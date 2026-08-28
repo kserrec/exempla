@@ -1,1 +1,336 @@
-{"schema_version": 1, "language_slug": "typescript", "repositories": []}
+{
+  "schema_version": 1,
+  "language_slug": "typescript",
+  "repositories": [
+    {
+      "slug": "mitt",
+      "repository": "developit/mitt",
+      "url": "https://github.com/developit/mitt",
+      "primary_language": "TypeScript",
+      "language_evidence": "The complete event-emitter runtime and its public generic types are implemented together in src/index.ts.",
+      "description": "A tiny typed event emitter that supports named events, wildcard listeners, and injectable event maps.",
+      "real_world_evidence": "The repository publishes mitt as a framework-neutral npm library for browser and server applications.",
+      "why_study": "Its entire behavior fits in one file, so learners can see how TypeScript generics strengthen a familiar runtime abstraction without obscuring it.",
+      "learn": ["Generic event maps, keyed handler types, overloads, map-backed subscriptions, wildcard dispatch, and mutation-safe iteration."],
+      "prerequisites": ["TypeScript generics, union types, functions, arrays, and Map."],
+      "start_here": {"path": "src/index.ts", "reason": "This file contains the public types, data structure, subscription operations, and dispatch algorithm in one continuous reading path."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 75, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers the complete TypeScript implementation, excluding tests, benchmarks, examples, and generated distributions."},
+        "difficulty": {"score": 1, "signals": ["generic event map", "overloaded methods"], "reason": "The generic relationships are explicit and the runtime consists of three short operations over one Map."},
+        "complexity": {"score": 1, "signals": ["single module", "one in-memory registry"], "reason": "One factory owns one handler registry with no services, plugins, persistence, or platform integration."},
+        "placement": "All three dimensions are in the first band, making mitt a direct SDC 1 introduction to typed library code."
+      },
+      "quality": {
+        "source_quality": "The implementation is complete, compact, side-effect free outside its injected registry, and avoids unnecessary abstractions.",
+        "architecture": "Public types and one emitter factory form the entire architecture around a Map of event keys to handlers.",
+        "naming_and_idiom": "EventType, EventHandlerMap, on, off, and emit closely match the domain and TypeScript's type vocabulary.",
+        "tests": "The tests cover registration, removal, wildcard order, duplicate handlers, symbols, custom maps, and compile-time type expectations.",
+        "documentation": "The README documents the API, typed event maps, wildcard behavior, size, installation, and examples.",
+        "traceability": "An emitted event can be followed through one method into its named and wildcard handler slices and matching tests.",
+        "maintainability": "The single responsibility, tiny public surface, and behavioral tests make every change easy to localize.",
+        "educational_value": "It isolates the benefit of TypeScript's type system while keeping every runtime consequence visible."
+      },
+      "inspection": {"commit": "6b41670516ed8e8b738612f60491995470aa63b3", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "package.json", "src/index.ts", "test/index_test.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/developit/mitt/blob/6b41670516ed8e8b738612f60491995470aa63b3/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "redux",
+      "repository": "reduxjs/redux",
+      "url": "https://github.com/reduxjs/redux",
+      "primary_language": "TypeScript",
+      "language_evidence": "Store creation, reducer composition, middleware application, observable interoperation, and public types are first-party TypeScript under src.",
+      "description": "A predictable state container built around pure reducers, immutable state transitions, action dispatch, subscriptions, and middleware.",
+      "real_world_evidence": "The repository publishes the Redux state-management library used by browser, server, and framework-integrated applications.",
+      "why_study": "A compact core demonstrates how state transitions, runtime contracts, and precise generic inference can support a stable ecosystem API.",
+      "learn": ["Reducer composition, generic state/action inference, observer contracts, listener snapshots, middleware enhancement, and runtime invariants."],
+      "prerequisites": ["TypeScript generics, functions as values, immutable update concepts, discriminated actions, and JavaScript modules."],
+      "start_here": {"path": "src/createStore.ts", "reason": "Store creation exposes the state machine, dispatch guards, listener snapshots, subscriptions, replacement, and observable interface."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 853, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript under src, excluding tests, examples, documentation, build tooling, and generated packages."},
+        "difficulty": {"score": 2, "signals": ["generic overloads", "reentrancy guards", "listener snapshotting"], "reason": "Generic APIs and dispatch invariants require attention, but the runtime model is small and deliberately explicit."},
+        "complexity": {"score": 1, "signals": ["small functional core", "single store abstraction"], "reason": "A handful of modules implement one state-container model without transport, persistence, or framework subsystems."},
+        "placement": "The tiny cohesive implementation keeps Redux at SDC 1 despite its careful public typing and ecosystem role."
+      },
+      "quality": {
+        "source_quality": "State transitions, forbidden reentrant operations, and listener lifecycle rules are expressed as visible checks rather than hidden convention.",
+        "architecture": "Store creation, reducer combination, middleware composition, utilities, and types form a compact functional core.",
+        "naming_and_idiom": "Reducer, dispatch, subscribe, currentState, and nextListeners consistently describe the state-machine contract.",
+        "tests": "Focused suites cover dispatch, subscriptions, reducer replacement, observable behavior, reducer composition, middleware, and errors.",
+        "documentation": "The README links to maintained tutorials and API material while explaining the library's purpose, installation, and ecosystem position.",
+        "traceability": "An action can be followed through dispatch, the current reducer, state replacement, listener notification, and a focused store test.",
+        "maintainability": "A small module graph, explicit runtime errors, and strong type tests protect the stable public contract.",
+        "educational_value": "It lets a learner study a complete influential architecture before taking on a framework or application-sized codebase."
+      },
+      "inspection": {"commit": "71606661ac515bdd64c199a6bb508401c7cf736f", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/createStore.ts", "src/combineReducers.ts", "test/createStore.spec.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/reduxjs/redux/blob/71606661ac515bdd64c199a6bb508401c7cf736f/LICENSE.md"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "ky",
+      "repository": "sindresorhus/ky",
+      "url": "https://github.com/sindresorhus/ky",
+      "primary_language": "TypeScript",
+      "language_evidence": "The HTTP client core, request normalization, hooks, retry logic, errors, and public options are TypeScript under source.",
+      "description": "A Fetch-based HTTP client that adds typed options, lifecycle hooks, retry policy, timeout handling, parsing shortcuts, and instances.",
+      "real_world_evidence": "The repository publishes Ky for production browser, Node.js, Bun, and Deno applications on top of the standard Fetch API.",
+      "why_study": "It shows how a focused wrapper can add real reliability and ergonomics while preserving the platform's native Request, Response, and stream model.",
+      "learn": ["Fetch adaptation, option normalization, hook pipelines, exponential backoff, abort signals, response decoration, and generic body parsing."],
+      "prerequisites": ["TypeScript generics, Fetch, promises, Request and Response objects, abort signals, and HTTP status semantics."],
+      "start_here": {"path": "source/core/Ky.ts", "reason": "The central class connects request construction, hooks, retries, timeouts, response parsing, and error propagation."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 2, "loc": 2340, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript, excluding tests, fixtures, documentation, build scripts, and generated output."},
+        "difficulty": {"score": 2, "signals": ["abort and retry control flow", "typed option normalization"], "reason": "Asynchronous retries and request cloning need care, but standard Fetch primitives anchor the implementation."},
+        "complexity": {"score": 2, "signals": ["core plus focused utilities", "hook and retry pipelines"], "reason": "Several helpers participate in a request, yet they remain organized around one HTTP-client abstraction."},
+        "placement": "Size, difficulty, and component structure all align in the second band, yielding a clear SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "The core preserves native web-platform behavior, validates incompatible options, and isolates retry, timeout, and normalization details.",
+        "architecture": "One core request class delegates to small utilities and exposes reusable instances through a thin public factory.",
+        "naming_and_idiom": "beforeRequest, afterResponse, shouldRetry, normalizeRetryOptions, and timeout reflect both Fetch and library concepts.",
+        "tests": "The suite covers methods, bodies, retries, hooks, timeouts, aborts, prefixes, parsing, instances, errors, streams, and runtime variants.",
+        "documentation": "The README provides typed examples and detailed contracts for every option, hook, error, shortcut, and runtime caveat.",
+        "traceability": "A client call can be followed from the factory into Ky.create, the request loop, hooks, retry calculation, and a matching test.",
+        "maintainability": "Platform concerns remain behind native interfaces and focused utilities rather than a custom transport stack.",
+        "educational_value": "It teaches disciplined API wrapping: add policy and types without replacing the underlying standard abstraction."
+      },
+      "inspection": {"commit": "d27ad21266d162ee218d4ea69dce192b84b6f967", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["readme.md", "source/core/Ky.ts", "source/utils/normalize.ts", "test/main.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/sindresorhus/ky/blob/d27ad21266d162ee218d4ea69dce192b84b6f967/license"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "reselect",
+      "repository": "reduxjs/reselect",
+      "url": "https://github.com/reduxjs/reselect",
+      "primary_language": "TypeScript",
+      "language_evidence": "Selector construction, memoizers, developer checks, utilities, and public inference types are implemented in TypeScript under src.",
+      "description": "A memoized selector library that derives values from application state while preserving stable results across unchanged inputs.",
+      "real_world_evidence": "The repository publishes Reselect for application and Redux state derivation, including extensible memoization strategies and development checks.",
+      "why_study": "A small runtime supports unusually capable variadic tuple inference, pluggable caches, recomputation accounting, and developer diagnostics.",
+      "learn": ["Variadic tuple types, selector inference, weak-map memoization, cache topology, result equality, development checks, and functional composition."],
+      "prerequisites": ["Advanced TypeScript generics, closures, memoization, referential equality, WeakMap and Map, and state selectors."],
+      "start_here": {"path": "src/createSelectorCreator.ts", "reason": "Selector assembly connects input dependencies, result memoization, argument memoization, diagnostics, counters, and inferred output types."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 1, "loc": 1276, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript under src, excluding tests, documentation, website code, benchmarks, and generated bundles."},
+        "difficulty": {"score": 3, "signals": ["variadic generic inference", "multi-layer memoization", "weak reference cache tree"], "reason": "The runtime is compact, but type inference and cache behavior require comfort with advanced TypeScript and identity semantics."},
+        "complexity": {"score": 2, "signals": ["selector and memoizer layers", "pluggable cache strategies"], "reason": "Multiple algorithms share one selector model and stable extension points without broad external integrations."},
+        "placement": "Advanced typing lifts this small, cohesive library to SDC 2 while its limited architecture keeps it below SDC 3."
+      },
+      "quality": {
+        "source_quality": "Runtime memoization stages and type-level machinery are separated, with counters and checks making hidden cache behavior observable.",
+        "architecture": "Selector construction composes input selectors with independent argument and result memoizers behind explicit option types.",
+        "naming_and_idiom": "Dependencies, resultFunc, recomputations, memoize, and argsMemoize distinguish the two cache layers clearly.",
+        "tests": "Runtime, type, and development-mode suites cover inference, cache strategies, recomputation, equality, diagnostics, and regressions.",
+        "documentation": "The README and linked site explain selector composition, APIs, memoization functions, debugging fields, and TypeScript use.",
+        "traceability": "A selector call can be followed through argument memoization, dependency collection, result memoization, and recomputation assertions.",
+        "maintainability": "Memoizers conform to a shared contract, type helpers are centralized, and observable counters support regression diagnosis.",
+        "educational_value": "It is a compact bridge from everyday generics to serious type-level API design and cache algorithms."
+      },
+      "inspection": {"commit": "73e20494780057cd44f2debc143eb7ef6178e19a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/createSelectorCreator.ts", "src/weakMapMemoize.ts", "test/reselect.spec.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/reduxjs/reselect/blob/73e20494780057cd44f2debc143eb7ef6178e19a/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "zod",
+      "repository": "colinhacks/zod",
+      "url": "https://github.com/colinhacks/zod",
+      "primary_language": "TypeScript",
+      "language_evidence": "Schema definitions, parsing internals, error representation, adapters, codecs, and public fluent APIs are TypeScript across the packages workspace.",
+      "description": "A schema validation library that parses untrusted values and infers static TypeScript input and output types from runtime definitions.",
+      "real_world_evidence": "The repository publishes multiple maintained Zod packages used to validate application, API, form, and configuration data.",
+      "why_study": "It demonstrates the central TypeScript challenge of keeping a rich runtime model and a rich inferred type model aligned across many schema kinds.",
+      "learn": ["Runtime parsing, input/output type inference, fluent schema APIs, discriminated unions, recursive schemas, codecs, error paths, and package compatibility."],
+      "prerequisites": ["Advanced generics and conditional types, recursive data, parsing, immutable fluent APIs, and package workspaces."],
+      "start_here": {"path": "packages/zod/src/v4/core/schemas.ts", "reason": "Core schema definitions and parse functions show how runtime checks, issues, async paths, and inferred input/output types meet."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 3, "loc": 36569, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript and small supporting JavaScript, excluding tests, documentation, benchmarks, fixtures, and generated builds."},
+        "difficulty": {"score": 4, "signals": ["conditional and recursive types", "dual input-output semantics", "sync and async parsing"], "reason": "Nearly every feature must remain correct both as runtime validation and as compile-time inference across nested schemas."},
+        "complexity": {"score": 3, "signals": ["core and classic API layers", "multiple compatibility packages", "many schema families"], "reason": "A shared core supports fluent APIs, mini variants, localization, codecs, conversions, and compatibility packages in one workspace."},
+        "placement": "Substantial size and advanced typing average to SDC 3; the architecture remains a cohesive library family rather than a platform."
+      },
+      "quality": {
+        "source_quality": "Schema parsers use explicit issue construction, continuability rules, and synchronized generic definitions instead of reflection-heavy shortcuts.",
+        "architecture": "A reusable core supports classic and mini APIs plus versioned compatibility packages while retaining clear schema boundaries.",
+        "naming_and_idiom": "Input, output, parse, issue, check, encode, decode, and schema vocabulary consistently connects types to runtime behavior.",
+        "tests": "Extensive suites cover every schema family, type inference, async paths, error formatting, codecs, localization, and regressions.",
+        "documentation": "Package READMEs and generated API material explain schema construction, inference, errors, transforms, metadata, and ecosystem integration.",
+        "traceability": "A string schema can be followed from its fluent constructor to core parsing checks, issue creation, inferred output, and dedicated tests.",
+        "maintainability": "Shared internals reduce duplication across API variants, while exhaustive behavioral and type tests guard their alignment.",
+        "educational_value": "It is a definitive study in designing TypeScript libraries where static guarantees must faithfully describe dynamic validation."
+      },
+      "inspection": {"commit": "571c8e8a3d73b4305f4abfdd6977773cc12f2bf5", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["packages/zod/README.md", "packages/zod/src/v4/core/schemas.ts", "packages/zod/src/v4/classic/schemas.ts", "packages/zod/src/v4/classic/tests/string.test.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/colinhacks/zod/blob/571c8e8a3d73b4305f4abfdd6977773cc12f2bf5/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "react-hook-form",
+      "repository": "react-hook-form/react-hook-form",
+      "url": "https://github.com/react-hook-form/react-hook-form",
+      "primary_language": "TypeScript",
+      "language_evidence": "Hooks, form-control state, validation, field arrays, utilities, and public types are implemented in TypeScript and TSX under src.",
+      "description": "A React form-state and validation library built around uncontrolled inputs, subscriptions, typed field paths, and composable hooks.",
+      "real_world_evidence": "The repository publishes React Hook Form for production React applications and maintains adapters for common schema validators.",
+      "why_study": "It makes performance-sensitive UI state concrete through subscriptions, proxy-based access tracking, lifecycle hooks, deeply inferred field names, and focused rerenders.",
+      "learn": ["React hook lifecycles, subscription-based state, typed object paths, form validation, uncontrolled inputs, field arrays, and render minimization."],
+      "prerequisites": ["React hooks, TypeScript generics and conditional types, DOM form events, refs, validation, and immutable state updates."],
+      "start_here": {"path": "src/useForm.ts", "reason": "The primary hook creates the form control, subscribes to state, coordinates layout effects, and exposes the public methods."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 2, "loc": 8409, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript and TSX under src, excluding tests, website code, examples, benchmarks, and generated output."},
+        "difficulty": {"score": 3, "signals": ["deep field-path types", "React lifecycle coordination", "proxy subscription tracking"], "reason": "Correctness spans type inference, DOM behavior, validation modes, and render timing, though patterns stay within familiar React abstractions."},
+        "complexity": {"score": 3, "signals": ["central form controller", "hook and validation subsystems", "field-array state"], "reason": "Registration, values, errors, subscriptions, validation, resets, focus, and field arrays coordinate through one control object."},
+        "placement": "Moderate size with interdependent type, DOM, and React behavior yields an SDC 3 learning project."
+      },
+      "quality": {
+        "source_quality": "Hot paths favor focused helpers and subscription updates, while public methods preserve visible form-state invariants.",
+        "architecture": "A central form controller supports thin hooks, validation resolvers, field arrays, and reusable state-subscription utilities.",
+        "naming_and_idiom": "Register, trigger, watch, dirtyFields, touchedFields, fieldArray, and resolver reflect standard form and React concepts.",
+        "tests": "Large unit and type suites cover hooks, validation modes, browser events, resets, field arrays, subscriptions, regressions, and inference.",
+        "documentation": "The README and linked documentation provide API examples, validation integrations, performance rationale, and TypeScript usage.",
+        "traceability": "A registered field can be followed from useForm into createFormControl, event handling, validation, state publication, and hook tests.",
+        "maintainability": "Controller logic is substantial but surrounded by small named utilities and behavior-specific tests for a broad public surface.",
+        "educational_value": "It teaches how types, browser state, and React rendering constraints shape a mature user-facing library."
+      },
+      "inspection": {"commit": "145441c2f2c7e32c00da943f02666bcbadce2ea9", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/useForm.ts", "src/logic/createFormControl.ts", "src/__tests__/useForm.test.tsx"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/react-hook-form/react-hook-form/blob/145441c2f2c7e32c00da943f02666bcbadce2ea9/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "trpc",
+      "repository": "trpc/trpc",
+      "url": "https://github.com/trpc/trpc",
+      "primary_language": "TypeScript",
+      "language_evidence": "The server runtime, clients, transports, adapters, framework bindings, and inference machinery are TypeScript across the packages workspace.",
+      "description": "An end-to-end typesafe RPC framework that infers client calls from server routers without a generated schema or code-generation step.",
+      "real_world_evidence": "The repository publishes server, client, React, Next.js, TanStack, and adapter packages for deployed TypeScript applications.",
+      "why_study": "It shows how a framework can carry types through builders, middleware, routers, callers, serialization, links, and framework adapters while retaining runtime validation.",
+      "learn": ["Fluent generic builders, recursive router types, middleware context transformation, proxy clients, transport links, serialization, and lazy module loading."],
+      "prerequisites": ["Advanced conditional and mapped types, async iterables, middleware, RPC, HTTP transports, schemas, and monorepo packages."],
+      "start_here": {"path": "packages/server/src/unstable-core-do-not-import/router.ts", "reason": "Router records, recursive decorated caller types, lazy routers, procedure flattening, and caller creation converge here."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 23862, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers first-party production TypeScript and TSX, excluding tests, examples, documentation, benchmarks, fixtures, and generated output."},
+        "difficulty": {"score": 4, "signals": ["recursive conditional types", "context-transforming middleware", "proxy and transport indirection"], "reason": "Understanding a call requires aligning sophisticated inferred types with runtime parsers, middleware, proxies, and asynchronous transports."},
+        "complexity": {"score": 4, "signals": ["server-client package graph", "multiple transports and adapters", "framework integrations"], "reason": "Routers and procedures connect to clients, link chains, subscriptions, serialization, React bindings, and server adapters across packages."},
+        "placement": "The S3 codebase has sustained D4 and C4 demands, so its rounded mean and framework breadth place it at SDC 4."
+      },
+      "quality": {
+        "source_quality": "The implementation uses explicit internal contracts and utility types to keep runtime composition aligned with inferred APIs.",
+        "architecture": "Server core, clients, transport links, adapters, framework bindings, and shared contracts form distinct workspace packages.",
+        "naming_and_idiom": "Router, procedure, middleware, parser, caller, link, transformer, and context vocabulary stays consistent across type and runtime layers.",
+        "tests": "Package-level suites exercise inference, middleware, routers, lazy loading, transports, batching, subscriptions, adapters, and regressions.",
+        "documentation": "The README and maintained documentation cover quick starts, server and client concepts, adapters, integrations, and migration paths.",
+        "traceability": "A procedure can be followed from its builder through router decoration, a client proxy and link, server resolution, and focused tests.",
+        "maintainability": "Internal entry points and package contracts contain type complexity while regression suites protect both compile-time and runtime behavior.",
+        "educational_value": "It is a strong advanced study of TypeScript used as architectural connective tissue rather than merely local annotation."
+      },
+      "inspection": {"commit": "6a70335e02fa1a8bc68e8d065b85687b0d7ffdea", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "packages/server/src/unstable-core-do-not-import/router.ts", "packages/server/src/unstable-core-do-not-import/procedureBuilder.ts", "packages/server/src/unstable-core-do-not-import/router.test.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/trpc/trpc/blob/6a70335e02fa1a8bc68e8d065b85687b0d7ffdea/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "nest",
+      "repository": "nestjs/nest",
+      "url": "https://github.com/nestjs/nest",
+      "primary_language": "TypeScript",
+      "language_evidence": "Dependency injection, application lifecycle, routing, transport abstractions, metadata scanning, and public framework packages are TypeScript.",
+      "description": "A modular server framework with dependency injection, decorators, lifecycle management, HTTP adapters, microservices, WebSockets, and application tooling.",
+      "real_world_evidence": "The repository releases the Nest application framework and its core platform packages for production Node.js services.",
+      "why_study": "It exposes a full decorator-driven framework kernel: module discovery, dependency graphs, scoped providers, adapters, proxies, exception zones, and lifecycle orchestration.",
+      "learn": ["Dependency injection, reflection metadata, module graphs, provider scopes, framework bootstrapping, adapter boundaries, lifecycle hooks, and exception handling."],
+      "prerequisites": ["TypeScript decorators and metadata, dependency injection, asynchronous application startup, HTTP servers, modules, and design patterns."],
+      "start_here": {"path": "packages/core/nest-factory.ts", "reason": "The factory visibly assembles configuration, container, scanner, injector, instance loader, adapter, application object, and error boundary."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 34142, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers production TypeScript in first-party packages, excluding tests, sample applications, documentation, build tooling, and generated output."},
+        "difficulty": {"score": 4, "signals": ["reflection-driven dependency injection", "scoped asynchronous resolution", "proxy and adapter layers"], "reason": "Provider lookup, cycles, scopes, metadata, context identifiers, and asynchronous factories require framework-internals reasoning."},
+        "complexity": {"score": 4, "signals": ["module and provider graph", "multiple application transports", "cross-cutting lifecycle and errors"], "reason": "The core coordinates discovery, injection, routing, adapters, logging, exceptions, inspection, and application lifecycle across packages."},
+        "placement": "Its S3 size and sustained D4/C4 framework architecture produce a rounded SDC 4 placement."
+      },
+      "quality": {
+        "source_quality": "Complex container behavior is decomposed into scanners, loaders, wrappers, signals, contexts, and explicit exception types.",
+        "architecture": "Common contracts, core container, platform adapters, transports, testing support, and optional packages have recognizable boundaries.",
+        "naming_and_idiom": "Provider, injector, module, context, scope, adapter, scanner, and lifecycle terms consistently describe framework responsibilities.",
+        "tests": "Unit and integration suites cover dependency resolution, scopes, cycles, factories, adapters, routing, lifecycle, and error behavior.",
+        "documentation": "The README and official documentation cover architecture, controllers, providers, modules, techniques, transports, and recipes.",
+        "traceability": "Application creation can be traced through NestFactory, dependency scanning, instance loading, provider injection, and focused injector tests.",
+        "maintainability": "Well-defined provider wrappers and platform abstractions contain a large feature set behind stable contracts.",
+        "educational_value": "It provides a readable production framework kernel for studying inversion of control and metadata-driven architecture."
+      },
+      "inspection": {"commit": "19ad8bf452bbbe159caa990d6344f8122eb607eb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["Readme.md", "packages/core/nest-factory.ts", "packages/core/injector/injector.ts", "packages/core/test/injector/injector.spec.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/nestjs/nest/blob/19ad8bf452bbbe159caa990d6344f8122eb607eb/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "vscode",
+      "repository": "microsoft/vscode",
+      "url": "https://github.com/microsoft/vscode",
+      "primary_language": "TypeScript",
+      "language_evidence": "The editor, workbench, platform services, extension host, terminals, notebooks, search, SCM, and testing systems are overwhelmingly TypeScript.",
+      "description": "The open-source code editor behind Visual Studio Code, including its editor engine, desktop and web workbench, extension platform, and integrated developer tools.",
+      "real_world_evidence": "The repository builds the production desktop and web editor distributed as Visual Studio Code and related open-source variants.",
+      "why_study": "It demonstrates TypeScript at product scale: layered services, dependency injection, extension isolation, text models, contributions, workbench composition, native integration, and long-lived compatibility.",
+      "learn": ["Large-scale service architecture, editor data structures, extension hosts, contribution registries, workbench lifecycle, desktop/web boundaries, accessibility, and performance engineering."],
+      "prerequisites": ["Advanced TypeScript, event-driven systems, dependency injection, desktop and browser runtimes, text editors, asynchronous services, and large monorepo navigation."],
+      "start_here": {"path": "src/vs/workbench/browser/workbench.ts", "reason": "The browser workbench entry shows how layout, services, parts, lifecycle phases, errors, and shutdown are coordinated at the product shell."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 1168707, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers first-party production TypeScript and TSX, excluding tests, extensions used as fixtures, documentation, build tooling, generated files, and bundled dependencies."},
+        "difficulty": {"score": 4, "signals": ["editor data structures", "distributed extension runtime", "desktop-web abstraction"], "reason": "Subsystems require specialized editor, process, platform, accessibility, and performance knowledge with extensive asynchronous coordination."},
+        "complexity": {"score": 5, "signals": ["million-line product", "many cross-cutting platform services", "extension ecosystem and process boundaries"], "reason": "Editor, workbench, extensions, terminals, SCM, debugging, notebooks, search, settings, remote work, and native shells interact across layered services."},
+        "placement": "S5 and C5 independently establish an SDC 5 codebase, with D4 confirming that individual subsystems also demand advanced expertise."
+      },
+      "quality": {
+        "source_quality": "Large classes are supported by disposables, events, cancellation, service contracts, telemetry, assertions, and subsystem-specific utilities.",
+        "architecture": "Base utilities, platform services, editor core, workbench contributions, extension host, and product shells form a deliberate layered system.",
+        "naming_and_idiom": "Service interfaces, contribution identifiers, editor models, lifecycle phases, and disposable ownership are consistent across the repository.",
+        "tests": "Broad unit, integration, smoke, extension-host, browser, and platform suites cover editing behavior, services, workbench features, and regressions.",
+        "documentation": "Repository, build, architecture, API, extension, testing, and contribution documentation supports both product and ecosystem development.",
+        "traceability": "A text edit can be traced through TextModel, operations and events, editor consumers, workbench services, and extensive model tests.",
+        "maintainability": "Layer rules, service interfaces, disposables, feature contributions, and targeted suites give teams ownership boundaries inside a very large product.",
+        "educational_value": "It is an advanced capstone for learning how TypeScript supports a multi-platform application and extension ecosystem over many years."
+      },
+      "inspection": {"commit": "6834b15c38351f2187f4f4478d3d406923265fd1", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/vs/workbench/browser/workbench.ts", "src/vs/editor/common/model/textModel.ts", "src/vs/editor/test/common/model/textModel.test.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/microsoft/vscode/blob/6834b15c38351f2187f4f4478d3d406923265fd1/LICENSE.txt"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "angular",
+      "repository": "angular/angular",
+      "url": "https://github.com/angular/angular",
+      "primary_language": "TypeScript",
+      "language_evidence": "Rendering, dependency injection, reactivity, compilation, forms, routing, HTTP, tooling, and public framework packages are TypeScript.",
+      "description": "A web application framework with a compiler, rendering and reactivity engine, dependency injection, routing, forms, HTTP, hydration, testing, and developer tooling.",
+      "real_world_evidence": "The repository builds and releases the Angular framework and its first-party packages for production web applications.",
+      "why_study": "It exposes the full consequences of a compiled framework: template lowering, incremental rendering, dependency scopes, signals, zones, hydration, package contracts, and compatibility migrations.",
+      "learn": ["Framework rendering internals, template compilation, dependency injection, reactive graphs, change detection, hydration, package layering, public API evolution, and conformance testing."],
+      "prerequisites": ["Advanced TypeScript, compilers and ASTs, browser rendering, dependency injection, reactive programming, build systems, and large framework architecture."],
+      "start_here": {"path": "packages/core/src/application/application_ref.ts", "reason": "ApplicationRef connects bootstrapping, views, change detection, stability, zones, errors, rendering hooks, and shutdown at a central public boundary."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 222592, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers first-party production TypeScript, excluding tests, integration fixtures, examples, documentation, build tooling, generated files, and vendored code."},
+        "difficulty": {"score": 4, "signals": ["compiler-runtime contract", "incremental rendering state", "reactivity and hydration semantics"], "reason": "Correctness depends on aligning compiler output, compact runtime data structures, dependency contexts, browser DOM behavior, and scheduling."},
+        "complexity": {"score": 5, "signals": ["framework and compiler platform", "many interoperating packages", "cross-cutting compatibility and tooling"], "reason": "Core rendering and DI integrate with compiler, router, forms, HTTP, SSR, hydration, localization, testing, CLI-facing tooling, and migrations."},
+        "placement": "S5 and C5 make Angular an unambiguous SDC 5 project; D4 reflects the sustained specialist knowledge within its major subsystems."
+      },
+      "quality": {
+        "source_quality": "Performance-critical runtime code uses explicit compact representations, development assertions, profiling hooks, and carefully separated creation and update phases.",
+        "architecture": "Compiler, core runtime, platform adapters, router, forms, HTTP, localization, SSR, testing, and tooling live behind package contracts.",
+        "naming_and_idiom": "LView, TView, injector, applicationRef, signal, hydration, instruction, and bootstrap vocabulary consistently describes framework internals.",
+        "tests": "Extensive unit, integration, compliance, compiler, rendering, browser, server, and migration suites protect framework and generated-code behavior.",
+        "documentation": "Public guides, API references, architecture notes, design documents, contributor guides, and code comments cover both use and internals.",
+        "traceability": "Application startup can be traced through ApplicationRef, bootstrapped components, render instructions, change detection, and focused application tests.",
+        "maintainability": "Package boundaries, public API extraction, compatibility tooling, development assertions, and conformance tests constrain a broad evolving platform.",
+        "educational_value": "It is a capstone for understanding how TypeScript, compilation, runtime performance, and ecosystem compatibility shape a major framework."
+      },
+      "inspection": {"commit": "34817da7354f2a4e55f277a991d4345a4ca8a91d", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "packages/core/src/application/application_ref.ts", "packages/core/src/render3/instructions/shared.ts", "packages/core/test/application_ref_spec.ts"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/angular/angular/blob/34817da7354f2a4e55f277a991d4345a4ca8a91d/LICENSE"},
+      "github": {"primary_language": "TypeScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+    }
+  ]
+}

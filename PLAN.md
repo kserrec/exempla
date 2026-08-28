@@ -163,7 +163,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.6 — TypeScript
 
-- [ ] Same objective, work, completion criteria, and dependencies as Step 5.1.
+- [x] Same objective, work, completion criteria, and dependencies as Step 5.1.
 - **Artifacts:** `catalog/typescript.json`, `languages/typescript/README.md`,
   rejection records.
 
