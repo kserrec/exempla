@@ -2,7 +2,7 @@
 
 Choose a language, then browse from SDC 1 (most approachable) through SDC 5 (most demanding).
 
-The catalog currently contains **60 repositories across 20 languages**.
+The catalog currently contains **70 repositories across 20 languages**.
 
 | Language | Entries | SDC 1 | SDC 2 | SDC 3 | SDC 4 | SDC 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -12,7 +12,7 @@ The catalog currently contains **60 repositories across 20 languages**.
 | [PHP](php/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [C#](c-sharp/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [TypeScript](typescript/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
-| [C++](cpp/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
+| [C++](cpp/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [Ruby](ruby/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
 | [C](c/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
 | [Swift](swift/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |

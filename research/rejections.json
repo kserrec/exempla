@@ -88,6 +88,30 @@
       "failed_requirement": "meaningful primary-language classification",
       "evidence": "At the inspected revision, tokei counted 1,194 production JavaScript lines and only 130 TypeScript lines; the shipped helper implementation is materially JavaScript despite its TypeScript ecosystem role.",
       "reconsider": "Consider it for a JavaScript catalog expansion, or reconsider if the runtime implementation moves materially to TypeScript."
+    },
+    {
+      "repository": "jarro2783/cxxopts",
+      "language": "C++",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The production header contains 2,569 lines and combines templated value conversion, Unicode support, compiler compatibility, regex parsing, and help formatting; S2/D2/C1 yields SDC 2 rather than the open SDC 1 slot.",
+      "reconsider": "Eligible as an additional C++ SDC 2 entry if the catalog expands beyond two repositories per level."
+    },
+    {
+      "repository": "p-ranav/argparse",
+      "language": "C++",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The production header contains 2,068 lines and uses traits, std::any, numeric-format parsing, typed actions, subparsers, and rich argument policies; S2/D2/C1 yields SDC 2 rather than SDC 1.",
+      "reconsider": "Eligible as an additional C++ SDC 2 entry in a larger catalog."
+    },
+    {
+      "repository": "sharkdp/dbg-macro",
+      "language": "C++",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "Although only 834 implementation lines, its compiler-specific macro expansion, SFINAE detection, type-name extraction, container adaptation, and multi-standard branches support D3; S1/D3/C1 rounds to SDC 2.",
+      "reconsider": "Eligible as an additional C++ SDC 2 project, especially for a metaprogramming-focused path."
     }
   ]
 }
