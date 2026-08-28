@@ -64,6 +64,22 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The pinned Git tree does contain a substantive parser test suite, but much of the main parser is generated or ported parse-table machinery; Doctrine Lexer and Webmozart Assert offer clearer first-reading paths for the two SDC 1 slots.",
       "reconsider": "Eligible for a future parser-focused expansion, with the generated portions labeled explicitly."
+    },
+    {
+      "repository": "khellang/Scrutor",
+      "language": "C#",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains 2,099 production C# lines and relies on assembly scanning, reflection, expression compilation, and dependency-injection decoration; it supports SDC 2 rather than the open SDC 1 slot.",
+      "reconsider": "Eligible as an additional C# SDC 2 project in a larger catalog."
+    },
+    {
+      "repository": "Cysharp/Ulid",
+      "language": "C#",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains 1,773 production C# lines, but base32 bit packing, timestamp/random layout, high-performance parsing, multiple serializers, CLI code, and Unity support make SDC 2 more honest than SDC 1.",
+      "reconsider": "Eligible as an additional C# SDC 2 project in a larger catalog."
     }
   ]
 }

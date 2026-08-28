@@ -157,7 +157,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.5 — C#
 
-- [ ] Same objective, work, completion criteria, and dependencies as Step 5.1.
+- [x] Same objective, work, completion criteria, and dependencies as Step 5.1.
 - **Artifacts:** `catalog/c-sharp.json`, `languages/c-sharp/README.md`, rejection
   records.
 
