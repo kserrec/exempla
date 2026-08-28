@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+
+# Local secrets are never part of this repository.
+.env
+*.env
+.env.*
+*.env.*
