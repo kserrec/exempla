@@ -22,7 +22,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 2.1 — Specify the deliberately simple SDC rubric
 
-- [ ] **Objective:** Make S, D, C, and the final level reproducible without
+- [x] **Objective:** Make S, D, C, and the final level reproducible without
   turning the rubric into a research project.
 - **Work:** Define the assumed learner; implementation-LOC exclusions and five
   size bands; short D and C judgment checklists; the combination rule,
@@ -49,7 +49,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 3.1 — Define the repository quality gate
 
-- [ ] **Objective:** Ensure SDC measures difficulty while a separate gate
+- [x] **Objective:** Ensure SDC measures difficulty while a separate gate
   decides whether a repository is worth learning from.
 - **Work:** Define mandatory checks for genuine purpose, meaningful language
   use, source quality, architecture, naming, idiom, tests, documentation,
@@ -62,7 +62,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 3.2 — Select and document the initial 20 languages
 
-- [ ] **Objective:** Choose a current, defensible scope without pretending one
+- [x] **Objective:** Choose a current, defensible scope without pretending one
   popularity measure is universal.
 - **Work:** Record the ranking source, snapshot date, selection rule, and
   treatment of CSS/HTML, SQL, shell languages, families, and ecosystems whose
@@ -74,7 +74,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 3.3 — Define systematic candidate research
 
-- [ ] **Objective:** Find strong small and less-famous projects as well as
+- [x] **Objective:** Find strong small and less-famous projects as well as
   prominent ones, then preserve the evidence behind every decision.
 - **Work:** Define multiple discovery channels, inspection depth, revision
   pinning, source files to sample, LOC measurement, quality review, scoring,
