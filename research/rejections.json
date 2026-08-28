@@ -24,6 +24,30 @@
       "failed_requirement": "target SDC level",
       "evidence": "The inspected revision contains 104,032 meaningful Python lines and substantial plugin, inventory, execution, transport, and configuration architecture, which supports SDC 4 rather than the open SDC 5 slot.",
       "reconsider": "Eligible as an additional SDC 4 entry if the catalog expands beyond two repositories per level."
+    },
+    {
+      "repository": "apache/kafka",
+      "language": "Java",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains approximately 435,000 first-party Java, Scala, Python, and shell lines, and its distributed broker, controller, replication, storage, Connect, and Streams architecture supports SDC 5 rather than the open SDC 4 slot.",
+      "reconsider": "Eligible as an additional Java SDC 5 project in a larger catalog."
+    },
+    {
+      "repository": "google/guava",
+      "language": "Java",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected production modules contain about 101,000 meaningful lines, but most learning paths remain within cohesive utility families; S4 size alone does not justify the requested SDC 4 placement.",
+      "reconsider": "Eligible as an additional Java SDC 3 project after a focused subsystem path is selected."
+    },
+    {
+      "repository": "dropwizard/dropwizard",
+      "language": "Java",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains about 23,000 meaningful Java lines and composes clear framework modules around established libraries; S3/D3/C4 combines to SDC 3, not the open SDC 4 slot.",
+      "reconsider": "Eligible as an additional Java SDC 3 project in a larger catalog."
     }
   ]
 }

@@ -1,1 +1,336 @@
-{"schema_version": 1, "language_slug": "java", "repositories": []}
+{
+  "schema_version": 1,
+  "language_slug": "java",
+  "repositories": [
+    {
+      "slug": "minimal-json",
+      "repository": "ralfstx/minimal-json",
+      "url": "https://github.com/ralfstx/minimal-json",
+      "primary_language": "Java",
+      "language_evidence": "The parser, writer, value model, and public factory API in com.eclipsesource.json are implemented entirely in Java.",
+      "description": "A dependency-free JSON parser and writer built around a compact Java value model and streaming parser.",
+      "real_world_evidence": "The repository publishes a reusable JSON library that has served Java applications and EclipseSource products.",
+      "why_study": "Nearly the whole implementation is approachable in one sitting while still showing parsing, buffered input, immutable literals, mutable containers, and API design.",
+      "learn": ["Recursive data models, streaming parsing, character buffering, fluent factories, serialization, and boundary-focused tests."],
+      "prerequisites": ["Java classes and interfaces, collections, readers, exceptions, and JSON syntax."],
+      "start_here": {"path": "com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java", "reason": "The parser exposes the complete token-to-handler flow, buffering, nesting guard, and error-location behavior."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 1741, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["performance tests", "tests"], "notes": "Count covers the library's production Java source, excluding tests and the separate performance-test module."},
+        "difficulty": {"score": 2, "signals": ["streaming parser", "manual character buffering"], "reason": "Parsing and buffer boundaries require attention, but control flow is direct and uses ordinary Java constructs."},
+        "complexity": {"score": 1, "signals": ["single library module", "one value/parser/writer pipeline"], "reason": "An important behavior crosses only a handful of classes with no plugins, persistence, networking, or services."},
+        "placement": "A complete parser in fewer than two thousand production lines remains an SDC 1 project despite modest parser-specific reasoning."
+      },
+      "quality": {
+        "source_quality": "The parser uses explicit states, input guards, a nesting limit, and precise source locations without unnecessary abstraction.",
+        "architecture": "A small value hierarchy surrounds one parser and writer, with a factory class providing the public entry point.",
+        "naming_and_idiom": "JsonValue, JsonObject, readValue, readArray, and ParseException align directly with the data format.",
+        "tests": "Focused tests cover every JSON form, malformed input, buffer boundaries, deep nesting, equality, mutation, and writing.",
+        "documentation": "The README and Javadocs explain installation, parsing, construction, mutation, and performance tradeoffs.",
+        "traceability": "A JSON string can be followed from Json.parse through JsonParser callbacks into the value objects and writer.",
+        "maintainability": "No runtime dependencies, compact modules, and exhaustive behavioral tests keep changes local.",
+        "educational_value": "It is genuine library code whose entire data-format implementation is small enough for a first repository study."
+      },
+      "inspection": {"commit": "c091e6985620da04d5abcd902aafb6c9583c48ea", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "com.eclipsesource.json/src/main/java/com/eclipsesource/json/Json.java", "com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java", "com.eclipsesource.json/src/test/java/com/eclipsesource/json/JsonParser_Test.java"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "jackson-annotations",
+      "repository": "FasterXML/jackson-annotations",
+      "url": "https://github.com/FasterXML/jackson-annotations",
+      "primary_language": "Java",
+      "language_evidence": "The published annotation types, value objects, and metadata contracts under src/main/java are Java.",
+      "description": "The standalone annotation contract used to configure Jackson serialization, deserialization, polymorphism, creators, and property handling.",
+      "real_world_evidence": "FasterXML releases this artifact as a core dependency of the production Jackson data-processing ecosystem.",
+      "why_study": "It shows how a stable metadata API encodes nuanced behavior through annotations, enums, defaults, compatibility rules, and unusually strong Javadocs.",
+      "learn": ["Java annotations, retention and targets, public compatibility contracts, enum-based configuration, metadata defaults, and API documentation."],
+      "prerequisites": ["Annotations, enums, reflection concepts, Java serialization terminology, and binary compatibility basics."],
+      "start_here": {"path": "src/main/java/com/fasterxml/jackson/annotation/JsonProperty.java", "reason": "This central annotation demonstrates targets, defaults, access rules, nullability signals, compatibility history, and user-facing documentation."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 2, "loc": 2566, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "release notes"], "notes": "Count covers Java in src/main, excluding tests, generated historical Javadocs, documentation, and build support."},
+        "difficulty": {"score": 1, "signals": ["annotation declarations", "documented configuration enums"], "reason": "Most implementation is declarative and readable once the learner understands Java annotation syntax."},
+        "complexity": {"score": 1, "signals": ["one API artifact", "no runtime engine"], "reason": "Types define independent metadata contracts without an execution pipeline, service topology, or hidden state."},
+        "placement": "S2 volume is mostly clear declarative API surface, so the simple code and architecture yield SDC 1."
+      },
+      "quality": {
+        "source_quality": "Defaults, precedence, version history, and edge cases are documented at the exact declaration where users depend on them.",
+        "architecture": "One dependency-light artifact contains annotations and their supporting enum/value contracts, separate from Jackson engines.",
+        "naming_and_idiom": "JsonProperty, JsonCreator, JsonTypeInfo, JsonIgnore, and OptBoolean consistently describe metadata intent.",
+        "tests": "Tests verify annotation targets, default values, equality contracts, bundles, polymorphic settings, and compatibility behavior.",
+        "documentation": "Extensive Javadocs serve as the canonical behavioral reference, supplemented by README and version notes.",
+        "traceability": "A configuration option is declared, documented, and verified without needing to navigate a serializer implementation.",
+        "maintainability": "The small dependency boundary and conservative public contracts support long-lived compatibility.",
+        "educational_value": "It teaches careful library API design through real annotations rather than a contrived reflection example."
+      },
+      "inspection": {"commit": "474f7c9449f0efc6bf2200aac7ea4c348b429536", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/main/java/com/fasterxml/jackson/annotation/JsonProperty.java", "src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java", "src/test/java/com/fasterxml/jackson/annotation/JsonTypeInfoTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "java-diff-utils",
+      "repository": "java-diff-utils/java-diff-utils",
+      "url": "https://github.com/java-diff-utils/java-diff-utils",
+      "primary_language": "Java",
+      "language_evidence": "Diff algorithms, deltas, patches, unified-diff parsing, and output helpers in the two production modules are Java.",
+      "description": "A library for computing sequence differences, applying and restoring patches, parsing unified diffs, and producing comparison output.",
+      "real_world_evidence": "The project publishes reusable Maven artifacts used by applications that compare text and other ordered data.",
+      "why_study": "It connects a recognizable algorithm to clean domain objects and practical formats without expanding into a large framework.",
+      "learn": ["Sequence diff algorithms, deltas and patches, generic APIs, conflict verification, unified-diff parsing, and algorithm substitution."],
+      "prerequisites": ["Java generics and collections, sequence algorithms, equality, exceptions, and basic diff notation."],
+      "start_here": {"path": "java-diff-utils/src/main/java/com/github/difflib/DiffUtils.java", "reason": "The public facade selects algorithms and turns edit paths into patches, providing a map of the core domain."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 2, "loc": 2873, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "examples"], "notes": "Count covers production source in java-diff-utils and its JGit adapter, excluding tests and examples."},
+        "difficulty": {"score": 2, "signals": ["sequence differencing", "patch reconstruction"], "reason": "The Myers-style path computation needs algorithmic attention, while public objects and most transformations remain straightforward."},
+        "complexity": {"score": 2, "signals": ["algorithm/patch/parser modules", "optional JGit adapter"], "reason": "A few cohesive modules collaborate in one process with a narrow optional integration."},
+        "placement": "Small-to-moderate size plus a substantive but contained algorithm makes this a clear SDC 2 study."
+      },
+      "quality": {
+        "source_quality": "Algorithms are isolated behind interfaces and patch application validates source positions and content before mutation.",
+        "architecture": "Facades, algorithms, delta/patch domain objects, unified-diff parsing, and output utilities have distinct roles.",
+        "naming_and_idiom": "DiffUtils, Patch, Delta, Chunk, ConflictOutput, and DiffAlgorithm make the model explicit.",
+        "tests": "Tests cover algorithm cases, patch and unpatch symmetry, conflicts, unified formats, fuzzy matching, and output generation.",
+        "documentation": "The README provides API examples, algorithm selection, patch usage, unified diffs, and integration guidance.",
+        "traceability": "Two sequences can be followed from DiffUtils through the chosen algorithm into deltas and validated application.",
+        "maintainability": "Algorithm interfaces and immutable-ish domain values let core comparison evolve independently of formats.",
+        "educational_value": "It shows how an algorithm becomes a useful, typed production library rather than remaining a textbook function."
+      },
+      "inspection": {"commit": "5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "java-diff-utils/src/main/java/com/github/difflib/DiffUtils.java", "java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java", "java-diff-utils/src/test/java/com/github/difflib/DiffUtilsTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/java-diff-utils/java-diff-utils/blob/5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "junit4",
+      "repository": "junit-team/junit4",
+      "url": "https://github.com/junit-team/junit4",
+      "primary_language": "Java",
+      "language_evidence": "The test runner, descriptions, statements, rules, assertions, matchers, and extension model under src/main/java are Java.",
+      "description": "The fourth-generation JUnit testing framework, including reflective discovery, runners, rules, assertions, lifecycle statements, and reports.",
+      "real_world_evidence": "JUnit 4 remains maintained production test infrastructure and a compatibility foundation across the Java ecosystem.",
+      "why_study": "It turns annotations and reflection into an explicit statement pipeline and runner extension model that is mature but still navigable.",
+      "learn": ["Reflection-based discovery, runner templates, composable statements, rules, annotations, result notification, and backward compatibility."],
+      "prerequisites": ["Java reflection and annotations, inheritance, exceptions, generics, testing frameworks, and design patterns."],
+      "start_here": {"path": "src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java", "reason": "The runner constructs children, validates test classes, wraps lifecycle statements, applies rules, and executes one test method."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 3, "loc": 10834, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "site documentation"], "notes": "Count covers Java under src/main, excluding the self-test suite, site content, historical documentation, and build files."},
+        "difficulty": {"score": 2, "signals": ["reflection", "composable execution wrappers"], "reason": "Annotations and reflective calls add indirection, but runners and Statements encode lifecycle order with conventional object-oriented patterns."},
+        "complexity": {"score": 2, "signals": ["runner/statement/rule layers", "listener notifications"], "reason": "Several packages participate, yet a test method can be traced through one in-process runner pipeline."},
+        "placement": "S3 breadth is offset by familiar framework patterns and a coherent lifecycle, producing SDC 2."
+      },
+      "quality": {
+        "source_quality": "Runner templates separate validation, discovery, lifecycle wrapping, execution, and notification into overridable methods.",
+        "architecture": "JUnitCore drives Runners, Description trees, Statements, Rules, RunNotifier, and Results through explicit interfaces.",
+        "naming_and_idiom": "ParentRunner, BlockJUnit4ClassRunner, Statement, TestRule, Description, and RunNotifier describe the execution model.",
+        "tests": "The framework tests itself across runners, rules, assumptions, timeouts, parameterization, notifications, and historical bugs.",
+        "documentation": "README, Javadocs, cookbook material, release notes, and a maintained wiki explain both use and extension.",
+        "traceability": "A test method can be followed from JUnitCore into its runner, methodBlock wrappers, RunNotifier events, and Result.",
+        "maintainability": "Stable interfaces and small lifecycle objects contain extensive backward-compatibility requirements.",
+        "educational_value": "It teaches how reflective framework magic can be decomposed into understandable object-oriented steps."
+      },
+      "inspection": {"commit": "890f3c972647de378f25e7271d8fbbd9d3456b79", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/main/java/org/junit/runner/JUnitCore.java", "src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java", "src/test/java/org/junit/runner/JUnitCoreTest.java"]},
+      "license": {"spdx": "EPL-1.0", "url": "https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/LICENSE-junit.txt"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "gson",
+      "repository": "google/gson",
+      "url": "https://github.com/google/gson",
+      "primary_language": "Java",
+      "language_evidence": "The JSON model, streaming reader/writer, reflection adapters, type tokens, and serialization engine in the Gson modules are Java.",
+      "description": "A JSON serialization library that maps Java object graphs and generic types through configurable streaming and tree adapters.",
+      "real_world_evidence": "Google releases Gson as production serialization infrastructure consumed broadly through Maven and Android ecosystems.",
+      "why_study": "It combines a friendly facade with reflection, generic type recovery, adapter factories, streaming tokens, recursion handling, and compatibility safeguards.",
+      "learn": ["Reflection, generic TypeTokens, adapter factories, streaming JSON, object construction, recursion placeholders, and configurable serialization policy."],
+      "prerequisites": ["Java reflection and generics, JSON, object construction, recursion, exceptions, and factory patterns."],
+      "start_here": {"path": "gson/src/main/java/com/google/gson/Gson.java", "reason": "The central facade builds and caches adapter chains, then connects tree, stream, and object representations."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 3, "loc": 12081, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "metrics", "native-image tests"], "notes": "Count covers production source in Gson, extras, and protocol-support modules, excluding tests, metrics, fixtures, and build support."},
+        "difficulty": {"score": 3, "signals": ["reflection and generic types", "recursive adapter factories"], "reason": "Type resolution, reflective access, recursion placeholders, unsafe allocation fallbacks, and streaming state require substantial Java knowledge."},
+        "complexity": {"score": 3, "signals": ["facade/stream/tree/adapter layers", "extensible factory chain"], "reason": "Serialization crosses configuration, type tokens, constructor selection, adapter factories, reflection, and stream or tree representations."},
+        "placement": "Moderate size with recurring reflection and a multi-layer conversion pipeline makes Gson SDC 3."
+      },
+      "quality": {
+        "source_quality": "Adapter resolution, recursive lookups, type checks, and reflection filters are explicit and guarded with descriptive failures.",
+        "architecture": "Gson coordinates streaming, tree, reflection, type, construction, exclusion, and adapter-factory packages behind one facade.",
+        "naming_and_idiom": "TypeAdapter, TypeAdapterFactory, TypeToken, JsonReader, JsonWriter, and Excluder consistently describe conversion roles.",
+        "tests": "Extensive suites cover types, reflection, adapters, streams, malformed input, concurrency, security restrictions, and compatibility.",
+        "documentation": "README, user guide, troubleshooting guide, Javadocs, and design notes explain both ordinary use and adapter extension.",
+        "traceability": "An object can be followed from Gson.toJson through TypeToken lookup and adapter factories to JsonWriter tokens.",
+        "maintainability": "Factory ordering and separate policies isolate extensibility from the streaming parser and public facade.",
+        "educational_value": "It demonstrates how Java's type erasure and reflection constraints shape a mature serialization library."
+      },
+      "inspection": {"commit": "b3f4ca20087f9066de4c340522ff84e0558e1ad1", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "gson/src/main/java/com/google/gson/Gson.java", "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java", "gson/src/test/java/com/google/gson/GsonTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/google/gson/blob/b3f4ca20087f9066de4c340522ff84e0558e1ad1/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "jsoup",
+      "repository": "jhy/jsoup",
+      "url": "https://github.com/jhy/jsoup",
+      "primary_language": "Java",
+      "language_evidence": "HTML tokenization, tree building, DOM nodes, selectors, networking, cleaning, and output under src/main are Java.",
+      "description": "An HTML parser and manipulation library with DOM traversal, CSS selectors, fetching, sanitization, and standards-aware error recovery.",
+      "real_world_evidence": "jsoup is released as a production HTML library used for scraping, editing, validation, and safe content cleaning.",
+      "why_study": "It turns the HTML parsing specification into readable token and tree-builder state machines while preserving an ergonomic public DOM API.",
+      "learn": ["Tokenizers and tree builders, state machines, error recovery, DOM models, CSS selection, sanitization, encodings, and HTTP boundaries."],
+      "prerequisites": ["HTML and DOM concepts, state machines, Java collections, HTTP, character encodings, and parsing basics."],
+      "start_here": {"path": "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java", "reason": "The tree builder connects tokenizer states, insertion modes, formatting elements, scope rules, and DOM construction."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 3, "loc": 18633, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "Javadocs", "benchmarks"], "notes": "Count covers production Java under src/main, excluding tests, generated Javadocs, benchmarks, documentation, and build support."},
+        "difficulty": {"score": 3, "signals": ["spec-driven state machines", "malformed-input recovery"], "reason": "Tokenizer and insertion-mode behavior require HTML parsing knowledge, while the DOM and public APIs remain conventional."},
+        "complexity": {"score": 3, "signals": ["parser/DOM/selector/cleaner/network layers", "cross-cutting encoding rules"], "reason": "Fetching and parsing cross several subsystems, but they are organized around a coherent document model."},
+        "placement": "A mid-sized codebase with one deep standards domain and several clear subsystems fits SDC 3."
+      },
+      "quality": {
+        "source_quality": "Parsing states and recovery rules are explicit, validation helpers guard assumptions, and public APIs keep standards detail contained.",
+        "architecture": "Parser, nodes, selectors, safety, helper, and HTTP packages separate document construction from use and transport.",
+        "naming_and_idiom": "Tokeniser, TreeBuilder, Document, Element, Selector, Safelist, and Cleaner provide consistent domain language.",
+        "tests": "Broad tests cover malformed and standards fixtures, encodings, selectors, DOM mutation, cleaners, connections, and regressions.",
+        "documentation": "The project site, cookbook, API docs, changelog, and source comments explain common use and parsing behavior.",
+        "traceability": "HTML input can be followed through tokenization and insertion modes into nodes, selectors, and serialized output.",
+        "maintainability": "Specification-heavy behavior is isolated in parser states while the DOM and transport surfaces evolve independently.",
+        "educational_value": "It is a practical bridge from a readable Java API into a real browser-grade parsing problem."
+      },
+      "inspection": {"commit": "7860d088e044236e288c1f88a743b68b2a0edece", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/main/java/org/jsoup/Jsoup.java", "src/main/java/org/jsoup/parser/HtmlTreeBuilder.java", "src/test/java/org/jsoup/parser/HtmlParserTest.java"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/jhy/jsoup/blob/7860d088e044236e288c1f88a743b68b2a0edece/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "maven",
+      "repository": "apache/maven",
+      "url": "https://github.com/apache/maven",
+      "primary_language": "Java",
+      "language_evidence": "The model, resolver integration, reactor graph, lifecycle, plugin execution, CLI, and compatibility layers are implemented in Java.",
+      "description": "The core of Apache Maven: project-model building, dependency resolution, reactor planning, lifecycle execution, plugins, sessions, and CLI behavior.",
+      "real_world_evidence": "Apache Maven is a production build and dependency-management system central to the Java ecosystem.",
+      "why_study": "Its source exposes how declarative project models become dependency graphs and ordered plugin executions across local and remote repositories.",
+      "learn": ["Build lifecycles, dependency graphs, model inheritance, repository resolution, plugin containers, session scope, parallel reactors, and compatibility layers."],
+      "prerequisites": ["Advanced Java, dependency injection, graphs, artifact repositories, concurrency, class loading, and build-tool concepts."],
+      "start_here": {"path": "impl/maven-core/src/main/java/org/apache/maven/DefaultMaven.java", "reason": "The numbered execution path assembles repository sessions, reads projects, builds the reactor graph, invokes participants, and starts lifecycles."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 4, "loc": 132793, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "site documentation", "generated sources"], "notes": "Count covers first-party Java and small supporting scripts, excluding tests, documentation, generated sources, fixtures, and build output."},
+        "difficulty": {"score": 3, "signals": ["dependency graphs", "classloader and repository behavior", "parallel lifecycle execution"], "reason": "Most code uses familiar enterprise Java patterns, while model resolution, class realms, graphs, and concurrency add recurring technical depth."},
+        "complexity": {"score": 4, "signals": ["model/resolver/reactor/lifecycle/plugin subsystems", "cross-cutting compatibility"], "reason": "A build crosses CLI configuration, model inheritance, repositories, graph planning, lifecycles, plugins, classloaders, events, and parallel builders."},
+        "placement": "Large size and many interacting build subsystems make Maven SDC 4 even though much individual Java is conventional."
+      },
+      "quality": {
+        "source_quality": "Core execution documents its phases and maintains explicit session, graph, event, error, and cleanup boundaries.",
+        "architecture": "API, model, resolver, core implementation, lifecycle, plugin, CLI, compatibility, and daemon modules have recognizable roles.",
+        "naming_and_idiom": "MavenSession, MavenProject, ProjectDependencyGraph, LifecycleStarter, MojoExecution, and RepositorySystem form stable vocabulary.",
+        "tests": "Unit, integration, compatibility, resolver, plugin, reactor, and CLI suites exercise builds across many realistic projects.",
+        "documentation": "User guides, plugin and extension references, model documentation, architecture material, and contributor guides are extensive.",
+        "traceability": "A build request can be followed through DefaultMaven, graph creation, LifecycleStarter, task segments, builders, and plugin executions.",
+        "maintainability": "Interfaces and compatibility modules isolate long-lived ecosystem contracts from newer core implementations.",
+        "educational_value": "It is a strong case study in how a ubiquitous declarative build tool becomes an extensible execution engine."
+      },
+      "inspection": {"commit": "e53b7bd98f7352a90af8795af75a2f4c5d3f179c", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "impl/maven-core/src/main/java/org/apache/maven/DefaultMaven.java", "impl/maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleStarter.java", "impl/maven-core/src/test/java/org/apache/maven/DefaultMavenTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/apache/maven/blob/e53b7bd98f7352a90af8795af75a2f4c5d3f179c/LICENSE"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "netty",
+      "repository": "netty/netty",
+      "url": "https://github.com/netty/netty",
+      "primary_language": "Java",
+      "language_evidence": "Buffers, channels, event loops, transports, protocol codecs, handlers, resolvers, and native bridges are predominantly Java.",
+      "description": "An asynchronous networking framework providing event loops, channel pipelines, pooled buffers, transports, and many protocol codecs.",
+      "real_world_evidence": "Netty is production networking infrastructure embedded in servers, clients, databases, RPC systems, and JVM frameworks.",
+      "why_study": "It exposes high-performance event-driven design, reference-counted memory, platform transports, concurrency contracts, and codec composition at industrial scale.",
+      "learn": ["Event loops, futures, channel pipelines, byte buffers, reference counting, zero-copy I/O, native transports, protocol codecs, and backpressure."],
+      "prerequisites": ["Advanced Java concurrency, NIO, memory management, networking protocols, generics, and operating-system I/O."],
+      "start_here": {"path": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java", "reason": "The pipeline shows handler composition, event direction, executor assignment, lifecycle callbacks, and how a Channel processes I/O."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 5, "loc": 275763, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "examples", "benchmarks", "generated native-image metadata"], "notes": "Count covers production Java, native C, and supporting shell across modules, excluding tests, examples, benchmarks, generated metadata, and build output."},
+        "difficulty": {"score": 4, "signals": ["concurrency and event loops", "reference-counted memory", "native and protocol code"], "reason": "Performance-sensitive concurrency, resource ownership, lock-free structures, unsafe/native paths, and binary protocols recur throughout core code."},
+        "complexity": {"score": 4, "signals": ["buffer/channel/transport/codec/resolver subsystems", "multiple native and platform modes"], "reason": "Network behavior crosses event loops, pipelines, buffers, transports, handlers, codecs, DNS, TLS, and native platform integrations."},
+        "placement": "Netty's S5 size is balanced by a coherent framework architecture; D4 and C4 place it at the upper end of SDC 4."
+      },
+      "quality": {
+        "source_quality": "Hot paths document ownership, thread-affinity, indexing, reference counts, and lifecycle invariants alongside defensive checks.",
+        "architecture": "Common utilities support buffers, transports, channels, handlers, codecs, resolvers, TLS, and platform-native modules behind stable interfaces.",
+        "naming_and_idiom": "Channel, EventLoop, Pipeline, Handler, ByteBuf, Future, Bootstrap, and Codec consistently model event-driven networking.",
+        "tests": "Extensive unit, integration, leak, transport, protocol, concurrency, fuzz, and platform suites exercise edge behavior.",
+        "documentation": "Guides, API references, examples, transport notes, contributor material, and design comments support deep study.",
+        "traceability": "An inbound buffer can be traced from a transport event through the ChannelPipeline and handlers into protocol decoding and release.",
+        "maintainability": "Module and interface boundaries isolate protocols and platforms while shared concurrency and buffer contracts remain centralized.",
+        "educational_value": "It is a demanding but exemplary source for understanding how managed-language networking reaches systems-level performance."
+      },
+      "inspection": {"commit": "ada3b9ab0c7a54f6e73f821216ba3db81bd90d55", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java", "buffer/src/main/java/io/netty/buffer/AbstractByteBuf.java", "transport/src/test/java/io/netty/channel/DefaultChannelPipelineTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/netty/netty/blob/ada3b9ab0c7a54f6e73f821216ba3db81bd90d55/LICENSE.txt"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "spring-framework",
+      "repository": "spring-projects/spring-framework",
+      "url": "https://github.com/spring-projects/spring-framework",
+      "primary_language": "Java",
+      "language_evidence": "Core containers, reflection and type systems, AOP, transactions, data access, messaging, MVC, reactive web, and testing support are primarily Java.",
+      "description": "A comprehensive application framework spanning dependency injection, AOP, transactions, data access, messaging, web stacks, and testing.",
+      "real_world_evidence": "Spring Framework is actively released production infrastructure underlying a large portion of the enterprise Java ecosystem.",
+      "why_study": "It shows how decades of compatibility, extension points, reflection, proxying, reactive and servlet stacks, and cross-cutting concerns are governed in one platform.",
+      "learn": ["Dependency injection, bean lifecycles, reflection and type resolution, proxies and AOP, transactions, reactive streams, web dispatch, extension contracts, and compatibility."],
+      "prerequisites": ["Expert Java, reflection and generics, concurrency, annotations, proxying, HTTP, databases, reactive streams, and enterprise architecture."],
+      "start_here": {"path": "spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java", "reason": "The central bean factory connects definitions, type matching, dependency resolution, scopes, post-processors, and lifecycle behavior."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 391522, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "test fixtures", "documentation", "benchmarks", "generated source"], "notes": "Calibration measurement covers first-party framework implementation across Java and Kotlin, excluding tests, fixtures, docs, benchmarks, generated source, and build output."},
+        "difficulty": {"score": 4, "signals": ["reflection and generic type resolution", "dynamic proxies and AOP", "reactive and concurrent lifecycles"], "reason": "Advanced Java mechanisms and domain-specific web, data, transaction, messaging, and reactive behavior recur across the main learning paths."},
+        "complexity": {"score": 5, "signals": ["platform-scale module graph", "many cross-cutting extension systems", "servlet and reactive stacks"], "reason": "Core containers interact with dozens of modules, deployment modes, integration contracts, infrastructure layers, and compatibility surfaces."},
+        "placement": "S5 and C5 trigger the SDC 5 guardrail, matching the expert effort required to understand the framework as a whole."
+      },
+      "quality": {
+        "source_quality": "Complex lifecycle and reflection code is strongly documented, typed, guarded, and decomposed around stable interfaces.",
+        "architecture": "Core, beans, context, AOP, transactions, data, messaging, servlet web, reactive web, testing, and observability modules have explicit boundaries.",
+        "naming_and_idiom": "BeanDefinition, ApplicationContext, HandlerMapping, Advisor, TransactionManager, and ResolvableType form precise shared language.",
+        "tests": "Massive unit, integration, compatibility, web, reactive, transaction, container, and regression suites cover the platform.",
+        "documentation": "Reference manuals, API docs, architecture guidance, migration notes, and contributor material are comprehensive.",
+        "traceability": "A bean can be traced from definition registration through type resolution, dependency selection, construction, post-processing, proxying, and shutdown.",
+        "maintainability": "Module boundaries, public contracts, deprecation policy, exhaustive tests, and careful compatibility layers govern a large surface.",
+        "educational_value": "For advanced readers it is a canonical study of sustaining an extensible framework across generations of Java applications."
+      },
+      "inspection": {"commit": "1b56f58999046051d76a653922c3ab72b4db9cf7", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "spring-core/src/main/java/org/springframework/core/ResolvableType.java", "spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java", "spring-beans/src/test/java/org/springframework/beans/factory/DefaultListableBeanFactoryTests.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/spring-projects/spring-framework/blob/1b56f58999046051d76a653922c3ab72b4db9cf7/LICENSE.txt"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "cassandra",
+      "repository": "apache/cassandra",
+      "url": "https://github.com/apache/cassandra",
+      "primary_language": "Java",
+      "language_evidence": "Storage engines, consensus, replication, query processing, compaction, streaming, networking, repair, and cluster services are predominantly Java.",
+      "description": "A distributed transactional database built around partitioned storage, replication, consensus, compaction, repair, and failure-tolerant cluster operation.",
+      "real_world_evidence": "Apache Cassandra is an actively released production database deployed for large, fault-tolerant data workloads.",
+      "why_study": "The source brings database internals and distributed systems together: on-disk formats, memtables, logs, consensus, replication, streaming, repair, and operational control.",
+      "learn": ["LSM storage, commit logs, SSTables, compaction, partitioning, replication, consensus, failure detection, repair, streaming, concurrency, and operational invariants."],
+      "prerequisites": ["Expert Java and concurrency, data structures, storage engines, distributed consensus, networking, filesystems, and database operations."],
+      "start_here": {"path": "src/java/org/apache/cassandra/db/ColumnFamilyStore.java", "reason": "This table-level service connects memtables, flushing, SSTables, compaction, indexes, metrics, snapshots, and lifecycle transactions."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 501795, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "third-party libraries", "documentation", "examples", "build infrastructure"], "notes": "Count covers production Java plus first-party Python tooling under src and pylib, excluding tests, bundled libraries, docs, examples, build support, and static assets."},
+        "difficulty": {"score": 5, "signals": ["storage-engine internals", "distributed consensus and failure recovery", "highly concurrent resource management"], "reason": "Correctness depends repeatedly on expert database algorithms, persistent formats, concurrency, failure modes, cluster metadata, and consensus protocols."},
+        "complexity": {"score": 5, "signals": ["distributed database platform", "many coupled storage and cluster subsystems", "operational topology"], "reason": "Queries and maintenance cross storage, schema, replication, consensus, networking, streaming, repair, security, metrics, and multi-node coordination."},
+        "placement": "All three dimensions independently occupy the highest band, making Cassandra an unequivocal SDC 5 codebase."
+      },
+      "quality": {
+        "source_quality": "Critical storage and cluster code names invariants, separates lifecycle transactions, and tests failures and recovery at multiple levels.",
+        "architecture": "Query, schema, storage, commit log, SSTable, compaction, consensus, replication, messaging, streaming, repair, and tooling subsystems are explicit.",
+        "naming_and_idiom": "ColumnFamilyStore, Memtable, SSTableReader, CommitLog, Gossiper, Replica, Repair, and ClusterMetadata encode the database model.",
+        "tests": "Unit, distributed, upgrade, fuzz, stress, compatibility, topology, and failure-injection suites exercise data and cluster behavior.",
+        "documentation": "Architecture, operations, data modeling, CQL, development, testing, and compatibility documentation supports expert navigation.",
+        "traceability": "A mutation can be followed through coordination, commit log and memtable, flushing, SSTables, compaction, replication, and repair.",
+        "maintainability": "Subsystem ownership, compatibility gates, persistent-format discipline, lifecycle abstractions, and broad testing constrain high-risk changes.",
+        "educational_value": "It is a deep production study in the intersection of storage engines, distributed consensus, and long-lived operational software."
+      },
+      "inspection": {"commit": "92530a18db31715bc0e9ec2363a735bc034ee530", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.asc", "src/java/org/apache/cassandra/service/StorageService.java", "src/java/org/apache/cassandra/db/ColumnFamilyStore.java", "test/unit/org/apache/cassandra/db/ColumnFamilyStoreTest.java"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/apache/cassandra/blob/92530a18db31715bc0e9ec2363a735bc034ee530/LICENSE.txt"},
+      "github": {"primary_language": "Java", "archived": false, "metadata_checked_at": "2026-08-28"}
+    }
+  ]
+}
