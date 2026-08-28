@@ -88,7 +88,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 4.1 — Define the catalog schema and authoring conventions
 
-- [ ] **Objective:** Keep one machine-checkable source of truth while serving
+- [x] **Objective:** Keep one machine-checkable source of truth while serving
   readable Markdown to GitHub visitors.
 - **Work:** Define language and repository records, evidence fields, inspection
   metadata, score consistency, stable slugs, and ordering rules in JSON Schema.

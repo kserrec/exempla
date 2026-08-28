@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "selected_at": "2026-08-28",
+  "baseline": {
+    "name": "RedMonk Programming Language Rankings: January 2026",
+    "url": "https://redmonk.com/sogrady/2026/04/14/language-rankings-1-26/",
+    "published_at": "2026-04-14",
+    "rule": "Take RedMonk's top 20, remove CSS, and add Lua from the 2025 Stack Overflow Developer Survey."
+  },
+  "languages": [
+    {"order": 1, "slug": "javascript", "name": "JavaScript", "source": "RedMonk", "source_rank": "1"},
+    {"order": 2, "slug": "python", "name": "Python", "source": "RedMonk", "source_rank": "2"},
+    {"order": 3, "slug": "java", "name": "Java", "source": "RedMonk", "source_rank": "3"},
+    {"order": 4, "slug": "php", "name": "PHP", "source": "RedMonk", "source_rank": "tied 4"},
+    {"order": 5, "slug": "c-sharp", "name": "C#", "source": "RedMonk", "source_rank": "tied 4"},
+    {"order": 6, "slug": "typescript", "name": "TypeScript", "source": "RedMonk", "source_rank": "6"},
+    {"order": 7, "slug": "cpp", "name": "C++", "source": "RedMonk", "source_rank": "tied 7"},
+    {"order": 8, "slug": "ruby", "name": "Ruby", "source": "RedMonk", "source_rank": "9"},
+    {"order": 9, "slug": "c", "name": "C", "source": "RedMonk", "source_rank": "10"},
+    {"order": 10, "slug": "swift", "name": "Swift", "source": "RedMonk", "source_rank": "11"},
+    {"order": 11, "slug": "go", "name": "Go", "source": "RedMonk", "source_rank": "12"},
+    {"order": 12, "slug": "r", "name": "R", "source": "RedMonk", "source_rank": "13"},
+    {"order": 13, "slug": "shell", "name": "Shell", "source": "RedMonk", "source_rank": "tied 14"},
+    {"order": 14, "slug": "kotlin", "name": "Kotlin", "source": "RedMonk", "source_rank": "tied 14"},
+    {"order": 15, "slug": "scala", "name": "Scala", "source": "RedMonk", "source_rank": "tied 14"},
+    {"order": 16, "slug": "powershell", "name": "PowerShell", "source": "RedMonk", "source_rank": "17"},
+    {"order": 17, "slug": "dart", "name": "Dart", "source": "RedMonk", "source_rank": "tied 18"},
+    {"order": 18, "slug": "objective-c", "name": "Objective-C", "source": "RedMonk", "source_rank": "tied 18"},
+    {"order": 19, "slug": "rust", "name": "Rust", "source": "RedMonk", "source_rank": "20"},
+    {"order": 20, "slug": "lua", "name": "Lua", "source": "Stack Overflow 2025 replacement", "source_rank": "9.2% used"}
+  ]
+}
