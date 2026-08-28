@@ -48,6 +48,22 @@
       "failed_requirement": "target SDC level",
       "evidence": "The inspected revision contains about 23,000 meaningful Java lines and composes clear framework modules around established libraries; S3/D3/C4 combines to SDC 3, not the open SDC 4 slot.",
       "reconsider": "Eligible as an additional Java SDC 3 project in a larger catalog."
+    },
+    {
+      "repository": "sebastianbergmann/version",
+      "language": "PHP",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "tests",
+      "evidence": "The pinned Git tree has no tests path or executable test suite, so the small runtime cannot meet the catalog's hard verification requirement.",
+      "reconsider": "Reconsider if a maintained revision adds tests that exercise version parsing and repository-state fallbacks."
+    },
+    {
+      "repository": "Seldaek/jsonlint",
+      "language": "PHP",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The pinned Git tree does contain a substantive parser test suite, but much of the main parser is generated or ported parse-table machinery; Doctrine Lexer and Webmozart Assert offer clearer first-reading paths for the two SDC 1 slots.",
+      "reconsider": "Eligible for a future parser-focused expansion, with the generated portions labeled explicitly."
     }
   ]
 }
