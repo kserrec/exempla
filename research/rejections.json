@@ -112,6 +112,14 @@
       "failed_requirement": "target SDC level",
       "evidence": "Although only 834 implementation lines, its compiler-specific macro expansion, SFINAE detection, type-name extraction, container adaptation, and multi-standard branches support D3; S1/D3/C1 rounds to SDC 2.",
       "reconsider": "Eligible as an additional C++ SDC 2 project, especially for a metaprogramming-focused path."
+    },
+    {
+      "repository": "ruby/tsort",
+      "language": "Ruby",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The library is only 87 production lines, but it implements topological sorting and Tarjan's strongly connected components algorithm through a caller-supplied graph traversal protocol; S1/D3/C1 rounds to SDC 2 rather than the open SDC 1 slot.",
+      "reconsider": "Eligible as an additional Ruby SDC 2 project or for an algorithms-focused expansion."
     }
   ]
 }
