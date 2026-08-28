@@ -25,6 +25,12 @@ GitHub language breakdown, project purpose, and a pinned commit. Reject obvious
 tutorials, examples, generated artifacts, mirrors, templates, or projects whose
 cataloged language is incidental.
 
+GitHub Linguist's top label is evidence, not a verdict. Generated files,
+fixtures, embedded intermediate representations, or documentation can dominate
+that label. When it differs from the catalog language, record the exact
+first-party implementation paths that justify classification; reject the
+candidate if the catalog language is not substantial in the real software.
+
 Repository discovery and metadata APIs may automate this triage. They may not
 decide quality or SDC level.
 

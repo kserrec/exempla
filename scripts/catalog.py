@@ -164,6 +164,7 @@ def validate_repository(
         "repository",
         "url",
         "primary_language",
+        "language_evidence",
         "description",
         "real_world_evidence",
         "why_study",
@@ -207,6 +208,7 @@ def validate_repository(
         errors.append(
             f"{prefix}.primary_language: expected catalog language {language['name']}"
         )
+    require_text(item.get("language_evidence"), f"{prefix}.language_evidence", errors, minimum=20)
 
     for field in ("description", "real_world_evidence", "why_study"):
         require_text(item.get(field), f"{prefix}.{field}", errors, minimum=20)
@@ -294,8 +296,6 @@ def validate_repository(
     github_language = require_text(
         github.get("primary_language"), f"{prefix}.github.primary_language", errors
     )
-    if github_language and github_language != primary_language:
-        errors.append(f"{prefix}.github.primary_language: must match primary_language")
     if type(github.get("archived")) is not bool:
         errors.append(f"{prefix}.github.archived: expected boolean")
     require_date(github.get("metadata_checked_at"), f"{prefix}.github.metadata_checked_at", errors)
@@ -458,6 +458,8 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
         "",
         f"**Real-world evidence:** {entry['real_world_evidence']}",
         "",
+        f"**Language evidence:** {entry['language_evidence']}",
+        "",
         f"**Why study it:** {entry['why_study']}",
         "",
         "**What you can learn:**",
@@ -498,10 +500,11 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
     reviewed_files = ", ".join(f"`{path}`" for path in inspection["files"])
     exclusions = ", ".join(size["exclusions"] or GLOBAL_EXCLUSIONS)
     archive_note = " Archived repository." if entry["github"]["archived"] else ""
+    github_language = entry["github"]["primary_language"]
     lines.extend(
         [
             "",
-            f"**Inspection record:** commit `{inspection['commit']}`, reviewed {inspection['inspected_at']} by {', '.join(inspection['reviewers'])}. Files sampled: {reviewed_files}. LOC exclusions: {exclusions}.{archive_note}",
+            f"**Inspection record:** commit `{inspection['commit']}`, reviewed {inspection['inspected_at']} by {', '.join(inspection['reviewers'])}. Files sampled: {reviewed_files}. GitHub Linguist label: {github_language}. LOC exclusions: {exclusions}.{archive_note}",
             "",
             f"**License:** [{license_info['spdx']}]({license_info['url']})",
             "",

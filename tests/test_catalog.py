@@ -23,6 +23,7 @@ def valid_entry() -> dict:
         "repository": repository,
         "url": f"https://github.com/{repository}",
         "primary_language": "Python",
+        "language_evidence": "The src directory contains the first-party Python implementation.",
         "description": "A real command-line tool that performs useful production work.",
         "real_world_evidence": "Published releases are used as a command-line utility by real users.",
         "why_study": "The small implementation has explicit boundaries and behavior-focused tests.",
@@ -159,6 +160,11 @@ class RecordValidationTests(unittest.TestCase):
         entry["inspection"]["files"][1] = "config/service.env.production"
         errors = self.validate(entry)
         self.assertTrue(any("non-dotenv relative path" in error for error in errors))
+
+    def test_github_linguist_label_may_differ_with_source_evidence(self) -> None:
+        entry = valid_entry()
+        entry["github"]["primary_language"] = "Jupyter Notebook"
+        self.assertEqual(self.validate(entry), [])
 
     def test_loc_must_match_size_band(self) -> None:
         entry = valid_entry()

@@ -20,7 +20,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "slug", "repository", "url", "primary_language", "description",
+        "slug", "repository", "url", "primary_language", "language_evidence", "description",
         "real_world_evidence", "why_study", "learn", "prerequisites",
         "start_here", "sdc", "quality", "inspection", "license", "github"
       ],
@@ -29,6 +29,7 @@
         "repository": {"type": "string", "pattern": "^[^/\\s]+/[^/\\s]+$"},
         "url": {"type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+$"},
         "primary_language": {"$ref": "#/$defs/nonEmptyString"},
+        "language_evidence": {"$ref": "#/$defs/nonEmptyString"},
         "description": {"$ref": "#/$defs/nonEmptyString"},
         "real_world_evidence": {"$ref": "#/$defs/nonEmptyString"},
         "why_study": {"$ref": "#/$defs/nonEmptyString"},
