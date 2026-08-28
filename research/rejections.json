@@ -1,4 +1,21 @@
 {
   "schema_version": 1,
-  "rejections": []
+  "rejections": [
+    {
+      "repository": "babel/babel",
+      "language": "JavaScript",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "meaningful primary-language classification",
+      "evidence": "GitHub reports TypeScript as the primary language at the reviewed default-branch state, and current first-party implementation has materially moved into TypeScript.",
+      "reconsider": "Consider it for the TypeScript catalog, not JavaScript."
+    },
+    {
+      "repository": "chalk/chalk",
+      "language": "JavaScript",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The source is qualified and readable, but p-limit, pump, Nano ID, and Express provide stronger distinct learning paths in the two lowest bands.",
+      "reconsider": "Eligible for a future expansion beyond two entries per level."
+    }
+  ]
 }

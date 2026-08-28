@@ -130,7 +130,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.1 — JavaScript
 
-- [ ] **Objective:** Curate the JavaScript SDC 1–5 catalog.
+- [x] **Objective:** Curate the JavaScript SDC 1–5 catalog.
 - **Work:** Discover, inspect, qualify, score, and document up to ten projects.
 - **Artifacts:** `catalog/javascript.json`, `languages/javascript/README.md`,
   JavaScript rejection records.

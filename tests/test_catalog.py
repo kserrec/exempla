@@ -174,7 +174,7 @@ class RecordValidationTests(unittest.TestCase):
 
 
 class CatalogIntegrationTests(unittest.TestCase):
-    def make_root(self) -> Path:
+    def make_root(self, *, empty: bool = False) -> Path:
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
@@ -187,11 +187,21 @@ class CatalogIntegrationTests(unittest.TestCase):
         for language in language_data["languages"]:
             source = ROOT / "catalog" / f"{language['slug']}.json"
             destination = catalog / source.name
-            destination.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+            if empty:
+                content = {
+                    "schema_version": 1,
+                    "language_slug": language["slug"],
+                    "repositories": [],
+                }
+                destination.write_text(
+                    json.dumps(content, indent=2) + "\n", encoding="utf-8"
+                )
+            else:
+                destination.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
         return root
 
     def test_complete_mode_catches_missing_corpus(self) -> None:
-        errors = catalog_tool.validate_catalog(self.make_root(), complete=True)
+        errors = catalog_tool.validate_catalog(self.make_root(empty=True), complete=True)
         self.assertTrue(any("requires 200 repositories; found 0" in error for error in errors))
         self.assertTrue(any("SDC 1 requires 2 entries" in error for error in errors))
 
