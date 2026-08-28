@@ -35,7 +35,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 2.2 — Calibrate on a varied 10–15 repository sample
 
-- [ ] **Objective:** Remove obvious scoring absurdities before cataloging 200
+- [x] **Objective:** Remove obvious scoring absurdities before cataloging 200
   repositories.
 - **Work:** Score repositories spanning tiny/large, conventional/systems,
   straightforward/algorithmic, and simple/interconnected designs; record the
