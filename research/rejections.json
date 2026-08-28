@@ -16,6 +16,14 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The source is qualified and readable, but p-limit, pump, Nano ID, and Express provide stronger distinct learning paths in the two lowest bands.",
       "reconsider": "Eligible for a future expansion beyond two entries per level."
+    },
+    {
+      "repository": "ansible/ansible",
+      "language": "Python",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains 104,032 meaningful Python lines and substantial plugin, inventory, execution, transport, and configuration architecture, which supports SDC 4 rather than the open SDC 5 slot.",
+      "reconsider": "Eligible as an additional SDC 4 entry if the catalog expands beyond two repositories per level."
     }
   ]
 }

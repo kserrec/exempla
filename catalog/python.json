@@ -1,1 +1,336 @@
-{"schema_version": 1, "language_slug": "python", "repositories": []}
+{
+  "schema_version": 1,
+  "language_slug": "python",
+  "repositories": [
+    {
+      "slug": "itsdangerous",
+      "repository": "pallets/itsdangerous",
+      "url": "https://github.com/pallets/itsdangerous",
+      "primary_language": "Python",
+      "language_evidence": "The signing, serialization, timestamp, encoding, and exception modules under src/itsdangerous are implemented in Python.",
+      "description": "A compact library for signing and timestamping data so tampering can be detected without encrypting the payload.",
+      "real_world_evidence": "Pallets publishes ItsDangerous as the signing layer used by Flask and other production Python applications.",
+      "why_study": "A small codebase shows how a security-sensitive contract can remain explicit through focused abstractions, key derivation, serializers, and precise failure modes.",
+      "learn": ["Message authentication, key derivation, constant-time comparison, serializer composition, timestamp validation, and exception design."],
+      "prerequisites": ["Python classes and bytes, hashing and MAC concepts, serialization, and exceptions."],
+      "start_here": {"path": "src/itsdangerous/signer.py", "reason": "Signer contains the core key derivation, signature, verification, and unsigning contract used by the higher-level serializers."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 890, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs"], "notes": "Count covers first-party Python under src, excluding tests, documentation, and build metadata."},
+        "difficulty": {"score": 2, "signals": ["cryptographic signing", "bytes/text boundaries"], "reason": "The cryptographic primitives and encoding rules need care, but the library delegates algorithms and keeps each transformation local."},
+        "complexity": {"score": 1, "signals": ["small module family", "single signing pipeline"], "reason": "A few classes layer serializers and timestamps over one signing abstraction without services, plugins, or persistence."},
+        "placement": "Its compact topology and traceable data path make it SDC 1 despite the importance of its cryptographic boundary."
+      },
+      "quality": {
+        "source_quality": "Security-relevant operations are short, documented, and built on standard cryptographic primitives rather than homemade algorithms.",
+        "architecture": "Signers, serializers, timestamps, encoding helpers, and exceptions form a small progression of responsibilities.",
+        "naming_and_idiom": "Names such as derive_key, get_signature, unsign, and BadSignature make success and failure semantics visible.",
+        "tests": "Focused tests cover key rotation, derivation methods, malformed signatures, fallback signers, timestamps, and serialization behavior.",
+        "documentation": "The README and narrative documentation explain the trust model, use cases, API layers, and non-encryption boundary.",
+        "traceability": "A payload can be followed from serializer through signer and digest comparison into a specific exception path.",
+        "maintainability": "The narrow surface, typed code, isolated encoding helpers, and explicit compatibility hooks limit change impact.",
+        "educational_value": "It teaches production integrity checks without burying the learner in a full authentication framework."
+      },
+      "inspection": {"commit": "672971d66a2ef9f85151e53283113f33d642dabd", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/itsdangerous/signer.py", "src/itsdangerous/serializer.py", "tests/test_itsdangerous/test_signer.py"]},
+      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/LICENSE.txt"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "schedule",
+      "repository": "dbader/schedule",
+      "url": "https://github.com/dbader/schedule",
+      "primary_language": "Python",
+      "language_evidence": "The scheduler, jobs, interval calculations, decorators, and public API live in the Python module schedule/__init__.py.",
+      "description": "An in-process job scheduler with a fluent API for running Python callables at human-readable intervals.",
+      "real_world_evidence": "The repository publishes a maintained scheduling package intended for recurring application jobs rather than an instructional toy.",
+      "why_study": "Its single main module demonstrates a complete domain model, fluent interface, time arithmetic, cancellation, and testable clock-dependent behavior.",
+      "learn": ["Fluent APIs, datetime scheduling, ordering, cancellation sentinels, decorators, and deterministic tests around time."],
+      "prerequisites": ["Python functions and classes, decorators, datetime arithmetic, exceptions, and sorting."],
+      "start_here": {"path": "schedule/__init__.py", "reason": "The Scheduler and Job classes expose the entire domain model and the calculation that turns fluent configuration into run times."},
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 1978, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test_schedule.py", "docs"], "notes": "Count covers the schedule package, excluding the test suite, documentation, examples, and packaging files."},
+        "difficulty": {"score": 2, "signals": ["calendar arithmetic", "fluent state transitions"], "reason": "Time zones, missed intervals, deadlines, and randomized ranges add edge cases, but the implementation uses familiar Python constructs."},
+        "complexity": {"score": 1, "signals": ["two central classes", "in-process state only"], "reason": "Scheduler owns a list of Jobs and each Job owns its next-run calculation; there are no workers, queues, or persistent stores."},
+        "placement": "The entire useful scheduler remains readable as one local object model, so it belongs at SDC 1."
+      },
+      "quality": {
+        "source_quality": "Validation and next-run calculations are explicit, with domain errors and cancellation behavior kept close to their use sites.",
+        "architecture": "Scheduler coordinates jobs while Job owns interval configuration and execution, producing a clean two-object model.",
+        "naming_and_idiom": "The every, at, until, do, run_pending, and next_run vocabulary mirrors how users describe recurring work.",
+        "tests": "A broad single-file suite covers units, tags, time zones, deadlines, missed runs, random intervals, cancellation, and failure cases.",
+        "documentation": "The README provides executable examples, limitations, API patterns, and guidance for background execution.",
+        "traceability": "A fluent statement can be traced through Job configuration, scheduling, due checks, execution, and rescheduling in one file.",
+        "maintainability": "No hidden thread or persistence layer exists, and the clock can be replaced in tests through a small seam.",
+        "educational_value": "It is a rare production library whose complete behavioral model fits into an introductory repository reading."
+      },
+      "inspection": {"commit": "82a43db1b938d8fdf60103bd41f329e06c8d3651", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.rst", "schedule/__init__.py", "test_schedule.py", "docs/timezones.rst"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "requests",
+      "repository": "psf/requests",
+      "url": "https://github.com/psf/requests",
+      "primary_language": "Python",
+      "language_evidence": "The public API, sessions, models, authentication, cookies, adapters, and utilities under src/requests are Python.",
+      "description": "A synchronous HTTP client that turns URLs, headers, authentication, cookies, redirects, and connection pools into a small Python API.",
+      "real_world_evidence": "Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.",
+      "why_study": "It shows how a friendly public API can sit over protocol details, stateful sessions, transport adapters, and disciplined exception translation.",
+      "learn": ["API layering, request preparation, sessions, adapter boundaries, redirect policy, authentication, cookies, and exception normalization."],
+      "prerequisites": ["HTTP fundamentals, context managers, Python mappings and classes, exceptions, and basic TLS concepts."],
+      "start_here": {"path": "src/requests/sessions.py", "reason": "Session.prepare_request and Session.send connect user configuration, persistent state, redirects, hooks, and the selected transport adapter."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 2, "loc": 4951, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "ext"], "notes": "Count covers first-party Python under src/requests, excluding tests, documentation, vendored certificates, and packaging files."},
+        "difficulty": {"score": 2, "signals": ["HTTP state", "transport error mapping"], "reason": "HTTP edge cases are substantive, but Requests deliberately presents them through conventional classes and readable control flow."},
+        "complexity": {"score": 2, "signals": ["session/model/adapter layers", "urllib3 boundary"], "reason": "A request crosses several modules, yet the dependency boundary and preparation-to-send flow are stable and easy to identify."},
+        "placement": "Moderate size and a clear layered request path make Requests an instructive SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "Input normalization, redirect rules, cookie handling, and transport exceptions are explicit and supported by narrow helpers.",
+        "architecture": "API helpers feed Sessions and prepared Models, with adapters isolating the urllib3 transport implementation.",
+        "naming_and_idiom": "PreparedRequest, Session, Response, Adapter, hooks, and merge_setting consistently describe the HTTP client lifecycle.",
+        "tests": "The suite covers HTTP verbs, redirects, authentication, proxies, cookies, encodings, streaming, hooks, and regression cases.",
+        "documentation": "README and guides document quick starts, advanced sessions, authentication, SSL, streaming, hooks, and exceptions.",
+        "traceability": "A call to requests.get can be followed through api.request, Session.request, preparation, send, adapter, and response construction.",
+        "maintainability": "Stable public objects and a distinct adapter boundary contain protocol and third-party transport changes.",
+        "educational_value": "It demonstrates the engineering behind an API that feels simpler than the protocol it represents."
+      },
+      "inspection": {"commit": "5460f467b02e49471c0fd6cfc9ca0adab6351f98", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/requests/api.py", "src/requests/sessions.py", "tests/test_requests.py"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/LICENSE"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "click",
+      "repository": "pallets/click",
+      "url": "https://github.com/pallets/click",
+      "primary_language": "Python",
+      "language_evidence": "Command parsing, parameter types, decorators, terminal helpers, and shell completion under src/click are Python.",
+      "description": "A composable command-line toolkit that maps decorators and command objects onto parsing, validation, help, invocation, and shell completion.",
+      "real_world_evidence": "Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.",
+      "why_study": "Its public decorators reveal a disciplined object model underneath, making it useful for studying API ergonomics, contexts, parsing, and extension points.",
+      "learn": ["Decorator APIs, command trees, context propagation, parsing state machines, parameter conversion, help rendering, and shell completion."],
+      "prerequisites": ["Decorators, callables, classes, iterators, terminal conventions, and command-line argument syntax."],
+      "start_here": {"path": "src/click/core.py", "reason": "Context, Command, Group, Parameter, Option, and Argument define the domain model that decorators construct."},
+      "sdc": {
+        "level": 2,
+        "size": {"score": 3, "loc": 10038, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "examples"], "notes": "Count covers Python under src/click, excluding tests, documentation, examples, and generated shell-completion artifacts."},
+        "difficulty": {"score": 2, "signals": ["parsing state", "decorator-to-object translation"], "reason": "The library has many behaviors, but individual mechanisms are idiomatic and the public abstraction maps cleanly to its core objects."},
+        "complexity": {"score": 2, "signals": ["command tree", "parser/type/terminal helpers"], "reason": "Several focused modules support one command invocation pipeline without external services or persistence."},
+        "placement": "Its size reaches S3, but conventional mechanisms and a cohesive command pipeline yield SDC 2 under the published averaging rule."
+      },
+      "quality": {
+        "source_quality": "Parsing, conversion, help formatting, and context cleanup are factored into named units with detailed behavioral docstrings.",
+        "architecture": "Core command objects coordinate parsing, types, decorators, formatting, terminal utilities, and completion through clear seams.",
+        "naming_and_idiom": "Command, Group, Context, Option, Argument, Parameter, and ResultCallback form a consistent CLI vocabulary.",
+        "tests": "The suite exercises commands, contexts, decorators, types, prompting, terminals, completion, deprecations, and compatibility.",
+        "documentation": "Tutorials, API references, patterns, testing guidance, and examples explain both routine and advanced use.",
+        "traceability": "A decorated function can be followed into a Command object, parser state, parameter processing, context invocation, and result handling.",
+        "maintainability": "Public abstractions are stable while platform-specific terminal and completion behavior stays in dedicated modules.",
+        "educational_value": "It teaches how a polished declarative API can be implemented with explicit, inspectable runtime objects."
+      },
+      "inspection": {"commit": "36baa15ff831b939a22bc527cd76ce653ef6f66d", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/click/core.py", "src/click/decorators.py", "tests/test_commands.py"]},
+      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/LICENSE.txt"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "flask",
+      "repository": "pallets/flask",
+      "url": "https://github.com/pallets/flask",
+      "primary_language": "Python",
+      "language_evidence": "Application, blueprint, context, helper, session, CLI, and templating integration modules under src/flask are Python.",
+      "description": "A web application framework that composes routing, request contexts, templating, sessions, error handling, and extensions over Werkzeug.",
+      "real_world_evidence": "Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.",
+      "why_study": "Flask keeps the web lifecycle visible while demonstrating context-local state, decorators, extension hooks, blueprints, and separation from lower-level HTTP machinery.",
+      "learn": ["WSGI request dispatch, application and request contexts, blueprints, hooks, error resolution, sessions, and dependency boundaries."],
+      "prerequisites": ["HTTP and WSGI basics, decorators, context managers, mappings, exceptions, and template concepts."],
+      "start_here": {"path": "src/flask/app.py", "reason": "Flask dispatch, hooks, errors, response finalization, and WSGI entry points meet in the application class."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 2, "loc": 7660, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "examples"], "notes": "Count covers first-party Python under src/flask, excluding tests, documentation, examples, and project metadata."},
+        "difficulty": {"score": 3, "signals": ["context-local lifecycle", "multi-stage request dispatch"], "reason": "Correctness depends on nested contexts, hook ordering, error selection, and response conversion across synchronous and asynchronous views."},
+        "complexity": {"score": 3, "signals": ["application and blueprint layers", "routing/session/template/CLI integration"], "reason": "A request crosses several framework components and an important Werkzeug boundary, though each responsibility remains identifiable."},
+        "placement": "Framework lifecycle reasoning balances its moderate code size, making Flask a representative SDC 3 project."
+      },
+      "quality": {
+        "source_quality": "Lifecycle stages are named, documented, and wrapped in controlled context cleanup and error handling.",
+        "architecture": "Application, blueprints, contexts, helpers, sessions, templating, and CLI integration have explicit responsibilities over Werkzeug.",
+        "naming_and_idiom": "before_request, dispatch_request, make_response, teardown_request, and context names mirror the web lifecycle.",
+        "tests": "Extensive tests cover dispatch, contexts, blueprints, sessions, templates, CLI behavior, signals, errors, and regressions.",
+        "documentation": "Quickstarts, tutorials, patterns, API references, extension guidance, and deployment material support multiple learning depths.",
+        "traceability": "A WSGI call can be traced through context creation, preprocessing, dispatch, response processing, and teardown.",
+        "maintainability": "The Werkzeug/Jinja boundaries and extension hooks are explicit, while shared lifecycle logic stays centralized.",
+        "educational_value": "It exposes the machinery of a real web framework without the breadth of a batteries-included platform."
+      },
+      "inspection": {"commit": "d318b683471101618febed18996405ad26462110", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/flask/app.py", "src/flask/ctx.py", "tests/test_basic.py"]},
+      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/LICENSE.txt"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "httpx",
+      "repository": "encode/httpx",
+      "url": "https://github.com/encode/httpx",
+      "primary_language": "Python",
+      "language_evidence": "Synchronous and asynchronous clients, models, authentication, decoders, URLs, and transports in the httpx package are Python.",
+      "description": "A modern HTTP client with matching synchronous and asynchronous APIs, streaming, redirects, authentication, proxies, and pluggable transports.",
+      "real_world_evidence": "Encode publishes HTTPX for production Python clients, with maintained protocol behavior and integrations built on HTTP Core.",
+      "why_study": "Its paired sync/async design makes resource lifetime, transport abstraction, exception translation, and API symmetry concrete.",
+      "learn": ["Sync/async API parity, transport adapters, streaming lifecycles, exception mapping, redirects, authentication, and client state machines."],
+      "prerequisites": ["HTTP, context managers, async iteration, type hints, exceptions, and TLS/proxy basics."],
+      "start_here": {"path": "httpx/_client.py", "reason": "Client and AsyncClient show request construction, state, redirects, authentication, event hooks, streaming, and transport delegation."},
+      "sdc": {
+        "level": 3,
+        "size": {"score": 2, "loc": 7308, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "scripts"], "notes": "Count covers first-party Python in httpx, excluding tests, documentation, scripts, and package metadata."},
+        "difficulty": {"score": 3, "signals": ["sync/async resource symmetry", "protocol exception mapping"], "reason": "Streaming ownership, redirects, authentication, timeouts, and paired concurrency styles require careful lifecycle reasoning."},
+        "complexity": {"score": 3, "signals": ["client/model/transport layers", "HTTP Core integration"], "reason": "Behavior crosses client state, models, authentication, decoders, URL logic, and sync/async transports, but boundaries are explicit."},
+        "placement": "Moderate size with meaningful concurrency and transport architecture puts HTTPX squarely at SDC 3."
+      },
+      "quality": {
+        "source_quality": "State checks, default resolution, stream wrappers, and exception mapping make ownership and failure behavior explicit.",
+        "architecture": "Clients build models and delegate I/O through a narrow transport interface, with parallel synchronous and asynchronous implementations.",
+        "naming_and_idiom": "ClientState, Request, Response, ByteStream, Transport, Timeout, and Auth consistently describe the HTTP domain.",
+        "tests": "Focused suites cover clients, transports, models, authentication, URLs, proxies, streaming, timeouts, and sync/async parity.",
+        "documentation": "Quickstarts, advanced guides, API references, compatibility notes, and transport documentation explain the full surface.",
+        "traceability": "A client call can be followed through request building, authentication, redirects, transport handling, streaming, and response closure.",
+        "maintainability": "The HTTP Core boundary isolates protocol engines while transport interfaces make testing and custom I/O straightforward.",
+        "educational_value": "It provides a clean study of one API expressed over both synchronous and asynchronous resource models."
+      },
+      "inspection": {"commit": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "httpx/_client.py", "httpx/_transports/default.py", "tests/client/test_client.py"]},
+      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/LICENSE.md"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "pytest",
+      "repository": "pytest-dev/pytest",
+      "url": "https://github.com/pytest-dev/pytest",
+      "primary_language": "Python",
+      "language_evidence": "Collection, fixtures, assertion rewriting, hooks, configuration, execution, reports, and terminal output under src/_pytest are Python.",
+      "description": "An extensible testing framework that discovers tests, resolves fixtures, rewrites assertions, runs lifecycle hooks, and reports results.",
+      "real_world_evidence": "pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.",
+      "why_study": "It demonstrates a mature plugin architecture whose dynamic behavior still has explicit collection nodes, hook contracts, fixture graphs, and execution phases.",
+      "learn": ["Plugin hooks, collection trees, fixture dependency resolution, AST assertion rewriting, setup/call/teardown phases, and structured reports."],
+      "prerequisites": ["Python import machinery, decorators and generators, AST concepts, dependency graphs, exceptions, and testing fundamentals."],
+      "start_here": {"path": "src/_pytest/main.py", "reason": "Session startup, collection, failure policy, and the run loop provide the map needed before entering fixtures or assertion rewriting."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 32506, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["testing", "doc", "bench"], "notes": "Count covers production Python under src, excluding the test suite, documentation, benchmarks, examples, and generated files."},
+        "difficulty": {"score": 4, "signals": ["import and AST rewriting", "dynamic plugin hooks", "fixture graphs"], "reason": "Core behavior repeatedly depends on metaprogramming, import state, hook dispatch, scoped dependency resolution, and exception-aware phases."},
+        "complexity": {"score": 4, "signals": ["collection/execution/plugin subsystems", "cross-cutting configuration and reports"], "reason": "A test run crosses configuration, discovery, nodes, plugins, fixtures, assertion rewriting, runners, capture, warnings, and reporters."},
+        "placement": "Advanced mechanisms and a multi-subsystem execution pipeline raise this S3-sized codebase to SDC 4."
+      },
+      "quality": {
+        "source_quality": "Dense mechanisms are backed by strong type hints, explicit hook specifications, structured nodes and reports, and carefully scoped helpers.",
+        "architecture": "Configuration and plugins drive a collection tree, fixture manager, phased runner, assertion engine, capture services, and reporters.",
+        "naming_and_idiom": "Collector, Item, Session, FixtureDef, CallInfo, TestReport, and hook names provide a shared execution vocabulary.",
+        "tests": "A large self-hosting suite covers collection, fixtures, hooks, assertions, capture, terminal output, configuration, and regressions.",
+        "documentation": "User guides, how-to material, references, examples, plugin guidance, and contributor documentation cover both consumers and extenders.",
+        "traceability": "A test can be traced from discovery through node collection, fixture setup, runtest phases, report construction, and plugin reporting.",
+        "maintainability": "Hook contracts and structured domain objects let independent plugins evolve around a stable lifecycle.",
+        "educational_value": "It is an unusually transparent example of extensible developer tooling, metaprogramming, and framework self-testing."
+      },
+      "inspection": {"commit": "fdba12e1708313f56e9cf713d260c029764ca2b7", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.rst", "src/_pytest/main.py", "src/_pytest/python.py", "testing/test_collection.py"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/LICENSE"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "scrapy",
+      "repository": "scrapy/scrapy",
+      "url": "https://github.com/scrapy/scrapy",
+      "primary_language": "Python",
+      "language_evidence": "Crawler orchestration, engine, scheduler, downloader, scraper, spiders, middleware, pipelines, and extensions in the scrapy package are Python.",
+      "description": "An asynchronous web-crawling framework coordinating spiders, request scheduling, downloading, scraping, pipelines, extensions, and signals.",
+      "real_world_evidence": "Scrapy is released as a production crawling and extraction framework with maintained middleware and extension ecosystems.",
+      "why_study": "Its event-driven engine makes backpressure, lifecycle ownership, pluggable stages, settings, signals, and concurrency coordination visible in Python.",
+      "learn": ["Asynchronous engines, schedulers, middleware chains, backpressure, signals, extension loading, settings precedence, and lifecycle state."],
+      "prerequisites": ["Async Python, deferred/future concepts, HTTP crawling, queues, callbacks, dependency injection, and framework configuration."],
+      "start_here": {"path": "scrapy/core/engine.py", "reason": "ExecutionEngine coordinates scheduler, downloader, scraper, spider input, backpressure, startup, idleness, and shutdown."},
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 25936, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "tests_typing", "docs"], "notes": "Count covers production Python in scrapy, excluding tests, typing tests, documentation, examples, and packaging files."},
+        "difficulty": {"score": 4, "signals": ["Twisted and asyncio interoperation", "backpressure and shutdown"], "reason": "Deferred/coroutine bridging, reactor selection, concurrent slots, cancellation, and signal ordering recur through core lifecycle code."},
+        "complexity": {"score": 4, "signals": ["scheduler/downloader/scraper pipeline", "middleware and extension systems"], "reason": "Crawling crosses settings, add-ons, signals, scheduler, downloader, scraper, spiders, item pipelines, stats, and process orchestration."},
+        "placement": "Its advanced asynchronous lifecycle and interconnected plugin pipeline make Scrapy SDC 4 despite a mid-sized source count."
+      },
+      "quality": {
+        "source_quality": "Lifecycle flags, late-bound attributes, error translation, and shutdown paths are explicit in the engine and crawler orchestration.",
+        "architecture": "The engine mediates distinct scheduler, downloader, scraper, spider, middleware, pipeline, signal, and extension components.",
+        "naming_and_idiom": "Crawler, Spider, Scheduler, Downloader, Scraper, Request, Response, Item, and Signal consistently model the crawl pipeline.",
+        "tests": "Extensive unit and integration tests cover reactors, crawlers, engines, middleware, protocols, pipelines, commands, and regressions.",
+        "documentation": "Tutorials, topic guides, API references, extension docs, architecture explanations, and deployment guidance are comprehensive.",
+        "traceability": "A request can be followed from spider output through scheduling, downloading, response handling, item processing, and idle detection.",
+        "maintainability": "Protocols and component loaders isolate replaceable implementations while settings and signals provide controlled extension surfaces.",
+        "educational_value": "It is a concrete production example of an asynchronous pipeline framework rather than a thin wrapper around an event loop."
+      },
+      "inspection": {"commit": "53eb8d60bcd0160633f6513478f958ed5a457363", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.rst", "scrapy/crawler.py", "scrapy/core/engine.py", "tests/test_crawler.py"]},
+      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/scrapy/scrapy/blob/53eb8d60bcd0160633f6513478f958ed5a457363/LICENSE"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "airflow",
+      "repository": "apache/airflow",
+      "url": "https://github.com/apache/airflow",
+      "primary_language": "Python",
+      "language_evidence": "The scheduler, DAG and task models, executors, APIs, providers, serialization, jobs, and operational services are predominantly Python.",
+      "description": "A workflow-orchestration platform that defines directed task graphs and schedules, executes, retries, observes, and persists their runs.",
+      "real_world_evidence": "Apache Airflow is an actively released Apache project used to operate production data and automation workflows.",
+      "why_study": "It exposes the engineering of a distributed control plane: durable workflow state, transactional scheduling, executors, serialization, APIs, plugins, and deployment boundaries.",
+      "learn": ["Distributed scheduling, DAG models, transactional locking, concurrency limits, executors, durable state machines, serialization, plugins, and service boundaries."],
+      "prerequisites": ["Advanced Python, SQL and transactions, distributed systems, queues, concurrency, web APIs, and deployment architecture."],
+      "start_here": {"path": "airflow-core/src/airflow/jobs/scheduler_job_runner.py", "reason": "The scheduler loop and executable-task selection reveal how persisted DAG state, locks, priorities, pools, and concurrency limits become work."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 469511, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "docs", "generated", "third-party front-end dependencies"], "notes": "Count covers first-party Python across Airflow core, providers, SDKs, and operational packages, excluding tests, documentation, generated output, and vendored dependencies."},
+        "difficulty": {"score": 4, "signals": ["transactional distributed scheduling", "concurrency and failure recovery", "dynamic DAG execution"], "reason": "Correctness repeatedly depends on database isolation, locks, idempotence, concurrency limits, serialization, retries, and distributed worker state."},
+        "complexity": {"score": 5, "signals": ["scheduler/executor/API/UI/provider platform", "persistent cross-service state", "large plugin ecosystem"], "reason": "Workflow behavior spans many deployable processes, databases, executors, APIs, task SDKs, providers, security boundaries, and operational tooling."},
+        "placement": "Extreme size plus platform-scale architecture and advanced distributed behavior make Airflow an unambiguous SDC 5 repository."
+      },
+      "quality": {
+        "source_quality": "Critical scheduling code documents lock scope, starvation filters, concurrency maps, transactional assumptions, and failure handling.",
+        "architecture": "Core models and jobs connect schedulers, executors, APIs, task SDKs, providers, serialization, security, UI, and deployment packages.",
+        "naming_and_idiom": "DAG, DagRun, TaskInstance, SchedulerJobRunner, Executor, Pool, Bundle, and Provider form a precise operational vocabulary.",
+        "tests": "Large unit, integration, system, provider, serialization, API, and end-to-end suites exercise the platform and its database backends.",
+        "documentation": "Architecture, administration, operations, security, provider, API, tutorial, and contributor documentation is extensive.",
+        "traceability": "A scheduled task can be traced from serialized DAG state through DagRun and TaskInstance selection, locking, executor dispatch, and state reconciliation.",
+        "maintainability": "Public interfaces, provider boundaries, database models, service packages, and compatibility policies constrain a very large change surface.",
+        "educational_value": "It rewards advanced readers with a real distributed orchestration control plane whose tradeoffs are visible in source."
+      },
+      "inspection": {"commit": "ff601cb5b75e77c1f28aaf014914f4e9d5cb0947", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "airflow-core/src/airflow/models/dag.py", "airflow-core/src/airflow/jobs/scheduler_job_runner.py", "airflow-core/tests/unit/models/test_dag.py"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/LICENSE"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "home-assistant-core",
+      "repository": "home-assistant/core",
+      "url": "https://github.com/home-assistant/core",
+      "primary_language": "Python",
+      "language_evidence": "The automation runtime, state machine, services, event bus, configuration entries, integrations, and coordinators are implemented in Python.",
+      "description": "A home-automation runtime that coordinates devices, integrations, events, services, entity state, configuration, storage, and user automations.",
+      "real_world_evidence": "Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.",
+      "why_study": "Its huge integration surface is organized around a coherent event loop, state and service models, lifecycle contracts, typed configuration entries, and strict concurrency rules.",
+      "learn": ["Event-driven architecture, state machines, service registries, async task ownership, integration lifecycles, configuration migrations, persistence, and compatibility policy."],
+      "prerequisites": ["Advanced asyncio, event-driven systems, typed Python, dependency injection, device protocols, persistence, and large-project navigation."],
+      "start_here": {"path": "homeassistant/core.py", "reason": "HomeAssistant, EventBus, ServiceRegistry, StateMachine, jobs, and core lifecycle states define the shared runtime every integration enters."},
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 1266444, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "stubs", "script", "generated metadata"], "notes": "Count covers production Python under homeassistant, excluding tests, type stubs, maintenance scripts, generated metadata, and deployment assets."},
+        "difficulty": {"score": 4, "signals": ["single-loop concurrency discipline", "device and integration lifecycles", "compatibility-sensitive state"], "reason": "Correct behavior relies on async ownership, thread-safety rules, staged setup and teardown, migrations, retries, and many external protocols."},
+        "complexity": {"score": 5, "signals": ["thousands of integrations", "shared event/service/state runtime", "cross-cutting configuration and storage"], "reason": "Core services connect an enormous integration graph, entity platform, automation engine, storage, authentication, networking, and deployment lifecycle."},
+        "placement": "Million-line scale and ecosystem-wide runtime coordination make Home Assistant Core decisively SDC 5."
+      },
+      "quality": {
+        "source_quality": "Core concurrency contracts, lifecycle states, immutable configuration data, and failure paths are explicit and increasingly type checked.",
+        "architecture": "A central event bus, state machine, service registry, configuration-entry manager, entity model, and integration loader coordinate domain packages.",
+        "naming_and_idiom": "HomeAssistant, EventBus, StateMachine, ServiceRegistry, ConfigEntry, Entity, and coordinator vocabulary is consistent across integrations.",
+        "tests": "A vast suite covers core services, state, configuration, integrations, protocols, migrations, concurrency rules, and regressions.",
+        "documentation": "Developer architecture, integration quality rules, APIs, testing guidance, user documentation, and contributor standards are extensive.",
+        "traceability": "A device update can be traced from an integration coordinator through entity state writing, event dispatch, service behavior, and tests.",
+        "maintainability": "Manifest contracts, integration boundaries, shared helpers, code ownership, strict linting, typing tiers, and quality scales govern the large surface.",
+        "educational_value": "It is a demanding but unusually well-governed case study in sustaining an async platform with thousands of real hardware integrations."
+      },
+      "inspection": {"commit": "471f2c28e285c268cc4ca67ad80ff4044b365d70", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.rst", "homeassistant/core.py", "homeassistant/config_entries.py", "tests/test_core.py"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/LICENSE.md"},
+      "github": {"primary_language": "Python", "archived": false, "metadata_checked_at": "2026-08-28"}
+    }
+  ]
+}
