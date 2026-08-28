@@ -99,7 +99,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 4.2 — Implement the standard-library catalog tool
 
-- [ ] **Objective:** Validate source data and generate deterministic
+- [x] **Objective:** Validate source data and generate deterministic
   learner-facing Markdown with no installed package dependency.
 - **Work:** Implement `validate`, `generate`, and `check-generated` commands;
   check counts, uniqueness, URLs, score ranges/formula, evidence, revisions,
@@ -111,7 +111,7 @@ verifiable pass. A checked box means its completion criteria were met.
 
 ### Step 4.3 — Test validation and generation behavior
 
-- [ ] **Objective:** Prove checks fail for the mistakes they claim to catch.
+- [x] **Objective:** Prove checks fail for the mistakes they claim to catch.
 - **Work:** Add focused standard-library tests for valid data, missing fields,
   duplicates, invalid scores, formula violations, unsafe slugs, incorrect
   counts, bad URLs, and stale generated output; add CI.
