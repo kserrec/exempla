@@ -1,0 +1,62 @@
+name: Dispute an SDC placement
+description: Request an evidence-backed review of an entry's S, D, C, or final level.
+title: "[SDC review]: "
+body:
+  - type: input
+    id: entry-url
+    attributes:
+      label: Exempla entry
+      description: Link to the catalog entry whose placement you reviewed.
+      placeholder: https://github.com/kserrec/exempla/blob/main/languages/rust/README.md
+    validations:
+      required: true
+  - type: dropdown
+    id: disputed-dimension
+    attributes:
+      label: Disputed score
+      options:
+        - S — Size
+        - D — Code difficulty
+        - C — System complexity
+        - Final SDC level
+        - Multiple dimensions
+    validations:
+      required: true
+  - type: input
+    id: pinned-revision
+    attributes:
+      label: Reviewed revision
+      description: Enter the full commit SHA recorded by the entry.
+      placeholder: 0123456789abcdef0123456789abcdef01234567
+    validations:
+      required: true
+  - type: textarea
+    id: rubric-anchor
+    attributes:
+      label: Relevant rubric anchor
+      description: Identify the current score and the definition in docs/sdc.md that you believe the evidence does or does not satisfy.
+    validations:
+      required: true
+  - type: textarea
+    id: source-evidence
+    attributes:
+      label: Observed source evidence
+      description: Link to concrete files at the recorded revision and explain the recurring signals in the main learning path.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-placement
+    attributes:
+      label: Proposed placement
+      description: State the whole-integer score or final level you believe the published rubric supports, with the calculation.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I scored the revision recorded by Exempla, not the upstream repository's current default branch.
+          required: true
+        - label: My reasoning uses the published SDC anchors and observed source, not popularity or a desired empty slot.
+          required: true

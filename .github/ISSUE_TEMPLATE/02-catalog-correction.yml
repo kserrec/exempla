@@ -1,0 +1,61 @@
+name: Report a catalog correction
+description: Report a verified factual problem in an existing catalog entry.
+title: "[Correction]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A moving upstream default branch does not by itself make a pinned entry
+        stale. Identify the exact existing claim and verify it against the
+        revision Exempla records before describing it as wrong or outdated.
+  - type: input
+    id: entry-url
+    attributes:
+      label: Exempla entry
+      description: Link to the affected language page or canonical catalog file.
+      placeholder: https://github.com/kserrec/exempla/blob/main/languages/python/README.md
+    validations:
+      required: true
+  - type: dropdown
+    id: correction-kind
+    attributes:
+      label: Correction type
+      options:
+        - Repository or pinned-source link
+        - Description or real-world evidence
+        - License
+        - Language classification
+        - LOC measurement or exclusions
+        - Learning path or prerequisites
+        - Quality evidence
+        - Other factual metadata
+    validations:
+      required: true
+  - type: textarea
+    id: current-claim
+    attributes:
+      label: Exact current claim
+      description: Quote or identify the field as it exists now, including the recorded commit and source path where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: observed-evidence
+    attributes:
+      label: Observed evidence
+      description: State what you directly inspected and link to the pinned source that demonstrates the discrepancy.
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-correction
+    attributes:
+      label: Proposed correction
+      description: State the smallest evidence-supported change. Leave blank if you are unsure of the replacement text.
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I verified the exact existing entry and did not infer the problem solely from a moving default branch or repository summary.
+          required: true
+        - label: I distinguished a demonstrated incorrect fact from a missing improvement or new feature.
+          required: true

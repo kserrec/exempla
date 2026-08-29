@@ -1,0 +1,97 @@
+name: Propose a repository
+description: Suggest real-world software for evidence-backed catalog review.
+title: "[Candidate]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Exempla. A candidate is accepted only after
+        its pinned source passes the full qualification and SDC workflow in
+        CONTRIBUTING.md. Empty catalog slots and popularity never lower that bar.
+  - type: input
+    id: repository-url
+    attributes:
+      label: Repository URL
+      description: Link to the public upstream GitHub repository.
+      placeholder: https://github.com/owner/repository
+    validations:
+      required: true
+  - type: input
+    id: pinned-revision
+    attributes:
+      label: Inspected revision
+      description: Enter the full 40-character commit SHA you actually reviewed.
+      placeholder: 0123456789abcdef0123456789abcdef01234567
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Catalog language
+      description: Name the language whose meaningful first-party implementation you inspected.
+      placeholder: Python
+    validations:
+      required: true
+  - type: textarea
+    id: real-world-purpose
+    attributes:
+      label: Real-world purpose
+      description: Explain what the software does and the evidence that it serves or served a genuine purpose.
+    validations:
+      required: true
+  - type: textarea
+    id: source-inspection
+    attributes:
+      label: Source inspection
+      description: List the entry point, core implementation, boundaries, tests, and architecture or build files you inspected.
+      placeholder: |
+        - Entry point: path/to/file
+        - Core behavior: path/to/file
+        - Tests: path/to/test
+        - Trace followed: ...
+    validations:
+      required: true
+  - type: textarea
+    id: learning-value
+    attributes:
+      label: Learning value and quality evidence
+      description: Explain what makes the source unusually good to study and summarize its qualification evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: learner-path
+    attributes:
+      label: Proposed learner path
+      description: Name prerequisites, a concrete starting file, and one behavior a learner can trace into tests or output.
+    validations:
+      required: true
+  - type: textarea
+    id: sdc-evidence
+    attributes:
+      label: SDC evidence
+      description: Record meaningful implementation LOC and exclusions, then justify S, D, C, and the resulting level independently.
+      placeholder: |
+        S: score, LOC count, tool version, scope, and exclusions
+        D: score and observed code-level signals
+        C: score and observed system-level signals
+        SDC: formula result and any guardrail
+    validations:
+      required: true
+  - type: textarea
+    id: license
+    attributes:
+      label: License evidence
+      description: Identify the license file at the inspected revision and explain any ambiguity.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I inspected the pinned source; this proposal is not based only on repository metadata, popularity, or reputation.
+          required: true
+        - label: This is genuine software, not a tutorial, exercise, starter, toy, or teaching-first project.
+          required: true
+        - label: I understand that opening this issue proposes review and does not mean the candidate has passed the quality gate.
+          required: true

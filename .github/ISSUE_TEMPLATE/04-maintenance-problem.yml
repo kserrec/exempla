@@ -1,0 +1,52 @@
+name: Report a maintenance problem
+description: Report a reproducible problem with Exempla's tooling, generated pages, or documentation.
+title: "[Maintenance]: "
+body:
+  - type: dropdown
+    id: affected-area
+    attributes:
+      label: Affected area
+      options:
+        - Catalog validation
+        - Markdown generation
+        - Tests or continuous integration
+        - Learner navigation
+        - Contributor documentation
+        - Other repository maintenance
+    validations:
+      required: true
+  - type: textarea
+    id: starting-state
+    attributes:
+      label: Verified starting state
+      description: Name the exact file, command, page, or behavior you inspected and the commit where it exists.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and output
+      description: Give the smallest reproducible sequence and paste the complete relevant output, with secrets removed.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: Explain the documented or otherwise supported result you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add environment details or links that materially help reproduce the problem. Never include secrets or dotenv contents.
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched existing issues and did not find this demonstrated problem already reported.
+          required: true
+        - label: I removed secrets, credentials, and private data from all submitted text and output.
+          required: true

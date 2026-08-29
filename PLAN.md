@@ -308,10 +308,10 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 - [ ] **Objective:** Make the public GitHub contribution surfaces enforce the
   same evidence standards as the repository documentation.
 - **Work:** Add focused issue forms for repository candidates, factual
-  corrections, and SDC disputes; disable unstructured public issues; add a
-  pull-request template that distinguishes observed facts from proposed
-  changes and carries the relevant release checks; document how contributors
-  should choose among those entry points.
+  corrections, SDC disputes, and maintenance problems; disable unstructured
+  public issues; add a pull-request template that distinguishes observed facts
+  from proposed changes and carries the relevant release checks; document how
+  contributors should choose among those entry points.
 - **Artifacts:** `.github/ISSUE_TEMPLATE/*.yml`,
   `.github/pull_request_template.md`, updates to `CONTRIBUTING.md`.
 - **Complete when:** The forms and pull-request template are present on `main`,
