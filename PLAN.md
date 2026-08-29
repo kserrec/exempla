@@ -437,7 +437,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 
 ### Steps 15.1–15.20 — Research each language in canonical order
 
-- [ ] **15.1 JavaScript**
+- [x] **15.1 JavaScript**
 - [ ] **15.2 Python**
 - [ ] **15.3 Java**
 - [ ] **15.4 PHP**

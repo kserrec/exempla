@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "research_started_at": "2026-08-29",
+  "cutover_commit": "17515a461c16bbb3711910a3a923f43f700d1698",
+  "target": {
+    "language_total": 20,
+    "levels_per_language": 5,
+    "maximum_entries_per_level": 2
+  },
+  "languages": [
+    {
+      "order": 1,
+      "language_slug": "javascript",
+      "language": "JavaScript",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "mafintosh/pump", "level": 2},
+        {"repository": "sindresorhus/p-limit", "level": 2},
+        {"repository": "ai/nanoid", "level": 3},
+        {"repository": "jquery/jquery", "level": 3},
+        {"repository": "eslint/eslint", "level": 4},
+        {"repository": "prettier/prettier", "level": 4},
+        {"repository": "nodejs/node", "level": 5},
+        {"repository": "react/react", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "npm-registry",
+          "channel": "npm package registry and usage evidence",
+          "sources": [
+            "https://www.npmjs.com/package/escape-string-regexp",
+            "https://registry.npmjs.org/escape-string-regexp/latest",
+            "https://registry.npmjs.org/slash/latest",
+            "https://api.npmjs.org/downloads/point/last-week/escape-string-regexp",
+            "https://api.npmjs.org/downloads/point/last-week/slash"
+          ],
+          "evidence": "The registry exposed installable, non-deprecated JavaScript utility packages and provided dated publication, license, repository, and usage signals."
+        },
+        {
+          "id": "curated-node-list",
+          "channel": "curated Node.js ecosystem list",
+          "sources": [
+            "https://github.com/sindresorhus/awesome-nodejs#text"
+          ],
+          "evidence": "The curated Text section independently surfaced escape-string-regexp among maintained Node.js packages and supplied neighboring utility leads for comparison."
+        },
+        {
+          "id": "github-small-source-search",
+          "channel": "GitHub language, size, public-status, and update search",
+          "sources": [
+            "https://api.github.com/search/repositories?q=language%3AJavaScript+archived%3Afalse+stars%3A%3E1000+size%3A%3C100&sort=updated&order=desc&per_page=10"
+          ],
+          "evidence": "A constrained source search deliberately sampled small public JavaScript repositories and surfaced current alternatives such as pretty-bytes and p-map rather than using popularity as an admission rule."
+        },
+        {
+          "id": "maintainer-small-libraries",
+          "channel": "respected maintainer's smaller source libraries",
+          "sources": [
+            "https://github.com/sindresorhus?tab=repositories&type=source&language=javascript",
+            "https://github.com/sindresorhus/escape-string-regexp",
+            "https://github.com/sindresorhus/slash"
+          ],
+          "evidence": "Reviewing the maintainer's small single-purpose JavaScript libraries supplied slash and corroborated escape-string-regexp as real package source rather than tutorial code."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "sindresorhus/escape-string-regexp",
+          "pinned_commit": "cbc42403142c96923b482604e1f3d627b1956aff",
+          "discovered_via": ["npm-registry", "curated-node-list", "maintainer-small-libraries"],
+          "inspection_files": ["index.js", "test.js", "readme.md", "package.json", "license"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The selected input-contract, staged transformation, compatibility representation, tests, and explicit safety limits transfer to other small production APIs; regular-expression context is short and repository-explained.",
+          "quality_status": "pass",
+          "quality_evidence": "The one-function responsibility is readable, named directly, documented with its limit, covered for the complete metacharacter set and both stated hyphen compatibility cases, and traceable from input to exact output.",
+          "scores": {"language_technique": 1, "behavioral_reasoning": 1, "design_span": 1, "constraint_burden": 2},
+          "calculated_level": 1,
+          "decision_evidence": "The scores were written before capacity was checked. The formula returns Level 1, both gates pass, and the candidate ranks first for the two open JavaScript Level 1 places because its staged representation choice and explicit safety boundary offer the stronger learning path.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and files, both gates, the 1/1/1/2 profile, Level 1 formula, JavaScript classification, MIT license, claim boundaries, and first-place capacity decision."
+          }
+        },
+        {
+          "repository": "sindresorhus/slash",
+          "pinned_commit": "98b618f5a3bfcb5dd374b204868818845b87bb2f",
+          "discovered_via": ["npm-registry", "maintainer-small-libraries", "github-small-source-search"],
+          "inspection_files": ["index.js", "test.js", "readme.md", "package.json", "license"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The selected guard, lexical transformation, protected exception, and boundary tests teach transferable compatibility engineering; the extended-length-path context is short and repository-explained.",
+          "quality_status": "pass",
+          "quality_evidence": "The one-component source and API are direct, the tests close normal, mixed, Unicode, and protected-prefix cases, and the README states the exact transformation without implying filesystem normalization.",
+          "scores": {"language_technique": 1, "behavioral_reasoning": 1, "design_span": 1, "constraint_burden": 2},
+          "calculated_level": 1,
+          "decision_evidence": "The scores were written before capacity was checked. The formula returns Level 1, both gates pass, and the candidate ranks second for the two open JavaScript Level 1 places; its single portability exception is narrower than the first-ranked path but remains qualified.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and files, both gates, the 1/1/1/2 profile, Level 1 formula, JavaScript classification, MIT license, strict separator-only boundary, and second-place capacity decision."
+          }
+        }
+      ],
+      "accepted": [
+        "sindresorhus/escape-string-regexp",
+        "sindresorhus/slash"
+      ],
+      "rejected": [],
+      "gaps_after": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 1 paths. JavaScript now has two accepted repositories at every level."
+    }
+  ],
+  "summary": {
+    "languages_completed": 1,
+    "accepted_new_total": 2,
+    "rejected_new_total": 0,
+    "current_entry_total": 135,
+    "remaining_gap_total": 65
+  }
+}

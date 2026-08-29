@@ -483,11 +483,25 @@ def validate_rebuild_reconciliation(
     ]
     if len(decision_keys) != 200 or len(set(decision_keys)) != 200:
         errors.append("research/learner-centered-rebuild.json: decisions must be unique")
-    rejection_counts = Counter(
+    removed_keys = [
+        item.get("repository", "").lower()
+        for item in decisions
+        if isinstance(item, dict) and item.get("decision") == "remove"
+    ]
+    rejection_keys = [
         item.get("repository", "").lower()
         for item in rejection_records
         if isinstance(item, dict)
-    )
+    ]
+    cutover_starts = [
+        index
+        for index in range(len(rejection_keys) - len(removed_keys) + 1)
+        if rejection_keys[index : index + len(removed_keys)] == removed_keys
+    ]
+    if len(cutover_starts) != 1:
+        errors.append(
+            "research/rejections.json: expected exactly one ordered cutover-removal block"
+        )
     for decision in decisions:
         if not isinstance(decision, dict):
             errors.append("research/learner-centered-rebuild.json: decision must be an object")
@@ -504,12 +518,200 @@ def validate_rebuild_reconciliation(
         elif outcome == "remove":
             if key in canonical_entries:
                 errors.append(f"research reconciliation: removed repository is still accepted: {repository}")
-            if rejection_counts[key] != 1:
-                errors.append(
-                    f"research reconciliation: removal needs exactly one rejection record: {repository}"
-                )
         else:
             errors.append(f"research reconciliation: invalid decision for {repository}")
+    return errors
+
+
+def validate_gap_research(
+    root: Path,
+    languages: list[dict[str, Any]],
+    canonical_entries: dict[str, dict[str, Any]],
+) -> list[str]:
+    """Reconcile the incremental post-cutover research record with the catalog."""
+    path = root / "research" / "learner-centered-gap-research.json"
+    if not path.exists():
+        return []
+    try:
+        audit = load_json(path)
+        rejections = load_json(root / "research" / "rejections.json")
+    except CatalogError as error:
+        return [str(error)]
+    errors: list[str] = []
+    require_exact_keys(
+        audit,
+        (
+            "schema_version",
+            "research_started_at",
+            "cutover_commit",
+            "target",
+            "languages",
+            "summary",
+        ),
+        "research/learner-centered-gap-research.json",
+        errors,
+    )
+    if audit.get("schema_version") != 1:
+        errors.append("research/learner-centered-gap-research.json schema_version: expected 1")
+    require_date(
+        audit.get("research_started_at"),
+        "research/learner-centered-gap-research.json research_started_at",
+        errors,
+    )
+    commit = require_text(
+        audit.get("cutover_commit"),
+        "research/learner-centered-gap-research.json cutover_commit",
+        errors,
+    )
+    if commit and not COMMIT_RE.fullmatch(commit):
+        errors.append(
+            "research/learner-centered-gap-research.json cutover_commit: expected 40 lowercase hexadecimal characters"
+        )
+    records = audit.get("languages")
+    if not isinstance(records, list):
+        return errors + ["research/learner-centered-gap-research.json languages: expected list"]
+    if len(records) > len(languages):
+        errors.append("research/learner-centered-gap-research.json languages: too many records")
+    candidate_keys: set[str] = set()
+    accepted_total = 0
+    rejected_total = 0
+    rejection_records = rejections.get("rejections", [])
+    for index, raw_record in enumerate(records):
+        prefix = f"research/learner-centered-gap-research.json languages[{index}]"
+        record = require_object(raw_record, prefix, errors)
+        expected_language = languages[index]
+        if record.get("order") != index + 1:
+            errors.append(f"{prefix}.order: expected {index + 1}")
+        if record.get("language_slug") != expected_language["slug"]:
+            errors.append(f"{prefix}.language_slug: expected {expected_language['slug']}")
+        if record.get("language") != expected_language["name"]:
+            errors.append(f"{prefix}.language: expected {expected_language['name']}")
+        researched_at = require_date(record.get("researched_at"), f"{prefix}.researched_at", errors)
+        channels = record.get("discovery_channels")
+        if not isinstance(channels, list) or len(channels) < 3:
+            errors.append(f"{prefix}.discovery_channels: expected at least 3 channels")
+            channels = []
+        channel_ids = [
+            channel.get("id")
+            for channel in channels
+            if isinstance(channel, dict) and isinstance(channel.get("id"), str)
+        ]
+        if len(channel_ids) != len(channels) or len(set(channel_ids)) != len(channel_ids):
+            errors.append(f"{prefix}.discovery_channels: channel ids must be present and unique")
+        starting_entries = record.get("starting_entries")
+        if not isinstance(starting_entries, list):
+            errors.append(f"{prefix}.starting_entries: expected list")
+            starting_entries = []
+        starting_levels = Counter(
+            item.get("level") for item in starting_entries if isinstance(item, dict)
+        )
+        expected_before = {str(level): 2 - starting_levels[level] for level in range(1, 6)}
+        if record.get("gaps_before") != expected_before:
+            errors.append(f"{prefix}.gaps_before: does not match starting entries")
+        candidates = record.get("candidates")
+        if not isinstance(candidates, list):
+            errors.append(f"{prefix}.candidates: expected list")
+            candidates = []
+        accepted = record.get("accepted")
+        rejected = record.get("rejected")
+        if not isinstance(accepted, list) or not isinstance(rejected, list):
+            errors.append(f"{prefix}: accepted and rejected must be lists")
+            accepted = []
+            rejected = []
+        candidate_decisions: dict[str, str] = {}
+        for candidate_index, raw_candidate in enumerate(candidates):
+            candidate_prefix = f"{prefix}.candidates[{candidate_index}]"
+            candidate = require_object(raw_candidate, candidate_prefix, errors)
+            repository = require_text(
+                candidate.get("repository"), f"{candidate_prefix}.repository", errors
+            )
+            key = repository.lower()
+            if key in candidate_keys:
+                errors.append(f"{candidate_prefix}.repository: duplicate gap candidate")
+            if key:
+                candidate_keys.add(key)
+            decision = candidate.get("decision")
+            candidate_decisions[repository] = decision
+            scores = require_object(candidate.get("scores"), f"{candidate_prefix}.scores", errors)
+            ordered_scores = tuple(require_score(scores.get(name), f"{candidate_prefix}.scores.{name}", errors) for name in DIMENSION_FIELDS)
+            calculated = candidate.get("calculated_level")
+            if None not in ordered_scores:
+                expected_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
+                if calculated != expected_level:
+                    errors.append(
+                        f"{candidate_prefix}.calculated_level: scores require Level {expected_level}"
+                    )
+            if decision == "accept":
+                accepted_total += 1
+                entry = canonical_entries.get(key)
+                if entry is None:
+                    errors.append(f"{candidate_prefix}: accepted candidate missing from catalog")
+                else:
+                    if entry.get("inspection", {}).get("commit") != candidate.get("pinned_commit"):
+                        errors.append(f"{candidate_prefix}: accepted pin differs from catalog")
+                    if entry.get("learning_level", {}).get("level") != calculated:
+                        errors.append(f"{candidate_prefix}: accepted Level differs from catalog")
+                second_review = candidate.get("second_review")
+                if not isinstance(second_review, dict) or second_review.get("status") != "agree":
+                    errors.append(f"{candidate_prefix}.second_review: acceptance requires agreement")
+            elif decision == "reject":
+                rejected_total += 1
+                if key in canonical_entries:
+                    errors.append(f"{candidate_prefix}: rejected candidate is accepted")
+                matching_rejections = [
+                    item
+                    for item in rejection_records
+                    if isinstance(item, dict)
+                    and item.get("repository", "").lower() == key
+                    and item.get("inspected_at") == researched_at
+                    and item.get("evidence") == candidate.get("decision_evidence")
+                ]
+                if len(matching_rejections) != 1:
+                    errors.append(f"{candidate_prefix}: expected one matching rejection record")
+            else:
+                errors.append(f"{candidate_prefix}.decision: expected accept or reject")
+        if set(accepted) != {
+            repository for repository, decision in candidate_decisions.items() if decision == "accept"
+        }:
+            errors.append(f"{prefix}.accepted: does not match candidate decisions")
+        if set(rejected) != {
+            repository for repository, decision in candidate_decisions.items() if decision == "reject"
+        }:
+            errors.append(f"{prefix}.rejected: does not match candidate decisions")
+        current_levels = Counter(
+            entry.get("learning_level", {}).get("level")
+            for entry in canonical_entries.values()
+            if entry.get("primary_language") == expected_language["name"]
+        )
+        expected_after = {str(level): 2 - current_levels[level] for level in range(1, 6)}
+        if record.get("gaps_after") != expected_after:
+            errors.append(f"{prefix}.gaps_after: does not match the canonical catalog")
+    summary = require_object(
+        audit.get("summary"), "research/learner-centered-gap-research.json summary", errors
+    )
+    if summary.get("languages_completed") != len(records):
+        errors.append("research/learner-centered-gap-research.json summary: language count differs")
+    if summary.get("accepted_new_total") != accepted_total:
+        errors.append("research/learner-centered-gap-research.json summary: accepted count differs")
+    if summary.get("rejected_new_total") != rejected_total:
+        errors.append("research/learner-centered-gap-research.json summary: rejected count differs")
+    if summary.get("current_entry_total") != len(canonical_entries):
+        errors.append("research/learner-centered-gap-research.json summary: entry count differs")
+    counts_by_language = {
+        language["name"]: Counter(
+            entry.get("learning_level", {}).get("level")
+            for entry in canonical_entries.values()
+            if entry.get("primary_language") == language["name"]
+        )
+        for language in languages
+    }
+    remaining_gap_total = sum(
+        2 - counts_by_language[language["name"]][level]
+        for language in languages
+        for level in range(1, 6)
+    )
+    if summary.get("remaining_gap_total") != remaining_gap_total:
+        errors.append("research/learner-centered-gap-research.json summary: gap count differs")
     return errors
 
 
@@ -580,6 +782,7 @@ def validate_catalog(root: Path = ROOT, complete: bool = False) -> list[str]:
                     f"catalog/{language['slug']}.json: Level {level} requires 2 entries; found {count}"
                 )
     errors.extend(validate_rebuild_reconciliation(root, canonical_entries))
+    errors.extend(validate_gap_research(root, languages, canonical_entries))
     if complete and total != 200:
         errors.append(f"complete catalog requires 200 repositories; found {total}")
     return errors

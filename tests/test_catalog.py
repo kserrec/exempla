@@ -262,8 +262,51 @@ class CatalogIntegrationTests(unittest.TestCase):
                 destination.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
         return root
 
+    def add_research(self, root: Path) -> None:
+        research = root / "research"
+        research.mkdir()
+        for name in (
+            "learner-centered-rebuild.json",
+            "learner-centered-gap-research.json",
+            "rejections.json",
+        ):
+            (research / name).write_text(
+                (ROOT / "research" / name).read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+
     def test_current_catalog_schema_and_rebuild_audit_reconcile(self) -> None:
         self.assertEqual(catalog_tool.validate_catalog(ROOT), [])
+
+    def test_gap_research_requires_diligent_channels_and_reconciles_acceptance(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        self.assertEqual(catalog_tool.validate_catalog(root), [])
+        gap_path = root / "research" / "learner-centered-gap-research.json"
+        audit = json.loads(gap_path.read_text(encoding="utf-8"))
+        audit["languages"][0]["discovery_channels"] = audit["languages"][0][
+            "discovery_channels"
+        ][:2]
+        gap_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "expected at least 3 channels" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+    def test_later_reconsideration_may_follow_the_ordered_cutover_rejections(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        rejection_path = root / "research" / "rejections.json"
+        rejection_data = json.loads(rejection_path.read_text(encoding="utf-8"))
+        reconsidered = dict(rejection_data["rejections"][45])
+        reconsidered["evidence"] = "A later independent research pass reached a new evidence-backed rejection."
+        rejection_data["rejections"].append(reconsidered)
+        rejection_path.write_text(
+            json.dumps(rejection_data, indent=2) + "\n", encoding="utf-8"
+        )
+        self.assertEqual(catalog_tool.validate_catalog(root), [])
 
     def test_schema_version_one_is_rejected(self) -> None:
         root = self.make_root(empty=True, schema_version=1)

@@ -3,6 +3,225 @@
   "language_slug": "javascript",
   "repositories": [
     {
+      "slug": "escape-string-regexp",
+      "repository": "sindresorhus/escape-string-regexp",
+      "url": "https://github.com/sindresorhus/escape-string-regexp",
+      "primary_language": "JavaScript",
+      "language_evidence": "The first-party runtime is exported from index.js as an ES module and its direct runtime suite is JavaScript; GitHub also labels the repository JavaScript at the metadata check.",
+      "description": "A focused npm utility that escapes regular-expression metacharacters in strings.",
+      "real_world_evidence": "npm published version 5.0.0 without a deprecation notice, and the public registry reported 361,397,477 downloads for 2026-08-22 through 2026-08-28.",
+      "why_study": "One short function demonstrates how input validation, staged transformation, compatibility-driven representation, tests, and explicit API limits fit into production utility code.",
+      "learn": [
+        "Use `index.js` to study narrow input contracts, staged string replacement, compatibility-driven escaping choices, boundary-focused tests, and documented safety limits."
+      ],
+      "prerequisites": [
+        "Before reading `index.js`, be familiar with JavaScript functions, strings, regular-expression literals, replacement strings, exceptions, and the idea that some characters have special meaning in a regular expression."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "The path requires only the README's short explanation that regular expressions reserve metacharacters and that a hyphen needs a hexadecimal form for PCRE and Unicode-pattern compatibility in this utility."
+        ],
+        "reason": "The hard part is a transferable programming decision: enforce a small API contract, choose representations that preserve compatibility, test the boundaries, and state where the abstraction does not apply."
+      },
+      "learning_path": {
+        "goal": "Understand how a small JavaScript utility validates a string and escapes regular-expression metacharacters while preserving its stated PCRE and Unicode-pattern compatibility for hyphens.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The file contains the entire production contract: the input guard and both escaping passes, including the comment that explains the non-obvious hexadecimal hyphen representation."
+        },
+        "supporting_files": [
+          "test.js",
+          "readme.md"
+        ],
+        "trace": "Enter escapeStringRegexp, reject a non-string, backslash-escape the ordinary metacharacter set with the replacement token, encode each hyphen as a hexadecimal escape, then close the shipped behavior with the complete metacharacter output and both PCRE- and Unicode-compatible hyphen cases in test.js."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one direct ES-module function",
+            "a typeof guard",
+            "ordinary regular-expression replacement"
+          ],
+          "reason": "A learner needs only basic functions, strings, a type check, regular-expression literals, and replace calls to read the entire path."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "synchronous stateless data flow",
+            "one local validation branch",
+            "two sequential transformations"
+          ],
+          "reason": "The input either fails one immediate guard or flows locally through two deterministic replacements to the returned string."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one implementation file",
+            "one direct runtime test file"
+          ],
+          "reason": "One focused implementation unit and its direct tests contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "exact metacharacter escaping",
+            "PCRE- and Unicode-compatible hyphen representation",
+            "a small stable API with documented interpolation limits"
+          ],
+          "reason": "Input validation, exact output, localized compatibility, and explicit safety limits are routine production safeguards rather than interacting advanced constraints."
+        },
+        "placement": "The 1/1/1/2 profile sums to 5, so the published formula yields Level 1; the localized compatibility safeguard does not make the direct path structurally or behaviorally advanced."
+      },
+      "quality": {
+        "source_quality": "The short implementation is intentional, and its comment explains why the second replacement uses a hexadecimal escape instead of a simpler form.",
+        "architecture": "A single-purpose exported function and one direct runtime suite are a coherent structure for the complete selected behavior.",
+        "naming_and_idiom": "escapeStringRegexp states the contract directly, and the implementation uses conventional ES-module export, validation, and string replacement.",
+        "tests": "The shipped AVA cases cover the complete ordinary metacharacter set and both stated PCRE- and Unicode-compatible hyphen outcomes; they do not claim direct coverage of the TypeError branch.",
+        "documentation": "The README explains installation, basic use, the native alternative, minimal escaping, and the interpolation positions where this utility is not sufficient.",
+        "traceability": "Every shipped transformation can be followed from the exported call through one of two replace operations into an exact assertion or successful Unicode-regex construction.",
+        "maintainability": "The two-stage implementation, explicit compatibility comment, and narrow contract keep changes local and reviewable.",
+        "educational_value": "The path turns a tiny utility into a concrete lesson about contracts, representation choices, compatibility, tests, and honest abstraction boundaries."
+      },
+      "inspection": {
+        "commit": "cbc42403142c96923b482604e1f3d627b1956aff",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "index.js",
+          "test.js",
+          "readme.md",
+          "package.json",
+          "license"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sindresorhus/escape-string-regexp/blob/cbc42403142c96923b482604e1f3d627b1956aff/license"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "slash",
+      "repository": "sindresorhus/slash",
+      "url": "https://github.com/sindresorhus/slash",
+      "primary_language": "JavaScript",
+      "language_evidence": "The first-party runtime is exported from index.js as an ES module and its direct runtime suite is JavaScript; GitHub also labels the repository JavaScript at the metadata check.",
+      "description": "A focused npm utility that converts Windows path separators while preserving extended-length paths.",
+      "real_world_evidence": "npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.",
+      "why_study": "A guard and one lexical transformation show how small production utilities make a portability exception explicit and prove both the common and protected cases.",
+      "learn": [
+        "Use `index.js` to study a small compatibility guard, lexical transformation, Unicode-transparent string handling, explicit exceptions, and boundary-focused tests."
+      ],
+      "prerequisites": [
+        "Before reading `index.js`, be familiar with JavaScript functions, strings, startsWith, regular-expression replacement, and the distinction between ordinary Windows paths and extended-length paths."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "The path requires only the README and test explanation that ordinary Windows paths may use backslashes while paths beginning with the extended-length prefix must remain untouched."
+        ],
+        "reason": "The selected behavior primarily teaches reusable compatibility engineering: isolate an exception, preserve it exactly, transform only the ordinary case, and test the boundary."
+      },
+      "learning_path": {
+        "goal": "Understand how a small JavaScript utility converts Windows separators lexically while preserving extended-length paths whose namespace syntax must remain untouched.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The file contains the complete guard-and-transform behavior, so a learner can see the compatibility exception before the ordinary replacement."
+        },
+        "supporting_files": [
+          "test.js",
+          "readme.md"
+        ],
+        "trace": "Enter slash, detect the extended-length prefix and return that input unchanged; otherwise replace every backslash with a forward slash, then close mixed separators, a Windows drive path, Unicode content, and the protected prefix in test.js."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one direct ES-module function",
+            "startsWith",
+            "ordinary regular-expression replacement"
+          ],
+          "reason": "The complete path uses only a direct function, a string-prefix check, a local branch, and a basic replacement."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one local branch",
+            "synchronous stateless transformation"
+          ],
+          "reason": "The function either preserves one protected input class or performs one deterministic lexical transformation."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one implementation file",
+            "one direct runtime test file"
+          ],
+          "reason": "One focused source unit and its direct tests contain the complete selected contract."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "cross-platform separator compatibility",
+            "exact extended-length-path preservation",
+            "Unicode-transparent transformation"
+          ],
+          "reason": "The stable API and one portability exception are routine production safeguards, not several interacting guarantees."
+        },
+        "placement": "The 1/1/1/2 profile sums to 5, so the published formula yields Level 1; one compatibility guard does not raise the otherwise direct path."
+      },
+      "quality": {
+        "source_quality": "The implementation exposes its one protected case and ordinary transformation without indirection or hidden state.",
+        "architecture": "One exported function and one direct runtime suite are proportionate to this single lexical responsibility.",
+        "naming_and_idiom": "slash and isExtendedLengthPath state the public transformation and its exception directly using conventional JavaScript string operations.",
+        "tests": "The shipped AVA cases cover mixed separators, Windows drive syntax, Unicode content, and exact preservation of the extended-length prefix.",
+        "documentation": "The README states the portability problem, installation, a cross-platform example, and the exact string-to-string API.",
+        "traceability": "Each input follows either the startsWith guard or the replace call and lands in a directly corresponding assertion.",
+        "maintainability": "The narrow API, one named compatibility decision, and direct boundary cases make future changes easy to bound.",
+        "educational_value": "The path is a clear first example of production code that remains simple while preserving a real platform-specific exception."
+      },
+      "inspection": {
+        "commit": "98b618f5a3bfcb5dd374b204868818845b87bb2f",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "index.js",
+          "test.js",
+          "readme.md",
+          "package.json",
+          "license"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/license"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "pump",
       "repository": "mafintosh/pump",
       "url": "https://github.com/mafintosh/pump",
