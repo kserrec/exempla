@@ -396,7 +396,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **13.8 Ruby**
 - [x] **13.9 C**
 - [x] **13.10 Swift**
-- [ ] **13.11 Go**
+- [x] **13.11 Go**
 - [ ] **13.12 R**
 - [ ] **13.13 Shell**
 - [ ] **13.14 Kotlin**

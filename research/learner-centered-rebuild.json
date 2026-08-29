@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 100,
+  "reviewed_entry_total": 110,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -7568,12 +7568,771 @@
         "status": "disagree_resolved",
         "notes": "The catalog's broad TabManagerImplementation path encouraged whole-browser breadth and an inflated placement. Root reconciliation adopts the bounded TabRestorer workflow, resolves 3/4/3/4 at Level 4, records its feature-gated or proposed comparative weakness, ranks it fifth, and removes it only for capacity."
       }
+    },
+    {
+      "repository": "tidwall/match",
+      "language": "Go",
+      "prior_level": 1,
+      "pinned_commit": "afc69bce52e08c02e78156a7697bd808fc868ec5",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches."
+        ],
+        "evidence": "Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "match.go keeps the complete matcher and case-folding behavior in one compact implementation, while match_test.go covers literals, wildcards, empty strings, Unicode byte behavior, case-insensitive matching, adversarial patterns, and randomized TestRandomInput coverage.",
+      "learning_path": {
+        "goal": "Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.",
+        "start_path": "match.go",
+        "supporting_files": [
+          "match_test.go"
+        ],
+        "trace": "Start with the main pattern and string scan, follow literal and question-mark consumption into the star branch and recursive or iterative suffix search, then compare the case-insensitive path; close with table tests and randomized TestRandomInput, which is randomized coverage rather than a Go Fuzz target."
+      },
+      "new_scores": {
+        "language_technique": 1,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "plain byte slices and indexes",
+            "loops and local conditionals",
+            "small helper functions"
+          ],
+          "reason": "The implementation relies on basic Go mechanics with no recurring intermediate language technique."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "literal, question-mark, and star branches",
+            "empty and exhausted input states",
+            "case-sensitive and insensitive modes"
+          ],
+          "reason": "A few related matcher states recur within one compact algorithm."
+        },
+        "design_span": {
+          "signals": [
+            "one matcher implementation",
+            "one direct test file"
+          ],
+          "reason": "The complete lesson stays within one local component and its tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stars may match zero or many bytes",
+            "pattern and input exhaustion must align",
+            "case folding and arbitrary input must terminate consistently"
+          ],
+          "reason": "Several material boundary and backtracking guarantees recur despite the tiny design span."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 1/2/1/3 sums to 7, whose mean of 1.75 calculates to Level 2; match ranks first of three qualified Go Level 2 paths.",
+      "reconsider": "Reconsider if wildcard semantics, termination, case behavior, randomized coverage, Go-primary status, or direct tests materially change, or a stronger Go Level 2 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether the compact backtracking logic justified a higher language or behavior anchor and on describing TestRandomInput as fuzzing. Root reconciliation keeps basic Language 1, bounded Behavior 2, records the test accurately as randomized rather than a Fuzz target, and resolves Level 2 rank 1 and retention."
+      }
+    },
+    {
+      "repository": "mattn/go-isatty",
+      "language": "Go",
+      "prior_level": 1,
+      "pinned_commit": "c44dc0b9c702c76577fdb7898032969e0611efc2",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Terminal detection asks an operating system whether a file descriptor or Windows handle is attached to an interactive terminal."
+        ],
+        "evidence": "Terminal and ioctl vocabulary is brief; the path teaches build constraints, platform-specific implementations, syscall boundaries, handle conversion, feature fallbacks, and portable API preservation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "isatty_tiocgwinsz.go shows the representative Unix ioctl operation rather than the always-false fallback, BSD and Windows files isolate platform differences, fallback and platform tests verify the shared API, and example_test.go demonstrates observable use.",
+      "learning_path": {
+        "goal": "Understand how one small Go API preserves terminal-detection behavior across Unix, BSD, Windows, and unsupported platforms.",
+        "start_path": "isatty_tiocgwinsz.go",
+        "supporting_files": [
+          "isatty_bsd.go",
+          "isatty_windows.go",
+          "isatty_others.go",
+          "isatty_others_test.go",
+          "isatty_windows_test.go",
+          "example_test.go"
+        ],
+        "trace": "Begin with the representative TIOCGWINSZ ioctl check, compare BSD constants and Windows handle logic, then inspect the unsupported-platform always-false fallback; close with platform-specific tests and the public example to see one API remain stable across build-selected implementations."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Go build constraints",
+            "syscall and unsafe platform boundaries",
+            "shared API over selected files"
+          ],
+          "reason": "Intermediate platform-selection and syscall techniques recur across the small package."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "terminal and non-terminal outcomes",
+            "Unix, BSD, Windows, and unsupported branches",
+            "standard and Cygwin terminal checks"
+          ],
+          "reason": "A few platform-specific branches recur without a larger lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "shared public API",
+            "build-selected platform implementations",
+            "focused tests and example"
+          ],
+          "reason": "A small family of files supplies one cohesive cross-platform abstraction."
+        },
+        "constraint_burden": {
+          "signals": [
+            "only one implementation set may compile per platform",
+            "raw descriptor and handle conversions must remain correct",
+            "unsupported systems must degrade predictably"
+          ],
+          "reason": "Portability and low-level representation constraints recur but remain locally visible."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/2/2/3 sums to 9, whose mean of 2.25 calculates to Level 2; go-isatty ranks third behind match and pflag for two Go Level 2 places.",
+      "reconsider": "Reconsider if a Go Level 2 place opens, a fresh comparison raises this path above a retained entry, or platform selection, syscall behavior, fallback, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog began at isatty_others.go, which is the always-false unsupported-platform fallback rather than the representative operation. Root reconciliation starts at isatty_tiocgwinsz.go, uses the exact prefixed platform filenames, resolves 2/2/2/3 at Level 2, and removes the path only at comparative rank 3."
+      }
+    },
+    {
+      "repository": "robfig/cron",
+      "language": "Go",
+      "prior_level": 2,
+      "pinned_commit": "bc59245fe10efaed9d51b56900192527ed733435",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Cron scheduler calculates each entry's next time, sleeps until work is due, launches jobs, and accepts updates while running."
+        ],
+        "evidence": "Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "cron.go centralizes the scheduler loop and lifecycle, chain.go makes wrappers including Recover explicit, and cron_test.go uses controlled schedules and synchronization to cover ordering, add and remove while running, stop, delayed jobs, and wrapper behavior.",
+      "learning_path": {
+        "goal": "Understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown.",
+        "start_path": "cron.go",
+        "supporting_files": [
+          "chain.go",
+          "cron_test.go"
+        ],
+        "trace": "Start at Cron.run, follow next-time calculation and sorting into timer selection, then trace wakeups alongside add, remove, snapshot, and stop channels before jobs launch in goroutines; compare chain wrappers and verify that panic recovery occurs only when WithChain(Recover(...)) is explicitly configured, contrary to the localized cron.go comment."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "goroutines, channels, and timers",
+            "sort-based deadline ordering",
+            "function and interface job wrappers"
+          ],
+          "reason": "Familiar Go concurrency primitives recur without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "stopped, running, sleeping, waking, and stopping states",
+            "timer, add, remove, snapshot, and stop events",
+            "due, delayed, empty, and panic branches"
+          ],
+          "reason": "Several coupled scheduler states and event branches recur throughout the run loop."
+        },
+        "design_span": {
+          "signals": [
+            "Cron scheduler owner",
+            "job wrapper chain",
+            "direct lifecycle tests"
+          ],
+          "reason": "A few compact components cover one scheduler lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "timer reset and deadline ordering must avoid missed work",
+            "live mutation must remain serialized with scheduling",
+            "shutdown, overlapping jobs, and optional panic recovery require explicit policy"
+          ],
+          "reason": "Concurrency, timing, mutation, and failure constraints recur in normal scheduler operation."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 2/4/2/4 sums to 12, whose mean of 3.00 calculates to Level 3; cron ranks first of three qualified Go Level 3 paths.",
+      "reconsider": "Reconsider if scheduler ownership, timer behavior, live mutation, shutdown, recovery configuration, documentation, or focused tests materially change, or a stronger Go Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on language depth and whether panic recovery was automatic. Root reconciliation applies the lower Language 2 anchor, preserves Behavior and Constraints at 4, and corrects the trace: recovery requires explicit WithChain(Recover), despite a localized comment in cron.go. This resolves Level 3 rank 1 and retention."
+      }
+    },
+    {
+      "repository": "spf13/pflag",
+      "language": "Go",
+      "prior_level": 2,
+      "pinned_commit": "4f8e9056816a26ecbac9fe26cde50968eb3626f8",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "FlagSet.Parse converts command-line tokens into named flag values and positional arguments."
+        ],
+        "evidence": "Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "flag.go documents the public parser and error policies, string.go supplies a simple concrete Value implementation, and flag_test.go broadly exercises long and shorthand flags, attached and separate values, terminators, unknown flags, normalization, repeated parse behavior, and errors.",
+      "learning_path": {
+        "goal": "Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.",
+        "start_path": "flag.go",
+        "supporting_files": [
+          "string.go",
+          "flag_test.go"
+        ],
+        "trace": "Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interface-backed Value parsing",
+            "maps, slices, and callbacks",
+            "table-driven tests"
+          ],
+          "reason": "Familiar intermediate Go interfaces and collection techniques recur across parsing."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "long, shorthand, positional, and terminator token states",
+            "attached and following values",
+            "success and configured error outcomes"
+          ],
+          "reason": "A few parser branches recur without a broader lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "FlagSet parser",
+            "Value extension point",
+            "concrete string value and focused tests"
+          ],
+          "reason": "A small set of cohesive pieces covers token input through typed storage."
+        },
+        "constraint_burden": {
+          "signals": [
+            "shorthand and long syntax must agree on value consumption",
+            "the terminator must preserve remaining positional arguments",
+            "unknown flags and conversion failures must honor configured policy"
+          ],
+          "reason": "Several material parser guarantees recur, but their interaction remains locally testable rather than strict enough for Constraint 4."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/2/3 sums to 9, whose mean of 2.25 calculates to Level 2; pflag ranks second of three qualified Go Level 2 paths.",
+      "reconsider": "Reconsider if parse syntax, Value conversion, error policy, documentation, or focused tests materially change, or a stronger Go Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether parser guarantees merited Constraint 4 and on the Level 2 collision order. Root reconciliation keeps several material guarantees at Constraint 3 under the lower-anchor rule, resolves 2/2/2/3, ranks pflag second, and retains it."
+      }
+    },
+    {
+      "repository": "spf13/cobra",
+      "language": "Go",
+      "prior_level": 3,
+      "pinned_commit": "adbc8813901bba65827259daa8e22ff94ec1f30e",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Command resolves a command-line path, validates arguments and flags, and executes ordered lifecycle hooks."
+        ],
+        "evidence": "Command vocabulary is familiar and subordinate; the path teaches recursive command selection, parser integration, hook ordering, inherited behavior, contextual execution, help and error branches, and extensible argument validation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "command.go documents and implements ExecuteC and execute, args.go isolates reusable argument validators, and command_test.go directly covers command discovery, flags, hooks, errors, help, context, suggestions, silence options, and repeated execution.",
+      "learning_path": {
+        "goal": "Understand how Cobra resolves a command tree and carries one invocation through parsing, validation, ordered hooks, execution, and errors.",
+        "start_path": "command.go",
+        "supporting_files": [
+          "args.go",
+          "command_test.go"
+        ],
+        "trace": "Start at ExecuteC, follow argument preparation and command discovery into execute, then trace flag parsing, Args validation, inherited and local pre-run, run, and post-run hooks, help, and error propagation; close with command tests that exercise ordering and failure policy."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "function-valued lifecycle hooks",
+            "recursive command tree traversal",
+            "context and interface-backed flag integration"
+          ],
+          "reason": "Intermediate Go composition techniques recur across command resolution and execution."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "unresolved, selected, parsed, validated, running, and completed states",
+            "help, success, validation, parse, and execution branches",
+            "ordered inherited and local hooks"
+          ],
+          "reason": "Several related invocation states recur but remain bounded to one command lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "command tree and execution owner",
+            "argument validators",
+            "flag dependency and direct tests"
+          ],
+          "reason": "A few cohesive components span public invocation through validation and execution."
+        },
+        "constraint_burden": {
+          "signals": [
+            "command and flag resolution must preserve inheritance",
+            "hook order must remain stable across success and failure",
+            "help, silence, context, and repeated-execution policies interact"
+          ],
+          "reason": "Ordering and compatibility guarantees recur throughout ordinary command execution."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 calculates to Level 3; Cobra ranks third behind cron and Gin for two Go Level 3 places.",
+      "reconsider": "Reconsider if a Go Level 3 place opens, a fresh comparison raises this path above a retained entry, or command resolution, hook ordering, validation, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether to include broader completion and documentation-generation surfaces and on comparative retention. Root reconciliation bounds the path to ExecuteC and execute plus argument validation, resolves 3/3/3/4 at Level 3, and removes it only at rank 3."
+      }
+    },
+    {
+      "repository": "gin-gonic/gin",
+      "language": "Go",
+      "prior_level": 3,
+      "pinned_commit": "dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP engine matches a request method and path, prepares a reusable Context, and executes the selected handler chain."
+        ],
+        "evidence": "HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "gin.go provides the production ServeHTTP entry and pooled-context lifecycle, tree.go isolates routing, context.go owns handler-chain progression, and focused engine, tree, and context tests cover matching, parameters, middleware, aborts, errors, reuse, and response behavior.",
+      "learning_path": {
+        "goal": "Understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup.",
+        "start_path": "gin.go",
+        "supporting_files": [
+          "tree.go",
+          "context.go",
+          "gin_test.go",
+          "tree_test.go",
+          "context_test.go"
+        ],
+        "trace": "Start at Engine.ServeHTTP, follow Context acquisition and reset into method-tree lookup and parameter capture, then trace handlers through Context.Next and abort behavior before the response and context return to the pool; close with focused engine, tree, and context tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "sync.Pool context reuse",
+            "slice-backed handler chains",
+            "tree and map-based routing"
+          ],
+          "reason": "Familiar Go collections, pooling, and method techniques recur without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "acquire, reset, route, handle, abort, respond, and release states",
+            "match, not-found, parameter, middleware, and error branches",
+            "handler index progression"
+          ],
+          "reason": "Several related request states recur within one bounded routing lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "Engine entry and pool owner",
+            "routing tree",
+            "Context handler-chain executor and focused tests"
+          ],
+          "reason": "A few cohesive components span request entry through routing and handler completion."
+        },
+        "constraint_burden": {
+          "signals": [
+            "pooled contexts must be fully reset between requests",
+            "route precedence and parameter capture must stay deterministic",
+            "middleware order, aborts, and response state must remain coherent"
+          ],
+          "reason": "Reuse, ordering, matching, and response guarantees recur in normal request handling."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 2/3/3/4 sums to 12, whose mean of 3.00 calculates to Level 3; Gin ranks second of three qualified Go Level 3 paths.",
+      "reconsider": "Reconsider if routing, context reuse, middleware ordering, abort behavior, documentation, or focused tests materially change, or a stronger Go Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether Gin's binding and rendering systems should raise design breadth. Root reconciliation excludes those surfaces, scores only ServeHTTP, routing, Context execution, and direct tests at 2/3/3/4, and resolves Level 3 rank 2 and retention."
+      }
+    },
+    {
+      "repository": "caddyserver/caddy",
+      "language": "Go",
+      "prior_level": 4,
+      "pinned_commit": "502691f5182123ef30f463d7f132e7c2fe55e2bf",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Caddy loads a configuration by provisioning module values, validating an app graph, swapping active state, and cleaning up replaced resources."
+        ],
+        "evidence": "Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "caddy.go centralizes Load and active-config replacement, context.go handles module provisioning and cleanup scope, modules.go defines registration and lookup, and admin_test.go closes the actual reload path through admin requests, validation failures, state preservation, and successful replacement. The catalog's caddy_test.go does not close that reload trace.",
+      "learning_path": {
+        "goal": "Understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure.",
+        "start_path": "caddy.go",
+        "supporting_files": [
+          "context.go",
+          "modules.go",
+          "admin_test.go"
+        ],
+        "trace": "Start at Load, follow configuration decoding and Context-based module provisioning into app validation and staged startup, then trace the synchronized active-config swap and cleanup of replaced modules; close with admin tests that exercise rejected and successful reloads and preservation of the prior configuration."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interface-driven module registry",
+            "reflection and JSON-backed provisioning",
+            "context-scoped lifecycle callbacks"
+          ],
+          "reason": "Intermediate Go extension and dynamic-loading techniques recur across configuration loading."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "decoded, provisioned, validated, started, active, replaced, and cleaned states",
+            "success, validation, provisioning, start, and cleanup branches",
+            "old and candidate configuration interaction"
+          ],
+          "reason": "Several coupled configuration and resource states recur throughout reload."
+        },
+        "design_span": {
+          "signals": [
+            "global load and activation owner",
+            "module registry",
+            "provisioning Context",
+            "admin reload boundary and integration tests"
+          ],
+          "reason": "Multiple cohesive components participate in one end-to-end reload lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "a failed candidate must not replace the working configuration",
+            "module dependencies must provision and clean up in valid scope",
+            "activation, replacement, and resource cleanup must remain ordered"
+          ],
+          "reason": "Failure atomicity, lifecycle, ordering, and compatibility guarantees recur in ordinary reload work."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and the published calibration scores 3/4/4/4 sum to 15, whose mean of 3.75 calculates to Level 4; Caddy ranks second of three qualified Go Level 4 paths.",
+      "reconsider": "Reconsider if the published calibration anchor changes, or module provisioning, reload atomicity, cleanup, admin integration, documentation, or tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on the best closing test and comparative order. Root reconciliation preserves the exact published 3/4/4/4 calibration, uses admin_test.go because caddy_test.go does not close the reload trace, and resolves Level 4 rank 2 and retention."
+      }
+    },
+    {
+      "repository": "gohugoio/hugo",
+      "language": "Go",
+      "prior_level": 4,
+      "pinned_commit": "d6e6f9e500eebdeae8e28de830fff2e3bfc7d534",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An incremental Hugo build classifies changed files, invalidates affected content and resources, and rebuilds the necessary site outputs."
+        ],
+        "evidence": "Static-site vocabulary is briefly defined; the path teaches event batching, dependency invalidation, multi-site coordination, cache and resource reset, partial rebuild selection, error recovery, and integration-test orchestration."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "hugo_sites_build.go contains the representative build and rebuild control flow, hugo_sites.go owns shared site state, integrationtest_builder.go supplies realistic edit-and-rebuild fixtures, and rebuild_test.go directly exercises content, template, data, resource, multilingual, error, and recovery changes.",
+      "learning_path": {
+        "goal": "Understand how Hugo turns a batch of file changes into precise invalidation and a coherent incremental rebuild across site state and resources.",
+        "start_path": "hugolib/hugo_sites_build.go",
+        "supporting_files": [
+          "hugolib/hugo_sites.go",
+          "hugolib/integrationtest_builder.go",
+          "hugolib/rebuild_test.go"
+        ],
+        "trace": "Start with the build and rebuild entry points, follow changed-file classification into content, template, data, resource, and site invalidation, then trace selected rebuilding, cache resets, error handling, and state publication; close with integration builder scenarios that edit files and assert rebuilt output and recovery."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "goroutine and context-aware build coordination",
+            "interface and collection-driven invalidation",
+            "closure-based integration fixtures"
+          ],
+          "reason": "Intermediate Go composition and concurrency techniques recur, without multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "initial, dirty, invalidated, rebuilding, failed, recovered, and published states",
+            "content, template, data, resource, configuration, and multilingual change branches",
+            "single-site and multi-site propagation"
+          ],
+          "reason": "Many coupled incremental states and failure branches recur throughout normal rebuild work."
+        },
+        "design_span": {
+          "signals": [
+            "build coordinator",
+            "shared site state",
+            "dependency and resource invalidation",
+            "integration-test builder and rebuild suite"
+          ],
+          "reason": "Several major components participate, but the representative trace remains within the rebuild subsystem rather than the whole generator."
+        },
+        "constraint_burden": {
+          "signals": [
+            "incremental output must match a clean build",
+            "invalidation must be neither stale nor needlessly global",
+            "multi-site, cache, resource, error, and recovery behavior must remain coherent"
+          ],
+          "reason": "Expert consistency, dependency, recovery, and performance constraints recur throughout incremental builds."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/4/5 sums to 17, whose mean of 4.25 calculates to Level 4; Hugo's rebuild path ranks third behind Kubernetes workqueue and Caddy for two Go Level 4 places.",
+      "reconsider": "Reconsider if a Go Level 4 place opens, a fresh comparison ranks the rebuild path above a retained entry, or invalidation, multi-site, resource, recovery, documentation, or integration-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on a broader site-orchestration start and whether expert behavior and constraints forced Level 5. Root reconciliation starts at hugolib/hugo_sites_build.go, bounds Design at the lower recurring anchor 4, resolves 3/5/4/5 at Level 4, and removes it only at rank 3."
+      }
+    },
+    {
+      "repository": "kubernetes/kubernetes",
+      "language": "Go",
+      "prior_level": 5,
+      "pinned_commit": "e72c2715ade37738aa5c029e8de5285cbe1c9441",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A workqueue serializes keys for concurrent workers, suppresses duplicate in-flight work, and can delay or rate-limit retries."
+        ],
+        "evidence": "Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "queue.go documents and implements the core dirty, processing, condition, shutdown, and drain invariants; sibling delaying and rate-limiting layers extend the lifecycle; default limiters make retry policy explicit; and corresponding focused tests cover concurrency, deduplication, timing, shutdown, draining, fairness, and limiter behavior.",
+      "learning_path": {
+        "goal": "Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.",
+        "start_path": "staging/src/k8s.io/client-go/util/workqueue/queue.go",
+        "supporting_files": [
+          "staging/src/k8s.io/client-go/util/workqueue/doc.go",
+          "staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go",
+          "staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue.go",
+          "staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters.go",
+          "staging/src/k8s.io/client-go/util/workqueue/queue_test.go",
+          "staging/src/k8s.io/client-go/util/workqueue/delaying_queue_test.go",
+          "staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue_test.go",
+          "staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters_test.go"
+        ],
+        "trace": "Start with Add, Get, Done, dirty, processing, and the condition variable in the core queue, then follow shutdown and drain behavior into delayed scheduling and rate-limited requeue policy; close with the four focused suites for concurrency, deduplication, timing, retries, fairness, and shutdown."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "mutex and condition-variable coordination",
+            "goroutines, timers, and channels",
+            "interface-composed rate limiters and typed sets"
+          ],
+          "reason": "Intermediate Go concurrency and composition techniques recur without multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "queued, dirty, processing, delayed, rate-limited, done, shutting-down, and drained states",
+            "duplicate add during processing and retry transitions",
+            "timing, fairness, cancellation, and shutdown branches"
+          ],
+          "reason": "Many tightly coupled concurrent states and failure-sensitive transitions recur in ordinary use."
+        },
+        "design_span": {
+          "signals": [
+            "core typed queue",
+            "delaying queue",
+            "rate-limiting facade and limiter policies",
+            "corresponding focused tests"
+          ],
+          "reason": "A few cohesive sibling components form one bounded workqueue subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "one logical key must not execute concurrently or be lost when re-added",
+            "delays, backoff, fairness, and retries must interact predictably",
+            "shutdown and draining must wake waiters and preserve completion invariants"
+          ],
+          "reason": "Expert concurrency, deduplication, timing, fairness, and shutdown guarantees recur throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/5/3/5 sums to 16, whose mean of 4.00 calculates to Level 4; Kubernetes workqueue ranks first of three qualified Go Level 4 paths.",
+      "reconsider": "Reconsider if queue deduplication, delay, retry, fairness, shutdown, documentation, or focused tests materially change, or a stronger Go Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog's mixed API-server and scheduler path was domain-heavy and incoherent. Root reconciliation adopts the central, domain-neutral client-go workqueue subsystem, applies the lower Language and Design anchors at 3/5/3/5, and resolves Level 4 rank 1 and retention."
+      }
+    },
+    {
+      "repository": "golang/go",
+      "language": "Go",
+      "prior_level": 5,
+      "pinned_commit": "da7c67f59526a02ef22f80fe91fd2960a6547e59",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The Go runtime implements channel send, receive, close, and select by coordinating goroutines, queues, buffers, locks, and the scheduler."
+        ],
+        "evidence": "Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "chan.go documents and implements buffered and unbuffered channel operations and close, select.go supplies multi-channel coordination, runtime2.go defines shared scheduler and wait structures, chan_test.go exercises semantics and regressions, and HACKING.md explains runtime invariants and development conventions.",
+      "learning_path": {
+        "goal": "Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.",
+        "start_path": "src/runtime/chan.go",
+        "supporting_files": [
+          "src/runtime/select.go",
+          "src/runtime/runtime2.go",
+          "src/runtime/chan_test.go",
+          "src/runtime/HACKING.md"
+        ],
+        "trace": "Start with hchan layout and channel creation, follow fast and blocking send and receive through buffers, sudog queues, gopark, and readying, then trace close wakeups and select's lock and race protocol; close with runtime structures, channel tests, and the runtime hacking guide."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "unsafe pointer arithmetic and typed memory operations",
+            "runtime-internal atomics, locks, barriers, and scheduler primitives",
+            "compiler-recognized and nosplit or system-stack mechanisms"
+          ],
+          "reason": "Multiple expert Go runtime and low-level language mechanisms recur throughout channel operations."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "open, buffered, empty, full, waiting, closed, parked, and readied states",
+            "direct handoff, buffer transfer, block, wakeup, close, panic, and select branches",
+            "sender, receiver, scheduler, and garbage-collector interaction"
+          ],
+          "reason": "Many tightly coupled concurrent states and race-sensitive transitions recur throughout normal channel behavior."
+        },
+        "design_span": {
+          "signals": [
+            "channel core and wait queues",
+            "select implementation",
+            "shared runtime scheduler structures",
+            "semantic tests and runtime guide"
+          ],
+          "reason": "Several major runtime components participate, while the trace stays bounded to channels rather than mixing compiler and unrelated runtime systems."
+        },
+        "constraint_burden": {
+          "signals": [
+            "send, receive, close, and select semantics must be race-correct",
+            "lock order, parking, wakeup, stack, and GC barriers must remain safe",
+            "fast paths must preserve fairness, memory-model, panic, and performance guarantees"
+          ],
+          "reason": "Expert concurrency, memory, scheduler, GC, semantic, and performance constraints recur across every channel operation."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 reaches Level 5 with three dimensions scored 5; Go runtime channels are the sole qualified Go Level 5 path.",
+      "reconsider": "Reconsider if runtime channel, select, scheduler, memory, garbage-collector, documentation, or direct-test evidence materially changes, or the Level 5 calibration policy changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog mixed compiler and runtime paths that did not form one teachable trace. Root reconciliation adopts the clearer bounded runtime-channel lifecycle, which independently sustains 5/5/4/5 and the Level 5 guard, and resolves sole Level 5 rank 1 and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 66,
-      "remove": 34
+      "retain": 73,
+      "remove": 37
     },
     "by_language": {
       "JavaScript": {
@@ -7765,32 +8524,51 @@
           "4": 5,
           "5": 1
         }
+      },
+      "Go": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 3,
+          "3": 3,
+          "4": 3,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 20,
-        "retain": 20,
-        "remove": 0
+        "reviewed": 22,
+        "retain": 21,
+        "remove": 1
       },
       "2": {
-        "reviewed": 20,
-        "retain": 14,
+        "reviewed": 22,
+        "retain": 16,
         "remove": 6
       },
       "3": {
-        "reviewed": 20,
-        "retain": 13,
-        "remove": 7
+        "reviewed": 22,
+        "retain": 14,
+        "remove": 8
       },
       "4": {
-        "reviewed": 20,
-        "retain": 9,
-        "remove": 11
+        "reviewed": 22,
+        "retain": 10,
+        "remove": 12
       },
       "5": {
-        "reviewed": 20,
-        "retain": 10,
+        "reviewed": 22,
+        "retain": 12,
         "remove": 10
       }
     },
@@ -7801,28 +8579,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 16,
-        "retain": 16,
-        "remove": 0
+        "scored": 19,
+        "retain": 18,
+        "remove": 1
       },
       "3": {
-        "scored": 27,
-        "retain": 18,
-        "remove": 9
+        "scored": 30,
+        "retain": 20,
+        "remove": 10
       },
       "4": {
-        "scored": 43,
-        "retain": 20,
-        "remove": 23
+        "scored": 46,
+        "retain": 22,
+        "remove": 24
       },
       "5": {
-        "scored": 13,
-        "retain": 12,
+        "scored": 14,
+        "retain": 13,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 33,
+      "qualified_alternate_over_capacity": 36,
       "coding_relevance_domain_gate": 1
     }
   }
