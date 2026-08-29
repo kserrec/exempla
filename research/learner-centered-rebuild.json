@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 90,
+  "reviewed_entry_total": 100,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -6807,12 +6807,773 @@
         "status": "agree",
         "notes": "The independent review and root reconciliation agree that the bounded ResourceOwner path is more domain-neutral than the SQL traffic-cop, executor, or shared-memory queue alternatives and agree on 4/4/3/5, Level 4, comparative rank 3, and capacity removal."
       }
+    },
+    {
+      "repository": "pointfreeco/swift-tagged",
+      "language": "Swift",
+      "prior_level": 1,
+      "pinned_commit": "6a8517578035408b6c14ccba00ee990a1435515c",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A phantom Tag parameter distinguishes values with the same RawValue at compile time while the runtime representation remains one wrapped value."
+        ],
+        "evidence": "The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Tagged.swift keeps the representation and conditional protocol extensions in one documented source file, while TaggedTests.swift directly covers construction, mapping, dynamic members, comparison, literals, encoding, numeric behavior, and coercion.",
+      "learning_path": {
+        "goal": "Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.",
+        "start_path": "Sources/Tagged/Tagged.swift",
+        "supporting_files": [
+          "Tests/TaggedTests/TaggedTests.swift"
+        ],
+        "trace": "Start with Tagged's Tag and RawValue parameters and single rawValue field, then follow mapping and dynamic-member lookup into the recurring conditional conformances; close with tests that show which operations are forwarded, encoded, compared, or deliberately coerced."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 1,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "phantom generic tag parameter",
+            "conditional protocol conformances",
+            "dynamic-member, literal, and Codable forwarding"
+          ],
+          "reason": "Advanced Swift type-system techniques recur throughout the compact implementation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "one wrapped raw value",
+            "local forwarding operations",
+            "no independent runtime lifecycle"
+          ],
+          "reason": "The main trace has one local value state, so compile-time sophistication does not raise runtime behavior above the Level 1 anchor."
+        },
+        "design_span": {
+          "signals": [
+            "one core wrapper abstraction",
+            "one direct test suite"
+          ],
+          "reason": "The lesson is intentionally contained in one production type and its tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "operations exist only when RawValue satisfies matching constraints",
+            "type identity must not alter raw representation",
+            "encoding and literal behavior must preserve RawValue semantics"
+          ],
+          "reason": "Several type-safety and representation constraints recur, but they are compiler-enforced and locally visible."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 4/1/1/3 sums to 9, whose mean of 2.25 calculates to Level 2; Swift Tagged ranks first of two qualified Swift Level 2 paths.",
+      "reconsider": "Reconsider if the wrapper gains a materially broader runtime lifecycle, conditional-conformance or representation evidence changes, or a stronger Swift Level 2 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether recurring advanced type machinery should lift the whole path above Level 2. Root reconciliation applies the lower behavioral anchor: the machinery recurs at Language 4, but one wrapped runtime value keeps Behavior and Design at 1, resolving 4/1/1/3, Level 2, rank 1, and retention."
+      }
+    },
+    {
+      "repository": "JohnSundell/Files",
+      "language": "Swift",
+      "prior_level": 1,
+      "pinned_commit": "e85f2b4a8dfa0f242889f45236f3867d16e40480",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Folder children are filesystem entries exposed as typed File and Folder values."
+        ],
+        "evidence": "Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Files.swift keeps Folder.ChildIterator and ChildSequence beside the File and Folder model, and FilesTests.swift exercises real temporary-directory traversal, recursive and shallow enumeration, filtering, paths, errors, and mutations.",
+      "learning_path": {
+        "goal": "Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders.",
+        "start_path": "Sources/Files.swift",
+        "supporting_files": [
+          "Tests/FilesTests/FilesTests.swift"
+        ],
+        "trace": "Begin at Folder.ChildIterator and ChildSequence, follow FileManager enumeration into typed File or Folder values, then compare shallow, recursive, file-only, and folder-only child sequences; close with temporary-directory tests that verify iteration order, filtering, paths, and failures."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Sequence and IteratorProtocol conformances",
+            "lazy typed child construction",
+            "Foundation error bridging"
+          ],
+          "reason": "Familiar Swift protocol and iterator techniques recur without advanced type-level machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "shallow and recursive traversal",
+            "file and folder filtering",
+            "end-of-sequence and lookup failures"
+          ],
+          "reason": "A few related traversal branches recur within one bounded iterator lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "Folder sequence facade",
+            "child iterator",
+            "FileManager-backed location model"
+          ],
+          "reason": "A small set of cohesive pieces spans the public traversal API and platform adapter."
+        },
+        "constraint_burden": {
+          "signals": [
+            "lazy enumeration must preserve path and type identity",
+            "recursive and shallow modes must remain distinct",
+            "filesystem errors cross the Foundation boundary"
+          ],
+          "reason": "Real filesystem state adds recurring correctness constraints, though the selected trace remains compact."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/2/3 sums to 9, whose mean of 2.25 calculates to Level 2; Files ranks second of two qualified Swift Level 2 paths.",
+      "reconsider": "Reconsider if traversal, Foundation bridging, error behavior, documentation, or focused tests materially change, or a stronger Swift Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews considered broader file-mutation traces as well as child traversal. Root reconciliation chooses Folder.ChildIterator and ChildSequence as the clearest representative bounded lesson, resolves the lower 2/2/2/3 anchor, assigns Level 2 rank 2, and retains it."
+      }
+    },
+    {
+      "repository": "apple/swift-log",
+      "language": "Swift",
+      "prior_level": 2,
+      "pinned_commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Logger filters a level, combines structured metadata, and delegates emission to a configured LogHandler."
+        ],
+        "evidence": "Logging concepts are familiar and quickly defined; the path teaches protocol-backed adapters, value semantics around an existential handler, autoclosure laziness, metadata merging, process-wide bootstrap, and concurrency-safe setup."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Logger and LogHandler document producer and backend contracts, LoggingSystem isolates one-time factory bootstrap, focused logging and global-bootstrap tests cover filtering, laziness, metadata, mutation, concurrency, and repeated setup, and UnderstandingLoggers.md explains the model.",
+      "learning_path": {
+        "goal": "Understand how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup.",
+        "start_path": "Sources/Logging/Logger.swift",
+        "supporting_files": [
+          "Sources/Logging/LogHandler.swift",
+          "Sources/Logging/LoggingSystem.swift",
+          "Tests/LoggingTests/LoggingTest.swift",
+          "Tests/LoggingTests/GlobalLoggingTest.swift",
+          "Sources/Logging/Docs.docc/UnderstandingLoggers.md"
+        ],
+        "trace": "Start at Logger.log and convenience methods, follow level filtering before autoclosure materialization and metadata combination into LogHandler.log, then trace LoggingSystem bootstrap into the handler factory; close with direct call-site and global-bootstrap tests plus the conceptual guide."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "protocol existential backend",
+            "autoclosure-based lazy messages",
+            "value facade with Sendable-aware mutation"
+          ],
+          "reason": "Several intermediate Swift techniques recur across the facade and backend boundary."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "level filtering before message construction",
+            "metadata precedence and handler mutation",
+            "initial and bootstrapped factory states"
+          ],
+          "reason": "Multiple related states and branches recur but remain bounded to one logging pipeline."
+        },
+        "design_span": {
+          "signals": [
+            "Logger facade",
+            "LogHandler extension boundary",
+            "LoggingSystem bootstrap and focused tests"
+          ],
+          "reason": "A few cohesive components form the complete producer-to-backend trace."
+        },
+        "constraint_burden": {
+          "signals": [
+            "messages must stay lazy below the active level",
+            "metadata precedence and source attribution must remain stable",
+            "global bootstrap must be concurrency-safe and effectively one-time"
+          ],
+          "reason": "Performance, compatibility, and process-wide concurrency guarantees recur in ordinary use."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 calculates to Level 3; SwiftLog ranks second of two qualified Swift Level 3 paths.",
+      "reconsider": "Reconsider if filtering, backend, bootstrap, concurrency, documentation, or focused-test evidence materially changes, or a stronger Swift Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on how broadly to include handler implementations and on the Level 3 collision order. Root reconciliation bounds the path to Logger, LogHandler, and bootstrap, resolves 3/3/3/4 at Level 3, and places SwiftLog second behind Vapor's middleware composition lesson."
+      }
+    },
+    {
+      "repository": "apple/swift-system",
+      "language": "Swift",
+      "prior_level": 2,
+      "pinned_commit": "1b452c2996c677d8e435bf0b766fc927176d8c77",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "FileDescriptor and FilePath are typed Swift currency values over POSIX, Darwin, Windows, and WASI file operations."
+        ],
+        "evidence": "Operating-system call vocabulary is concise and subordinate; the path teaches unsafe buffer boundaries, strongly typed flags and handles, conditional compilation, EINTR retry, errno translation, partial I/O, and ownership-aware close behavior."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "FileOperations.swift exposes the actual open, read, write, seek, duplicate, pipe, and close trace; the descriptor, path, errno, utility, and syscall layers document raw contracts, and FileOperationsTest.swift exercises cross-platform success, partial work, errors, and cleanup.",
+      "learning_path": {
+        "goal": "Understand how Swift System wraps low-level file operations without hiding platform differences, partial progress, errors, or resource ownership.",
+        "start_path": "Sources/System/FileOperations.swift",
+        "supporting_files": [
+          "Sources/System/FileDescriptor.swift",
+          "Sources/System/FilePath/FilePath.swift",
+          "Sources/System/Errno.swift",
+          "Sources/System/Util.swift",
+          "Sources/System/Internals/Syscalls.swift",
+          "Tests/SystemTests/FileOperationsTest.swift"
+        ],
+        "trace": "Begin with typed open and close operations, follow paths, access modes, and platform branches into syscall shims and Errno mapping, then trace read, write, and retry loops through unsafe buffers and partial progress; close with focused operation tests across files, pipes, failures, and cleanup."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "unsafe raw and mutable buffer scopes",
+            "typed option sets and raw handles",
+            "extensive platform conditional compilation"
+          ],
+          "reason": "Advanced interoperation and systems-oriented Swift techniques recur across normal operations."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "open, read, write, seek, duplicate, and close states",
+            "partial I/O and retry-on-interrupt branches",
+            "platform-specific success and failure paths"
+          ],
+          "reason": "Several coupled operation and error states recur, bounded within the file-operation subsystem."
+        },
+        "design_span": {
+          "signals": [
+            "typed public currency values",
+            "operation layer",
+            "platform syscall and focused-test layers"
+          ],
+          "reason": "A few clear layers cover the public API through platform execution and tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "pointer validity and buffer lifetimes",
+            "partial progress and EINTR correctness",
+            "cross-platform ABI, errno, ownership, and cleanup guarantees"
+          ],
+          "reason": "Expert safety, portability, failure, and ownership constraints recur throughout ordinary file operations."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/5 sums to 16, whose mean of 4.00 calculates to Level 4; Swift System ranks third behind Alamofire and SwiftLint for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, a fresh comparison ranks this path above a retained entry, or file-operation, platform, ownership, error, documentation, or test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The old FileDescriptor start described types but did not supply the promised operation trace. Root reconciliation adopts the independently verified FileOperations start, keeps the bounded 4/4/3/5 Level 4 placement, ranks it third, and removes it only for capacity."
+      }
+    },
+    {
+      "repository": "Alamofire/Alamofire",
+      "language": "Swift",
+      "prior_level": 3,
+      "pinned_commit": "0455bfb650893e86ad07ace16e5f2d36dadf46f4",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Request owns a URLSession task lifecycle and may consult a RequestInterceptor before retrying a completed attempt."
+        ],
+        "evidence": "HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Request.swift documents and centralizes request state, completion, cancellation, and retry; Session, RequestTaskMap, SessionDelegate, and RequestInterceptor expose the coordinating boundaries, and SessionTests exercises task creation, completion, cancellation, retry, invalidation, and cleanup.",
+      "learning_path": {
+        "goal": "Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.",
+        "start_path": "Source/Core/Request.swift",
+        "supporting_files": [
+          "Source/Core/Session.swift",
+          "Source/Core/RequestTaskMap.swift",
+          "Source/Core/SessionDelegate.swift",
+          "Source/Features/RequestInterceptor.swift",
+          "Tests/SessionTests.swift"
+        ],
+        "trace": "Start at Request completion and retry handling, follow state changes and interceptor decisions into Session task creation, RequestTaskMap ownership, and SessionDelegate callbacks, then return through retry or terminal cleanup; close with Session tests for successful completion, cancellation, retry, invalidation, and task-map removal."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "closure and protocol-based interceptor callbacks",
+            "synchronized mutable request state",
+            "typed request and task coordination"
+          ],
+          "reason": "Intermediate Swift abstraction and synchronization techniques recur without requiring multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "created, resumed, suspended, cancelled, completed, and retried states",
+            "delegate callback and interceptor decision ordering",
+            "success, failure, retry, cancellation, and invalidation branches"
+          ],
+          "reason": "Several coupled asynchronous states and branches recur throughout the bounded request lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "Request state owner",
+            "Session task coordinator",
+            "task map and delegate bridge",
+            "interceptor extension point and integration tests"
+          ],
+          "reason": "Multiple cohesive components participate in one end-to-end retry and completion path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "callbacks must serialize state transitions",
+            "retry must not leak or duplicate URLSession tasks",
+            "cancellation, invalidation, and completion cleanup must remain ordered"
+          ],
+          "reason": "Concurrency, lifecycle, and cleanup constraints recur, but the lesson does not require the whole networking framework."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/4/4 sums to 15, whose mean of 3.75 calculates to Level 4; Alamofire ranks first of five qualified Swift Level 4 paths.",
+      "reconsider": "Reconsider if request retry, task mapping, delegate ordering, cleanup, documentation, or Session test evidence materially changes, or a stronger Swift Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether framework-wide networking breadth justified a higher placement. Root reconciliation scores only the representative completion, retry, task, and cleanup lifecycle, resolves the lower Language 3 anchor at 3/4/4/4, assigns Level 4 rank 1, and retains it."
+      }
+    },
+    {
+      "repository": "vapor/vapor",
+      "language": "Swift",
+      "prior_level": 3,
+      "pinned_commit": "86ab4300efa1b3e270eeba2ca4b253998b734669",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Middleware wraps an HTTP Responder so request handling can be composed as an ordered chain."
+        ],
+        "evidence": "HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Middleware.swift defines the extension contract, MiddlewareConfiguration owns ordering, Application+Middleware connects configured middleware to the application, Responder defines the terminal boundary, and MiddlewareTests verifies order, short-circuiting, errors, and composition.",
+      "learning_path": {
+        "goal": "Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.",
+        "start_path": "Sources/Vapor/Middleware/Middleware.swift",
+        "supporting_files": [
+          "Sources/Vapor/Middleware/MiddlewareConfiguration.swift",
+          "Sources/Vapor/Middleware/Application+Middleware.swift",
+          "Sources/Vapor/HTTP/Responder.swift",
+          "Tests/VaporTests/MiddlewareTests.swift"
+        ],
+        "trace": "Start with Middleware.respond(to:chainingTo:), follow configuration order as middleware wraps the next Responder, then trace the application-built chain into its terminal responder; close with tests for execution order, transformed responses, short circuits, and propagated failures."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "protocol-based middleware and responder contracts",
+            "closure and type-erased composition",
+            "asynchronous response values"
+          ],
+          "reason": "Intermediate Swift protocol and composition techniques recur across the chain."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered before and after behavior",
+            "continue, transform, short-circuit, and error branches",
+            "terminal responder completion"
+          ],
+          "reason": "Several related chain states recur without a broad independent lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "middleware extension point",
+            "ordered configuration",
+            "application assembly and terminal responder"
+          ],
+          "reason": "A few cohesive components cover the complete composition path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "configured order must be preserved",
+            "each layer must invoke or intentionally bypass the next responder",
+            "responses and errors must propagate through the chain"
+          ],
+          "reason": "Composition and propagation constraints recur but are locally inspectable and directly tested."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/3 sums to 12, whose mean of 3.00 calculates to Level 3; Vapor's middleware path ranks first of two qualified Swift Level 3 paths.",
+      "reconsider": "Reconsider if middleware ordering, responder composition, error behavior, documentation, or focused tests materially change, or a stronger Swift Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The original Application, Request, and RouteTests grouping did not form one coherent learning trace. Root reconciliation adopts the independently identified middleware composition path, applies the lower 3/3/3/3 anchor, assigns Level 3 rank 1, and retains it."
+      }
+    },
+    {
+      "repository": "apple/swift-nio",
+      "language": "Swift",
+      "prior_level": 4,
+      "pinned_commit": "a931f2c1de8dd49381ce3bf2e279d033f68d8865",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "EventLoopFuture represents a result whose callbacks and transformations are confined to an EventLoop."
+        ],
+        "evidence": "Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "EventLoopFuture.swift and EventLoop.swift carry extensive contracts for affinity, completion, callback ordering, and thread safety; EventLoopFutureTest covers transformations, combination, cascading, failure, scheduling, and edge cases, while the public async API guide explains compatibility boundaries.",
+      "learning_path": {
+        "goal": "Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.",
+        "start_path": "Sources/NIOCore/EventLoopFuture.swift",
+        "supporting_files": [
+          "Sources/NIOCore/EventLoop.swift",
+          "Tests/NIOPosixTests/EventLoopFutureTest.swift",
+          "docs/public-async-nio-apis.md"
+        ],
+        "trace": "Begin with EventLoopFuture and Promise completion, follow map, flatMap, cascade, and aggregate operations through event-loop scheduling and callback queues, then examine failure and async-await bridges; close with the focused future tests and the public async API compatibility guidance."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "deep generic future and promise composition",
+            "Sendable and concurrency-aware callback APIs",
+            "async-await bridging with performance-sensitive specialization"
+          ],
+          "reason": "Multiple expert Swift mechanisms recur in the core future implementation and public composition surface."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "pending and completed success or failure states",
+            "scheduled callback, cascade, aggregate, and cancellation behavior",
+            "cross-thread submission and event-loop-affine execution"
+          ],
+          "reason": "Many coupled asynchronous states and failure branches recur throughout normal future work."
+        },
+        "design_span": {
+          "signals": [
+            "future and promise core",
+            "EventLoop execution contract",
+            "async compatibility policy",
+            "large focused regression suite"
+          ],
+          "reason": "Several major components participate, but the path remains bounded below the entire networking stack."
+        },
+        "constraint_burden": {
+          "signals": [
+            "callbacks must execute on the owning event loop",
+            "completion must be exactly once with ordered propagation",
+            "thread safety, cancellation, failure, and allocation costs must remain controlled"
+          ],
+          "reason": "Expert concurrency, ordering, safety, and performance guarantees recur throughout the representative path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and the published calibration scores 5/5/4/5 sum to 19, whose mean of 4.75 reaches Level 5 with three dimensions scored 5; SwiftNIO is the sole qualified Swift Level 5 path.",
+      "reconsider": "Reconsider if the published calibration anchor changes, or future, event-loop, async-bridge, concurrency, documentation, or regression-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review preferred a different bounded subsystem over the catalog's broad Channel and custom-channel trace. Root reconciliation preserves the published Level 5 calibration scores but replaces that broad trace with the clearer EventLoopFuture lifecycle, which independently sustains 5/5/4/5 and the Level 5 guard."
+      }
+    },
+    {
+      "repository": "realm/SwiftLint",
+      "language": "Swift",
+      "prior_level": 4,
+      "pinned_commit": "29d5c2b0484c9cf52d9745402160e59b7741b1db",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The sorted_imports rule groups adjacent Swift import declarations, reports inversions, and rewrites each block into configured order."
+        ],
+        "evidence": "Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SortedImportsRule.swift contains a focused visitor and rewriter, its examples and configuration define observable contracts, the core visitor and correctable-rule protocols plus macro expose integration mechanics, and generated tests and TestHelpers close the rule's violation and correction path.",
+      "learning_path": {
+        "goal": "Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.",
+        "start_path": "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift",
+        "supporting_files": [
+          "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRuleExamples.swift",
+          "Source/SwiftLintBuiltInRules/Rules/RuleConfigurations/SortedImportsConfiguration.swift",
+          "Source/SwiftLintCore/Protocols/SwiftSyntaxCorrectableRule.swift",
+          "Source/SwiftLintCore/Visitors/ViolationsSyntaxVisitor.swift",
+          "Source/SwiftLintCoreMacros/SwiftSyntaxRule.swift",
+          "Tests/GeneratedTests/GeneratedTests_08.swift",
+          "Tests/TestHelpers/TestHelpers.swift"
+        ],
+        "trace": "Start with the rule's visitor collecting adjacent ImportDeclSyntax nodes and reporting inversions, then follow the rewriter's block sorting, configuration, disabled regions, trivia preservation, and correction count through shared visitor and macro machinery; close with examples and generated rule tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "SwiftSyntax visitor and rewriter subclasses",
+            "macro-generated rule conformance",
+            "typed syntax and trivia transformations"
+          ],
+          "reason": "Advanced compiler-tooling and source-rewriting techniques recur across the rule lifecycle."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "collect, group, compare, report, and rewrite phases",
+            "adjacent, conditional-compilation, disabled-region, and trivia branches",
+            "violation and correction outcomes"
+          ],
+          "reason": "Several related rule states recur, but they remain bounded to one syntax transformation."
+        },
+        "design_span": {
+          "signals": [
+            "built-in rule implementation",
+            "shared visitor and correction protocols",
+            "macro integration and generated test harness"
+          ],
+          "reason": "A few clear components connect one rule to reusable infrastructure and direct tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "sorting must respect configured grouping and case behavior",
+            "comments, trivia, conditional blocks, and disabled regions must survive correction",
+            "reported positions and correction counts must remain stable"
+          ],
+          "reason": "Source-preservation and diagnostic correctness constraints recur across detection and correction."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; SwiftLint ranks second of five qualified Swift Level 4 paths.",
+      "reconsider": "Reconsider if SwiftSyntax integration, correction preservation, configuration, generated tests, or shared rule contracts materially change, or a stronger Swift Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The old Linter and CoreTests or RuleTests pairing did not close one representative trace and encouraged framework-wide inflation. Root reconciliation adopts the focused SortedImports lifecycle, resolves 4/3/3/4 at Level 4, assigns rank 2, and retains it."
+      }
+    },
+    {
+      "repository": "signalapp/Signal-iOS",
+      "language": "Swift",
+      "prior_level": 5,
+      "pinned_commit": "eec0a2f587b49082efdb5a4dc1e2a491fd52144f",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "MessageLoader incrementally loads conversation items around a requested display position and returns batches to CVLoader."
+        ],
+        "evidence": "Conversation and display vocabulary is brief; the replacement path is programming-led and teaches bounded batch loading, cursor and range progression, cache-aware state, direction changes, empty and terminal cases, and asynchronous coordination without requiring cryptographic protocol expertise."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "MessageLoader.swift centralizes the loading state machine, CVLoader shows its production consumer, and the dedicated MessageLoader and batch tests exercise initial, older, newer, overlapping, empty, boundary, and repeated-load behavior.",
+      "learning_path": {
+        "goal": "Understand how Signal incrementally loads stable conversation-display batches around a changing viewport without studying message encryption or product policy.",
+        "start_path": "Signal/ConversationView/Loading/MessageLoader.swift",
+        "supporting_files": [
+          "Signal/ConversationView/Loading/CVLoader.swift",
+          "Signal/test/ViewControllers/MessageLoaderTest.swift",
+          "Signal/test/ViewControllers/MessageLoaderBatchTest.swift"
+        ],
+        "trace": "Start with MessageLoader's current batch and load request, follow directional range selection and cursor progression into the next batch, then see CVLoader consume the result; close with dedicated tests for initial positioning, older and newer loads, overlap, empty results, boundaries, and repeated requests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "typed batch and range models",
+            "closure and asynchronous loader coordination",
+            "collection-oriented state updates"
+          ],
+          "reason": "Intermediate Swift modeling and asynchronous techniques recur without expert cryptographic or language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "initial, older, newer, overlapping, empty, and terminal loads",
+            "cursor and loaded-range progression",
+            "consumer update and repeated-request branches"
+          ],
+          "reason": "Several coupled loader states and boundary branches recur throughout the representative path."
+        },
+        "design_span": {
+          "signals": [
+            "MessageLoader state owner",
+            "CVLoader production consumer",
+            "two dedicated batch and loader test suites"
+          ],
+          "reason": "A few cohesive components cover loading, consumption, and direct verification."
+        },
+        "constraint_burden": {
+          "signals": [
+            "batches must advance without gaps or accidental duplication",
+            "direction and display position must preserve stable boundaries",
+            "empty, repeated, and terminal loads must not corrupt loader state"
+          ],
+          "reason": "Ordering, boundary, and incremental-state constraints recur, but remain independent of Signal's cryptographic domain."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass on the replacement path and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Signal's MessageLoader ranks fourth behind Alamofire, SwiftLint, and Swift System for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, a fresh comparison ranks MessageLoader above a retained path, or loading-state, batch-boundary, consumer, documentation, or dedicated-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews found that the original MessageSender path hard-failed the coding/domain gate because meaningful study required cryptographic protocol expertise. Root reconciliation does not reject the project: it adopts the central, domain-neutral MessageLoader replacement, resolves 3/4/3/4 at Level 4, and removes it only at comparative rank 4."
+      }
+    },
+    {
+      "repository": "mozilla-mobile/firefox-ios",
+      "language": "Swift",
+      "prior_level": 5,
+      "pinned_commit": "b0799c34c313be9e832b749794f91277a9ce57eb",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "TabRestorer rebuilds saved browser tabs and reports restoration results to a delegate and the tab manager."
+        ],
+        "evidence": "Tab and restoration vocabulary is brief; the bounded path teaches asynchronous reconstruction, result modeling, delegate callbacks, partial failure, selection and ordering, feature-gated integration, and direct lifecycle tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "TabRestorer.swift isolates reconstruction, TabRestorationResult and TabRestorerDelegate make outcomes explicit, TabManagerImplementation supplies the production integration, and the focused restorer and manager restoration tests cover order, selection, empty input, failures, and completion. The feature-gated or proposed status reduces comparative clarity but is not a quality-gate failure.",
+      "learning_path": {
+        "goal": "Understand how Firefox for iOS reconstructs a saved tab set, preserves ordering and selection, and reports partial restoration outcomes.",
+        "start_path": "firefox-ios/Client/TabManagement/TabRestorer.swift",
+        "supporting_files": [
+          "firefox-ios/Client/TabManagement/TabRestorationResult.swift",
+          "firefox-ios/Client/TabManagement/TabRestorerDelegate.swift",
+          "firefox-ios/Client/TabManagement/TabManagerImplementation.swift",
+          "firefox-ios/firefox-ios-tests/Tests/ClientTests/TabManagement/TabRestorerTests.swift",
+          "firefox-ios/firefox-ios-tests/Tests/ClientTests/TabManagement/TabManagerRestoreTabsTests.swift"
+        ],
+        "trace": "Start with TabRestorer's saved-tab input and reconstruction loop, follow successful and failed restorations into TabRestorationResult and delegate callbacks, then trace the relevant tab-manager restore integration; close with focused tests for ordering, selected tabs, empty state, partial failure, and completion."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "async restoration workflow",
+            "typed result modeling",
+            "protocol delegate and manager integration"
+          ],
+          "reason": "Intermediate Swift concurrency and protocol techniques recur without multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "pending, restored, failed, selected, and completed states",
+            "empty, full-success, and partial-failure branches",
+            "ordered manager and delegate updates"
+          ],
+          "reason": "Several coupled restoration states recur throughout the bounded workflow."
+        },
+        "design_span": {
+          "signals": [
+            "restorer workflow",
+            "result and delegate contracts",
+            "tab-manager integration and focused tests"
+          ],
+          "reason": "A few cohesive components cover one end-to-end restoration path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "saved ordering and selected-tab identity must survive reconstruction",
+            "partial failures must yield coherent results",
+            "manager and delegate completion must occur once in the correct order"
+          ],
+          "reason": "Ordering, identity, failure, and completion constraints recur, though the feature-gated path is less settled than higher-ranked alternatives."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Firefox TabRestorer ranks fifth behind Alamofire, SwiftLint, Swift System, and Signal MessageLoader for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, the restoration design becomes established rather than feature-gated or proposed, a fresh comparison raises its rank, or restoration, manager, delegate, documentation, or focused-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog's broad TabManagerImplementation path encouraged whole-browser breadth and an inflated placement. Root reconciliation adopts the bounded TabRestorer workflow, resolves 3/4/3/4 at Level 4, records its feature-gated or proposed comparative weakness, ranks it fifth, and removes it only for capacity."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 59,
-      "remove": 31
+      "retain": 66,
+      "remove": 34
     },
     "by_language": {
       "JavaScript": {
@@ -6985,33 +7746,52 @@
           "4": 5,
           "5": 2
         }
+      },
+      "Swift": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 5,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 18,
-        "retain": 18,
+        "reviewed": 20,
+        "retain": 20,
         "remove": 0
       },
       "2": {
-        "reviewed": 18,
-        "retain": 13,
-        "remove": 5
+        "reviewed": 20,
+        "retain": 14,
+        "remove": 6
       },
       "3": {
-        "reviewed": 18,
-        "retain": 11,
+        "reviewed": 20,
+        "retain": 13,
         "remove": 7
       },
       "4": {
-        "reviewed": 18,
-        "retain": 7,
+        "reviewed": 20,
+        "retain": 9,
         "remove": 11
       },
       "5": {
-        "reviewed": 18,
+        "reviewed": 20,
         "retain": 10,
-        "remove": 8
+        "remove": 10
       }
     },
     "by_new_level": {
@@ -7021,28 +7801,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 14,
-        "retain": 14,
+        "scored": 16,
+        "retain": 16,
         "remove": 0
       },
       "3": {
-        "scored": 25,
-        "retain": 16,
+        "scored": 27,
+        "retain": 18,
         "remove": 9
       },
       "4": {
-        "scored": 38,
-        "retain": 18,
-        "remove": 20
+        "scored": 43,
+        "retain": 20,
+        "remove": 23
       },
       "5": {
-        "scored": 12,
-        "retain": 11,
+        "scored": 13,
+        "retain": 12,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 30,
+      "qualified_alternate_over_capacity": 33,
       "coding_relevance_domain_gate": 1
     }
   }
