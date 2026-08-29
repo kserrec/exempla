@@ -110,6 +110,117 @@
       }
     },
     {
+      "slug": "gsl",
+      "repository": "microsoft/GSL",
+      "url": "https://github.com/microsoft/GSL",
+      "primary_language": "C++",
+      "language_evidence": "The final_action class, finally factory, move-only ownership transfer, and direct contract tests are implemented in C++ in include/gsl/util and tests/utils_tests.cpp.",
+      "description": "Microsoft's header-only implementation of selected C++ Core Guidelines support types and utilities.",
+      "real_world_evidence": "The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.",
+      "why_study": "The final_action path shows how a small move-only RAII object owns one cleanup action at scope exit and transfers that responsibility safely when moved.",
+      "learn": [
+        "Use `include/gsl/util` to study the following transferable techniques and behaviors: RAII scope cleanup, generic callable storage, perfect forwarding, decay, move-only ownership, single-invocation responsibility under ordinary lifetime, noexcept construction and destruction, and a convenience factory that preserves value categories."
+      ],
+      "prerequisites": [
+        "Before reading `include/gsl/util`, be familiar with the following concepts: C++14 templates, lambdas and function pointers, RAII, destructors, move construction, perfect forwarding, type decay, std::exchange, and noexcept behavior."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A scope guard owns a cleanup callback and invokes it when the guard leaves scope unless responsibility has been transferred to another guard."
+        ],
+        "reason": "Scope cleanup is a standard programming concern needing only one local definition; the path teaches transferable RAII, ownership transfer, generic callables, exception-safety policy, API design, and direct lifecycle testing."
+      },
+      "learning_path": {
+        "goal": "Understand how final_action stores a cleanup callable, invokes it once at scope exit, and transfers that responsibility safely through move construction.",
+        "start_here": {
+          "path": "include/gsl/util",
+          "reason": "include/gsl/util contains the complete final_action class, its armed state, move-only ownership transfer, destructor, and finally factory."
+        },
+        "supporting_files": [
+          "tests/utils_tests.cpp",
+          "docs/headers.md"
+        ],
+        "trace": "Start at finally's decay and forwarding into final_action, follow callable storage and the invoke flag through construction, move construction with std::exchange, and noexcept destruction, then close the path with the lambda, moved-guard, lvalue, and function-pointer tests and the public header contract."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "generic callable storage and decay",
+            "perfect forwarding into a factory",
+            "move-only RAII ownership with std::exchange"
+          ],
+          "reason": "Templates, forwarding, type transformation, and move-only RAII materially shape the tiny public utility, but remain localized and conventional."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "armed and disarmed guard lifecycle",
+            "one scope-exit callback under ordinary lifetime",
+            "responsibility transfer during moves"
+          ],
+          "reason": "One small lifecycle and ownership transfer determine whether cleanup runs, with no asynchronous or distributed state."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one final_action utility",
+            "one convenience factory and direct test group"
+          ],
+          "reason": "The complete behavior is one focused header component with direct tests and documentation."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "the active guard invokes cleanup once during ordinary destruction",
+            "moved-from guards must become inert",
+            "noexcept destruction and no-exception builds",
+            "C++14 and multiple-compiler compatibility"
+          ],
+          "reason": "Several ownership, exception-safety, and portability guarantees constrain an otherwise small implementation."
+        },
+        "placement": "The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "The compact class makes callable ownership, the armed flag, move transfer, and destructor invocation explicit, with comments explaining its purpose and unavoidable padding.",
+        "architecture": "final_action owns one callable and invocation flag, while finally provides deduction and forwarding; no unrelated subsystem is needed for the selected behavior.",
+        "naming_and_idiom": "final_action, finally, invoke, std::decay_t, std::forward, std::move, and std::exchange directly express generic RAII ownership.",
+        "tests": "tests/utils_tests.cpp covers scope-exit timing, one callback after moving, inert moved-from guards, const and mutable lvalue lambdas, lambdas, function pointers, and functions.",
+        "documentation": "README.md and docs/headers.md document final_action, finally, move-only behavior, scope-exit invocation, and noexcept signatures.",
+        "traceability": "A callback can be followed from finally through decay and construction, into move ownership or the original guard, and finally into one destructor call verified by direct counter assertions.",
+        "maintainability": "A single data-bearing class, deleted copy and assignment operations, explicit move disarming, and focused lifecycle tests tightly constrain changes.",
+        "educational_value": "The path is a compact production example of generic RAII and single-owner cleanup. It has no explicit dismiss operation; moving is the only disarming mechanism, and a throwing callable copy, move, or invocation cannot escape the unconditional noexcept boundary."
+      },
+      "inspection": {
+        "commit": "417ef685eafd626db765f0027b7fc5a0057e0770",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "include/gsl/util",
+          "tests/utils_tests.cpp",
+          "docs/headers.md",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C++",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "cli11",
       "repository": "CLIUtils/CLI11",
       "url": "https://github.com/CLIUtils/CLI11",
@@ -561,6 +672,136 @@
         "primary_language": "C++",
         "archived": false,
         "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "asio",
+      "repository": "boostorg/asio",
+      "url": "https://github.com/boostorg/asio",
+      "primary_language": "C++",
+      "language_evidence": "The async_compose and composed APIs, intermediate handler, work tracking, completion-token adaptation, associated executor and allocator propagation, cancellation state, and direct tests are C++ under include/boost/asio, test/compose.cpp, and test/composed.cpp.",
+      "description": "Boost.Asio's portable asynchronous I/O library for networking, timers, executors, completion tokens, coroutines, and composed operations.",
+      "real_world_evidence": "Boost distributes Asio as its portable low-level I/O library with versioned reference documentation, examples, tests, and release integration.",
+      "why_study": "The async_compose path shows how a user state machine becomes a conforming asynchronous operation while preserving completion-token return types, handler characteristics, outstanding work, cancellation, Asio work-guard release, and the model's at-most-once completion contract.",
+      "learn": [
+        "Use `include/boost/asio/compose.hpp` to study the following transferable techniques and behaviors: Variadic completion signatures, forwarding and decay, completion-token adaptation, stateful intermediate handlers, associated executor and allocator propagation, outstanding-work guards, per-operation cancellation filters, asynchronous state machines, resource lifetime, result delivery, and at-most-once completion contracts."
+      ],
+      "prerequisites": [
+        "Before reading `include/boost/asio/compose.hpp`, be familiar with the following concepts: Expert C++ templates and traits, variadic templates, perfect forwarding, callable adaptation, executors, allocators, asynchronous callbacks, state machines, cancellation, ownership, and resource lifetime."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An initiating function starts background work, a completion token selects the caller-facing result mechanism, and the resulting completion handler is invoked at most once after temporary operation resources are released.",
+          "An asynchronous agent's associated executor, allocator, and cancellation slot determine where completion runs, how memory is obtained, and how one operation receives targeted cancellation."
+        ],
+        "reason": "The asynchronous-operation vocabulary is documented locally and consists of broadly reusable concurrency abstractions; the difficulty comes from transferable generic API design, scheduling, cancellation, resource lifetime, ownership, compatibility, and race-sensitive contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how async_compose turns a stateful implementation into a conforming asynchronous operation while preserving completion-token behavior, associated characteristics, work, cancellation, and the at-most-once result-delivery contract.",
+        "start_here": {
+          "path": "include/boost/asio/compose.hpp",
+          "reason": "compose.hpp exposes async_compose, its completion signature and token contract, the supplied I/O executors, cancellation policy, and the handoff into composed and async_initiate."
+        },
+        "supporting_files": [
+          "include/boost/asio/composed.hpp",
+          "include/boost/asio/async_result.hpp",
+          "include/boost/asio/detail/composed_work.hpp",
+          "include/boost/asio/detail/base_from_cancellation_state.hpp",
+          "test/compose.cpp",
+          "test/composed.cpp",
+          "doc/overview/compose.qbk",
+          "doc/overview/model/async_ops.qbk",
+          "doc/overview/model/associators.qbk",
+          "doc/overview/model/cancellation.qbk"
+        ],
+        "trace": "Begin at async_compose's completion signature, implementation, token, and I/O objects; follow async_initiate into composed's initiation object, composed_op handler wrapping, associated executor and allocator forwarding, recursive work guards, cancellation-state setup and reset, state-machine re-entry, Asio work-guard reset, and final handler call; close both public APIs with test/compose.cpp and test/composed.cpp across zero- and one-result cases and the default, partial, and total cancellation matrix."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "variadic completion signatures and recursive template specializations",
+            "perfect forwarding, decay, and value-category-sensitive initiation",
+            "completion-token result adaptation through async_result and async_initiate",
+            "associator customization for wrapped handlers and executor families"
+          ],
+          "reason": "Several expert generic-programming, callable-adaptation, customization, and overload mechanisms interact pervasively across the public and intermediate-handler path."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "multi-step asynchronous state-machine re-entry",
+            "outstanding-work and executor lifetime",
+            "terminal, partial, and total cancellation propagation",
+            "at-most-once completion contract and Asio work-guard reset"
+          ],
+          "reason": "Scheduling, cancellation, state transitions, handler invocation, and resource lifetime interact across callbacks and require nonlocal asynchronous reasoning."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public composition and completion-token APIs",
+            "initiation and intermediate-handler layers",
+            "work, executor, allocator, and cancellation collaborators",
+            "multiple completion signatures and execution modes"
+          ],
+          "reason": "The selected behavior crosses many meaningful generic and runtime boundaries while remaining one bounded Asio composition subsystem."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "the implementation must invoke its completion handler at most once",
+            "Asio work guards reset before final completion while user-owned state remains the implementation's responsibility",
+            "associated executor, allocator, and cancellation compatibility",
+            "outstanding-work, forwarding, ownership, scheduling, and portability guarantees"
+          ],
+          "reason": "Several system-wide correctness, resource, compatibility, and scheduling guarantees interact across the asynchronous operation lifecycle."
+        },
+        "placement": "The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "Public composition, handler wrapping, work tracking, cancellation state, and token adaptation are separated into named templates with detailed lifecycle and contract comments.",
+        "architecture": "async_compose exposes the API, async_result adapts tokens, composed_op owns intermediate state and handler characteristics, composed_work retains executors, and the cancellation base isolates per-operation policy.",
+        "naming_and_idiom": "async_compose, async_initiate, composed_op, complete, composed_work, get_executor, get_allocator, reset_cancellation_state, and cancelled preserve the asynchronous model's vocabulary.",
+        "tests": "test/compose.cpp and test/composed.cpp directly cover the two public composition APIs with deferred execution, lvalue and bound handlers, zero and one result arguments, single invocation in the tested state machines, and no, terminal, partial, and total cancellation behavior; they do not directly isolate associator forwarding or work guards.",
+        "documentation": "The composition and asynchronous-model guides explain initiating functions, completion tokens, at-most-once handlers, resource release, associators, work tracking, cancellation slots, and the state-machine pattern used by this path.",
+        "traceability": "A composed operation can be followed from its initiating function and token through handler construction, associated characteristics, state-machine callbacks, cancellation filtering, Asio work-guard reset, final result delivery, and the focused cancellation matrix.",
+        "maintainability": "Explicit API, initiation, handler, work, and cancellation boundaries plus direct contract tests constrain changes to a highly generic asynchronous subsystem.",
+        "educational_value": "The path provides an expert production account of building a reusable asynchronous abstraction where template adaptation, scheduling, cancellation, resource lifetime, and an at-most-once completion contract must agree; composed_op helps conforming code but does not prevent a user state machine from calling complete twice."
+      },
+      "inspection": {
+        "commit": "a7dc25b4cb6c49a6946d86ea20664f1027203225",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "include/boost/asio/compose.hpp",
+          "include/boost/asio/composed.hpp",
+          "include/boost/asio/async_result.hpp",
+          "include/boost/asio/detail/composed_work.hpp",
+          "include/boost/asio/detail/base_from_cancellation_state.hpp",
+          "test/compose.cpp",
+          "test/composed.cpp",
+          "doc/overview/compose.qbk",
+          "doc/overview/model/async_ops.qbk",
+          "doc/overview/model/associators.qbk",
+          "doc/overview/model/cancellation.qbk"
+        ]
+      },
+      "license": {
+        "spdx": "BSL-1.0",
+        "urls": [
+          "https://github.com/boostorg/asio/blob/a7dc25b4cb6c49a6946d86ea20664f1027203225/include/boost/asio/compose.hpp"
+        ]
+      },
+      "github": {
+        "primary_language": "C++",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
       }
     },
     {

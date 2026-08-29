@@ -968,6 +968,22 @@
       "failed_requirement": "meaningful first-party implementation and behavioral tests in the cataloged language",
       "evidence": "Reject at the TypeScript language-eligibility gate: package exports index.js as the runtime, all linked-list queue behavior, iteration, and draining are implemented in index.js, and every behavioral test is in test.js. TypeScript consists only of index.d.ts and one dequeue assertion in index.test-d.ts, so no meaningful first-party TypeScript implementation-to-behavioral-test path exists. The hard failure precedes quality ranking, diagnostic scores, or capacity comparison.",
       "reconsider": "Reconsider only at a stable pin where the queue implementation and its direct behavioral tests are substantive first-party TypeScript rather than declarations and one type assertion, or re-audit it as a JavaScript candidate without implying a TypeScript runtime."
+    },
+    {
+      "repository": "Neargye/semver",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 4/3/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; CLI11 and Mustache already fill that level with more complementary command-parser and template-engine paths, so the two-entry cap excludes semver. The scores were locked before capacity was inspected. A focused C++17 probe compiled with warnings as errors and verified prerelease precedence, build metadata, range unions, containment, and upper bounds. The range grammar is an explicitly narrower library contract than all ecosystem SemVer range dialects; the 512-byte default input limit is configurable but must match across translation units; generated bounds must fit the selected unsigned component types; compile-time features vary by toolchain; prerelease policy changes containment; and inclusion undefines platform major and minor macros.",
+      "reconsider": "Reconsider if a C++ Level 3 place opens, the two-entry cap changes, a retained Level 3 path weakens on re-audit, or comparative review shows the generic version-and-range parser now provides stronger and sufficiently distinct learning value; rerank it at Level 3 without broadening its documented grammar or lowering it into Level 1."
+    },
+    {
+      "repository": "Neargye/nameof",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 5/2/2/4 sums to 13, whose mean is 3.25; the rubric's score-of-5 guardrail raises the result to Level 4. Catch2 and spdlog already fill that level with more complementary testing-framework and asynchronous-logging paths, so the two-entry cap excludes nameof. The scores were locked before capacity was inspected. A focused C++17 probe compiled with warnings as errors and verified enum-name lookup. The compiler-specific backend depends on signature strings; ordinary runtime lookup defaults to -128 through 127, clamps to the underlying type, and requires custom ranges below UINT16_MAX values; the constant-value overload is not range-bound; aliases may vary by compiler; C++26 reflection ignores ranges and chooses the first alias; forced-backend configuration must match across translation units; and forward-declared enums are unsupported.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, the two-entry cap changes, a retained Level 4 path weakens on re-audit, or standard reflection materially changes the selected enum-name path and comparative value; rerank it under the score-of-5 guardrail and retain every compiler-signature, range, alias, and backend limitation."
     }
   ]
 }

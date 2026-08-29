@@ -999,13 +999,280 @@
         "5": 0
       },
       "conclusion": "Four independent discovery channels and five exact-pin inspections found one qualified Level 2 path, one quality-gate rejection, one qualified Level 4 capacity alternate, and two packages without TypeScript runtime paths. tiny-invariant fills the sole Level 2 place; both Level 1 places and the Level 3 place remain honest because no candidate was moved downward and ofetch's open-slot fit could not override its quality failure."
+    },
+    {
+      "order": 7,
+      "language_slug": "cpp",
+      "language": "C++",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "agauniyal/rang",
+          "level": 2
+        },
+        {
+          "repository": "CLIUtils/CLI11",
+          "level": 3
+        },
+        {
+          "repository": "kainjow/Mustache",
+          "level": 3
+        },
+        {
+          "repository": "catchorg/Catch2",
+          "level": 4
+        },
+        {
+          "repository": "gabime/spdlog",
+          "level": 4
+        },
+        {
+          "repository": "facebook/folly",
+          "level": 5
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
+      "discovery_channels": [
+        {
+          "id": "vcpkg-registry",
+          "channel": "vcpkg package registry and port metadata",
+          "sources": [
+            "https://github.com/microsoft/vcpkg/tree/master/ports/ms-gsl",
+            "https://github.com/microsoft/vcpkg/tree/master/ports/neargye-semver",
+            "https://github.com/microsoft/vcpkg/tree/master/ports/nameof",
+            "https://github.com/microsoft/vcpkg/tree/master/ports/boost-asio"
+          ],
+          "evidence": "The public C++ package registry independently surfaced installable GSL, semver, nameof, and Asio leads without using registry presence as admission or level evidence."
+        },
+        {
+          "id": "github-cpp-source-search",
+          "channel": "GitHub C++ source, size, maintenance, and public-status search",
+          "sources": [
+            "https://api.github.com/search/repositories?q=language%3AC%2B%2B+archived%3Afalse+size%3A%3C5000&sort=updated&order=desc&per_page=20",
+            "https://github.com/microsoft/GSL",
+            "https://github.com/boostorg/asio",
+            "https://github.com/Neargye/semver",
+            "https://github.com/Neargye/nameof"
+          ],
+          "evidence": "A constrained public-source search deliberately included small and large current repositories, after which exact repository metadata and pinned trees established implementation language, maintenance state, source, tests, documentation, and license evidence."
+        },
+        {
+          "id": "cpp-library-curation",
+          "channel": "curated modern C++ library lists",
+          "sources": [
+            "https://github.com/fffaraz/awesome-cpp",
+            "https://github.com/uhub/awesome-cpp"
+          ],
+          "evidence": "Independent general C++ curation surfaced compact header-only utilities and broader production libraries for comparison, including GSL, semver, nameof, and Asio."
+        },
+        {
+          "id": "boost-library-catalog",
+          "channel": "official Boost library catalog and Asio documentation",
+          "sources": [
+            "https://www.boost.org/library/latest/asio/",
+            "https://www.boost.org/doc/libs/latest/doc/html/boost_asio.html",
+            "https://www.boost.org/doc/libs/latest/doc/html/boost_asio/overview/model.html"
+          ],
+          "evidence": "Boost's official catalog and current Asio model documentation independently surfaced the composed-operation path and defined its completion-token, associated-characteristic, work, cancellation, and resource-lifetime contracts."
+        },
+        {
+          "id": "cpp-core-guidelines",
+          "channel": "C++ Core Guidelines utility recommendations",
+          "sources": [
+            "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#re-finally",
+            "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#ss-utilities",
+            "https://github.com/microsoft/GSL"
+          ],
+          "evidence": "The public C++ Core Guidelines independently identified final_action as the recommended scope-cleanup abstraction and linked it to Microsoft's concrete GSL implementation."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "microsoft/GSL",
+          "pinned_commit": "417ef685eafd626db765f0027b7fc5a0057e0770",
+          "discovered_via": [
+            "vcpkg-registry",
+            "github-cpp-source-search",
+            "cpp-library-curation",
+            "cpp-core-guidelines"
+          ],
+          "inspection_files": [
+            "include/gsl/util",
+            "tests/utils_tests.cpp",
+            "docs/headers.md",
+            "README.md",
+            "LICENSE"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "A scope guard needs only one local definition; the complete path teaches transferable C++14 templates, perfect forwarding, decay, RAII, move-only responsibility, single-owner cleanup under ordinary lifetime, noexcept policy, portability, and lifecycle testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional compact source, one coherent class-and-factory boundary, idiomatic RAII and move naming, direct lambda, function, and moved-guard tests, matching public documentation, complete callback-to-destruction traceability, explicit copy and assignment restrictions, and strong focused teaching value support all eight quality findings.",
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 2,
+            "design_span": 1,
+            "constraint_burden": 3
+          },
+          "calculated_level": 2,
+          "decision_evidence": "The scores were written before capacity was checked. The 3/2/1/3 profile sums to 9, whose mean is Level 2; both gates pass and the one open C++ Level 2 place accepts GSL's final_action path. A focused C++14 probe compiled with -Wall, -Wextra, and -Werror and verified that moving a guard transfers responsibility and produces one callback under ordinary lifetime. The upstream tests were inspected but their CMake suite was not run because CMake is unavailable locally. There is no explicit dismiss operation; moving is the only disarming mechanism, and a throwing callable copy, move, or invocation cannot escape the unconditional noexcept boundary.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and final_action-to-tests path, both gates and all eight findings, the 3/2/1/3 Level 2 result, the open slot, C++ and MIT evidence, and the ordinary-lifetime, moved-from, no-dismiss, C++14, and unconditional-noexcept claim boundaries."
+          }
+        },
+        {
+          "repository": "boostorg/asio",
+          "pinned_commit": "a7dc25b4cb6c49a6946d86ea20664f1027203225",
+          "discovered_via": [
+            "vcpkg-registry",
+            "github-cpp-source-search",
+            "cpp-library-curation",
+            "boost-library-catalog"
+          ],
+          "inspection_files": [
+            "include/boost/asio/compose.hpp",
+            "include/boost/asio/composed.hpp",
+            "include/boost/asio/async_result.hpp",
+            "include/boost/asio/detail/composed_work.hpp",
+            "include/boost/asio/detail/base_from_cancellation_state.hpp",
+            "test/compose.cpp",
+            "test/composed.cpp",
+            "doc/overview/compose.qbk",
+            "doc/overview/model/async_ops.qbk",
+            "doc/overview/model/associators.qbk",
+            "doc/overview/model/cancellation.qbk"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Initiating functions, completion tokens and handlers, executors, allocators, and cancellation slots are standard asynchronous-programming abstractions documented locally; the path teaches transferable expert templates, callback adaptation, scheduling, cancellation, ownership, resource lifetime, portability, and at-most-once completion contracts.",
+          "quality_status": "pass",
+          "quality_evidence": "Invariant-rich source and documentation, explicit API, initiation, handler, work, and cancellation boundaries, precise asynchronous vocabulary, direct state, result, lvalue-handler, and cancellation tests for both public composition APIs, comprehensive model documentation, complete initiation-to-completion traceability, isolated collaborators, and exceptional asynchronous-systems teaching value support all eight quality findings; associator forwarding and work guards are established by source and documentation rather than isolated direct tests.",
+          "scores": {
+            "language_technique": 5,
+            "behavioral_reasoning": 5,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 5/5/4/5 profile sums to 19, whose mean is Level 5 and satisfies the Level 5 guardrail; both gates pass and the one open C++ Level 5 place accepts Asio's async_compose path. Exact pinned source, model documentation, test/compose.cpp, and test/composed.cpp were inspected. Local compilation was attempted but could not begin because this workspace lacks the external Boost.System headers; no local test-execution claim is made. composed_op helps an implementation satisfy Asio's at-most-once completion contract but does not guard against two calls to complete, and only Asio's composed work guards reset automatically; resources stored in the user's state-machine object remain that implementation's responsibility. The selected path does not establish every Asio transport or platform backend.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and both public composition APIs through the intermediate handler, work, associator, cancellation, and direct tests, both gates and all eight findings, the 5/5/4/5 Level 5 result, the open slot, C++ and Boost Software License evidence, and the non-enforced at-most-once, Asio-work-only release, associator-test, local-execution, and subsystem-scope claim boundaries."
+          }
+        },
+        {
+          "repository": "Neargye/semver",
+          "pinned_commit": "d0065661457e8cac5b78092544e83f25bfd19b1b",
+          "discovered_via": [
+            "vcpkg-registry",
+            "github-cpp-source-search",
+            "cpp-library-curation"
+          ],
+          "inspection_files": [
+            "include/semver.hpp",
+            "test/test_parse.cpp",
+            "test/test_ranges.cpp",
+            "test/test_advanced_ranges.cpp",
+            "test/test_edge_cases.cpp",
+            "doc/reference.md",
+            "doc/limitations.md",
+            "README.md",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Semantic versions and ranges require a short local grammar description; the selected strict-parse-to-range-match path teaches transferable generic numeric modeling, constexpr parsing, cursor state, error positions, transactional output, range expansion, overflow, portability, and compatibility testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional bounded parser source, coherent version, cursor, parser, and range responsibilities within one header, precise standard vocabulary, extensive parse, range, edge, cross-standard, and warning-as-error tests, detailed reference and limitation documents, complete strict-grammar-to-range-match traceability, explicit feature and input guards, and strong parser teaching value support all eight quality findings.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 3,
+            "design_span": 2,
+            "constraint_burden": 4
+          },
+          "calculated_level": 3,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 4/3/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; CLI11 and Mustache already fill that level with more complementary command-parser and template-engine paths, so the two-entry cap excludes semver. The scores were locked before capacity was inspected. A focused C++17 probe compiled with warnings as errors and verified prerelease precedence, build metadata, range unions, containment, and upper bounds. The range grammar is an explicitly narrower library contract than all ecosystem SemVer range dialects; the 512-byte default input limit is configurable but must match across translation units; generated bounds must fit the selected unsigned component types; compile-time features vary by toolchain; prerelease policy changes containment; and inclusion undefines platform major and minor macros.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and strict-version-parser-to-range-expansion and range_set::contains path, both gates and all eight findings, the 4/3/2/4 Level 3 result, full capacity, C++ and MIT evidence, and the grammar, input-limit, compile-time-feature, and capacity claim boundaries."
+          }
+        },
+        {
+          "repository": "Neargye/nameof",
+          "pinned_commit": "20c03433036d76002c5b3c5e43baa8012aaa4d10",
+          "discovered_via": [
+            "vcpkg-registry",
+            "github-cpp-source-search",
+            "cpp-library-curation"
+          ],
+          "inspection_files": [
+            "include/nameof.hpp",
+            "test/test.cpp",
+            "test/test_aliases.cpp",
+            "test/test_range.cpp",
+            "test/test_range_negative.cpp",
+            "test/test_reflection.cpp",
+            "test/test_standalone.cpp",
+            "test/compile_fail.cpp",
+            "test/reflection_compile_fail.cpp",
+            "doc/reference.md",
+            "doc/limitations.md",
+            "README.md",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Resolving runtime and constant enum names needs a short reflection primer; the selected path primarily teaches transferable compile-time string processing, compiler-feature detection, template enumeration, customization, backend selection, bounded fallback design, portability, and compile-failure testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Deliberate feature-gated source, coherent runtime and constant enum APIs with constexpr strings, compiler-signature and standard-reflection backends, ranges, and customization, idiomatic public metaprogramming names, extensive runtime, static, range, reflection, standalone, and compile-failure tests, detailed reference and limitation documents, direct enum-API-to-backend traceability, explicit support matrices and customization points, and exceptional compile-time C++ teaching value support all eight quality findings; some low-level helper names such as n, nv, and ualue are unnecessarily terse but do not materially fail the gate.",
+          "scores": {
+            "language_technique": 5,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 4
+          },
+          "calculated_level": 4,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 5/2/2/4 sums to 13, whose mean is 3.25; the rubric's score-of-5 guardrail raises the result to Level 4. Catch2 and spdlog already fill that level with more complementary testing-framework and asynchronous-logging paths, so the two-entry cap excludes nameof. The scores were locked before capacity was inspected. A focused C++17 probe compiled with warnings as errors and verified enum-name lookup. The compiler-specific backend depends on signature strings; ordinary runtime lookup defaults to -128 through 127, clamps to the underlying type, and requires custom ranges below UINT16_MAX values; the constant-value overload is not range-bound; aliases may vary by compiler; C++26 reflection ignores ranges and chooses the first alias; forced-backend configuration must match across translation units; and forward-declared enums are unsupported.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and runtime and constant enum-name path across the compiler-signature and C++26-reflection backends, both gates and all eight findings, the 5/2/2/4 guardrailed Level 4 result, full capacity, C++ and MIT evidence, and the helper-naming, compiler-signature, enum-range, alias, backend, and capacity claim boundaries."
+          }
+        }
+      ],
+      "accepted": [
+        "microsoft/GSL",
+        "boostorg/asio"
+      ],
+      "rejected": [
+        "Neargye/semver",
+        "Neargye/nameof"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "conclusion": "Five independent discovery channels and four exact-pin inspections found qualified Level 2, Level 3, Level 4, and Level 5 paths. GSL and Asio fill the open Level 2 and Level 5 places; semver and nameof remain durable qualified capacity alternatives at their calculated Levels 3 and 4. Both Level 1 places remain honest because no candidate was moved downward to fill them."
     }
   ],
   "summary": {
-    "languages_completed": 6,
-    "accepted_new_total": 6,
-    "rejected_new_total": 9,
-    "current_entry_total": 139,
-    "remaining_gap_total": 61
+    "languages_completed": 7,
+    "accepted_new_total": 8,
+    "rejected_new_total": 11,
+    "current_entry_total": 141,
+    "remaining_gap_total": 59
   }
 }

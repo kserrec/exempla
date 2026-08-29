@@ -2,7 +2,7 @@
 
 Choose a language, then browse from Level 1 (most approachable) through Level 5 (most demanding).
 
-The catalog currently contains **139 qualified repositories across 20 languages**. Empty cells are honest research gaps.
+The catalog currently contains **141 qualified repositories across 20 languages**. Empty cells are honest research gaps.
 
 | Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -12,7 +12,7 @@ The catalog currently contains **139 qualified repositories across 20 languages*
 | [PHP](php/README.md) | 6 | 0 | 2 | 2 | 2 | 0 |
 | [C#](c-sharp/README.md) | 8 | 0 | 2 | 2 | 2 | 2 |
 | [TypeScript](typescript/README.md) | 7 | 0 | 2 | 1 | 2 | 2 |
-| [C++](cpp/README.md) | 6 | 0 | 1 | 2 | 2 | 1 |
+| [C++](cpp/README.md) | 8 | 0 | 2 | 2 | 2 | 2 |
 | [Ruby](ruby/README.md) | 5 | 0 | 1 | 2 | 2 | 0 |
 | [C](c/README.md) | 7 | 0 | 2 | 1 | 2 | 2 |
 | [Swift](swift/README.md) | 7 | 0 | 2 | 2 | 2 | 1 |
