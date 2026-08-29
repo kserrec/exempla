@@ -136,6 +136,14 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The 193-line codec has a working happy-path test file, but its assertions cover a small set of literal round trips and do not exercise malformed input or allocation failures; jsmn and libcwalk provide stronger boundary-focused study paths for the two SDC 1 slots.",
       "reconsider": "Eligible for a future encoding-focused expansion after broader error and allocation tests are present."
+    },
+    {
+      "repository": "apple/swift-collections",
+      "language": "Swift",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected production targets contain 52,016 meaningful lines and implement several performance-sensitive generic data structures with custom storage, indexing, copy-on-write, hashing, and algorithmic invariants; S4/D4/C3 supports SDC 4 rather than the open SDC 3 slot.",
+      "reconsider": "Eligible as an additional Swift SDC 4 project in a larger catalog, especially for a data-structures learning path."
     }
   ]
 }
