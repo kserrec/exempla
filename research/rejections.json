@@ -288,6 +288,38 @@
       "failed_requirement": "tests",
       "evidence": "The pinned repository contains 383 production Objective-C and header lines plus iOS and macOS demonstration applications, but no automated behavior test suite for reachability transitions, notifier lifecycle, hostname and address modes, queueing, or failure paths.",
       "reconsider": "Reconsider if the repository adds deterministic tests around injected reachability flags and callback delivery rather than relying only on interactive sample applications."
+    },
+    {
+      "repository": "dtolnay/itoa",
+      "language": "Rust",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected 317-line crate is maintained, tested, and suitable for SDC 1, but its central integer-formatting implementation states that it comes directly from libcore; rustc-hash and heck provide more first-party mechanism in the initial two SDC 1 slots.",
+      "reconsider": "Eligible for a future performance, integer-formatting, or standard-library adaptation path."
+    },
+    {
+      "repository": "dtolnay/thiserror",
+      "language": "Rust",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected 2,554-line production implementation is a qualified SDC 2 study of procedural-macro error derivation with strong compile-time and runtime tests, but anyhow already supplies the initial error-system path while semver adds a distinct parser and evaluator domain.",
+      "reconsider": "Eligible for a future procedural-macro, code-generation, or typed-error expansion."
+    },
+    {
+      "repository": "rust-lang/log",
+      "language": "Rust",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected 3,472-line crate is a qualified SDC 2 logging facade with atomic global logger registration, filtering, structured key-values, macros, and tests, but anyhow and semver provide stronger domain variety for the initial two slots.",
+      "reconsider": "Eligible for a future logging, observability, global-state, or facade-design path."
+    },
+    {
+      "repository": "tokio-rs/bytes",
+      "language": "Rust",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected 4,058-line production crate is a qualified SDC 3 study of reference-counted byte storage, ownership transitions, unsafe internals, buffer traits, and extensive tests, but serde_json and Axum provide broader initial domain variety.",
+      "reconsider": "Eligible for a future low-level memory, network-buffer, or unsafe-Rust learning path."
     }
   ]
 }
