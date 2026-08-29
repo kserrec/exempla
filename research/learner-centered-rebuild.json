@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 80,
+  "reviewed_entry_total": 90,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -6046,12 +6046,773 @@
         "status": "disagree_resolved",
         "notes": "The reviews disagreed between the Conversation callback lifecycle and SafeFetch and therefore on Level 4 versus Level 3. Root reconciliation finds the original Conversation path dominated by customer-support policy, chooses the bounded security-oriented SafeFetch trace, applies lower behavior 3, discloses that selected paths are MIT while enterprise/ is separately licensed, and resolves 3/3/3/4, Level 3, rank 3, capacity removal."
       }
+    },
+    {
+      "repository": "likle/cwalk",
+      "language": "C",
+      "prior_level": 1,
+      "pinned_commit": "e98d23f68807208952c179b49e4fd1813f31298d",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Lexical paths consist of roots, separators, ordinary segments, dot segments, and parent segments under Unix or Windows conventions."
+        ],
+        "evidence": "No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "One focused implementation and public header expose explicit output and segment primitives; the documented API and operation-specific tests cover Unix and Windows roots, overlap, small buffers, empty paths, and excessive parent traversal, making the normalization trace direct and maintainable.",
+      "learning_path": {
+        "goal": "Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.",
+        "start_path": "src/cwalk.c",
+        "supporting_files": [
+          "include/cwalk.h",
+          "test/normalize_test.c",
+          "test/relative_test.c"
+        ],
+        "trace": "Start at cwk_path_normalize, follow joined segment iteration through dot and parent removal into bounded output and termination, then compare cwk_path_get_relative's shared segment model; close with normalization and relative-path cases for overlap, undersized buffers, roots, separators, and excessive parent traversal."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "pointer-based string and segment scanning",
+            "caller-owned bounded output buffers",
+            "in-place input and output overlap"
+          ],
+          "reason": "Ordinary C pointers, structs, enums, and size-aware writes are essential, but the path does not require advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "iterative segment state",
+            "dot and parent filtering",
+            "shared normalization and relative-path rules"
+          ],
+          "reason": "Several related branches must stay coherent, yet control flow remains local, synchronous, and easy to simulate."
+        },
+        "design_span": {
+          "signals": [
+            "one implementation module",
+            "one public header",
+            "one lexical-path concern"
+          ],
+          "reason": "A flat API and private helpers keep the complete representative trace within one component."
+        },
+        "constraint_burden": {
+          "signals": [
+            "Unix, drive-root, and UNC compatibility",
+            "bounded output with theoretical lengths",
+            "overlapping input and output support"
+          ],
+          "reason": "Multiple portability and memory-safety guarantees materially shape otherwise straightforward transformations."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean of 2.00 calculates to Level 2; cwalk ranks first of two qualified C Level 2 paths.",
+      "reconsider": "Reconsider if normalization, relative-path behavior, overlap or buffer guarantees, C-primary status, license, documentation, or focused tests materially change, or a stronger C Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on this representative path, 2/2/1/3, Level 2, and retention but reversed the two qualified Level 2 candidates. Root reconciliation gives cwalk rank 1 because its compact trace combines bounded memory handling, shared segment invariants, and cross-platform behavior."
+      }
+    },
+    {
+      "repository": "zserge/jsmn",
+      "language": "C",
+      "prior_level": 1,
+      "pinned_commit": "25647e692c7906b96ffd2b05ca54c097948e879c",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "JSON has objects, arrays, strings, primitives, delimiters, and nesting, while jsmn returns token spans rather than allocating a value tree."
+        ],
+        "evidence": "The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The single public header keeps token types, parser state, allocation, and scanning explicit; its README explains the API and zero-allocation contract, and the direct tests cover strings, escapes, primitives, nesting, partial input, token exhaustion, strict parsing, and parent links.",
+      "learning_path": {
+        "goal": "Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.",
+        "start_path": "jsmn.h",
+        "supporting_files": [
+          "test/tests.c"
+        ],
+        "trace": "Follow jsmn_parse through primitive and string scanners, container opening and closing, parent or backward matching, and token allocation; then use the direct tests to compare successful nested parses with invalid escapes, partial input, strict mode, parent links, and JSMN_ERROR_NOMEM retries."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "header-only implementation switches",
+            "caller-owned token arrays",
+            "pointer and index based spans"
+          ],
+          "reason": "The implementation depends on solid C representation and preprocessor fluency without advanced type or memory machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "incremental parser position and next-token state",
+            "nested container matching",
+            "success, invalid, partial, and no-memory outcomes"
+          ],
+          "reason": "Several parser states and recovery outcomes interact across calls, making behavior the path's main learning burden."
+        },
+        "design_span": {
+          "signals": [
+            "one header",
+            "one parser abstraction",
+            "one direct test program"
+          ],
+          "reason": "The full path is deliberately contained in one cohesive component."
+        },
+        "constraint_burden": {
+          "signals": [
+            "zero allocation and zero-copy token spans",
+            "caller-selected token capacity",
+            "strict and parent-link compatibility modes"
+          ],
+          "reason": "Memory, incremental-use, and compile-time compatibility contracts all influence parser changes."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/3/1/3 sums to 9, whose mean of 2.25 calculates to Level 2; jsmn ranks second of two qualified C Level 2 paths.",
+      "reconsider": "Reconsider if zero-allocation tokenization, incremental parsing, error behavior, C-primary status, license, documentation, or direct parser tests materially change, or a stronger C Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on the path, 2/3/1/3, Level 2, and retention but reversed the two Level 2 candidates. Root reconciliation retains jsmn at rank 2, behind cwalk's broader bounded-buffer and cross-platform normalization lessons."
+      }
+    },
+    {
+      "repository": "DaveGamble/cJSON",
+      "language": "C",
+      "prior_level": 2,
+      "pinned_commit": "fb16e5cf358798aabb049655975cde8427101056",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "JSON values form a recursive tree of objects, arrays, strings, numbers, booleans, and null, with ownership transferred into containers."
+        ],
+        "evidence": "The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public header documents ownership and allocator contracts, the implementation names parse state and cleanup branches directly, and the selected private tests exercise value and object parsing, malformed input, depth, duplicate keys, null termination, and allocation failures without pulling in the separate cJSON_Utils feature set.",
+      "learning_path": {
+        "goal": "Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure.",
+        "start_path": "cJSON.c",
+        "supporting_files": [
+          "cJSON.h",
+          "tests/parse_value.c",
+          "tests/parse_object.c"
+        ],
+        "trace": "Start at cJSON_ParseWithLengthOpts, follow parse_buffer bounds and parse_value dispatch into recursive object parsing, linked child ownership, duplicate-key and depth behavior, and failure cleanup; then close the contract with the focused value and object parser tests and the public ownership rules in cJSON.h."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "manual recursive tree ownership",
+            "intrusive child and sibling links",
+            "pluggable allocation hooks and pointer arithmetic"
+          ],
+          "reason": "Substantial manual memory and representation technique shapes normal parsing and cleanup work, matching the published C calibration anchor."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive value and object dispatch",
+            "bounded parse position and depth state",
+            "success and partial-construction cleanup branches"
+          ],
+          "reason": "Meaningful recursive state and failure behavior remain traceable within one synchronous parse lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "public data and ownership API",
+            "private parser helpers",
+            "two focused test files"
+          ],
+          "reason": "The representative behavior crosses only a small number of clearly separated responsibilities."
+        },
+        "constraint_burden": {
+          "signals": [
+            "bounded and null-terminated input modes",
+            "allocator and ownership correctness",
+            "nesting limits, locale-sensitive numbers, and stable error positions"
+          ],
+          "reason": "Several interacting memory, compatibility, and malformed-input guarantees constrain ordinary changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and the published calibration scores 4/3/2/4 sum to 13, whose mean of 3.25 calculates to Level 3; cJSON is the sole qualified C Level 3 path.",
+      "reconsider": "Reconsider if the published calibration anchor changes, or parsing, ownership, allocator, depth, C-primary, license, documentation, or focused-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review lowered language and constraints to 3/3/2/3 after narrowing the path, while the primary review preserved the published cJSON calibration anchor. Root reconciliation keeps the exact 4/3/2/4 anchor required for corpus consistency, with cJSON_Utils omitted from the representative trace."
+      }
+    },
+    {
+      "repository": "libcheck/check",
+      "language": "C",
+      "prior_level": 2,
+      "pinned_commit": "35d9cc011faa0545bf56d5062ae90bbc2688eba7",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A C test framework registers suites and cases, runs tests in-process or in child processes, and reports assertion failures, signals, exits, and timeouts."
+        ],
+        "evidence": "Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public macro contract, registration model, runner, message transport, and serialization are separated into named modules; direct self-tests cover assertions, subprocess isolation, fixtures, signals, exits, timeouts, and fork versus no-fork modes, closing a demanding but coherent trace.",
+      "learning_path": {
+        "goal": "Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results.",
+        "start_path": "src/check.h.in",
+        "supporting_files": [
+          "src/check.c",
+          "src/check_run.c",
+          "src/check_msg.c",
+          "src/check_pack.c",
+          "tests/check_check_sub.c",
+          "tests/check_check_fork.c"
+        ],
+        "trace": "Begin with START_TEST and assertion macro expansion in the public contract, follow suite and case registration through check_run's fork or no-fork lifecycle, signal, exit and timeout classification, then trace check_msg and check_pack result transport back to the runner; close with the subprocess and fork-mode self-tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "public variadic assertion macro machinery",
+            "function-pointer test and fixture callbacks",
+            "manual packed message representation"
+          ],
+          "reason": "Macro metaprogramming, callbacks, and explicit representation materially shape the framework path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "fork and no-fork execution lifecycles",
+            "signal, exit, assertion, and timeout outcomes",
+            "setup, test, teardown, and result transitions"
+          ],
+          "reason": "Several advanced process and lifecycle states recur, but the lower-anchor rule does not elevate the bounded runner to expert nonlocal behavior."
+        },
+        "design_span": {
+          "signals": [
+            "public macro and registration contract",
+            "runner and subprocess boundary",
+            "message and packing helpers",
+            "direct framework self-tests"
+          ],
+          "reason": "Several clear components collaborate while remaining within one test-execution subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "portable fork and no-fork modes",
+            "signal and timeout correctness",
+            "failure-safe interprocess reporting"
+          ],
+          "reason": "Portability, isolation, cleanup, and stable result guarantees interact throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 calculates to Level 4; Check ranks second of five qualified C Level 4 paths.",
+      "reconsider": "Reconsider if macro, runner, isolation, signal, timeout, result-transport, C-primary, license, documentation, or self-test evidence materially changes, or a stronger C Level 4 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews agreed on 4/4/3/4 and Level 4 but differed on whether to begin inside check_run and whether Check outranked Git's child-process path. Root reconciliation begins at the public macro contract, follows it through the runner, keeps fork, signals, and timeouts at recurring advanced behavior 4 under the lower-anchor rule, and assigns rank 2."
+      }
+    },
+    {
+      "repository": "akheron/jansson",
+      "language": "C",
+      "prior_level": 3,
+      "pinned_commit": "851a2145e3256f2e67e5dfe24b0e456bf198b741",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A JSON object maps UTF-8 string keys to reference-counted JSON values and transfers ownership under the set-new API."
+        ],
+        "evidence": "Only the familiar object-map model is required; the path teaches transferable ownership transfer, reference counting, hash-table growth, intrusive iteration order, allocator substitution, and failure cleanup."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public header states reference and ownership rules, value.c separates object API policy from hashtable mechanics, and direct object and memory-function tests cover insertion, replacement, deletion, iteration, UTF-8 validation, allocator failures, refcounts, and cleanup; the trace excludes unrelated parser and dumper breadth.",
+      "learning_path": {
+        "goal": "Understand how Jansson stores reference-counted values in an ordered hash-backed JSON object while preserving ownership and allocator guarantees.",
+        "start_path": "src/value.c",
+        "supporting_files": [
+          "src/jansson.h",
+          "src/hashtable.c",
+          "src/hashtable.h",
+          "test/suites/api/test_object.c",
+          "test/suites/api/test_memory_funcs.c"
+        ],
+        "trace": "Start at json_object_set_new, follow key and UTF-8 validation, stolen-reference cleanup, and hashtable_set into bucket lookup, replacement or insertion, ordered-list links, and rehashing; then close with object semantics, reference-count, custom-allocation, and failure-path tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "manual reference counting and stolen ownership",
+            "intrusive ordered hash links",
+            "replaceable allocator function pointers"
+          ],
+          "reason": "Advanced manual ownership and representation techniques recur across the selected object path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "insert, replace, delete, and rehash transitions",
+            "reference transfer on success and failure",
+            "ordered iteration under mutation"
+          ],
+          "reason": "Several coupled states require careful reasoning, but they remain bounded inside a synchronous container operation."
+        },
+        "design_span": {
+          "signals": [
+            "public object and ownership API",
+            "value-layer validation and policy",
+            "private ordered hashtable",
+            "object and allocator tests"
+          ],
+          "reason": "A few clear components span the public abstraction, backing structure, and direct contracts."
+        },
+        "constraint_burden": {
+          "signals": [
+            "UTF-8 key validity",
+            "reference-count and stolen-ownership correctness",
+            "stable iteration order and allocation-failure cleanup"
+          ],
+          "reason": "Memory, compatibility, ordering, and failure guarantees interact in ordinary object updates."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Jansson's ownership path ranks fifth behind Git, Check, PostgreSQL, and Redis for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks this path above a retained entry, or ownership, hashtable, allocator, ordering, C-primary, license, documentation, or direct-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews agreed on the bounded ownership and hash path, 4/3/3/4, and Level 4 but disagreed on its comparative strength and retention. Root reconciliation ranks the five qualified Level 4 paths by their representative transferable burden, placing Jansson fifth and removing it only for capacity."
+      }
+    },
+    {
+      "repository": "libevent/libevent",
+      "language": "C",
+      "prior_level": 3,
+      "pinned_commit": "335349b9b60c860289c6c47eadadadf18dc58211",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An event loop registers I/O and timeout interests with an operating-system backend, activates ready events, and dispatches callbacks by priority."
+        ],
+        "evidence": "The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public event contract, loop, I/O map, timeout heap, and epoll backend have explicit boundaries and invariants; the broad regression harness and edge-triggered tests exercise registration, activation, persistence, priorities, timeouts, deletion, reentrancy, and backend behavior.",
+      "learning_path": {
+        "goal": "Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely.",
+        "start_path": "event.c",
+        "supporting_files": [
+          "include/event2/event.h",
+          "event-internal.h",
+          "evmap.c",
+          "epoll.c",
+          "minheap-internal.h",
+          "test/regress.c",
+          "test/regress_et.c"
+        ],
+        "trace": "Start at event_base_loop, follow event addition through evmap registration and the epoll backend, place timeout events in the min-heap, then trace readiness and expiration into priority activation and callback dispatch, including persistence, deletion, reentrancy, and thread notification; close with the core and edge-triggered regression tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "opaque public handles and internal structures",
+            "callback function pointers and backend operation tables",
+            "intrusive queues, maps, and timeout heap"
+          ],
+          "reason": "Advanced C representation and callback techniques recur throughout the core without becoming the primary expert burden."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "registered, ready, active, executing, persistent, and deleted event states",
+            "interleaved I/O, timeout, priority, and thread-notification transitions",
+            "reentrant callback changes to the same event base"
+          ],
+          "reason": "Multiple nonlocal state machines and callback lifecycles interact repeatedly across the loop, backend, maps, heap, and user callbacks."
+        },
+        "design_span": {
+          "signals": [
+            "public event API and event-base core",
+            "I/O mapping and timeout scheduling",
+            "pluggable epoll backend",
+            "core and edge-triggered regression tests"
+          ],
+          "reason": "Several substantial subsystem boundaries must be understood together, while protocol handlers remain outside the selected trace."
+        },
+        "constraint_burden": {
+          "signals": [
+            "cross-platform backend and readiness semantics",
+            "callback reentrancy, deletion, and persistence safety",
+            "thread notification, locking, priority, and timeout correctness"
+          ],
+          "reason": "Expert portability, lifecycle, concurrency, and scheduling guarantees recur throughout ordinary core-loop changes."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 4/5/4/5 sums to 18, whose mean of 4.50 reaches Level 5 with two dimensions scored 5; Libevent ranks first of two qualified C Level 5 paths.",
+      "reconsider": "Reconsider if the core loop, backend, timeout, callback, concurrency, C-primary, license, documentation, or regression-test evidence materially changes, or a stronger C Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "The independent review and root reconciliation agree on the bounded event-base trace, omission of bufferevent, DNS, HTTP, and TLS breadth, 4/5/4/5, Level 5, comparative rank 1, and retention."
+      }
+    },
+    {
+      "repository": "redis/redis",
+      "language": "C",
+      "prior_level": 4,
+      "pinned_commit": "e1d7d50f9c244ce52f724b279fcb19773fffa98c",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Redis dictionaries are generic hash tables parameterized by key and value operations and used by the server database."
+        ],
+        "evidence": "The representative path is a domain-neutral container implementation; it teaches transferable callback-based genericity, incremental rehashing, iterator safety, ownership policy, random sampling, and production integration without requiring SET, persistence, or replication semantics."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "dict.h states the generic operation and iterator contracts, dict.c separates lookup, mutation, rehash, scan, sampling, and embedded direct tests, and server.c supplies a narrow dbDictType production integration; explicit invariants and assertions make the bounded path maintainable and traceable.",
+      "learning_path": {
+        "goal": "Understand how Redis implements a generic C dictionary that grows incrementally while preserving ownership, iterator, and lookup guarantees.",
+        "start_path": "src/dict.h",
+        "supporting_files": [
+          "src/dict.c",
+          "src/server.c"
+        ],
+        "trace": "Begin with dictType's hash, compare, duplicate, and destructor callbacks, follow dictionary creation and ordinary lookup or mutation into the two-table incremental rehash machinery, then inspect safe and unsafe iterators, fingerprints, scan and random sampling; close with dict.c's REDIS_TEST cases and dbDictType as the narrow server integration."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dictType function-pointer policy table",
+            "manual key and value ownership callbacks",
+            "pointer-based buckets, iterators, and compact entry forms"
+          ],
+          "reason": "Advanced C genericity and representation choices recur across the container implementation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "two-table incremental rehash state",
+            "mutation-safe versus fingerprint-checked iteration",
+            "resize, scan, lookup, and random-sampling transitions"
+          ],
+          "reason": "Several coupled container states recur, but the behavior remains bounded within one data structure and its integration."
+        },
+        "design_span": {
+          "signals": [
+            "dictionary contract and implementation",
+            "embedded direct test mode",
+            "one narrow server database integration"
+          ],
+          "reason": "The representative path is intentionally contained in one container component plus one consumer boundary."
+        },
+        "constraint_burden": {
+          "signals": [
+            "incremental progress without lookup interruption",
+            "safe and unsafe iterator mutation rules",
+            "hash compatibility, ownership cleanup, and sampling behavior"
+          ],
+          "reason": "Expert memory, mutation, progress, and distribution guarantees repeatedly constrain ordinary dictionary changes."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/2/5 sums to 15, whose mean of 3.75 calculates to Level 4; Redis's dictionary ranks fourth behind Git, Check, and PostgreSQL for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks the dictionary above a retained path, or hashing, rehashing, iterator, ownership, C-primary, license, documentation, embedded-test, or integration evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review followed broad SET, persistence, and replication behavior and placed Redis at Level 5. Root reconciliation selects the clearer domain-neutral central dictionary path, scores only that trace at 4/4/2/5, and resolves Level 4, rank 4, capacity removal."
+      }
+    },
+    {
+      "repository": "curl/curl",
+      "language": "C",
+      "prior_level": 4,
+      "pinned_commit": "c2a04c080d79e1eb5d99bc0a73fd71710aa6d345",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The curl multi interface advances multiple transfers without blocking and tells callers which sockets or timeouts should drive the next step."
+        ],
+        "evidence": "Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public multi contract and internal multihandle state are explicit, multi.c centralizes scheduling and lifecycle invariants, and three verified libtests plus matching data drive ordinary progress, duplicate removal, and wakeup-to-poll behavior through the public API.",
+      "learning_path": {
+        "goal": "Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs.",
+        "start_path": "lib/multi.c",
+        "supporting_files": [
+          "include/curl/multi.h",
+          "lib/multihandle.h",
+          "tests/libtest/lib1531.c",
+          "tests/libtest/lib3105.c",
+          "tests/libtest/lib2414.c",
+          "tests/data/test1531",
+          "tests/data/test3105",
+          "tests/data/test2414"
+        ],
+        "trace": "Begin with the public CURLM lifecycle and multi.c's add, perform, poll, wakeup, info-read, remove, and cleanup paths; follow a transfer through the internal multihandle scheduler while protocol handlers remain adapters, then close with lib1531's perform/fdset/timeout/completion flow, lib3105's repeated removal, lib2414's wakeup-to-poll exit, and their matching test definitions."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "opaque public and internal handle representations",
+            "callback and socket-operation function pointers",
+            "intrusive transfer and message collections"
+          ],
+          "reason": "Advanced C API and representation techniques recur across the engine, while the hardest work lies in behavior and constraints."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "many concurrent transfer state machines",
+            "perform, socket, timer, poll, wakeup, completion, and removal transitions",
+            "reentrant and error-driven lifecycle changes"
+          ],
+          "reason": "Multiple nonlocal asynchronous lifecycles interact repeatedly across caller actions, scheduler passes, timers, sockets, and callbacks."
+        },
+        "design_span": {
+          "signals": [
+            "public multi API",
+            "internal multihandle and scheduler",
+            "protocol adapters at the selected boundary",
+            "public-API integration tests and data"
+          ],
+          "reason": "Several substantial components must be understood together, but the representative trace excludes protocol implementation breadth."
+        },
+        "constraint_burden": {
+          "signals": [
+            "handle ownership, removal, cleanup, and reentrancy",
+            "socket, timer, poll, and wakeup interoperability",
+            "cross-platform event-loop and stable public-API compatibility"
+          ],
+          "reason": "Expert lifecycle, concurrency, portability, and compatibility guarantees recur throughout ordinary multi-engine work."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 4/5/4/5 sums to 18, whose mean of 4.50 reaches Level 5 with two dimensions scored 5; curl's multi engine ranks second of two qualified C Level 5 paths.",
+      "reconsider": "Reconsider if multi scheduling, lifecycle, poll or wakeup behavior, public API, C-primary status, license, documentation, or direct integration tests materially change, or a stronger C Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews selected the multi engine and 4/5/4/5, but the independent review used a weaker closing test set and ranked curl third. Root reconciliation verified the three public-API libtests and matching data, notes that the old catalog unit1300 tested a linked list rather than the multi engine, and resolves rank 2 and retention."
+      }
+    },
+    {
+      "repository": "git/git",
+      "language": "C",
+      "prior_level": 5,
+      "pinned_commit": "c73e85354c275c9d409b26445089bc16940fc527",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Git's child-process layer launches external commands with controlled arguments, environment, file descriptors, cleanup, and optional parallel scheduling."
+        ],
+        "evidence": "The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "run-command.h documents child_process ownership, redirection, callbacks, and parallel APIs; run-command.c isolates launch, finish, cleanup, pipe, and scheduler responsibilities; the helper and shell suite directly cover I/O, missing commands, parallel tasks, output, and graceful abort.",
+      "learning_path": {
+        "goal": "Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure.",
+        "start_path": "run-command.h",
+        "supporting_files": [
+          "run-command.c",
+          "t/helper/test-run-command.c",
+          "t/t0061-run-command.sh"
+        ],
+        "trace": "Begin with child_process initialization, arguments, environment, redirection, cleanup, and callback contracts, follow start_command through pipe creation and fork, spawn, or exec setup into finish and signal cleanup, then trace pipe_command and the parallel scheduler's task admission, output buffering, abort, and completion behavior; close with the dedicated helper and t0061 tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "function-pointer lifecycle and task callbacks",
+            "explicit child_process and parallel-process structures",
+            "manual file-descriptor and pipe ownership"
+          ],
+          "reason": "Advanced C callback, resource, and representation techniques materially shape the process layer."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "prepare, launch, running, finish, signal, and cleanup process states",
+            "pipe endpoints shared across parent, child, and error paths",
+            "parallel admission, output, abort, and completion scheduling"
+          ],
+          "reason": "Multiple nonlocal process and scheduler lifecycles interact repeatedly across operating-system boundaries."
+        },
+        "design_span": {
+          "signals": [
+            "public child and parallel-process contract",
+            "launch, pipe, cleanup, and scheduler implementation",
+            "dedicated helper and shell integration suite"
+          ],
+          "reason": "Several clear responsibilities collaborate within one bounded process-control subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "fork, exec, and platform-specific spawn portability",
+            "descriptor closure and deadlock avoidance on every failure path",
+            "signal cleanup, graceful abort, and deterministic output"
+          ],
+          "reason": "Expert portability, resource, concurrency, and failure guarantees recur throughout normal process-layer changes."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/5/3/5 sums to 17, whose mean of 4.25 calculates to Level 4; Git's child-process path ranks first of five qualified C Level 4 paths.",
+      "reconsider": "Reconsider if child launch, descriptor, signal, parallel scheduling, C-primary, license, documentation, or dedicated-test evidence materially changes, or a stronger C Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review selected ref transactions and scored 4/5/4/5 at Level 5. Root reconciliation selects the more domain-neutral child-process path, bounds design to the process subsystem, and resolves 4/5/3/5, Level 4, comparative rank 1, and retention."
+      }
+    },
+    {
+      "repository": "postgres/postgres",
+      "language": "C",
+      "prior_level": 5,
+      "pinned_commit": "6c5f1d6074208146930b67c2054509c3e82f6f7f",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A ResourceOwner forms a hierarchy that remembers acquired resources and releases them in ordered transaction phases on commit or abort."
+        ],
+        "evidence": "Transaction commit and abort need only brief explanation; the path teaches transferable hierarchical resource ownership, preallocation before acquisition, small-array to hash-table scaling, callback priorities, phased cleanup, failure invariants, and adversarial module testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public internal header documents ownership and release contracts, resowner.c centralizes hierarchy, storage, priorities, callbacks, and assertions, xact.c shows the production transaction boundary, and the verified test module covers basic, many-resource, hierarchy, priority, leak, and invalid-lifecycle cases with SQL-visible expected results.",
+      "learning_path": {
+        "goal": "Understand how PostgreSQL tracks heterogeneous resources in an owner hierarchy and releases them safely across transaction success and failure.",
+        "start_path": "src/backend/utils/resowner/resowner.c",
+        "supporting_files": [
+          "src/include/utils/resowner.h",
+          "src/backend/access/transam/xact.c",
+          "src/test/modules/test_resowner/test_resowner_basic.c",
+          "src/test/modules/test_resowner/test_resowner_many.c",
+          "src/test/modules/test_resowner/sql/test_resowner.sql",
+          "src/test/modules/test_resowner/expected/test_resowner.out"
+        ],
+        "trace": "Start with ResourceOwner creation and hierarchy, follow pre-enlarge before resource acquisition into remember and forget operations, small-array spill to hash storage, then trace priority-ordered release phases and callbacks into xact.c's commit and abort lifecycle; close with the module's basic, many-resource, hierarchy, priority, leak, and illegal-after-release cases and expected SQL results."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "callback-based resource kinds and release priorities",
+            "manual hierarchical ownership structures",
+            "small-array and hash-backed storage representations"
+          ],
+          "reason": "Advanced C ownership, callback, and adaptive-storage techniques recur across the selected path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "remember, forget, release, and delete owner states",
+            "ordered before-locks, locks, and after-locks release phases",
+            "commit, abort, leak, and invalid-lifecycle branches"
+          ],
+          "reason": "Several coupled resource lifecycles recur, but they remain bounded within the owner hierarchy and transaction integration."
+        },
+        "design_span": {
+          "signals": [
+            "ResourceOwner contract and implementation",
+            "transaction lifecycle integration",
+            "dedicated loadable test module and SQL contract"
+          ],
+          "reason": "A few clear components cover ownership, one production consumer, and direct adversarial tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "allocation must precede ownership-changing acquisition",
+            "release priority and transaction-phase ordering",
+            "cleanup under errors, leaks, deep hierarchies, and storage growth"
+          ],
+          "reason": "Expert failure-atomicity, ordering, scaling, and cleanup guarantees recur throughout normal resource-owner work."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/5 sums to 16, whose mean of 4.00 calculates to Level 4; PostgreSQL's ResourceOwner ranks third behind Git and Check for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks ResourceOwner above a retained path, or ownership, release-order, transaction, scaling, C-primary, license, documentation, or test-module evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "The independent review and root reconciliation agree that the bounded ResourceOwner path is more domain-neutral than the SQL traffic-cop, executor, or shared-memory queue alternatives and agree on 4/4/3/5, Level 4, comparative rank 3, and capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 52,
-      "remove": 28
+      "retain": 59,
+      "remove": 31
     },
     "by_language": {
       "JavaScript": {
@@ -6205,33 +6966,52 @@
           "4": 4,
           "5": 0
         }
+      },
+      "C": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 5,
+          "5": 2
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 16,
-        "retain": 16,
+        "reviewed": 18,
+        "retain": 18,
         "remove": 0
       },
       "2": {
-        "reviewed": 16,
-        "retain": 11,
+        "reviewed": 18,
+        "retain": 13,
         "remove": 5
       },
       "3": {
-        "reviewed": 16,
-        "retain": 10,
-        "remove": 6
+        "reviewed": 18,
+        "retain": 11,
+        "remove": 7
       },
       "4": {
-        "reviewed": 16,
-        "retain": 6,
-        "remove": 10
+        "reviewed": 18,
+        "retain": 7,
+        "remove": 11
       },
       "5": {
-        "reviewed": 16,
-        "retain": 9,
-        "remove": 7
+        "reviewed": 18,
+        "retain": 10,
+        "remove": 8
       }
     },
     "by_new_level": {
@@ -6241,28 +7021,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 12,
-        "retain": 12,
+        "scored": 14,
+        "retain": 14,
         "remove": 0
       },
       "3": {
-        "scored": 24,
-        "retain": 15,
+        "scored": 25,
+        "retain": 16,
         "remove": 9
       },
       "4": {
-        "scored": 33,
-        "retain": 16,
-        "remove": 17
+        "scored": 38,
+        "retain": 18,
+        "remove": 20
       },
       "5": {
-        "scored": 10,
-        "retain": 9,
+        "scored": 12,
+        "retain": 11,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 27,
+      "qualified_alternate_over_capacity": 30,
       "coding_relevance_domain_gate": 1
     }
   }
