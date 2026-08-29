@@ -1,6 +1,6 @@
 # Go
 
-7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -474,5 +474,75 @@ Required domain context:
 **Inspection record:** commit `da7c67f59526a02ef22f80fe91fd2960a6547e59`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/runtime/chan.go`, `src/runtime/select.go`, `src/runtime/runtime2.go`, `src/runtime/chan_test.go`, `src/runtime/HACKING.md`, `LICENSE`. GitHub Linguist label: Go.
 
 **License:** BSD-3-Clause ([evidence 1](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/LICENSE))
+
+### [grpc/grpc-go](https://github.com/grpc/grpc-go)
+
+**Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+The Go implementation of gRPC, providing clients, servers, streaming RPCs, transports, resolution, load balancing, retries, observability, and generated-code support.
+
+**Real-world evidence:** The module publishes google.golang.org/grpc, the production Go runtime used to build interoperable RPC clients and servers across the gRPC ecosystem.
+
+**Language evidence:** The selected ClientConn, resolver and balancer wrappers, address-connection state machine, picker coordination, shutdown behavior, and direct tests are handwritten first-party Go in the root, resolver/, connectivity/, and test/.
+
+**Why study it:** Understand how a gRPC-Go ClientConn turns resolver updates into balanced subchannels, waits or fails RPC picks according to connectivity, reconnects with backoff, and closes every concurrent component in dependency order. Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `clientconn.go`: interface-driven resolver, balancer, picker, and transport boundaries; goroutines, channels, contexts, mutexes, atomics, and wait groups; and callback serializers with explicit ownership.
+- Trace these states and branches through the selected implementation: idle, connecting, ready, transient-failure, and shutdown states; resolver and service-config updates; address attempts and backoff; picker blocking, fail-fast, and wait-for-ready behavior; and concurrent close races.
+- Identify these architectural responsibilities: ClientConn orchestration, resolver and balancer wrappers, per-address connection and transport lifecycle, picker admission, connectivity publication, and direct unit and integration state-transition tests.
+- Study these change constraints: state notifications and picks must not be missed, resolver and balancer callbacks must remain serialized, RPC and connection paths must stay race-safe, backoff and cancellation must bound work, and close must quiesce serializers and subchannels without deadlock or use-after-close.
+
+**Prerequisites:**
+
+- Be fluent with Go interfaces, goroutines, channels, contexts, mutexes, atomics, error wrapping, closures, and cancellation-aware tests.
+- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
+
+**Coding relevance:**
+
+Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
+
+Required domain context:
+
+- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
+
+**Learning path:**
+
+- **Goal:** Understand how a gRPC-Go ClientConn turns resolver updates into balanced subchannels, waits or fails RPC picks according to connectivity, reconnects with backoff, and closes every concurrent component in dependency order.
+- **Start here:** [`clientconn.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/clientconn.go) — Begin with ClientConn and addrConn because their documented ownership, update, connection, backoff, state, and close methods connect every selected boundary.
+- **Then read:**
+  - [`resolver_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/resolver_wrapper.go)
+  - [`balancer_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/balancer_wrapper.go)
+  - [`picker_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/picker_wrapper.go)
+  - [`connectivity/connectivity.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/connectivity/connectivity.go)
+  - [`test/clientconn_state_transition_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/test/clientconn_state_transition_test.go)
+  - [`balancer_wrapper_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/balancer_wrapper_test.go)
+  - [`picker_wrapper_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/picker_wrapper_test.go)
+  - [`Documentation/anti-patterns.md`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/Documentation/anti-patterns.md)
+- **Trace:** Start at ClientConn creation and resolverWrapper updates, follow service configuration into the balancer serializer, NewSubConn into addrConn connection attempts and backoff, connectivity publication and picker replacement into blocking or fail-fast RPC selection, then follow transport loss and address updates through reconnection; finish at ClientConn.Close's picker-before-balancer ordering, serializer drains, parallel subchannel teardown, and state, picker, and close-race tests.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced Go concurrency and interface machinery recurs throughout the path, but the language deliberately avoids type-level or metaprogramming complexity sufficient for expert score 5.
+- **Behavioral reasoning 5:** Several concurrent state machines and failure lifecycles interact pervasively, making expert nonlocal reasoning unavoidable.
+- **Design span 5:** The path coordinates several major runtime subsystems and pervasive extension policies even while RPC framing and server execution stay out of scope.
+- **Constraint burden 5:** Concurrency, lifecycle, reliability, extensibility, observability, and compatibility guarantees interact so local changes can strand RPCs or leak live work.
+- **Placement:** The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5.
+
+**Quality-gate evidence:**
+
+- **Source quality:** ClientConn and addrConn document field synchronization and lifecycle assumptions; resolver, balancer, and picker wrappers isolate callbacks and publication; direct tests exercise transition sequences, address failure, blocking picks, contexts, policy updates, and close races.
+- **Architecture:** The selected files expose recognizable ClientConn orchestration, resolver, configuration, balancer, subchannel, picker, transport, connectivity, and observability boundaries with explicit ownership and serializer rules.
+- **Naming and idiom:** ClientConn, addrConn, updateResolverStateAndUnlock, resetTransportAndUnlock, connectivityStateManager, pickerWrapper, serializer, and firstResolveEvent make state and ownership visible while demonstrating advanced idiomatic Go concurrency.
+- **Tests:** State-transition integration tests cover successful readiness, preface failure, timeouts, disconnection, multiple failed addresses, and reconnects; picker tests cover blocking, deadlines, transient failure, fail-fast, subchannel readiness, and concurrent wakeups; balancer tests target creation-versus-close races.
+- **Documentation:** README.md, API comments, anti-pattern guidance, and official gRPC Go documentation explain the client abstraction, connectivity, supported use, and relevant lifecycle context.
+- **Traceability:** A resolver update can be followed through serialized balancer state, subchannel creation, address connection and transport state, picker publication, RPC selection, reconnection, and ordered shutdown into direct assertions.
+- **Maintainability:** Synchronization ownership is documented near fields, callback streams are serialized, close order is explained in source, state changes are centralized, and race-shaped tests protect the most dangerous interleavings.
+- **Educational value:** The bounded client-connection path is a strong production study of concurrent control-plane and data-plane coordination in Go without requiring the learner to understand protobuf encoding or HTTP/2 frame implementation.
+
+**Inspection record:** commit `6d697e4b65eb0dcfaf326b5b1fcdc66913872442`, reviewed 2026-08-29 by Codex, Codex cold self-review. Files sampled: `README.md`, `clientconn.go`, `resolver_wrapper.go`, `balancer_wrapper.go`, `picker_wrapper.go`, `connectivity/connectivity.go`, `test/clientconn_state_transition_test.go`, `balancer_wrapper_test.go`, `picker_wrapper_test.go`, `Documentation/anti-patterns.md`, `LICENSE`. GitHub Linguist label: Go.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/LICENSE))
 
 _Generated from `catalog/go.json`; do not edit by hand._

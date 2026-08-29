@@ -1755,13 +1755,104 @@
       "rejected": ["apple/swift-argument-parser"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and two exact-pin inspections found a qualified Level 4 command-parser alternate and a distinct Level 5 macro-expansion path. SwiftSyntax fills the only score-supported open place; both Level 1 places remain honest because neither candidate was moved downward."
+    },
+    {
+      "order": 11,
+      "language_slug": "go",
+      "language": "Go",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "spf13/pflag", "level": 2},
+        {"repository": "tidwall/match", "level": 2},
+        {"repository": "gin-gonic/gin", "level": 3},
+        {"repository": "robfig/cron", "level": 3},
+        {"repository": "caddyserver/caddy", "level": 4},
+        {"repository": "kubernetes/kubernetes", "level": 4},
+        {"repository": "golang/go", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "discovery_channels": [
+        {
+          "id": "go-package-registry",
+          "channel": "official Go package documentation and module discovery",
+          "sources": [
+            "https://pkg.go.dev/github.com/google/uuid",
+            "https://pkg.go.dev/google.golang.org/grpc"
+          ],
+          "evidence": "pkg.go.dev supplied canonical module identities, public APIs, versions, imports, license leads, and documentation for one deliberately small value library and one large runtime."
+        },
+        {
+          "id": "curated-go-ecosystem",
+          "channel": "independently curated Go library categories",
+          "sources": [
+            "https://github.com/avelino/awesome-go#uuid",
+            "https://github.com/avelino/awesome-go#networking"
+          ],
+          "evidence": "The curated UUID and networking categories exposed neighboring real software across different sizes without prescribing a learner level."
+        },
+        {
+          "id": "github-go-source",
+          "channel": "GitHub Go source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/google/uuid",
+            "https://github.com/grpc/grpc-go"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, meaningful first-party Go paths, active status, tests, documentation, and pinned license material."
+        },
+        {
+          "id": "official-grpc-go-docs",
+          "channel": "official gRPC Go documentation and production guides",
+          "sources": [
+            "https://grpc.io/docs/languages/go/",
+            "https://grpc.io/docs/languages/go/basics/",
+            "https://grpc.io/docs/languages/go/generated-code/"
+          ],
+          "evidence": "The official language guide established production use, the ClientConn abstraction, concurrent RPC model, generated-code boundary, and the short resolver, subchannel, and picker context used to bound the selected handwritten path."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "google/uuid",
+          "pinned_commit": "2d3c2a9cc518326daf99a383f07c4d3c44317e4d",
+          "discovered_via": ["go-package-registry", "curated-go-ecosystem", "github-go-source"],
+          "inspection_files": ["README.md", "uuid.go", "marshal.go", "version4.go", "uuid_test.go", "json_test.go", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "UUID text forms and bit fields need only a short primer; the path teaches fixed-size value types, parsing and validation, sentinel and typed errors, encoding interfaces, random input, optional pooling, synchronization, and table-driven edge tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Compact intentional functions, one focused value-type boundary, idiomatic array and interface methods, direct malformed, round-trip, version, variant, marshal, pool, and concurrency tests, public API documentation, parse-to-encoding traceability, explicit permissive-versus-validating contracts, and strong small-package teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 3},
+          "calculated_level": 2,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but pflag and match already fill the two Go Level 2 places with more complementary configuration and pattern-matching lessons. The Go toolchain is unavailable locally, so source and tests were inspected but not executed. Parse deliberately accepts several nonstandard forms and must not be used as validation; random pooling changes entropy-reader call behavior and is protected by a mutex; UUID generation is uniqueness-oriented identification rather than encryption, authentication, or authorization.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and text-to-fixed-array-to-encoding path, both gates and all eight findings, 2/2/1/3 Level 2 formula, full capacity, Go and BSD evidence, unavailable toolchain, and the permissive-parse, pool, random-source, and non-security boundaries."}
+        },
+        {
+          "repository": "grpc/grpc-go",
+          "pinned_commit": "6d697e4b65eb0dcfaf326b5b1fcdc66913872442",
+          "discovered_via": ["go-package-registry", "curated-go-ecosystem", "github-go-source", "official-grpc-go-docs"],
+          "inspection_files": ["README.md", "clientconn.go", "resolver_wrapper.go", "balancer_wrapper.go", "picker_wrapper.go", "connectivity/connectivity.go", "test/clientconn_state_transition_test.go", "balancer_wrapper_test.go", "picker_wrapper_test.go", "Documentation/anti-patterns.md", "LICENSE"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Documented synchronization and lifecycle assumptions, recognizable ClientConn, resolver, balancer, subchannel, picker, and transport boundaries, idiomatic Go concurrency, direct state, picker, address, context, and close-race tests, public guides and comments, full update-to-pick-to-reconnect-to-close traceability, centralized transitions, and exceptional concurrent-systems teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and the open Go Level 5 place accepts gRPC-Go's ClientConn control path. The Go toolchain is unavailable locally, so selected tests were inspected but not executed. The path excludes protobuf generation and encoding, HTTP/2 frame implementation, server request execution, credentials and handshake correctness, individual load-balancing algorithms, and xDS; readiness may also include health policy beyond transport viability, while wait-for-ready changes pick failure behavior rather than making an RPC durable.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and resolver-to-service-config-to-balancer-to-subchannel-to-connectivity-to-picker-to-reconnect-and-close path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open slot, Go and Apache evidence, unavailable toolchain, and every generation, protocol, server, security, policy, health, durability, and xDS boundary."}
+        }
+      ],
+      "accepted": ["grpc/grpc-go"],
+      "rejected": ["google/uuid"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections found a qualified compact Level 2 alternate and a distinct Level 5 concurrent ClientConn path. gRPC-Go fills the only score-supported open place; both Level 1 places remain honest because UUID was not moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 10,
-    "accepted_new_total": 13,
-    "rejected_new_total": 15,
-    "current_entry_total": 146,
-    "remaining_gap_total": 54
+    "languages_completed": 11,
+    "accepted_new_total": 14,
+    "rejected_new_total": 16,
+    "current_entry_total": 147,
+    "remaining_gap_total": 53
   }
 }
