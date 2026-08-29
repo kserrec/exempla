@@ -1040,6 +1040,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/2/3 sums to 9, whose mean of 2.25 rounds to Level 2. Both gates pass, but pkgconfig and rematch2 already fill the two R Level 2 places with more complementary configuration and match-structure paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. Decimal bytes and SI quantities use different prefix tables, formatting styles intentionally trade padding and precision, negative values retain sign after magnitude selection, large values clamp to the largest named unit, and standalone closure environments must remain base-only.",
       "reconsider": "Reconsider if an R Level 2 place opens, the two-entry cap changes, or comparative review finds the vectorized magnitude, formatting, rounding, and standalone-closure path stronger and sufficiently distinct; preserve its calculated Level 2 and prefix, precision, clamping, and environment boundaries."
+    },
+    {
+      "repository": "magicmonty/bash-git-prompt",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but dokku and rbenv already fill the two Shell Level 3 places with more complementary deployment and command-shim paths. The complete direct test script passed locally. The prompt runs inside an interactive shell, so global variables and PROMPT_COMMAND composition are deliberate shared state; asynchronous refresh may show cached information briefly; Git worktrees, detached heads, rebases, upstream divergence, and disabled fetch policy alter output; and theme code executes in the user's shell context.",
+      "reconsider": "Reconsider if a Shell Level 3 place opens, the two-entry cap changes, or comparative review finds its Git-state, asynchronous-cache, theming, and prompt-hook path stronger and sufficiently distinct; retain the calculated Level 3 and interactive-shell boundaries."
+    },
+    {
+      "repository": "nvm-sh/nvm",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/5 sums to 16, whose mean is Level 4. Both gates pass, but getoptions and pyenv already fill the two Shell Level 4 places with more complementary parser-generation and multi-process shim paths. Focused path, install-lock, and injection tests passed locally; one separate nvmrc fixture probe could not run because its referenced fixture subtree was absent from the research checkout and was not used as evidence. nvm must be sourced to mutate the caller's environment; shell and utility differences constrain portability; PATH, MANPATH, NODE_PATH, aliases, mirrors, architecture, checksums, download fallbacks, concurrent installs, signals, and stale locks interact; and the path does not teach Node's runtime implementation.",
+      "reconsider": "Reconsider if a Shell Level 4 place opens, the two-entry cap changes, or comparative review finds the portable version-resolution, download-integrity, install-lock, and environment-rewrite path stronger and sufficiently distinct; preserve all sourcing, portability, integrity, concurrency, and scope boundaries."
     }
   ]
 }

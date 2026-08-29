@@ -449,7 +449,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **15.10 Swift**
 - [x] **15.11 Go**
 - [x] **15.12 R**
-- [ ] **15.13 Shell**
+- [x] **15.13 Shell**
 - [ ] **15.14 Kotlin**
 - [ ] **15.15 Scala**
 - [ ] **15.16 PowerShell**

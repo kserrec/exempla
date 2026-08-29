@@ -1937,12 +1937,101 @@
       "rejected": ["r-lib/crayon", "r-lib/prettyunits"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 2 and Level 3 alternatives, but both calculated buckets were already full. Both Level 1 places remain honest because neither candidate was simplified or moved downward."
+    },
+    {
+      "order": 13,
+      "language_slug": "shell",
+      "language": "Shell",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "bats-core/bats-support", "level": 2},
+        {"repository": "fsaintjacques/semver-tool", "level": 2},
+        {"repository": "dokku/dokku", "level": 3},
+        {"repository": "rbenv/rbenv", "level": 3},
+        {"repository": "ko1nksm/getoptions", "level": 4},
+        {"repository": "pyenv/pyenv", "level": 4}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "discovery_channels": [
+        {
+          "id": "shell-system-packages",
+          "channel": "operating-system package registries",
+          "sources": [
+            "https://formulae.brew.sh/formula/bash-git-prompt",
+            "https://ports.macports.org/port/nvm/"
+          ],
+          "evidence": "Homebrew and MacPorts supplied independently maintained packaging, version, license, and real installation evidence for the prompt and version-manager projects."
+        },
+        {
+          "id": "curated-shell-projects",
+          "channel": "independently curated shell project index",
+          "sources": [
+            "https://github.com/alebcay/awesome-shell#command-line-productivity",
+            "https://github.com/alebcay/awesome-shell#for-developers"
+          ],
+          "evidence": "The curated productivity and developer-tool categories exposed real shell software of varied sizes without prescribing learner levels."
+        },
+        {
+          "id": "github-shell-source",
+          "channel": "GitHub Shell source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/magicmonty/bash-git-prompt",
+            "https://github.com/nvm-sh/nvm"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, meaningful first-party Shell paths, active status, tests, documentation, and pinned license material."
+        },
+        {
+          "id": "shell-maintainer-docs",
+          "channel": "maintainer usage and compatibility documentation",
+          "sources": [
+            "https://github.com/magicmonty/bash-git-prompt/blob/master/README.md",
+            "https://github.com/nvm-sh/nvm/blob/master/README.md"
+          ],
+          "evidence": "Maintainer documentation supplied the prompt-state contract and nvm's sourced-function, platform, version-resolution, installation, path-mutation, and compatibility boundaries."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "magicmonty/bash-git-prompt",
+          "pinned_commit": "0bca4060a7b43d315e56113c7fb636e03cc29573",
+          "discovered_via": ["shell-system-packages", "curated-shell-projects", "github-shell-source", "shell-maintainer-docs"],
+          "inspection_files": ["README.md", "gitprompt.sh", "gitstatus.sh", "prompt-colors.sh", "tests/all-tests.sh", "tests/base.sh", "tests/test-prompt-command.sh", "tests/test-rebase-prompt.sh", "LICENSE.txt"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Git status and prompt hooks need only a short primer; the path teaches sourced-function state, command substitution, arrays and parameter expansion, subprocess coordination, cached asynchronous refresh, theme loading, trap-like prompt composition, and repository-backed tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional prompt and status modules, recognizable configuration, status, rendering, and hook boundaries, idiomatic defensive Bash, direct non-repository, hook, rebase, and recovery tests, extensive option documentation, traceable Git-state-to-PS1 output, centralized status symbols, and strong interactive-shell teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "calculated_level": 3,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but dokku and rbenv already fill the two Shell Level 3 places with more complementary deployment and command-shim paths. The complete direct test script passed locally. The prompt runs inside an interactive shell, so global variables and PROMPT_COMMAND composition are deliberate shared state; asynchronous refresh may show cached information briefly; Git worktrees, detached heads, rebases, upstream divergence, and disabled fetch policy alter output; and theme code executes in the user's shell context.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and Git-status-to-cache-to-theme-to-PROMPT_COMMAND path, both gates and all eight findings, 3/3/3/4 Level 3 formula, full capacity, Shell and BSD evidence, passing direct suite, and the shared-state, cache, repository-state, network-policy, and sourced-theme boundaries."}
+        },
+        {
+          "repository": "nvm-sh/nvm",
+          "pinned_commit": "6798d1dbc99e879f36a7d2eb2231104dc7e78e77",
+          "discovered_via": ["shell-system-packages", "curated-shell-projects", "github-shell-source", "shell-maintainer-docs"],
+          "inspection_files": ["README.md", "nvm.sh", "install.sh", "test/common.sh", "test/fast/Unit tests/nvm_change_path", "test/fast/Unit tests/nvm_acquire_install_lock", "test/fast/Unit tests/nvm_release_install_lock", "test/fast/Unit tests/nvm_download no eval injection", "LICENSE.md"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Node versions and shell startup need concise context; the bounded path teaches portable sourced functions, disciplined quoting and parameter expansion, command bypass, version and alias normalization, PATH rewriting, download and checksum handling, advisory directory locks, cleanup, and adversarial injection tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Deliberate portable functions, explicit resolution, installation, environment, download, and lock boundaries, highly defensive POSIX-oriented Shell, extensive fast, slow, installation, compatibility, and security tests, unusually detailed user and maintainer docs, traceable request-to-resolved-version-to-installed-path behavior, centralized helpers and compatibility policy, and exceptional production-shell teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 3, "constraint_burden": 5},
+          "calculated_level": 4,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/5 sums to 16, whose mean is Level 4. Both gates pass, but getoptions and pyenv already fill the two Shell Level 4 places with more complementary parser-generation and multi-process shim paths. Focused path, install-lock, and injection tests passed locally; one separate nvmrc fixture probe could not run because its referenced fixture subtree was absent from the research checkout and was not used as evidence. nvm must be sourced to mutate the caller's environment; shell and utility differences constrain portability; PATH, MANPATH, NODE_PATH, aliases, mirrors, architecture, checksums, download fallbacks, concurrent installs, signals, and stale locks interact; and the path does not teach Node's runtime implementation.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and version-request-to-alias-to-download-to-lock-to-install-to-PATH path, both gates and all eight findings, 4/4/3/5 Level 4 formula, full capacity, Shell and MIT evidence, focused test results and fixture limitation, and every sourcing, portability, environment, mirror, architecture, integrity, fallback, concurrency, signal, and scope boundary."}
+        }
+      ],
+      "accepted": [],
+      "rejected": ["magicmonty/bash-git-prompt", "nvm-sh/nvm"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 3 and Level 4 alternatives, but both calculated buckets were already full. The two Level 1 and two Level 5 places remain honest because neither candidate was moved to fit an open bucket."
     }
   ],
   "summary": {
-    "languages_completed": 12,
+    "languages_completed": 13,
     "accepted_new_total": 14,
-    "rejected_new_total": 18,
+    "rejected_new_total": 20,
     "current_entry_total": 147,
     "remaining_gap_total": 53
   }
