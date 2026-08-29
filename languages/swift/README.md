@@ -1,6 +1,6 @@
 # Swift
 
-7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -475,5 +475,75 @@ Required domain context:
 **Inspection record:** commit `a931f2c1de8dd49381ce3bf2e279d033f68d8865`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `Sources/NIOCore/EventLoopFuture.swift`, `Sources/NIOCore/EventLoop.swift`, `Tests/NIOPosixTests/EventLoopFutureTest.swift`, `docs/public-async-nio-apis.md`, `LICENSE.txt`. GitHub Linguist label: Swift.
 
 **License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/LICENSE.txt))
+
+### [swiftlang/swift-syntax](https://github.com/swiftlang/swift-syntax)
+
+**Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+Swift's source-accurate syntax-tree libraries, parser tooling, refactoring support, and macro-expansion infrastructure.
+
+**Real-world evidence:** The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.
+
+**Language evidence:** The selected macro-expansion system, syntax rewriter, role dispatch, expansion context, diagnostics, formatting, and direct behavioral tests are handwritten first-party Swift under Sources/SwiftSyntaxMacroExpansion and Tests/SwiftSyntaxMacroExpansionTest.
+
+**Why study it:** Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics. A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.
+
+**What you can learn:**
+
+- Study these transferable Swift mechanisms in `Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`: generic `some` and existential `any` protocol APIs, runtime metatype dispatch across macro roles, and SyntaxProtocol rewriting and typed-node conversion.
+- Trace these states and branches through the selected implementation: registered macro lookup, attached and freestanding role selection, detached input and lexical context creation, recursive rewrite and generated-node insertion, formatting and trivia restoration, diagnostics, and recursive-expansion rejection.
+- Identify these architectural responsibilities in the path: public expansion facade, role-specific expansion helpers, tree rewriter and application state, macro context and diagnostics, and focused expression, attached-role, lexical-context, recursive, and failure tests.
+- Study these change constraints: generated Swift must remain syntactically valid and source-accurate, each role must attach output at the correct structural location, context and diagnostics must point back to original source, recursion must terminate, and package behavior must remain aligned with Swift toolchain releases.
+
+**Prerequisites:**
+
+- Be fluent with Swift protocols, generics, metatypes, existentials, enums with associated values, throwing APIs, builders, value semantics, and visitor or rewriter patterns.
+- A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted.
+
+**Coding relevance:**
+
+A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.
+
+Required domain context:
+
+- A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted.
+
+**Learning path:**
+
+- **Goal:** Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics.
+- **Start here:** [`Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift) — Begin with the public SyntaxProtocol.expand facade and MacroApplication rewriter because they expose registration, discovery, role dispatch, recursive traversal, insertion, and failure handling in one path.
+- **Then read:**
+  - [`Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift)
+  - [`Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift)
+  - [`Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift)
+  - [`Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift)
+  - [`Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift)
+  - [`Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift)
+  - [`Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift)
+  - [`Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift)
+- **Trace:** Start at SyntaxProtocol.expand, build MacroSystem and MacroApplication, follow the rewriter as it resolves a macro specification and role, creates a context, detaches and folds the input node, calls the role protocol's expansion, formats and reindents generated syntax, inserts it at the correct tree position, recursively expands generated uses, and records diagnostics on failure; close with expression, multi-role, lexical-context, interpolation-error, and recursive-expansion tests.
+
+**Why this level:**
+
+- **Language technique 5:** Several advanced Swift type-system and metaprogramming mechanisms interact pervasively throughout ordinary expansion behavior.
+- **Behavioral reasoning 5:** Multiple transformation state machines and source-context concerns interact nonlocally, making expert behavioral reasoning unavoidable.
+- **Design span 4:** Many significant components participate, while parser generation, compiler plugin transport, and the full SwiftSyntax tree implementation remain outside the selected path.
+- **Constraint burden 5:** A local expansion change can violate syntax validity, source mapping, diagnostics, termination, role semantics, or toolchain compatibility elsewhere in the path.
+- **Placement:** The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The selected handwritten implementation partitions registration, role dispatch, rewriting, context, formatting, and diagnostics despite the inherent breadth; focused tests exercise every macro role, recursion, malformed expansions, context, indentation, and source-location behavior.
+- **Architecture:** MacroSystem.swift exposes the public facade and application rewriter, MacroExpansion.swift owns role-specific calls and diagnostics, BasicMacroExpansionContext owns lexical and location state, and dedicated tests isolate each transformation contract.
+- **Naming and idiom:** MacroRole, MacroSpec, MacroApplication, expandAttachedMacro, expandFreestandingMacro, lexicalContext, detach, rewrite, and formattedExpansion communicate the transformation model while demonstrating expert Swift protocol and syntax-builder idioms.
+- **Tests:** Expression, multi-role, lexical-context, and interpolation-error suites assert successful insertions, nested and recursive behavior, role combinations, contextual names, indentation and trivia, diagnostics, malformed output, and failure containment.
+- **Documentation:** README.md and public API comments orient syntax trees and macro expansion; the Swift language's macro documentation supplies the short role model needed to read the implementation without requiring compiler theory.
+- **Traceability:** A learner can follow SyntaxProtocol.expand into MacroSystem, MacroApplication, role-specific helpers, context generation, formatting, insertion, recursion, and direct expected-source and diagnostic assertions.
+- **Maintainability:** Responsibilities are localized, error cases become explicit diagnostics, recursion is guarded, compatibility imports are isolated, and comprehensive role-specific tests protect the source-accurate transformation contract.
+- **Educational value:** The bounded handwritten subsystem is a rare production example of Swift metaprogramming infrastructure where advanced type machinery, transformation state, source fidelity, and testing all remain observable.
+
+**Inspection record:** commit `dfd70da7d018493ed39721e7312f707d3f59ed2c`, reviewed 2026-08-29 by Codex, Codex cold self-review. Files sampled: `README.md`, `Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`, `Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift`, `Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift`, `Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift`, `Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift`, `Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift`, `Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift`, `Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift`, `Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift`, `LICENSE.txt`. GitHub Linguist label: Swift.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/LICENSE.txt))
 
 _Generated from `catalog/swift.json`; do not edit by hand._

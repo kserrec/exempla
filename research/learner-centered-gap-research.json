@@ -1640,13 +1640,128 @@
       "rejected": ["benhoyt/inih", "cktan/tomlc99"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and three exact-pin inspections produced one accepted Level 3 parser, one qualified Level 2 capacity alternate, and one hard quality rejection for the obsolete predecessor. tomlc17 fills the only score-supported open place; both Level 1 places remain honest because no candidate was simplified or moved downward."
+    },
+    {
+      "order": 10,
+      "language_slug": "swift",
+      "language": "Swift",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "JohnSundell/Files", "level": 2},
+        {"repository": "pointfreeco/swift-tagged", "level": 2},
+        {"repository": "apple/swift-log", "level": 3},
+        {"repository": "vapor/vapor", "level": 3},
+        {"repository": "Alamofire/Alamofire", "level": 4},
+        {"repository": "realm/SwiftLint", "level": 4},
+        {"repository": "apple/swift-nio", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "discovery_channels": [
+        {
+          "id": "swift-package-index",
+          "channel": "independent Swift Package Index",
+          "sources": [
+            "https://swiftpackageindex.com/apple/swift-argument-parser",
+            "https://swiftpackageindex.com/swiftlang/swift-syntax"
+          ],
+          "evidence": "The package index supplied build, platform, release, product, documentation, and maintenance leads for a focused command parser and a compiler-adjacent syntax package without assigning learner levels."
+        },
+        {
+          "id": "swift-official-ecosystem",
+          "channel": "official Swift package and language documentation",
+          "sources": [
+            "https://www.swift.org/packages/",
+            "https://www.swift.org/packages/macros.html",
+            "https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/"
+          ],
+          "evidence": "Swift.org's ecosystem pages and language guide established real package use, macro roles, compiler-time expansion, syntax-tree transformation, and the intentionally short domain primer for the SwiftSyntax path."
+        },
+        {
+          "id": "github-swift-source",
+          "channel": "GitHub Swift source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/apple/swift-argument-parser",
+            "https://github.com/swiftlang/swift-syntax"
+          ],
+          "evidence": "Public source and current GitHub metadata established the exact revisions, first-party Swift implementation and test paths, active maintenance, documentation, and pinned Apache license evidence."
+        },
+        {
+          "id": "swift-production-consumers",
+          "channel": "official production consumer and toolchain dependency evidence",
+          "sources": [
+            "https://github.com/swiftlang/swift-package-manager/blob/main/Package.swift",
+            "https://docs.swift.org/swiftpm/documentation/packagemanagerdocs/creatingswiftpackage/"
+          ],
+          "evidence": "SwiftPM's own manifest uses ArgumentParser and SwiftSyntax products, while official package documentation identifies SwiftSyntax as the implementation dependency for macro targets."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "apple/swift-argument-parser",
+          "pinned_commit": "e24941a11359a745b38f5e69fae358d6f0ad88d3",
+          "discovered_via": ["swift-package-index", "github-swift-source", "swift-production-consumers"],
+          "inspection_files": [
+            "README.md",
+            "Sources/ArgumentParser/Parsable Types/ParsableArguments.swift",
+            "Sources/ArgumentParser/Parsing/CommandParser.swift",
+            "Sources/ArgumentParser/Parsing/SplitArguments.swift",
+            "Sources/ArgumentParser/Parsing/ArgumentSet.swift",
+            "Sources/ArgumentParser/Parsing/ArgumentDecoder.swift",
+            "Tests/ArgumentParserUnitTests/ParsableArgumentsValidationTests.swift",
+            "Tests/ArgumentParserUnitTests/SplitArgumentTests.swift",
+            "Sources/ArgumentParser/Documentation.docc/Articles/DeclaringArguments.md",
+            "Sources/ArgumentParser/Documentation.docc/Articles/Validation.md",
+            "LICENSE.txt"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Command-line grammar needs little special context; the path teaches property wrappers, reflection, custom Decodable plumbing, typed conversion, token origins, subcommand state, validation, diagnostics, and compatibility-focused tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional parsing and decoding modules, clear public-to-token-to-decoder boundaries, idiomatic property-wrapper and protocol APIs, extensive split, validation, help, error, and command tests, complete DocC guides, direct parse-to-instance traceability, explicit source-stability policy, and strong Swift teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "calculated_level": 4,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/3/4 sums to 14, whose mean of 3.50 rounds half up to Level 4. Both gates pass, but Alamofire and SwiftLint already fill the two Swift Level 4 places with more complementary request-lifecycle and source-analysis paths. The Swift toolchain is unavailable locally, so source and direct tests were inspected but not executed. The selected path does not include shell-completion generators or process exit behavior; Mirror and Decodable depend on correctly formed property wrappers; internal help wording is not source-stable; and ambiguous single-dash long names remain an explicitly discouraged compatibility feature.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and property-wrapper-to-Mirror-to-argument-set-to-token-parser-to-decoder-to-validation path, both gates and all eight findings, 4/3/3/4 Level 4 formula, full capacity, Swift and Apache evidence, unavailable toolchain, and the completion, exit, wrapper, wording, and ambiguity boundaries."}
+        },
+        {
+          "repository": "swiftlang/swift-syntax",
+          "pinned_commit": "dfd70da7d018493ed39721e7312f707d3f59ed2c",
+          "discovered_via": ["swift-package-index", "swift-official-ecosystem", "github-swift-source", "swift-production-consumers"],
+          "inspection_files": [
+            "README.md",
+            "Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift",
+            "Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift",
+            "Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift",
+            "Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift",
+            "Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift",
+            "Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift",
+            "Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift",
+            "Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift",
+            "Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift",
+            "LICENSE.txt"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Handwritten role, rewriter, context, formatting, and diagnostic code has explicit boundaries and naming; direct role, recursion, context, indentation, malformed-output, and diagnostic suites plus public comments and language guides make the source-accurate transformation path traceable, maintainable, and exceptionally instructive despite generated code elsewhere in the repository.",
+          "scores": {"language_technique": 5, "behavioral_reasoning": 5, "design_span": 4, "constraint_burden": 5},
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 5/5/4/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the two-score-of-5 guardrail; both gates pass and the open Swift Level 5 place accepts SwiftSyntax's handwritten macro-expansion subsystem. The Swift toolchain is unavailable locally, so the focused suites were inspected but not executed. The scope excludes generated syntax-node definitions, parser generation, compiler-plugin transport, semantic type checking, and arbitrary compiler internals; expansion works on syntax and may diagnose or format output but does not replace the compiler's semantic checks.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and expand-facade-to-registry-to-rewriter-to-role-dispatch-to-context-to-formatting-to-diagnostics path, handwritten Swift eligibility, both gates and all eight findings, 5/5/4/5 Level 5 result and guardrail, open slot, Apache evidence, unavailable toolchain, and every generated-code, parser, plugin, semantic, and compiler-scope boundary."}
+        }
+      ],
+      "accepted": ["swiftlang/swift-syntax"],
+      "rejected": ["apple/swift-argument-parser"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections found a qualified Level 4 command-parser alternate and a distinct Level 5 macro-expansion path. SwiftSyntax fills the only score-supported open place; both Level 1 places remain honest because neither candidate was moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 9,
-    "accepted_new_total": 12,
-    "rejected_new_total": 14,
-    "current_entry_total": 145,
-    "remaining_gap_total": 55
+    "languages_completed": 10,
+    "accepted_new_total": 13,
+    "rejected_new_total": 15,
+    "current_entry_total": 146,
+    "remaining_gap_total": 54
   }
 }

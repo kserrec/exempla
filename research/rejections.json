@@ -1008,6 +1008,14 @@
       "failed_requirement": "maintainability and educational value",
       "evidence": "Reject at the repository-quality gate: the exact pinned README marks tomlc99 obsolete and names tomlc17 as its replacement. The implementation and tests exist and remain readable, but selecting the superseded parser for new study would teach an explicitly retired design while the maintainer's current replacement is available. The hard failure precedes numerical scoring or capacity comparison.",
       "reconsider": "Reconsider only if the maintainer reverses the obsolete status and resumes this implementation as the supported line, or if the repository is evaluated solely as documented historical context rather than a new learner exemplar."
+    },
+    {
+      "repository": "apple/swift-argument-parser",
+      "language": "Swift",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/3/4 sums to 14, whose mean of 3.50 rounds half up to Level 4. Both gates pass, but Alamofire and SwiftLint already fill the two Swift Level 4 places with more complementary request-lifecycle and source-analysis paths. The Swift toolchain is unavailable locally, so source and direct tests were inspected but not executed. The selected path does not include shell-completion generators or process exit behavior; Mirror and Decodable depend on correctly formed property wrappers; internal help wording is not source-stable; and ambiguous single-dash long names remain an explicitly discouraged compatibility feature.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, the two-entry cap changes, or comparative review finds the property-wrapper, reflection, typed-decoder, token-origin, subcommand, validation, and diagnostics path stronger and sufficiently distinct; retain the calculated Level 4 and source-stability boundaries."
     }
   ]
 }
