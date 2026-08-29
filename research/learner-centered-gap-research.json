@@ -363,13 +363,183 @@
       ],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four independent channels and two exact-pin deep inspections found one quality-gate rejection and one qualified Level 5 scheduler path. Jenkins fills Java's final Level 5 place; two honest Level 1 gaps remain because neither candidate was moved downward and the defective JSON Pointer path was not admitted."
+    },
+    {
+      "order": 4,
+      "language_slug": "php",
+      "language": "PHP",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "doctrine/lexer",
+          "level": 2
+        },
+        {
+          "repository": "nikic/FastRoute",
+          "level": 3
+        },
+        {
+          "repository": "webmozarts/assert",
+          "level": 3
+        },
+        {
+          "repository": "Seldaek/monolog",
+          "level": 4
+        },
+        {
+          "repository": "symfony/symfony",
+          "level": 4
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
+      "discovery_channels": [
+        {
+          "id": "php-package-registry",
+          "channel": "official PHP package registry",
+          "sources": [
+            "https://packagist.org/packages/phpoption/phpoption",
+            "https://packagist.org/packages/laravel/framework"
+          ],
+          "evidence": "Packagist established both projects as distributable Composer packages and supplied package identity, dependency, release, and license leads without treating popularity as qualification."
+        },
+        {
+          "id": "curated-php-ecosystem",
+          "channel": "independently curated PHP library catalog",
+          "sources": [
+            "https://github.com/ziadoz/awesome-php"
+          ],
+          "evidence": "The curated PHP catalog provided independent ecosystem discovery across functional-programming libraries and web frameworks without prescribing a learner Level."
+        },
+        {
+          "id": "github-public-source",
+          "channel": "GitHub public source, language, maintenance, and organization review",
+          "sources": [
+            "https://github.com/schmittjoh/php-option",
+            "https://github.com/laravel/framework",
+            "https://github.com/laravel"
+          ],
+          "evidence": "Public source and current GitHub metadata confirmed both repositories, first-party PHP implementation, maintenance status, exact candidate revisions, and the files used for pin-level inspection."
+        },
+        {
+          "id": "official-project-documentation",
+          "channel": "maintainer-authored API and framework lifecycle documentation",
+          "sources": [
+            "https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/README.md",
+            "https://laravel.com/docs/12.x/lifecycle"
+          ],
+          "evidence": "Maintainer documentation supplied the public Option semantics and Laravel request-lifecycle context used to bound the selected learning paths and distinguish public claims from source-level judgments."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "schmittjoh/php-option",
+          "pinned_commit": "67b192b6a42ec03944b972d6e633ddec78ad2c6d",
+          "discovered_via": [
+            "php-package-registry",
+            "curated-php-ecosystem",
+            "github-public-source",
+            "official-project-documentation"
+          ],
+          "inspection_files": [
+            "src/PhpOption/Option.php",
+            "src/PhpOption/LazyOption.php",
+            "src/PhpOption/Some.php",
+            "src/PhpOption/None.php",
+            "tests/PhpOption/Tests/OptionTest.php",
+            "tests/PhpOption/Tests/LazyOptionTest.php",
+            "tests/PhpOption/Tests/SomeTest.php",
+            "tests/PhpOption/Tests/NoneTest.php",
+            "README.md",
+            "composer.json",
+            "LICENSE"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The Some-versus-None model needs only a short primer; the selected path primarily teaches transferable factory design, strict sentinels, callbacks, closure capture, lazy evaluation, delegation, successful memoization, and error contracts.",
+          "quality_status": "pass",
+          "quality_evidence": "Compact source, cohesive eager and lazy boundaries, precise Option vocabulary, focused factory and delegation tests, detailed method documentation, direct traceability, localized change surfaces, and visible guarantees support all eight quality findings.",
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 3
+          },
+          "calculated_level": 2,
+          "decision_evidence": "The scores were written before capacity was checked. The 2/2/2/3 profile sums to 9, whose mean of 2.25 rounds half up to Level 2; both gates pass and PHP's one open Level 2 place accepts php-option. Successful resolution is memoized in source, but the selected tests do not directly count callback calls, so no exact-once claim is published. Tests were inspected but not executed because PHP is unavailable in the review environment.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin, factory-to-lazy trace, both gates and all eight findings, the 2/2/2/3 profile, Apache-2.0 evidence, the open Level 2 place, and the explicit limit on callback-execution claims."
+          }
+        },
+        {
+          "repository": "laravel/framework",
+          "pinned_commit": "bf309ebfd509b23b25bd830ff8982755820ad5bd",
+          "discovered_via": [
+            "php-package-registry",
+            "curated-php-ecosystem",
+            "github-public-source",
+            "official-project-documentation"
+          ],
+          "inspection_files": [
+            "src/Illuminate/Foundation/Http/Kernel.php",
+            "src/Illuminate/Pipeline/Pipeline.php",
+            "src/Illuminate/Routing/Pipeline.php",
+            "src/Illuminate/Routing/Router.php",
+            "tests/Pipeline/PipelineTest.php",
+            "tests/Routing/RoutingRouteTest.php",
+            "tests/Foundation/Http/KernelTest.php",
+            "README.md",
+            "composer.json",
+            "LICENSE.md"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The HTTP request, middleware, router, response, and exception-handler vocabulary needs a bounded framework primer; the selected path primarily teaches transferable staged orchestration, onion pipelines, callbacks, extension boundaries, lifecycle state, and failure routing.",
+          "quality_status": "pass",
+          "quality_evidence": "Explicit orchestration, coherent Kernel-Pipeline-Router boundaries, framework-consistent naming, extensive documentation, focused component and lifecycle tests, traceable request transitions, stable extension contracts, and production-grade educational value support all eight findings, with test-closure limits stated rather than inferred away.",
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 4,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
+          "calculated_level": 4,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; Symfony retains the more directly tested overlapping HTTP lifecycle path and Monolog preserves stronger domain diversity, so the two-entry cap excludes Laravel. The scores were locked before capacity was inspected. KernelTest does not directly exercise handle or sendRequestThroughRouter, and routing tests do not directly assert the general bound ExceptionHandler.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact representative files, both gates and all eight findings, the 3/4/4/5 Level 4 result and expert guardrail, MIT evidence, full-slot comparison, distributed test closure, and bounded claim surface."
+          }
+        }
+      ],
+      "accepted": [
+        "schmittjoh/php-option"
+      ],
+      "rejected": [
+        "laravel/framework"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
+      "conclusion": "Four independent channels and two exact-pin deep inspections found one qualified Level 2 Option path and one qualified Level 4 framework alternate. php-option fills PHP's final Level 2 place; Laravel remains a durable capacity alternate, and four Level 1 and Level 5 gaps remain because neither candidate was mis-leveled to fill them."
     }
   ],
   "summary": {
-    "languages_completed": 3,
-    "accepted_new_total": 3,
-    "rejected_new_total": 3,
-    "current_entry_total": 136,
-    "remaining_gap_total": 64
+    "languages_completed": 4,
+    "accepted_new_total": 4,
+    "rejected_new_total": 4,
+    "current_entry_total": 137,
+    "remaining_gap_total": 63
   }
 }

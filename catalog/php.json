@@ -112,6 +112,124 @@
       }
     },
     {
+      "slug": "php-option",
+      "repository": "schmittjoh/php-option",
+      "url": "https://github.com/schmittjoh/php-option",
+      "primary_language": "PHP",
+      "language_evidence": "The Option abstraction, eager Some and None implementations, lazy wrapper, and focused tests under src and tests are implemented in PHP.",
+      "description": "An Option type for representing present and absent values with eager, lazy, mapping, filtering, folding, and fallback operations.",
+      "real_world_evidence": "The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.",
+      "why_study": "The factory-to-lazy-resolution path shows how a compact PHP API normalizes existing values, callables, and Option instances while preserving a strict absence sentinel, identity, deferred work, successful-result memoization, and explicit failure behavior.",
+      "learn": [
+        "Use `src/PhpOption/Option.php` to study the following transferable techniques and behaviors: Abstract option contracts, PHPDoc covariance and templates, strict sentinel comparison, eager and lazy factory methods, callable normalization, identity preservation, deferred delegation, successful-result memoization, and invalid-callback or invalid-result errors."
+      ],
+      "prerequisites": [
+        "Before reading `src/PhpOption/Option.php`, be familiar with the following concepts: PHP classes and inheritance, static factories, callables and closures, strict equality, null, exceptions, PHPDoc generic annotations, and the idea of representing presence or absence with an Option value."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An Option represents either a present value as Some or absence as None, avoiding a raw sentinel value in the rest of a program."
+        ],
+        "reason": "The presence-versus-absence model needs only a short primer; the path primarily teaches transferable factory design, higher-order functions, strict comparison, lazy evaluation, delegation, memoization, and error contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how php-option turns eager values, callables, and existing Option objects into a consistent eager or lazy Option while preserving strict absence and resolution behavior.",
+        "start_here": {
+          "path": "src/PhpOption/Option.php",
+          "reason": "Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations."
+        },
+        "supporting_files": [
+          "src/PhpOption/LazyOption.php",
+          "src/PhpOption/Some.php",
+          "src/PhpOption/None.php",
+          "tests/PhpOption/Tests/OptionTest.php",
+          "tests/PhpOption/Tests/LazyOptionTest.php"
+        ],
+        "trace": "Follow Option.fromValue as strict equality chooses None or Some, then compare fromReturn and ensure as they capture callables or preserve an existing Option; continue into LazyOption.option as it validates, resolves, stores a successful Option, and delegates reads and transforms, while correlating sentinel, callable, identity, fallback, delegation, and invalid-result cases in OptionTest and LazyOptionTest."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "abstract class with covariant PHPDoc templates",
+            "static factories and captured closures",
+            "final lazy delegating implementation"
+          ],
+          "reason": "Conventional inheritance, callbacks, closure capture, and documented generic relationships materially shape the API without advanced runtime language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "strict configurable absence sentinel",
+            "eager-versus-deferred resolution branches",
+            "successful memoization and explicit failure paths"
+          ],
+          "reason": "Meaningful branching and lazy state require care but remain synchronous and localized in two small classes."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "factory and abstract Option boundary",
+            "Some, None, and LazyOption implementations",
+            "focused factory and lazy-behavior tests"
+          ],
+          "reason": "A few cohesive types contain the complete normalization and resolution behavior."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "strict sentinel identity",
+            "existing Option identity preservation",
+            "deferred resolution, successful caching, and callback-result validation"
+          ],
+          "reason": "Several API guarantees interact across eager and lazy construction, including strict absence semantics, object identity, deferred work, reuse of a successful result, and explicit invalid-input failures."
+        },
+        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "The three factory branches, lazy state, delegation, validation, and successful-result assignment are compact and explicit.",
+        "architecture": "Option owns normalization and the abstract contract, Some and None model the two eager cases, and LazyOption isolates deferred resolution before delegating to a resolved Option.",
+        "naming_and_idiom": "fromValue, fromReturn, ensure, Some, None, LazyOption, isDefined, isEmpty, getOrElse, map, and flatMap state the presence and transformation vocabulary directly.",
+        "tests": "OptionTest covers default and custom sentinels, eager factories, lazy return conversion, alternatives, and lifting; LazyOptionTest covers construction, arguments, repeated delegated reads, None behavior, invalid callbacks, invalid results, and delegated operations. The selected tests do not directly count callback invocations, so no exact-once execution claim is made.",
+        "documentation": "Class and method documentation explains strict sentinel behavior, factory normalization, callable expectations, laziness, and the Option operations used by the selected path.",
+        "traceability": "A value or callable can be followed from one of three factories into Some, None, or LazyOption, through successful resolution or an explicit error, and into focused factory and delegation assertions.",
+        "maintainability": "Small implementations, one lazy-resolution seam, strict comparisons, stable abstract operations, and focused tests keep changes locally reviewable.",
+        "educational_value": "The path demonstrates how a production PHP library replaces raw absence sentinels with a typed, composable, and optionally lazy API without hiding its control flow."
+      },
+      "inspection": {
+        "commit": "67b192b6a42ec03944b972d6e633ddec78ad2c6d",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/PhpOption/Option.php",
+          "src/PhpOption/LazyOption.php",
+          "src/PhpOption/Some.php",
+          "src/PhpOption/None.php",
+          "tests/PhpOption/Tests/OptionTest.php",
+          "tests/PhpOption/Tests/LazyOptionTest.php",
+          "README.md",
+          "composer.json",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "fastroute",
       "repository": "nikic/FastRoute",
       "url": "https://github.com/nikic/FastRoute",

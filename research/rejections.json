@@ -920,6 +920,14 @@
       "failed_requirement": "source quality, tests, maintainability, and educational value",
       "evidence": "Reject at the quality gate: JSONPointer unescapes stored tokens again during object lookup, URI-encodes raw rather than JSON-Pointer-escaped tokens and uses form-style encoding, returns null for a missing terminal object member despite documenting an exception, and accepts leading-zero array indexes. Focused tests omit those escaped-token, URI round-trip, terminal-miss, and index-grammar cases. The hard failure precedes publication of diagnostic scores or capacity ranking.",
       "reconsider": "Reconsider only at a new pin that removes the second unescape, serializes URI fragments from correctly escaped tokens with RFC-correct percent encoding, throws on missing terminal members, validates array-index grammar, and adds focused regression and round-trip tests; it must then pass a fresh quality review and honest capacity ranking."
+    },
+    {
+      "repository": "laravel/framework",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; Symfony retains the more directly tested overlapping HTTP lifecycle path and Monolog preserves stronger domain diversity, so the two-entry cap excludes Laravel. The scores were locked before capacity was inspected. KernelTest does not directly exercise handle or sendRequestThroughRouter, and routing tests do not directly assert the general bound ExceptionHandler.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, the two-entry cap changes, a retained path weakens on re-audit, or direct end-to-end tests materially strengthen the selected Kernel-to-Pipeline-to-Router and exception-handler trace."
     }
   ]
 }

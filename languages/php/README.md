@@ -1,6 +1,6 @@
 # PHP
 
-5 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -69,6 +69,69 @@ Required domain context:
 **Inspection record:** commit `e96fe45e92a54233726014a7cc7340abf29bb14c`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/AbstractLexer.php`, `src/Token.php`, `tests/AbstractLexerTest.php`, `LICENSE`. GitHub Linguist label: PHP.
 
 **License:** MIT ([evidence 1](https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/LICENSE))
+
+### [schmittjoh/php-option](https://github.com/schmittjoh/php-option)
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
+
+An Option type for representing present and absent values with eager, lazy, mapping, filtering, folding, and fallback operations.
+
+**Real-world evidence:** The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.
+
+**Language evidence:** The Option abstraction, eager Some and None implementations, lazy wrapper, and focused tests under src and tests are implemented in PHP.
+
+**Why study it:** The factory-to-lazy-resolution path shows how a compact PHP API normalizes existing values, callables, and Option instances while preserving a strict absence sentinel, identity, deferred work, successful-result memoization, and explicit failure behavior.
+
+**What you can learn:**
+
+- Use `src/PhpOption/Option.php` to study the following transferable techniques and behaviors: Abstract option contracts, PHPDoc covariance and templates, strict sentinel comparison, eager and lazy factory methods, callable normalization, identity preservation, deferred delegation, successful-result memoization, and invalid-callback or invalid-result errors.
+
+**Prerequisites:**
+
+- Before reading `src/PhpOption/Option.php`, be familiar with the following concepts: PHP classes and inheritance, static factories, callables and closures, strict equality, null, exceptions, PHPDoc generic annotations, and the idea of representing presence or absence with an Option value.
+
+**Coding relevance:**
+
+The presence-versus-absence model needs only a short primer; the path primarily teaches transferable factory design, higher-order functions, strict comparison, lazy evaluation, delegation, memoization, and error contracts.
+
+Required domain context:
+
+- An Option represents either a present value as Some or absence as None, avoiding a raw sentinel value in the rest of a program.
+
+**Learning path:**
+
+- **Goal:** Understand how php-option turns eager values, callables, and existing Option objects into a consistent eager or lazy Option while preserving strict absence and resolution behavior.
+- **Start here:** [`src/PhpOption/Option.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Option.php) — Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations.
+- **Then read:**
+  - [`src/PhpOption/LazyOption.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/LazyOption.php)
+  - [`src/PhpOption/Some.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Some.php)
+  - [`src/PhpOption/None.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/None.php)
+  - [`tests/PhpOption/Tests/OptionTest.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/tests/PhpOption/Tests/OptionTest.php)
+  - [`tests/PhpOption/Tests/LazyOptionTest.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/tests/PhpOption/Tests/LazyOptionTest.php)
+- **Trace:** Follow Option.fromValue as strict equality chooses None or Some, then compare fromReturn and ensure as they capture callables or preserve an existing Option; continue into LazyOption.option as it validates, resolves, stores a successful Option, and delegates reads and transforms, while correlating sentinel, callable, identity, fallback, delegation, and invalid-result cases in OptionTest and LazyOptionTest.
+
+**Why this level:**
+
+- **Language technique 2:** Conventional inheritance, callbacks, closure capture, and documented generic relationships materially shape the API without advanced runtime language machinery.
+- **Behavioral reasoning 2:** Meaningful branching and lazy state require care but remain synchronous and localized in two small classes.
+- **Design span 2:** A few cohesive types contain the complete normalization and resolution behavior.
+- **Constraint burden 3:** Several API guarantees interact across eager and lazy construction, including strict absence semantics, object identity, deferred work, reuse of a successful result, and explicit invalid-input failures.
+- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The three factory branches, lazy state, delegation, validation, and successful-result assignment are compact and explicit.
+- **Architecture:** Option owns normalization and the abstract contract, Some and None model the two eager cases, and LazyOption isolates deferred resolution before delegating to a resolved Option.
+- **Naming and idiom:** fromValue, fromReturn, ensure, Some, None, LazyOption, isDefined, isEmpty, getOrElse, map, and flatMap state the presence and transformation vocabulary directly.
+- **Tests:** OptionTest covers default and custom sentinels, eager factories, lazy return conversion, alternatives, and lifting; LazyOptionTest covers construction, arguments, repeated delegated reads, None behavior, invalid callbacks, invalid results, and delegated operations. The selected tests do not directly count callback invocations, so no exact-once execution claim is made.
+- **Documentation:** Class and method documentation explains strict sentinel behavior, factory normalization, callable expectations, laziness, and the Option operations used by the selected path.
+- **Traceability:** A value or callable can be followed from one of three factories into Some, None, or LazyOption, through successful resolution or an explicit error, and into focused factory and delegation assertions.
+- **Maintainability:** Small implementations, one lazy-resolution seam, strict comparisons, stable abstract operations, and focused tests keep changes locally reviewable.
+- **Educational value:** The path demonstrates how a production PHP library replaces raw absence sentinels with a typed, composable, and optionally lazy API without hiding its control flow.
+
+**Inspection record:** commit `67b192b6a42ec03944b972d6e633ddec78ad2c6d`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/PhpOption/Option.php`, `src/PhpOption/LazyOption.php`, `src/PhpOption/Some.php`, `src/PhpOption/None.php`, `tests/PhpOption/Tests/OptionTest.php`, `tests/PhpOption/Tests/LazyOptionTest.php`, `README.md`, `composer.json`, `LICENSE`. GitHub Linguist label: PHP.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE))
 
 ## Level 3
 
