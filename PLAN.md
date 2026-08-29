@@ -323,7 +323,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 10.1 — Publish the verified corpus as v1.0.0
 
-- [ ] **Objective:** Give the finished initial catalog a permanent, citable
+- [x] **Objective:** Give the finished initial catalog a permanent, citable
   version on GitHub.
 - **Work:** Run the complete release gate; create and push an annotated
   `v1.0.0` tag at the verified catalog snapshot; publish concise GitHub release
@@ -334,3 +334,17 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
   `v1.0.0` release; its tag resolves to the tested commit; both generated source
   archives resolve; and local `main` remains clean and synchronized.
 - **Dependencies:** Phase 9.
+
+## Phase 11 — CI action runtime refresh
+
+### Step 11.1 — Remove the Node.js 20 action deprecation warning
+
+- [ ] **Objective:** Keep the GitHub release gate on supported action runtimes
+  without changing the commands it verifies.
+- **Work:** Confirm the official successor releases for `actions/checkout@v4`
+  and `actions/setup-python@v5`; update only their workflow references; run the
+  complete local gate and inspect the resulting GitHub Actions annotations.
+- **Artifacts:** `.github/workflows/validate.yml`.
+- **Complete when:** The exact workflow still passes all three project checks
+  and GitHub no longer reports that either action targets Node.js 20.
+- **Dependencies:** Phase 10.
