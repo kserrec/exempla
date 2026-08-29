@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 20,
+  "reviewed_entry_total": 30,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -1489,12 +1489,736 @@
         "status": "agree_after_correction",
         "notes": "Moved the start to ConfigEntry lifecycle code and added loader.py, setup.py, and focused config-entry tests while retaining core.py and test_core.py for job, event, and thread ownership; independently confirmed both gates, 4/5/4/5 scoring, Level 5 formula, and retention."
       }
+    },
+    {
+      "repository": "ralfstx/minimal-json",
+      "language": "Java",
+      "prior_level": 1,
+      "pinned_commit": "c091e6985620da04d5abcd902aafb6c9583c48ea",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "JSON consists of objects, arrays, strings, numbers, booleans, and null, with a small documented grammar."
+        ],
+        "evidence": "The format context is short and self-contained; the selected path primarily teaches buffered reading, recursive parsing, callbacks, state management, error reporting, and resource limits."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "A compact value-parser-writer architecture, direct naming, precise parser states, exhaustive malformed-input and buffer-boundary tests, API documentation, and a nesting guard make the path readable, traceable, maintainable, and educational.",
+      "learning_path": {
+        "goal": "Understand how minimal-json turns a String or Reader into a JsonValue while preserving buffer-boundary behavior, nesting limits, and precise parse errors.",
+        "start_path": "com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java",
+        "supporting_files": [
+          "com.eclipsesource.json/src/main/java/com/eclipsesource/json/Json.java",
+          "com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonHandler.java",
+          "com.eclipsesource.json/src/test/java/com/eclipsesource/json/JsonParser_Test.java"
+        ],
+        "trace": "Begin with Json.parse and its DefaultHandler, follow JsonParser as it reads and captures characters across buffer fills, dispatches object, array, literal, number, and string events through JsonHandler, enforces nesting and complete-input rules, and reports line and column; correlate valid forms, malformed syntax, buffer boundaries, repeated parsing, source locations, and excessive nesting in JsonParser_Test."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic parser-handler callbacks",
+            "Reader composition and ordinary object-oriented boundaries"
+          ],
+          "reason": "Interfaces, callbacks, composition, and conventional Java classes shape the path without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized parser and capture state",
+            "recursive object and array branches",
+            "explicit malformed-input paths"
+          ],
+          "reason": "Meaningful state and branching remain localized in one parser and are straightforward to trace."
+        },
+        "design_span": {
+          "signals": [
+            "public factory and value model",
+            "parser-handler boundary"
+          ],
+          "reason": "A few explicit modules contain the complete in-process behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "reader buffer boundaries",
+            "nesting resource limit",
+            "syntax and source-location contracts"
+          ],
+          "reason": "Correctness, resource protection, streaming reliability, and exact diagnostics materially constrain parser changes."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and the 2/2/2/3 profile sums to 9, which calculates to Level 2 independently of available catalog places.",
+      "reconsider": "Reconsider if the parser-handler path, public source status, license, documentation, or boundary and malformed-input tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added JsonHandler.java so the callback boundary between JsonParser and Json.DefaultHandler is explicit; independently confirmed both gates, 2/2/2/3 scoring, Level 2 formula, and retention."
+      }
+    },
+    {
+      "repository": "FasterXML/jackson-annotations",
+      "language": "Java",
+      "prior_level": 1,
+      "pinned_commit": "474f7c9449f0efc6bf2200aac7ea4c348b429536",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Jackson annotations attach serialization and polymorphic-type configuration to Java program elements for a separate data-binding implementation to consume."
+        ],
+        "evidence": "The short annotation and serialization context is documented in the source; the path teaches transferable annotation API design, immutable configuration values, normalization, compatibility, and reflection-based testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Small annotation contracts, unusually detailed compatibility Javadocs, immutable value semantics, stable names, and focused default, mutation, equality, reflection, and Java-serialization tests make the component clear and maintainable.",
+      "learning_path": {
+        "goal": "Understand how JsonTypeInfo exposes polymorphic serialization metadata and mirrors it in an immutable normalized Value object suitable for framework configuration and compatibility.",
+        "start_path": "src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java",
+        "supporting_files": [
+          "src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotation.java",
+          "src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotationValue.java",
+          "src/main/java/com/fasterxml/jackson/annotation/OptBoolean.java",
+          "src/test/java/com/fasterxml/jackson/annotation/JsonTypeInfoTest.java"
+        ],
+        "trace": "Read the runtime annotation contract and its Id, As, and None types, then follow JsonTypeInfo.Value construction, default normalization, copy-with methods, feature merging, equality, hashing, and serialization; correlate reflected annotation defaults, immutable mutations, equality, and JDK serialization in JsonTypeInfoTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "runtime annotations and nested enum types",
+            "generic annotation-value contract",
+            "immutable copy-with configuration API"
+          ],
+          "reason": "Annotations and nontrivial type modeling materially shape the component, satisfying substantial abstraction without recurring advanced machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "default normalization and feature merging",
+            "localized immutable mutations and equality"
+          ],
+          "reason": "Branches and configuration state matter, but the behavior remains synchronous, local, and easy to enumerate."
+        },
+        "design_span": {
+          "signals": [
+            "one annotation and value component",
+            "focused supporting marker interfaces"
+          ],
+          "reason": "The selected behavior stays within one cohesive API unit despite its rich contract."
+        },
+        "constraint_burden": {
+          "signals": [
+            "source and binary compatibility",
+            "stable annotation defaults and precedence",
+            "JDK serialization and security guidance"
+          ],
+          "reason": "Public compatibility, reflection-visible defaults, serialization, and safe polymorphic configuration impose several material guarantees."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and the 3/2/1/3 profile sums to 9, which calculates to Level 2 independently of catalog demand.",
+      "reconsider": "Reconsider if JsonTypeInfo.Value or its tests disappear, the annotation contracts cease to be representative, or public metadata, license, documentation, or compatibility quality materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Replaced the mismatched JsonProperty.java start with JsonTypeInfo.java and its actual marker, value, option, and test files; independently confirmed both gates, 3/2/1/3 scoring, Level 2 formula, and retention."
+      }
+    },
+    {
+      "repository": "java-diff-utils/java-diff-utils",
+      "language": "Java",
+      "prior_level": 2,
+      "pinned_commit": "5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A patch is an ordered collection of insert, delete, and change deltas whose source chunks must match before they can be applied or reversed."
+        ],
+        "evidence": "This compact patch model is sufficient context and avoids making Myers edit-graph theory the lesson; the selected behavior teaches transferable generics, reversible transformations, validation, conflict handling, and serialization."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Patch, chunk, and delta responsibilities are explicit, generic contracts are readable, application order and conflicts are visible in source, and focused application, reversal, verification, serialization, and algorithm-independent tests make the standard path traceable; an incomplete optional merge-conflict edge does not undermine that path.",
+      "learning_path": {
+        "goal": "Understand how java-diff-utils validates and applies an existing generic patch, detects conflicts, and reverses the same delta sequence.",
+        "start_path": "java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java",
+        "supporting_files": [
+          "java-diff-utils/src/main/java/com/github/difflib/patch/AbstractDelta.java",
+          "java-diff-utils/src/main/java/com/github/difflib/patch/Chunk.java",
+          "java-diff-utils/src/main/java/com/github/difflib/patch/ChangeDelta.java",
+          "java-diff-utils/src/main/java/com/github/difflib/patch/DeleteDelta.java",
+          "java-diff-utils/src/main/java/com/github/difflib/patch/InsertDelta.java",
+          "java-diff-utils/src/test/java/com/github/difflib/patch/PatchWithAllDiffAlgorithmsTest.java",
+          "java-diff-utils/src/test/java/com/github/difflib/patch/ChunkTest.java"
+        ],
+        "trace": "Follow Patch.applyTo into reverse-ordered delta iteration, AbstractDelta.verifyAndApplyTo, Chunk verification, and the concrete insert, delete, and change mutations; then follow restore through inverse delta behavior and correlate application across both bundled generators, serialization, content mismatch, position, and fuzz verification tests without studying the diff-generation algorithm itself."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic patch and chunk types",
+            "polymorphic delta hierarchy",
+            "strategy-style conflict callback"
+          ],
+          "reason": "Generics and a typed polymorphic transformation model materially shape the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "reverse-ordered mutation",
+            "localized verification and conflict branches",
+            "inverse restoration"
+          ],
+          "reason": "State and ordering require care but remain synchronous and locally traceable."
+        },
+        "design_span": {
+          "signals": [
+            "patch orchestration and delta boundary",
+            "chunk verification component"
+          ],
+          "reason": "A few explicit modules contain the complete application behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "generic sequence correctness",
+            "reversible delta ordering",
+            "conflict and serialization contracts"
+          ],
+          "reason": "Application, restoration, input verification, arbitrary element types, conflicts, and serialized patches impose several material guarantees."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and the 3/2/2/3 profile sums to 10, whose half-up mean calculates to Level 3.",
+      "reconsider": "Reconsider if patch application ceases to be a first-class production behavior, or if public metadata, license, source quality, documentation, or application and reversal tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Replaced the incomplete DiffUtils-to-Patch trace with the self-contained patch-application path so Myers algorithm theory does not dominate; independently confirmed both gates, 3/2/2/3 scoring, Level 3 formula, and retention."
+      }
+    },
+    {
+      "repository": "junit-team/junit4",
+      "language": "Java",
+      "prior_level": 2,
+      "pinned_commit": "890f3c972647de378f25e7271d8fbbd9d3456b79",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A JUnit 4 runner discovers annotated test methods, wraps each invocation with setup, teardown, timeout, expected-exception, and rule behavior, and reports events to listeners."
+        ],
+        "evidence": "The familiar test-runner model is short and documented; the path's difficulty is transferable reflection, lifecycle composition, extension ordering, event propagation, isolation, and failure handling."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Runner, statement, rule, description, and notifier responsibilities are explicit, lifecycle ordering is documented in source, and focused validation, rule, timeout, expected-exception, customization, notification, and interruption tests make this stable maintenance-mode framework path traceable and educational.",
+      "learning_path": {
+        "goal": "Understand how JUnit 4 discovers and executes one annotated test method through its composable statement lifecycle and reports the result safely.",
+        "start_path": "src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java",
+        "supporting_files": [
+          "src/main/java/org/junit/runners/ParentRunner.java",
+          "src/main/java/org/junit/runners/model/Statement.java",
+          "src/main/java/org/junit/runners/RuleContainer.java",
+          "src/main/java/org/junit/runner/notification/RunNotifier.java",
+          "src/test/java/org/junit/tests/running/classes/BlockJUnit4ClassRunnerTest.java",
+          "src/test/java/org/junit/tests/running/methods/ExpectedTest.java",
+          "src/test/java/org/junit/tests/running/methods/TimeoutTest.java",
+          "src/test/java/org/junit/runners/RuleContainerTest.java"
+        ],
+        "trace": "Follow reflective method discovery and validation into runChild and methodBlock, then compose invocation, expected-exception, timeout, before, after, and ordered rule Statements; continue through ParentRunner scheduling and interrupt isolation into RunNotifier's failure-contained listener events, correlating runner construction, expected exceptions, timeouts, rule order, customization, and notification behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reflection and runtime annotations",
+            "generic runner hierarchy",
+            "dynamic rule discovery and statement decoration"
+          ],
+          "reason": "Reflection, annotations, generic framework types, and implicit decorator composition recur in important behavior."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "nested test and class lifecycles",
+            "event propagation and listener failure containment",
+            "timeouts, cleanup, and interrupt isolation"
+          ],
+          "reason": "Lifecycle ordering, event propagation, resource cleanup, and failure behavior require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "runner and statement layers",
+            "rule and notifier extension points",
+            "legacy and custom execution modes"
+          ],
+          "reason": "Many framework modules, extension points, and cross-cutting execution policies contribute directly to one test run."
+        },
+        "constraint_burden": {
+          "signals": [
+            "JUnit 3 and 4 compatibility",
+            "strict lifecycle and rule ordering",
+            "timeout, failure, cleanup, and listener isolation"
+          ],
+          "reason": "Compatibility, deterministic order, error aggregation, threading, and isolation guarantees interact throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass, 4/4/4/4 calculates to Level 4, and this focused lifecycle path ranks second among four qualified Java Level 4 candidates.",
+      "reconsider": "Reconsider if the stable runner path or tests become unavailable, or if a fresh Java Level 4 comparison ranks a qualified alternate above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review rejected JUnitCoreTest.java as sufficient evidence for BlockJUnit4ClassRunner behavior. Final reconciliation adopts focused runner, expected-exception, timeout, and rule tests; both reviewers agree on the gates, 4/4/4/4 scoring, Level 4 formula, comparative rank 2, and retention."
+      }
+    },
+    {
+      "repository": "google/gson",
+      "language": "Java",
+      "prior_level": 3,
+      "pinned_commit": "b3f4ca20087f9066de4c340522ff84e0558e1ad1",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Gson maps Java types to JSON through an ordered chain of TypeAdapterFactory implementations, using reflective binding when no earlier adapter handles a type."
+        ],
+        "evidence": "Basic JSON and reflection context is short and documented; the path teaches transferable erased-type modeling, recursive cache construction, concurrency, factory composition, reflective access policy, streaming, and compatibility."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Adapter, factory, type-token, streaming, and reflective-binding responsibilities are explicit; defensive errors, access filters, extensive Javadocs, and focused recursion, concurrency, precedence, record, reflection-access, strictness, and compatibility tests make the path maintainable and educational.",
+      "learning_path": {
+        "goal": "Understand how Gson resolves and caches a type adapter, breaks recursive construction cycles, falls back to reflective field or record binding, and uses the result for JSON conversion.",
+        "start_path": "gson/src/main/java/com/google/gson/Gson.java",
+        "supporting_files": [
+          "gson/src/main/java/com/google/gson/TypeAdapterFactory.java",
+          "gson/src/main/java/com/google/gson/reflect/TypeToken.java",
+          "gson/src/main/java/com/google/gson/internal/bind/ReflectiveTypeAdapterFactory.java",
+          "gson/src/test/java/com/google/gson/GsonTest.java",
+          "gson/src/test/java/com/google/gson/functional/ReflectionAccessFilterTest.java",
+          "gson/src/test/java/com/google/gson/functional/Java17RecordTest.java"
+        ],
+        "trace": "Follow Gson.getAdapter from TypeToken lookup through the concurrent cache, per-thread construction map, FutureTypeAdapter recursion placeholder, and ordered factories; enter ReflectiveTypeAdapterFactory for access filtering, generic field resolution, duplicate-name rejection, bound-field adapters, and record construction, then return through streaming read or write while correlating recursion, concurrency, factory order, access, record, strictness, and error tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reflection and erased generic type tokens",
+            "runtime record and field introspection",
+            "recursive placeholder adapters"
+          ],
+          "reason": "Reflection, advanced generic-type recovery, and implicit runtime binding recur throughout adapter resolution."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent adapter cache",
+            "thread-local recursive construction",
+            "streaming state restoration and reflective object construction"
+          ],
+          "reason": "Concurrency, recursion, cache publication, streaming state, and construction failures require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "Gson facade and factory chain",
+            "type-token and reflective-binding boundaries",
+            "stream adapter boundary"
+          ],
+          "reason": "The trace crosses several meaningful, locally understandable layers and interfaces, but it does not require Gson's broader architecture."
+        },
+        "constraint_burden": {
+          "signals": [
+            "thread-safe cache identity and recursion",
+            "Java version, access, and serialization compatibility",
+            "stream strictness and stable error behavior"
+          ],
+          "reason": "Thread safety, reflective access, type correctness, Java compatibility, streaming modes, and stable serialized behavior interact across ordinary changes."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass, 4/4/3/4 sums to 15 and calculates to Level 4, and this adapter-resolution path ranks first among four qualified Java Level 4 candidates.",
+      "reconsider": "Reconsider if adapter resolution or reflective binding is materially redesigned, or if a fresh Java Level 4 comparison ranks a qualified alternate above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review proposed design span 4. Final reconciliation uses the lower anchor 3 because the corrected trace crosses several clear adapter, type, reflection, and stream boundaries without requiring broad Gson architecture; both reviewers agree on the other scores, Level 4 formula, gates, rank 1, and retention."
+      }
+    },
+    {
+      "repository": "jhy/jsoup",
+      "language": "Java",
+      "prior_level": 3,
+      "pinned_commit": "7860d088e044236e288c1f88a743b68b2a0edece",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTML sanitizer parses untrusted body content, copies only allowed elements and attributes into a new document, and restricts URL-bearing attributes to configured protocols."
+        ],
+        "evidence": "The original HtmlTreeBuilder path fails this gate because WHATWG insertion modes, active formatting and open-element stacks, foster parenting, foreign-content rules, and quirks dominate its program logic. The replacement Jsoup.clean-to-Cleaner-to-Safelist path is a substantial documented production feature whose short HTML and XSS context remains subordinate to transferable traversal, policy, normalization, validation, and security-boundary engineering."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public facade, cleaner traversal, mutable safelist policy, DOM model, and tests have recognizable responsibilities; explicit security warnings and focused tag, attribute, protocol, relative-URL, normalization, concurrency, malformed-input, and regression tests make the corrected path readable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how jsoup cleans untrusted HTML by parsing a body fragment, copying only safelisted DOM nodes and attributes, normalizing URLs, and enforcing security policy without mutating the input.",
+        "start_path": "src/main/java/org/jsoup/Jsoup.java",
+        "supporting_files": [
+          "src/main/java/org/jsoup/safety/Cleaner.java",
+          "src/main/java/org/jsoup/safety/Safelist.java",
+          "src/test/java/org/jsoup/safety/CleanerTest.java",
+          "src/test/java/org/jsoup/safety/SafelistTest.java"
+        ],
+        "trace": "Follow Jsoup.clean into body-fragment parsing and Cleaner.clean, then traverse the dirty DOM with CleaningVisitor as it copies safe elements, text, data, and source ranges into a fresh shell; follow Safelist tag and attribute checks, protocol validation, absolute or preserved relative URLs, and enforced attributes, then correlate XSS payloads, malformed input, pseudo-tag rules, URL normalization, nofollow, input immutability, and concurrent reuse in the safety tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "visitor callbacks and fluent policy configuration",
+            "composition over the DOM model",
+            "typed wrapper values for policy keys"
+          ],
+          "reason": "The path uses common professional Java composition, callbacks, visitors, and fluent configuration without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "destination stack during tree traversal",
+            "parse, copy, validate, and normalize stages",
+            "mutable policy with safe concurrent read reuse"
+          ],
+          "reason": "Traversal state, document reconstruction, policy decisions, URL normalization, and validation materially affect the end-to-end result."
+        },
+        "design_span": {
+          "signals": [
+            "public facade and parser boundary",
+            "DOM traversal and cleaner layer",
+            "safelist policy component"
+          ],
+          "reason": "The behavior crosses several meaningful, locally understandable layers and interfaces."
+        },
+        "constraint_burden": {
+          "signals": [
+            "XSS security boundary",
+            "browser-facing parse normalization",
+            "URL protocols, relative links, enforced attributes, and thread sharing"
+          ],
+          "reason": "Multiple strict security, normalization, URL, immutability, and concurrency guarantees interact across the sanitizer path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain only through the replacement sanitizer path: both gates pass there and 2/3/3/4 sums to 12, which calculates to Level 3; the old HtmlTreeBuilder path itself is rejected by the domain gate.",
+      "reconsider": "Reconsider if cleaning ceases to be a substantial documented production feature, if its security and normalization tests materially deteriorate, or if the entry reverts to the specification-dominated HtmlTreeBuilder path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review rejected the proposed HtmlTreeBuilder path under the mandatory niche-protocol/specification signal. Final reconciliation retains jsoup only after replacing it with the representative sanitizer path and confirms 2/3/3/4, Level 3, both gates on that path, and retention."
+      }
+    },
+    {
+      "repository": "apache/maven",
+      "language": "Java",
+      "prior_level": 4,
+      "pinned_commit": "e53b7bd98f7352a90af8795af75a2f4c5d3f179c",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 4,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Maven reactor build creates a dependency-ordered project graph, lets lifecycle participants adjust it, calculates lifecycle tasks, and executes them through a selected builder inside one repository session."
+        ],
+        "evidence": "Build graphs, lifecycle phases, extensions, and concurrency are documented software-engineering concepts; the path primarily teaches transferable orchestration, graph rebuilding, event flow, session scope, recovery, cleanup, extension contracts, and builder selection."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Session, graph, lifecycle, builder, repository, and extension responsibilities are explicit, the top-level execution sequence is documented in source, and extensive unit and integration tests cover graph construction, lifecycle planning and execution, builders, extensions, failures, and compatibility.",
+      "learning_path": {
+        "goal": "Understand how Maven validates and scopes an execution request, constructs and possibly rebuilds a reactor graph, delegates lifecycle tasks to a selected builder, records failures or resumption state, and cleans up the session.",
+        "start_path": "impl/maven-core/src/main/java/org/apache/maven/DefaultMaven.java",
+        "supporting_files": [
+          "impl/maven-core/src/main/java/org/apache/maven/graph/DefaultGraphBuilder.java",
+          "impl/maven-core/src/main/java/org/apache/maven/execution/ProjectDependencyGraph.java",
+          "impl/maven-core/src/main/java/org/apache/maven/lifecycle/internal/DefaultLifecycleStarter.java",
+          "impl/maven-core/src/main/java/org/apache/maven/lifecycle/internal/builder/Builder.java",
+          "impl/maven-core/src/main/java/org/apache/maven/lifecycle/internal/builder/singlethreaded/SingleThreadedBuilder.java",
+          "impl/maven-core/src/main/java/org/apache/maven/lifecycle/internal/builder/multithreaded/MultiThreadedBuilder.java",
+          "impl/maven-core/src/test/java/org/apache/maven/DefaultMavenTest.java",
+          "impl/maven-core/src/test/java/org/apache/maven/graph/DefaultGraphBuilderTest.java",
+          "impl/maven-core/src/test/java/org/apache/maven/lifecycle/LifecycleExecutorTest.java",
+          "impl/maven-core/src/test/java/org/apache/maven/lifecycle/internal/builder/BuilderCommonTest.java"
+        ],
+        "trace": "Follow DefaultMaven.execute through repository validation, closeable repository and session scopes, context-class-loader and listener setup, graph construction, lifecycle-participant callbacks and graph rebuilding, then DefaultLifecycleStarter task segmentation and builder selection into single- or multi-threaded execution; finish with result aggregation, resumption persistence, listener restoration, scope exit, and cleanup, correlating graph, lifecycle, builder, cycle, and extension tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dependency-injected framework components",
+            "generic graph and result abstractions",
+            "listener, extension, and builder composition"
+          ],
+          "reason": "Substantial framework idioms, generic models, and extension composition shape the path without pervasive expert Java machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "graph mutation and topological rebuild",
+            "event, session, and class-loader lifecycles",
+            "concurrent build execution, failure, and resumption"
+          ],
+          "reason": "Scheduling, event propagation, mutable graph state, resource ownership, recovery, and concurrency recur across the execution."
+        },
+        "design_span": {
+          "signals": [
+            "session, repository, graph, and lifecycle layers",
+            "extension participants and builder strategies",
+            "single- and multi-threaded execution modes"
+          ],
+          "reason": "Many modules, extension points, execution modes, and cross-cutting policies contribute to a reactor build."
+        },
+        "constraint_burden": {
+          "signals": [
+            "reactor ordering and reproducibility",
+            "repository, class-loader, listener, and session cleanup",
+            "extension, concurrency, resumption, and long-lived compatibility"
+          ],
+          "reason": "Several system-wide correctness, compatibility, isolation, concurrency, and recovery guarantees interact so a local orchestration change can break builds elsewhere."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/4/5 sums to 16, which calculates to Level 4, but Gson, JUnit 4, and Netty offer clearer bounded paths; Maven ranks fourth for two places.",
+      "reconsider": "Reconsider if a Java Level 4 place opens or a fresh comparison finds the corrected reactor-execution path clearer than a retained Level 4 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review found DefaultLifecycleStarter.java and DefaultMavenTest.java insufficient to substantiate the broad DefaultMaven trace. Final reconciliation adds the graph, builder implementations, and focused graph, lifecycle, and builder tests; both reviewers agree on both gates, 3/4/4/5, Level 4, rank 4, and capacity removal."
+      }
+    },
+    {
+      "repository": "netty/netty",
+      "language": "Java",
+      "prior_level": 4,
+      "pinned_commit": "ada3b9ab0c7a54f6e73f821216ba3db81bd90d55",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 3,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Netty channel pipeline is an ordered doubly linked chain of inbound and outbound handlers whose callbacks must execute on assigned event loops and whose membership may change during a channel lifecycle."
+        ],
+        "evidence": "This generic event-pipeline model needs no network-protocol expertise; the path teaches transferable event propagation, thread affinity, concurrent mutation, lifecycle callbacks, extension boundaries, error recovery, and message ownership."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Pipeline, context, handler, mask, event executor, and channel responsibilities are explicit; careful ordering comments, failure cleanup, and extensive mutation, propagation, affinity, concurrency, lifecycle, rejection, and resource-release tests make the path traceable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how Netty safely adds, removes, and replaces channel handlers, propagates inbound and outbound events across executor boundaries, and destroys the pipeline in lifecycle order.",
+        "start_path": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java",
+        "supporting_files": [
+          "transport/src/main/java/io/netty/channel/ChannelPipeline.java",
+          "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java",
+          "transport/src/main/java/io/netty/channel/ChannelHandlerMask.java",
+          "transport/src/test/java/io/netty/channel/DefaultChannelPipelineTest.java"
+        ],
+        "trace": "Follow add, remove, and replace as synchronized linked-list changes create contexts, defer callbacks before registration, or schedule handlerAdded and handlerRemoved on the assigned executor in strict order; then trace inbound and outbound event lookup and invocation through AbstractChannelHandlerContext and mask skipping, finishing with failure cleanup and event-loop-aware destroy traversal while correlating mutation, propagation, concurrency, executor, lifecycle, rejection, and release tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "atomic field updaters and thread-local caches",
+            "generic handler and promise APIs",
+            "implicit handler-mask dispatch"
+          ],
+          "reason": "Low-level concurrency utilities, generic asynchronous APIs, and implicit dispatch machinery recur in important pipeline behavior."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent structural mutation",
+            "event propagation and executor affinity",
+            "handler lifecycle, failure cleanup, and message ownership"
+          ],
+          "reason": "Concurrency, scheduling, event propagation, lifecycle ordering, recovery, and resource ownership require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "pipeline and context components",
+            "handler, executor, channel, and promise boundaries",
+            "inbound and outbound directions"
+          ],
+          "reason": "The trace crosses several meaningful interfaces and components but remains within one channel-pipeline subsystem rather than broad Netty architecture."
+        },
+        "constraint_burden": {
+          "signals": [
+            "event-loop thread affinity",
+            "callback and propagation ordering",
+            "deadlock avoidance, failure cleanup, and reference-counted message release"
+          ],
+          "reason": "Thread safety, ordering, reentrancy, resource ownership, error recovery, and API compatibility interact throughout the pipeline."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/4 sums to 15, which calculates to Level 4, but Gson and JUnit 4 provide the two clearest paths; Netty ranks third, ahead of Maven.",
+      "reconsider": "Reconsider if a Java Level 4 place opens or a fresh comparison ranks this corrected pipeline path above a retained Level 4 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review proposed design span 4 and found AbstractByteBuf.java unrelated to the selected behavior. Final reconciliation replaces it with AbstractChannelHandlerContext.java, ChannelPipeline.java, and ChannelHandlerMask.java and uses design span 3 because the path remains one pipeline subsystem; both reviewers agree on the other scores, Level 4, gates, rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "spring-projects/spring-framework",
+      "language": "Java",
+      "prior_level": 5,
+      "pinned_commit": "1b56f58999046051d76a653922c3ab72b4db9cf7",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Spring bean factory stores object definitions, resolves dependencies by type and metadata, constructs and post-processes objects, manages singleton identity and circular references, and runs initialization callbacks."
+        ],
+        "evidence": "Dependency injection and object lifecycle are documented programming-framework concepts; the selected path's difficulty is transferable reflection, generic type resolution, extension policy, concurrent lifecycle management, caching, compatibility, and error handling."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Bean definition, dependency descriptor, constructor resolution, singleton registry, type resolution, creation, and lifecycle responsibilities are explicit and strongly documented; focused dependency, construction, singleton, concurrency, failure, and compatibility tests support an expert but traceable path.",
+      "learning_path": {
+        "goal": "Understand how Spring registers a bean definition, resolves generic and qualified dependencies, constructs and post-processes one singleton, handles circular or concurrent creation, and completes initialization.",
+        "start_path": "spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java",
+        "supporting_files": [
+          "spring-beans/src/main/java/org/springframework/beans/factory/config/DependencyDescriptor.java",
+          "spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java",
+          "spring-beans/src/main/java/org/springframework/beans/factory/support/ConstructorResolver.java",
+          "spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistry.java",
+          "spring-core/src/main/java/org/springframework/core/ResolvableType.java",
+          "spring-beans/src/test/java/org/springframework/beans/factory/DefaultListableBeanFactoryTests.java",
+          "spring-beans/src/test/java/org/springframework/beans/factory/support/DefaultSingletonBeanRegistryTests.java"
+        ],
+        "trace": "Follow bean-definition registration and singleton pre-instantiation into dependency resolution, where DependencyDescriptor and ResolvableType drive optional, provider, lazy, collection, map, qualifier, name, primary, priority, and fallback matching; continue through AbstractAutowireCapableBeanFactory and ConstructorResolver into instantiation, property population, post-processors, and initialization, with DefaultSingletonBeanRegistry coordinating cache publication, circular references, locking, destruction, and failures; correlate matching, construction, lifecycle, concurrency, and registry tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reflection and runtime construction",
+            "recursive generic type resolution",
+            "annotation metadata, lazy proxies, providers, and post-processors"
+          ],
+          "reason": "Multiple advanced Java mechanisms interact pervasively across dependency discovery, construction, and lifecycle policy."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "singleton creation and circular-reference state",
+            "concurrent and background initialization",
+            "dependency selection, callbacks, failure, and destruction"
+          ],
+          "reason": "Concurrency, cache state, cycles, dynamic resolution, extension callbacks, recovery, and resource lifecycles interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "definition registry and dependency resolver",
+            "construction and post-processing layers",
+            "singleton registry, type system, and extension policies"
+          ],
+          "reason": "Many container modules and pervasive extension policies contribute directly, satisfying broad architecture without requiring the entire Spring platform."
+        },
+        "constraint_burden": {
+          "signals": [
+            "thread-safe singleton identity and circular references",
+            "generic type, qualifier, scope, and lifecycle correctness",
+            "AOT, serialization, and decades of API compatibility"
+          ],
+          "reason": "Several system-wide type, lifecycle, concurrency, extension, AOT, and compatibility guarantees interact so local changes can break applications elsewhere."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose half-up mean is Level 5 with three independently expert dimensions.",
+      "reconsider": "Reconsider if bean construction and dependency resolution are materially simplified or delegated, or if public metadata, license, documentation, source quality, or lifecycle and concurrency tests deteriorate.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Expanded the path beyond ResolvableType.java to include dependency descriptors, construction, constructor resolution, singleton registry state, and corresponding registry tests; independently confirmed both gates, 5/5/4/5 scoring, Level 5 formula, and retention."
+      }
+    },
+    {
+      "repository": "apache/cassandra",
+      "language": "Java",
+      "prior_level": 5,
+      "pinned_commit": "92530a18db31715bc0e9ec2363a735bc034ee530",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The proposed table-level path coordinates memtables, commit-log positions, SSTables, flushing, compaction, tombstones, snapshots, indexes, lifecycle transactions, and repair metadata inside a distributed LSM database.",
+          "Its supporting cluster service additionally assumes token ranges, replication, gossip, streaming, bootstrap, failure recovery, and Paxos repair."
+        ],
+        "evidence": "Understanding ColumnFamilyStore and StorageService materially depends on specialist storage-engine and distributed-database theory that a short prerequisites paragraph cannot supply. Those domain invariants explain the difficulty better than programming technique does, and no production-representative self-contained alternative path was established; the hard gate therefore rejects the repository before quality evaluation or scoring."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed table-level storage lifecycle path that connects writes, memory, disk files, compaction, snapshots, indexes, and cluster services.",
+        "start_path": "src/java/org/apache/cassandra/db/ColumnFamilyStore.java",
+        "supporting_files": [
+          "src/java/org/apache/cassandra/service/StorageService.java",
+          "test/unit/org/apache/cassandra/db/ColumnFamilyStoreTest.java"
+        ],
+        "trace": "The proposed trace immediately crosses memtable ownership, commit-log positions, flushing executors, SSTable tracking and formats, compaction strategies, lifecycle transactions, snapshots, indexes, repair state, and then cluster topology and streaming services; that dependency chain is the evidence that the selected behavior cannot pass the coding-relevance gate."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative Cassandra behavior whose purpose and implementation can be understood from repository documentation plus short prerequisites without specialist storage-engine or distributed-systems theory.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independently confirmed that LSM storage, SSTable and compaction lifecycle, repair metadata, token topology, gossip, streaming, and Paxos assumptions dominate the proposed path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 16,
-      "remove": 4
+      "retain": 23,
+      "remove": 7
     },
     "by_language": {
       "JavaScript": {
@@ -1534,33 +2258,52 @@
           "4": 4,
           "5": 2
         }
+      },
+      "Java": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 4,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 4,
-        "retain": 4,
+        "reviewed": 6,
+        "retain": 6,
         "remove": 0
       },
       "2": {
-        "reviewed": 4,
-        "retain": 3,
+        "reviewed": 6,
+        "retain": 5,
         "remove": 1
       },
       "3": {
-        "reviewed": 4,
-        "retain": 2,
+        "reviewed": 6,
+        "retain": 4,
         "remove": 2
       },
       "4": {
-        "reviewed": 4,
+        "reviewed": 6,
         "retain": 3,
-        "remove": 1
+        "remove": 3
       },
       "5": {
-        "reviewed": 4,
-        "retain": 4,
-        "remove": 0
+        "reviewed": 6,
+        "retain": 5,
+        "remove": 1
       }
     },
     "by_new_level": {
@@ -1570,28 +2313,29 @@
         "remove": 0
       },
       "2": {
-        "scored": 4,
-        "retain": 4,
+        "scored": 6,
+        "retain": 6,
         "remove": 0
       },
       "3": {
-        "scored": 6,
-        "retain": 4,
+        "scored": 8,
+        "retain": 6,
         "remove": 2
       },
       "4": {
-        "scored": 6,
-        "retain": 4,
-        "remove": 2
+        "scored": 10,
+        "retain": 6,
+        "remove": 4
       },
       "5": {
-        "scored": 4,
-        "retain": 4,
+        "scored": 5,
+        "retain": 5,
         "remove": 0
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 4
+      "qualified_alternate_over_capacity": 6,
+      "coding_relevance_domain_gate": 1
     }
   }
 }
