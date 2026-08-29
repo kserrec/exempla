@@ -17,11 +17,16 @@ score only after it passes a quality gate covering real-world purpose, source
 quality, architecture, naming, tests, documentation, traceability, and
 educational value.
 
+## Browse the catalog
+
+[Choose from all 20 languages and 200 repositories](languages/README.md), then
+work from SDC 1 toward SDC 5 at the pace that fits you.
+
 ## Project status
 
-The initial 20-language, 200-repository catalog is under construction. The
-complete implementation sequence and completion criteria live in
-[PLAN.md](PLAN.md).
+The initial 20-language, 200-repository catalog is complete and undergoing its
+final publication checks. The implementation record and completion criteria
+live in [PLAN.md](PLAN.md).
 
 ## Principles
 
