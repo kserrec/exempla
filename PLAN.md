@@ -318,3 +318,19 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
   the form and chooser definitions pass their published schemas, GitHub reports
   the pull-request template, and all existing catalog checks still pass.
 - **Dependencies:** Phase 8.
+
+## Phase 10 — Versioned initial release
+
+### Step 10.1 — Publish the verified corpus as v1.0.0
+
+- [ ] **Objective:** Give the finished initial catalog a permanent, citable
+  version on GitHub.
+- **Work:** Run the complete release gate; create and push an annotated
+  `v1.0.0` tag at the verified catalog snapshot; publish concise GitHub release
+  notes describing the corpus, methodology, tooling, and contribution paths;
+  verify anonymous release metadata and source archive links.
+- **Artifacts:** Git tag `v1.0.0`, GitHub release `Exempla v1.0.0`.
+- **Complete when:** GitHub reports a public, non-draft, non-prerelease
+  `v1.0.0` release; its tag resolves to the tested commit; both generated source
+  archives resolve; and local `main` remains clean and synchronized.
+- **Dependencies:** Phase 9.
