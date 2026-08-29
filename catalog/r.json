@@ -1,1 +1,366 @@
-{"schema_version": 1, "language_slug": "r", "repositories": []}
+{
+  "schema_version": 1,
+  "language_slug": "r",
+  "repositories": [
+    {
+      "slug": "pkgconfig",
+      "repository": "r-lib/pkgconfig",
+      "url": "https://github.com/r-lib/pkgconfig",
+      "primary_language": "R",
+      "language_evidence": "Per-package configuration storage, stack inspection, lookup precedence, validation, and the public API are implemented in the root R package.",
+      "description": "A tiny package for configuration values that are private to each calling R package instead of globally shared.",
+      "real_world_evidence": "The repository publishes the pkgconfig CRAN package for libraries that need caller-specific configuration without global-option collisions.",
+      "why_study": "Forty-eight lines turn R environments and call-stack metadata into a complete, useful API with explicit fallback and precedence behavior.",
+      "learn": ["R environments, call-stack frames, namespaces, package identity, named variadic arguments, fallback values, and small API design."],
+      "prerequisites": ["R functions and lists, environments, packages and namespaces, call stacks, and testthat basics."],
+      "start_here": {
+        "path": "R/getset.R",
+        "reason": "The complete implementation shows storage, caller discovery, precedence, validation, and mutation in one short file."
+      },
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 48, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "man/", "README.Rmd"], "notes": "Count covers all production R files and excludes tests, generated reference documentation, and README source."},
+        "difficulty": {"score": 2, "signals": ["call-stack namespace discovery", "environment-backed package-private state"], "reason": "The mechanism uses reflective R facilities, but the full control flow is short and direct."},
+        "complexity": {"score": 1, "signals": ["one in-memory configuration store", "four small public operations"], "reason": "One package and one environment implement the behavior without I/O or external services."},
+        "placement": "S1/D2/C1 averages to 1.33, making pkgconfig an SDC 1 project."
+      },
+      "quality": {
+        "source_quality": "The implementation keeps lookup precedence, caller detection, validation, and mutation separate despite its tiny size.",
+        "architecture": "One private environment stores keys whose values are maps from calling package to configured value.",
+        "naming_and_idiom": "get_config, set_config, set_config_in, get_from_session, who, and fallback make the policy visible.",
+        "tests": "Tests create temporary packages to verify caller isolation, nesting precedence, global fallback, custom APIs, validation, and errors.",
+        "documentation": "The README explains the global-state problem, a realistic package scenario, nested calls, installation, and usage.",
+        "traceability": "A get_config call can be followed through stored values, sys.frames, namespace identification, reverse precedence, and custom-package tests.",
+        "maintainability": "The small representation and focused contract make all precedence behavior auditable in one sitting.",
+        "educational_value": "It demonstrates how a language's reflective runtime can solve a real package-isolation problem with almost no machinery."
+      },
+      "inspection": {"commit": "687e3154aa407642649beb00334940c71d6f22d9", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/getset.R", "tests/testthat/test-api.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "rematch2",
+      "repository": "r-lib/rematch2",
+      "url": "https://github.com/r-lib/rematch2",
+      "primary_language": "R",
+      "language_evidence": "Regex result conversion, capture-group indexing, tidy table construction, match-record classes, and the public API are implemented in R.",
+      "description": "A small wrapper that turns base R regular-expression matches and capture groups into tidy tabular results.",
+      "real_world_evidence": "The repository publishes the rematch2 CRAN package for programs that need structured first-match and all-match data.",
+      "why_study": "It is a compact adapter study: awkward attribute-rich base results become stable tabular objects while preserving strings, positions, groups, missing matches, and vectorized inputs.",
+      "learn": ["Regular-expression match metadata, capture groups, vectorization, substring indexing, list columns, S3 classes and methods, tidy data frames, and adapter APIs."],
+      "prerequisites": ["R vectors, lists and attributes, regular expressions and capture groups, S3 methods, data frames or tibbles, and unit tests."],
+      "start_here": {
+        "path": "R/exec.R",
+        "reason": "re_exec converts regexpr attributes into match records, capture columns, positions, missing values, and the final tidy result."
+      },
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 250, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "man/", "README.Rmd"], "notes": "Count covers every production R file and excludes tests, snapshots, generated reference documentation, and README source."},
+        "difficulty": {"score": 2, "signals": ["attribute-rich regex result normalization", "custom list-column extraction methods"], "reason": "Indexing and unmatched-group cases need care, but each transformation is local and well tested."},
+        "complexity": {"score": 1, "signals": ["one regex adapter package", "four related public operations"], "reason": "The library wraps base regex functions without I/O, shared state, or architectural layers."},
+        "placement": "S1/D2/C1 averages to 1.33, making rematch2 an SDC 1 project."
+      },
+      "quality": {
+        "source_quality": "The code normalizes match, start, end, groups, names, and missing values explicitly rather than hiding conversions.",
+        "architecture": "First-match and all-match paths share record constructors, indexing methods, bind helpers, and a minimal tibble boundary.",
+        "naming_and_idiom": "re_match, re_exec, re_match_all, re_exec_all, match, start, end, and capture names preserve regex vocabulary.",
+        "tests": "Tests cover named and unnamed groups, no matches, empty input, vectorization, all matches, indexing, binding, Unicode, and malformed requests.",
+        "documentation": "The README compares the predecessor API and develops realistic first-match, all-match, and position examples.",
+        "traceability": "A capture can be followed from regexpr attributes through substring extraction and record construction to list-column access tests.",
+        "maintainability": "Small dedicated helpers and exhaustive shape tests protect an adapter whose main risk is indexing detail.",
+        "educational_value": "It teaches how to make a low-level return format easier to use without discarding information or rewriting the underlying engine."
+      },
+      "inspection": {"commit": "be7c3a05c060dce37277098967d42ffc695a6943", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/exec.R", "R/exec-all.R", "tests/testthat/test-exec.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "glue",
+      "repository": "tidyverse/glue",
+      "url": "https://github.com/tidyverse/glue",
+      "primary_language": "R",
+      "language_evidence": "Expression capture and evaluation, transformers, quoting, SQL support, vector recycling, and the interpolation parser are implemented in R and C.",
+      "description": "A dependency-light string interpolation library that evaluates expressions inside customizable delimiters.",
+      "real_world_evidence": "The repository publishes the glue CRAN package for applications and packages that construct text, messages, SQL, and data-aware strings.",
+      "why_study": "A familiar API reveals language evaluation, a hand-written delimiter parser, escaping, vectorization, custom transformers, SQL quoting, and safe restricted interpolation.",
+      "learn": ["Non-standard evaluation, expression parsing, lexical state machines in C, escaping and delimiters, vector recycling, custom transformers, SQL quoting, S3 output, and safe API variants."],
+      "prerequisites": ["R expressions and environments, vectors and recycling, S3 methods, basic C extension interfaces, parsers, and SQL quoting concepts."],
+      "start_here": {
+        "path": "R/glue.R",
+        "reason": "The public glue function assembles arguments, environments, transformers, delimiters, recycling, and the C-backed parsing path."
+      },
+      "sdc": {
+        "level": 2,
+        "size": {"score": 1, "loc": 984, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "vignettes/", "man/", "pkgdown/", "revdep/"], "notes": "Count covers production R and C under R/ and src/, excluding tests, snapshots, vignettes, generated documentation, website sources, and reverse-dependency material."},
+        "difficulty": {"score": 3, "signals": ["expression evaluation in caller environments", "delimiter and escape state machine", "vectorized recycling and transformer hooks"], "reason": "Parsing and evaluation semantics cross R and C and contain enough edge cases to require substantial prerequisite knowledge."},
+        "complexity": {"score": 2, "signals": ["R API plus C parser", "core, SQL, safe, color, quoting, and transformer variants"], "reason": "Several cohesive adapters share one interpolation engine within a single package."},
+        "placement": "S1/D3/C2 averages to 2.00, making glue an SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "Evaluation, parsing, escaping, recycling, transformation, and output classes are separated with explicit boundary checks.",
+        "architecture": "R functions prepare contexts and variants while a small C state machine scans literal and expression segments.",
+        "naming_and_idiom": "glue, glue_data, transformer, open, close, trim, literal, comment, and recycle0 expose interpolation policy.",
+        "tests": "Tests cover delimiters, escaping, multiline trimming, comments, evaluation scope, recycling, NA and NULL, custom transformers, SQL, safe mode, and regressions.",
+        "documentation": "The README, vignettes, function reference, maintenance notes, and examples explain both everyday use and extension mechanisms.",
+        "traceability": "An interpolation can be followed from glue through argument preparation into the C scanner, expression evaluation, vector assembly, and focused tests.",
+        "maintainability": "One parser, explicit callbacks, small variant modules, a minimal dependency surface, and broad edge-case tests contain semantic risk.",
+        "educational_value": "It shows how a tiny user-facing convenience rests on careful language, parsing, and data-shape contracts."
+      },
+      "inspection": {"commit": "da9c73f7a3de6a27f3103cb5bb2355820a4c3a6a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/glue.R", "src/glue.c", "tests/testthat/test-glue.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/tidyverse/glue/blob/da9c73f7a3de6a27f3103cb5bb2355820a4c3a6a/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "withr",
+      "repository": "r-lib/withr",
+      "url": "https://github.com/r-lib/withr",
+      "primary_language": "R",
+      "language_evidence": "Temporary state setters, dynamic function construction, deferred cleanup, resource helpers, and integrations are implemented in R.",
+      "description": "A library for running code with temporary changes to global process state and reliably restoring that state afterward.",
+      "real_world_evidence": "The repository publishes the withr CRAN package used by packages, tests, scripts, and tools that must scope side effects safely.",
+      "why_study": "It turns a broad maintenance hazard into a reusable pattern across options, environment variables, paths, locales, files, connections, databases, graphics devices, random state, and namespaces.",
+      "learn": ["Resource acquisition and cleanup, on.exit and deferred handlers, dynamic function construction, non-standard evaluation, process-global state, files and connections, nested scopes, and exception-safe APIs."],
+      "prerequisites": ["R environments and evaluation, functions and formals, on.exit, conditions, files and connections, process state, and package namespaces."],
+      "start_here": {
+        "path": "R/with_.R",
+        "reason": "The with_ constructor generates the common set-change-evaluate-reset protocol used by the package's concrete helpers."
+      },
+      "sdc": {
+        "level": 2,
+        "size": {"score": 1, "loc": 1298, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "vignettes/", "man/", "pkgdown/", "revdep/", "man-roxygen/"], "notes": "Count covers all production R helpers while excluding tests, snapshots, vignettes, generated reference material, website sources, and reverse-dependency data."},
+        "difficulty": {"score": 3, "signals": ["dynamically generated functions and formals", "deferred cleanup across stack frames", "exception-safe mutation of process-global state"], "reason": "The central pattern is simple, but evaluation frames, early exits, nested scopes, and diverse resources create subtle behavior."},
+        "complexity": {"score": 2, "signals": ["shared with and local constructors", "many focused state and resource adapters"], "reason": "Many helpers share one lifecycle abstraction and remain confined to the current R process."},
+        "placement": "S1/D3/C2 averages to 2.00, making withr an SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "Constructors establish cleanup before risky mutation when possible, and each resource helper makes capture and restoration explicit.",
+        "architecture": "with_ and local_ generate the lifecycle wrappers; defer manages frame-bound cleanup; small modules adapt individual kinds of state.",
+        "naming_and_idiom": "with_, local_, defer, set, get, reset, action, and .local_envir state lifetime and ownership clearly.",
+        "tests": "Tests exercise success, errors, early exits, nesting, setters that fail, cleanup order, files, connections, paths, locales, random state, graphics, databases, and integration boundaries.",
+        "documentation": "The README inventories supported state, contrasts with and local lifetimes, and demonstrates both built-in and custom wrappers.",
+        "traceability": "with_options can be followed from a resource-specific setter through with_, on.exit registration, code evaluation, restoration, and failure-path tests.",
+        "maintainability": "Central lifecycle constructors prevent dozens of state helpers from reimplementing cleanup semantics inconsistently.",
+        "educational_value": "It is a practical study in making side effects safe through scope, ownership, and guaranteed restoration."
+      },
+      "inspection": {"commit": "d82e4bc2d69a34f044ad205210e26207bfb8f3e0", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/with_.R", "R/local_.R", "R/defer.R", "tests/testthat/test-with.R", "tests/testthat/test-local_.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/r-lib/withr/blob/d82e4bc2d69a34f044ad205210e26207bfb8f3e0/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "testthat",
+      "repository": "r-lib/testthat",
+      "url": "https://github.com/r-lib/testthat",
+      "primary_language": "R",
+      "language_evidence": "Test discovery and execution, expectations, conditions and restarts, reporters, snapshots, mocking, parallel workers, and package integration are implemented primarily in R.",
+      "description": "R's xUnit-style testing framework, with expressive expectations, reporters, snapshots, package integration, and parallel execution.",
+      "real_world_evidence": "The repository publishes the testthat CRAN package used to run and report automated tests for R packages and applications.",
+      "why_study": "It is a self-referential production framework whose source exposes test isolation, structured conditions, restarts, source references, reporters, snapshots, process workers, and compatibility editions.",
+      "learn": ["Test-runner architecture, condition systems and restarts, isolated evaluation environments, source references, reporter objects, snapshots, parallel processes, mocking, state-leak detection, and backward-compatible framework evolution."],
+      "prerequisites": ["Strong R, environments and evaluation, conditions and restarts, R6, files and processes, serialization, source references, package loading, and testing concepts."],
+      "start_here": {
+        "path": "R/test-files.R",
+        "reason": "test_dir and test_files connect discovery, environment setup, reporters, serial or parallel execution, teardown, result collection, and failure policy."
+      },
+      "sdc": {
+        "level": 3,
+        "size": {"score": 2, "loc": 9814, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "inst/", "vignettes/", "man/", "pkgdown/", "revdep/"], "notes": "Count covers production R plus small compiled support under R/ and src/, excluding the framework's own tests and fixtures, installed examples, vignettes, generated documentation, website, and reverse-dependency data."},
+        "difficulty": {"score": 4, "signals": ["nested conditions, handlers, restarts, and source references", "parallel process orchestration and result serialization", "snapshot, mocking, and state-isolation semantics"], "reason": "Advanced evaluation and condition behavior recurs throughout the execution path, with additional concurrency and compatibility constraints."},
+        "complexity": {"score": 3, "signals": ["discovery, execution, expectation, reporter, snapshot, mock, and parallel subsystems", "interactive, package-check, IDE, CI, and parallel modes"], "reason": "Several framework subsystems interact, but they compose around one test-runner domain and a bounded process topology."},
+        "placement": "S2/D4/C3 averages to 3.00, making testthat an SDC 3 project."
+      },
+      "quality": {
+        "source_quality": "Test lifecycle, result conditions, restart boundaries, reporter callbacks, cleanup, and process modes are explicit and protected against recursive failures.",
+        "architecture": "Discovery feeds serial or parallel runners; isolated test environments signal expectation conditions into composable reporters and snapshot managers.",
+        "naming_and_idiom": "test_dir, test_file, test_that, expectation, reporter, snapshot, teardown, skip, and edition reflect testing vocabulary directly.",
+        "tests": "The framework tests its expectations, runners, every reporter, snapshots, mocks, source locations, parallel lifecycle, package loading, state leaks, output, errors, warnings, and regressions.",
+        "documentation": "The README, reference site, vignettes, package-development book links, release notes, and inline lifecycle documentation provide multiple learning paths.",
+        "traceability": "A test file can be followed from discovery through environment setup, test_that evaluation, condition signaling, reporter collection, snapshot handling, teardown, and runner tests.",
+        "maintainability": "Structured conditions, reporter interfaces, lifecycle helpers, compatibility editions, self-tests, snapshots, and process isolation contain a wide behavioral surface.",
+        "educational_value": "It shows what a mature testing framework must do beyond comparing values: isolate state, preserve source context, survive failures, and communicate results."
+      },
+      "inspection": {"commit": "9b6f12b9f50c297b4b5f485f728a2a19305770eb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/test-files.R", "R/test-that.R", "R/expectation.R", "R/reporter.R", "tests/testthat/test-test-files.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/r-lib/testthat/blob/9b6f12b9f50c297b4b5f485f728a2a19305770eb/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "dplyr",
+      "repository": "tidyverse/dplyr",
+      "url": "https://github.com/tidyverse/dplyr",
+      "primary_language": "R",
+      "language_evidence": "Data-manipulation verbs, grouping, data masks, tidy evaluation, joins, selection, reconstruction, and performance-critical grouped operations are implemented in R and C++.",
+      "description": "A grammar of data manipulation built around consistent verbs for selecting, filtering, mutating, summarizing, arranging, and joining tabular data.",
+      "real_world_evidence": "The repository publishes the dplyr CRAN package used by data workflows and downstream packages to transform in-memory and backend tabular data.",
+      "why_study": "It connects a declarative user grammar to generic dispatch, tidy evaluation, grouped data masks, vector-size rules, type restoration, joins, and native loops while preserving data-frame subclasses.",
+      "learn": ["Data-frame algebra, generic verbs, tidy evaluation and data masks, grouping, vector recycling and type stability, joins, selection, native R extension code, error context, and extensible backend design."],
+      "prerequisites": ["Strong R, S3 and R6, quosures and tidy evaluation, environments and active bindings, data frames, vector type systems, C++ extension interfaces, relational operations, and testing."],
+      "start_here": {
+        "path": "R/mutate.R",
+        "reason": "mutate.data.frame and mutate_cols connect the public verb to grouping, data-mask evaluation, native chunk execution, recycling, reconstruction, relocation, and column-retention policy."
+      },
+      "sdc": {
+        "level": 3,
+        "size": {"score": 3, "loc": 12482, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "data/", "data-raw/", "vignettes/", "man/", "pkgdown/", "revdep/"], "notes": "Count covers production R, C++, and headers under R/ and src/, excluding tests, fixtures, data, vignettes, generated documentation, website sources, and reverse-dependency material."},
+        "difficulty": {"score": 4, "signals": ["non-standard evaluation through quosures, masks, and active bindings", "grouped vector size and type invariants across R and C++", "generic reconstruction and backend extension contracts"], "reason": "Advanced evaluation, type, grouping, and native-interface concerns recur across core verbs and error paths."},
+        "complexity": {"score": 3, "signals": ["verbs, masks, grouping, joins, selection, vector, and reconstruction modules", "in-memory generics with extension points for remote backends"], "reason": "Many cohesive subsystems interact, but the repository implements one data-manipulation layer rather than a whole distributed engine."},
+        "placement": "S3/D4/C3 averages to 3.33, making dplyr an SDC 3 project."
+      },
+      "quality": {
+        "source_quality": "Public verbs separate policy from data-mask evaluation and native loops, with explicit size, type, grouping, and reconstruction checks.",
+        "architecture": "S3 verbs and helpers build grouping metadata and data masks, delegate tight grouped work to C++, then reconstruct the appropriate tabular type.",
+        "naming_and_idiom": "mutate, summarise, filter, arrange, join, group_by, DataMask, chunks, rows, and reconstruct preserve the data-manipulation model.",
+        "tests": "Large suites cover every verb, grouping, rowwise data, joins, selection, data masks, evaluation, recycling, type errors, subclasses, locale behavior, and regressions.",
+        "documentation": "The README, reference site, vignettes, programming guides, release notes, and detailed function contracts explain both user grammar and extension points.",
+        "traceability": "A grouped mutate can be followed from generic dispatch through grouping computation, DataMask active bindings, per-group native evaluation, column modification, reconstruction, and mutate tests.",
+        "maintainability": "Generic boundaries, centralized masks and grouping, vector contracts, native error objects, extensive regression tests, and stable verb semantics manage evolution.",
+        "educational_value": "It is a strong study of translating a small declarative vocabulary into type-stable, extensible, performance-conscious execution."
+      },
+      "inspection": {"commit": "d5e94e7fa8fd4a5f79c1a707d1842216bb4c691f", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/mutate.R", "R/data-mask.R", "src/mutate.cpp", "tests/testthat/test-mutate.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/tidyverse/dplyr/blob/d5e94e7fa8fd4a5f79c1a707d1842216bb4c691f/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "ggplot2",
+      "repository": "tidyverse/ggplot2",
+      "url": "https://github.com/tidyverse/ggplot2",
+      "primary_language": "R",
+      "language_evidence": "The grammar, plot object, build pipeline, layers, scales, coordinates, facets, guides, themes, geoms, stats, positions, and extension system are implemented in R.",
+      "description": "A declarative graphics system that implements a layered grammar of data, aesthetics, scales, statistics, geometry, coordinates, faceting, guides, and themes.",
+      "real_world_evidence": "The repository publishes the ggplot2 CRAN package used to create static visualizations and as a platform for a large extension ecosystem.",
+      "why_study": "It turns a deep domain model into a staged compiler-like pipeline, custom object protocols, reusable coordinate and statistical transformations, layout, guide training, and grid graphics output.",
+      "learn": ["Grammar-of-graphics architecture, declarative object composition, staged build pipelines, prototype and S7 object systems, scale training and mapping, statistics and geometry, coordinate transforms, faceting, guides, themes, extension protocols, and backward compatibility."],
+      "prerequisites": ["Strong R, object systems and method dispatch, non-standard evaluation, data frames, statistics, coordinate systems, grid graphics, layout, functional composition, and visual-testing concepts."],
+      "start_here": {
+        "path": "R/plot-build.R",
+        "reason": "build_ggplot presents the complete staged path from layers and raw data through aesthetics, scales, statistics, positions, layout, guides, themes, and render-ready objects."
+      },
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 24718, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "data/", "data-raw/", "inst/", "icons/", "vignettes/", "man/", "pkgdown/", "revdep/"], "notes": "Count covers production R under R/, excluding tests and visual snapshots, datasets, assets, vignettes, generated documentation, website sources, and reverse-dependency material."},
+        "difficulty": {"score": 4, "signals": ["multi-stage statistical and graphical transformation pipeline", "custom prototype and S7 object semantics", "coordinate, scale, layout, and guide invariants"], "reason": "Deep visualization theory, extensible object behavior, and transformations recur across the main plot-building path."},
+        "complexity": {"score": 4, "signals": ["plot, layer, stat, geom, scale, coordinate, facet, guide, theme, and rendering subsystems", "large third-party extension and compatibility surface"], "reason": "Rendering one plot crosses many configurable components whose ordering and contracts are central to correctness."},
+        "placement": "S3/D4/C4 averages to 3.67 and rounds to SDC 4."
+      },
+      "quality": {
+        "source_quality": "The build pipeline names each transformation phase, isolates extension protocols, and adds contextual errors at layer boundaries.",
+        "architecture": "A declarative plot composes layers and shared settings, then a staged builder trains and maps data before grid-based rendering.",
+        "naming_and_idiom": "Layer, Geom, Stat, Scale, Coord, Facet, Guide, Theme, Layout, train, map, setup, compute, and draw encode the grammar.",
+        "tests": "Extensive behavioral, snapshot, visual, extension, scale, stat, geom, coordinate, facet, guide, theme, layout, accessibility, and regression tests protect output.",
+        "documentation": "The README, reference site, internals book, extension guide, vignettes, governance, release notes, and examples explain theory and implementation.",
+        "traceability": "A point plot can be followed from object composition through build_ggplot's layer data, aesthetics, scale training, statistics, positions, layout, guides, geometry, and build tests.",
+        "maintainability": "Stable grammar objects, extension contracts, staged transformations, deprecation policy, governance, visual snapshots, and broad tests manage a mature ecosystem.",
+        "educational_value": "It is a rare production example of a declarative domain language becoming an explicit, extensible compilation pipeline."
+      },
+      "inspection": {"commit": "6870419aa6e106c3580c45c81d5b688cb31758bd", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/plot-build.R", "R/ggproto.R", "tests/testthat/test-plot-build.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/tidyverse/ggplot2/blob/6870419aa6e106c3580c45c81d5b688cb31758bd/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "shiny",
+      "repository": "rstudio/shiny",
+      "url": "https://github.com/rstudio/shiny",
+      "primary_language": "R",
+      "language_evidence": "The server runtime, reactive graph, sessions, application loading, rendering, caching, resources, inputs, and testing API are implemented in R, with a first-party TypeScript browser runtime.",
+      "description": "A reactive web application framework that connects R server functions to a browser client over persistent sessions.",
+      "real_world_evidence": "The repository publishes the Shiny CRAN package and browser runtime used to build, serve, test, and deploy interactive R web applications.",
+      "why_study": "It spans both sides of a framework: reactive invalidation and flushing, application and session lifecycle, HTTP and WebSocket transport, browser bindings, message queues, file uploads, caching, modules, bookmarking, and testing.",
+      "learn": ["Reactive dependency graphs, invalidation and scheduling, session lifecycle, HTTP and WebSocket protocols, asynchronous queues, browser input and output bindings, application loading and hot reload, caching, modules, observability, and cross-language framework design."],
+      "prerequisites": ["Strong R and TypeScript, environments and R6, reactive systems, concurrency and promises, HTTP and WebSockets, browser events and DOM APIs, serialization, caching, files, and integration testing."],
+      "start_here": {
+        "path": "R/reactives.R",
+        "reason": "ReactiveVal, Observable, Observer, contexts, invalidation, dependency registration, priorities, and flush behavior define the framework's central execution model."
+      },
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 23979, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "smoketests/", "srcts/src/**/__tests__/", "srcts/types/", "inst/www/ compiled assets", "res/", "man/", "man-roxygen/", "revdep/", "generated JavaScript"], "notes": "Count covers first-party R under R/ and TypeScript source under srcts/src/, excluding tests and fixture applications, generated declarations and browser bundles, static resources, generated documentation, and reverse-dependency material."},
+        "difficulty": {"score": 4, "signals": ["reactive dependency tracking and scheduled invalidation", "cross-language asynchronous client and server protocol", "dynamic application loading, scopes, promises, and cleanup"], "reason": "Advanced evaluation, graph, asynchronous, protocol, and lifecycle concerns recur across central server and browser paths."},
+        "complexity": {"score": 4, "signals": ["reactive, session, transport, application, binding, rendering, cache, upload, resource, and testing subsystems", "R server and TypeScript browser runtimes with multiple deployment and application modes"], "reason": "A user interaction crosses persistent client/server state and many framework services, though deployment infrastructure remains outside this repository."},
+        "placement": "S3/D4/C4 averages to 3.67 and rounds to SDC 4."
+      },
+      "quality": {
+        "source_quality": "Reactive ownership, invalidation state, session cleanup, message ordering, binding registration, resource paths, and application lifetimes are represented explicitly.",
+        "architecture": "An R reactive and session runtime communicates through a defined message protocol with TypeScript input/output bindings and a stateful ShinyApp browser client.",
+        "naming_and_idiom": "ReactiveVal, Observable, Observer, Context, Session, ShinyApp, InputBinding, OutputBinding, invalidate, flush, bind, and reconnect expose the model.",
+        "tests": "Unit, browser, application-fixture, module, reactive, session, server, snapshot, accessibility, TypeScript, protocol, encoding, and regression suites cover both runtimes.",
+        "documentation": "The README, reference site, articles, function docs, deployment guides, TypeScript notes, package examples, and testing helpers support study.",
+        "traceability": "Changing an input can be followed from a browser binding and queued WebSocket message through session input handling, reactive invalidation and flush, output rendering, return messages, and client updates.",
+        "maintainability": "Explicit lifecycle objects, scoped domains, message handlers, modular bindings, cleanup hooks, typed client source, observability hooks, and broad tests contain cross-runtime risk.",
+        "educational_value": "It is an advanced reference for how reactive programming becomes a full client/server product without obscuring the dependency graph."
+      },
+      "inspection": {"commit": "81844600fc15f1952838546faa6699d0506ce7f9", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESCRIPTION", "R/reactives.R", "R/shinyapp.R", "srcts/src/shiny/shinyapp.ts", "tests/testthat/test-reactives.R", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/rstudio/shiny/blob/81844600fc15f1952838546faa6699d0506ce7f9/LICENSE"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "nimble",
+      "repository": "nimble-dev/nimble",
+      "url": "https://github.com/nimble-dev/nimble",
+      "primary_language": "R",
+      "language_evidence": "The BUGS-compatible modeling language, graph construction, algorithm DSL, MCMC configuration, compiler and C++ generation pipeline, and R interfaces are implemented in substantial first-party R alongside the generated-code runtime in C++.",
+      "description": "A programmable hierarchical-modeling system that compiles BUGS-style models and model-generic algorithms from R into customized C++.",
+      "real_world_evidence": "The repository publishes the NIMBLE CRAN package used to build and fit hierarchical models with MCMC, particle filtering, Laplace approximation, and custom statistical algorithms.",
+      "why_study": "It combines two embedded languages, probabilistic graph analysis, model specialization, C++ code generation and compilation, automatic differentiation, R/native interfaces, configurable samplers, and several inference systems.",
+      "learn": ["Probabilistic programming languages, graphical models, language parsing and semantic analysis, dependency graphs, partial evaluation, source generation, native compilation, automatic differentiation, MCMC and particle methods, numerical inference, R/C++ bridges, and scientific-software architecture."],
+      "prerequisites": ["Expert R and C++, Bayesian statistics and graphical models, MCMC and numerical inference, compilers and code generation, graph algorithms, automatic differentiation, native extension APIs, linear algebra, and large scientific systems."],
+      "start_here": {
+        "path": "packages/nimble/R/BUGS_model.R",
+        "reason": "The model classes expose how BUGS code becomes declarations, graph nodes, dependencies, executable model objects, data state, and the input to compilation."
+      },
+      "sdc": {
+        "level": 5,
+        "size": {"score": 4, "loc": 66315, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["packages/nimble/tests/", "packages/AD-full-tests/", "packages/Laplace-examples/", "packages/nimble/inst/classic-bugs/", "UserManual/", "packages/nimble/man/", "vendored Eigen and CppAD headers", "examples, benchmarks, data, and generated documentation"], "notes": "Count covers first-party R under packages/nimble/R plus the reusable C++ runtime under packages/nimble/inst/CppCode and packages/nimble/inst/include/nimble, excluding tests, model corpora, examples, benchmarks, manuals, data, generated reference material, and vendored numeric libraries."},
+        "difficulty": {"score": 5, "signals": ["two embedded statistical and algorithm languages with C++ generation", "probabilistic graph analysis, MCMC, automatic differentiation, and numerical inference", "dynamic R/native compilation and object-lifetime boundaries"], "reason": "Expert compiler, graph, statistical, numerical, automatic-differentiation, and cross-language concerns recur throughout the main path."},
+        "complexity": {"score": 5, "signals": ["model parser, semantic processor, graph, algorithm DSL, compiler, code generator, C++ runtime, samplers, optimizers, and diagnostics", "interpreted and compiled model or algorithm modes with extensible distributions and inference methods"], "reason": "NIMBLE is a specialized probabilistic-programming platform whose useful workflows cross two languages, graph state, generated code, a native runtime, and multiple inference engines."},
+        "placement": "S4/D5/C5 has two dimensions at 5 and therefore requires SDC 5."
+      },
+      "quality": {
+        "source_quality": "Model declarations, graph identities, dependencies, compiler intermediates, generated types, native ownership, sampler configuration, and diagnostic failures are represented explicitly.",
+        "architecture": "BUGS models and nimbleFunctions become typed graph and expression intermediates, generated C++, compiled runtime objects, and configurable inference algorithms behind R interfaces.",
+        "naming_and_idiom": "nimbleCode, nimbleModel, nimbleFunction, modelBaseClass, graphNode, compileNimble, configureMCMC, sampler, node, dependency, and calculate expose the platform model.",
+        "tests": "Large unit, compiler, model-corpus, MCMC, automatic-differentiation, graph, distribution, indexing, native-interface, optimization, benchmark, and regression suites compare interpreted and compiled behavior.",
+        "documentation": "The README, full user manual, developer documentation, examples, workshops, package reference, publications, contributor guide, and inline compiler notes support expert study.",
+        "traceability": "A BUGS model can be followed through nimbleCode capture, declaration analysis, graph construction, model class creation, compiler intermediates and generated C++, native graph execution, configured MCMC, and interpreted-versus-compiled tests.",
+        "maintainability": "Named compiler stages, explicit intermediates, separated runtime headers, compatible interpreted mode, generated-code boundaries, gold comparisons, model corpora, and extensive tests manage a very difficult system.",
+        "educational_value": "It is a rare open source example of a probabilistic programming system whose modeling language, algorithm language, compiler, runtime, and inference machinery are all inspectable."
+      },
+      "inspection": {"commit": "0181166733112cdaaf4edf7d7b0817a8f03cbdac", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "packages/nimble/DESCRIPTION", "packages/nimble/R/BUGS_model.R", "packages/nimble/R/nimbleFunction_compile.R", "packages/nimble/R/genCpp_generateCpp.R", "packages/nimble/inst/CppCode/nimbleGraph.cpp", "packages/nimble/tests/testthat/test-models.R", "LICENSE"]},
+      "license": {"spdx": "BSD-3-Clause OR GPL-2.0-or-later", "url": "https://github.com/nimble-dev/nimble/blob/0181166733112cdaaf4edf7d7b0817a8f03cbdac/LICENSE"},
+      "github": {"primary_language": "C++", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "r-source",
+      "repository": "wch/r-source",
+      "url": "https://github.com/wch/r-source",
+      "primary_language": "R",
+      "language_evidence": "The repository is the R language implementation itself: its evaluator and runtime are written in C, its base and standard packages substantially in R, and numerical kernels in C and Fortran.",
+      "description": "The R language implementation, runtime, garbage collector, standard and recommended packages, graphics, statistics, compiler, build system, and platform ports.",
+      "real_world_evidence": "This read-only mirror tracks the upstream R source tree used to build the R language and standard software distribution.",
+      "why_study": "It exposes a mature statistical language from evaluator and promises through environments, object systems, bytecode, memory management, numerical libraries, graphics, packages, foreign interfaces, platform ports, and compatibility tests.",
+      "learn": ["Interpreter evaluation, lexical environments and promises, object dispatch, bytecode compilation, garbage collection and object representation, numerical and statistical computing, graphics engines, package loading, native interfaces, internationalization, platform portability, and language compatibility."],
+      "prerequisites": ["Expert R, C, Fortran, interpreters and virtual machines, garbage collection, language semantics and object systems, compilers, numerical analysis and statistics, operating systems, graphics, native ABIs, build systems, and very large codebase navigation."],
+      "start_here": {
+        "path": "doc/manual/R-ints.texi",
+        "reason": "R Internals explains core representations, evaluation, memory, environments, serialization, graphics, and native interfaces before the reader enters runtime source."
+      },
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 432178, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "doc/", "share/", "po/ translation catalogs", "src/library/Recommended/ external package archives", "src/extra/ bundled third-party libraries", "generated src/library/compiler/R/cmp.R", "build and configuration files"], "notes": "Count covers first-party C, R, Fortran, headers, lexer and grammar sources, Tcl, Objective-C, and assembly under src/, excluding tests, documentation, data and translations, bundled or recommended third-party source, generated compiler output, and build machinery."},
+        "difficulty": {"score": 5, "signals": ["interpreter, bytecode compiler, evaluator, promises, and object dispatch", "generational garbage collection and low-level object representation", "statistical, numerical, graphics, native-interface, and multi-platform runtime code"], "reason": "Expert language-runtime, memory, numerical, platform, and compatibility concerns recur across the implementation and standard libraries."},
+        "complexity": {"score": 5, "signals": ["parser, evaluator, runtime, compiler, memory manager, object systems, standard packages, graphics, numerical libraries, package and native interfaces", "self-hosted multi-platform language distribution with many build and extension modes"], "reason": "R is a platform-scale language ecosystem whose runtime, libraries, tools, interfaces, and ports must evolve as one compatible system."},
+        "placement": "S5/D5/C5 averages to 5.00 and satisfies the two-dimensions-at-5 guardrail, making R an SDC 5 project."
+      },
+      "quality": {
+        "source_quality": "Core runtime code documents protection, contexts, evaluation, dispatch, allocation, collection, and platform invariants at the points where violations would corrupt semantics.",
+        "architecture": "A C evaluator and runtime support R-level base and standard packages, a bytecode compiler, numerical and graphics subsystems, package loading, native interfaces, tools, and platform ports.",
+        "naming_and_idiom": "SEXP, eval, applyClosure, promise, environment, context, protect, gc, dispatch, package, primitive, and bytecode reflect the implementation model.",
+        "tests": "Regression, evaluation, arithmetic, numerical, methods, encoding, graphics, package, embedding, native-interface, platform, example, and no-crash suites protect language behavior.",
+        "documentation": "R Internals, the Language Definition, Writing R Extensions, Installation and Administration, data import, package help, source comments, and contributor history provide extensive guidance.",
+        "traceability": "Evaluating a closure can be followed from eval through promise and argument handling, applyClosure and contexts, allocation and garbage-collection protection, standard functions, and evaluation regression tests.",
+        "maintainability": "Stable internal APIs, explicit protection discipline, platform separation, generated-source boundaries, exhaustive regression tests, manuals, and conservative compatibility practices manage a decades-old runtime.",
+        "educational_value": "It is the definitive expert source for understanding how R's visible statistical language semantics are realized by its evaluator, memory system, and standard distribution."
+      },
+      "inspection": {"commit": "780021752eb83a71e2198019acf069ba8741103b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README", "src/main/eval.c", "src/main/memory.c", "doc/manual/R-ints.texi", "tests/eval-etc.R", "COPYING"]},
+      "license": {"spdx": "GPL-2.0-or-later", "url": "https://github.com/wch/r-source/blob/780021752eb83a71e2198019acf069ba8741103b/COPYING"},
+      "github": {"primary_language": "R", "archived": false, "metadata_checked_at": "2026-08-28"}
+    }
+  ]
+}

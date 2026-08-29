@@ -152,6 +152,14 @@
       "failed_requirement": "open-source license",
       "evidence": "The pinned default-branch revision is governed by the CockroachDB Software License, which restricts operation without a license key and therefore does not satisfy the project's open-source eligibility requirement.",
       "reconsider": "Reconsider only if the relevant current source is released under an open-source license; older differently licensed history is not a substitute for the maintained default branch."
+    },
+    {
+      "repository": "OpenMx/OpenMx",
+      "language": "R",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "verifiable repository licensing",
+      "evidence": "The package DESCRIPTION declares Apache 2.0, but the pinned Git tree contains no license file and bundles ASA source whose header requires a separate ASA-LICENSE file that is also absent; the repository therefore does not provide a complete verifiable license chain for all included source.",
+      "reconsider": "Reconsider if the repository adds the declared Apache license and every required third-party license, or removes the incompletely licensed bundled source."
     }
   ]
 }
