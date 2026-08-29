@@ -1,1 +1,366 @@
-{"schema_version": 1, "language_slug": "shell", "repositories": []}
+{
+  "schema_version": 1,
+  "language_slug": "shell",
+  "repositories": [
+    {
+      "slug": "semver-tool",
+      "repository": "fsaintjacques/semver-tool",
+      "url": "https://github.com/fsaintjacques/semver-tool",
+      "primary_language": "Shell",
+      "language_evidence": "Semantic-version parsing, validation, precedence comparison, extraction, bumping, and command dispatch are implemented in one Bash program.",
+      "description": "A small command-line utility for validating, comparing, inspecting, and incrementing Semantic Versioning 2.0 versions.",
+      "real_world_evidence": "The repository publishes an executable release used directly from shell scripts, Git hooks, asdf, and bpkg workflows.",
+      "why_study": "One file turns a written specification into regex validation, structured comparison rules, transformations, and a practical command-line interface.",
+      "learn": ["Specification-driven parsing, Bash regular expressions and capture groups, numeric versus lexical precedence, arrays, command dispatch, strict shell options, and table-like Bats tests."],
+      "prerequisites": ["Bash functions, arrays and conditionals, regular-expression basics, command exit status, Semantic Versioning concepts, and shell test fundamentals."],
+      "start_here": {
+        "path": "src/semver",
+        "reason": "The entire production path is visible in one file, from the SemVer grammar through comparison helpers to command dispatch."
+      },
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 345, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "README.md", "Makefile"], "notes": "Count covers the complete production Bash executable and excludes tests, documentation, and build metadata."},
+        "difficulty": {"score": 2, "signals": ["specification-shaped regular expression", "mixed numeric and lexical precedence rules"], "reason": "Semantic Versioning has meaningful edge cases, but the implementation follows the specification with direct functions and data flow."},
+        "complexity": {"score": 1, "signals": ["one stateless command-line program", "one input-to-output execution path"], "reason": "There is no persistence, networking, plugin system, or multi-process architecture."},
+        "placement": "S1/D2/C1 averages to 1.33, making semver-tool an SDC 1 project."
+      },
+      "quality": {
+        "source_quality": "Validation, comparison, prerelease handling, bumping, extraction, and dispatch are separated into short functions with strict shell failure settings.",
+        "architecture": "A single executable holds pure comparison and transformation helpers behind a small command dispatcher.",
+        "naming_and_idiom": "validate_version, compare_fields, bump_prerel, command_compare, and command_validate mirror the specification and CLI vocabulary.",
+        "tests": "Bats suites cover every precedence example from the specification, invalid forms, build metadata, bumps, extraction, differences, documentation output, and argument errors.",
+        "documentation": "The README explains installation, the complete command contract, version grammar, examples, integrations, development, and license.",
+        "traceability": "A compare request can be followed through validation, captured components, release comparison, prerelease field ordering, and the corresponding Bats cases.",
+        "maintainability": "One source file, strict options, focused helpers, specification-linked comments, ShellCheck, and broad behavior tests keep the contract auditable.",
+        "educational_value": "It demonstrates how to translate a compact public specification into a complete, tested shell tool."
+      },
+      "inspection": {"commit": "1a547a75f946717223fb7ca821ba6f3f337e9aca", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/semver", "test/compare.bats", "test/validate.bats", "test/bump.bats", "LICENSE"]},
+      "license": {"spdx": "Apache-2.0", "url": "https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "bats-support",
+      "repository": "bats-core/bats-support",
+      "url": "https://github.com/bats-core/bats-support",
+      "primary_language": "Shell",
+      "language_evidence": "Output formatting, error emission, caller detection, and the Bats load entry point are implemented in Bash under the repository root and src directory.",
+      "description": "A compact support library that supplies output and error helpers for reusable Bats test libraries.",
+      "real_world_evidence": "The repository publishes a versioned Bats helper package intended to be loaded by other test libraries and suites.",
+      "why_study": "Its tiny surface shows how a support library can make failure output consistent while preserving streams, prefixes, multiline values, and useful caller context.",
+      "learn": ["Source-based shell libraries, caller-stack inspection, stdout and stderr discipline, multiline formatting, width calculation, prefixes and decoration, composable helpers, and Bats contracts."],
+      "prerequisites": ["Bash functions and arrays, file descriptors, command substitution, sourcing, terminal output, and basic Bats usage."],
+      "start_here": {
+        "path": "src/output.bash",
+        "reason": "The output helpers form the largest behavior surface and connect directly to focused tests for line counting, alignment, prefixes, and multiline values."
+      },
+      "sdc": {
+        "level": 1,
+        "size": {"score": 1, "loc": 120, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "README.md", "package-lock.json"], "notes": "Count covers load.bash and all production files under src/, excluding tests, documentation, and package metadata."},
+        "difficulty": {"score": 2, "signals": ["Bash call-stack inspection", "stream-safe multiline output formatting"], "reason": "A few shell-specific details require care, but every helper is short, local, and named after its visible behavior."},
+        "complexity": {"score": 1, "signals": ["one sourced helper library", "three small source modules"], "reason": "The package has no service topology, persistence, or state beyond a caller's shell process."},
+        "placement": "S1/D2/C1 averages to 1.33, making bats-support an SDC 1 project."
+      },
+      "quality": {
+        "source_quality": "Small functions keep formatting decisions explicit and use caller-controlled streams instead of hidden global output machinery.",
+        "architecture": "The load file exposes independent language, output, and error modules that other Bats libraries can compose.",
+        "naming_and_idiom": "batslib_err, batslib_count_lines, batslib_prefix, batslib_mark, and batslib_decorate state their output transformations directly.",
+        "tests": "Individual Bats files exercise each helper with empty, single-line, multiline, marked, prefixed, aligned, and caller-sensitive cases.",
+        "documentation": "The README explains the package's role, installation, loading, compatibility promise, and relationship to Bats helper libraries.",
+        "traceability": "A formatted diagnostic can be followed from a public batslib helper through its line transformation and into one narrowly named test file.",
+        "maintainability": "The tiny API, module separation, no runtime dependencies beyond Bash, and one-test-file-per-helper organization make changes easy to bound.",
+        "educational_value": "It is an approachable example of designing a reusable shell library instead of a one-off script."
+      },
+      "inspection": {"commit": "0954abb9925cad550424cebca2b99255d4eabe96", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "load.bash", "src/output.bash", "src/error.bash", "src/lang.bash", "test/50-output-16-batslib_print_kv_single_or_multi.bats", "test/52-lang-10-batslib_is_caller.bats", "LICENSE"]},
+      "license": {"spdx": "0BSD", "url": "https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "getoptions",
+      "repository": "ko1nksm/getoptions",
+      "url": "https://github.com/ko1nksm/getoptions",
+      "primary_language": "Shell",
+      "language_evidence": "The portable option grammar, parser-code generator, abbreviation and help modules, and executable interfaces are implemented in POSIX shell.",
+      "description": "A portable POSIX-shell option parser and parser generator supporting short, long, optional, abbreviated, and subcommand forms.",
+      "real_world_evidence": "The repository publishes standalone release scripts and a Homebrew package for shell programs that need a richer option grammar than getopts provides.",
+      "why_study": "It is a concentrated lesson in what production portability costs: quoting, eval-based code generation, multiple scanning modes, validation hooks, help generation, and cross-shell workarounds.",
+      "learn": ["POSIX shell portability, parser generation, safe quoting, eval and indirect variables, option grammars, scanning modes, subcommands, validation callbacks, ambiguity detection, and cross-shell testing."],
+      "prerequisites": ["Strong POSIX shell fluency, quoting and expansion rules, eval, regular-expression and pattern matching, command-line conventions, and generated-code reasoning."],
+      "start_here": {
+        "path": "lib/getoptions_base.sh",
+        "reason": "The base module builds the generated parser and exposes how definitions become initialization, token cases, validation, rest arguments, and errors."
+      },
+      "sdc": {
+        "level": 2,
+        "size": {"score": 1, "loc": 632, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["spec/", "examples/", "docs/", "tools/"], "notes": "Count covers authoring source under src/ and the production library modules under lib/, excluding tests, examples, documentation, and development tooling."},
+        "difficulty": {"score": 3, "signals": ["eval-driven parser-code generation", "dense portable quoting and indirect-variable logic", "full POSIX and GNU option grammar"], "reason": "The source is small but materially abstract: readers must reason about shell code that emits and later evaluates other shell code across many implementations."},
+        "complexity": {"score": 2, "signals": ["base, abbreviation, and help modules", "command, library, generator, and embedded modes"], "reason": "Several cohesive modules and delivery modes interact, but the result remains one local parser library with no external services."},
+        "placement": "S1/D3/C2 averages to 2.00, making getoptions an SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "The dense metaprogramming is purposeful, factored into small emitters, and guarded by explicit portability workarounds rather than accidental cleverness.",
+        "architecture": "Definition collection feeds a base generator, with abbreviation and help behavior layered as optional modules and a separate generator CLI for delivery modes.",
+        "naming_and_idiom": "setup, flag, param, option, disp, msg, prehook, validate, OPTARG, and OPTIND preserve familiar option-parser concepts.",
+        "tests": "ShellSpec suites exercise scanning modes, combined flags, optional and required values, abbreviations, ambiguity, validation, subcommands, custom hooks, quoting, errors, and many supported shells.",
+        "documentation": "The README compares getopt, getopts, and getoptions; documents the grammar and three delivery modes; and links detailed references and portability workarounds.",
+        "traceability": "A declared option can be followed from the definition DSL through code emission, token matching, validation, assignment, and a matching ShellSpec context.",
+        "maintainability": "Generated artifacts come from explicit source modules, portability decisions are documented, and broad multi-shell tests constrain changes to delicate quoting behavior.",
+        "educational_value": "It shows why line count alone cannot predict difficulty and gives advanced shell learners a bounded metaprogramming system to unpack."
+      },
+      "inspection": {"commit": "139d121807db67f632b412b2a00ece851df73203", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/getoptions", "src/gengetoptions", "lib/getoptions_base.sh", "lib/getoptions_abbr.sh", "spec/getoptions_base_spec.sh", "spec/getoptions_abbr_spec.sh", "LICENSE"]},
+      "license": {"spdx": "CC0-1.0", "url": "https://github.com/ko1nksm/getoptions/blob/139d121807db67f632b412b2a00ece851df73203/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "rbenv",
+      "repository": "rbenv/rbenv",
+      "url": "https://github.com/rbenv/rbenv",
+      "primary_language": "Shell",
+      "language_evidence": "Command dispatch, version selection, shim generation, hook discovery, executable lookup, and shell initialization are implemented as Bash executables under libexec/.",
+      "description": "A per-user Ruby version manager that selects installations through PATH shims, directory-local version files, environment overrides, and plugins.",
+      "real_world_evidence": "The repository ships the rbenv command installed by major operating-system package managers and used to select Ruby runtimes for projects and shells.",
+      "why_study": "It solves runtime selection with ordinary filesystem and PATH mechanisms, making shims, precedence, command dispatch, locking, and plugin hooks visible without a daemon.",
+      "learn": ["Unix command dispatch, PATH shims, configuration precedence, filesystem traversal, plugin hooks, shell initialization, atomic-ish lock files, executable discovery, and Bats integration tests."],
+      "prerequisites": ["Bash arrays and parameter expansion, PATH lookup, files and symlinks, processes and exec, environment variables, shell startup files, and basic plugin concepts."],
+      "start_here": {
+        "path": "libexec/rbenv",
+        "reason": "The dispatcher establishes roots and hook paths, discovers plugin commands, and execs the selected subcommand; every user operation starts there."
+      },
+      "sdc": {
+        "level": 2,
+        "size": {"score": 1, "loc": 1142, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "README.md", "completions/", "src/"], "notes": "Count covers production command executables under libexec/ and excludes tests, documentation, completions, and optional build-time native-helper sources."},
+        "difficulty": {"score": 2, "signals": ["shim regeneration and lock behavior", "version-file precedence and plugin hooks"], "reason": "The mechanisms require Unix familiarity, but each command is a short executable with explicit inputs, filesystem operations, and exit behavior."},
+        "complexity": {"score": 2, "signals": ["dispatcher plus focused command executables", "filesystem, PATH, shell, and plugin boundaries"], "reason": "Several commands coordinate through a shared directory convention, but there is no daemon, database, network service, or distributed state."},
+        "placement": "S1/D2/C2 averages to 1.67 and rounds upward, making rbenv an SDC 2 project."
+      },
+      "quality": {
+        "source_quality": "Commands are narrowly scoped, fail early, and make precedence and filesystem effects explicit.",
+        "architecture": "One dispatcher locates rbenv-prefixed executables; small commands share environment conventions while hooks and plugin bin directories extend behavior.",
+        "naming_and_idiom": "RBENV_ROOT, RBENV_DIR, rbenv-version-name, rbenv-version-origin, rbenv-rehash, and rbenv-which reveal both ownership and precedence.",
+        "tests": "Bats suites cover each command, version precedence, missing installations, hook mutation, shim creation and cleanup, command lookup, initialization, completions, and regressions.",
+        "documentation": "The README explains installation, commands, shims, version selection, shell integration, plugins, alternatives, and the full mechanism.",
+        "traceability": "A Ruby invocation can be followed from the generated shim through rbenv exec, version-name precedence, prefix selection, executable lookup, and focused tests.",
+        "maintainability": "One-command-per-file organization, stable naming conventions, plugin boundaries, and command-level tests localize changes.",
+        "educational_value": "It is a clear study of replacing a complex-seeming runtime manager with Unix path indirection and small cooperating scripts."
+      },
+      "inspection": {"commit": "07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "libexec/rbenv", "libexec/rbenv-version-name", "libexec/rbenv-rehash", "libexec/rbenv-which", "test/version-name.bats", "test/rehash.bats", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/rbenv/rbenv/blob/07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "pyenv",
+      "repository": "pyenv/pyenv",
+      "url": "https://github.com/pyenv/pyenv",
+      "primary_language": "Shell",
+      "language_evidence": "Runtime selection, command dispatch, shims, hooks, shell setup, Python download and compilation, and binary packaging are implemented primarily in Bash.",
+      "description": "A Python version manager that selects installed runtimes through shims and can download and build many Python implementations.",
+      "real_world_evidence": "The repository ships the pyenv command and bundled python-build plugin installed through common package managers and used for per-user and per-project Python selection.",
+      "why_study": "It extends the small shim pattern into a multi-plugin tool that must detect shells and platforms, resolve versions, fetch and verify source, compile runtimes, and preserve extensibility.",
+      "learn": ["Command and hook architectures, PATH shims, version precedence, shell-specific initialization, portable platform detection, checksummed downloads, source builds, compiler configuration, plugin discovery, and integration testing."],
+      "prerequisites": ["Comfortable Bash, Unix processes and PATH, build toolchains, checksums and archives, shell startup behavior, plugins, and basic C compilation."],
+      "start_here": {
+        "path": "libexec/pyenv",
+        "reason": "The dispatcher establishes installation and user roots, merges plugin command and hook paths, and routes every operation into the command suite."
+      },
+      "sdc": {
+        "level": 3,
+        "size": {"score": 2, "loc": 4933, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "plugins/**/test/", "plugins/python-build/share/python-build/", "plugins/python-build/scripts/", "completions/", "docs and media"], "notes": "Count covers the core command suite, runtime hooks, python-build and pyenv-binary production executables, and the small C realpath helper; version-definition data, tests, maintenance scripts, completions, and documentation are excluded."},
+        "difficulty": {"score": 3, "signals": ["portable source-build orchestration", "shell-specific startup-file generation", "checksums, mirrors, patches, and compiler configuration"], "reason": "Understanding the main path requires build-system and platform knowledge beyond shell syntax, with subtle quoting and failure behavior across operating systems."},
+        "complexity": {"score": 3, "signals": ["dispatcher, command suite, shims, hooks, and bundled plugins", "download, cache, patch, compile, install, and relocation stages"], "reason": "Several subsystems and platform boundaries cooperate, although all work remains local to one machine and filesystem hierarchy."},
+        "placement": "S2/D3/C3 averages to 2.67 and rounds upward, making pyenv an SDC 3 project."
+      },
+      "quality": {
+        "source_quality": "Core commands preserve the rbenv-style single-purpose shape while build logic is divided into named download, verification, compiler, and install helpers.",
+        "architecture": "The dispatcher and hook convention support a core command suite plus bundled python-build and binary plugins without folding every concern into one process.",
+        "naming_and_idiom": "PYENV_ROOT, PYENV_VERSION, pyenv-rehash, pyenv-version-name, install_package, fetch_tarball, and build_package expose lifecycle and ownership.",
+        "tests": "Core and plugin Bats suites cover dispatch, version precedence, shims, hooks, shell setup, downloads, caches, checksums, patches, compilers, installation, relocation, and failure cases.",
+        "documentation": "The README explains setup, usage, shims, version resolution, plugins, shell behavior, build prerequisites, upgrading, and development.",
+        "traceability": "Installing and selecting a runtime can be followed from dispatch through python-build definition resolution, verified source acquisition, compilation, installation, rehashing, and command lookup tests.",
+        "maintainability": "Stable extension conventions, small core commands, separated build helpers, explicit compatibility branches, and broad Bats suites contain a large portability surface.",
+        "educational_value": "It forms a natural progression from a small shim manager to a production tool that owns runtime acquisition and cross-platform integration."
+      },
+      "inspection": {"commit": "4733cca31b0f63eab95937f179584ba0d47d44d5", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "libexec/pyenv", "libexec/pyenv-init", "libexec/pyenv-rehash", "plugins/python-build/bin/python-build", "test/rehash.bats", "plugins/python-build/test/checksum.bats", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/pyenv/pyenv/blob/4733cca31b0f63eab95937f179584ba0d47d44d5/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "oh-my-zsh",
+      "repository": "ohmyzsh/ohmyzsh",
+      "url": "https://github.com/ohmyzsh/ohmyzsh",
+      "primary_language": "Shell",
+      "language_evidence": "Framework loading, interactive-shell behavior, the omz CLI, update lifecycle, themes, completion definitions, and hundreds of plugins are implemented in Zsh and shell files.",
+      "description": "A Zsh configuration framework with a core loader, shared libraries, themes, a management CLI, update machinery, and a large plugin ecosystem.",
+      "real_world_evidence": "The repository distributes an installable interactive-shell framework whose plugins and themes integrate everyday developer tools and operating systems.",
+      "why_study": "It shows how conventions, dynamic loading, shell-native data structures, completion, user configuration, and extension discovery can support a very broad ecosystem without a separate plugin runtime.",
+      "learn": ["Zsh startup sequencing, autoload and completion, plugin discovery, theme loading, shell option isolation, command dispatch, update locking, terminal input, configuration rewriting, and convention-based extension systems."],
+      "prerequisites": ["Strong Zsh fluency, interactive-shell startup, arrays and parameter flags, completion functions, Git, terminal modes, filesystem conventions, and plugin architecture basics."],
+      "start_here": {
+        "path": "oh-my-zsh.sh",
+        "reason": "The main loader validates configuration, builds function paths, selects plugins and themes, sources shared libraries, and reveals the framework's extension contract."
+      },
+      "sdc": {
+        "level": 3,
+        "size": {"score": 3, "loc": 31265, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["**/tests/", "documentation", "JSON and static data", "repository metadata"], "notes": "Count includes production Zsh, Bash, POSIX shell, and Python under the core loader, lib/, plugins/, themes/, and tools/; focused tests and non-code data are excluded."},
+        "difficulty": {"score": 3, "signals": ["Zsh-specific parameter and completion features", "interactive terminal and update lifecycle behavior", "dynamic configuration and plugin loading"], "reason": "Individual modules are usually direct, but recurring Zsh-specific semantics and interactive state require substantial prerequisites."},
+        "complexity": {"score": 4, "signals": ["core loader, shared libraries, CLI, updater, themes, and hundreds of plugins", "many external tool and platform integrations"], "reason": "The framework is a large convention-driven ecosystem with many optional cross-cutting integrations, even though each user's runtime is one shell process."},
+        "placement": "S3/D3/C4 averages to 3.33, making Oh My Zsh an SDC 3 project."
+      },
+      "quality": {
+        "source_quality": "The core loader and CLI make order and side effects explicit, while most integrations stay in small plugin-local files.",
+        "architecture": "A shared loader and library layer establishes conventions that independent plugins, completions, themes, tools, and the omz CLI follow.",
+        "naming_and_idiom": "ZSH, ZSH_CUSTOM, plugins, fpath, _omz::plugin, _omz::theme, and zstyle use the shell's own vocabulary and scoping conventions.",
+        "tests": "Focused Zsh tests cover core CLI configuration rewriting and plugin behavior, while repository automation checks syntax, formatting, metadata, and selected integration paths.",
+        "documentation": "The README and plugin-local guides explain installation, configuration, plugins, themes, updates, safety, removal, and contribution paths.",
+        "traceability": "Enabling a plugin can be followed from user configuration through loader discovery and sourcing into the plugin file, CLI mutation logic, and focused CLI tests.",
+        "maintainability": "Directory conventions and local plugin ownership contain a very large extension set; core helpers and automated checks guard shared behavior.",
+        "educational_value": "It teaches how a dynamic language can scale an ecosystem primarily through naming and loading conventions rather than framework objects."
+      },
+      "inspection": {"commit": "4b657407c98bbc8830ae66c2ac7ff3d737c55a83", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "oh-my-zsh.sh", "lib/cli.zsh", "tools/check_for_upgrade.sh", "lib/tests/cli.test.zsh", "plugins/git/git.plugin.zsh", "plugins/git/README.md", "LICENSE.txt"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/ohmyzsh/ohmyzsh/blob/4b657407c98bbc8830ae66c2ac7ff3d737c55a83/LICENSE.txt"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "testssl-sh",
+      "repository": "testssl/testssl.sh",
+      "url": "https://github.com/testssl/testssl.sh",
+      "primary_language": "Shell",
+      "language_evidence": "Transport setup, TLS record construction and parsing, cipher and protocol discovery, vulnerability probes, certificate checks, rating, reporting, and CLI orchestration are implemented in Bash.",
+      "description": "A standalone command-line scanner for TLS protocols, ciphers, certificates, configuration weaknesses, and cryptographic vulnerabilities on many network services.",
+      "real_world_evidence": "The repository publishes a directly executable scanner and official container used for local security assessment of TLS and STARTTLS endpoints.",
+      "why_study": "It exposes an unusually deep systems program in shell: raw protocol bytes, OpenSSL fallbacks, socket I/O, certificate logic, security findings, multiple report formats, parallel scans, and portable execution.",
+      "learn": ["TLS record and handshake parsing, Bash TCP sockets, OpenSSL integration, binary-to-text conversion, cipher and protocol enumeration, certificate trust and revocation, vulnerability probes, severity models, structured reporting, STARTTLS, and parallel scanning."],
+      "prerequisites": ["Advanced Bash, TCP/IP and sockets, TLS handshakes and certificates, cryptographic vulnerability concepts, binary encodings, OpenSSL, structured output formats, and security-test interpretation."],
+      "start_here": {
+        "path": "testssl.sh",
+        "reason": "The single production program is organized into named sections; parse_cmd_line and initialize_engine lead into protocol discovery, certificate analysis, vulnerability probes, reporting, and mass-scan orchestration."
+      },
+      "sdc": {
+        "level": 4,
+        "size": {"score": 3, "loc": 21416, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["t/", "utils/", "bin/", "doc/", "etc/", "generated reports"], "notes": "Count covers the production testssl.sh scanner and excludes tests, maintenance utilities, bundled OpenSSL binaries, documentation, and static protocol/reference data."},
+        "difficulty": {"score": 4, "signals": ["manual TLS record construction and parsing", "cryptographic and certificate-security domain", "portable network, process, and binary-data handling", "many vulnerability-specific probes"], "reason": "Low-level protocol behavior and security interpretation recur throughout the main path, and safe changes require deep TLS and shell knowledge."},
+        "complexity": {"score": 4, "signals": ["socket and OpenSSL engines", "protocol, cipher, certificate, header, and vulnerability subsystems", "terminal, JSON, CSV, HTML, rating, STARTTLS, and mass-scan modes"], "reason": "Many scanning and reporting modes share cross-cutting connection, finding, severity, and output state inside one large executable."},
+        "placement": "S3/D4/C4 averages to 3.67 and rounds upward, making testssl.sh an SDC 4 project."
+      },
+      "quality": {
+        "source_quality": "Although intentionally delivered as one large script, the file uses stable sectioning, descriptive functions, explicit status codes, and consistent finding/report helpers.",
+        "architecture": "Initialization selects a socket or OpenSSL engine, reusable discovery state feeds specialized checks, and a shared output layer emits terminal and machine-readable findings.",
+        "naming_and_idiom": "run_protocols, parse_tls_serverhello, determine_trust, run_heartbleed, run_starttls_injection, fileout, and run_mass_testing expose the security workflow.",
+        "tests": "Pinned Perl suites verify help and syntax, baseline scans, socket versus OpenSSL behavior, protocol output, valid JSON and HTML, severity contracts, STARTTLS, certificate failures, revocation, and known public endpoints.",
+        "documentation": "The README, man page, FAQ, coding convention, Docker guide, security policy, and test guide cover operation, internals, contribution, and risk boundaries.",
+        "traceability": "A protocol or vulnerability finding can be followed from connection setup through byte parsing and detection logic into fileout severity records and baseline or endpoint tests.",
+        "maintainability": "Coding conventions, shared output and transport helpers, baseline artifacts, multi-platform CI, and live behavior tests constrain a necessarily broad compatibility surface.",
+        "educational_value": "It is a rare inspectable example of implementing a security scanner close to the wire without hiding the protocol behind a high-level library."
+      },
+      "inspection": {"commit": "853850e3f4433c7717035a84cfe873dd0e63dfd3", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["Readme.md", "testssl.sh", "Coding_Convention.md", "t/10_baseline_ipv4_http.t", "t/31_isJSON_valid.t", "t/51_badssl.com.t", "t/Readme.md", "LICENSE"]},
+      "license": {"spdx": "GPL-2.0-only", "url": "https://github.com/testssl/testssl.sh/blob/853850e3f4433c7717035a84cfe873dd0e63dfd3/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "dokku",
+      "repository": "dokku/dokku",
+      "url": "https://github.com/dokku/dokku",
+      "primary_language": "Shell",
+      "language_evidence": "The command router and core deployment plugins are implemented in Bash, with substantial first-party Go modules extending application, builder, proxy, storage, Docker, and Kubernetes behavior.",
+      "description": "A self-hosted platform as a service that builds, deploys, configures, networks, schedules, and serves applications on a user's server.",
+      "real_world_evidence": "The repository publishes installable Dokku releases and packages for operating a multi-application deployment platform on supported Ubuntu and Debian hosts.",
+      "why_study": "It shows shell as an orchestration language at platform scale, combining a plugin command bus with Docker builds, Git deployment, process lifecycle, proxies, storage, certificates, and optional Kubernetes scheduling.",
+      "learn": ["Plugin command dispatch, privilege boundaries, Git receive deployments, buildpack and Dockerfile builders, container lifecycle, proxy configuration, persistent settings, application metadata, Bash and Go interoperability, Kubernetes clients, Helm templates, and end-to-end deployment tests."],
+      "prerequisites": ["Advanced Bash and Go, Linux users and permissions, Git transport, Docker images and containers, reverse proxies, process models, storage and networking, Kubernetes and Helm basics, and deployment-system testing."],
+      "start_here": {
+        "path": "dokku",
+        "reason": "The top-level executable establishes host state and permissions, authenticates SSH commands, resolves aliases, and dispatches into the enabled plugin graph."
+      },
+      "sdc": {
+        "level": 4,
+        "size": {"score": 4, "loc": 50388, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "*_test.go", "docs/", "contrib/", "debian/", "plugin templates and static assets"], "notes": "Count includes 14,656 production Bash lines and 35,732 production Go lines in the main executable and core plugins, excluding tests, templates, documentation, packaging, and release tooling."},
+        "difficulty": {"score": 4, "signals": ["privileged process and filesystem orchestration", "container build and runtime semantics", "Kubernetes client and Helm integration", "security-sensitive SSH and deployment paths"], "reason": "Several systems domains and failure-prone boundaries recur in normal deployment flows and require substantial operational expertise."},
+        "complexity": {"score": 4, "signals": ["large core-plugin command graph", "multiple builders, schedulers, and proxies", "Git, Docker, Kubernetes, storage, certificates, networking, and configuration boundaries"], "reason": "Many interacting components and execution modes form a platform, while the default control plane remains centered on one Dokku host."},
+        "placement": "S4/D4/C4 averages to 4.00, making Dokku an SDC 4 project."
+      },
+      "quality": {
+        "source_quality": "The router makes privilege and dispatch decisions visible, shell plugins remain command-focused, and newer Go packages use explicit inputs, outputs, and errors.",
+        "architecture": "A common plugin protocol joins command modules for apps, Git, builders, schedulers, proxies, processes, storage, networking, certificates, and configuration.",
+        "naming_and_idiom": "PLUGIN_PATH, execute_dokku_cmd, cmd-deploy, builder, scheduler, proxy, report, and trigger vocabulary maps directly to platform operations.",
+        "tests": "ShellCheck, extensive Bats suites, Go tests, and deployment fixtures exercise commands, configuration, security boundaries, builders, proxies, schedulers, failures, and real example applications.",
+        "documentation": "The repository and project documentation cover installation, architecture by feature, plugin development, commands, deployment paths, operations, upgrades, troubleshooting, and testing.",
+        "traceability": "A Git push can be followed from SSH authorization and command routing through the Git plugin, source preparation, builder selection, scheduler deployment, proxy updates, and Bats deployment tests.",
+        "maintainability": "Stable plugin boundaries, shared common helpers, typed Go modules, generated command metadata, and layered unit and deployment tests contain a broad platform surface.",
+        "educational_value": "It demonstrates where shell remains effective in a production platform and how typed modules can be introduced around increasingly complex integrations."
+      },
+      "inspection": {"commit": "c712429b095e8bbd58029787b64a9f23f98cb5fb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "dokku", "plugins/common/functions", "plugins/git/functions", "plugins/scheduler-k3s/functions.go", "tests/unit/git_1.bats", "docs/development/testing.md", "LICENSE"]},
+      "license": {"spdx": "MIT", "url": "https://github.com/dokku/dokku/blob/c712429b095e8bbd58029787b64a9f23f98cb5fb/LICENSE"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "termux-packages",
+      "repository": "termux/termux-packages",
+      "url": "https://github.com/termux/termux-packages",
+      "primary_language": "Shell",
+      "language_evidence": "The build engine, toolchain setup, package metadata, dependency handling, validation, and active package and subpackage recipes are overwhelmingly implemented in Bash and POSIX shell.",
+      "description": "The build system and package-recipe corpus that produces the Termux userland and repositories for multiple Android architectures.",
+      "real_world_evidence": "This repository builds and validates the package repositories consumed by the Termux Android application and its package manager.",
+      "why_study": "It is an expert study in porting a Unix userland onto Android: thousands of recipes feed a modular cross-build engine that configures NDK, libc, compilers, language toolchains, dependency graphs, patches, packaging, signing, and multi-architecture CI.",
+      "learn": ["Cross-compilation, Android NDK and Bionic constraints, ABI and architecture flags, dependency graph traversal, reproducible builds, source verification, package recipes and subpackages, toolchain adapters for many languages, patch pipelines, repository assembly, CI artifact flow, and defensive path validation."],
+      "prerequisites": ["Expert Bash, compiler and linker toolchains, Android NDK and ABI concepts, C and C++ build systems, multiple language package ecosystems, Debian packages and repositories, dependency resolution, containers, release engineering, and supply-chain security."],
+      "start_here": {
+        "path": "build-package.sh",
+        "reason": "The primary entry point loads the build modules in lifecycle order, establishes architecture and toolchain state, resolves dependencies, runs package hooks, and produces repository artifacts."
+      },
+      "sdc": {
+        "level": 5,
+        "size": {"score": 4, "loc": 95348, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests and test payloads", "disabled-packages/", "sample/", "*.patch and *.diff", "bundled upstream helper source", "static XML and data", "documentation and CI-only tooling"], "notes": "Count conservatively includes active package and subpackage recipes plus the core build, utility, setup, and toolchain Shell and Python implementation; copied patch context, bundled source, static data, tests, and disabled recipes are excluded."},
+        "difficulty": {"score": 5, "signals": ["recurring multi-language cross-toolchain construction", "Android ABI, libc, linker, and platform compatibility", "package-specific compiler and runtime porting", "reproducible and security-sensitive release engineering"], "reason": "The normal learning path repeatedly crosses expert compiler, linker, ABI, operating-system, and packaging concerns rather than containing them in one optional subsystem."},
+        "complexity": {"score": 5, "signals": ["distribution-scale package and dependency graph", "multiple repositories and four target architectures", "many build-system and language adapters", "container, artifact, signing, mirror, and repository pipelines"], "reason": "The repository is an interconnected operating environment and release platform whose important behavior spans core orchestration, toolchains, thousands of recipes, CI, and package repositories."},
+        "placement": "S4/D5/C5 triggers the two-dimensions-at-5 guardrail, making termux-packages an SDC 5 project."
+      },
+      "quality": {
+        "source_quality": "The large entry point delegates lifecycle stages to named modules, toolchain setup is separated by concern, and package recipes declare metadata before narrowly overriding hooks.",
+        "architecture": "A common build engine owns state and stages; setup and toolchain modules adapt ecosystems; repository directories contribute package recipes; CI selects, lints, builds, and publishes architecture-specific artifacts.",
+        "naming_and_idiom": "TERMUX_PKG variables, termux_step functions, termux_setup_toolchain, package build.sh files, subpackage hooks, and repository paths make the build protocol visible.",
+        "tests": "Changed recipes are linted and built across aarch64, arm, i686, and x86_64; repository-health checks, dry-run simulations, validation scripts, and package-specific tests cover metadata, dependency, artifact, and runtime boundaries.",
+        "documentation": "The README, contribution guide, developer wiki links, inline module contracts, package conventions, security policy, and workflow definitions orient both package maintainers and build-system contributors.",
+        "traceability": "A package can be followed from its build.sh metadata into property validation, dependency resolution, source verification, toolchain setup, build hooks, package creation, CI selection, and architecture artifacts.",
+        "maintainability": "Named lifecycle modules, shared validators, recipe conventions, automated linting, architecture matrices, and scoped package ownership control a very large heterogeneous surface.",
+        "educational_value": "It shows shell coordinating a real cross-compiled distribution where operating-system, compiler, and supply-chain concerns are inseparable from the code."
+      },
+      "inspection": {"commit": "dd1290e0fc0912dae71ab8627ded804566d28e92", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "LICENSE.md", "build-package.sh", "scripts/properties.sh", "scripts/build/termux_step_get_dependencies.sh", "scripts/build/toolchain/termux_setup_toolchain_29.sh", "packages/bash/build.sh", "scripts/bin/validation", ".github/workflows/packages.yml"]},
+      "license": {"spdx": "Apache-2.0 AND LicenseRef-Package-Specific", "url": "https://github.com/termux/termux-packages/blob/dd1290e0fc0912dae71ab8627ded804566d28e92/LICENSE.md"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    },
+    {
+      "slug": "void-packages",
+      "repository": "void-linux/void-packages",
+      "url": "https://github.com/void-linux/void-packages",
+      "primary_language": "Shell",
+      "language_evidence": "xbps-src, build stages, dependency resolution, chroot and environment adapters, hooks, build styles, architecture profiles, and 9,661 package templates are implemented as Bash or POSIX-shell programs.",
+      "description": "The xbps-src build system and source-package collection used to build the Void Linux distribution across architectures and libc variants.",
+      "real_world_evidence": "The repository is Void Linux's maintained source-package system; its templates and build engine produce distribution packages and are exercised by official continuous integration.",
+      "why_study": "It combines a full source-package DSL with dependency solving, isolated build environments, cross compilation, reusable build styles, installation hooks, metadata generation, quality checks, and an operating-system-sized recipe corpus.",
+      "learn": ["Source-package DSL design, staged builds, dependency graph resolution, chroots and namespaces, cross compilation, architecture and libc profiles, reusable build styles, package hooks and triggers, subpackages, repository metadata, package QA, and distribution CI."],
+      "prerequisites": ["Expert Bash and POSIX shell, Linux build and packaging systems, dependency resolution, chroots and namespaces, cross toolchains, ELF and shared libraries, libc differences, package repositories, and operating-system release engineering."],
+      "start_here": {
+        "path": "xbps-src",
+        "reason": "The public command establishes configuration and master directories, resolves targets and options, and dispatches into the common xbps-src build machinery."
+      },
+      "sdc": {
+        "level": 5,
+        "size": {"score": 5, "loc": 269448, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["srcpkgs/**/patches/", "srcpkgs/**/files/", "tests and fixtures", "common/travis/", "common/scripts/", "documentation", "package payload data"], "notes": "Count includes 260,038 Shell lines in 9,661 extensionless srcpkgs/*/template files plus 9,410 core Shell lines in xbps-src, build helpers, profiles, build styles, chroot and container adapters, environments, hooks, wrappers, and shutils. Tokei classified templates through a temporary hard-linked mirror with only a .sh filename suffix; file contents were unchanged."},
+        "difficulty": {"score": 4, "signals": ["dependency and subpackage resolution", "cross-architecture and dual-libc build behavior", "chroot, namespace, toolchain, ELF, and metadata handling", "dynamic shell package DSL"], "reason": "Several expert systems concerns recur across the build path, though the code favors explicit staged shell functions over unusually dense algorithms or concurrency."},
+        "complexity": {"score": 5, "signals": ["operating-system-scale package corpus", "build engine, styles, hooks, environments, profiles, repositories, and QA", "many architectures and glibc or musl targets", "cross-package dependency and installation validation"], "reason": "Understanding distribution behavior requires following interactions across the core build engine, thousands of templates, architecture profiles, package hooks, dependency repositories, and CI."},
+        "placement": "S5/D4/C5 averages to 4.67 and rounds upward, making void-packages an SDC 5 project."
+      },
+      "quality": {
+        "source_quality": "Build stages, dependency helpers, environments, hooks, styles, and templates follow stable conventions and keep package-specific overrides separate from shared machinery.",
+        "architecture": "xbps-src dispatches into shutils and stage executables; build styles and hooks provide reusable lifecycle behavior; templates declare packages and subpackages; profiles specialize architecture and libc targets.",
+        "naming_and_idiom": "XBPS variables, do_fetch through do_pkg stages, build_style, hostmakedepends, makedepends, checkdepends, vmove, and package functions expose the distribution model.",
+        "tests": "Continuous integration lints changed templates, builds and runs package checks across native and cross targets with glibc and musl, compares artifacts, detects conflicts, and verifies dependent packages can be installed.",
+        "documentation": "The README, comprehensive Manual, contribution guide, build-style and hook READMEs, inline stage contracts, and template examples document both package authorship and engine behavior.",
+        "traceability": "A package can be followed from its template through target parsing, dependency resolution, environment setup, selected build style, stage hooks, checks, subpackage splitting, metadata scripts, package output, and CI installation validation.",
+        "maintainability": "A strict template convention, reusable build styles, isolated hooks, lint tools, architecture matrices, and artifact comparisons let many maintainers evolve a distribution-sized corpus coherently.",
+        "educational_value": "It is a complete study of how a shell-based DSL and engine can build an operating system without obscuring the package lifecycle behind a separate language."
+      },
+      "inspection": {"commit": "876ee5650a22d8ef731e955dd1c629b962a329e3", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Manual.md", "xbps-src", "common/xbps-src/libexec/build.sh", "common/xbps-src/shutils/build_dependencies.sh", "common/hooks/post-install/04-create-xbps-metadata-scripts.sh", "srcpkgs/bash/template", ".github/workflows/build.yaml", "common/travis/check-install.sh", "COPYING"]},
+      "license": {"spdx": "BSD-2-Clause", "url": "https://github.com/void-linux/void-packages/blob/876ee5650a22d8ef731e955dd1c629b962a329e3/COPYING"},
+      "github": {"primary_language": "Shell", "archived": false, "metadata_checked_at": "2026-08-28"}
+    }
+  ]
+}

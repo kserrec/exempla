@@ -160,6 +160,30 @@
       "failed_requirement": "verifiable repository licensing",
       "evidence": "The package DESCRIPTION declares Apache 2.0, but the pinned Git tree contains no license file and bundles ASA source whose header requires a separate ASA-LICENSE file that is also absent; the repository therefore does not provide a complete verifiable license chain for all included source.",
       "reconsider": "Reconsider if the repository adds the declared Apache license and every required third-party license, or removes the incompletely licensed bundled source."
+    },
+    {
+      "repository": "zsh-users/zsh-autosuggestions",
+      "language": "Shell",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The 451-line authoring source uses ZLE widget rebinding, asynchronous worker processes, terminal sessions, and subtle interactive-shell state; S1/D3/C1 rounds to SDC 2 rather than the open SDC 1 slot.",
+      "reconsider": "Eligible as an additional Shell SDC 2 project, especially for an interactive Zsh learning path."
+    },
+    {
+      "repository": "rupa/z",
+      "language": "Shell",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "tests",
+      "evidence": "The pinned repository contains the z.sh implementation, manual page, README, Makefile, and license but no test suite or executable test path for ranking, aging, matching, or path edge cases.",
+      "reconsider": "Reconsider if a maintained revision adds behavior tests for frecency updates, aging, matching modes, exclusions, missing directories, and paths containing whitespace."
+    },
+    {
+      "repository": "acmesh-official/acme.sh",
+      "language": "Shell",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "stable in-repository tests",
+      "evidence": "The pinned tree contains production source and CI workflows but no behavior test suite; the workflows clone the separate acmesh-official/acmetest default branch without a revision pin, so the tests used for a run cannot be reproduced from the accepted repository revision alone.",
+      "reconsider": "Reconsider if behavior tests are included in the repository or the external harness and every required fixture are pinned to immutable revisions recorded with the candidate."
     }
   ]
 }
