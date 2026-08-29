@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 40,
+  "reviewed_entry_total": 50,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -2988,12 +2988,771 @@
         "status": "disagree_resolved",
         "notes": "The original Server.php and lib/base.php composition-root path is not locally teachable and cannot substantiate Level 5, but that failure does not disqualify the repository. Final reconciliation adopts the independent review's representative View.rename subsystem, confirms its programming-led domain and quality passes, uses 3/4/4/5 and Level 4, and records rank 6 capacity removal."
       }
+    },
+    {
+      "repository": "ardalis/GuardClauses",
+      "language": "C#",
+      "prior_level": 1,
+      "pinned_commit": "7d55fa5397d73c0fe4e86a2dcab0230d1db57870",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [],
+        "evidence": "The selected behavior is entirely about transferable argument validation, generic nullable-flow contracts, exception construction, and caller-expression capture."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The marker API and null extensions are compact, directly named, documented, and covered by focused tests for null and non-null reference and value types, parameter-name capture, custom messages, custom exceptions, and nullable-flow narrowing.",
+      "learning_path": {
+        "goal": "Understand how GuardClauses rejects null arguments while returning a compiler-narrowed value and preserving the caller's argument name and exception contract.",
+        "start_path": "src/GuardClauses/GuardAgainstNullExtensions.cs",
+        "supporting_files": [
+          "src/GuardClauses/Guard.cs",
+          "test/GuardClauses.UnitTests/GuardAgainstNull.cs"
+        ],
+        "trace": "Begin with the reference- and value-type Null extension overloads, follow their generic constraints, nullable annotations, CallerArgumentExpression parameter capture, and optional exception factory into ArgumentNullException, then correlate default and custom names, messages, factories, non-null returns, and nullable value narrowing in GuardAgainstNull tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic reference- and value-type overloads",
+            "nullable-flow attributes and CallerArgumentExpression"
+          ],
+          "reason": "Generics, constraints, compiler flow annotations, and caller-expression capture materially shape the small public API."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized null and non-null branches",
+            "optional custom-exception construction"
+          ],
+          "reason": "Validation and error behavior require care but remain synchronous and local to the guard call."
+        },
+        "design_span": {
+          "signals": [
+            "one focused extension unit",
+            "one marker API"
+          ],
+          "reason": "The complete behavior remains in one focused unit with a minimal public marker boundary."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable parameter-name and exception contracts",
+            "nullable-analysis compatibility"
+          ],
+          "reason": "The path preserves routine public-API, diagnostic, and compiler-analysis safeguards without several interacting production constraints."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/1/2 sums to 8, which calculates to Level 2 independently of available catalog places.",
+      "reconsider": "Reconsider if the nullable-flow contract, public source status, license, documentation, or focused null and exception tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "The catalog's Level 1 placement understated the recurring generic and compiler-flow techniques. Both reviews confirm the corrected files, gates, 3/2/1/2 profile, Level 2 formula, and retention."
+      }
+    },
+    {
+      "repository": "serilog/serilog-sinks-console",
+      "language": "C#",
+      "prior_level": 1,
+      "pinned_commit": "9b75d510787f5d54cf76584a3c3341d7eab0ee0a",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A console sink formats each structured log event, optionally applies a theme, and writes it atomically to standard output or standard error."
+        ],
+        "evidence": "The logging vocabulary is familiar and short; the path primarily teaches interface composition, conditional buffering, localized synchronization, configuration defaults, and observable formatting."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Configuration, sink, renderer, and theme responsibilities are explicit and compact; configuration and renderer tests cover themed output, format providers, templates, properties, levels, timestamps, and trace identifiers, making the bounded output lifecycle readable and educational.",
+      "learning_path": {
+        "goal": "Understand how the Serilog console sink configures a renderer and emits each formatted event as one synchronized console write.",
+        "start_path": "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs",
+        "supporting_files": [
+          "src/Serilog.Sinks.Console/ConsoleLoggerConfigurationExtensions.cs",
+          "src/Serilog.Sinks.Console/Sinks/SystemConsole/Output/OutputTemplateRenderer.cs",
+          "test/Serilog.Sinks.Console.Tests/Configuration/ConsoleLoggerConfigurationExtensionsTests.cs",
+          "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs"
+        ],
+        "trace": "Follow console configuration as it chooses a theme and constructs OutputTemplateRenderer and ConsoleSink, then follow Emit as it selects standard output or error, optionally buffers themed output, and protects the final write with the shared lock; correlate configuration output and token-rendering behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "formatter and theme interfaces",
+            "delegate-based configuration composition"
+          ],
+          "reason": "Interfaces, callbacks, and ordinary composition shape the path without advanced C# machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized buffered versus direct output branch",
+            "one synchronized write lifecycle"
+          ],
+          "reason": "The lock and output choice matter, but all mutable behavior remains localized in one short Emit method and does not require advanced concurrent-state reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "configuration and sink boundary",
+            "renderer and theme collaborators"
+          ],
+          "reason": "A few small modules contain the complete console-output behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "atomic event output",
+            "theming, redirection, and formatting compatibility",
+            "standard-output and standard-error selection"
+          ],
+          "reason": "Several material reliability and compatibility contracts constrain changes even though the implementation remains compact."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/2/3 sums to 9, whose half-up mean calculates to Level 2; exactly two qualified C# paths occupy that level.",
+      "reconsider": "Reconsider if output synchronization, theme selection, public source status, license, documentation, or configuration and rendering tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review initially scored behavior at 3 and placed the sink at Level 3, treating synchronization as a broader concurrency concern. Final reconciliation applies the lower anchor because the synchronized one-write lifecycle is localized, confirms 2/2/2/3 and Level 2, adds the missing configuration path, and retains the sink."
+      }
+    },
+    {
+      "repository": "DapperLib/Dapper",
+      "language": "C#",
+      "prior_level": 2,
+      "pinned_commit": "6d48ef664acc7298c649e2d449d903b3360d5a90",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An ADO.NET data reader exposes typed columns for the current database row, which Dapper maps into a requested object constructor and members."
+        ],
+        "evidence": "This row-mapping context fits in a short paragraph; the selected path teaches reflection, dynamic IL generation, typed caches, constructor and member selection, conversion, null handling, and extensibility rather than database theory."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Although SqlMapper is large and the emitted IL is necessarily intricate, the bounded materializer path has named cache and type-map boundaries, detailed compatibility branches, and focused constructor and type-handler tests that expose mapping, conversion, null, and extension contracts.",
+      "learning_path": {
+        "goal": "Understand how Dapper converts one data-reader row into a typed object by caching a generated deserializer and honoring constructor, member, conversion, null, and type-handler contracts.",
+        "start_path": "Dapper/SqlMapper.TypeDeserializerCache.cs",
+        "supporting_files": [
+          "Dapper/SqlMapper.cs",
+          "Dapper/DefaultTypeMap.cs",
+          "tests/Dapper.Tests/ConstructorTests.cs",
+          "tests/Dapper.Tests/TypeHandlerTests.cs"
+        ],
+        "trace": "Follow TypeDeserializerCache as it keys and reuses row-reader delegates, then follow SqlMapper.GetTypeDeserializer and GenerateDeserializerFromMap as they inspect columns, select constructors or members through DefaultTypeMap, and emit conversion, null, tuple, and type-handler IL; correlate constructor selection and custom-handler behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reflection-driven constructor and member selection",
+            "DynamicMethod and ILGenerator materializers",
+            "generic cached delegates and type handlers"
+          ],
+          "reason": "Reflection and runtime code generation are central rather than incidental to the materialization path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "typed deserializer caching",
+            "column-by-column construction and conversion state",
+            "null, constructor, and handler branches"
+          ],
+          "reason": "Cache state and numerous mapping branches materially affect behavior, but the bounded row conversion remains synchronous and lacks advanced nonlocal scheduling."
+        },
+        "design_span": {
+          "signals": [
+            "reader-to-deserializer boundary",
+            "type-map and generated-delegate layers",
+            "constructor and type-handler extension points"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one row materialization."
+        },
+        "constraint_burden": {
+          "signals": [
+            "provider and runtime compatibility",
+            "null and numeric conversion correctness",
+            "constructor, tuple, and type-handler contracts",
+            "hot-path allocation and performance limits"
+          ],
+          "reason": "Several interacting correctness, compatibility, extensibility, and performance guarantees constrain changes to the emitted materializer."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, which calculates to Level 4; Dapper ranks second of three qualified C# Level 4 paths.",
+      "reconsider": "Reconsider if a stronger C# Level 4 path appears, or if the materializer boundaries, public source status, license, documentation, or constructor and handler tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews replace the catalog's broad SqlMapper/async sample with the coherent row-materialization and emitted-IL path and confirm 4/3/3/4, Level 4. The independent ranking placed Dapper third; final reconciliation ranks it second because the complete first-party cache-to-generated-deserializer trace is directly testable and more bounded than Orleans' distributed proxy transition."
+      }
+    },
+    {
+      "repository": "serilog/serilog",
+      "language": "C#",
+      "prior_level": 2,
+      "pinned_commit": "49b5339ce85385dc52d4d8e8f2b8308becf23506",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A structured log event combines a parsed message template, bound properties, a level, timestamp, exception, and optional trace identifiers before enrichers, filters, and sinks process it."
+        ],
+        "evidence": "The logging model is concise and familiar; the path primarily teaches parser and cache design, interface-driven pipelines, contextual enrichment, fault containment, resource cleanup, and stable extension contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Logger, configuration, event, parser, and cache responsibilities are explicitly named and documented; focused parser and logger tests cover binding, nested context, enrichment failures, filters, dynamic levels, trace capture, event disposal, and asynchronous disposal, making the full event trace readable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how Serilog parses and caches a message template, binds one structured event, enriches and filters it, emits it to sinks, and contains extension failures.",
+        "start_path": "src/Serilog/Core/Logger.cs",
+        "supporting_files": [
+          "src/Serilog/LoggerConfiguration.cs",
+          "src/Serilog/Core/Pipeline/MessageTemplateCache.cs",
+          "src/Serilog/Parsing/MessageTemplateParser.cs",
+          "src/Serilog/Events/LogEvent.cs",
+          "test/Serilog.Tests/Core/LoggerTests.cs",
+          "test/Serilog.Tests/Parsing/MessageTemplateParserTests.cs"
+        ],
+        "trace": "Follow Logger.Write from level checking through MessageTemplateCache and MessageTemplateParser, property binding, LogEvent construction, enrichment, filtering, and sink emission; then correlate parser tokenization, property precedence, enricher-failure containment, dynamic level switches, trace context, binding, disposal, and async-disposal tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interface-composed enrichers, filters, and sinks",
+            "typed template-token and property model",
+            "contextual and disposable framework idioms"
+          ],
+          "reason": "Substantial framework abstraction and typed pipeline idioms recur without reflection, unsafe code, or pervasive code generation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "message-template cache state",
+            "ordered enrichment, filtering, and emission",
+            "context propagation and extension-failure containment"
+          ],
+          "reason": "Caching, contextual state, events, failure paths, and cleanup materially affect the trace without expert concurrent scheduling."
+        },
+        "design_span": {
+          "signals": [
+            "configuration and logger boundaries",
+            "parser and cache layer",
+            "event, enricher, filter, and sink interfaces"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one structured event."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable message-template and property semantics",
+            "extension failure isolation",
+            "context, trace, level-switch, and disposal contracts"
+          ],
+          "reason": "Several interacting compatibility, reliability, extension, and resource guarantees constrain pipeline changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, which calculates to Level 3; Serilog ranks first of four qualified C# Level 3 paths.",
+      "reconsider": "Reconsider if a stronger C# Level 3 path appears, or if the event pipeline, public source status, license, documentation, parser tests, or logger behavior tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added the cache, parser, event, and parser tests missing from the catalog's abbreviated Logger path. Both reviews confirm both gates, 3/3/3/4, Level 3, comparative rank 1, and retention."
+      }
+    },
+    {
+      "repository": "FluentValidation/FluentValidation",
+      "language": "C#",
+      "prior_level": 3,
+      "pinned_commit": "daa00b795450881c233253488e3ddeb362f59f56",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A validator builds typed property rules, then evaluates their selectors, conditions, validator components, cascade policy, and dependent rules into validation failures."
+        ],
+        "evidence": "The validation vocabulary is short and programming-led; the selected authored async path teaches expression-based APIs, generic fluent builders, cached accessors, callbacks, cancellation, conditions, and ordered rule composition."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Validator, rule, component, and builder responsibilities are explicit and strongly typed; the authored async implementation is directly inspectable, and focused condition, cascade, dependency, sync/async-parity, and validator tests make its contracts traceable despite the generated sync counterpart.",
+      "learning_path": {
+        "goal": "Understand how FluentValidation turns a typed RuleFor expression into an authored asynchronous property-rule pipeline with conditions, cascade behavior, dependent rules, cancellation, and failures.",
+        "start_path": "src/FluentValidation/AbstractValidator.cs",
+        "supporting_files": [
+          "src/FluentValidation/Internal/PropertyRule.cs",
+          "src/FluentValidation/Internal/RuleBase.cs",
+          "src/FluentValidation/Internal/RuleBuilder.cs",
+          "src/FluentValidation.Tests/AbstractValidatorTester.cs",
+          "src/FluentValidation.Tests/ConditionTests.cs",
+          "src/FluentValidation.Tests/CascadingFailuresTester.cs",
+          "src/FluentValidation.Tests/SyncAsyncParityTests.cs"
+        ],
+        "trace": "Follow RuleFor as it captures a typed expression and builds PropertyRule and RuleBuilder, then follow ValidateInternalAsync through cancellation and class-level cascade into PropertyRule.ValidateAsync, selector and condition checks, lazy accessor evaluation, validator components, failure creation, rule-level cascade, and dependent rules; use the focused tests to verify conditions, cascades, failures, and sync/async parity without treating generated output as the teaching source."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic fluent rule-builder interfaces",
+            "expression-tree property capture and compiled accessor caching",
+            "source-generated sync counterpart to authored async code"
+          ],
+          "reason": "Expression processing and code generation materially shape the API and maintenance model alongside pervasive generic abstractions."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered async rule evaluation",
+            "conditions, selectors, and cascade short circuits",
+            "cancellation and dependent-rule branches"
+          ],
+          "reason": "Meaningful async, conditional, and cascade behavior recurs, but it remains a linear per-validation pipeline rather than an advanced distributed or concurrent state machine."
+        },
+        "design_span": {
+          "signals": [
+            "validator and builder API",
+            "rule and component model",
+            "context, selector, and failure boundaries"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one property validation."
+        },
+        "constraint_burden": {
+          "signals": [
+            "sync and async parity",
+            "stable cascade and condition semantics",
+            "cancellation, failure formatting, and extension contracts"
+          ],
+          "reason": "Several material API, correctness, and reliability guarantees constrain changes, but they do not rise to interacting system-wide expert constraints in this bounded path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 4/3/3/3 sums to 13, which calculates to Level 3; FluentValidation ranks second of four qualified C# Level 3 paths.",
+      "reconsider": "Reconsider if a stronger C# Level 3 path appears, or if the authored async rule path, public source status, license, documentation, or condition, cascade, and parity tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review scored behavior and constraints at 4 and placed the path at Level 4. Final reconciliation keeps the advanced expression and generation score but uses the lower behavior and constraint anchors because the authored async trace is a linear rule pipeline with material rather than system-wide guarantees; 4/3/3/3 yields Level 3, rank 2, and retention."
+      }
+    },
+    {
+      "repository": "nodatime/nodatime",
+      "language": "C#",
+      "prior_level": 3,
+      "pinned_commit": "67f788570b9b5972f52aa316fa1cf32b73439eb6",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 3,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An Instant is a point on the global timeline and a Duration is a fixed number of nanoseconds, represented as floor days plus a non-negative nanosecond-of-day remainder."
+        ],
+        "evidence": "The selected path deliberately excludes calendars, time-zone transitions, and civil-time rules; its fixed-unit arithmetic context is short, while the implementation teaches normalized value types, operators, overflow-safe integer arithmetic, boundary checks, and conversion contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Instant, Duration, and TickArithmetic state their representation and boundary invariants directly, keep arithmetic helpers focused, and have extensive tests for negative normalization, addition, subtraction, multiplication, conversions, extrema, overflow, and round trips, making the bounded arithmetic path readable and educational.",
+      "learning_path": {
+        "goal": "Understand how NodaTime represents fixed timeline arithmetic, normalizes negative durations, converts ticks without overflow, and enforces Instant range boundaries.",
+        "start_path": "src/NodaTime/Instant.cs",
+        "supporting_files": [
+          "src/NodaTime/Duration.cs",
+          "src/NodaTime/Utility/TickArithmetic.cs",
+          "src/NodaTime.Test/InstantTest.cs",
+          "src/NodaTime.Test/DurationTest.cs"
+        ],
+        "trace": "Begin with Instant's Duration-backed day and nanosecond representation, follow addition, subtraction, and tick conversion through Duration's normalized floor-day arithmetic and TickArithmetic's overflow-safe negative and positive branches, then correlate extrema, overflow, normalization, operator, conversion, and round-trip cases in InstantTest and DurationTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "immutable value types and operator overloads",
+            "generic math interfaces and trusted-value annotations",
+            "careful Int128, BigInteger, and long conversions"
+          ],
+          "reason": "Substantial C# value-type, operator, numeric-interface, and multiple-width integer techniques materially shape the arithmetic API."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized day and nanosecond normalization",
+            "positive and negative tick-conversion branches",
+            "explicit overflow paths"
+          ],
+          "reason": "Arithmetic state and boundary branches require care but remain synchronous and locally traceable."
+        },
+        "design_span": {
+          "signals": [
+            "Instant and Duration value boundaries",
+            "one internal tick-arithmetic helper"
+          ],
+          "reason": "A few focused modules contain the complete fixed-unit arithmetic behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "nanosecond precision and normalized negatives",
+            "overflow-safe extreme conversions",
+            "range, operator, and round-trip compatibility"
+          ],
+          "reason": "Several material numeric correctness and compatibility guarantees constrain changes without becoming system-wide expert policy."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/2/2/3 sums to 10, whose half-up mean calculates to Level 3, but two clearer paths rank ahead; NodaTime ranks third for two places.",
+      "reconsider": "Reconsider if a C# Level 3 place opens, the fixed-unit arithmetic path becomes materially clearer, or a fresh comparison ranks it above a retained entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review replaced the incoherent Instant-plus-zone-cache sample with a zone-provider cache and ranked it second. Final reconciliation instead keeps Instant as the representative entry but pairs it coherently with Duration, TickArithmetic, and their arithmetic tests; excluding calendar and zone logic resolves the domain risk, and the final 3/2/2/3 path ranks third and is removed for capacity."
+      }
+    },
+    {
+      "repository": "dotnet/orleans",
+      "language": "C#",
+      "prior_level": 4,
+      "pinned_commit": "137d9acc17830f15b13a4eb0058d6cee633cad5e",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 3,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An Orleans grain reference is a typed local proxy for a virtual actor; a method call becomes a serializable invokable request sent by the client runtime and completed asynchronously."
+        ],
+        "evidence": "Virtual-actor identity and remote invocation fit in a short prerequisite paragraph when the trace stops before placement and cluster mechanics; the selected path primarily teaches source generation, typed proxies, request objects, copying, async completion, filters, and runtime dispatch."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Generator, proxy, request, reference, and runtime responsibilities are explicit, and the committed verified snapshot exposes the otherwise generated proxy and invokable transition; generator tests plus the snapshot make interface-to-request-to-runtime dispatch inspectable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how Orleans source-generates a typed grain proxy and invokable request, then sends that request through GrainReference and the client runtime.",
+        "start_path": "src/Orleans.CodeGenerator/ProxyGenerator.cs",
+        "supporting_files": [
+          "src/Orleans.CodeGenerator/ProxyGenerationContext.cs",
+          "src/Orleans.CodeGenerator/ProxySourceOutputGenerator.cs",
+          "src/Orleans.Core.Abstractions/Runtime/GrainReference.cs",
+          "src/Orleans.Core/Runtime/GrainReferenceRuntime.cs",
+          "test/Orleans.CodeGenerator.Tests/OrleansSourceGeneratorTests.cs",
+          "test/Orleans.CodeGenerator.Tests/snapshots/OrleansSourceGeneratorTests.TestBasicGrain.verified.cs"
+        ],
+        "trace": "Follow ProxyGenerationContext and ProxyGenerator as they turn a grain-interface method into a proxy method and invokable request, verify the concrete generated classes and base.InvokeAsync call in the committed TestBasicGrain snapshot, then follow GrainReference into GrainReferenceRuntime's cancellation-token targeting, filter path, response-completion source, and RuntimeClient.SendRequest boundary."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Roslyn syntax-based source generation",
+            "generic generated proxies and invokable requests",
+            "reflection metadata, serializers, and copied arguments"
+          ],
+          "reason": "Source generation and advanced generic and reflection machinery are central throughout the proxy path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous remote completion",
+            "outgoing-filter and direct-send branches",
+            "cancellation-token retargeting and request lifecycle"
+          ],
+          "reason": "Distributed async completion, filtering, cancellation, and request ownership require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "compiler source-generator layer",
+            "generated proxy and serialization contracts",
+            "reference, filter, response, and runtime-client boundaries"
+          ],
+          "reason": "Many framework layers contribute directly to one typed grain invocation."
+        },
+        "constraint_burden": {
+          "signals": [
+            "generated-code and interface compatibility",
+            "argument copying and serialization correctness",
+            "filter, cancellation, one-way, and async response contracts"
+          ],
+          "reason": "Several interacting compatibility, correctness, distribution, and reliability guarantees constrain the generated and runtime halves together."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/4/4 sums to 16, which calculates to Level 4, but ASP.NET Core and Dapper provide clearer bounded paths; Orleans ranks third for two places.",
+      "reconsider": "Reconsider if a C# Level 4 place opens, the generated-call path becomes still more compact, or a fresh comparison ranks it above a retained entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews reject the catalog's GrainReference-to-Silo sample as an incomplete call trace and confirm that generated transitions are inspectable through ProxyGenerator and the committed TestBasicGrain snapshot. They agree on 4/4/4/4 and capacity removal; final reconciliation ranks Orleans third rather than the independent review's fourth because its generated proxy transition is concretely preserved and tested."
+      }
+    },
+    {
+      "repository": "dotnet/efcore",
+      "language": "C#",
+      "prior_level": 4,
+      "pinned_commit": "8e66699fe92713d8cfa9f4b248c0f3711af88d34",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 4,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "EF Core keeps an original-value snapshot for each tracked entity and marks a property and entity modified when the current scalar value differs under that property's comparer."
+        ],
+        "evidence": "Snapshot tracking, scalar properties, comparers, and entity states fit in a short prerequisite paragraph; the selected path avoids query translation and relationship fixup and primarily teaches metadata-driven state, snapshots, events, comparison, and change propagation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The bounded DetectValueChange trace has explicit tracker, detector, entry, state-manager, snapshot, and comparer responsibilities and direct tests for snapshot strategies, changed and unchanged values, arrays, custom comparers, keys, events, and state promotion; the surrounding ChangeDetector file is large, but the selected scalar path remains traceable.",
+      "learning_path": {
+        "goal": "Understand how EF Core compares a tracked scalar property with its original snapshot and promotes property and entity state while preserving key, comparer, and event contracts.",
+        "start_path": "src/EFCore/ChangeTracking/Internal/ChangeDetector.cs",
+        "supporting_files": [
+          "src/EFCore/ChangeTracking/ChangeTracker.cs",
+          "src/EFCore/ChangeTracking/Internal/InternalEntryBase.OriginalValues.cs",
+          "src/EFCore/ChangeTracking/Internal/InternalEntityEntry.cs",
+          "src/EFCore/ChangeTracking/Internal/StateManager.cs",
+          "src/EFCore/ChangeTracking/ValueComparer.cs",
+          "test/EFCore.Tests/ChangeTracking/Internal/ChangeDetectorTest.cs"
+        ],
+        "trace": "Follow ChangeTracker.DetectChanges into ChangeDetector's state-manager scan and scalar DetectValueChange branch, read current and original values through InternalEntityEntry and its original-values sidecar, compare them with the configured ValueComparer, reject changed keys where required, and mark the property and entity modified; correlate snapshot strategy, scalar and array mutation, comparer, event, and state tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic metadata and comparer abstractions",
+            "snapshot sidecars and notification interfaces",
+            "framework state-management idioms"
+          ],
+          "reason": "Generics, metadata, custom comparers, and substantial framework idioms materially shape the bounded path without requiring reflection or code generation in the trace."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "original and current snapshot state",
+            "entity and property state transitions",
+            "notification, event, and key-change branches"
+          ],
+          "reason": "State, snapshots, events, and comparison branches materially affect behavior, but the scalar trace avoids advanced relationship-fixup state machines."
+        },
+        "design_span": {
+          "signals": [
+            "public tracker and internal detector",
+            "entry, snapshot, state-manager, and comparer boundaries",
+            "metadata-driven state propagation"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one scalar change detection."
+        },
+        "constraint_burden": {
+          "signals": [
+            "custom and structural equality semantics",
+            "key immutability and tracking-strategy compatibility",
+            "state, event, performance, and snapshot correctness"
+          ],
+          "reason": "Several interacting compatibility, correctness, extensibility, and performance guarantees constrain detector changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, which calculates to Level 3, but three candidates offer clearer learner paths; EF Core ranks fourth for two places.",
+      "reconsider": "Reconsider if a C# Level 3 place opens, the scalar detector is isolated from the larger relationship machinery, or a fresh comparison ranks it above a retained entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews replace the catalog's broad DbContext and StateManager sample with scalar snapshot detection, avoiding query and relationship domain burden, and confirm 3/3/3/4 and Level 3. Final reconciliation ranks EF Core fourth rather than the independent review's third because the focused method remains embedded in a much larger mixed-concern detector and is less locally teachable than the other candidates."
+      }
+    },
+    {
+      "repository": "dotnet/runtime",
+      "language": "C#",
+      "prior_level": 5,
+      "pinned_commit": "c4eee2b76e574b0dd6cfe3387220a905ba69aca6",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [],
+        "evidence": "The selected all-C# path is core transferable runtime programming: await continuation registration, captured execution context, synchronization and scheduler choice, lock-free completion, inlining, queuing, cancellation, and error behavior."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "TaskAwaiter, Task, continuation, and scheduler responsibilities and invariants are extensively documented despite their expert complexity; targeted tests exercise synchronization-context and scheduler capture, ConfigureAwait behavior, execution-context flow, asynchronous continuation guarantees, races, and platform conditions, making the bounded continuation trace inspectable and exceptionally well protected.",
+      "learning_path": {
+        "goal": "Understand how an awaited Task registers and eventually runs a continuation while preserving execution context, scheduler and synchronization-context policy, race safety, inlining rules, and asynchronous-continuation guarantees.",
+        "start_path": "src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs",
+        "supporting_files": [
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/TaskContinuation.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/ThreadPoolTaskScheduler.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/System.Runtime.CompilerServices/TaskAwaiterTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/RunContinuationsAsynchronouslyTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/ExecutionContextFlowTest.cs"
+        ],
+        "trace": "Follow TaskAwaiter.OnCompletedInternal into Task.SetContinuationForAwait as it chooses a SynchronizationContext, non-default TaskScheduler, ExecutionContext-capturing continuation, or direct state-machine registration; follow AddTaskContinuation's completion race and FinishContinuations into AwaitTaskContinuation inlining or ThreadPoolTaskScheduler queuing, then correlate scheduler/context capture, ConfigureAwait, forced asynchronous continuations, execution-context lifetime, and race behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "awaiter and async-state-machine interfaces",
+            "generic continuation and completion abstractions",
+            "volatile and interlocked synchronization with specialized runtime hooks"
+          ],
+          "reason": "Advanced async, generic, low-level synchronization, and runtime-specific C# techniques are central, while the bounded path does not require multiple pervasive Level 5 language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "lock-free registration versus completion races",
+            "execution, synchronization, and scheduler context flow",
+            "inline versus queued continuation scheduling",
+            "cancellation, faults, child completion, and debugger state"
+          ],
+          "reason": "Multiple expert concurrency, scheduling, lifecycle, and nonlocal state concerns are pervasive and tightly coupled."
+        },
+        "design_span": {
+          "signals": [
+            "compiler awaiter boundary",
+            "Task state and continuation subsystem",
+            "scheduler, ThreadPool, ExecutionContext, and SynchronizationContext integration"
+          ],
+          "reason": "The trace crosses broad runtime architecture and many core subsystems while remaining bounded to continuation execution."
+        },
+        "constraint_burden": {
+          "signals": [
+            "memory ordering and exactly-once continuation execution",
+            "context and scheduler compatibility",
+            "deadlock, stack-overflow, fairness, performance, and allocation limits",
+            "debugger, tracing, cancellation, and exception contracts"
+          ],
+          "reason": "System-wide runtime safety, correctness, compatibility, observability, and performance guarantees interact throughout the path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 4/5/4/5 sums to 18, whose half-up mean calculates to Level 5; two dimensions score 5, satisfying the Level 5 eligibility rule.",
+      "reconsider": "Reconsider if the all-C# continuation path, public source status, license, runtime documentation, or scheduler, context, race, and asynchronous-continuation tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Both reviews reject the catalog's mixed System.String.cs-to-coreclr/object.cpp path: C++ allocation code cannot substantiate a C# language-technique score. The all-C# TaskAwaiter, Task, continuation, scheduler, and focused-test path is coherent and confirms 4/5/4/5, the Level 5 formula and eligibility rule, and retention."
+      }
+    },
+    {
+      "repository": "dotnet/aspnetcore",
+      "language": "C#",
+      "prior_level": 5,
+      "pinned_commit": "8c1a406592b06b954acac509fa4725ca560b2e53",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An ASP.NET Core request pipeline is an ordered nesting of middleware delegates; each component can perform work before and after calling the next component or short-circuit the request."
+        ],
+        "evidence": "The middleware model fits in a short prerequisite paragraph; this corrected path teaches delegate composition, reflection and expression compilation, dependency injection, per-request activation and release, async control flow, and runtime fallback rather than HTTP protocol rules."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "ApplicationBuilder, binders, middleware interfaces, and factory responsibilities are explicit and documented; focused tests cover ordering, terminal behavior, endpoint mistakes, invoke-method validation, injected and keyed services, dynamic-code fallback contracts, factory failures, and release, making the pipeline locally traceable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how ASP.NET Core composes an ordered request-delegate pipeline and adapts conventional or factory-created middleware with dependency injection and reliable per-request release.",
+        "start_path": "src/Http/Http/src/Builder/ApplicationBuilder.cs",
+        "supporting_files": [
+          "src/Http/Http.Abstractions/src/IApplicationBuilder.cs",
+          "src/Http/Http.Abstractions/src/Extensions/UseMiddlewareExtensions.cs",
+          "src/Http/Http.Abstractions/src/IMiddleware.cs",
+          "src/Http/Http.Abstractions/src/IMiddlewareFactory.cs",
+          "src/Http/Http/src/MiddlewareFactory.cs",
+          "src/Http/Http/test/ApplicationBuilderTests.cs",
+          "src/Http/Http.Abstractions/test/UseMiddlewareTest.cs"
+        ],
+        "trace": "Follow ApplicationBuilder.Use as it stores middleware factories and Build as it folds them in reverse around the terminal delegate, then follow UseMiddlewareExtensions as it validates Invoke or InvokeAsync, chooses compiled-expression or reflection fallback service injection, or creates IMiddleware per request and releases it in finally; correlate ordering, terminal, endpoint, signature, service, factory, and release tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-order RequestDelegate composition",
+            "reflection-based middleware discovery",
+            "expression-tree compilation with runtime fallback"
+          ],
+          "reason": "Reflection, expression compilation, and sophisticated delegate composition are central to middleware adaptation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered nested async execution and short circuiting",
+            "per-request middleware activation and finally release",
+            "compiled and reflection invocation branches"
+          ],
+          "reason": "Async ordering, lifecycle, and fallback behavior materially affect requests, but the bounded pipeline does not require advanced protocol or distributed state reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "builder and request-delegate boundary",
+            "reflection and interface middleware binders",
+            "dependency-injection and factory lifecycle"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one middleware invocation."
+        },
+        "constraint_burden": {
+          "signals": [
+            "middleware signature and DI compatibility",
+            "dynamic-code and AOT fallback behavior",
+            "ordering, short-circuit, exception, and release guarantees"
+          ],
+          "reason": "Several interacting compatibility, reliability, extensibility, and resource guarantees constrain the pipeline."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, which calculates to Level 4; ASP.NET Core ranks first of three qualified C# Level 4 paths.",
+      "reconsider": "Reconsider if a stronger C# Level 4 path appears, or if the middleware composition path, public source status, license, documentation, or builder and middleware tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Both reviews reject Kestrel HttpProtocol.cs as a representative learner path because HTTP protocol machinery dominates it and the catalog's DefaultHttpContext test does not cover that trace. The corrected ApplicationBuilder and UseMiddleware lifecycle passes both gates and confirms 4/3/3/4, Level 4, comparative rank 1, and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 28,
-      "remove": 12
+      "retain": 35,
+      "remove": 15
     },
     "by_language": {
       "JavaScript": {
@@ -3071,32 +3830,51 @@
           "4": 6,
           "5": 0
         }
+      },
+      "C#": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 4,
+          "4": 3,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 8,
-        "retain": 8,
+        "reviewed": 10,
+        "retain": 10,
         "remove": 0
       },
       "2": {
-        "reviewed": 8,
-        "retain": 6,
+        "reviewed": 10,
+        "retain": 8,
         "remove": 2
       },
       "3": {
-        "reviewed": 8,
-        "retain": 5,
-        "remove": 3
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4
       },
       "4": {
-        "reviewed": 8,
+        "reviewed": 10,
         "retain": 3,
-        "remove": 5
+        "remove": 7
       },
       "5": {
-        "reviewed": 8,
-        "retain": 6,
+        "reviewed": 10,
+        "retain": 8,
         "remove": 2
       }
     },
@@ -3107,28 +3885,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 7,
-        "retain": 7,
+        "scored": 9,
+        "retain": 9,
         "remove": 0
       },
       "3": {
-        "scored": 11,
-        "retain": 8,
-        "remove": 3
+        "scored": 15,
+        "retain": 10,
+        "remove": 5
       },
       "4": {
-        "scored": 16,
-        "retain": 8,
-        "remove": 8
+        "scored": 19,
+        "retain": 10,
+        "remove": 9
       },
       "5": {
-        "scored": 5,
-        "retain": 5,
+        "scored": 6,
+        "retain": 6,
         "remove": 0
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 11,
+      "qualified_alternate_over_capacity": 14,
       "coding_relevance_domain_gate": 1
     }
   }
