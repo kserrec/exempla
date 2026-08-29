@@ -238,13 +238,138 @@
       ],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 3 paths, not Level 1 paths. Both Level 3 places already contain stronger retained entries, so Python keeps two honest Level 1 gaps without weakening scores or moving candidates."
+    },
+    {
+      "order": 3,
+      "language_slug": "java",
+      "language": "Java",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "FasterXML/jackson-annotations", "level": 2},
+        {"repository": "ralfstx/minimal-json", "level": 2},
+        {"repository": "java-diff-utils/java-diff-utils", "level": 3},
+        {"repository": "jhy/jsoup", "level": 3},
+        {"repository": "google/gson", "level": 4},
+        {"repository": "junit-team/junit4", "level": 4},
+        {"repository": "spring-projects/spring-framework", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "discovery_channels": [
+        {
+          "id": "java-package-registries",
+          "channel": "official Java artifact registries and release repositories",
+          "sources": [
+            "https://central.sonatype.com/artifact/org.json/json",
+            "https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-core/"
+          ],
+          "evidence": "Published artifact records established that JSON-java and Jenkins core are distributable production Java software while supplying package identity, release, and license leads rather than admission by download count."
+        },
+        {
+          "id": "curated-java-ecosystem",
+          "channel": "independently curated Java libraries and software catalog",
+          "sources": [
+            "https://github.com/akullpp/awesome-java#json",
+            "https://github.com/akullpp/awesome-java#continuous-integration"
+          ],
+          "evidence": "The curated JSON and continuous-integration sections provided independent ecosystem discovery for focused libraries and production automation software without prescribing a learner Level."
+        },
+        {
+          "id": "github-public-source",
+          "channel": "GitHub public source, language, maintenance, and organization review",
+          "sources": [
+            "https://github.com/stleary/JSON-java",
+            "https://github.com/jenkinsci/jenkins",
+            "https://github.com/orgs/jenkinsci/repositories"
+          ],
+          "evidence": "Public source and current GitHub metadata confirmed both repositories, their first-party Java classification, maintenance status, and exact source candidates for pinning and inspection."
+        },
+        {
+          "id": "official-project-documentation",
+          "channel": "maintainer-authored purpose, development, and release documentation",
+          "sources": [
+            "https://stleary.github.io/JSON-java/",
+            "https://www.jenkins.io/doc/developer/",
+            "https://www.jenkins.io/changelog/"
+          ],
+          "evidence": "Maintainer documentation supplied product purpose, learner context, development orientation, and release evidence used to distinguish repository facts from source-level quality and difficulty judgments."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "stleary/JSON-java",
+          "pinned_commit": "4f859fdf3b5669894c5ed8a305ee5cd5f1fe2b7a",
+          "discovered_via": ["java-package-registries", "curated-java-ecosystem", "github-public-source"],
+          "inspection_files": [
+            "src/main/java/org/json/JSONPointer.java",
+            "src/main/java/org/json/JSONPointerException.java",
+            "src/test/java/org/json/junit/JSONPointerTest.java",
+            "src/test/resources/jsonpointer-testdoc.json",
+            "README.md",
+            "pom.xml",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "JSON Pointer needs only a short path-token, object, array, escaping, and URI-fragment primer; the selected behavior primarily teaches transferable parsing, representation, traversal, serialization, and error design.",
+          "quality_status": "fail",
+          "quality_evidence": "Architecture, naming, documentation, and basic traceability pass, but source consistency, core invariant tests, maintainability, and exemplar value fail because constructor, builder, query, and URI serialization disagree on token representation and documented failures.",
+          "decision_evidence": "Reject at the quality gate: JSONPointer unescapes stored tokens again during object lookup, URI-encodes raw rather than JSON-Pointer-escaped tokens and uses form-style encoding, returns null for a missing terminal object member despite documenting an exception, and accepts leading-zero array indexes. Focused tests omit those escaped-token, URI round-trip, terminal-miss, and index-grammar cases. The hard failure precedes publication of diagnostic scores or capacity ranking.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently traced all four defects at the exact pin, confirmed the missing regression cases and failed quality findings, bounded the claim to JSONPointer, and verified Java classification and the project-specific Public Domain license evidence."
+          }
+        },
+        {
+          "repository": "jenkinsci/jenkins",
+          "pinned_commit": "982bc91d866ed90aa135b87a2cb4ac1e68c2412e",
+          "discovered_via": ["java-package-registries", "curated-java-ecosystem", "github-public-source", "official-project-documentation"],
+          "inspection_files": [
+            "core/src/main/java/hudson/model/Queue.java",
+            "core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java",
+            "core/src/main/java/hudson/model/queue/MappingWorksheet.java",
+            "core/src/main/java/hudson/model/LoadBalancer.java",
+            "core/src/main/java/hudson/model/queue/WorkUnitContext.java",
+            "core/src/main/java/hudson/model/queue/WorkUnit.java",
+            "core/src/main/java/hudson/model/Executor.java",
+            "test/src/test/java/hudson/model/QueueTest.java",
+            "test/src/test/java/hudson/model/queue/QueueTaskDispatcherTest.java",
+            "test/src/test/java/hudson/model/ExecutorTest.java",
+            "test/src/test/java/hudson/model/QueueRestartTest.java",
+            "README.md",
+            "pom.xml",
+            "LICENSE.txt"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Tasks, nodes, labels, and executors need only a short Jenkins primer; the representative core path teaches transferable state-machine scheduling, resource assignment, concurrency, extension policy, work handoff, persistence, and recovery.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional state and locking comments, coherent queue-policy-placement-handoff-execution boundaries, precise names, extensive Javadocs, enabled integration coverage, explicit recovery, and visible compatibility constraints support all eight quality findings despite a large central maintain method and distributed test closure.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5, with three expert dimensions satisfying the guardrail; both gates pass and the one open Java Level 5 place accepts Jenkins. Placement is described only as consistent-hash greedy, restored stages may be normalized by maintenance, and no exactly-once crash guarantee is claimed.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and representative trace, both gates and all eight findings, the 4/5/5/5 profile and Level 5 guardrail, Java and MIT status, distributed test closure, disabled restart-test limitation, and acceptance into the open place."
+          }
+        }
+      ],
+      "accepted": [
+        "jenkinsci/jenkins"
+      ],
+      "rejected": [
+        "stleary/JSON-java"
+      ],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four independent channels and two exact-pin deep inspections found one quality-gate rejection and one qualified Level 5 scheduler path. Jenkins fills Java's final Level 5 place; two honest Level 1 gaps remain because neither candidate was moved downward and the defective JSON Pointer path was not admitted."
     }
   ],
   "summary": {
-    "languages_completed": 2,
-    "accepted_new_total": 2,
-    "rejected_new_total": 2,
-    "current_entry_total": 135,
-    "remaining_gap_total": 65
+    "languages_completed": 3,
+    "accepted_new_total": 3,
+    "rejected_new_total": 3,
+    "current_entry_total": 136,
+    "remaining_gap_total": 64
   }
 }

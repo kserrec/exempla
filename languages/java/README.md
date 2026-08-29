@@ -1,6 +1,6 @@
 # Java
 
-7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -395,6 +395,73 @@ Required domain context:
 **License:** EPL-1.0 ([evidence 1](https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/LICENSE-junit.txt))
 
 ## Level 5
+
+### [jenkinsci/jenkins](https://github.com/jenkinsci/jenkins)
+
+**Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+The Jenkins automation server core, including its persistent task queue, extension-driven eligibility policy, executor placement, work handoff, and completion lifecycle.
+
+**Real-world evidence:** Jenkins publishes weekly and long-term-support automation-server releases used to build, test, analyze, and deploy production software.
+
+**Language evidence:** The queue, placement, work-unit, executor, extension, persistence, and integration-test implementation in the selected path is first-party Java.
+
+**Why study it:** The queue-to-executor path exposes how a mature extensible platform coordinates persistent scheduling state, resource assignment, concurrent execution, failure recovery, and compatibility without hiding the difficult invariants.
+
+**What you can learn:**
+
+- Use `core/src/main/java/hudson/model/Queue.java` to study transferable task-state machines, concurrency control, extension policy, constrained resource assignment, multi-unit work handoff, persistence recovery, listener isolation, and completion guarantees.
+
+**Prerequisites:**
+
+- Before reading `core/src/main/java/hudson/model/Queue.java`, be comfortable with Java generics, nested classes, annotations, locks, threads, futures, callbacks, serialization, and the short Jenkins vocabulary of tasks, agents or nodes, labels, and executors.
+
+**Coding relevance:**
+
+That vocabulary is short and documented in the selected source; the path's difficulty comes from transferable scheduling, concurrent state, resource assignment, extension policy, recovery, and lifecycle engineering rather than a specialist external discipline.
+
+Required domain context:
+
+- Jenkins queues tasks, assigns their subtasks to eligible executors on agents or the built-in node, and exposes extension points that may veto execution or placement.
+
+**Learning path:**
+
+- **Goal:** Understand how Jenkins accepts a task, moves it through waiting, blocked, buildable, and pending states, assigns its work to eligible executors, runs it, and resolves completion or recovery paths.
+- **Start here:** [`core/src/main/java/hudson/model/Queue.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/Queue.java) — Queue.schedule2 and Queue.maintain define the central state transitions, extension vetoes, executor offers, placement call, pending handoff, persistence, and lost-executor recovery that organize the complete trace.
+- **Then read:**
+  - [`core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java)
+  - [`core/src/main/java/hudson/model/queue/MappingWorksheet.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/MappingWorksheet.java)
+  - [`core/src/main/java/hudson/model/LoadBalancer.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/LoadBalancer.java)
+  - [`core/src/main/java/hudson/model/queue/WorkUnitContext.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/WorkUnitContext.java)
+  - [`core/src/main/java/hudson/model/queue/WorkUnit.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/WorkUnit.java)
+  - [`core/src/main/java/hudson/model/Executor.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/Executor.java)
+  - [`test/src/test/java/hudson/model/QueueTest.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/test/src/test/java/hudson/model/QueueTest.java)
+  - [`test/src/test/java/hudson/model/queue/QueueTaskDispatcherTest.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/test/src/test/java/hudson/model/queue/QueueTaskDispatcherTest.java)
+  - [`test/src/test/java/hudson/model/ExecutorTest.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/test/src/test/java/hudson/model/ExecutorTest.java)
+- **Trace:** Begin at schedule2, decision extensions, duplicate folding, and WaitingItem creation; follow maintain through blocked and buildable transitions, lost-pending recovery, QueueTaskDispatcher eligibility, MappingWorksheet constraints, and LoadBalancer's consistent-hash greedy mapping; continue through WorkUnitContext and WorkUnit assignment into Executor.run, node revalidation, pending-to-left transition, executable creation, synchronized start and finish, future and listener completion, executor release, and renewed maintenance.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced Java annotations, extension discovery, reflective persistence, generics, nested polymorphic states, locks, latches, and futures recur materially, but do not require expert command of several interacting language mechanisms everywhere.
+- **Behavioral reasoning 5:** Concurrent state, plugin vetoes, assignment, executor churn, multi-unit barriers, asynchronous completion, persistence, and recovery interact pervasively and require unavoidable nonlocal reasoning.
+- **Design span 5:** The selected behavior coordinates several major platform subsystems and pervasive extension and lifecycle boundaries rather than a bounded group of ordinary modules.
+- **Constraint burden 5:** Thread safety, resource policy, permission checks, extension compatibility, fault isolation, executor churn, persistence normalization, and completion guarantees interact so a local scheduling change can violate system-wide correctness.
+- **Placement:** The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. Three dimensions score 5, satisfying the Level 5 guardrail.
+
+**Quality-gate evidence:**
+
+- **Source quality:** Queue's central maintain method is large, but its explicit state collections, lock boundaries, transition comments, snapshots, and recovery branches make its demanding invariants intentional and readable.
+- **Architecture:** Queue, QueueTaskDispatcher, MappingWorksheet, LoadBalancer, WorkUnitContext, WorkUnit, and Executor separate state, policy, placement, handoff, synchronization, and execution responsibilities.
+- **Naming and idiom:** WaitingItem, BlockedItem, BuildableItem, pending, JobOffer, MappingWorksheet, WorkUnitContext, synchronizeStart, and synchronizeEnd expose the scheduling lifecycle precisely.
+- **Tests:** Enabled tests exercise blockage, permissions, pending-loss recovery, assignment policy, save and load recovery, executor failure, start, and completion; the two dedicated restart tests are disabled for flakiness and are not claimed as protection.
+- **Documentation:** The README establishes the production platform and extensive source Javadocs document queue states, extension contracts, mapping, handoff, persistence normalization, and executor lifecycle.
+- **Traceability:** The complete implementation-to-result path is observable across focused queue, dispatcher, and executor integration tests, although its evidence is necessarily distributed and does not isolate every mapping or multi-unit-latch branch.
+- **Maintainability:** Explicit locking, immutable snapshots, compatibility converters, plugin exception containment, recovery paths, and regression tests constrain changes to the mature scheduler.
+- **Educational value:** The path is a rare source-closed study of platform-scale scheduling and concurrency; it does not promise globally optimal placement or exactly-once execution across process crashes.
+
+**Inspection record:** commit `982bc91d866ed90aa135b87a2cb4ac1e68c2412e`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `core/src/main/java/hudson/model/Queue.java`, `core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java`, `core/src/main/java/hudson/model/queue/MappingWorksheet.java`, `core/src/main/java/hudson/model/LoadBalancer.java`, `core/src/main/java/hudson/model/queue/WorkUnitContext.java`, `core/src/main/java/hudson/model/queue/WorkUnit.java`, `core/src/main/java/hudson/model/Executor.java`, `test/src/test/java/hudson/model/QueueTest.java`, `test/src/test/java/hudson/model/queue/QueueTaskDispatcherTest.java`, `test/src/test/java/hudson/model/ExecutorTest.java`, `test/src/test/java/hudson/model/QueueRestartTest.java`, `README.md`, `pom.xml`, `LICENSE.txt`. GitHub Linguist label: Java.
+
+**License:** MIT ([evidence 1](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/LICENSE.txt))
 
 ### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
 
