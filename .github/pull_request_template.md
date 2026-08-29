@@ -14,7 +14,7 @@
 
 - [ ] Catalog candidate, replacement, or refresh
 - [ ] Factual catalog correction
-- [ ] SDC scoring correction
+- [ ] Learning-level scoring correction
 - [ ] Validation or generation tooling
 - [ ] Documentation or maintenance only
 
@@ -23,20 +23,24 @@
 <!-- Complete this section for catalog changes; otherwise write "Not applicable." -->
 
 - Pinned 40-character revision:
-- Inspected source, test, boundary, and architecture/build paths:
-- Meaningful implementation LOC, tool version, scope, and exclusions:
-- Qualification evidence:
-- S, D, C, final level, and rubric anchors:
-- Prerequisites, starting file, and traceable learner behavior:
-- License evidence:
+- Coding-relevance evidence and required domain context:
+- Learning goal, start path and reason, supporting files, and trace:
+- Eight path-specific quality findings:
+- Language technique score, recurring signals, and reason:
+- Behavioral reasoning score, recurring signals, and reason:
+- Design span score, recurring signals, and reason:
+- Constraint burden score, recurring signals, and reason:
+- Formula result, guardrail, prerequisites, and transferable lessons:
+- Exact SPDX expression and pinned license evidence URL(s):
 
 ## Verification
 
 <!-- Paste concise command results. Do not include secrets or dotenv contents. -->
 
 - [ ] `python3 -m unittest discover -s tests -v`
-- [ ] `python3 scripts/catalog.py validate --complete`
-- [ ] `python3 scripts/catalog.py check-generated --complete`
+- [ ] `python3 scripts/catalog.py validate`
+- [ ] `python3 scripts/catalog.py check-generated`
+- [ ] `--complete` was also run only if every catalog slot is genuinely filled.
 - [ ] Canonical JSON and generated Markdown changed together, or neither needed regeneration.
 - [ ] No catalog standard was lowered to fill a slot.
 - [ ] Submitted text and output contain no credentials, private data, or dotenv contents.

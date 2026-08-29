@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "language_slug": "kotlin",
   "repositories": [
     {
@@ -10,129 +10,114 @@
       "language_evidence": "The table model, builder and Kotlin DSL, span-aware layout, border calculation, and text rendering are implemented in Kotlin under picnic/src/commonMain.",
       "description": "A compact Kotlin multiplatform library for building HTML-like tables and rendering them as aligned text.",
       "real_world_evidence": "The repository publishes versioned Picnic artifacts and documents both a Kotlin DSL and Java/Kotlin builder API for application output.",
-      "why_study": "Six production files connect a friendly type-safe DSL to a nontrivial but bounded layout problem involving styles, borders, padding, Unicode width, and row and column spans.",
-      "learn": ["Kotlin DSL markers, receiver lambdas, builder APIs, interface delegation, immutable models, style inheritance, grid layout, span accounting, text alignment, and focused rendering tests."],
-      "prerequisites": ["Kotlin classes and interfaces, lambdas with receivers, nullable values, collections, delegated interfaces, basic terminal text layout, and unit tests."],
-      "start_here": {"path": "picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt", "reason": "The DSL turns nested table declarations into the model that textLayout.kt measures and renders, giving the shortest complete path from public API to output tests."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 1012, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["picnic/src/commonTest/", "picnic/src/jvmTest/", "sample/", "build and documentation files"], "notes": "Count covers all production Kotlin under picnic/src/commonMain and excludes tests, the sample application, documentation, and build metadata."},
-        "difficulty": {"score": 2, "signals": ["span-aware grid measurement", "Unicode visual-width and alignment rules", "nested receiver-based DSL"], "reason": "Layout carries and inherited styles add real edge cases, but the algorithms are explicit and contained in a few well-named files."},
-        "complexity": {"score": 1, "signals": ["one in-memory library", "six cohesive production files", "one model-to-text path"], "reason": "There is no persistence, networking, plugin system, or process boundary; a render can be traced locally from DSL to model to canvas."},
-        "placement": "S1/D2/C1 averages to 1.33, making Picnic an SDC 1 project."
+      "why_study": "Picnic is a compact example of a Kotlin receiver DSL that produces a real immutable model and carries it through measurement, layout, and observable multiline rendering.",
+      "learn": [
+        "Trace receiver-lambda builders into immutable table data, inherited styles, cell measurement, canvas coordinates, clipped drawing, and multiline text output."
+      ],
+      "prerequisites": [
+        "Readers should know Kotlin classes, interfaces, lambdas with receivers, immutable collections, and the basic idea that text-table cells must be measured and aligned."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A text table contains rows and cells whose content is measured, aligned, styled, and drawn into a character canvas."
+        ],
+        "reason": "The short table-layout vocabulary is subordinate to transferable lessons in receiver DSLs, builder composition, immutable models, style resolution, measurement, layout, drawing, and observable text rendering."
       },
-      "quality": {
-        "source_quality": "The DSL, model, layout, border, and rendering concerns are separated cleanly, with direct transformations and explicit invariants.",
-        "architecture": "A small builder and DSL produce immutable table data, which layout objects measure before the text renderer draws borders and cell content.",
-        "naming_and_idiom": "TableDsl, PositionedCell, SimpleLayout, canonicalStyle, measureWidth, and renderText reveal the pipeline while demonstrating idiomatic receiver lambdas and delegation.",
-        "tests": "Common and JVM suites cover the DSL, Java builder, alignment, sizing, border combinations, row spans, column spans, holes, and representative complete tables.",
-        "documentation": "The README develops the feature set through rendered examples and includes a realistic styled-table example, setup, and API links.",
-        "traceability": "A cell declaration can be followed through CellDslImpl into positioned model data, width and height measurement, canvas drawing, and exact multiline assertions.",
-        "maintainability": "The production surface is tiny, multiplatform logic is centralized, names mirror table concepts, and output-focused tests constrain layout regressions.",
-        "educational_value": "It is an approachable demonstration that a concise Kotlin DSL can front a complete, testable domain model rather than hide the implementation."
+      "learning_path": {
+        "goal": "Understand how a Kotlin receiver DSL builds a styled table model that is measured, laid out, and drawn as multiline text.",
+        "start_here": {
+          "path": "picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt",
+          "reason": "The reviewed trace begins in dsl.kt because its table and row receiver builders create the model consumed by the selected layout and rendering path."
+        },
+        "supporting_files": [
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt",
+          "picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with table and row receiver builders, follow their immutable model and inherited styles into simple cell measurement, table coordinate calculation, clipped drawing, and multiline output, then close with DslTest. Row and column span behavior is deliberately excluded from the scored core."
       },
-      "inspection": {"commit": "bc8832efb604ecdd80abedc0648fdb3ca813d714", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt", "picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt", "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt", "picnic/src/commonTest/kotlin/com/jakewharton/picnic/CellSpanTest.kt", "picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "kotlinx-cli",
-      "repository": "Kotlin/kotlinx-cli",
-      "url": "https://github.com/Kotlin/kotlinx-cli",
-      "primary_language": "Kotlin",
-      "language_evidence": "Option and argument descriptors, delegated values, parsing state, prefix styles, subcommands, help generation, and platform exits are implemented in Kotlin multiplatform source sets.",
-      "description": "JetBrains' compact multiplatform command-line parser, preserved as an explicitly obsolete but stable study of declarative CLI design.",
-      "real_world_evidence": "The repository published kotlinx-cli artifacts for JVM, Native, and other Kotlin targets; its README now states plainly that the experimental library is obsolete and effectively unmaintained.",
-      "why_study": "Its small source makes option declaration, delegated result values, token scanning, subcommand recursion, defaults, validation, and help generation visible in one pass.",
-      "learn": ["Property delegates, generic argument types, declarative option descriptors, prefix grammars, positional queues, subcommands, multiplatform expect/actual functions, parsing errors, and contract-oriented tests."],
-      "prerequisites": ["Kotlin generics, property delegation, mutable collections, inheritance, arrays, command-line conventions, and basic multiplatform source sets."],
-      "start_here": {"path": "core/commonMain/src/ArgParser.kt", "reason": "ArgParser owns declarations, parsing state, option recognition, positional assignment, subcommand dispatch, validation, and help termination, so the library's full control flow is concentrated here."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 928, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["core/commonTest/", "README.md", "Gradle build files"], "notes": "Count covers common, JVM, JS, and Native production source sets in core and excludes tests, documentation, and build metadata."},
-        "difficulty": {"score": 2, "signals": ["generic delegated option values", "multiple command-line prefix grammars", "recursive subcommand parsing"], "reason": "The type transformations and parsing states require attention, but they use familiar collections and explicit branches without advanced algorithms or concurrency."},
-        "complexity": {"score": 1, "signals": ["one parser library", "one common module with tiny platform exits", "single parse-to-values path"], "reason": "All behavior lives in one cohesive module and can be followed without external services, persistence, or runtime plugins."},
-        "placement": "S1/D2/C1 averages to 1.33, making kotlinx-cli an SDC 1 project."
-      },
-      "quality": {
-        "source_quality": "Descriptors, option transformations, positional values, parser control flow, and platform exits are separated while keeping state changes explicit.",
-        "architecture": "Common source defines the parser and value model; three tiny platform files supply process termination behavior.",
-        "naming_and_idiom": "ArgParser, ArgumentsQueue, ParsingValue, ValueOrigin, declaredOptions, and strictSubcommandOptionsOrder make parser responsibilities and state visible.",
-        "tests": "Focused suites cover options, positionals, GNU and JVM prefixes, defaults, required and repeated values, help, errors, and recursive subcommands.",
-        "documentation": "The README explains the obsolete status first, then preserves setup, entity types, examples, generated help, and subcommand behavior.",
-        "traceability": "A declared option can be followed through its descriptor, parser map, token match, typed conversion, delegated value, and a directly corresponding OptionsTests case.",
-        "maintainability": "The inspected revision is internally coherent and broadly tested, but maintenance has ended; the entry recommends it for source study, not as a new production dependency.",
-        "educational_value": "It provides a compact historical example of a typed declarative parser while teaching learners to distinguish source-study value from dependency advice."
-      },
-      "inspection": {"commit": "32112b630b3f1e01c2b446173410be895d456e5e", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "core/commonMain/src/ArgParser.kt", "core/commonMain/src/Options.kt", "core/commonMain/src/ArgType.kt", "core/commonTest/src/OptionsTests.kt", "core/commonTest/src/SubcommandsTests.kt", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/Kotlin/kotlinx-cli/blob/32112b630b3f1e01c2b446173410be895d456e5e/LICENSE"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "turbine",
-      "repository": "cashapp/turbine",
-      "url": "https://github.com/cashapp/turbine",
-      "primary_language": "Kotlin",
-      "language_evidence": "Flow collection, channel wrapping, event modeling, timeouts, cancellation, assertion reporting, and the public test DSL are implemented in common Kotlin.",
-      "description": "A small multiplatform testing library that turns Kotlin Flow emissions, completion, and failures into explicit ordered assertions.",
-      "real_world_evidence": "Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.",
-      "why_study": "A very small codebase exposes the hard parts of asynchronous tests: collection startup, virtual time, cancellation, terminal events, unconsumed events, timeouts, and error preservation.",
-      "learn": ["Flow collection, channels, structured concurrency, coroutine contexts, cancellation, virtual test dispatchers, sealed event models, timeout scopes, assertion design, and race-sensitive tests."],
-      "prerequisites": ["Suspend functions, CoroutineScope and Job, Flow and Channel, cancellation exceptions, coroutine test scheduling, sealed types, and asynchronous test reasoning."],
-      "start_here": {"path": "src/commonMain/kotlin/app/cash/turbine/flow.kt", "reason": "The test and testIn operators show how a Flow is launched into a channel-backed Turbine, registered with a scope, validated, canceled, and checked for unconsumed events."},
-      "sdc": {
+      "learning_level": {
         "level": 2,
-        "size": {"score": 1, "loc": 569, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["src/commonTest/", "src/jvmTest/", "src/nonJvmTest/", "README.md", "build files"], "notes": "Count covers the complete common production implementation and excludes all platform test source sets, documentation, API dumps, and build metadata."},
-        "difficulty": {"score": 3, "signals": ["structured coroutine cancellation", "virtual-time dispatcher inheritance", "terminal and unconsumed event races"], "reason": "The library is tiny, but correct behavior depends on coroutine scheduling, cancellation propagation, channel closure, and preserving causal exceptions across asynchronous boundaries."},
-        "complexity": {"score": 2, "signals": ["Flow collector plus channel-backed assertion API", "scope registry and timeout context elements", "standalone and Flow-backed modes"], "reason": "Several tightly related pieces interact in one process, but there are no external services or broad subsystem boundaries."},
-        "placement": "S1/D3/C2 averages to 2.00, making Turbine an SDC 2 project."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "DSL-marked receiver lambdas",
+            "builder composition and delegated style implementation",
+            "higher-order layout factory"
+          ],
+          "reason": "Receiver-based construction and delegation materially shape the path, establishing substantial abstraction without recurring advanced metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "synchronous model construction",
+            "localized measure, layout, and draw passes",
+            "multiline alignment and style branches"
+          ],
+          "reason": "The selected observable has meaningful local state and branching, but excludes span behavior and does not require nonlocal lifecycle or state-machine reasoning."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "receiver DSL and immutable model",
+            "layout and text-rendering components",
+            "one direct output test"
+          ],
+          "reason": "A few clear modules in one process contain the complete behavior."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "style precedence must reach the rendered cell",
+            "measured multiline content must fit the allocated canvas",
+            "observable alignment must remain stable"
+          ],
+          "reason": "Routine output, validation, and stable-API safeguards constrain the bounded transformation."
+        },
+        "placement": "The four scores 3/2/2/2 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Public contracts, channel adaptation, coroutine-scope setup, timeout handling, and error formatting remain separated despite delicate cancellation semantics.",
-        "architecture": "Flow operators collect into channels, ChannelTurbine implements the assertion protocol, context elements carry registry and timeout state, and Event models terminal outcomes.",
-        "naming_and_idiom": "awaitItem, ensureAllEventsConsumed, cancelAndIgnoreRemainingEvents, collectTurbineIn, TurbineRegistryElement, and Event.Error state behavior directly.",
-        "tests": "Large common and platform suites exercise ordering, completion, exceptions, timeouts, virtual time, cancellation, multiple flows, standalone turbines, non-suspending APIs, and diagnostic messages.",
-        "documentation": "The README explains the channel model, single and multiple Flow use, cleanup obligations, terminal events, timeouts, standalone fakes, and known unstable upstream dependency.",
-        "traceability": "A Flow.test call can be followed through collection launch and channel closure into awaitItem or awaitError and then matched to exact failure-message assertions.",
-        "maintainability": "The small API, explicit lifecycle operations, stable artifact policy, and exhaustive edge-case suite constrain changes to timing-sensitive behavior.",
-        "educational_value": "It demonstrates why concurrent code can be difficult even when short and provides a bounded place to study structured testing of asynchronous streams."
+        "source_quality": "dsl.kt, model.kt, textLayout.kt, and textRender.kt keep building, data, measurement, and drawing responsibilities explicit and compact.",
+        "architecture": "Receiver builders produce immutable table data, layout code assigns dimensions and coordinates, and the renderer draws the resulting cells into text.",
+        "naming_and_idiom": "The table, row, cell, style, layout, and render names expose the pipeline while demonstrating idiomatic receiver lambdas and Kotlin model construction.",
+        "tests": "DslTest.kt closes the selected receiver-DSL-to-multiline-output behavior without using row or column spans to inflate the path.",
+        "documentation": "README.md supplies rendered examples and styling guidance that orient the implementation trace.",
+        "traceability": "A declaration in dsl.kt can be followed through model.kt and textLayout.kt into textRender.kt and then compared with DslTest.kt output assertions.",
+        "maintainability": "The small staged surface and direct output test make changes to the bounded non-span path easy to localize and verify.",
+        "educational_value": "The path shows how a friendly Kotlin DSL can front a complete, inspectable transformation instead of hiding the underlying model and rendering work."
       },
-      "inspection": {"commit": "408104d0874678455ff997913bd3f698039f5c25", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/commonMain/kotlin/app/cash/turbine/flow.kt", "src/commonMain/kotlin/app/cash/turbine/Turbine.kt", "src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt", "src/commonTest/kotlin/app/cash/turbine/FlowTest.kt", "src/commonTest/kotlin/app/cash/turbine/ChannelTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "kotlin-logging",
-      "repository": "oshai/kotlin-logging",
-      "url": "https://github.com/oshai/kotlin-logging",
-      "primary_language": "Kotlin",
-      "language_evidence": "The lazy logging facade, event builder, logger factories, SLF4J and JUL adapters, source-location preservation, and native, Android, JS, Wasm, and Darwin backends are Kotlin.",
-      "description": "A lightweight Kotlin multiplatform logging facade with lazy messages and adapters for platform logging systems.",
-      "real_world_evidence": "The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.",
-      "why_study": "The code shows how a narrow common API can preserve lazy evaluation, markers, structured payloads, caller location, and exceptions while adapting to very different platform loggers.",
-      "learn": ["Lazy lambda APIs, facade and adapter design, multiplatform source sets, logger factories, fluent event builders, caller-boundary preservation, markers, MDC context, and platform contract tests."],
-      "prerequisites": ["Kotlin interfaces and default methods, lambdas, delegation, multiplatform source organization, logging levels, SLF4J concepts, and coroutine context basics."],
-      "start_here": {"path": "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt", "reason": "KLogger defines the common lazy and fluent contract; LocationAwareKLogger then shows how that contract maps to SLF4J without losing the real caller."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 1882, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all test source sets under src/", "docs/", "README.md", "build files"], "notes": "Count covers common, Java, JVM, Android, JS, Native, Darwin, Wasm JS, and Wasm WASI production source sets and excludes every test source set, documentation, and build metadata."},
-        "difficulty": {"score": 2, "signals": ["caller-location preservation across a facade", "lazy and fluent logging adaptation", "platform-specific logger backends"], "reason": "The wrappers contain platform details and overload discipline, but data flow is direct and the common abstractions are conventional."},
-        "complexity": {"score": 2, "signals": ["common API plus several platform adapters", "SLF4J, JUL, Logback, Android, Darwin, console, and Wasm boundaries", "configuration-selected logger factory"], "reason": "Several clear adapters implement one contract, without persistence, networking, or a service topology."},
-        "placement": "S1/D2/C2 averages to 1.67 and rounds upward, making kotlin-logging an SDC 2 project."
+      "inspection": {
+        "commit": "bc8832efb604ecdd80abedc0648fdb3ca813d714",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt",
+          "picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ]
       },
-      "quality": {
-        "source_quality": "The common API centralizes overload semantics while backend files focus on translating events and preserving platform-specific metadata.",
-        "architecture": "KLogger and event builders define the facade; configuration selects a factory; platform wrappers translate the same level, marker, cause, argument, and payload model.",
-        "naming_and_idiom": "KLoggingEventBuilder, DelegatingKLogger, LocationAwareKLogger, loggerFactory, isLoggingEnabledFor, and callerBoundary reveal intent and ownership.",
-        "tests": "Common and platform suites cover lazy invocation, payloads, markers, caller lines, name resolution, MDC propagation, startup configuration, and backend-specific formatting.",
-        "documentation": "The README explains lazy messages, logger naming, exceptions, structured payloads, backend setup, compatibility changes, multiplatform status, and troubleshooting.",
-        "traceability": "A logger.info lambda can be followed through the common level method, enabled check, event builder, selected wrapper, underlying backend call, and caller-location assertion.",
-        "maintainability": "The facade isolates backend churn, platform behavior has targeted tests, and public compatibility changes are documented explicitly.",
-        "educational_value": "It is a manageable study of abstraction boundaries: convenience is added without pretending that all logging platforms expose identical capabilities."
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/LICENSE.txt"
+        ]
       },
-      "inspection": {"commit": "0aaa57ccef9e1cc619de0d30bd65cc0a7271332d", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt", "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt", "src/javaMain/kotlin/io/github/oshai/kotlinlogging/slf4j/internal/LocationAwareKLogger.kt", "src/commonTest/kotlin/io/github/oshai/kotlinlogging/SimpleTest.kt", "src/jvmTest/kotlin/io/github/oshai/kotlinlogging/LoggingWithLocationTest.kt", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/LICENSE"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "clikt",
@@ -142,30 +127,362 @@
       "language_evidence": "Command modeling, tokenization and parsing, property-delegated parameters, transformations, validation, value sources, help formatting, completion generation, and platform types are Kotlin.",
       "description": "A multiplatform Kotlin framework for type-safe command-line applications with nested commands, composable parameters, generated help, and shell completion.",
       "real_world_evidence": "Clikt publishes current core, full, and Markdown artifacts on Maven Central and maintains documentation and sample applications for JVM, Node.js, and native targets.",
-      "why_study": "Clikt shows how a polished declarative API is supported by a staged parser: invocation collection, eager handling, conversion, finalization, validation, command execution, help, and completion.",
-      "learn": ["Property-delegate providers, typed transformation chains, command trees, parser staging, error aggregation, value sources and environment precedence, parameter groups, help formatting, shell completion, and multiplatform APIs."],
-      "prerequisites": ["Comfortable Kotlin generics, variance, property delegates, extension functions, sealed errors, command-line parsing, nested commands, and validation pipelines."],
-      "start_here": {"path": "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt", "reason": "This file names the distinct parse, eager-finalization, value-finalization, validation, and run stages and connects them to command and parameter abstractions."},
-      "sdc": {
+      "why_study": "Starting at CommandLineParser shows how a declarative Kotlin command model becomes normalized tokens, recursive invocations, finalized option values, validation results, and executable subcommands.",
+      "learn": [
+        "Use `CommandLineParser.kt` to study property delegates, staged parsing, token normalization, alias and argument-file expansion, recursive command trees, typed option finalization, validation, and direct option and subcommand contracts."
+      ],
+      "prerequisites": [
+        "Before reading `CommandLineParser.kt`, be familiar with Kotlin classes, generics, property delegates, sealed result types, higher-order functions, command-line options, and recursive tree traversal."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A command-line parser maps option and argument tokens into typed command invocations, including nested subcommands."
+        ],
+        "reason": "The concise command-line vocabulary is subordinate to reusable lessons in delegated APIs, token-state machines, recursive parsing, extension boundaries, error aggregation, validation, and compatibility-oriented tests."
+      },
+      "learning_path": {
+        "goal": "Understand how Clikt turns a delegated command DSL into recursively parsed, finalized, validated, and executable command invocations.",
+        "start_here": {
+          "path": "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt",
+          "reason": "CommandLineParser names the tokenize, parse, eager-finalization, value-finalization, validation, and run stages and connects them to the selected command and option abstractions."
+        },
+        "supporting_files": [
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt",
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/OptionTest.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/SubcommandTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with tokenize, parse, finalize, and run, follow CommandParser as it normalizes tokens, expands aliases and argument files, distinguishes long, short, numeric, argument, and subcommand cases, then trace option finalization and validation into the direct option and nested-subcommand tests."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 2, "loc": 5249, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "samples/", "docs/", "API dumps", "build files"], "notes": "Count covers production source in clikt, clikt-mordant, and clikt-mordant-markdown, including JVM-specific types, and excludes tests, samples, documentation, API dumps, and build metadata."},
-        "difficulty": {"score": 3, "signals": ["generic property-delegate transformation chains", "multi-stage parser finalization", "command and parameter constraint interactions"], "reason": "Understanding a value requires following generic wrappers and lifecycle stages, while shell grammars, grouped constraints, and multiple sources add moderate domain depth."},
-        "complexity": {"score": 3, "signals": ["parser, command, context, parameter, source, output, completion, and testing layers", "nested command trees", "core and Mordant rendering variants"], "reason": "An important option crosses several explicit layers and extension points, though everything remains an in-process library."},
-        "placement": "S2/D3/C3 averages to 2.67, making Clikt an SDC 3 project."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "generic command and invocation types",
+            "delegated option framework idiom",
+            "higher-order context and finalization hooks"
+          ],
+          "reason": "Generics, delegates, and framework idioms materially shape the trace; the lower anchor controls because advanced type or implicit machinery does not recur pervasively."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "mutable token-consumption state",
+            "recursive subcommand parsing",
+            "separate parsing, finalization, validation, and execution stages",
+            "alias, argument-file, arity, and error branches"
+          ],
+          "reason": "A nontrivial synchronous parser lifecycle materially affects the trace without advanced concurrent or recovery behavior."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "public parser facade",
+            "internal token parser",
+            "option and invocation boundaries",
+            "context, finalization, and test boundaries"
+          ],
+          "reason": "Several meaningful parsing, model, lifecycle, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "grouped, attached, transformed, and interspersed token forms",
+            "recursive and repeated subcommand semantics",
+            "option arity, eager handling, value sources, defaults, and validation",
+            "cross-platform behavior, localization, completion, and diagnostic compatibility"
+          ],
+          "reason": "Multiple grammar, extension, validation, portability, and compatibility guarantees interact throughout the parser."
+        },
+        "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Parsing, invocation records, value transformation, finalization, validation, formatting, and completion are decomposed into focused files with explicit stage boundaries.",
-        "architecture": "Base commands own contexts and parameters; the parser builds invocation trees; finalizers derive typed values; output and completion layers consume the resulting command model.",
-        "naming_and_idiom": "CommandInvocation, OptionInvocation, finalizeEagerOptions, finalizeCommand, TransformContext, ValueSource, and CompletionCandidates expose the lifecycle.",
-        "tests": "Extensive common and JVM suites cover token forms, suggestions, nested commands, eager options, groups, sources, every common type, help output, completion scripts, and filesystem types.",
-        "documentation": "The README orients quickly, while dedicated documentation explains command, option, argument, completion, testing, migration, and advanced extension behavior.",
-        "traceability": "An option delegate can be followed from registration through argv invocation, source precedence, conversion, finalization, post-validation, property access, and targeted OptionTest cases.",
-        "maintainability": "Core and rich-output integrations are separated, public APIs have dumps, transformations compose instead of duplicating parser branches, and tests mirror feature areas.",
-        "educational_value": "It is a strong intermediate study of the machinery required to make a declarative user API both type-safe and operationally precise."
+        "source_quality": "Token normalization, invocation records, option transformation, finalization, validation, and command execution are separated into named stages with explicit errors.",
+        "architecture": "CommandLineParser coordinates ParserInternals, command invocation trees, and Option finalizers; the selected tests close option and nested-subcommand behavior.",
+        "naming_and_idiom": "CommandInvocation, OptionInvocation, finalizeEagerOptions, finalizeCommand, TransformContext, and ValueSource expose the parser lifecycle.",
+        "tests": "OptionTest and SubcommandTest exercise option conversion and validation, token forms, eager options, nested commands, command selection, and related failure cases used by this trace.",
+        "documentation": "The README introduces the declarative command and option model, shows representative usage, and links the reference material a learner needs before entering the parser.",
+        "traceability": "A command-line token can be followed through normalization and invocation collection into option finalization, validation, command selection, and the direct option or subcommand assertions.",
+        "maintainability": "Parser stages, invocation data, command structure, and option transformations remain separate, so changes to one selected boundary do not require rewriting the whole trace.",
+        "educational_value": "This path demonstrates the machinery beneath a type-safe declarative API without requiring the unrelated help, rich-output, or completion subsystems."
       },
-      "inspection": {"commit": "fa2e48c54995a88d492f05568a64889d99994877", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt", "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt", "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt", "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/OptionTest.kt", "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/SubcommandTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "fa2e48c54995a88d492f05568a64889d99994877",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt",
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt",
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/OptionTest.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/SubcommandTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "kotlin-logging",
+      "repository": "oshai/kotlin-logging",
+      "url": "https://github.com/oshai/kotlin-logging",
+      "primary_language": "Kotlin",
+      "language_evidence": "The lazy logging facade, event builder, logger factories, SLF4J and JUL adapters, source-location preservation, and native, Android, JS, Wasm, and Darwin backends are Kotlin.",
+      "description": "A lightweight Kotlin multiplatform logging facade with lazy messages and adapters for platform logging systems.",
+      "real_world_evidence": "The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.",
+      "why_study": "kotlin-logging shows how a multiplatform facade can keep logging lazy while preserving markers, payloads, causes, and the original call site through an SLF4J adapter.",
+      "learn": [
+        "Trace enabled checks and lazy event construction through the common logger contract into a location-aware JVM backend with exact caller metadata."
+      ],
+      "prerequisites": [
+        "Readers should know Kotlin interfaces, inline and lambda-based APIs, multiplatform source sets, and basic logging levels, markers, exceptions, and backend adapters."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A logging facade checks a level, lazily creates an event, and forwards it to a platform backend while preserving the caller location."
+        ],
+        "reason": "Logging vocabulary is short and subordinate to transferable lessons in lazy APIs, receiver builders, common-to-platform adapters, compatibility facades, payload forwarding, and observability contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how a multiplatform Kotlin logging facade keeps messages lazy while preserving markers, payloads, causes, and the original source location through an SLF4J adapter.",
+        "start_here": {
+          "path": "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt",
+          "reason": "The reviewed trace begins in KLogger.kt because it defines the level methods and lazy receiver-builder contract that every selected backend call implements."
+        },
+        "supporting_files": [
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLoggingEventBuilder.kt",
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt",
+          "src/javaMain/kotlin/io/github/oshai/kotlinlogging/slf4j/internal/LocationAwareKLogger.kt",
+          "src/jvmTest/kotlin/io/github/oshai/kotlinlogging/LoggingWithLocationTest.kt",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with KLogger level methods and the receiver event builder, follow enabled checks and lazy message, marker, cause, and payload collection into LocationAwareKLogger, then close with exact caller-class, method, and line assertions for ordinary, lazy, fluent, null, and entry/exit calls."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "receiver-lambda event builder",
+            "default interface methods and higher-order message suppliers",
+            "generic backend delegation"
+          ],
+          "reason": "Higher-order facade abstractions materially shape the API without recurring reflection, code generation, or expert type machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "level-enabled branch",
+            "lazy event population",
+            "payload and non-payload forwarding"
+          ],
+          "reason": "Behavior has meaningful local branching but no nontrivial state machine or lifecycle."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "common multiplatform API",
+            "event-builder abstraction",
+            "Java and SLF4J adapter boundary",
+            "backend-observable integration test"
+          ],
+          "reason": "Several meaningful common, platform, backend, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "disabled messages must remain unevaluated",
+            "the original caller location must survive wrapper frames",
+            "markers, causes, payloads, and null messages must retain backend semantics",
+            "the common API must remain compatible across platforms and SLF4J variants"
+          ],
+          "reason": "Performance, source-location, payload, multiplatform, and backend-compatibility guarantees interact throughout the facade."
+        },
+        "placement": "The four scores 3/2/3/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3."
+      },
+      "quality": {
+        "source_quality": "KLogger.kt, KLoggingEventBuilder.kt, KotlinLogging.kt, and LocationAwareKLogger.kt give the common contract, event state, entry point, and JVM adapter distinct roles.",
+        "architecture": "Common logger methods collect a lazy event and forward it through a platform implementation that preserves the fully qualified caller boundary.",
+        "naming_and_idiom": "KLogger, KLoggingEventBuilder, KotlinLogging, and LocationAwareKLogger make the facade and adapter layers explicit while using Kotlin receiver builders and lazy lambdas idiomatically.",
+        "tests": "LoggingWithLocationTest.kt verifies class, method, and line attribution for ordinary, lazy, fluent, null-message, and entry or exit calls.",
+        "documentation": "README.md documents lazy evaluation, supported backends, and the facade's intended usage.",
+        "traceability": "A level call in KLogger.kt can be followed through event construction into LocationAwareKLogger.kt and closed by exact source-location assertions.",
+        "maintainability": "The common contract and backend adapter are separated, and one focused test suite protects the subtle caller-location guarantee.",
+        "educational_value": "The path teaches that an ergonomic wrapper must preserve observability semantics, not merely forward message text."
+      },
+      "inspection": {
+        "commit": "0aaa57ccef9e1cc619de0d30bd65cc0a7271332d",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt",
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLoggingEventBuilder.kt",
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt",
+          "src/javaMain/kotlin/io/github/oshai/kotlinlogging/slf4j/internal/LocationAwareKLogger.kt",
+          "src/jvmTest/kotlin/io/github/oshai/kotlinlogging/LoggingWithLocationTest.kt",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "turbine",
+      "repository": "cashapp/turbine",
+      "url": "https://github.com/cashapp/turbine",
+      "primary_language": "Kotlin",
+      "language_evidence": "Flow collection, channel wrapping, event modeling, timeouts, cancellation, assertion reporting, and the public test DSL are implemented in common Kotlin.",
+      "description": "A small multiplatform testing library that turns Kotlin Flow emissions, completion, and failures into explicit ordered assertions.",
+      "real_world_evidence": "Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.",
+      "why_study": "Turbine makes concurrent Flow testing concrete by turning collection into an ordered event protocol with timeouts, cancellation, cleanup, and preserved failures.",
+      "learn": [
+        "Follow Flow collection into channel-backed item, completion, and error events, then reason about timeout selection, cancellation, joining, and unconsumed-event reporting."
+      ],
+      "prerequisites": [
+        "Readers should know Kotlin coroutines, Flow, channels, structured cancellation, exceptions, and ordinary asynchronous unit tests."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Flow test observes emitted items, normal completion, and errors through a channel-backed assertion API."
+        ],
+        "reason": "Coroutine and Flow vocabulary is programming subject matter; the path directly teaches concurrent collection, structured cancellation, terminal events, timeouts, cleanup, exception causality, and race-sensitive testing."
+      },
+      "learning_path": {
+        "goal": "Understand how Turbine turns concurrent Flow collection into an ordered, timeout-bounded assertion lifecycle with explicit cleanup and terminal events.",
+        "start_here": {
+          "path": "src/commonMain/kotlin/app/cash/turbine/flow.kt",
+          "reason": "The reviewed trace begins in flow.kt because Flow.test and testIn establish collection ownership and hand events to the assertion lifecycle."
+        },
+        "supporting_files": [
+          "src/commonMain/kotlin/app/cash/turbine/Turbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/channel.kt",
+          "src/commonMain/kotlin/app/cash/turbine/Event.kt",
+          "src/commonMain/kotlin/app/cash/turbine/coroutines.kt",
+          "src/commonTest/kotlin/app/cash/turbine/FlowTest.kt",
+          "src/commonTest/kotlin/app/cash/turbine/ChannelTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with Flow.test and testIn, follow undispatched collection into ChannelTurbine and item, completion, or error events, then trace timeout selection, cancellation and join, remaining-event reporting, and exception preservation into the direct Flow and Channel assertions."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "generic suspend extension functions and receiver contexts",
+            "CoroutineScope and Channel delegation",
+            "sealed terminal-event modeling and context elements"
+          ],
+          "reason": "Substantial coroutine and higher-order abstractions shape the path without manual continuations or multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "concurrent Flow collection and channel delivery",
+            "structured cancellation and completion",
+            "timeouts, unconsumed events, and exception-cause preservation",
+            "wall-clock and virtual-time interaction"
+          ],
+          "reason": "Concurrency, cancellation, event propagation, and cleanup invariants recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "Flow adapter",
+            "channel-backed assertion implementation",
+            "event and timeout helpers",
+            "direct common tests"
+          ],
+          "reason": "Several meaningful collection, assertion, lifecycle, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "collection must start promptly without losing hot-flow events",
+            "cancellation must stop and join backing work",
+            "timeouts must not be distorted by virtual test time",
+            "terminal and unconsumed exceptions must retain actionable causes"
+          ],
+          "reason": "Concurrency, cleanup, timing, diagnostic, and test-determinism guarantees interact throughout the path."
+        },
+        "placement": "The four scores 3/4/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
+      },
+      "quality": {
+        "source_quality": "flow.kt, Turbine.kt, ReceiveTurbine.kt, channel.kt, Event.kt, and coroutines.kt separate adaptation, event transport, assertions, and coroutine helpers.",
+        "architecture": "An undispatched collector converts a Flow into channel events, ChannelTurbine exposes assertions, and cleanup cancels and joins the collection job.",
+        "naming_and_idiom": "Flow.test, testIn, ChannelTurbine, ReceiveTurbine, and Event state the lifecycle directly and use structured coroutine APIs idiomatically.",
+        "tests": "FlowTest.kt and ChannelTest.kt exercise item ordering, completion, errors, cancellation, timeouts, names, and leftover-event failures.",
+        "documentation": "README.md explains the assertion lifecycle, cleanup obligation, and interaction with virtual time.",
+        "traceability": "A Flow passed to test can be traced through collection and Event creation to receive assertions and the direct Flow and channel tests.",
+        "maintainability": "Narrow interfaces isolate event transport from public assertions, while direct lifecycle tests constrain cancellation and timeout regressions.",
+        "educational_value": "The path is a bounded lesson in testing concurrent streams without losing ownership, terminal-state, or cleanup guarantees."
+      },
+      "inspection": {
+        "commit": "408104d0874678455ff997913bd3f698039f5c25",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/commonMain/kotlin/app/cash/turbine/flow.kt",
+          "src/commonMain/kotlin/app/cash/turbine/Turbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/channel.kt",
+          "src/commonMain/kotlin/app/cash/turbine/Event.kt",
+          "src/commonMain/kotlin/app/cash/turbine/coroutines.kt",
+          "src/commonTest/kotlin/app/cash/turbine/FlowTest.kt",
+          "src/commonTest/kotlin/app/cash/turbine/ChannelTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "moshi",
@@ -175,129 +492,118 @@
       "language_evidence": "The adapter registry, streaming UTF-8 reader and writer, Kotlin reflection integration, standard adapters, and KSP code generator are primarily Kotlin, with intentional Java interoperability and tests.",
       "description": "A modern JSON library for Kotlin and Java with streaming I/O, composable adapters, reflection support, and generated adapters through Kotlin Symbol Processing.",
       "real_world_evidence": "Square publishes Moshi runtime, Kotlin, adapter, and code-generation artifacts and documents stable use in Kotlin and Java applications.",
-      "why_study": "Moshi connects a byte-level JSON state machine to a type-driven adapter registry and two Kotlin object-mapping strategies, making parsing, caching, reflection, and code generation comparable in one repository.",
-      "learn": ["Streaming JSON tokenization, parser state stacks, buffered I/O, generic type resolution, adapter factories and caching, annotations, reflection, Kotlin metadata, KSP code generation, recursion handling, and exhaustive format tests."],
-      "prerequisites": ["Advanced Kotlin and Java interoperability, generics and reflection, JSON grammar, buffered byte I/O, annotations, code generation, Kotlin metadata, and Gradle modules."],
-      "start_here": {"path": "moshi/src/main/java/com/squareup/moshi/Moshi.kt", "reason": "Moshi.adapter shows factory lookup, recursive deferred adapters, qualifier and type handling, and cache publication before the reader or object-mapping details are explored."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 9041, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all src/test/ trees", "moshi-kotlin-tests/", "examples/", "records-tests/", "build files and API reports"], "notes": "Count covers production source in moshi, moshi-kotlin, moshi-adapters, and moshi-kotlin-codegen, including Kotlin and Java, and excludes tests, examples, dedicated test modules, documentation, and build metadata."},
-        "difficulty": {"score": 4, "signals": ["byte-level streaming parser state machine", "recursive generic adapter resolution and caching", "reflection and Kotlin metadata", "KSP source generation"], "reason": "Several advanced concerns recur across the main path: correct JSON lexing, generic type construction, reflection, generated code, recursive types, and strict error locations."},
-        "complexity": {"score": 3, "signals": ["streaming core, adapter registry, reflection adapter, generated adapter, and optional adapters", "factory extension chain", "runtime and build-time execution modes"], "reason": "Tracing object decoding crosses meaningful layers and sometimes build-time generation, but the architecture remains a bounded library rather than a platform."},
-        "placement": "S2/D4/C3 averages to 3.00, making Moshi an SDC 3 project."
+      "why_study": "Moshi's adapter lookup is a focused study of recursive factory resolution, cycle breaking, deferred publication, and safe cache updates.",
+      "learn": [
+        "Follow a generic adapter request through factory precedence, a thread-local lookup chain, deferred recursive adapters, and synchronized cache publication."
+      ],
+      "prerequisites": [
+        "Readers should know Kotlin and Java generics, factories, reflection at a high level, thread-local state, maps, and the role of adapters in JSON serialization."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Moshi maps JSON values to and from Kotlin and Java object models through composable adapters."
+        ],
+        "reason": "The short serialization vocabulary is subordinate to transferable programming lessons in generic factory lookup, recursive construction, cycle breaking, cache publication, reentrancy, reflection boundaries, and focused contract tests."
       },
-      "quality": {
-        "source_quality": "Parser states, adapter lookup, standard adapters, reflection, and generation are separated and heavily documented where contracts are subtle.",
-        "architecture": "JsonReader and JsonWriter provide the streaming layer; Moshi resolves and caches JsonAdapters; reflection or KSP-generated adapters map Kotlin objects; optional factories extend behavior.",
-        "naming_and_idiom": "peekedNumberLength, JsonScope, DeferredJsonAdapter, nextAdapter, KotlinJsonAdapterFactory, TargetType, and AdapterGenerator make state and extension roles explicit.",
-        "tests": "Broad suites cover valid and invalid grammar, numeric boundaries, paths, recursion, factories, qualifiers, Kotlin defaults and nullability, reflection, generated adapters, dates, enums, and polymorphism.",
-        "documentation": "The README explains the object model, adapter composition, Kotlin reflection versus code generation, custom adapters, platform requirements, and limitations.",
-        "traceability": "A requested Kotlin type can be followed through factory selection and cache handling into a generated or reflective adapter, streaming token reads, object construction, and corresponding tests.",
-        "maintainability": "Public extension points are narrow, recursion is handled explicitly, parser errors carry paths, compatibility tooling is present, and implementation areas have dedicated suites.",
-        "educational_value": "It teaches how production serialization spans syntax, bytes, types, reflection, generated code, and API design without collapsing those concerns into one opaque mapper."
+      "learning_path": {
+        "goal": "Understand how Moshi resolves, constructs, temporarily defers, and safely caches recursive adapters without exposing incomplete adapters to callers.",
+        "start_here": {
+          "path": "moshi/src/main/java/com/squareup/moshi/Moshi.kt",
+          "reason": "The reviewed trace begins in Moshi.kt because Moshi.adapter owns the factory walk, recursive LookupChain, deferred adapter, and cache-publication behavior."
+        },
+        "supporting_files": [
+          "moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt",
+          "moshi/src/test/java/com/squareup/moshi/CircularAdaptersTest.java",
+          "moshi/src/test/java/com/squareup/moshi/DeferredAdapterTest.java",
+          "moshi/src/test/java/com/squareup/moshi/MoshiTest.java",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start at Moshi.adapter and its factory walk, follow the thread-local LookupChain as recursive requests receive deferred adapters and successful outermost lookup publishes a synchronized cache snapshot, inspect the Kotlin reflection factory as a concrete recursive boundary, then close the trace with the direct circular and deferred tests plus only MoshiTest's lookup-stack and factory-precedence cases."
       },
-      "inspection": {"commit": "889013ec2edb8d8034902662a1dc8c4f3b3f8111", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "moshi/src/main/java/com/squareup/moshi/Moshi.kt", "moshi/src/main/java/com/squareup/moshi/-JsonUtf8Reader.kt", "moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt", "moshi-kotlin-codegen/src/main/java/com/squareup/moshi/kotlin/codegen/api/AdapterGenerator.kt", "moshi/src/test/java/com/squareup/moshi/MoshiTest.java", "moshi-kotlin-codegen/src/test/java/com/squareup/moshi/kotlin/codegen/ksp/JsonClassSymbolProcessorTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "kotlinx-serialization",
-      "repository": "Kotlin/kotlinx.serialization",
-      "url": "https://github.com/Kotlin/kotlinx.serialization",
-      "primary_language": "Kotlin",
-      "language_evidence": "The format-independent serializer contracts and modules plus JSON, ProtoBuf, CBOR, Properties, and HOCON runtime implementations are Kotlin multiplatform code.",
-      "description": "Kotlin's multiplatform, multi-format, reflectionless serialization runtime and format libraries.",
-      "real_world_evidence": "JetBrains publishes stable core and format artifacts coordinated with Kotlin's serialization compiler plugin and documents JVM, JS, Native, and Wasm use.",
-      "why_study": "The repository cleanly separates generated type knowledge from format encoders and decoders, then implements several text and binary protocols over the same descriptor contract.",
-      "learn": ["Serializer and descriptor protocols, generated-code boundaries, encoder and decoder abstractions, polymorphic and contextual lookup, JSON lexing and modes, ProtoBuf and CBOR wire formats, schema behavior, multiplatform APIs, and conformance testing."],
-      "prerequisites": ["Advanced Kotlin generics and annotations, compiler-plugin concepts, serialization theory, JSON and binary protocols, state machines, polymorphism, multiplatform source sets, and compatibility testing."],
-      "start_here": {"path": "core/commonMain/src/kotlinx/serialization/KSerializer.kt", "reason": "KSerializer documents the format-independent contract between generated serializers and encoders; Json.kt and StreamingJsonDecoder then show one substantial realization of that contract."},
-      "sdc": {
+      "learning_level": {
         "level": 4,
-        "size": {"score": 3, "loc": 13771, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all test source sets under core/ and formats/", "formats/json-tests/", "benchmark/", "guide/", "integration-test/", "buildSrc/", "build files"], "notes": "Count covers production Kotlin and Java in core and all format main source sets and excludes every test source set, dedicated test modules, benchmarks, guide examples, integration fixtures, build logic, documentation, and build metadata."},
-        "difficulty": {"score": 4, "signals": ["descriptor-driven generic serialization", "contextual and polymorphic resolution", "streaming JSON state machines", "binary wire-format encoding", "multiplatform type behavior"], "reason": "Advanced type, protocol, parser, and generated-code concerns recur throughout the runtime and require both language and serialization-domain knowledge."},
-        "complexity": {"score": 4, "signals": ["compiler-generated serializers crossing into a runtime protocol", "core plus multiple independent formats", "common and platform implementations", "schema, module, polymorphism, and compatibility concerns"], "reason": "A complete behavior crosses generated code, descriptors, modules, encoders, format internals, and platform-specific paths, with several formats sharing the same core."},
-        "placement": "S3/D4/C4 averages to 3.67, making kotlinx.serialization an SDC 4 project."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "reified and KType-based adapter APIs",
+            "generic factories and type-token normalization",
+            "thread-local lookup context and deferred generic stubs",
+            "Kotlin reflection and Java type-system interoperation"
+          ],
+          "reason": "Advanced generic and reflective techniques recur across lookup and concrete adapter construction, but the trace does not require pervasive compiler-level type machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "ordered factory search and next-adapter continuation",
+            "recursive lookup with placeholder binding",
+            "thread-local nested lookup stacks",
+            "outermost success, failure, cleanup, and cache-publication branches"
+          ],
+          "reason": "Correctness depends on a nonlocal recursive construction lifecycle, reentrancy, cleanup, and publication across nested lookups, matching the advanced behavior anchor."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "public lookup facade",
+            "factory extension boundary",
+            "lookup-chain and deferred-adapter mechanism",
+            "direct recursion and cache tests"
+          ],
+          "reason": "Several meaningful implementation and verification boundaries cooperate, while the representative path remains one cohesive adapter-resolution subsystem."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "recursive types and circular adapter graphs",
+            "thread safety and cache visibility",
+            "factory ordering and skip-past semantics",
+            "nullability, annotations, reflection, and actionable lookup diagnostics"
+          ],
+          "reason": "Multiple interacting compatibility, concurrency, extension, recursion, and diagnostic guarantees constrain the lookup design."
+        },
+        "placement": "The four scores 4/4/3/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Core contracts are documented as protocols, format code isolates wire concerns, and error paths preserve positions and descriptor paths.",
-        "architecture": "Generated serializers speak the KSerializer and descriptor protocol; modules resolve contextual and polymorphic types; each format supplies encoders, decoders, lexers or readers, and configuration.",
-        "naming_and_idiom": "SerialDescriptor, SerializersModule, CompositeDecoder, StreamingJsonDecoder, WriteMode, ProtobufTaggedEncoder, and MissingFieldException reveal the data and control contracts.",
-        "tests": "Core, format, cross-platform, compatibility, conformance, failure-mode, schema, polymorphism, numeric-boundary, and stress suites exercise both protocols and diagnostics.",
-        "documentation": "The README and guides explain setup, compiler/runtime versioning, formats, generated serializers, customization, polymorphism, compatibility, and platform caveats.",
-        "traceability": "A Serializable value can be followed from a generated serializer's descriptor calls through module lookup and a format encoder or decoder into JSON or binary tokens and targeted tests.",
-        "maintainability": "Stable core contracts decouple formats, configurations are explicit, platform differences stay in source sets, compatibility policies are documented, and exhaustive tests bound protocol changes.",
-        "educational_value": "It is a rigorous study of designing one type-directed protocol that supports multiple encodings without reflection or format knowledge leaking into generated models."
+        "source_quality": "Moshi.kt keeps adapter lookup and caching readable, while KotlinJsonAdapterFactory.kt isolates the reflection boundary used as a concrete recursive case.",
+        "architecture": "A public lookup walks factories, a thread-local chain breaks recursive construction cycles, and the outermost successful lookup publishes a synchronized cache snapshot.",
+        "naming_and_idiom": "Moshi.adapter, LookupChain, DeferredAdapter, and KotlinJsonAdapterFactory expose their responsibilities and use typed factories and localized synchronization clearly.",
+        "tests": "CircularAdaptersTest.java and DeferredAdapterTest.java directly close recursion and publication behavior; focused MoshiTest.java cases cover lookup stacks and factory precedence.",
+        "documentation": "README.md explains adapters and factories sufficiently to enter the selected implementation path.",
+        "traceability": "An adapter request can be followed from Moshi.adapter through the factory chain and deferred placeholder to cache publication and the circular-adapter tests.",
+        "maintainability": "Cycle handling is concentrated in the lookup chain, reflection stays behind a factory, and focused tests protect precedence and publication invariants.",
+        "educational_value": "The path turns a difficult recursive-cache problem into a bounded example with observable failure and success cases."
       },
-      "inspection": {"commit": "25c2a755cbe6926a63003f3a51527bb731e8cd14", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "core/commonMain/src/kotlinx/serialization/KSerializer.kt", "core/commonMain/src/kotlinx/serialization/modules/SerializersModule.kt", "formats/json/commonMain/src/kotlinx/serialization/json/Json.kt", "formats/json/commonMain/src/kotlinx/serialization/json/internal/StreamingJsonDecoder.kt", "formats/protobuf/commonMain/src/kotlinx/serialization/protobuf/internal/ProtobufEncoding.kt", "formats/json-tests/commonTest/src/kotlinx/serialization/json/JsonParserFailureModesTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/Kotlin/kotlinx.serialization/blob/25c2a755cbe6926a63003f3a51527bb731e8cd14/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "kotlinx-coroutines",
-      "repository": "Kotlin/kotlinx.coroutines",
-      "url": "https://github.com/Kotlin/kotlinx.coroutines",
-      "primary_language": "Kotlin",
-      "language_evidence": "Coroutine jobs, continuations, dispatchers, work-stealing scheduler, channels, flows, synchronization primitives, test scheduler, debug probes, reactive adapters, and platform integrations are Kotlin.",
-      "description": "Kotlin's official multiplatform library for structured concurrency, asynchronous streams, channels, scheduling, testing, debugging, and ecosystem integration.",
-      "real_world_evidence": "JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.",
-      "why_study": "The repository exposes the runtime machinery beneath friendly suspend APIs: lock-free job states, cancellation, continuation resumption, scheduling, channels, Flow operators, virtual time, and platform dispatchers.",
-      "learn": ["Structured concurrency, coroutine contexts, state machines, atomic and lock-free algorithms, work stealing, cancellation races, continuations, channels, Flow backpressure, synchronization, virtual-time testing, debugger instrumentation, and platform adapters."],
-      "prerequisites": ["Expert Kotlin, continuations and suspend lowering concepts, memory models, atomics, concurrent data structures, thread scheduling, reactive streams, cancellation semantics, and stress-test reasoning."],
-      "start_here": {"path": "kotlinx-coroutines-core/common/src/JobSupport.kt", "reason": "JobSupport documents and implements the central lifecycle state machine; its state-table tests provide an unusually direct bridge into the wider cancellation and child-job machinery."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 3, "loc": 20652, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all test source directories", "all benchmark directories", "integration-testing/", "test-utils/", "buildSrc/", "docs/", "build files"], "notes": "Count covers production Kotlin and Java in source directories across core, test, debug, reactive, UI, and integration modules; test sources, benchmarks, integration harnesses, internal test utilities, build logic, documentation, and build metadata are excluded."},
-        "difficulty": {"score": 5, "signals": ["lock-free lifecycle and queue algorithms", "work-stealing scheduler", "cancellation and resumption races", "cross-platform memory-model constraints", "dense asynchronous stream machinery"], "reason": "Expert-level concurrent algorithms recur in the main runtime, and correctness depends on atomic transitions, scheduling, cancellation, and platform memory behavior."},
-        "complexity": {"score": 4, "signals": ["core, Flow, channels, synchronization, test, debug, reactive, UI, and integration modules", "many platform source sets", "cross-cutting context and cancellation contracts", "multiple dispatcher and adapter boundaries"], "reason": "Many interacting components and integrations share core lifecycle contracts, although the project is still a library family rather than a distributed platform."},
-        "placement": "S3/D5/C4 averages to 4.00, making kotlinx.coroutines an SDC 4 project."
+      "inspection": {
+        "commit": "889013ec2edb8d8034902662a1dc8c4f3b3f8111",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "moshi/src/main/java/com/squareup/moshi/Moshi.kt",
+          "moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt",
+          "moshi/src/test/java/com/squareup/moshi/CircularAdaptersTest.java",
+          "moshi/src/test/java/com/squareup/moshi/DeferredAdapterTest.java",
+          "moshi/src/test/java/com/squareup/moshi/MoshiTest.java",
+          "README.md",
+          "LICENSE.txt"
+        ]
       },
-      "quality": {
-        "source_quality": "Dense concurrency code accompanies its atomic transitions with state tables, invariants, and comments explaining common-case optimizations and race handling.",
-        "architecture": "Job and continuation lifecycles anchor builders and scopes; dispatchers schedule work; channels and Flow provide communication; test and debug modules observe the same runtime contracts.",
-        "naming_and_idiom": "JobSupport, Finishing, CancellableContinuationImpl, CoroutineScheduler, parkedWorkersStack, SharedFlowImpl, and TestCoroutineScheduler expose concrete runtime roles.",
-        "tests": "Deterministic lifecycle tests, platform suites, stress tests, Lincheck models, scheduler tests, Flow and channel contracts, virtual-time tests, integration tests, and debugger tests cover concurrency behavior deeply.",
-        "documentation": "The README maps modules and concepts, links the coroutine guide and design proposal, documents platform support, compatibility, debugging, testing, and integration setup.",
-        "traceability": "A launched child can be followed through JobSupport state transitions and continuation dispatch into a scheduler queue, cancellation propagation, and explicit state and stress tests.",
-        "maintainability": "Internal APIs are marked, compatibility policy is documented, platform implementations share common contracts, invariants are stated, and specialized concurrency tests guard races.",
-        "educational_value": "It is a demanding but exemplary source for understanding how structured concurrency emerges from atomic lifecycle machinery rather than syntax alone."
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/LICENSE.txt"
+        ]
       },
-      "inspection": {"commit": "f63a04bacb8beeafcc9d49199b1e4bb08931b7eb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "kotlinx-coroutines-core/common/src/JobSupport.kt", "kotlinx-coroutines-core/common/src/CancellableContinuationImpl.kt", "kotlinx-coroutines-core/jvm/src/scheduling/CoroutineScheduler.kt", "kotlinx-coroutines-core/common/src/flow/SharedFlow.kt", "kotlinx-coroutines-core/common/test/JobStatesTest.kt", "kotlinx-coroutines-core/jvm/test/scheduling/CoroutineSchedulerTest.kt", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/LICENSE.txt"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "ktor",
-      "repository": "ktorio/ktor",
-      "url": "https://github.com/ktorio/ktor",
-      "primary_language": "Kotlin",
-      "language_evidence": "Server and client pipelines, routing, HTTP and WebSocket protocols, I/O channels, networking, engines, plugins, serialization adapters, test hosts, and multiplatform implementations are overwhelmingly Kotlin, with a small Rust WebRTC boundary.",
-      "description": "JetBrains' multiplatform asynchronous framework for HTTP clients, servers, microservices, WebSockets, streaming, and extensible application plugins.",
-      "real_world_evidence": "Ktor is an official JetBrains product with published client, server, engine, protocol, plugin, and testing artifacts and maintained product documentation.",
-      "why_study": "Ktor shows how a coroutine-based pipeline abstraction scales from request routing and plugins into clients, servers, network engines, protocols, serialization, testing, and multiple operating platforms.",
-      "learn": ["Coroutine request lifecycles, phased pipelines, route trees and resolution, client and server plugin systems, HTTP parsing, streaming byte channels, sockets and TLS, engine adapters, WebSockets and SSE, serialization, multiplatform boundaries, and integration testing."],
-      "prerequisites": ["Expert Kotlin and coroutines, HTTP semantics, asynchronous I/O, sockets and TLS, parser and routing concepts, plugin architecture, serialization, Gradle multiplatform builds, and server lifecycle operations."],
-      "start_here": {"path": "ktor-server/ktor-server-core/common/src/io/ktor/server/application/ApplicationCallPipeline.kt", "reason": "The call pipeline names the framework's execution phases; RoutingRoot then demonstrates how route resolution builds and executes merged receive, call, and response pipelines for one request."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 4, "loc": 101229, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all test source trees and test-only modules", "all testData trees", "samples and examples", "benchmarks", "integration test suites", "build-logic/", "build-settings-logic/", "documentation and build metadata"], "notes": "Count covers production Kotlin, Java, Rust, C, and C++ under source and Rust implementation paths across the framework; tests, fixtures, test-support modules, samples, benchmarks, integration suites, build logic, documentation, and generated API dumps are excluded."},
-        "difficulty": {"score": 5, "signals": ["asynchronous streaming I/O and cancellation", "HTTP, WebSocket, TLS, and network protocol machinery", "concurrent client and server engines", "compiler plugin and cross-language WebRTC boundary", "multiplatform low-level resource management"], "reason": "Expert-level concurrency, networking, protocol, compiler, and platform concerns recur throughout core framework paths rather than appearing in one isolated module."},
-        "complexity": {"score": 5, "signals": ["client, server, routing, engines, I/O, network, HTTP, plugins, serialization, test host, and compiler subsystems", "many external engine and protocol integrations", "platform-scale artifact graph", "cross-cutting pipelines and plugin lifecycles"], "reason": "Tracing a real request can cross routing, plugins, transformations, streaming channels, an engine, protocol parsing, and platform adapters inside a broad framework platform."},
-        "placement": "S4/D5/C5 averages to 4.67 and has two dimensions at 5, making Ktor an SDC 5 project."
-      },
-      "quality": {
-        "source_quality": "Core lifecycle classes and protocol modules use explicit phases, capabilities, attributes, typed plugins, and coroutine ownership to bound otherwise broad behavior.",
-        "architecture": "Shared I/O, network, HTTP, and utility modules support independent client and server stacks; engines adapt platforms; plugins intercept stable pipelines; test hosts exercise applications in process.",
-        "naming_and_idiom": "ApplicationCallPipeline, RoutingResolveContext, RoutingPipelineCall, HttpClientEngine, HttpRequestPipeline, ByteReadChannel, and BaseApplicationPlugin reveal execution and extension boundaries.",
-        "tests": "Unit, contract, engine, protocol, routing, plugin, test-host, platform, stress, and integration suites cover request lifecycles from parsing through responses across multiple engines.",
-        "documentation": "The README states principles and a complete first server; product documentation covers clients, servers, engines, plugins, protocols, deployment, testing, and extension points.",
-        "traceability": "A server call can be followed from an engine into ApplicationCallPipeline, RoutingRoot resolution, merged route and application pipelines, a handler response, and route or engine tests.",
-        "maintainability": "Shared contracts isolate engines and platforms, public APIs are documented and dumped, plugins compose through named hooks, and subsystem-specific tests localize a very large surface.",
-        "educational_value": "It is a mature capstone for studying how small Kotlin abstractions such as receiver DSLs, coroutines, and pipelines scale into a full network framework."
-      },
-      "inspection": {"commit": "6b20bd02a684a3543bf2e4d2fa2f9c83a83189e4", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "ktor-server/ktor-server-core/common/src/io/ktor/server/application/ApplicationCallPipeline.kt", "ktor-server/ktor-server-core/common/src/io/ktor/server/routing/RoutingRoot.kt", "ktor-client/ktor-client-core/common/src/io/ktor/client/HttpClient.kt", "ktor-utils/common/src/io/ktor/util/pipeline/Pipeline.kt", "ktor-server/ktor-server-core/common/test/io/ktor/server/routing/RouteTest.kt", "ktor-client/ktor-client-core/common/test/ClientPluginsTest.kt", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/ktorio/ktor/blob/6b20bd02a684a3543bf2e4d2fa2f9c83a83189e4/LICENSE"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "kotlin",
@@ -307,30 +613,257 @@
       "language_evidence": "The compiler frontends, FIR semantic model, FIR-to-IR conversion, intermediate representations, lowering pipelines, JVM backend, command-line compiler, daemon, incremental compilation, and much supporting infrastructure are implemented primarily in Kotlin.",
       "description": "The Kotlin programming language implementation, including its compiler frontends, intermediate representations, backends, tooling, libraries, and multiplatform infrastructure.",
       "real_world_evidence": "This official JetBrains repository builds the Kotlin compiler and language toolchain distributed for JVM, JavaScript, Wasm, Native, IDE, Gradle, Maven, and command-line workflows.",
-      "why_study": "The JVM path provides a complete compiler journey: command-line configuration, source environment, FIR analysis, FIR-to-IR conversion, lowering phases, bytecode generation, metadata, diagnostics, plugins, and deterministic output tests.",
-      "learn": ["Compiler drivers, syntax and semantic analysis, symbol and type systems, FIR and IR design, lowering phases, expect/actual processing, plugin extension points, bytecode generation, incremental compilation, compiler daemons, diagnostics, metadata, and massive generated and integration test systems."],
-      "prerequisites": ["Expert Kotlin and Java, compiler construction, parsing and semantic analysis, type systems, intermediate representations, JVM bytecode, build systems, concurrency, multiplatform compilation, and large-repository navigation."],
-      "start_here": {"path": "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt", "reason": "K2JVMCompiler is a concrete product entry point whose pipeline leads through environment setup, FIR analysis and conversion, JVM IR lowerings, bytecode generation, output writing, and integration tests."},
-      "sdc": {
+      "why_study": "Kotlin's JVM command-line compiler exposes an expert but unusually explicit staged path from configuration and frontend analysis through FIR, IR, backend code generation, and artifact output.",
+      "learn": [
+        "Follow source compilation through ordered pipeline phases, typed intermediate representations, backend generation, diagnostics, and safe JAR output."
+      ],
+      "prerequisites": [
+        "Readers should know advanced Kotlin, compiler frontends and intermediate representations, JVM bytecode at a high level, staged pipelines, diagnostics, and build artifacts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "The selected JVM command-line compiler pipeline transforms Kotlin source through frontend analysis, FIR-to-IR conversion, backend code generation, and output writing."
+        ],
+        "reason": "Compiler construction is programming infrastructure rather than an external specialist domain, and the trace teaches transferable staged architecture, typed intermediate representations, diagnostics, extension coordination, code generation, lifecycle, and output-integrity reasoning."
+      },
+      "learning_path": {
+        "goal": "Understand how the Kotlin JVM command-line compiler coordinates configuration, frontend analysis, FIR-to-IR conversion, JVM backend generation, and safe artifact output as an explicit staged pipeline.",
+        "start_here": {
+          "path": "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt",
+          "reason": "The reviewed trace begins in JvmCliPipeline.kt because it names and composes the exact frontend, FIR-to-IR, backend, and output phases selected for study."
+        },
+        "supporting_files": [
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFrontendPipelinePhase.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFir2IrPipelinePhase.kt",
+          "compiler/fir/entrypoint/src/org/jetbrains/kotlin/fir/pipeline/convertToIr.kt",
+          "compiler/fir/fir2ir/src/org/jetbrains/kotlin/fir/backend/Fir2IrConverter.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmBackendPipelinePhase.kt",
+          "compiler/ir/backend.jvm/entrypoint/src/org/jetbrains/kotlin/backend/jvm/JvmIrCodegenFactory.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmWriteOutputsPhase.kt",
+          "compiler/tests-integration/tests/org/jetbrains/kotlin/cli/JarOutputTest.kt",
+          "ReadMe.md",
+          "license/README.md",
+          "license/LICENSE.txt"
+        ],
+        "trace": "Start with JvmCliPipeline's ordered phase composition and K2JVMCompiler entry, follow frontend session and analysis output into JvmFir2IrPipelinePhase, convertToIr and Fir2IrConverter, continue through JvmBackendPipelinePhase and JvmIrCodegenFactory, then finish at JvmWriteOutputsPhase and JarOutputTest's artifact contracts; unrelated IDE, Native, JavaScript, build, and plugin subsystems are excluded."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 780962, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["all test, testFixtures, and testData paths", "generated source", "benchmarks", "build infrastructure", "documentation", "repository areas outside compiler/ and core/"], "notes": "A conservative count covers first-party Kotlin, Java, C, and C++ implementation under compiler/ and core/ only. Tests, fixtures, test data, generated files, benchmarks, build paths, documentation, and the repository's many libraries, plugins, IDE integrations, Native, JS, and Wasm areas are excluded; the measured slice alone remains S5."},
-        "difficulty": {"score": 5, "signals": ["compiler frontend and semantic analysis", "advanced type and symbol systems", "multiple intermediate representations and lowering pipelines", "parallel bytecode generation", "incremental and plugin-aware compilation"], "reason": "The central code is expert compiler implementation requiring deep language, type-system, IR, platform, and performance knowledge."},
-        "complexity": {"score": 5, "signals": ["multiple frontends, IRs, backends, targets, build tools, daemons, plugins, and IDE boundaries", "platform-scale module graph", "cross-cutting diagnostics, metadata, incremental state, and extensions", "several compilation execution modes"], "reason": "A compilation crosses many major subsystems, and the full repository also serves numerous targets and tool integrations with shared language contracts."},
-        "placement": "S5/D5/C5 averages to 5.00, making Kotlin an SDC 5 project."
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "strongly typed generic pipeline phases and artifacts",
+            "compiler-internal FIR and IR type systems",
+            "visitor, symbol, scope, extension, and lowering machinery",
+            "advanced Kotlin and JVM interoperation throughout code generation"
+          ],
+          "reason": "Expert type, compiler, generic pipeline, representation, and code-generation techniques are pervasive across every stage."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "multi-stage configuration and diagnostic lifecycle",
+            "frontend session, analysis, and failure propagation",
+            "FIR-to-IR conversion with symbol and component coordination",
+            "backend generation, incremental outputs, jar writing, and cleanup"
+          ],
+          "reason": "Correctness requires expert nonlocal reasoning across staged transformations, shared compiler state, diagnostics, failure policies, generated artifacts, and output finalization."
+        },
+        "design_span": {
+          "score": 5,
+          "signals": [
+            "command-line entry and configuration",
+            "explicit phase-pipeline framework",
+            "frontend, FIR, IR, and backend subsystems",
+            "code-generation and artifact-output boundaries",
+            "integration-level output verification"
+          ],
+          "reason": "The coherent source-to-jar trace necessarily spans many architecturally distinct compiler subsystems and integration boundaries."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "language semantic and diagnostic compatibility",
+            "stable FIR-to-IR symbol and type translation",
+            "JVM bytecode, metadata, classpath, module, and plugin contracts",
+            "incremental, reproducible, safe jar and directory output",
+            "performance and compatibility across a large evolving compiler"
+          ],
+          "reason": "Expert semantic, representation, extension, artifact, performance, and backward-compatibility guarantees interact pervasively across the pipeline."
+        },
+        "placement": "The four scores 5/5/5/5 sum to 20; their arithmetic mean is 5.00 and rounds half-up to Level 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Complex compiler phases are represented by named pipeline objects, explicit result types, phase engines, symbol tables, diagnostics, and extensive internal contracts rather than an undifferentiated driver.",
-        "architecture": "CLI and build-tool drivers configure environments; FIR performs frontend analysis; FIR-to-IR bridges semantic and backend models; target lowering phases prepare IR; backends emit artifacts and metadata.",
-        "naming_and_idiom": "K2JVMCompiler, KotlinCoreEnvironment, JvmFir2IrPipelinePhase, Fir2IrConverter, JvmIrCodegenFactory, PhaseEngine, and DiagnosticReporter expose the compilation stages.",
-        "tests": "Generated language tests, integration suites, diagnostics, IR dumps, bytecode listings, runtime boxes, incremental scenarios, daemon tests, compatibility suites, and deterministic JAR tests cover the toolchain at many boundaries.",
-        "documentation": "The repository orients contributors, links language and build resources, documents code rules and security, and contains subsystem READMEs plus a precise license and third-party notice directory.",
-        "traceability": "A JVM CLI invocation can be followed through K2JVMCompiler configuration and pipeline selection, FIR analysis, FIR-to-IR conversion, JVM lowerings, per-file code generation, output packaging, and JarOutputTest.",
-        "maintainability": "Despite scale, stages and extension points are explicit, code ownership is modular, diagnostics and outputs have stable models, and layered generated, golden, integration, and compatibility tests constrain change.",
-        "educational_value": "It is a genuine capstone: learners can study a production language implementation end to end while choosing one bounded target pipeline instead of pretending the whole platform is a beginner reading exercise."
+        "source_quality": "JvmCliPipeline.kt and its phase classes expose ordered boundaries, while convertToIr.kt, Fir2IrConverter.kt, and JvmIrCodegenFactory.kt make the central transformations inspectable.",
+        "architecture": "K2JVMCompiler enters a typed pipeline whose frontend result feeds FIR-to-IR conversion, JVM backend generation, and a dedicated output phase.",
+        "naming_and_idiom": "JvmFrontendPipelinePhase, JvmFir2IrPipelinePhase, JvmBackendPipelinePhase, and JvmWriteOutputsPhase make the compiler architecture literal and use typed phase composition consistently.",
+        "tests": "JarOutputTest.kt closes the selected pipeline at the artifact boundary by exercising the compiler's JAR-output contracts.",
+        "documentation": "ReadMe.md orients the repository, while the explicitly named pipeline and phase types provide a stage-by-stage implementation map from frontend analysis through JAR output.",
+        "traceability": "A JVM CLI invocation can be followed from K2JVMCompiler through every named pipeline phase to JvmWriteOutputsPhase and the JAR integration test.",
+        "maintainability": "Explicit phase inputs and outputs localize the selected compiler flow, and the bounded trace excludes IDE, Native, JavaScript, build, and plugin subsystems.",
+        "educational_value": "The path lets an advanced learner study a production compiler as a sequence of concrete transformations rather than an undifferentiated monorepo."
       },
-      "inspection": {"commit": "893937b03bee8acd82c4c6201732d9e29cb3d932", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["ReadMe.md", "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt", "compiler/cli/cli-base/src/org/jetbrains/kotlin/cli/jvm/compiler/KotlinCoreEnvironment.kt", "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFir2IrPipelinePhase.kt", "compiler/fir/entrypoint/src/org/jetbrains/kotlin/fir/pipeline/convertToIr.kt", "compiler/fir/fir2ir/src/org/jetbrains/kotlin/fir/backend/Fir2IrConverter.kt", "compiler/ir/backend.jvm/entrypoint/src/org/jetbrains/kotlin/backend/jvm/JvmIrCodegenFactory.kt", "compiler/tests-integration/tests/org/jetbrains/kotlin/cli/JarOutputTest.kt", "license/README.md", "license/LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0 AND LicenseRef-Third-Party-Notices", "url": "https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/license/README.md"},
-      "github": {"primary_language": "Kotlin", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "893937b03bee8acd82c4c6201732d9e29cb3d932",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFrontendPipelinePhase.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFir2IrPipelinePhase.kt",
+          "compiler/fir/entrypoint/src/org/jetbrains/kotlin/fir/pipeline/convertToIr.kt",
+          "compiler/fir/fir2ir/src/org/jetbrains/kotlin/fir/backend/Fir2IrConverter.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmBackendPipelinePhase.kt",
+          "compiler/ir/backend.jvm/entrypoint/src/org/jetbrains/kotlin/backend/jvm/JvmIrCodegenFactory.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmWriteOutputsPhase.kt",
+          "compiler/tests-integration/tests/org/jetbrains/kotlin/cli/JarOutputTest.kt",
+          "ReadMe.md",
+          "license/README.md",
+          "license/LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0 AND LicenseRef-Third-Party-Notices",
+        "urls": [
+          "https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/license/README.md",
+          "https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/license/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "kotlinx-coroutines",
+      "repository": "Kotlin/kotlinx.coroutines",
+      "url": "https://github.com/Kotlin/kotlinx.coroutines",
+      "primary_language": "Kotlin",
+      "language_evidence": "Coroutine jobs, continuations, dispatchers, work-stealing scheduler, channels, flows, synchronization primitives, test scheduler, debug probes, reactive adapters, and platform integrations are Kotlin.",
+      "description": "Kotlin's official multiplatform library for structured concurrency, asynchronous streams, channels, scheduling, testing, debugging, and ecosystem integration.",
+      "real_world_evidence": "JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.",
+      "why_study": "The kotlinx.coroutines Job implementation is a concentrated example of a thread-safe lifecycle state machine with cancellation, child ownership, callbacks, and exception aggregation.",
+      "learn": [
+        "Trace Job activation, cancellation, make-completing transitions, child waiting, finalization, handler notification, and exception aggregation through atomic state changes."
+      ],
+      "prerequisites": [
+        "Readers should know advanced Kotlin, coroutines and structured concurrency, atomic compare-and-set loops, linked state structures, cancellation, and exception propagation."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "The selected Job path coordinates structured coroutine lifetimes, cancellation, completion, and parent-child relationships."
+        ],
+        "reason": "Coroutine vocabulary is programming-language and concurrency infrastructure, and the trace teaches transferable state-machine, lock-free transition, lifecycle, callback, ownership, exception, and concurrency reasoning without relying on an external specialist domain."
+      },
+      "learning_path": {
+        "goal": "Understand how kotlinx.coroutines implements a thread-safe Job lifecycle across activation, completion, cancellation, child waiting, handler invocation, and exception aggregation.",
+        "start_here": {
+          "path": "kotlinx-coroutines-core/common/src/JobSupport.kt",
+          "reason": "The reviewed trace begins in JobSupport.kt because it contains the state representation and transition loops that implement the public Job contract."
+        },
+        "supporting_files": [
+          "kotlinx-coroutines-core/common/src/Job.kt",
+          "kotlinx-coroutines-core/common/test/JobStatesTest.kt",
+          "kotlinx-coroutines-core/common/test/JobTest.kt",
+          "kotlinx-coroutines-core/common/test/ParentCancellationTest.kt",
+          "kotlinx-coroutines-core/common/test/CompletableJobTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with JobSupport's state representation and atomic transition loops, follow start, cancel, make-completing, child-wait, finalization, exception aggregation, and handler notification against the public Job lifecycle contract, then close each transition and parent-child edge with the focused state, cancellation, completion, and completable-job tests; unrelated scheduler, continuation, channel, and SharedFlow machinery is excluded."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "atomicfu-backed compare-and-set loops",
+            "lock-free linked-list state and conditional additions",
+            "sealed internal state families, sentinels, and type refinement",
+            "inline fast paths and carefully controlled internal visibility"
+          ],
+          "reason": "Low-level atomic, lock-free, type-state, and performance techniques are pervasive across the selected lifecycle implementation."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "multi-phase incomplete, finishing, completed, and cancelled states",
+            "racing completion and cancellation transitions",
+            "parent-child attachment, waiting, propagation, and detachment",
+            "handler ordering, exception aggregation, suppression, and finalization"
+          ],
+          "reason": "Correctness depends on expert nonlocal reasoning across concurrent state transitions, nested ownership, callbacks, and exceptional completion."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "public Job lifecycle contract",
+            "central JobSupport state machine",
+            "lock-free node and child-handle collaborators",
+            "focused lifecycle and parent-child verification"
+          ],
+          "reason": "Several meaningful contract, implementation, collaboration, and test boundaries cooperate, but the representative path deliberately remains one subsystem."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "lock-free thread safety and linearizable state publication",
+            "structured parent-child cancellation and completion guarantees",
+            "exactly-once handler invocation under races",
+            "exception ownership, aggregation, suppression, and reporting",
+            "hot-path performance and multiplatform consistency"
+          ],
+          "reason": "Expert concurrency, lifecycle, exception, compatibility, and performance guarantees interact pervasively throughout the path."
+        },
+        "placement": "The four scores 5/5/3/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "JobSupport.kt names its states and transition phases explicitly, and Job.kt provides the public lifecycle contract against which the implementation can be read.",
+        "architecture": "The public Job abstraction delegates lifecycle management to one atomic state machine that coordinates children, handlers, completion, cancellation, and failures.",
+        "naming_and_idiom": "JobSupport, makeCompleting, finalization, child waiting, and handler nodes expose lifecycle intent while demonstrating advanced lock-free Kotlin patterns.",
+        "tests": "JobStatesTest.kt, JobTest.kt, ParentCancellationTest.kt, and CompletableJobTest.kt exercise state transitions, parent-child cancellation, completion, and explicit completable jobs.",
+        "documentation": "Job.kt documents the lifecycle contract, and README.md provides project and coroutine orientation for the bounded trace.",
+        "traceability": "Each public lifecycle action in Job.kt can be followed into JobSupport.kt's atomic transitions and then matched to a focused state or cancellation test.",
+        "maintainability": "The selected path excludes unrelated schedulers, channels, and flow machinery, leaving explicit invariants and direct regression suites around one lifecycle engine.",
+        "educational_value": "The path provides a rare, complete view of how structured-concurrency promises are enforced under races rather than merely described by an API."
+      },
+      "inspection": {
+        "commit": "f63a04bacb8beeafcc9d49199b1e4bb08931b7eb",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "kotlinx-coroutines-core/common/src/JobSupport.kt",
+          "kotlinx-coroutines-core/common/src/Job.kt",
+          "kotlinx-coroutines-core/common/test/JobStatesTest.kt",
+          "kotlinx-coroutines-core/common/test/JobTest.kt",
+          "kotlinx-coroutines-core/common/test/ParentCancellationTest.kt",
+          "kotlinx-coroutines-core/common/test/CompletableJobTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     }
   ]
 }

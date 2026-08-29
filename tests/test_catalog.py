@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import copy
 import importlib.util
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -26,54 +26,66 @@ def valid_entry() -> dict:
         "language_evidence": "The src directory contains the first-party Python implementation.",
         "description": "A real command-line tool that performs useful production work.",
         "real_world_evidence": "Published releases are used as a command-line utility by real users.",
-        "why_study": "The small implementation has explicit boundaries and behavior-focused tests.",
-        "learn": ["How a command-line request flows into a focused domain function."],
-        "prerequisites": ["Basic Python functions, modules, and exceptions."],
-        "start_here": {
-            "path": "src/tool.py",
-            "reason": "This module connects the public command to the core transformation.",
+        "why_study": "The path demonstrates a complete request, validation, and transformation boundary.",
+        "learn": ["Understand how a command request becomes a tested observable result."],
+        "prerequisites": ["Basic Python functions, modules, collections, and exceptions."],
+        "coding_relevance": {
+            "gate": "pass",
+            "domain_context": [],
+            "reason": "The path teaches reusable request validation and transformation without specialist domain knowledge.",
         },
-        "sdc": {
+        "learning_path": {
+            "goal": "Understand how a command request is validated and transformed into its observable result.",
+            "start_here": {
+                "path": "src/tool.py",
+                "reason": "This module connects the public command to the core transformation.",
+            },
+            "supporting_files": ["tests/test_tool.py"],
+            "trace": "Start at the command adapter, follow validation into the transformation, then confirm success and error behavior in the focused test.",
+        },
+        "learning_level": {
             "level": 1,
-            "size": {
+            "language_technique": {
                 "score": 1,
-                "loc": 500,
-                "tool": "tokei 14.0.0",
-                "measured_at": "2026-08-28",
-                "exclusions": ["tests"],
-                "notes": "The count covers first-party implementation source only.",
+                "signals": ["direct functions and ordinary modules"],
+                "reason": "Direct functions, ordinary modules, and basic exceptions contain the path.",
             },
-            "difficulty": {
+            "behavioral_reasoning": {
                 "score": 1,
-                "signals": ["direct control flow"],
-                "reason": "The implementation uses direct control flow and ordinary data structures.",
+                "signals": ["local synchronous data flow"],
+                "reason": "The request follows local synchronous data flow with one explicit error path.",
             },
-            "complexity": {
+            "design_span": {
                 "score": 1,
-                "signals": ["one process"],
-                "reason": "One process and two focused modules contain the important behavior.",
+                "signals": ["one focused component"],
+                "reason": "The command adapter and transformation form one focused component.",
             },
-            "placement": "All three dimensions fit the most approachable published band.",
+            "constraint_burden": {
+                "score": 1,
+                "signals": ["ordinary output correctness"],
+                "reason": "The main guarantee is the small transformation contract and expected output.",
+            },
+            "placement": "All four observed dimensions fit Level 1 and the formula returns that level.",
         },
         "quality": {
             "source_quality": "Functions are short, direct, and free of unexplained cleverness.",
-            "architecture": "The command adapter and domain transformation have a clear boundary.",
+            "architecture": "The command adapter and transformation have one clear boundary.",
             "naming_and_idiom": "Names expose intent and use conventional Python structure.",
             "tests": "Behavior tests cover the normal request and a representative error.",
             "documentation": "The README explains purpose, installation, and supported behavior.",
             "traceability": "A command can be followed through one adapter into its tested function.",
-            "maintainability": "The modules have narrow responsibilities and explicit error handling.",
-            "educational_value": "It demonstrates a complete small utility without teaching scaffolding.",
+            "maintainability": "Modules have narrow responsibilities and explicit error handling.",
+            "educational_value": "The path demonstrates a complete utility without teaching scaffolding.",
         },
         "inspection": {
             "commit": commit,
-            "inspected_at": "2026-08-28",
-            "reviewers": ["Codex"],
-            "files": ["README.md", "src/tool.py", "tests/test_tool.py"],
+            "inspected_at": "2026-08-29",
+            "reviewers": ["Codex", "independent Codex reviewer"],
+            "files": ["README.md", "src/tool.py", "tests/test_tool.py", "LICENSE"],
         },
         "license": {
             "spdx": "MIT",
-            "url": f"https://github.com/{repository}/blob/{commit}/LICENSE",
+            "urls": [f"https://github.com/{repository}/blob/{commit}/LICENSE"],
         },
         "github": {
             "primary_language": "Python",
@@ -83,50 +95,8 @@ def valid_entry() -> dict:
     }
 
 
-def valid_v2_entry() -> dict:
-    entry = valid_entry()
-    start_here = entry.pop("start_here")
-    entry.pop("sdc")
-    entry["coding_relevance"] = {
-        "gate": "pass",
-        "domain_context": [],
-        "reason": "The path teaches reusable request validation and transformation without specialist domain knowledge.",
-    }
-    entry["learning_path"] = {
-        "goal": "Understand how a command request is validated and transformed into its observable result.",
-        "start_here": start_here,
-        "supporting_files": ["tests/test_tool.py"],
-        "trace": "Start at the command adapter, follow its validation into the transformation, then confirm both success and error behavior in the focused test.",
-    }
-    entry["learning_level"] = {
-        "level": 1,
-        "language_technique": {
-            "score": 1,
-            "signals": ["direct functions and ordinary modules"],
-            "reason": "Direct functions, ordinary modules, and basic exceptions contain the selected path.",
-        },
-        "behavioral_reasoning": {
-            "score": 1,
-            "signals": ["local synchronous data flow"],
-            "reason": "The request follows local synchronous data flow with one explicit error path.",
-        },
-        "design_span": {
-            "score": 1,
-            "signals": ["one focused component"],
-            "reason": "The command adapter and transformation form one focused component across a few functions.",
-        },
-        "constraint_burden": {
-            "score": 1,
-            "signals": ["ordinary output correctness"],
-            "reason": "The main guarantee is the small transformation contract and its expected output.",
-        },
-        "placement": "All four observed dimensions fit Level 1 and the formula returns that level.",
-    }
-    return entry
-
-
 class ScoreTests(unittest.TestCase):
-    def test_learning_level_examples_and_guardrails(self) -> None:
+    def test_required_examples_and_guardrails(self) -> None:
         cases = {
             (1, 1, 1, 1): 1,
             (2, 2, 1, 1): 2,
@@ -140,35 +110,11 @@ class ScoreTests(unittest.TestCase):
             with self.subTest(scores=scores):
                 self.assertEqual(catalog_tool.calculate_learning_level(*scores), expected)
 
-    def test_size_boundaries(self) -> None:
-        cases = {
-            1: 1,
-            2_000: 1,
-            2_001: 2,
-            10_000: 2,
-            10_001: 3,
-            50_000: 3,
-            50_001: 4,
-            200_000: 4,
-            200_001: 5,
-        }
-        for loc, expected in cases.items():
-            with self.subTest(loc=loc):
-                self.assertEqual(catalog_tool.size_score(loc), expected)
-
-    def test_combination_examples_and_guardrails(self) -> None:
-        cases = {
-            (1, 1, 1): 1,
-            (2, 3, 2): 2,
-            (1, 5, 2): 4,
-            (5, 2, 3): 3,
-            (5, 5, 4): 5,
-            (1, 1, 5): 4,
-            (1, 5, 5): 5,
-        }
-        for scores, expected in cases.items():
+    def test_invalid_inputs_are_rejected(self) -> None:
+        for scores in ((0, 1, 1, 1), (1, 6, 1, 1), (1, 1.5, 1, 1), (True, 1, 1, 1)):
             with self.subTest(scores=scores):
-                self.assertEqual(catalog_tool.combined_level(*scores), expected)
+                with self.assertRaisesRegex(ValueError, "integers from 1 through 5"):
+                    catalog_tool.calculate_learning_level(*scores)
 
 
 class RecordValidationTests(unittest.TestCase):
@@ -179,219 +125,221 @@ class RecordValidationTests(unittest.TestCase):
             entry, self.language, 0, seen if seen is not None else set(), set()
         )
 
-    def test_valid_record_passes(self) -> None:
-        self.assertEqual(self.validate(valid_entry()), [])
-
-    def test_missing_field_fails(self) -> None:
+    def test_valid_record_passes_and_renders_learning_evidence(self) -> None:
         entry = valid_entry()
-        del entry["description"]
-        errors = self.validate(entry)
-        self.assertTrue(any("missing fields description" in error for error in errors))
+        self.assertEqual(self.validate(entry), [])
+        rendered = "\n".join(catalog_tool.render_repository(entry))
+        self.assertIn("Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1", rendered)
+        self.assertIn("**Coding relevance:**", rendered)
+        self.assertIn("**Learning path:**", rendered)
+        self.assertIn("tests/test_tool.py", rendered)
+
+    def test_missing_and_obsolete_fields_fail(self) -> None:
+        missing = valid_entry()
+        del missing["description"]
+        self.assertTrue(any("missing fields description" in error for error in self.validate(missing)))
+        obsolete = valid_entry()
+        obsolete["sdc"] = {"level": 1}
+        self.assertTrue(any("unexpected fields sdc" in error for error in self.validate(obsolete)))
 
     def test_duplicate_repository_fails(self) -> None:
         seen: set[str] = set()
         self.assertEqual(self.validate(valid_entry(), seen), [])
-        errors = self.validate(valid_entry(), seen)
-        self.assertTrue(any("duplicate across catalog" in error for error in errors))
+        self.assertTrue(any("duplicate across catalog" in error for error in self.validate(valid_entry(), seen)))
 
-    def test_invalid_score_and_formula_fail(self) -> None:
-        entry = valid_entry()
-        entry["sdc"]["level"] = 3
-        errors = self.validate(entry)
-        self.assertTrue(any("requires SDC 1, not 3" in error for error in errors))
-        entry["sdc"]["difficulty"]["score"] = 6
-        errors = self.validate(entry)
-        self.assertTrue(any("expected integer from 1 through 5" in error for error in errors))
+    def test_score_range_and_formula_are_enforced(self) -> None:
+        invalid = valid_entry()
+        invalid["learning_level"]["language_technique"]["score"] = 6
+        self.assertTrue(any("integer from 1 through 5" in error for error in self.validate(invalid)))
+        mismatch = valid_entry()
+        mismatch["learning_level"]["level"] = 3
+        self.assertTrue(any("require Level 1, not 3" in error for error in self.validate(mismatch)))
 
-    def test_unsafe_slug_and_bad_url_fail(self) -> None:
-        entry = valid_entry()
-        entry["slug"] = "Bad Slug"
-        entry["url"] = "http://example.com/not-github"
-        errors = self.validate(entry)
-        self.assertTrue(any("single hyphens" in error for error in errors))
-        self.assertTrue(any("expected https://github.com" in error for error in errors))
+    def test_coding_relevance_gate_is_required_and_must_pass(self) -> None:
+        missing = valid_entry()
+        del missing["coding_relevance"]["gate"]
+        self.assertTrue(any("missing fields gate" in error for error in self.validate(missing)))
+        failed = valid_entry()
+        failed["coding_relevance"]["gate"] = "fail"
+        self.assertTrue(any("expected constant pass" in error for error in self.validate(failed)))
 
-    def test_dotenv_inspection_path_is_rejected(self) -> None:
+    def test_learning_path_requires_goal_start_support_and_trace(self) -> None:
+        cases = (("goal",), ("trace",), ("start_here",), ("supporting_files",), ("start_here", "path"))
+        for path in cases:
+            with self.subTest(path=path):
+                entry = valid_entry()
+                target = entry["learning_path"]
+                for part in path[:-1]:
+                    target = target[part]
+                del target[path[-1]]
+                self.assertTrue(any("missing fields" in error for error in self.validate(entry)))
+
+    def test_learning_and_license_paths_must_be_inspected(self) -> None:
+        learning = valid_entry()
+        learning["inspection"]["files"].remove("tests/test_tool.py")
+        self.assertTrue(any("must also appear" in error for error in self.validate(learning)))
+        license_entry = valid_entry()
+        license_entry["inspection"]["files"].remove("LICENSE")
+        self.assertTrue(any("license path must appear" in error for error in self.validate(license_entry)))
+
+    def test_dotenv_variants_are_rejected_everywhere(self) -> None:
+        names = (
+            ".env",
+            "service.env",
+            ".env.local",
+            "service.env.production",
+            ".ENV",
+            "SERVICE.ENV.production",
+        )
+        for name in names:
+            for field in ("start", "supporting", "inspection"):
+                with self.subTest(name=name, field=field):
+                    entry = valid_entry()
+                    value = f"config/{name}"
+                    if field == "start":
+                        entry["learning_path"]["start_here"]["path"] = value
+                    elif field == "supporting":
+                        entry["learning_path"]["supporting_files"][0] = value
+                    else:
+                        entry["inspection"]["files"][0] = value
+                    self.assertTrue(any("non-dotenv" in error for error in self.validate(entry)))
+
+    def test_paths_must_be_canonical_relative_and_unique(self) -> None:
+        for invalid_path in ("/src/tool.py", "../src/tool.py", "src//tool.py", "src/./tool.py", "src\\tool.py"):
+            with self.subTest(path=invalid_path):
+                entry = valid_entry()
+                entry["learning_path"]["start_here"]["path"] = invalid_path
+                self.assertTrue(any("canonical safe" in error for error in self.validate(entry)))
+        duplicate_support = valid_entry()
+        duplicate_support["learning_path"]["supporting_files"] *= 2
+        self.assertTrue(any("duplicate value" in error for error in self.validate(duplicate_support)))
+        duplicate_inspection = valid_entry()
+        duplicate_inspection["inspection"]["files"].append("README.md")
+        self.assertTrue(any("duplicate value" in error for error in self.validate(duplicate_inspection)))
+
+    def test_repository_url_commit_date_language_and_prose_are_checked(self) -> None:
         entry = valid_entry()
-        entry["inspection"]["files"][1] = "config/service.env.production"
+        entry["url"] = "https://example.com/not-github"
+        entry["inspection"]["commit"] = "bad"
+        entry["inspection"]["inspected_at"] = "2026-99-99"
+        entry["primary_language"] = "Ruby"
+        entry["why_study"] = "short"
         errors = self.validate(entry)
-        self.assertTrue(any("non-dotenv relative path" in error for error in errors))
+        for fragment in ("expected https://github.com", "40 lowercase", "ISO date", "expected catalog language", "at least 20"):
+            self.assertTrue(any(fragment in error for error in errors), fragment)
+
+    def test_license_urls_are_unique_and_pinned_to_the_inspection(self) -> None:
+        wrong_commit = valid_entry()
+        wrong_commit["license"]["urls"][0] = "https://github.com/example/real-tool/blob/" + "b" * 40 + "/LICENSE"
+        self.assertTrue(any("expected URL pinned" in error for error in self.validate(wrong_commit)))
+        duplicate = valid_entry()
+        duplicate["license"]["urls"] *= 2
+        self.assertTrue(any("duplicate value" in error for error in self.validate(duplicate)))
 
     def test_github_linguist_label_may_differ_with_source_evidence(self) -> None:
         entry = valid_entry()
         entry["github"]["primary_language"] = "Jupyter Notebook"
         self.assertEqual(self.validate(entry), [])
 
-    def test_loc_must_match_size_band(self) -> None:
-        entry = valid_entry()
-        entry["sdc"]["size"]["loc"] = 2_001
-        errors = self.validate(entry)
-        self.assertTrue(any("requires S2, not S1" in error for error in errors))
-
-
-class VersionTwoRecordValidationTests(unittest.TestCase):
-    language = {"slug": "python", "name": "Python"}
-
-    def validate(self, entry: dict, seen: set[str] | None = None) -> list[str]:
-        return catalog_tool.validate_repository_v2(
-            entry, self.language, 0, seen if seen is not None else set(), set()
-        )
-
-    def test_valid_record_passes_and_renders_learning_evidence(self) -> None:
-        entry = valid_v2_entry()
-        self.assertEqual(self.validate(entry), [])
-        rendered = "\n".join(catalog_tool.render_repository_v2(entry))
-        self.assertIn("Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1", rendered)
-        self.assertIn("**Coding relevance:**", rendered)
-        self.assertIn("**Learning path:**", rendered)
-        self.assertIn("tests/test_tool.py", rendered)
-
-    def test_stored_level_must_match_formula(self) -> None:
-        entry = valid_v2_entry()
-        entry["learning_level"]["level"] = 3
-        errors = self.validate(entry)
-        self.assertTrue(any("require Level 1, not 3" in error for error in errors))
-
-    def test_each_dimension_rejects_scores_outside_one_through_five(self) -> None:
-        dimensions = (
-            "language_technique",
-            "behavioral_reasoning",
-            "design_span",
-            "constraint_burden",
-        )
-        for dimension, invalid in zip(dimensions, (0, 6, 1.5, True), strict=True):
-            with self.subTest(dimension=dimension, invalid=invalid):
-                entry = valid_v2_entry()
-                entry["learning_level"][dimension]["score"] = invalid
-                errors = self.validate(entry)
-                self.assertTrue(
-                    any(
-                        f"learning_level.{dimension}.score: expected integer from 1 through 5"
-                        in error
-                        for error in errors
-                    )
-                )
-
-    def test_coding_relevance_gate_is_required_and_must_pass(self) -> None:
-        missing = valid_v2_entry()
-        del missing["coding_relevance"]["gate"]
-        self.assertTrue(
-            any("missing fields gate" in error for error in self.validate(missing))
-        )
-
-        failed = valid_v2_entry()
-        failed["coding_relevance"]["gate"] = "fail"
-        self.assertTrue(
-            any("expected constant pass" in error for error in self.validate(failed))
-        )
-
-    def test_learning_path_requires_goal_trace_start_and_supporting_files(self) -> None:
-        cases = (
-            ("goal",),
-            ("trace",),
-            ("start_here",),
-            ("supporting_files",),
-            ("start_here", "path"),
-        )
-        for path in cases:
-            with self.subTest(path=path):
-                entry = valid_v2_entry()
-                target = entry["learning_path"]
-                for part in path[:-1]:
-                    target = target[part]
-                del target[path[-1]]
-                errors = self.validate(entry)
-                self.assertTrue(any("missing fields" in error for error in errors))
-
-    def test_every_learning_path_file_must_be_inspected(self) -> None:
-        entry = valid_v2_entry()
-        entry["inspection"]["files"].remove("tests/test_tool.py")
-        errors = self.validate(entry)
-        self.assertTrue(any("must also appear in inspection.files" in error for error in errors))
-
-    def test_dotenv_like_learning_and_inspection_paths_are_rejected(self) -> None:
-        for field in ("start", "supporting", "inspection"):
-            with self.subTest(field=field):
-                entry = valid_v2_entry()
-                if field == "start":
-                    entry["learning_path"]["start_here"]["path"] = ".env.local"
-                elif field == "supporting":
-                    entry["learning_path"]["supporting_files"][0] = "config/service.env"
-                else:
-                    entry["inspection"]["files"][0] = "nested/secrets.env.production"
-                errors = self.validate(entry)
-                self.assertTrue(any("non-dotenv relative path" in error for error in errors))
-
-    def test_obsolete_or_unrecognized_fields_are_rejected(self) -> None:
-        entry = valid_v2_entry()
-        entry["sdc"] = {"level": 1}
-        errors = self.validate(entry)
-        self.assertTrue(any("unexpected fields sdc" in error for error in errors))
-
-    def test_supporting_file_is_distinct_and_unique(self) -> None:
-        entry = valid_v2_entry()
-        entry["learning_path"]["supporting_files"] = [
-            "src/tool.py",
-            "tests/test_tool.py",
-            "tests/test_tool.py",
-        ]
-        errors = self.validate(entry)
-        self.assertTrue(any("in addition to start_here.path" in error for error in errors))
-        self.assertTrue(any("duplicate path" in error for error in errors))
-
 
 class CatalogIntegrationTests(unittest.TestCase):
-    def make_root(self, *, empty: bool = False, schema_version: int = 1) -> Path:
+    def make_root(self, *, empty: bool = False, schema_version: int = 2) -> Path:
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
         catalog = root / "catalog"
         catalog.mkdir()
-        language_data = json.loads((ROOT / "catalog" / "languages.json").read_text())
-        (catalog / "languages.json").write_text(
-            json.dumps(language_data, indent=2) + "\n", encoding="utf-8"
-        )
+        for name in ("languages.json", "schema.json"):
+            (catalog / name).write_text((ROOT / "catalog" / name).read_text(encoding="utf-8"), encoding="utf-8")
+        language_data = json.loads((catalog / "languages.json").read_text(encoding="utf-8"))
         for language in language_data["languages"]:
             source = ROOT / "catalog" / f"{language['slug']}.json"
             destination = catalog / source.name
             if empty:
-                content = {
-                    "schema_version": schema_version,
-                    "language_slug": language["slug"],
-                    "repositories": [],
-                }
-                destination.write_text(
-                    json.dumps(content, indent=2) + "\n", encoding="utf-8"
-                )
+                content = {"schema_version": schema_version, "language_slug": language["slug"], "repositories": []}
+                destination.write_text(json.dumps(content, indent=2) + "\n", encoding="utf-8")
             else:
                 destination.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
         return root
 
-    def test_complete_mode_catches_missing_corpus(self) -> None:
-        errors = catalog_tool.validate_catalog(self.make_root(empty=True), complete=True)
-        self.assertTrue(any("requires 200 repositories; found 0" in error for error in errors))
-        self.assertTrue(any("SDC 1 requires 2 entries" in error for error in errors))
+    def test_current_catalog_schema_and_rebuild_audit_reconcile(self) -> None:
+        self.assertEqual(catalog_tool.validate_catalog(ROOT), [])
 
-    def test_version_two_incomplete_catalog_is_valid_but_not_complete(self) -> None:
-        root = self.make_root(empty=True, schema_version=2)
+    def test_schema_version_one_is_rejected(self) -> None:
+        root = self.make_root(empty=True, schema_version=1)
+        errors = catalog_tool.validate_catalog(root)
+        self.assertTrue(any("schema_version: expected 2" in error for error in errors))
+
+    def test_incomplete_catalog_is_valid_but_not_complete(self) -> None:
+        root = self.make_root(empty=True)
         self.assertEqual(catalog_tool.validate_catalog(root), [])
         errors = catalog_tool.validate_catalog(root, complete=True)
-        self.assertTrue(any("requires 200 repositories; found 0" in error for error in errors))
+        self.assertTrue(any("complete catalog requires 200 repositories; found 0" in error for error in errors))
         self.assertTrue(any("Level 1 requires 2 entries" in error for error in errors))
 
-    def test_stale_generated_markdown_is_detected(self) -> None:
+    def test_schema_and_manual_validator_stay_aligned(self) -> None:
+        self.assertEqual(catalog_tool.validate_schema(ROOT), [])
+        published_schema = json.loads(
+            (ROOT / "catalog" / "schema.json").read_text(encoding="utf-8")
+        )
+        published_path_pattern = re.compile(
+            published_schema["$defs"]["safePath"]["pattern"]
+        )
+        for invalid_path in (
+            ".env",
+            "config/SERVICE.ENV.production",
+            "src/./tool.py",
+            "src/",
+            "README.md/",
+            "../src/tool.py",
+            "src//tool.py",
+            "src\\tool.py",
+        ):
+            with self.subTest(invalid_path=invalid_path):
+                self.assertIsNone(published_path_pattern.fullmatch(invalid_path))
+        root = self.make_root(empty=True)
+        schema_path = root / "catalog" / "schema.json"
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        schema["$defs"]["repository"]["required"].remove("learning_path")
+        schema_path.write_text(json.dumps(schema, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(any("required fields differ" in error for error in catalog_tool.validate_schema(root)))
+        schema = json.loads(
+            (ROOT / "catalog" / "schema.json").read_text(encoding="utf-8")
+        )
+        schema["$defs"]["safePath"]["pattern"] = r".+"
+        schema_path.write_text(json.dumps(schema, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "safePath pattern differs" in error
+                for error in catalog_tool.validate_schema(root)
+            )
+        )
+
+    def test_generated_markdown_is_deterministic_and_staleness_is_detected(self) -> None:
         root = self.make_root()
+        first = catalog_tool.generated_files(root)
+        second = catalog_tool.generated_files(root)
+        self.assertEqual(first, second)
         catalog_tool.write_generated(root)
         self.assertEqual(catalog_tool.check_generated(root), [])
         index = root / "languages" / "README.md"
         index.write_text("stale\n", encoding="utf-8")
         self.assertIn("stale generated file: languages/README.md", catalog_tool.check_generated(root))
 
-    def test_generation_is_deterministic(self) -> None:
-        root = self.make_root()
-        first = catalog_tool.generated_files(root)
-        second = catalog_tool.generated_files(root)
-        self.assertEqual(first, second)
+    def test_no_active_entry_contains_sdc_or_top_level_start_here(self) -> None:
+        languages = json.loads((ROOT / "catalog" / "languages.json").read_text(encoding="utf-8"))["languages"]
+        for language in languages:
+            data = json.loads((ROOT / "catalog" / f"{language['slug']}.json").read_text(encoding="utf-8"))
+            self.assertEqual(data["schema_version"], 2)
+            for entry in data["repositories"]:
+                self.assertNotIn("sdc", entry)
+                self.assertNotIn("start_here", entry)
+
+    def test_multi_license_evidence_is_representable(self) -> None:
+        shelf = json.loads((ROOT / "catalog" / "dart.json").read_text(encoding="utf-8"))
+        entry = next(item for item in shelf["repositories"] if item["repository"] == "dart-lang/shelf")
+        self.assertEqual(entry["license"]["spdx"], "Apache-2.0 AND BSD-3-Clause")
+        self.assertGreaterEqual(len(entry["license"]["urls"]), 2)
 
 
 if __name__ == "__main__":

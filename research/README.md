@@ -1,8 +1,18 @@
 # Research records
 
-This directory preserves evidence that does not belong in learner-facing pages:
-rejected candidates, corpus audit results, and calibration notes. Accepted
-candidate evidence lives in the canonical files under `catalog/` and is
-rendered into `languages/`.
+This directory preserves decision evidence outside learner-facing pages.
 
-The process is defined in [`../docs/research-process.md`](../docs/research-process.md).
+- `learner-centered-rebuild.json` records the complete, independently reviewed
+  retain/remove decision for every v1.0.0 entry.
+- `learner-centered-cutover-overrides.json` records the explicit path-specific
+  learner and eight-part quality prose required where v1 text could not be
+  carried over safely.
+- `rejections.json` is append-only: it contains discovery rejections, cutover
+  removals, and later serious candidates that did not qualify.
+- `audit.json` is the historical v1 Size / Difficulty / Complexity corpus audit;
+  it is not the current cutover verification record.
+- Accepted evidence lives in schema-version-2 files under `../catalog/` and is
+  rendered into `../languages/`.
+
+See the [research process](../docs/research-process.md), [learning-level
+rubric](../docs/learning-levels.md), and [quality gate](../docs/qualification.md).

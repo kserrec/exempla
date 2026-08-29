@@ -1,40 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "language_slug": "objective-c",
   "repositories": [
-    {
-      "slug": "textbundle",
-      "repository": "shinyfrog/TextBundle",
-      "url": "https://github.com/shinyfrog/TextBundle",
-      "primary_language": "Objective-C",
-      "language_evidence": "TextBundle package reading and writing, metadata projection, Uniform Type Identifier handling, asset collision handling, errors, and tests are Objective-C.",
-      "description": "A compact framework for reading, creating, and writing TextBundle document packages with metadata, text, and optional assets.",
-      "real_world_evidence": "The framework implements the TextBundle interchange format used by writing applications and ships macOS and iOS targets.",
-      "why_study": "A few files expose the complete path from an on-disk directory package through NSFileWrapper, JSON metadata, text type selection, attachments, validation, and atomic persistence.",
-      "learn": ["Objective-C properties, NSFileWrapper packages, JSON serialization, Uniform Type Identifiers, NSError conventions, metadata preservation, asset filenames, and fixture tests."],
-      "prerequisites": ["Objective-C classes and properties, Foundation collections and data, files and URLs, JSON, nullable errors, and document packages."],
-      "start_here": {"path": "TextBundle/TextBundleWrapper.m", "reason": "The implementation can be read end to end, from defaults through file-wrapper construction, parsing, validation, assets, and filename generation."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 246, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["TextBundleTests/", "example applications", "framework wrappers, resources, documentation, and project metadata"], "notes": "Count covers the shared Objective-C implementation and public headers used by both platform targets."},
-        "difficulty": {"score": 2, "signals": ["directory-package validation", "metadata and asset ownership", "filename and type mapping"], "reason": "Serialization and filesystem edges require care, but Foundation supplies the storage machinery and transformations remain direct."},
-        "complexity": {"score": 1, "signals": ["one document wrapper", "one local filesystem boundary"], "reason": "One cohesive class owns a small format without asynchronous, service, plugin, or process coordination."},
-        "placement": "S1/D2/C1 averages to 1.33, making TextBundle an SDC 1 project."
-      },
-      "quality": {
-        "source_quality": "Required-file checks, metadata extraction, asset deduplication, package construction, and errors are visible in short methods over Foundation values.",
-        "architecture": "One shared wrapper contains the format behavior while thin macOS and iOS targets expose it.",
-        "naming_and_idiom": "info.json, textFilenameForType, fileWrapper, metadata, assetsFileWrapper, readFromURL, and writeToURL mirror the package vocabulary.",
-        "tests": "Fixtures cover text-only and attachment packages, missing members, invalid input, creation, writing, and asset collisions; one write-to-new-URL test mistakenly reloads its source fixture, so it is not a complete persistence round trip.",
-        "documentation": "The README explains the TextBundle format, platform targets, installation, and wrapper role.",
-        "traceability": "A bundle can be followed from NSFileWrapper through info.json and text selection into properties, then back through fileWrapper and writeToURL.",
-        "maintainability": "Format constants and transformations are centralized, the surface is narrow, and representative packages live beside the tests.",
-        "educational_value": "It is an approachable first study of mapping a real document format onto Foundation without a framework-sized abstraction."
-      },
-      "inspection": {"commit": "eb0e2c75afec3817cf6817548179fe679ba565ee", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "TextBundle/TextBundleWrapper.h", "TextBundle/TextBundleWrapper.m", "TextBundleTests/TextBundleTests.m", "TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
     {
       "slug": "mcuiviewlayout",
       "repository": "mirego/MCUIViewLayout",
@@ -44,15 +11,73 @@
       "description": "A small UIView layout library for sizing and positioning views against superviews and siblings with explicit geometry helpers.",
       "real_world_evidence": "The repository distributes Objective-C and Swift package products and documents UIKit use through Swift Package Manager and CocoaPods.",
       "why_study": "It turns repetitive frame arithmetic into a bounded vocabulary while leaving every CGRect calculation, margin rule, display-scale rounding choice, and category method visible.",
-      "learn": ["Objective-C categories, NS_OPTIONS bitmasks, CGRect arithmetic, sibling and superview coordinates, display-scale rounding, compatibility, and geometry tests."],
-      "prerequisites": ["Objective-C methods and categories, UIKit views and frames, C structs and bitmasks, coordinate systems, floating-point rounding, and XCTest."],
-      "start_here": {"path": "Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m", "reason": "The calculation category expresses the geometry rules without mutation; the public category then applies returned rectangles to views."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 716, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Sources/MCUIViewLayout/", "MCUIViewLayoutExample/", "documentation and package metadata"], "notes": "Count covers all production Objective-C and public headers under Sources/MCUIViewLayoutObjC, excluding the parallel Swift implementation."},
-        "difficulty": {"score": 2, "signals": ["coordinate-system translation", "bitmask position composition", "display-scale-aware rounding"], "reason": "Geometry combinations and pixel rounding need precision, but each rule is deterministic and uses familiar UIKit primitives."},
-        "complexity": {"score": 1, "signals": ["one layout concern", "calculation and mutation categories"], "reason": "The library has one in-process responsibility and a short path from a position request to a frame."},
-        "placement": "S1/D2/C1 averages to 1.33, making MCUIViewLayout an SDC 1 project."
+      "learn": [
+        "Objective-C categories, NS_OPTIONS bitmasks, CGRect arithmetic, sibling and superview coordinates, display-scale rounding, compatibility, and geometry tests."
+      ],
+      "prerequisites": [
+        "Objective-C methods and categories, UIKit views and frames, C structs and bitmasks, coordinate systems, floating-point rounding, and XCTest."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "UIKit represents a view's position and size with CGRect values in superview and sibling coordinate systems."
+        ],
+        "reason": "That short user-interface geometry primer is subordinate to transferable lessons in category design, bitmask options, pure calculations before mutation, coordinate translation, composition of fitting and positioning operations, display-scale rounding, compatibility facades, and exhaustive boundary tests."
+      },
+      "learning_path": {
+        "goal": "Understand how a small Objective-C category library turns composable layout options into exact, scale-aware view frames.",
+        "start_here": {
+          "path": "Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m",
+          "reason": "The calculation category expresses the geometry rules without mutation; the public category then applies returned rectangles to views."
+        },
+        "supporting_files": [
+          "Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m",
+          "Sources/MCUIViewLayoutObjC/UIView+MCLayout.m",
+          "MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m",
+          "README.md",
+          "LICENSE.md"
+        ],
+        "trace": "Start with the pure mc_getRect calculation entry points, follow superview and sibling coordinate selection, combined fitting options, margins, and delegation into MCUIViewLayoutPosition's scale-rounded arithmetic, then see UIView+MCLayout apply the calculated frame and close representative CGRect contracts in the direct calculation suite."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "Objective-C categories over UIKit classes",
+            "NS_OPTIONS bitmask composition",
+            "C struct arithmetic with UIEdgeInsets and CGRect"
+          ],
+          "reason": "Several ordinary Objective-C and UIKit idioms materially shape the API without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "parent-relative and sibling-relative coordinate cases",
+            "composed fit, center, edge, and margin branches",
+            "localized display-scale rounding"
+          ],
+          "reason": "Several explicit geometric cases recur, but all reasoning stays synchronous and local."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one geometry helper",
+            "one calculation category and thin mutation category",
+            "focused geometry suites"
+          ],
+          "reason": "One small cohesive library contains the design."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "coordinate-system and margin semantics must remain exact",
+            "combined options must compose without contradictory axes",
+            "display-scale rounding and compatibility behavior must avoid visible layout drift"
+          ],
+          "reason": "Several precision, composition, and compatibility guarantees constrain ordinary changes."
+        },
+        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
         "source_quality": "Pure calculation methods separate geometry from frame mutation, combinations are explicit, and scale-aware rounding avoids blurred half-pixel placement.",
@@ -64,9 +89,148 @@
         "maintainability": "The Objective-C implementation is compact, calculation logic is reusable, compatibility code is isolated, and geometry cases are enumerated in focused suites.",
         "educational_value": "It demonstrates how a small convenience API can improve call-site language while preserving transparent, testable arithmetic."
       },
-      "inspection": {"commit": "987cb7ee525f03aeae81db7e3ad639080e23bc46", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m", "Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m", "Sources/MCUIViewLayoutObjC/UIView+MCLayout.m", "MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m", "LICENSE.md"]},
-      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/LICENSE.md"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "987cb7ee525f03aeae81db7e3ad639080e23bc46",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m",
+          "Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m",
+          "Sources/MCUIViewLayoutObjC/UIView+MCLayout.m",
+          "MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m",
+          "README.md",
+          "LICENSE.md"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/LICENSE.md"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "textbundle",
+      "repository": "shinyfrog/TextBundle",
+      "url": "https://github.com/shinyfrog/TextBundle",
+      "primary_language": "Objective-C",
+      "language_evidence": "TextBundle package reading and writing, metadata projection, Uniform Type Identifier handling, asset collision handling, errors, and tests are Objective-C.",
+      "description": "A compact framework for reading, creating, and writing TextBundle document packages with metadata, text, and optional assets.",
+      "real_world_evidence": "The framework implements the TextBundle interchange format used by writing applications and ships macOS and iOS targets.",
+      "why_study": "A few files expose the complete path from an on-disk directory package through NSFileWrapper, JSON metadata, text type selection, attachments, validation, and atomic persistence.",
+      "learn": [
+        "Objective-C properties, NSFileWrapper packages, JSON serialization, Uniform Type Identifiers, NSError conventions, metadata preservation, asset filenames, and fixture tests."
+      ],
+      "prerequisites": [
+        "Objective-C classes and properties, Foundation collections and data, files and URLs, JSON, nullable errors, and document packages."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A TextBundle is a directory package whose info.json names a text file and optional assets for interchange between writing applications."
+        ],
+        "reason": "That short format primer is subordinate to transferable file-format engineering: Foundation object modeling, directory-package validation, JSON metadata projection, filename and Uniform Type Identifier mapping, attachment ownership, collision handling, errors, and round-trip tests."
+      },
+      "learning_path": {
+        "goal": "Understand how a compact Objective-C model validates, reads, mutates, and writes a directory-based document package without losing metadata or assets.",
+        "start_here": {
+          "path": "TextBundle/TextBundleWrapper.m",
+          "reason": "The implementation can be read end to end, from defaults through file-wrapper construction, parsing, validation, assets, and filename generation."
+        },
+        "supporting_files": [
+          "TextBundle/TextBundleWrapper.h",
+          "TextBundleTests/TextBundleTests.m",
+          "TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with initialization and readFromURL, follow NSFileWrapper validation into info.json decoding, text filename and type selection, metadata properties, and optional assets, then reverse the flow through fileWrapper, textFilenameForType, asset collision handling, and writeToURL before closing the format and error cases in TextBundleTests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "Objective-C properties and nullable NSError conventions",
+            "NSFileWrapper directory-package composition",
+            "block-based collection traversal over Foundation values"
+          ],
+          "reason": "Several ordinary Objective-C and Foundation idioms shape the path, without advanced runtime or language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "read and write transformations between a package tree and object state",
+            "explicit missing-member, malformed-metadata, and asset-collision branches",
+            "localized filename and type selection"
+          ],
+          "reason": "The behavior has several cases but remains synchronous and locally traceable in one class."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one cohesive document wrapper",
+            "one local filesystem and JSON boundary",
+            "one fixture-driven suite"
+          ],
+          "reason": "One unit contains nearly the complete design."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "required package members and metadata keys must remain valid",
+            "text type, filenames, assets, and errors must round-trip consistently",
+            "filesystem replacement and asset collision behavior must avoid silent loss"
+          ],
+          "reason": "Several format, persistence, and data-preservation guarantees constrain otherwise ordinary changes."
+        },
+        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "Required-file checks, metadata extraction, asset deduplication, package construction, and errors are visible in short methods over Foundation values.",
+        "architecture": "One shared wrapper contains the format behavior while thin macOS and iOS targets expose it.",
+        "naming_and_idiom": "info.json, textFilenameForType, fileWrapper, metadata, assetsFileWrapper, readFromURL, and writeToURL mirror the package vocabulary.",
+        "tests": "Fixtures cover text-only and attachment packages, missing members, invalid input, creation, writing, and asset collisions; one write-to-new-URL test mistakenly reloads its source fixture, so it is not a complete persistence round trip.",
+        "documentation": "The README explains the TextBundle format, platform targets, installation, and wrapper role.",
+        "traceability": "A bundle can be followed from NSFileWrapper through info.json and text selection into properties, then back through fileWrapper and writeToURL.",
+        "maintainability": "Format constants and transformations are centralized, the surface is narrow, and representative packages live beside the tests.",
+        "educational_value": "It is an approachable first study of mapping a real document format onto Foundation without a framework-sized abstraction."
+      },
+      "inspection": {
+        "commit": "eb0e2c75afec3817cf6817548179fe679ba565ee",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "TextBundle/TextBundleWrapper.m",
+          "TextBundle/TextBundleWrapper.h",
+          "TextBundleTests/TextBundleTests.m",
+          "TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "pinoperation",
@@ -77,15 +241,74 @@
       "description": "A thread-safe operation queue with priorities, dynamic concurrency limits, cancellation, data coalescing, completions, and operation groups.",
       "real_world_evidence": "Pinterest maintains and releases PINOperation as an Apple-platform library through Swift Package Manager and CocoaPods.",
       "why_study": "Its small surface reveals recursive locks, serial and concurrent lanes, semaphores, dispatch groups, priority queues, weak reference maps, duplicate-work coalescing, and nested work.",
-      "learn": ["Grand Central Dispatch queues, groups, and semaphores, pthread mutexes, bounded concurrency, priorities, cancellation, coalescing, completion fan-out, and asynchronous XCTest."],
-      "prerequisites": ["Comfortable Objective-C, blocks, Foundation collections, Grand Central Dispatch, mutexes and semaphores, race conditions, cancellation, and asynchronous tests."],
-      "start_here": {"path": "Source/PINOperationQueue.m", "reason": "The queue connects registration, priority buckets, locking, serial and concurrent dispatch, cancellation, coalescing, dynamic limits, and completion accounting."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 586, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Example/", "docs/"], "notes": "Count covers every production implementation and public header under Source."},
-        "difficulty": {"score": 3, "signals": ["recursive synchronization and nested scheduling", "serial and semaphore-bounded concurrent lanes", "cancellation, priority mutation, and coalescing races"], "reason": "Correctness depends on ordering and shared-state invariants, but the scheduler uses a small set of explicit queues and lock-protected collections."},
-        "complexity": {"score": 2, "signals": ["queue and group abstractions", "priority, cancellation, coalescing, waiting, and completion modes"], "reason": "Several lifecycle paths interact inside one in-process scheduling library with two principal classes."},
-        "placement": "S1/D3/C2 averages to 2.00, making PINOperation an SDC 2 project."
+      "learn": [
+        "Grand Central Dispatch queues, groups, and semaphores, pthread mutexes, bounded concurrency, priorities, cancellation, coalescing, completion fan-out, and asynchronous XCTest."
+      ],
+      "prerequisites": [
+        "Comfortable Objective-C, blocks, Foundation collections, Grand Central Dispatch, mutexes and semaphores, race conditions, cancellation, and asynchronous tests."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An operation queue schedules blocks for serial or bounded-concurrent execution and may expose priorities, cancellation, and groups."
+        ],
+        "reason": "That familiar concurrency vocabulary is subordinate to transferable scheduler engineering: recursive mutex ownership, priority ordering, serial and concurrent lanes, semaphore-based dynamic limits, dispatch-group accounting, cancellation races, work coalescing, completion fan-out, reference lifetime, nested work, and asynchronous contract tests."
+      },
+      "learning_path": {
+        "goal": "Understand how an Objective-C operation queue preserves priority, cancellation, coalescing, completion, and bounded-concurrency invariants across serial and concurrent work.",
+        "start_here": {
+          "path": "Source/PINOperationQueue.m",
+          "reason": "The queue connects registration, priority buckets, locking, serial and concurrent dispatch, cancellation, coalescing, dynamic limits, and completion accounting."
+        },
+        "supporting_files": [
+          "Source/PINOperationQueue.h",
+          "Source/PINOperationGroup.m",
+          "Tests/PINOperationQueueTests.m",
+          "Tests/PINOperationGroupTests.m",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with scheduleOperation and reference allocation, follow recursive-lock protection into priority sets and identifier-based coalescing, then trace dispatch-group entry, serial or semaphore-bounded concurrent execution, cancellation and completion fan-out, runtime limit changes, group completion, and nested waiting before closing each invariant in the queue and group suites."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "Objective-C blocks and protocol-typed operation references",
+            "Grand Central Dispatch queues, groups, and semaphores",
+            "pthread recursive mutexes and weak reference maps"
+          ],
+          "reason": "Substantial Objective-C and platform concurrency mechanisms materially shape the scheduler without expert runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "priority-ordered serial and concurrent lanes",
+            "coalesced work and completion fan-out under cancellation races",
+            "dynamic semaphore limits, nested work, waits, and group completion"
+          ],
+          "reason": "Advanced nonlocal scheduling, ownership, and event-order reasoning recurs across asynchronous callbacks."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "one reusable queue",
+            "one operation record and reference boundary",
+            "one group abstraction with direct suites"
+          ],
+          "reason": "A few clear units contain the complete design."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "group enter and leave, reference lifetime, and completion counts must balance exactly",
+            "priority, cancellation, coalescing, and bounded concurrency must remain race-safe",
+            "nested waits and runtime limit changes must not deadlock or oversubscribe"
+          ],
+          "reason": "Multiple strict concurrency, lifecycle, ordering, and liveness guarantees interact."
+        },
+        "placement": "The four scores 3/4/2/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
         "source_quality": "Lock boundaries, queue membership, dispatch-group accounting, completion ownership, semaphore changes, and cancellation results are explicit.",
@@ -97,108 +320,34 @@
         "maintainability": "A narrow API, two synchronized components, invariant-preserving private helpers, and regression tests constrain a concurrency-heavy implementation.",
         "educational_value": "It is a compact bridge from basic dispatch queues to designing and testing a reusable concurrent scheduler."
       },
-      "inspection": {"commit": "a74f978733bdaf982758bfa23d70a189f4b4c1b6", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Source/PINOperationQueue.h", "Source/PINOperationQueue.m", "Source/PINOperationGroup.m", "Tests/PINOperationQueueTests.m", "Tests/PINOperationGroupTests.m", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/pinterest/PINOperation/blob/a74f978733bdaf982758bfa23d70a189f4b4c1b6/LICENSE.txt"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "sbjson",
-      "repository": "SBJson/SBJson",
-      "url": "https://github.com/SBJson/SBJson",
-      "primary_language": "Objective-C",
-      "language_evidence": "Incremental UTF-8 tokenization, parser and writer state machines, Objective-C value construction, streaming callbacks, formatting, errors, and tests are Objective-C.",
-      "description": "A streaming Objective-C JSON parser and writer that accepts chunks, emits complete values or array elements, and supports bounded depth and deterministic formatting.",
-      "real_world_evidence": "SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.",
-      "why_study": "Every layer of streaming serialization is inspectable: retained chunks, strict UTF-8 validation, lexical tokens, nested parser states, Foundation value assembly, writer states, formatting, and delegate output.",
-      "learn": ["Incremental tokenization, UTF-8 and surrogate validation, parser state, chunk boundaries, block callbacks, streaming JSON generation, deterministic sorting, error locations, and corpus tests."],
-      "prerequisites": ["Objective-C and Foundation collections, bytes and encodings, JSON grammar, finite-state machines, callbacks, recursion and stacks, numeric conversion, and unit testing."],
-      "start_here": {"path": "Classes/SBJson5StreamTokeniser.m", "reason": "The tokeniser shows how partial buffers, strings, escapes, Unicode, numbers, literals, whitespace, and error offsets feed higher parser states."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 1702, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "TestData/", "SBJson5_iOSTests/", "SBJson5_macOSTests/", "sbjson/"], "notes": "Count covers all production Objective-C and public headers in Classes."},
-        "difficulty": {"score": 3, "signals": ["strict incremental UTF-8 tokenization", "nested parser and writer state machines", "partial-input and multi-root semantics"], "reason": "Streaming and encoding correctness create subtle transitions, but lexical, structural, value, and writing concerns are separated."},
-        "complexity": {"score": 2, "signals": ["tokeniser-parser-writer layers", "plain, multi-root, and root-array-unwrapping modes"], "reason": "Several cohesive components implement one data format without network, process, or plugin topology."},
-        "placement": "S1/D3/C2 averages to 2.00, making SBJson an SDC 2 project."
+      "inspection": {
+        "commit": "a74f978733bdaf982758bfa23d70a189f4b4c1b6",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Source/PINOperationQueue.m",
+          "Source/PINOperationQueue.h",
+          "Source/PINOperationGroup.m",
+          "Tests/PINOperationQueueTests.m",
+          "Tests/PINOperationGroupTests.m",
+          "README.md",
+          "LICENSE.txt"
+        ]
       },
-      "quality": {
-        "source_quality": "Consumed offsets, partial buffers, byte availability, Unicode legality, depth, parser completion states, and writer errors are explicit and guarded.",
-        "architecture": "A tokeniser feeds a structural parser; adapters assemble Foundation values or unwrap arrays; a separate writer state machine emits bytes through a delegate.",
-        "naming_and_idiom": "WaitingForData, Complete, multiRootParser, unwrapRootArrayParser, getToken, stateStack, errorHandler, humanReadable, and sortKeys describe the contract.",
-        "tests": "Thirty-six test methods drive large conformance fixtures for syntax, UTF-8, chunk streams, round trips, writer states, formatting, decimals, proxies, and error text; the repository also documents fuzzing.",
-        "documentation": "The README explains chunk parsing, multiple roots, root-array unwrapping, type mapping, depth, formatting, compatibility, installation, limitations, and fuzzing.",
-        "traceability": "Bytes can be followed through token recognition, parser state, Foundation construction, callback delivery, writer state, and fixture comparison.",
-        "maintainability": "Versioned symbols, separated states, bounded buffers and depth, standard corpora, and stable-package maintenance protect a compact parser.",
-        "educational_value": "It is a small but substantive study of production parsing where chunk boundaries and encodings cannot be hand-waved."
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/pinterest/PINOperation/blob/a74f978733bdaf982758bfa23d70a189f4b4c1b6/LICENSE.txt"
+        ]
       },
-      "inspection": {"commit": "93e4ca5c274488fb745429977308d85929c5f13a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Classes/SBJson5StreamTokeniser.m", "Classes/SBJson5StreamParser.m", "Classes/SBJson5StreamWriter.m", "Tests/MainSuite.m", "Tests/JsonStreamTokeniserTest.m", "LICENSE"]},
-      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/SBJson/SBJson/blob/93e4ca5c274488fb745429977308d85929c5f13a/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "appauth-ios",
-      "repository": "openid/AppAuth-iOS",
-      "url": "https://github.com/openid/AppAuth-iOS",
-      "primary_language": "Objective-C",
-      "language_evidence": "OAuth and OpenID Connect models, discovery, PKCE, token exchange and refresh, authorization state, external user agents, loopback redirects, tvOS device flow, secure coding, and tests are Objective-C.",
-      "description": "A standards-oriented OAuth 2.0 and OpenID Connect client SDK for native Apple applications, including PKCE, discovery, refresh, registration, logout, and device authorization.",
-      "real_world_evidence": "The OpenID Foundation project releases AppAuth through CocoaPods, Swift Package Manager, Carthage, and framework targets for production iOS, macOS, Catalyst, and tvOS clients.",
-      "why_study": "It maps security protocols onto explicit request and response objects, browser handoff, redirect validation, token state, freshness coordination, persistence, discovery, and platform adapters without hiding the standards.",
-      "learn": ["OAuth 2.0 and OpenID Connect, PKCE, native browser authorization, request and response models, query encoding, discovery, refresh coalescing, ID tokens, secure persistence, redirects, device flow, and protocol tests."],
-      "prerequisites": ["Comfortable Objective-C, blocks and asynchronous APIs, HTTP and URLs, OAuth 2.0 and OpenID Connect, hashes and randomness, secure coding, browser redirects, and network-model testing."],
-      "start_here": {"path": "Sources/AppAuthCore/OIDAuthState.m", "reason": "OIDAuthState ties authorization and token responses to expiration, refresh exchange, pending action coalescing, error state, delegates, and secure serialization."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 6462, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["UnitTests/", "Examples/", "framework wrapper targets"], "notes": "Count covers all production Objective-C and public headers under Sources."},
-        "difficulty": {"score": 4, "signals": ["security-sensitive OAuth and OpenID Connect semantics", "PKCE, redirect, issuer, token, and freshness invariants", "asynchronous browser and network lifecycle"], "reason": "Correctness depends on several security standards and platform lifecycle rules, even though the implementation mirrors protocol concepts deliberately."},
-        "complexity": {"score": 3, "signals": ["core models, authorization service, and persisted auth state", "iOS, macOS, Catalyst, and tvOS adapters", "authorization, discovery, registration, refresh, logout, and device flows"], "reason": "Multiple flows and platform boundaries cooperate within one client SDK while retaining a common model layer."},
-        "placement": "S2/D4/C3 averages to 3.00, making AppAuth an SDC 3 project."
-      },
-      "quality": {
-        "source_quality": "Protocol fields, required parameters, extensions, redirect and issuer checks, PKCE material, expiry tolerance, pending refresh actions, secure coding, and error domains are explicit.",
-        "architecture": "AppAuthCore models standards and exchanges; OIDAuthState owns continuity; platform modules implement external agents and redirects; AppAuthTV adds device flow.",
-        "naming_and_idiom": "OIDAuthorizationRequest, OIDTokenResponse, OIDAuthState, performActionWithFreshTokens, additionalParameters, externalUserAgent, and serviceDiscovery preserve standards vocabulary.",
-        "tests": "Suites cover every request and response model, query encoding, discovery, registration, scopes, grant and response types, token utilities, auth-state persistence and refresh, URL-session injection, tvOS flow, Swift bridging, and regressions.",
-        "documentation": "The README teaches standards, platforms, security posture, configuration, discovery, authorization, redirects, persistence, refresh, logout, device flow, and installation; DESIGN.md records scope.",
-        "traceability": "A native authorization can be followed from configuration and PKCE through browser redirect into token exchange, OIDAuthState persistence, refresh, and exact model tests.",
-        "maintainability": "Near-one-to-one models, field mapping, explicit scope, platform isolation, extension dictionaries, and comprehensive tests reduce provider-specific hacks.",
-        "educational_value": "It teaches how a security protocol becomes a usable SDK without erasing the checks and state transitions applications rely on."
-      },
-      "inspection": {"commit": "a972daac82d449d58ab119e91c68153e29ddac33", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "DESIGN.md", "Sources/AppAuthCore/OIDAuthState.m", "Sources/AppAuthCore/OIDAuthorizationService.m", "Sources/AppAuthCore/OIDAuthorizationRequest.m", "UnitTests/OIDAuthStateTests.m", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/openid/AppAuth-iOS/blob/a972daac82d449d58ab119e91c68153e29ddac33/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "sdwebimage",
-      "repository": "SDWebImage/SDWebImage",
-      "url": "https://github.com/SDWebImage/SDWebImage",
-      "primary_language": "Objective-C",
-      "language_evidence": "Image orchestration, downloader operations, memory and disk caches, coder and loader protocols, animated playback, transformations, UIKit and AppKit categories, prefetching, and tests are Objective-C.",
-      "description": "An asynchronous image loading and caching framework for Apple platforms with codecs, progressive and animated images, transformations, prefetching, and extensible cache and loader pipelines.",
-      "real_world_evidence": "SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.",
-      "why_study": "It connects a simple image-view call to request deduplication, cancellation, progress, decoding, memory and disk policy, cache keys, transformations, animated frames, platform drawing, and UI lifecycle safety.",
-      "learn": ["Asynchronous operations, URLSession downloading, request deduplication, cancellation, memory and disk caching, image codecs and metadata, progressive decoding, animated playback, transformations, prefetching, extension protocols, and UI categories."],
-      "prerequisites": ["Advanced Objective-C, blocks and queues, URLSession, UIKit or AppKit images, files and caches, image formats, cancellation, protocols, memory pressure, and integration testing."],
-      "start_here": {"path": "SDWebImage/Core/SDWebImageManager.m", "reason": "The manager computes keys, queries original and transformed images, delegates loading, decodes and transforms results, stores them, tracks operations, and handles cancellation."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 3, "loc": 15357, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Examples/", "WebImage/", "Docs/"], "notes": "Count covers production Objective-C and public headers in SDWebImage and SDWebImageMapKit."},
-        "difficulty": {"score": 3, "signals": ["asynchronous request, cache, decode, transform, and UI ordering", "animated and progressive formats", "cancellation, memory pressure, and platform variation"], "reason": "Concurrency and media behavior recur, but components expose strong protocols and operation boundaries."},
-        "complexity": {"score": 3, "signals": ["manager-loader-downloader-cache-coder pipeline", "memory, disk, network, transform, animation, prefetch, and UI subsystems", "UIKit, AppKit, MapKit, and format extension points"], "reason": "Several substantial subsystems cooperate through one image-loading lifecycle."},
-        "placement": "S3/D3/C3 makes SDWebImage a balanced SDC 3 project."
-      },
-      "quality": {
-        "source_quality": "Cache type, source, decode options, transformation keys, cancellation, callback queues, errors, metadata, and platform branches use explicit values and guarded transitions.",
-        "architecture": "SDWebImageManager composes cache and loader protocols; downloader operations own transport; coder managers own formats; caches implement policy; categories and prefetchers provide application surfaces.",
-        "naming_and_idiom": "loadImageWithURL, queryCacheOperation, cacheType, cacheKey, imageLoader, imageCoder, transformer, progressiveLoad, context, and completedBlock define the pipeline.",
-        "tests": "Large suites cover downloads, authentication, HTTP failures, cancellation races, duplicate URLs, progressive formats, cache expiry, memory pressure, custom components, transformations, codecs, animation, prefetching, UI reuse, transitions, and regressions.",
-        "documentation": "The README and wiki document integrations, loaders, caches, coders, animated images, transformers, options, context, platforms, installation, migration, and extensions.",
-        "traceability": "An image-view URL can be followed through its category, manager, cache, downloader, coder, transformation, storage, operation token, and a focused async test.",
-        "maintainability": "Protocol boundaries, immutable configuration copies, operation objects, private helpers, option typing, platform macros, and broad regression suites contain a mature compatibility surface.",
-        "educational_value": "It reveals the systems work hidden behind a familiar UI convenience API while remaining a single inspectable framework."
-      },
-      "inspection": {"commit": "c3ad5e1a9bf55c9b76d4c362430b5fcded96c502", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "SDWebImage/Core/SDWebImageManager.m", "SDWebImage/Core/SDWebImageDownloaderOperation.m", "SDWebImage/Core/SDImageCache.m", "Tests/Tests/SDWebImageManagerTests.m", "Tests/Tests/SDWebImageDownloaderTests.m", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "sparkle",
@@ -208,63 +357,358 @@
       "language_evidence": "Updater scheduling and drivers, appcast parsing, signature and code-signing validation, downloading, extraction and installation, XPC services, UI, version comparison, CLI integration, and core tests are predominantly Objective-C.",
       "description": "A secure macOS software-update framework with signed appcasts, background downloads, delta updates, sandbox support, privilege-separated installation, phased rollouts, resumable updates, and customizable UI.",
       "real_world_evidence": "Sparkle is released as a framework, Swift package, command-line tool, and supporting services used by independently distributed macOS applications.",
-      "why_study": "It shows an end-to-end security-sensitive lifecycle across untrusted feeds and archives, signatures, code identities, processes, XPC protocols, installation plans, atomic replacement, relaunch, scheduling, and recovery.",
-      "learn": ["Secure updater threat models, EdDSA and code signing, privilege separation, XPC and secure coding, appcasts and version policy, download and extraction, atomic installation, sandboxing, delta updates, resumability, drivers, and failure recovery."],
-      "prerequisites": ["Advanced Objective-C and Cocoa, macOS bundles and code signing, signature concepts, XPC and launchd, sandboxing and privileges, atomic files, networking, state machines, and security testing."],
-      "start_here": {"path": "Sparkle/SPUUpdater.m", "reason": "SPUUpdater validates host configuration and policy, selects drivers, coordinates schedules and sessions, resumes work, exposes state, and bridges the host to installation."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 3, "loc": 20735, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "UITests/", "TestApplication/", "TestAppHelper/", "Vendor/", "BinaryDelta/", "generate_appcast/", "generate_keys/", "sign_update/"], "notes": "Count covers the framework, updater agents, downloader and installer services, connection and status services, and sparkle-cli."},
-        "difficulty": {"score": 5, "signals": ["security-critical signature, code identity, and archive validation", "privilege-separated XPC and launchd installation", "atomic update, recovery, sandbox, and compatibility invariants"], "reason": "A mistake can turn remote update input or a privilege boundary into code execution or application loss, requiring adversarial reasoning across macOS security mechanisms."},
-        "complexity": {"score": 4, "signals": ["framework-agent-daemon-XPC process graph", "feed-download-validate-extract-install-relaunch pipeline", "scheduled, user, automatic, resumed, delta, sandboxed, and privileged modes"], "reason": "Many components and modes form a production updater, though they remain one product rather than a multi-service platform."},
-        "placement": "S3/D5/C4 averages to 4.00; the D5 floor also requires at least SDC 4."
+      "why_study": "Sparkle's appcast-selection path is a bounded policy engine for filtering and ordering update candidates without requiring the security and installation pipeline.",
+      "learn": [
+        "Trace feed items through operating-system, channel, version, skipped-update, autoupdate, phased-rollout, delegate, primary, secondary, and no-update decisions."
+      ],
+      "prerequisites": [
+        "Readers should know Objective-C models and delegates, comparators, filtering, dates, and the basic idea of an update feed containing versions, channels, system bounds, and rollout metadata."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Sparkle appcast is an update feed whose items carry application versions, operating-system bounds, channels, rollout information, and optional delta relationships."
+        ],
+        "reason": "That short updater-feed primer is subordinate to transferable selection engineering: immutable item modeling, layered filtering, injectable comparators and delegate policy, version ordering, skipped updates, channels, phased rollout timing, primary and secondary candidates, fallback explanations, and deterministic tests. The security and installation pipeline is deliberately outside this bounded path."
+      },
+      "learning_path": {
+        "goal": "Understand how Sparkle filters an appcast and selects the best applicable update while preserving version, channel, skipped-update, system-bound, and phased-rollout policy.",
+        "start_here": {
+          "path": "Sparkle/SUAppcastDriver.m",
+          "reason": "The reviewed trace begins in SUAppcastDriver.m because it owns the ordered filters, candidate comparison, delegate policy, and final primary or secondary selection."
+        },
+        "supporting_files": [
+          "Sparkle/SUAppcast.m",
+          "Sparkle/SUAppcastItem.m",
+          "Sparkle/SPUAppcastItemStateResolver.m",
+          "Sparkle/SUStandardVersionComparator.m",
+          "Tests/SUAppcastTest.swift",
+          "Tests/SUVersionComparisonTest.m",
+          "README.markdown",
+          "LICENSE"
+        ],
+        "trace": "Start where a loaded appcast is filtered for macOS and allowed channels, follow system and minimum-autoupdate requirements, skipped versions, phased-rollout groups and dates, state resolution, injected or standard version comparison, delegate candidate overrides, primary and secondary selection, and no-update diagnostics, then close parsing, filtering, and version-order behavior in the appcast and comparator suites."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "Objective-C models, protocols, predicates, and nullable policy values",
+            "delegate-injected version comparison and candidate selection",
+            "Foundation dates, sets, arrays, and key-value feed parsing"
+          ],
+          "reason": "Substantial Objective-C framework abstractions shape the path without advanced runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "layered deterministic filter and ranking pipeline",
+            "primary, secondary, fallback, skipped, and phased candidate cases",
+            "localized item-state and version-comparator interactions"
+          ],
+          "reason": "Multi-stage policy and state reasoning recurs, while remaining synchronous and inspectable."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "appcast and item models",
+            "selection driver, state resolver, comparator, and delegate policy boundaries",
+            "feed and version contract suites"
+          ],
+          "reason": "Several meaningful updater-selection layers cooperate in a bounded path."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "version order, operating-system bounds, channels, and minimum autoupdate rules must compose exactly",
+            "skipped updates, critical items, phased rollout dates, primary and delta candidates must not contradict policy",
+            "delegate extensions, historical version formats, public updater behavior, determinism, and compatibility must remain stable"
+          ],
+          "reason": "Multiple strict selection, version, rollout, extension, and compatibility guarantees recur."
+        },
+        "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Configuration preconditions, thread rules, public keys, transport warnings, code identities, secure decoding classes, XPC availability, states, invalidation, and recovery are explicit and contextual.",
-        "architecture": "SPUUpdater and protocol-based drivers orchestrate work; downloader and installer services separate privileges; agents handle progress and installation; validators bind feeds, archives, signatures, and host identity.",
-        "naming_and_idiom": "SPUUpdater, UpdateDriver, UserDriver, appcast, resumableUpdate, SUUpdateValidator, InstallerLauncher, SecureCoding, allowedChannels, and phased rollout expose roles.",
-        "tests": "Core suites contain 184 named tests across appcasts, binary deltas, code signing, feed and archive signatures, files, installation, unarchiving, validation, updater behavior, and version comparison.",
-        "documentation": "The README and security, installation, design-practices, and API documents explain setup and the reasons behind process, trust, lifecycle, and extensibility boundaries.",
-        "traceability": "An update can be followed from check through appcast selection, download, signature and code validation, extraction, installer communication, atomic replacement, relaunch, and security tests.",
-        "maintainability": "Protocol composition, explicit invalidation, restricted exports, feature flags, privilege-separated targets, stable APIs, and validation tests isolate a high-risk system.",
-        "educational_value": "It is a rare approachable codebase for studying desktop updates while treating feeds, archives, processes, and privileges as hostile boundaries."
+        "source_quality": "SUAppcastDriver.m separates system, channel, skipped-version, rollout, delegate, and selection decisions; item-state resolution and version comparison remain in named collaborators.",
+        "architecture": "Parsed appcast items become immutable candidates, layered filters reduce them, injected policy resolves applicability and ordering, and the driver reports an update or a specific no-update reason.",
+        "naming_and_idiom": "SUAppcastDriver, SUAppcastItem, SPUAppcastItemStateResolver, SUStandardVersionComparator, channels, and phased rollout preserve feed and policy intent.",
+        "tests": "SUAppcastTest.swift and SUVersionComparisonTest.m cover feed parsing, filtering, version order, channels, rollout dates, system bounds, deltas, and edge cases.",
+        "documentation": "README.markdown and public Sparkle guidance orient appcasts, versions, channels, and update selection.",
+        "traceability": "A loaded feed item can be followed through each driver filter and comparator to a primary, secondary, or rejected result asserted by the appcast and version suites.",
+        "maintainability": "Policy stages and comparator injection are explicit, and the selected tests protect ordering and applicability without coupling the lesson to installation or signature verification.",
+        "educational_value": "The path demonstrates how several individually simple policies interact in a production selection engine while remaining locally teachable."
       },
-      "inspection": {"commit": "164f2fd30f7b6feb60596246322648a784dd308c", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.markdown", "Documentation/Security.md", "Documentation/Design Practices.md", "Sparkle/SPUUpdater.m", "Sparkle/SUUpdateValidator.m", "Tests/SUCodeSigningVerifierTest.m", "LICENSE"]},
-      "license": {"spdx": "MIT AND BSD-2-Clause AND Zlib", "url": "https://github.com/sparkle-project/Sparkle/blob/164f2fd30f7b6feb60596246322648a784dd308c/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "164f2fd30f7b6feb60596246322648a784dd308c",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Sparkle/SUAppcastDriver.m",
+          "Sparkle/SUAppcast.m",
+          "Sparkle/SUAppcastItem.m",
+          "Sparkle/SPUAppcastItemStateResolver.m",
+          "Sparkle/SUStandardVersionComparator.m",
+          "Tests/SUAppcastTest.swift",
+          "Tests/SUVersionComparisonTest.m",
+          "README.markdown",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT AND BSD-2-Clause AND Zlib",
+        "urls": [
+          "https://github.com/sparkle-project/Sparkle/blob/164f2fd30f7b6feb60596246322648a784dd308c/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
-      "slug": "kscrash",
-      "repository": "kstenerud/KSCrash",
-      "url": "https://github.com/kstenerud/KSCrash",
+      "slug": "sbjson",
+      "repository": "SBJson/SBJson",
+      "url": "https://github.com/SBJson/SBJson",
       "primary_language": "Objective-C",
-      "language_evidence": "The public framework, installation, reports and stores, filters and sinks, Apple-platform monitors, and substantial low-level recorder portions are Objective-C, supported by first-party C and a smaller Swift model layer.",
-      "description": "An Apple-platform crash-reporting framework that records Mach exceptions, signals, C++ and Objective-C exceptions, hangs, resource terminations, thread and binary-image state, and durable reports.",
-      "real_world_evidence": "KSCrash is released as modular Swift Package Manager and CocoaPods products for on-device crash capture, report storage, processing, diagnosis, and delivery.",
-      "why_study": "It confronts corrupted processes, suspended threads, signal safety, Mach state, unwinding, Objective-C runtime inspection, sidecar durability, symbolication, report repair, and post-crash delivery.",
-      "learn": ["Crash-handler architecture, Mach exceptions and signals, async-signal safety, machine contexts and unwinding, runtime inspection, binary images and symbols, watchdog hangs, lifecycle sidecars, crash-safe JSON, report stores, filters, sinks, and concurrency tests."],
-      "prerequisites": ["Advanced Objective-C and C, Apple process and thread internals, signals and Mach APIs, stack concepts, atomics and locks, files and memory mapping, runtime metadata, JSON, and postmortem debugging."],
-      "start_here": {"path": "Sources/KSCrashRecordingCore/KSCrashMonitor.c", "reason": "The monitor registry shows how crash sources are installed, gated for debugger and async safety, supplied callbacks, and routed into common capture."},
-      "sdc": {
+      "language_evidence": "Incremental UTF-8 tokenization, parser and writer state machines, Objective-C value construction, streaming callbacks, formatting, errors, and tests are Objective-C.",
+      "description": "A streaming Objective-C JSON parser and writer that accepts chunks, emits complete values or array elements, and supports bounded depth and deterministic formatting.",
+      "real_world_evidence": "SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.",
+      "why_study": "SBJson's streaming path is a production parser lesson in preserving lexical and structural state when tokens and nested values cross arbitrary input chunks.",
+      "learn": [
+        "Trace retained bytes through incremental token states, UTF-8 and escape validation, nested object and array states, depth limits, callbacks, completion, and errors."
+      ],
+      "prerequisites": [
+        "Readers should know Objective-C classes and blocks, C bytes and lengths, state machines, UTF-8 at a high level, and JSON objects, arrays, strings, numbers, booleans, and null."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "JSON's grammar distinguishes objects, arrays, strings, numbers, booleans, and null; streaming input may split any token across chunks."
+        ],
+        "reason": "That short grammar primer is subordinate to transferable parser engineering: retained byte chunks, strict UTF-8 and surrogate validation, incremental lexical states, token lifetimes, nested structural state stacks, depth limits, partial-input status, callback delivery, error offsets, and conformance tests."
+      },
+      "learning_path": {
+        "goal": "Understand how a streaming Objective-C JSON parser preserves lexical and structural state when tokens and nested values cross arbitrary input-chunk boundaries.",
+        "start_here": {
+          "path": "Classes/SBJson5StreamTokeniser.m",
+          "reason": "The reviewed trace begins in SBJson5StreamTokeniser.m because every chunk first enters its retained-buffer and lexical-state machinery before structural parsing."
+        },
+        "supporting_files": [
+          "Classes/SBJson5StreamParser.m",
+          "Tests/JsonStreamTokeniserTest.m",
+          "Tests/StreamSuite.m",
+          "Tests/MainSuite.m",
+          "TestData/jsonchecker/README",
+          "TestData/kuhn/utf8.in",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with getToken's retained byte range and lexical-state dispatch, follow partial strings, escapes, UTF-8, numbers, keywords, whitespace, and errors into SBJson5StreamParser's named object and array states, state stack, depth checks, Foundation value assembly, callback delivery, waiting and complete statuses, then close chunk-boundary, malformed-input, Unicode, nesting, and completion behavior in the tokeniser and stream suites."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 3, "loc": 31188, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Benchmarks/", "Samples/", "Sources/KSCrashTestTools/"], "notes": "Count covers first-party production Objective-C, C, C++, Swift, and headers under Sources."},
-        "difficulty": {"score": 5, "signals": ["corrupted-process and async-signal-safe execution", "Mach, signal, runtime, unwinding, and symbolication invariants", "cross-run crash and hang durability under concurrency"], "reason": "The recorder must extract trustworthy state while ordinary allocation, locking, and runtime operations may be unsafe, and errors can destroy the only evidence."},
-        "complexity": {"score": 4, "signals": ["monitor-recorder-report-store-filter-sink pipeline", "Mach, signal, exception, hang, resource, lifecycle, and profiler modes", "Objective-C, C, C++, Swift, runtime, file, network, and OS boundaries"], "reason": "Many modules cooperate across crash time and later processing, but remain a modular in-application framework."},
-        "placement": "S3/D5/C4 averages to 4.00; the D5 floor also requires at least SDC 4."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "Objective-C class hierarchy for parser states",
+            "C byte pointers, explicit lengths, and UTF-8 bit validation",
+            "block callbacks and Foundation value construction"
+          ],
+          "reason": "Advanced Objective-C and low-level byte techniques recur across tokenization and structural parsing."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "lexical state persists across arbitrary chunk boundaries",
+            "nested structural state stack with multiple-root and unwrap modes",
+            "partial, complete, error, callback, and depth behavior"
+          ],
+          "reason": "Advanced nonlocal state-machine and incremental-input reasoning recurs throughout the trace."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "incremental tokeniser",
+            "structural parser and Foundation assembly boundary",
+            "callback adapters and several conformance suites"
+          ],
+          "reason": "Several meaningful parsing layers cooperate while remaining locally understandable."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "JSON grammar and token boundaries must remain exact for every chunk split",
+            "UTF-8, escapes, surrogate pairs, numeric conversion, offsets, and errors must agree",
+            "depth, multiple-root, completion, callback, memory, and compatibility guarantees interact"
+          ],
+          "reason": "Multiple strict syntax, encoding, incremental-state, safety, and compatibility guarantees recur."
+        },
+        "placement": "The four scores 4/4/3/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Crash-time and normal-time APIs are separated, capabilities and IDs are explicit, unsafe operations are isolated, sidecar formats are versioned, and report results preserve partial failures.",
-        "architecture": "RecordingCore owns low-level capture and monitors; Recording exposes configuration and stores; models, filters, installations, sinks, profilers, and optional monitors layer around it.",
-        "naming_and_idiom": "KSCrashMonitorAPI, machineContext, stackCursor, binaryImage, reportWriter, runSidecar, crashedLastLaunch, reportStore, filter, sink, and installation define the domain.",
-        "tests": "Roughly 1,450 named tests and benchmarks cover monitors, signals, Mach state, threads, unwinding, symbols, JSON, files, key-value durability, corrupt sidecars, lifecycle stitching, hangs, reports, stores, filters, concurrency, Swift models, and regressions.",
-        "documentation": "The README documents configuration, monitors, hangs, resource terminations, CPU and memory tracking, user data, reports, delivery, modules, deprecations, and platform caveats; headers explain safety contracts.",
-        "traceability": "A signal or Mach exception can be followed from its monitor through context capture and stack cursor into the crash-safe writer, stored report, next-launch stitching, model, sink, and a targeted test.",
-        "maintainability": "Fine-grained modules, C APIs at crash-time boundaries, plugin registration, versioned sidecars, destructive fixtures, benchmarks, and migration shims contain exceptional platform risk.",
-        "educational_value": "It is a deep systems example of engineering for the moment when the process itself can no longer be trusted."
+        "source_quality": "SBJson5StreamTokeniser.m makes offsets, partial buffers, byte availability, token states, encoding checks, and errors explicit; SBJson5StreamParser.m names structural transitions.",
+        "architecture": "An incremental tokeniser emits lexical units to a structural parser that maintains an object and array state stack, assembles Foundation values, and invokes callbacks.",
+        "naming_and_idiom": "StreamTokeniser, StreamParser, token states, object and array parser states, waiting, complete, and error statuses expose the incremental design through Objective-C and C idioms.",
+        "tests": "JsonStreamTokeniserTest.m, StreamSuite.m, MainSuite.m, JSONChecker data, and Unicode fixtures exercise chunk splits, malformed syntax and encoding, nesting, roots, completion, and error locations.",
+        "documentation": "README.md documents streaming modes, while the JSONChecker and UTF-8 fixture documentation identify conformance inputs.",
+        "traceability": "A byte chunk can be followed through lexical state and retained data into a structural transition, callback, or precise error and then closed by focused streaming tests.",
+        "maintainability": "Lexical and structural state are separated, buffers are bounded explicitly, and conformance suites protect syntax, encoding, depth, and chunk-boundary behavior.",
+        "educational_value": "The path exposes why incremental parsing is more than ordinary recursive descent while remaining bounded to tokenizer and stream-parser behavior."
       },
-      "inspection": {"commit": "8649e0727ef4506f3cf910453eb0f2481321e8ab", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Sources/KSCrashRecording/include/KSCrash.h", "Sources/KSCrashRecording/KSCrash.m", "Sources/KSCrashRecordingCore/KSCrashMonitor.c", "Sources/KSCrashRecordingCore/include/KSCrashMonitor.h", "Tests/KSCrashRecordingTests/KSCrashMonitor_Signal_Tests.m", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/kstenerud/KSCrash/blob/8649e0727ef4506f3cf910453eb0f2481321e8ab/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "93e4ca5c274488fb745429977308d85929c5f13a",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Classes/SBJson5StreamTokeniser.m",
+          "Classes/SBJson5StreamParser.m",
+          "Tests/JsonStreamTokeniserTest.m",
+          "Tests/StreamSuite.m",
+          "Tests/MainSuite.m",
+          "TestData/jsonchecker/README",
+          "TestData/kuhn/utf8.in",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/SBJson/SBJson/blob/93e4ca5c274488fb745429977308d85929c5f13a/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "sdwebimage",
+      "repository": "SDWebImage/SDWebImage",
+      "url": "https://github.com/SDWebImage/SDWebImage",
+      "primary_language": "Objective-C",
+      "language_evidence": "Image orchestration, downloader operations, memory and disk caches, coder and loader protocols, animated playback, transformations, UIKit and AppKit categories, prefetching, and tests are Objective-C.",
+      "description": "An asynchronous image loading and caching framework for Apple platforms with codecs, progressive and animated images, transformations, prefetching, and extensible cache and loader pipelines.",
+      "real_world_evidence": "SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.",
+      "why_study": "SDWebImage's manager path shows how a mature Objective-C library coordinates cache, network, decoding, transformation, cancellation, storage, and callback ownership for one request.",
+      "learn": [
+        "Follow an image URL through cache-key lookup, layered cache queries, loader dispatch, progressive and final decoding, cancellation, transformation, storage, and callback delivery."
+      ],
+      "prerequisites": [
+        "Readers should know Objective-C blocks and protocols, Grand Central Dispatch, URL loading, operation cancellation, caches, and the basic role of image decoding and transformation."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An image-loading framework resolves a URL through cache and network sources, decodes image bytes, and returns a platform image to a caller."
+        ],
+        "reason": "That short media primer is subordinate to transferable systems lessons in asynchronous operation ownership, request deduplication, cancellation, callback queues, layered caches, loader and coder protocols, progressive results, transformations, key identity, memory pressure, persistence policy, error propagation, and race-focused integration tests."
+      },
+      "learning_path": {
+        "goal": "Understand how SDWebImage coordinates cache lookup, network loading, decoding, transformation, storage, cancellation, and callback delivery for one image request.",
+        "start_here": {
+          "path": "SDWebImage/Core/SDWebImageManager.m",
+          "reason": "The reviewed trace begins in SDWebImageManager.m because loadImageWithURL creates the combined operation and coordinates every selected cache, loader, transform, and completion branch."
+        },
+        "supporting_files": [
+          "SDWebImage/Core/SDWebImageDownloaderOperation.m",
+          "SDWebImage/Core/SDImageCache.m",
+          "Tests/Tests/SDWebImageManagerTests.m",
+          "Tests/Tests/SDWebImageDownloaderTests.m",
+          "Tests/Tests/SDImageCacheTests.m",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with loadImageWithURL and its combined operation, follow option and context normalization into cache-key lookup, original and transformed cache queries, loader dispatch, progressive and final decode results, cancellation and error branches, transformation, memory and disk storage, and callback-queue completion; then close deduplication, cancellation, cache, network, custom-component, and transformation contracts in the direct suites."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "Objective-C blocks, protocols, categories, and operation tokens",
+            "Grand Central Dispatch and URLSession integration",
+            "typed option bitmasks and context dictionaries across platform image APIs"
+          ],
+          "reason": "Substantial Objective-C framework techniques recur, without expert runtime or metaprogramming machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "asynchronous cache-query, download, decode, transform, store, and callback chain",
+            "deduplicated requests with per-caller progress, cancellation, and completion",
+            "progressive and final results, fallback sources, failures, and memory or disk policy"
+          ],
+          "reason": "Advanced nonlocal lifecycle, race, and event-order reasoning recurs across asynchronous boundaries."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "manager orchestration and public operation boundary",
+            "cache, loader, downloader-operation, coder, transformer, and callback boundaries",
+            "platform image and persistent filesystem boundaries with direct suites"
+          ],
+          "reason": "Several major subsystems and external boundaries cooperate in one representative request path."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "cache-key identity, source and store policy, decoded and transformed variants, and callback queues must agree",
+            "deduplication, cancellation, progressive results, retry, failure, and operation ownership must remain race-safe",
+            "memory pressure, disk expiry, image-format behavior, platform differences, performance, API compatibility, and UI reuse constrain changes"
+          ],
+          "reason": "Several system-wide correctness, resource, concurrency, compatibility, and performance guarantees interact, meeting the expert change-discipline anchor."
+        },
+        "placement": "The four scores 3/4/4/5 sum to 16; their arithmetic mean is 4.00 and rounds half-up to Level 4. The published result is Level 4."
+      },
+      "quality": {
+        "source_quality": "SDWebImageManager.m keeps options, context, cache type, operation tokens, cancellation, decode, transform, storage, errors, and callback queues explicit; downloader and cache files own their layers.",
+        "architecture": "The manager composes cache and loader protocols, delegates transport to SDWebImageDownloaderOperation, delegates memory and disk policy to SDImageCache, and returns through a controlled callback queue.",
+        "naming_and_idiom": "SDWebImageManager, combined operations, image cache, downloader operation, context, cache type, and completion blocks reveal the asynchronous Objective-C pipeline.",
+        "tests": "Manager, downloader, and cache test suites cover duplicate URLs, custom components, cancellation races, progress, failures, decoding, transformations, expiry, memory pressure, and storage.",
+        "documentation": "README.md documents the loading API, while linked project guidance explains options and extension points used by the selected path.",
+        "traceability": "One URL can be followed from manager normalization through cache or loader, decode and transform, storage, and callback completion into direct component tests.",
+        "maintainability": "Protocol boundaries isolate cache, loader, coder, and transform concerns, and focused suites protect their lifecycle integration.",
+        "educational_value": "The path is a realistic study of asynchronous orchestration in which ownership and cancellation are as important as the successful result."
+      },
+      "inspection": {
+        "commit": "c3ad5e1a9bf55c9b76d4c362430b5fcded96c502",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "SDWebImage/Core/SDWebImageManager.m",
+          "SDWebImage/Core/SDWebImageDownloaderOperation.m",
+          "SDWebImage/Core/SDImageCache.m",
+          "Tests/Tests/SDWebImageManagerTests.m",
+          "Tests/Tests/SDWebImageDownloaderTests.m",
+          "Tests/Tests/SDImageCacheTests.m",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "iterm2",
@@ -274,30 +718,124 @@
       "language_evidence": "The still-dominant terminal core—byte streams, VT100 parsers and state machines, grids, screens, line buffers, sessions, process integration, selection, search, drawing, and much of the UI—is Objective-C and Objective-C++, with a substantial modern Swift layer.",
       "description": "A full macOS terminal emulator with VT protocols, high-performance grids and rendering, sessions and process control, tmux and shell integration, automation APIs, restoration, search, transfers, profiles, and modern application features.",
       "real_world_evidence": "The repository builds and releases the iTerm2 desktop application used as a terminal replacement on macOS, plus scripting, helper, companion, and integration surfaces.",
-      "why_study": "It carries terminal bytes through parsers, tokens, grids, scrollback, rendering, sessions, process and window lifecycles, persistence, tmux, shell protocols, accessibility, automation, and a large Objective-C and Swift boundary.",
-      "learn": ["Terminal protocols and state machines, byte parsing, Unicode and bidirectional text, screen grids and scrollback, PTYs and processes, rendering and Metal, sessions and windows, selection and search, tmux and shell integration, persistence, automation, interoperability, and large-application evolution."],
-      "prerequisites": ["Expert Objective-C plus working Swift, C, and C++, terminal and VT protocols, Unicode, processes and pseudo-terminals, AppKit, concurrency, graphics, persistence, networking, security, and large-codebase navigation."],
-      "start_here": {"path": "sources/VT100/VT100Parser.m", "reason": "The parser turns incoming bytes into tokens and exposes partial input, control delegation, encoding, nested SSH and tmux streams, saved state, performance paths, and signaling."},
-      "sdc": {
+      "why_study": "iTerm2's state-restoration database is an expert path through cyclic graph encoding, delta persistence, transactions, identity, integrity checks, and recovery after failure.",
+      "learn": [
+        "Trace restorable state into graph records, stable identifiers and generations, prior-revision deltas, transactional SQLite rows, root publication, garbage collection, rollback, and bounded recovery."
+      ],
+      "prerequisites": [
+        "Readers should know advanced Objective-C, object graphs and cycles, stable identity, SQLite transactions, asynchronous ownership, rollback, deep copies, and state-restoration concepts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "State restoration serializes an application's object graph so windows and sessions can be reconstructed after relaunch; iTerm2 persists graph records in SQLite."
+        ],
+        "reason": "That short application primer is subordinate to transferable expert engineering in cyclic graph encoding, stable identity and generations, delta detection, append-only transactional records, relational graph transformation, asynchronous database ownership, integrity assertions, rollback, recovery after failed saves, deep copying, garbage collection, encryption boundaries, compatibility, and real recovery tests."
+      },
+      "learning_path": {
+        "goal": "Understand how iTerm2 encodes a restorable object graph, persists only graph changes transactionally in SQLite, and recovers a consistent baseline after save or database failure.",
+        "start_here": {
+          "path": "sources/StateRestoration/iTermGraphDatabase.m",
+          "reason": "The reviewed trace begins in iTermGraphDatabase.m because the database owns loading, transactional persistence, row publication, integrity, garbage collection, and recovery around encoded graph records."
+        },
+        "supporting_files": [
+          "sources/StateRestoration/iTermGraphEncoder.m",
+          "sources/StateRestoration/iTermGraphDeltaEncoder.m",
+          "sources/StateRestoration/iTermEncoderGraphRecord.m",
+          "sources/StateRestoration/iTermGraphTableTransformer.m",
+          "sources/StateRestoration/iTermRestorableStateSQLite.m",
+          "ModernTests/iTermGraphDatabaseTests.swift",
+          "ModernTests/iTermGraphDeltaEncoderTests.swift",
+          "ModernTests/iTermGraphDatabaseRecoveryTests.m",
+          "README.md",
+          "COPYING"
+        ],
+        "trace": "Start with graph-database initialization and load, follow state encoding into scalar and child records, stable identifiers and generations, delta comparison against the prior revision, table transformation and one SQLite transaction, row-id publication and garbage collection; then force a failed save through bounded recovery, fresh full encoding, deep-copy isolation and integrity assertions before closing persistence, delta, corruption, rollback, and recovery behavior in the modern suites."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 539073, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["iTerm2XCTests/", "ModernTests/", "tests/", "sources/iTermTests/", "sources/CoreDataGeneratedFiles/", "sources/proto/", "ThirdParty/", "submodules/"], "notes": "Count covers first-party production code and shipped templates under sources plus interface resources, excluding tests, generated code, third parties, companion products, tools, documentation, and project metadata."},
-        "difficulty": {"score": 5, "signals": ["terminal, Unicode, PTY, process, rendering, and protocol correctness", "large Objective-C and Swift interoperability surface", "performance, restoration, security, accessibility, and concurrency invariants"], "reason": "Correctness spans mature specifications and OS subsystems, with visible corruption or data loss possible from subtle parsing, coordinate, lifecycle, or synchronization errors."},
-        "complexity": {"score": 5, "signals": ["application-window-tab-session-terminal-renderer hierarchy", "hundreds of feature and infrastructure modules", "process, shell, tmux, browser, automation, AI, companion, persistence, and plugin boundaries"], "reason": "A long-lived desktop product coordinates many complex subsystems, languages, processes, protocols, state migrations, and delivery targets."},
-        "placement": "S5/D5/C5 is an SDC 5 system; two dimensions at score 5 independently require level 5."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "Objective-C graph-encodable protocols, blocks, categories, and typed records",
+            "Objective-C and Swift interoperability around SQLite and restoration models",
+            "custom coder adaptation, cyclic-object handling, deep copy, and asynchronous thread confinement"
+          ],
+          "reason": "Advanced Objective-C and interoperability techniques recur across encoding, persistence, and recovery."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "cyclic graph identity, generations, prior revision, and delta propagation",
+            "transactional save, root publication, garbage collection, load, and asynchronous ownership",
+            "failed-save recovery, deep-copy isolation, row-id repair, retries, and integrity assertions"
+          ],
+          "reason": "Expert nonlocal graph, persistence, lifecycle, failure, and recovery reasoning is pervasive."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "application restoration and graph-encoding boundary",
+            "delta encoder, record model, relational transformer, SQLite wrapper, and database coordinator",
+            "threading, encryption, filesystem, and modern recovery-test boundaries"
+          ],
+          "reason": "Several major subsystems and external boundaries cooperate in one bounded state-restoration slice."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "object identity, cycles, generations, row IDs, graph reachability, and previous revisions must remain coherent",
+            "transactions, publication, rollback, garbage collection, failed-save recovery, and retries must never expose a corrupt baseline",
+            "application compatibility, encryption, SQLite durability, asynchronous ordering, performance, and restoration fidelity interact"
+          ],
+          "reason": "Several system-wide integrity, durability, failure-recovery, security, compatibility, and performance guarantees interact."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Hot parsing and grid paths use explicit C structures and invariants, application layers name lifecycle state, project assertions preserve field diagnostics, modern modules add Swift types, and compatibility behavior is localized.",
-        "architecture": "Application coordination leads through windows and tabs to PTYSession; byte-stream and VT100 parsers emit tokens into screen and grid state; line buffers retain history; AppKit and Metal render; feature modules attach through controllers, delegates, and services.",
-        "naming_and_idiom": "PTYSession, VT100Parser, VT100Token, VT100Screen, VT100Grid, LineBuffer, PseudoTerminal, PTYTextView, shell integration, trigger, profile, and restoration form a durable vocabulary.",
-        "tests": "More than 5,400 named Objective-C and Swift tests cover parsers, grids, screens, line buffers, selection, Unicode, bidirectional text, rendering, sessions, tmux, search, layout, restoration, browser and shell integrations, persistence, APIs, safety gates, regressions, and performance paths.",
-        "documentation": "The README covers product architecture and builds, project guides record development invariants, the public website documents user and scripting behavior, and protocol modules carry explanatory comments and fixtures.",
-        "traceability": "A PTY byte can be followed through VT100ByteStream and parser states into a token, terminal action, screen grid, line-buffer history, renderer, accessibility and selection behavior, and parser or screen tests.",
-        "maintainability": "Feature-oriented folders, explicit bridging, generated-code boundaries, project assertion and logging APIs, extensive regression suites, and compatibility policies support continuous evolution.",
-        "educational_value": "It provides a complete advanced study of a protocol-driven desktop application whose core abstractions remain visible despite decades of growth."
+        "source_quality": "iTermGraphDatabase.m exposes transaction and recovery steps, while graph encoder, delta encoder, record, transformer, and SQLite wrapper files isolate representation and persistence concerns.",
+        "architecture": "An encoder turns application state into graph records, a delta encoder compares revisions, a transformer writes relational rows in one transaction, and the database publishes or recovers a consistent root.",
+        "naming_and_idiom": "GraphDatabase, GraphEncoder, GraphDeltaEncoder, EncoderGraphRecord, GraphTableTransformer, generations, revisions, and recovery preserve the persistence model explicitly.",
+        "tests": "iTermGraphDatabaseTests.swift, iTermGraphDeltaEncoderTests.swift, and iTermGraphDatabaseRecoveryTests.m exercise round trips, deltas, cycles, identity, failures, corruption, rollback, repair, and recovery.",
+        "documentation": "README.md provides repository orientation, while the explicitly separated graph components make transaction, identity, integrity, rollback, and recovery responsibilities visible beside the implementation.",
+        "traceability": "A restorable object can be followed through graph encoding and delta computation into a SQLite transaction, then through reload or recovery into focused modern tests.",
+        "maintainability": "Encoding, change detection, table transformation, persistence, and recovery have separate boundaries, with integrity assertions and failure tests guarding cross-layer changes.",
+        "educational_value": "The path makes durability and recovery obligations visible in a real application subsystem without requiring the terminal emulator's unrelated breadth."
       },
-      "inspection": {"commit": "095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "AGENTS.md", "CLAUDE.md", "sources/VT100/VT100Parser.m", "sources/VT100/VT100StateMachine.m", "sources/PTYSession/PTYSession.m", "iTerm2XCTests/VT100CSIParserTest.m", "LICENSE"]},
-      "license": {"spdx": "GPL-2.0-only", "url": "https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/LICENSE"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "sources/StateRestoration/iTermGraphDatabase.m",
+          "sources/StateRestoration/iTermGraphEncoder.m",
+          "sources/StateRestoration/iTermGraphDeltaEncoder.m",
+          "sources/StateRestoration/iTermEncoderGraphRecord.m",
+          "sources/StateRestoration/iTermGraphTableTransformer.m",
+          "sources/StateRestoration/iTermRestorableStateSQLite.m",
+          "ModernTests/iTermGraphDatabaseTests.swift",
+          "ModernTests/iTermGraphDeltaEncoderTests.swift",
+          "ModernTests/iTermGraphDatabaseRecoveryTests.m",
+          "README.md",
+          "COPYING",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "GPL-2.0-or-later",
+        "urls": [
+          "https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/COPYING",
+          "https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "gnustep-base",
@@ -307,30 +845,120 @@
       "language_evidence": "The Foundation-compatible object model, strings and collections, coding, dates and locales, files, processes and threads, run loops, notifications, predicates, XML, networking, URL loading, distributed objects, and public headers are predominantly Objective-C with supporting C.",
       "description": "GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa Foundation APIs, from root objects and collections through run loops, networking, serialization, localization, processes, and distributed objects.",
       "real_world_evidence": "GNUstep Base is a released runtime library used by GNUstep applications and command-line software to provide Foundation-style APIs across Unix-like systems and Windows.",
-      "why_study": "It implements the substrate most Objective-C programs consume: NSObject behavior, memory management, collections, KVC and KVO, coding, run loops, timers, files, sockets, HTTP, locales, text, XML, processes, and portability.",
-      "learn": ["Objective-C runtime foundations, ownership compatibility, class clusters, collections and strings, archives, KVC and KVO, run loops and timers, threads and locks, files and processes, URL loading over libcurl, distributed objects, localization, portability, and framework compatibility."],
-      "prerequisites": ["Expert Objective-C and C, runtime messaging and forwarding, ownership, data structures, encodings, files and processes, threads, sockets and HTTP, event loops, serialization, build portability, and API compatibility."],
-      "start_here": {"path": "Source/NSObject.m", "reason": "The root object establishes allocation, identity, introspection, forwarding, copying, coding, description, synchronization, and runtime conventions used throughout the library."},
-      "sdc": {
+      "why_study": "GNUstep's notification center is an expert Foundation-compatible implementation of wildcard registration, weak observer identity, reentrant callbacks, and thread-safe removal.",
+      "learn": [
+        "Trace selector and block observers into wildcard indexes and locks, then follow snapshot-based synchronous posting, reentrant mutation, queued delivery, exceptions, removal, and lifetime races."
+      ],
+      "prerequisites": [
+        "Readers should know advanced Objective-C runtime dispatch, selectors and blocks, weak references, hash tables, locks, callback reentrancy, and the observer notification pattern."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A notification center registers observers by optional notification name and object and synchronously dispatches matching notifications; nil names or objects act as wildcards."
+        ],
+        "reason": "That short framework primer is subordinate to transferable expert library engineering in Objective-C runtime dispatch, weak observer identity, selector and block APIs, wildcard indexing, custom allocation, striped and recursive locking, snapshotting before callbacks, reentrant add and remove, deallocation races, queued delivery, exception safety, compatibility, and concurrency tests."
+      },
+      "learning_path": {
+        "goal": "Understand how GNUstep implements a reentrant, thread-safe Foundation-compatible notification center with exact wildcard, observer-lifetime, selector, and block-delivery semantics.",
+        "start_here": {
+          "path": "Source/NSNotificationCenter.m",
+          "reason": "The reviewed trace begins in NSNotificationCenter.m because it contains observation storage, registration indexes, posting snapshots, callback delivery, and removal synchronization."
+        },
+        "supporting_files": [
+          "Source/NSNotification.m",
+          "Headers/Foundation/NSNotification.h",
+          "Tests/base/NSNotification/basic.m",
+          "Tests/base/NSNotification/general.m",
+          "Tests/base/NSNotification/dynamic.m",
+          "README.md",
+          "COPYING.LIB",
+          "COPYING"
+        ],
+        "trace": "Start with the observation record and notification tables, follow addObserver into wildcard, name, object, receiver and selector indexes under recursive and striped locks, then trace postNotification through matching-list snapshots, unlock-before-callback delivery, selector or queued block invocation, reentrant mutation, exception and cleanup paths; finish with scoped and total removal, observer lifetime, nested posting, wildcard, mutation, and threading contracts in the three focused suites."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 223325, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Tools/", "Examples/", "Documentation/", "Source/Additions/unicode/", "Source/tzdb.h", "generated character-set data and template sources"], "notes": "Count covers the LGPL library implementation and public headers under Source and Headers, excluding tests, GPL tools, generated tables and templates, resources, configuration, and build metadata."},
-        "difficulty": {"score": 5, "signals": ["runtime, ownership, class-cluster, coding, KVC, KVO, and compatibility invariants", "cross-platform run loop, thread, process, filesystem, socket, TLS, and HTTP behavior", "Unicode, locale, date, archive, XML, and distributed-object correctness"], "reason": "The library must reproduce a broad foundational API across runtimes and OSes while preserving behavioral, memory, concurrency, serialization, and compatibility contracts."},
-        "complexity": {"score": 5, "signals": ["root-object, value, collection, coding, event, network, process, and text subsystems", "hundreds of public classes and private concrete implementations", "compiler, runtime, OS, TLS, XML, ICU, curl, and ffi boundaries"], "reason": "Many foundational subsystems and portability layers form a runtime-scale library beneath entire applications."},
-        "placement": "S5/D5/C5 is an SDC 5 system; two dimensions at score 5 independently require level 5."
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "manual Objective-C runtime selector dispatch and weak observer identity",
+            "custom observation arenas, C structs, intrusive lists, hash tables, and cached classes",
+            "blocks, NSOperation queue delivery, pthread-backed recursive and striped synchronization"
+          ],
+          "reason": "Multiple expert Objective-C runtime, ownership, data-structure, callback, and synchronization mechanisms interact pervasively."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "wildcard, name, object, observer, selector, and block matching across several indexes",
+            "snapshot, unlock, callback, reentrant add or remove, nested post, and deferred-release lifecycle",
+            "concurrent registration, removal, posting, observer deallocation, exceptions, and queued delivery"
+          ],
+          "reason": "Expert nonlocal identity, matching, event-order, reentrancy, ownership, and concurrency reasoning is pervasive."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "public Foundation-compatible notification and center APIs",
+            "internal tables, observation allocator, locks, selector and block delivery",
+            "focused compatibility and concurrency suites"
+          ],
+          "reason": "Several meaningful runtime-library units cooperate, while the path remains one bounded Foundation subsystem."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "wildcard matching, duplicate registration, scoped removal, callback order, and Foundation compatibility must remain exact",
+            "reentrant mutation, nested posting, observer deallocation, exceptions, queue delivery, and concurrent access must never corrupt tables or message dead observers",
+            "ownership modes, runtime variants, historical API behavior, hot-path performance, portability, and binary compatibility interact"
+          ],
+          "reason": "Several system-wide correctness, lifetime, concurrency, reentrancy, compatibility, portability, and performance guarantees interact."
+        },
+        "placement": "The four scores 5/5/3/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Public contracts and private concrete classes are separated, ownership macros make runtime modes explicit, platform branches are localized, synchronization is named, error behavior is deliberate, and new subsystems document threading.",
-        "architecture": "Public Foundation and GNUstepBase headers define compatibility; Source provides class clusters and private implementations; run-loop, networking, coding, distributed-object, text, and platform modules integrate through internal contracts.",
-        "naming_and_idiom": "NSObject, NSString, GSString, NSRunLoop, GSTimedPerformer, NSURLSession, GSURLSessionWorkThread, NSKeyValueObserving, NSCoder, NSConnection, and GSPrivate expose public and internal roles.",
-        "tests": "More than 7,000 assertion sites across hundreds of fixtures cover objects, collections, strings, numbers, dates, KVC, KVO, coding, secure archives, run loops, threads, files, processes, sockets, URL loading, cookies, TLS, XML, predicates, notifications, distributed objects, portability, and regressions.",
-        "documentation": "The README explains scope, licensing, installation, and framework role; class documentation, manuals, standards notes, release history, coding standards, and compatibility analyses cover behavior.",
-        "traceability": "A Foundation call can be followed from its public header into a class cluster or platform implementation, internal ownership path, external boundary where applicable, and a focused compatibility test.",
-        "maintainability": "Stable headers, internal prefixes, generic templates, compile-time feature selection, platform directories, compatibility tests, multi-OS CI, and explicit library-versus-tool licensing support long-term evolution.",
-        "educational_value": "It is a capstone for understanding what Objective-C application code rests on: the object framework, event machinery, portability work, and contracts normally supplied by the platform."
+        "source_quality": "NSNotificationCenter.m makes wildcard dimensions, custom observation records, indexes, striped and recursive locks, snapshots, deferred release, and callback paths explicit.",
+        "architecture": "Registrations enter name, object, receiver, selector, or block indexes; posting snapshots matching observations under locks and invokes callbacks after unlocking; removal updates the same structures safely.",
+        "naming_and_idiom": "NSNotificationCenter, NSNotification, addObserver, postNotification, removeObserver, selector, object, and name mirror Foundation contracts while exposing GNUstep internals.",
+        "tests": "basic.m, general.m, and dynamic.m cover construction, selectors, blocks, wildcard combinations, duplicates, scoped removal, mutation during posting, nested posts, lifetimes, threads, and compatibility.",
+        "documentation": "NSNotification.h documents the public notification contract, and README.md provides the GNUstep Base context needed to compare the implementation with Foundation behavior.",
+        "traceability": "An observer registration can be followed into indexes and locks, through a posting snapshot and callback, and into removal and direct compatibility tests.",
+        "maintainability": "Observation records and indexes centralize policy, lock boundaries are explicit, and focused suites exercise reentrancy and lifetime cases that ordinary tests often miss.",
+        "educational_value": "The path reveals the concurrency and ownership engineering required to reproduce a deceptively simple observer API faithfully."
       },
-      "inspection": {"commit": "795e88205b20cf372296af5b4d727aa68718fb6a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Headers/Foundation/NSObject.h", "Source/NSObject.m", "Source/NSString.m", "Source/NSRunLoop.m", "Source/NSURLSession.m", "Tests/base/NSString/basic.m", "COPYING.LIB"]},
-      "license": {"spdx": "LGPL-2.1-or-later", "url": "https://github.com/gnustep/libs-base/blob/795e88205b20cf372296af5b4d727aa68718fb6a/COPYING.LIB"},
-      "github": {"primary_language": "Objective-C", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "795e88205b20cf372296af5b4d727aa68718fb6a",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Source/NSNotificationCenter.m",
+          "Source/NSNotification.m",
+          "Headers/Foundation/NSNotification.h",
+          "Tests/base/NSNotification/basic.m",
+          "Tests/base/NSNotification/general.m",
+          "Tests/base/NSNotification/dynamic.m",
+          "README.md",
+          "COPYING.LIB",
+          "COPYING"
+        ]
+      },
+      "license": {
+        "spdx": "LGPL-2.0-or-later AND GPL-2.0-only",
+        "urls": [
+          "https://github.com/gnustep/libs-base/blob/795e88205b20cf372296af5b4d727aa68718fb6a/README.md",
+          "https://github.com/gnustep/libs-base/blob/795e88205b20cf372296af5b4d727aa68718fb6a/COPYING.LIB",
+          "https://github.com/gnustep/libs-base/blob/795e88205b20cf372296af5b4d727aa68718fb6a/COPYING"
+        ]
+      },
+      "github": {
+        "primary_language": "Objective-C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     }
   ]
 }

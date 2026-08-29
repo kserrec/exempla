@@ -1,14 +1,17 @@
 # Catalog source data
 
-`languages.json` defines the ordered language scope. Each other JSON file is
-the canonical source for one language's accepted repositories. Do not edit the
-Markdown under `../languages/` directly; regenerate it with:
+`languages.json` is the separate schema-version-1 registry for the ordered
+language scope. Every other language JSON file is schema version 2 and is the
+canonical source for accepted repositories and their scored learning paths.
+
+Do not edit Markdown under `../languages/` directly; regenerate it with:
 
 ```console
 python3 scripts/catalog.py generate
 ```
 
-Validate an in-progress catalog with `python3 scripts/catalog.py validate` and
-the release-sized corpus with `python3 scripts/catalog.py validate --complete`.
-The record format is documented by `schema.json` and enforced without external
-Python packages by `scripts/catalog.py`.
+Ordinary `python3 scripts/catalog.py validate` is the normal gate while honest
+gaps exist. `--complete` additionally requires exactly two qualified entries
+at every Level for every language and must be used only when that is literally
+true. `schema.json` documents the record format; `scripts/catalog.py` enforces
+it without external Python packages and generates only from schema version 2.

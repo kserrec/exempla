@@ -14,7 +14,7 @@ rather than a general programming or scripting language, and adds Lua. Lua is
 the replacement because the
 [2025 Stack Overflow Developer Survey](https://survey.stackoverflow.co/2025/technology)
 reported substantial recent developer use and its open-source ecosystem offers
-real, source-readable applications and libraries across the SDC range.
+real, source-readable applications and libraries across a broad learning range.
 
 The selection is a dated scope boundary, not a claim that these are the
 objectively “best” or universally most-used languages.
@@ -48,8 +48,9 @@ objectively “best” or universally most-used languages.
 
 - **HTML and CSS:** Excluded. They are essential web technologies, but their
   primary artifacts describe document structure and presentation. Repositories
-  primarily classified as either tend not to offer the software behavior SDC is
-  intended to grade. JavaScript and TypeScript cover web programming directly.
+  primarily classified as either generally do not offer the transferable
+  programming behavior this catalog ranks. JavaScript and TypeScript cover web
+  programming directly.
 - **SQL:** Not present in the RedMonk top 20 and omitted from this snapshot.
   SQL is a programming language, but public repositories classified primarily
   as SQL are often schema/data collections subordinate to software written in
@@ -61,8 +62,9 @@ objectively “best” or universally most-used languages.
   object-oriented language and ecosystem with its own real-world corpus.
 - **C, C++, C#, Objective-C:** Kept separate. Similar names do not make their
   language semantics, ecosystems, or learning paths interchangeable.
-- **Sparse levels:** No language receives relaxed SDC or quality thresholds to
-  force two entries into a band. A visible gap is an honest catalog result.
+- **Sparse levels:** No language receives relaxed coding-relevance, quality, or
+  score thresholds to force two entries into a Level. A visible gap is an
+  honest catalog result.
 
 ## Refresh policy
 

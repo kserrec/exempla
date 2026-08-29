@@ -1,40 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "language_slug": "javascript",
   "repositories": [
-    {
-      "slug": "p-limit",
-      "repository": "sindresorhus/p-limit",
-      "url": "https://github.com/sindresorhus/p-limit",
-      "primary_language": "JavaScript",
-      "language_evidence": "The public limiter and all runtime behavior are implemented in index.js; TypeScript supplies declarations only.",
-      "description": "A small promise-concurrency limiter that queues asynchronous functions and caps how many run simultaneously.",
-      "real_world_evidence": "The repository publishes the p-limit npm library as a reusable concurrency control primitive for production JavaScript programs.",
-      "why_study": "One file demonstrates a complete, useful abstraction with careful promise timing, queue state, error propagation, and a compact public API.",
-      "learn": ["FIFO work scheduling, promise adoption, asynchronous context preservation, and observable queue state."],
-      "prerequisites": ["Promises, async functions, closures, and JavaScript property descriptors."],
-      "start_here": {"path": "index.js", "reason": "The entire runtime contract, queue, transitions, and public API are visible in this one implementation file."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 745, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes runtime JavaScript and TypeScript declarations while excluding tests, recipes, and benchmarks."},
-        "difficulty": {"score": 2, "signals": ["promise scheduling", "microtask timing"], "reason": "Promise adoption and microtask ordering require attention, but state transitions remain short, named, and local."},
-        "complexity": {"score": 1, "signals": ["single module", "one in-memory queue"], "reason": "One factory owns one queue and exposes counters without services, persistence, plugins, or architectural layers."},
-        "placement": "The small single-module design outweighs its modest asynchronous nuance, yielding an approachable SDC 1 reading project."
-      },
-      "quality": {
-        "source_quality": "Queue transitions are compact, explicit, and guarded against both synchronous throws and rejected promises.",
-        "architecture": "A single factory cleanly contains scheduling state and returns one callable public abstraction.",
-        "naming_and_idiom": "Names such as activeCount, pendingCount, resumeNext, and clearQueue state the contract directly.",
-        "tests": "AVA tests cover concurrency limits, thrown errors, queue clearing, dynamic limits, and asynchronous context propagation.",
-        "documentation": "The README documents the API, counters, mapping helper, mutable concurrency, and usage examples.",
-        "traceability": "A call can be followed through generator, enqueue, run, next, and its matching tests in minutes.",
-        "maintainability": "The narrow API, isolated validation, and visible state invariants make changes reviewable.",
-        "educational_value": "It teaches production promise coordination without framework scaffolding or irrelevant repository machinery."
-      },
-      "inspection": {"commit": "df476048d023ff868cd45b35ee47f5fb0ca2b25a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["readme.md", "index.js", "index.d.ts", "test.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/sindresorhus/p-limit/blob/df476048d023ff868cd45b35ee47f5fb0ca2b25a/license"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
     {
       "slug": "pump",
       "repository": "mafintosh/pump",
@@ -44,15 +11,68 @@
       "description": "A stream piping utility that destroys an entire Node.js pipeline when any component closes or fails.",
       "real_world_evidence": "The repository publishes an npm stream utility designed to prevent resource leaks in real Node.js pipelines.",
       "why_study": "Its tiny implementation captures a subtle production concern: coordinating completion, errors, and cleanup across heterogeneous streams.",
-      "learn": ["Node.js stream lifecycle handling, once-only callbacks, error fan-out, and compatibility boundaries."],
-      "prerequisites": ["CommonJS modules, callbacks, Node.js readable and writable streams, and event emitters."],
-      "start_here": {"path": "index.js", "reason": "The destroyer helper and final pump reduction expose the whole lifecycle algorithm in one place."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 161, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers the runtime module and browser shim, excluding the two integration test scripts."},
-        "difficulty": {"score": 2, "signals": ["event-driven cleanup", "legacy stream compatibility"], "reason": "Close/error ordering and old stream variants are subtle, but the algorithm is direct and fully contained."},
-        "complexity": {"score": 1, "signals": ["single module", "one pipeline abstraction"], "reason": "The software coordinates one list of streams with no wider component topology or configuration system."},
-        "placement": "A complete real utility in 161 lines makes this SDC 1 despite the care required around stream termination."
+      "learn": [
+        "Node.js stream lifecycle handling, once-only callbacks, error fan-out, and compatibility boundaries."
+      ],
+      "prerequisites": [
+        "CommonJS modules, callbacks, Node.js readable and writable streams, and event emitters."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Node.js stream emits completion, close, and error events and may own an operating-system resource."
+        ],
+        "reason": "The short stream context is documented by the project; the path primarily teaches transferable lifecycle coordination, cleanup, and once-only completion."
+      },
+      "learning_path": {
+        "goal": "Understand how pump tears down every stream and completes exactly once when a pipeline closes or fails.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The destroyer helper and final pump reduction expose the whole lifecycle algorithm in one place."
+        },
+        "supporting_files": [
+          "test-node.js",
+          "test-browser.js"
+        ],
+        "trace": "Follow each stream through the destroyer helper and end-of-stream callback, then follow the pump reduction as an error fans cleanup across siblings and the final writable triggers the one callback; confirm closure and returned-stream behavior in both integration scripts."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "callbacks and event emitters",
+            "function composition over stream objects"
+          ],
+          "reason": "Callbacks, event emitters, CommonJS modules, array reduction, and duck-typed stream operations are ordinary professional Node.js idioms."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "close and error event ordering",
+            "once-only destruction state",
+            "cleanup fan-out"
+          ],
+          "reason": "Several asynchronous lifecycle events may arrive in different orders, and local flags coordinate destruction, error preservation, and final completion."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "single pipeline module",
+            "one focused destroyer helper"
+          ],
+          "reason": "The whole production behavior fits in one module and one list of streams."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "file-descriptor cleanup",
+            "first-error preservation",
+            "legacy stream compatibility"
+          ],
+          "reason": "A correct change must avoid leaks and duplicate callbacks while preserving distinct cleanup behavior for filesystem streams, request streams, and older implementations."
+        },
+        "placement": "The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
         "source_quality": "Cleanup guards prevent duplicate destruction and preserve the first pipeline error without unnecessary abstraction.",
@@ -64,9 +84,137 @@
         "maintainability": "The small surface and explicit compatibility checks isolate the few platform-dependent behaviors.",
         "educational_value": "It shows why a tiny production library can encode important lifecycle knowledge absent from naive piping."
       },
-      "inspection": {"commit": "714c0a70a8199104bf65a57582009d42f81d8d94", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "index.js", "test-node.js", "test-browser.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/mafintosh/pump/blob/714c0a70a8199104bf65a57582009d42f81d8d94/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "714c0a70a8199104bf65a57582009d42f81d8d94",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "index.js",
+          "test-node.js",
+          "test-browser.js",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/mafintosh/pump/blob/714c0a70a8199104bf65a57582009d42f81d8d94/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "p-limit",
+      "repository": "sindresorhus/p-limit",
+      "url": "https://github.com/sindresorhus/p-limit",
+      "primary_language": "JavaScript",
+      "language_evidence": "The public limiter and all runtime behavior are implemented in index.js; TypeScript supplies declarations only.",
+      "description": "A small promise-concurrency limiter that queues asynchronous functions and caps how many run simultaneously.",
+      "real_world_evidence": "The repository publishes the p-limit npm library as a reusable concurrency control primitive for production JavaScript programs.",
+      "why_study": "One file demonstrates a complete, useful abstraction with careful promise timing, queue state, error propagation, and a compact public API.",
+      "learn": [
+        "FIFO work scheduling, promise adoption, asynchronous context preservation, and observable queue state."
+      ],
+      "prerequisites": [
+        "Promises, async functions, closures, and JavaScript property descriptors."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "The selected path is entirely about transferable promise scheduling, bounded concurrency, state transitions, and error propagation."
+      },
+      "learning_path": {
+        "goal": "Understand how p-limit admits, queues, runs, and completes promise-returning tasks while preserving a concurrency cap.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The entire runtime contract, queue, transitions, and public API are visible in this one implementation file."
+        },
+        "supporting_files": [
+          "test.js",
+          "index.d.ts"
+        ],
+        "trace": "Call the returned generator, follow enqueue as it stores a runnable closure, resumeNext as it increments activeCount, run as it adopts success or failure, and next as it releases capacity; then correlate the concurrency, error, queue, and async-context tests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "closures and promise composition",
+            "callable object properties and bound callbacks"
+          ],
+          "reason": "The path uses common professional JavaScript idioms—closures, async functions, promise adoption, property descriptors, and bound callbacks—without expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "FIFO queue state",
+            "microtask scheduling",
+            "success and failure continuation"
+          ],
+          "reason": "Admission, active and pending counts, microtask order, synchronous throws, rejected promises, and queue resumption materially affect the trace."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one runtime module",
+            "one in-memory queue component"
+          ],
+          "reason": "The complete behavior remains in one factory and one source file, with the declaration and tests explaining its public boundary."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "hard concurrency bound",
+            "promise error propagation",
+            "async-context and counter accuracy"
+          ],
+          "reason": "A correct change must preserve the concurrency ceiling, queue progress after failures, observable counts, result and rejection adoption, and asynchronous execution context."
+        },
+        "placement": "The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "Queue transitions are compact, explicit, and guarded against both synchronous throws and rejected promises.",
+        "architecture": "A single factory cleanly contains scheduling state and returns one callable public abstraction.",
+        "naming_and_idiom": "Names such as activeCount, pendingCount, resumeNext, and clearQueue state the contract directly.",
+        "tests": "AVA tests cover concurrency limits, thrown errors, queue clearing, dynamic limits, and asynchronous context propagation.",
+        "documentation": "The README documents the API, counters, mapping helper, mutable concurrency, and usage examples.",
+        "traceability": "A call can be followed through generator, enqueue, run, next, and its matching tests in minutes.",
+        "maintainability": "The narrow API, isolated validation, and visible state invariants make changes reviewable.",
+        "educational_value": "It teaches production promise coordination without framework scaffolding or irrelevant repository machinery."
+      },
+      "inspection": {
+        "commit": "df476048d023ff868cd45b35ee47f5fb0ca2b25a",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "index.js",
+          "test.js",
+          "index.d.ts",
+          "license"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sindresorhus/p-limit/blob/df476048d023ff868cd45b35ee47f5fb0ca2b25a/license"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "nanoid",
@@ -77,15 +225,67 @@
       "description": "A compact secure unique-ID generator for JavaScript runtimes with customizable alphabets and output lengths.",
       "real_world_evidence": "The repository ships Nano ID for Node.js, browsers, and package ecosystems as a production identifier library.",
       "why_study": "A small surface demonstrates cryptographic randomness, unbiased alphabet mapping, performance-conscious pooling, and cross-runtime packaging.",
-      "learn": ["Rejection sampling, entropy preservation, typed-array operations, runtime-specific entry points, and property-focused tests."],
-      "prerequisites": ["Typed arrays, bitwise operations, cryptographic random APIs, modules, and elementary probability."],
-      "start_here": {"path": "index.js", "reason": "The secure generator explains modulo bias, fast paths, pooling, and the customizable public API together."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 265, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes Node/browser JavaScript and declarations, excluding tests, benchmarks, and translated documentation."},
-        "difficulty": {"score": 3, "signals": ["cryptographic randomness", "rejection sampling", "bit-mask optimization"], "reason": "Correct uniform sampling and optimized byte/string pools require probability and low-level representation reasoning."},
-        "complexity": {"score": 2, "signals": ["Node and browser entry points", "custom generator variants"], "reason": "Several runtime builds share one concept, but the architecture remains a small family of focused modules."},
-        "placement": "Very small size is balanced by substantive randomness and optimization concerns, producing SDC 2."
+      "learn": [
+        "Rejection sampling, entropy preservation, typed-array operations, runtime-specific entry points, and property-focused tests."
+      ],
+      "prerequisites": [
+        "Typed arrays, bitwise operations, cryptographic random APIs, modules, and elementary probability."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Mapping random bytes to an alphabet is uniform only when remainder values that would bias a symbol are rejected; the implementation explains this with a concrete 17-symbol example."
+        ],
+        "reason": "The required probability is elementary and self-contained in source comments; the path mainly teaches secure API use, rejection sampling, typed arrays, validation, portability, and performance-conscious implementation."
+      },
+      "learning_path": {
+        "goal": "Understand how Nano ID converts cryptographically random bytes into uniformly distributed custom-alphabet identifiers without runtime-size or modulo-bias errors.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The secure generator explains modulo bias, fast paths, pooling, and the customizable public API together."
+        },
+        "supporting_files": [
+          "index.browser.js",
+          "test/index.test.js"
+        ],
+        "trace": "Start with customRandom's cutoff and power-of-two fast path, follow rejected bytes and size validation into the returned generator, compare the browser variant's random source, and verify length, bounds, custom alphabet, and flat-distribution tests."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "typed arrays and buffers",
+            "closures and bitwise operations"
+          ],
+          "reason": "The path uses common professional typed-array, closure, module, and bitwise idioms rather than metaprogramming or expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "localized rejection loop",
+            "buffer chunk and offset state"
+          ],
+          "reason": "Several branches and a small retry lifecycle matter, but the state remains local and directly visible."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "Node and browser entry points",
+            "shared alphabet and generator contract"
+          ],
+          "reason": "A few explicit runtime modules implement the same small public abstraction."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "uniform output distribution",
+            "cryptographic random source",
+            "runtime request limits and performance"
+          ],
+          "reason": "Security, distribution correctness, hostile size conversion, browser random-byte limits, cross-runtime equivalence, collision properties, and hot-path performance interact throughout the selected generator."
+        },
+        "placement": "The four scores 2/2/2/4 sum to 10; their arithmetic mean is 2.50 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
         "source_quality": "The implementation explains every non-obvious constant and separates generic randomness from optimized alphabet paths.",
@@ -97,75 +297,31 @@
         "maintainability": "Fast and generic paths are separated, documented, and exercised against adversarial input conversions.",
         "educational_value": "It makes a security-sensitive algorithm readable without pretending secure IDs are just random string concatenation."
       },
-      "inspection": {"commit": "07a39d62d84c21af5046fe6b2ef7b3e36ee557db", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "index.js", "index.browser.js", "test/index.test.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/ai/nanoid/blob/07a39d62d84c21af5046fe6b2ef7b3e36ee557db/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "express",
-      "repository": "expressjs/express",
-      "url": "https://github.com/expressjs/express",
-      "primary_language": "JavaScript",
-      "language_evidence": "The application, request, response, view, and utility layers under lib are implemented in JavaScript.",
-      "description": "A minimalist Node.js web framework providing middleware composition, routing integration, HTTP helpers, and view rendering.",
-      "real_world_evidence": "Express is released as a deployable web framework whose repository maintains the runtime used by Node.js applications.",
-      "why_study": "Its relatively small core reveals how a mature framework extends native HTTP objects and composes middleware without hiding the flow.",
-      "learn": ["Middleware pipelines, prototype extension, request/response adaptation, application settings, and error finalization."],
-      "prerequisites": ["Node.js HTTP servers, callbacks, prototypes, CommonJS modules, and middleware concepts."],
-      "start_here": {"path": "lib/application.js", "reason": "Application initialization, middleware registration, dispatch, settings, and mounting converge in this central module."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 1139, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers lib runtime JavaScript, excluding tests, examples, documentation, and dependency code."},
-        "difficulty": {"score": 3, "signals": ["prototype adaptation", "middleware/error control flow", "HTTP edge cases"], "reason": "Native HTTP mutation and callback/error semantics require framework knowledge even though individual functions are readable."},
-        "complexity": {"score": 3, "signals": ["application/router boundary", "request-response-view layers"], "reason": "Meaningful behavior crosses application, router dependency, request, response, settings, and final-handler boundaries."},
-        "placement": "Compact size keeps a mature multi-layer web framework at SDC 2 rather than overstating it based on reputation."
+      "inspection": {
+        "commit": "07a39d62d84c21af5046fe6b2ef7b3e36ee557db",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "index.js",
+          "index.browser.js",
+          "test/index.test.js",
+          "LICENSE"
+        ]
       },
-      "quality": {
-        "source_quality": "The core favors small functions and delegates security-sensitive encoding, sending, and finalization to focused libraries.",
-        "architecture": "Application, request, response, view, and utilities have recognizable roles around a middleware router.",
-        "naming_and_idiom": "Long-standing public methods and private helpers consistently match familiar HTTP and middleware vocabulary.",
-        "tests": "The test suite covers mounting, configuration, routing, HTTP semantics, error paths, and regression behavior.",
-        "documentation": "The README and linked API guides explain installation, routing, middleware, and application behavior.",
-        "traceability": "A request enters app.handle, receives adapted prototypes and locals, reaches the router, then uses response helpers.",
-        "maintainability": "Compatibility behavior is explicit, public surfaces are stable, and responsibilities remain split into a few modules.",
-        "educational_value": "Learners can see a real framework core without first navigating a large plugin or build infrastructure."
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/ai/nanoid/blob/07a39d62d84c21af5046fe6b2ef7b3e36ee557db/LICENSE"
+        ]
       },
-      "inspection": {"commit": "023767fe9872e029271df1418f73401bff20ff40", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["Readme.md", "lib/application.js", "lib/response.js", "test/app.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "axios",
-      "repository": "axios/axios",
-      "url": "https://github.com/axios/axios",
-      "primary_language": "JavaScript",
-      "language_evidence": "The client core, adapters, helpers, cancellation, transforms, and platform implementations are JavaScript under lib.",
-      "description": "A promise-based HTTP client that presents one request API across browsers, Node.js, and multiple transport adapters.",
-      "real_world_evidence": "The project publishes a production HTTP client with browser and Node transports, releases, and maintained compatibility behavior.",
-      "why_study": "It shows how a portable library normalizes configuration, headers, errors, cancellation, proxying, streams, and adapters behind one API.",
-      "learn": ["Adapter architecture, interceptor chains, configuration merging, HTTP/TLS proxy behavior, cancellation, and cross-runtime boundaries."],
-      "prerequisites": ["Promises, HTTP, Node.js streams, browser requests, modules, and object configuration patterns."],
-      "start_here": {"path": "lib/core/Axios.js", "reason": "The request method assembles configuration, interceptors, dispatch, and response flow before handing off to adapters."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 7769, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes JavaScript runtime and declarations, excluding tests, examples, distributions, and generated artifacts."},
-        "difficulty": {"score": 3, "signals": ["asynchronous interceptor chains", "stream and TLS handling", "cross-runtime compatibility"], "reason": "The core is conventional, while Node transport, redirects, proxy tunneling, streaming, and cancellation add recurring technical depth."},
-        "complexity": {"score": 3, "signals": ["multiple adapters", "configuration and transform layers", "platform variants"], "reason": "A request crosses defaults, merge logic, interceptors, dispatch, an environment adapter, transforms, and structured errors."},
-        "placement": "Moderate size plus multiple runtime and protocol boundaries make Axios a balanced SDC 3 codebase."
-      },
-      "quality": {
-        "source_quality": "Core orchestration is separated from transport-specific detail, with defensive error decoration and option normalization.",
-        "architecture": "Core, adapters, helpers, cancellation, defaults, and platform directories form a clear portability boundary.",
-        "naming_and_idiom": "Request, dispatch, adapter, interceptor, headers, and transform vocabulary follows the HTTP client model.",
-        "tests": "Unit and integration suites exercise configuration, adapters, proxies, headers, cancellation, errors, and runtime regressions.",
-        "documentation": "The README documents requests, instances, interceptors, cancellation, configuration, errors, and environment support.",
-        "traceability": "A request can be traced from Axios.request through interceptor chains and dispatchRequest into the chosen adapter.",
-        "maintainability": "Environment-specific branches live behind adapters and helpers instead of contaminating the central request abstraction.",
-        "educational_value": "It provides a concrete study of portable networking code at a size where the entire request lifecycle remains approachable."
-      },
-      "inspection": {"commit": "fede1d1562e308077da7994305d63fb7722b66ac", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "lib/core/Axios.js", "lib/adapters/http.js", "tests/unit/core/Axios.test.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/axios/axios/blob/fede1d1562e308077da7994305d63fb7722b66ac/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "jquery",
@@ -175,63 +331,106 @@
       "language_evidence": "The modular DOM, events, data, Ajax, traversal, and effects implementation is JavaScript under src.",
       "description": "A browser library that normalizes DOM traversal, manipulation, events, Ajax, data, and effects behind a chainable API.",
       "real_world_evidence": "The repository builds and releases the jQuery browser library as real compatibility software, not an instructional implementation.",
-      "why_study": "Its modules expose years of browser-platform edge cases, extensible transports, deferred flow, and a durable chainable object model.",
-      "learn": ["DOM abstraction, prototype-based fluent APIs, feature detection, Ajax prefilters/transports, events, and compatibility engineering."],
-      "prerequisites": ["Browser DOM APIs, prototypes, callbacks and promises, HTTP/Ajax, and regular expressions."],
-      "start_here": {"path": "src/core.js", "reason": "The central constructor, prototype, extension mechanism, collection operations, and shared utilities define the library model."},
-      "sdc": {
+      "why_study": "The core factory path shows how jQuery turns varied selector inputs into one array-like, chainable collection while preserving deep-extension compatibility and prototype-pollution defenses.",
+      "learn": [
+        "Use `src/core.js` to study the following transferable techniques and behaviors: Prototype-based fluent objects, constructor indirection, selector-input classification, array-like collections, shallow and deep extension, document-ready callbacks, and prototype-pollution prevention."
+      ],
+      "prerequisites": [
+        "Before reading `src/core.js`, be familiar with the following concepts: JavaScript prototypes, constructor functions, array-like objects, browser DOM nodes, callbacks, recursion, and object-property copying."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A DOM element is a browser object, and a jQuery collection wraps zero or more elements behind a chainable API."
+        ],
+        "reason": "The short DOM context is sufficient; collection construction, prototype design, recursive extension, input classification, compatibility, and security hardening are transferable programming lessons."
+      },
+      "learning_path": {
+        "goal": "Understand how jQuery constructs an array-like chainable collection from different selector inputs and extends its shared prototype safely.",
+        "start_here": {
+          "path": "src/core.js",
+          "reason": "src/core.js defines the jQuery factory, shared prototype, and extend operation before src/core/init.js classifies empty values, DOM nodes, callbacks, IDs, and HTML inputs."
+        },
+        "supporting_files": [
+          "src/core/init.js",
+          "test/unit/core.js"
+        ],
+        "trace": "Start at the jQuery factory and prototype, follow init as it classifies empty values, DOM nodes, callbacks, IDs, and HTML, then follow extend's shallow and deep copy rules; correlate constructor, extension, recursion, and security cases in the core tests."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 2, "loc": 7166, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count covers modular source JavaScript, excluding QUnit tests, build tooling, distributions, and vendor material."},
-        "difficulty": {"score": 4, "signals": ["browser compatibility", "implicit fluent object model", "Ajax transport negotiation"], "reason": "Host-object quirks, feature detection, callbacks/deferreds, selector behavior, and legacy compatibility recur across core paths."},
-        "complexity": {"score": 3, "signals": ["many browser subsystems", "extension registries", "cross-cutting collection model"], "reason": "Core collections connect selectors, DOM manipulation, events, data, effects, serialization, and Ajax modules."},
-        "placement": "A modest codebase with unusually demanding platform knowledge and several connected subsystems fits SDC 3."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "prototype-based fluent objects",
+            "constructor indirection",
+            "recursive extension and array-like modeling"
+          ],
+          "reason": "Prototype aliasing, constructor indirection, dynamic input classification, array-like collections, and recursive extension materially shape the path."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "many constructor branches",
+            "localized recursive deep merge",
+            "explicit document-ready and selector callbacks"
+          ],
+          "reason": "Input kind and context select explicit synchronous branches, while recursive merge and ready callbacks remain localized rather than forming a distributed state machine."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "core factory and init module",
+            "one shared collection prototype"
+          ],
+          "reason": "The selected behavior stays within a few closely related core modules and their focused tests."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "browser compatibility",
+            "prototype-pollution defense",
+            "stable historical API and performance"
+          ],
+          "reason": "DOM quirks, accepted selector forms, deep-copy semantics, prototype safety, modular builds, performance, and decades of compatibility interact in the core path."
+        },
+        "placement": "The four scores 3/2/2/4 sum to 11; their arithmetic mean is 2.75 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Compatibility branches are purposeful, security-sensitive merges reject prototype pollution, and modules isolate browser concerns.",
-        "architecture": "A small core and explicit feature modules build into selectable distributions without obscuring shared behavior.",
-        "naming_and_idiom": "Long-lived names consistently distinguish collections, elements, transports, prefilters, converters, and deferred state.",
-        "tests": "Extensive QUnit suites encode DOM, Ajax, selector, event, manipulation, and historical regression contracts.",
-        "documentation": "The README covers building and contribution while the public API documentation is linked and maintained separately.",
-        "traceability": "A jQuery collection begins in core, gains module methods, and reaches focused unit suites for each browser behavior.",
-        "maintainability": "Modular builds and dedicated compatibility tests preserve a difficult browser contract without a monolithic source file.",
-        "educational_value": "It teaches mature compatibility engineering and the reasons real browser abstractions contain seemingly unusual branches."
+        "source_quality": "The factory, prototype, and extension logic use explicit branches, while src/core/init.js isolates the input-classification behavior that constructs each collection.",
+        "architecture": "The selected path stays within the core factory, the init constructor, one shared collection prototype, and their focused core tests.",
+        "naming_and_idiom": "jQuery, fn, init, extend, pushStack, selector, context, and ready consistently describe construction and fluent collection behavior.",
+        "tests": "test/unit/core.js covers constructor inputs, prototype extension, recursive copying, and security cases such as `__proto__` pollution.",
+        "documentation": "The README and maintained public API documentation provide the collection-construction and extension context needed to follow `src/core.js`.",
+        "traceability": "A call to jQuery can be followed from the factory into init's input branches and back through the shared prototype, while extend can be traced independently into the core tests.",
+        "maintainability": "A shared prototype and separate input constructor localize the historical API, browser-compatibility, deep-copy, and prototype-safety constraints.",
+        "educational_value": "The path demonstrates how a mature JavaScript library builds a compact fluent object model without hiding its compatibility and security obligations."
       },
-      "inspection": {"commit": "71c0dd14927c41d1aab5ce5ef2687d7808a4186b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/core.js", "src/ajax.js", "test/unit/core.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/jquery/jquery/blob/71c0dd14927c41d1aab5ce5ef2687d7808a4186b/LICENSE.txt"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "prettier",
-      "repository": "prettier/prettier",
-      "url": "https://github.com/prettier/prettier",
-      "primary_language": "JavaScript",
-      "language_evidence": "The formatter core, document intermediate representation, printers, parser adapters, and plugins are JavaScript under src.",
-      "description": "An opinionated source-code formatter that parses many languages, builds a document representation, and prints stable layouts.",
-      "real_world_evidence": "The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.",
-      "why_study": "It is a strong example of compiler-shaped software: parse, normalize, attach comments, build documents, and render under width constraints.",
-      "learn": ["AST adaptation, pretty-printing algorithms, document IR, comment attachment, plugin boundaries, snapshots, and cursor preservation."],
-      "prerequisites": ["Abstract syntax trees, parsing concepts, recursion, immutable transformations, modules, and basic compiler pipelines."],
-      "start_here": {"path": "src/main/core.js", "reason": "The core formatting path connects parser resolution, AST-to-document conversion, printing, ranges, comments, and cursor mapping."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 3, "loc": 47162, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes formatter JavaScript and declarations, excluding tests, fixtures, generated distributions, and documentation."},
-        "difficulty": {"score": 5, "signals": ["parser and printer algorithms", "AST normalization", "comment and cursor mapping"], "reason": "Correct stable printing across many syntaxes requires recursive algorithms, parser recovery, comment placement, and layout optimization."},
-        "complexity": {"score": 4, "signals": ["multi-language plugin system", "parse-to-document pipeline", "large snapshot matrix"], "reason": "Core formatting coordinates parser adapters, language printers, options, plugins, document rendering, ranges, and standalone builds."},
-        "placement": "Expert code difficulty triggers the guardrail and the broad formatter architecture confirms an SDC 4 placement."
+      "inspection": {
+        "commit": "71c0dd14927c41d1aab5ce5ef2687d7808a4186b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/core.js",
+          "src/core/init.js",
+          "test/unit/core.js",
+          "LICENSE.txt"
+        ]
       },
-      "quality": {
-        "source_quality": "Pipeline stages and utility boundaries keep difficult formatting algorithms readable and reduce language-plugin duplication.",
-        "architecture": "Parser adapters, AST normalization, document builders, printers, and core rendering form a recognizable compiler-style pipeline.",
-        "naming_and_idiom": "Names such as printAstToDoc, normalizeFormatOptions, attachComments, and printDocToString expose each transformation.",
-        "tests": "A large fixture and snapshot system covers languages, syntax proposals, options, cursor placement, ranges, and regressions.",
-        "documentation": "Contributor and plugin documentation explain architecture, testing, debugging, options, and supported language behavior.",
-        "traceability": "A format call can be traced through coreFormat, parsing, AST-to-doc, document printing, and a focused fixture snapshot.",
-        "maintainability": "Shared document primitives and plugin contracts constrain a large compatibility matrix behind stable interfaces.",
-        "educational_value": "It offers a production-grade introduction to formatting and compiler pipelines with unusually strong executable examples."
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/jquery/jquery/blob/71c0dd14927c41d1aab5ce5ef2687d7808a4186b/LICENSE.txt"
+        ]
       },
-      "inspection": {"commit": "0283c8848ecb541c7ea0601ff274799bce1b39e5", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/main/core.js", "src/language-js/parse/babel.js", "tests/config/format-test/run-format-test.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "eslint",
@@ -241,63 +440,231 @@
       "language_evidence": "The linter engine, configuration loaders, rule traversal, fixes, CLI engine, and services are JavaScript under lib.",
       "description": "A configurable static-analysis engine and CLI for identifying and automatically fixing JavaScript problems.",
       "real_world_evidence": "The repository publishes ESLint as an extensible linter used in development and continuous-integration workflows.",
-      "why_study": "It demonstrates AST traversal, plugin rules, configuration resolution, safe autofixes, caching, parallel work, and stable diagnostics.",
-      "learn": ["Static analysis, visitor dispatch, configuration merging, plugin systems, source ranges, autofix conflict handling, and CLI orchestration."],
-      "prerequisites": ["JavaScript ASTs, modules, asynchronous filesystem work, configuration systems, and command-line tools."],
-      "start_here": {"path": "lib/linter/linter.js", "reason": "The linter connects parsing, rule listeners, traversal, diagnostics, inline configuration, and iterative fixes."},
-      "sdc": {
+      "why_study": "Starting at the public lintText entry point reveals the full analysis lifecycle: configuration lookup, parser and rule isolation, event-driven traversal, diagnostic suppression, and conflict-safe iterative fixes.",
+      "learn": [
+        "Use `lib/eslint/eslint.js` to study the following transferable techniques and behaviors: Public API orchestration, abstract-syntax-tree traversal, visitor dispatch, plugin isolation, configuration resolution, stable diagnostics, suppression accounting, and multipass autofix handling."
+      ],
+      "prerequisites": [
+        "Before reading `lib/eslint/eslint.js`, be familiar with the following concepts: JavaScript modules and callbacks, abstract syntax trees, visitor traversal, configuration objects, source ranges, and ordinary linter concepts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A linter parses source into an abstract syntax tree and invokes configured rule listeners as that tree is traversed."
+        ],
+        "reason": "The short static-analysis context is documented; the selected path teaches transferable visitor dispatch, extension isolation, configuration, diagnostics, suppression, conflict-safe fixes, caching, and error handling."
+      },
+      "learning_path": {
+        "goal": "Understand how ESLint parses one source file, creates isolated rule listeners, traverses the source, reports and suppresses diagnostics, and applies safe iterative fixes.",
+        "start_here": {
+          "path": "lib/eslint/eslint.js",
+          "reason": "ESLint.lintText is the learner-facing entry point that assembles configuration and result handling before delegating to the linter engine, so it exposes the selected end-to-end path without beginning inside an internal subsystem."
+        },
+        "supporting_files": [
+          "lib/eslint/eslint-helpers.js",
+          "lib/linter/linter.js",
+          "lib/linter/source-code-fixer.js",
+          "tests/lib/linter/linter.js"
+        ],
+        "trace": "Enter through ESLint.lintText and its configuration and result helpers, continue into Linter verification, parser and SourceCode creation, runRules, rule-context creation, and visitor dispatch, then follow reports through suppression and source-code-fixer passes; confirm message ordering, rule failures, suppression, and autofix behavior in the linter tests."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 4, "loc": 71101, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes production JavaScript and declarations, excluding tests, fixtures, docs, benchmarks, and generated output."},
-        "difficulty": {"score": 4, "signals": ["AST traversal", "dynamic rule/plugin execution", "autofix ranges"], "reason": "Parsing services, scoped traversal, dynamic plugins, suppression, and multipass fixes create recurring advanced behavior."},
-        "complexity": {"score": 4, "signals": ["configuration and plugin subsystems", "CLI/cache/workers", "cross-cutting diagnostics"], "reason": "Linting crosses file discovery, config loading, parsers, plugins, traversal, fixes, suppression, caching, and output services."},
-        "placement": "All three dimensions independently land in the fourth band, making ESLint a clear SDC 4 project."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "higher-order visitor listeners",
+            "plugin and parser interfaces",
+            "private slots and nontrivial source models"
+          ],
+          "reason": "Visitor callbacks, dynamic rule contexts, plugin interfaces, private state, and structured AST/source models materially shape the path."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "event-driven traversal",
+            "multipass autofix",
+            "suppression and error propagation"
+          ],
+          "reason": "Rule listeners, traversal order, processor blocks, inline directives, suppression accounting, fix conflicts, repeated verification, and plugin failures interact nonlocally."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public API and configuration loaders",
+            "parser, source, visitor, rule, and fix subsystems",
+            "result and reporting helpers"
+          ],
+          "reason": "One lint request crosses many extension points, services, representation boundaries, and cross-cutting diagnostic policies."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "third-party extension isolation",
+            "stable diagnostics and fix ranges",
+            "parser, configuration, source, and API compatibility"
+          ],
+          "reason": "Correctness, deterministic diagnostics, safe fixes, plugin errors, source ranges, configuration semantics, and compatibility recur throughout the path."
+        },
+        "placement": "The four scores 3/4/4/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Large orchestration functions are supported by focused helpers, explicit types in comments, invariants, and structured result objects.",
-        "architecture": "Public ESLint orchestration, the Linter engine, config loaders, services, rules, and formatters have distinct responsibilities.",
-        "naming_and_idiom": "Rule, source-code, config, suppression, fix, and diagnostic vocabulary is consistent across public and internal APIs.",
-        "tests": "Extensive unit and integration suites cover parsers, rules, configuration, fixes, caching, workers, and regressions.",
-        "documentation": "User, rule-author, plugin, parser, formatter, integration, and contributor documentation covers each extension surface.",
-        "traceability": "A lint request can be followed from ESLint.lintFiles into configuration, Linter verification, rule listeners, and diagnostics.",
-        "maintainability": "Extension contracts and service boundaries prevent the configurable analysis engine from collapsing into rule-specific conditionals.",
-        "educational_value": "It is a substantial but navigable example of how a real static-analysis platform contains third-party code safely."
+        "source_quality": "The public lintText orchestration delegates configuration, source verification, suppression, and fixing to named helpers with explicit result and failure paths.",
+        "architecture": "ESLint orchestration, configuration helpers, the Linter engine, parser and SourceCode creation, rule listeners, and the source-code fixer have distinct responsibilities.",
+        "naming_and_idiom": "lintText, runRules, SourceCode, rule listeners, suppressions, messages, and fixes consistently describe each stage of one lint request.",
+        "tests": "The selected linter tests exercise message ordering, rule failures, suppression behavior, fix conflicts, repeated fix passes, parser behavior, and extension errors.",
+        "documentation": "User and extension documentation explains configuration, rules, parsers, plugins, diagnostics, and fixes needed to follow the selected linting path.",
+        "traceability": "A learner can follow lintText through configuration and verification into visitor dispatch, reported messages, suppression accounting, and source-code-fixer passes, then match each outcome to focused tests.",
+        "maintainability": "Stable public orchestration and explicit parser, rule, source, and fixer boundaries keep third-party extension behavior out of unrelated control flow.",
+        "educational_value": "This path shows how a production static-analysis platform turns configurable third-party visitors into deterministic diagnostics and safe edits."
       },
-      "inspection": {"commit": "5634542be580750ffb1a5766470f9e9c72719696", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "lib/eslint/eslint.js", "lib/linter/linter.js", "tests/lib/linter/linter.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "5634542be580750ffb1a5766470f9e9c72719696",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "lib/eslint/eslint.js",
+          "lib/eslint/eslint-helpers.js",
+          "lib/linter/linter.js",
+          "lib/linter/source-code-fixer.js",
+          "tests/lib/linter/linter.js",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
-      "slug": "react",
-      "repository": "react/react",
-      "url": "https://github.com/react/react",
+      "slug": "prettier",
+      "repository": "prettier/prettier",
+      "url": "https://github.com/prettier/prettier",
       "primary_language": "JavaScript",
-      "language_evidence": "JavaScript implements the public packages, reconciler, scheduler integration, renderers, server components, and runtime; Rust supports the compiler.",
-      "description": "A component runtime and rendering platform spanning reconciliation, scheduling, server rendering, native/web renderers, and a compiler.",
-      "real_world_evidence": "The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.",
-      "why_study": "It exposes the internals of cooperative scheduling, persistent update queues, fiber reconciliation, rendering phases, hydration, and compilation.",
-      "learn": ["Fiber data structures, priority lanes, interruptible rendering, commit phases, renderer abstraction, hydration, server components, and compiler analysis."],
-      "prerequisites": ["Advanced JavaScript, trees and graph algorithms, scheduling, concurrent state machines, compilers, and browser rendering."],
-      "start_here": {"path": "packages/react-reconciler/src/ReactFiberWorkLoop.js", "reason": "The work loop coordinates priorities, render phases, suspension, retries, errors, and commits at the heart of React."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 338536, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes production JavaScript, TypeScript, and Rust compiler code while excluding tests, fixtures, generated builds, and docs."},
-        "difficulty": {"score": 5, "signals": ["concurrent scheduler", "fiber reconciliation", "compiler and hydration algorithms"], "reason": "Priority lanes, resumable work, effect ordering, suspension, hydration, server protocols, and compiler transforms are expert-level code."},
-        "complexity": {"score": 5, "signals": ["many packages and renderers", "client/server/compiler topology", "cross-cutting feature flags"], "reason": "The platform connects public APIs, reconciler, scheduler, DOM/native renderers, server components, hydration, devtools, and compiler packages."},
-        "placement": "Every dimension reaches the highest band, so React is unambiguously SDC 5."
+      "language_evidence": "The formatter core, document intermediate representation, printers, parser adapters, and plugins are JavaScript under src.",
+      "description": "An opinionated source-code formatter that parses many languages, builds a document representation, and prints stable layouts.",
+      "real_world_evidence": "The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.",
+      "why_study": "The core formatting path makes a production pretty-printer concrete by connecting parsing, abstract-syntax-tree conversion, document layout, comment handling, and cursor preservation.",
+      "learn": [
+        "Use `src/main/core.js` to study the following transferable techniques and behaviors: Parser-plugin resolution, abstract-syntax-tree modeling, document intermediate representations, constrained layout, comment attachment, line-ending normalization, cursor relocation, and snapshot testing."
+      ],
+      "prerequisites": [
+        "Before reading `src/main/core.js`, be familiar with the following concepts: JavaScript modules and asynchronous functions, abstract syntax trees, recursive tree traversal, immutable transformations, parsing, and basic compiler pipelines."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A formatter parses source into an abstract syntax tree, converts it to a layout document, and prints that document under width and option constraints."
+        ],
+        "reason": "The repository documents the compiler-shaped pipeline, and its hard parts teach transferable parsing adapters, staged transformations, immutable layout representations, deterministic output, and compatibility engineering."
+      },
+      "learning_path": {
+        "goal": "Understand how Prettier formats source through parsing, AST-to-document conversion, document printing, and cursor preservation.",
+        "start_here": {
+          "path": "src/main/core.js",
+          "reason": "src/main/core.js coordinates parser selection, parseText, printAstToDoc, document rendering, line endings, and cursor relocation, so it exposes the complete selected formatting request."
+        },
+        "supporting_files": [
+          "src/language-js/parse/babel.js",
+          "src/main/ast-to-doc.js",
+          "src/document/printer/printer.js",
+          "src/main/get-cursor-node.js",
+          "tests/format/js/arrays/format.test.js",
+          "tests/format/js/arrays/__snapshots__/format.test.js.snap",
+          "tests/integration/__tests__/cursor-offset.js"
+        ],
+        "trace": "Follow coreFormat into parser resolution and parseText, then through printAstToDoc and the document printer; continue through line-ending, comment, and cursor-node relocation handling, and finish with a concrete JavaScript arrays fixture, its expected snapshot, and cursor-offset integration tests."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "higher-order asynchronous composition",
+            "plugin objects and AST modeling",
+            "nontrivial option and result shapes"
+          ],
+          "reason": "Higher-order composition, parser plugins, AST and document modeling, and asynchronous stages materially shape the path without pervasive expert JavaScript machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "multi-stage parse-to-print flow",
+            "cursor-node state mapping",
+            "comment and recovery interactions"
+          ],
+          "reason": "Parsing, comment attachment, document layout, cursor-node tracking, diff-based relocation, and error recovery create recurring nonlocal invariants."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "parser plugin boundary",
+            "AST-to-document pipeline",
+            "document renderer and fixture matrix"
+          ],
+          "reason": "Many modules, language plugins, intermediate representations, option policies, and test fixtures contribute to one formatting request."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "syntax and parser compatibility",
+            "deterministic stable output",
+            "cursor, comment, and line-ending preservation"
+          ],
+          "reason": "A locally plausible change can alter syntax coverage, comments, formatting stability, cursor positions, line endings, plugin behavior, or performance across languages."
+        },
+        "placement": "The four scores 3/4/4/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Difficult state machines use explicit phase, lane, fiber, and feature-flag vocabulary with extensive invariants and comments.",
-        "architecture": "Package boundaries separate public APIs, reconciliation, scheduling, renderers, server behavior, shared utilities, and compiler code.",
-        "naming_and_idiom": "Domain terminology is consistent enough to trace priorities, roots, fibers, updates, effects, and commits across subsystems.",
-        "tests": "Specialized renderers and scheduler logs test ordering, interruption, retries, effects, hydration, errors, and compatibility contracts.",
-        "documentation": "Public documentation is extensive, while repository READMEs and source comments orient contributors to internal packages.",
-        "traceability": "A state update can be followed through queues, lanes, the fiber work loop, completion, commit, and priority-order tests.",
-        "maintainability": "Shared reconciler contracts let multiple renderers reuse hard logic while feature flags isolate staged behavior.",
-        "educational_value": "For prepared readers, it is a rare public implementation of a mature cooperative rendering runtime and compiler ecosystem."
+        "source_quality": "Named stages in core.js, ast-to-doc.js, and the document printer separate parsing, intermediate representation construction, layout, and result adjustment.",
+        "architecture": "The path crosses an explicit parser-plugin boundary, an AST-to-document stage, a document renderer, and narrow cursor-mapping helpers.",
+        "naming_and_idiom": "coreFormat, parseText, printAstToDoc, printDocToString, getCursorNode, and cursorOffset state each transformation and observable result directly.",
+        "tests": "The selected JavaScript array fixture and snapshot prove formatted output, while cursor-offset integration tests exercise relocation across formatting changes.",
+        "documentation": "Contributor and plugin documentation explains Prettier's parser, printer, document, option, and fixture contracts needed to follow this path.",
+        "traceability": "A format request can be followed from coreFormat through Babel parsing, AST-to-document conversion, document rendering, and cursor relocation into one concrete fixture, snapshot, and integration suite.",
+        "maintainability": "Stable parser and printer contracts plus deterministic fixtures constrain changes across language syntax, comments, layout, line endings, and cursor behavior.",
+        "educational_value": "The path provides an evidence-backed view of compiler-shaped JavaScript software whose intermediate representation and output constraints are visible end to end."
       },
-      "inspection": {"commit": "2dc7da790d6388b95b83198ca9b588b2ad5f5c0b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "packages/react/src/ReactClient.js", "packages/react-reconciler/src/ReactFiberWorkLoop.js", "packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "0283c8848ecb541c7ea0601ff274799bce1b39e5",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/main/core.js",
+          "src/language-js/parse/babel.js",
+          "src/main/ast-to-doc.js",
+          "src/document/printer/printer.js",
+          "src/main/get-cursor-node.js",
+          "tests/format/js/arrays/format.test.js",
+          "tests/format/js/arrays/__snapshots__/format.test.js.snap",
+          "tests/integration/__tests__/cursor-offset.js",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "node",
@@ -307,30 +674,225 @@
       "language_evidence": "JavaScript implements the standard-library and internal runtime layers, with substantial first-party C++ and C bindings beneath them.",
       "description": "The Node.js runtime, standard library, module loaders, native bindings, event loop integration, diagnostics, and tooling.",
       "real_world_evidence": "This repository builds the released Node.js executable and standard library used to run server, command-line, and tooling workloads.",
-      "why_study": "It connects high-level JavaScript APIs to native runtime machinery, operating systems, V8, libuv, networking, modules, and diagnostics.",
-      "learn": ["Runtime bootstrapping, CommonJS/ESM loading, native bindings, event loops, filesystem and network APIs, workers, diagnostics, and compatibility."],
-      "prerequisites": ["Expert JavaScript, C++, operating-system APIs, event loops, compilers/runtimes, networking, and concurrent systems."],
-      "start_here": {"path": "lib/internal/modules/cjs/loader.js", "reason": "The CommonJS loader exposes resolution, caching, cycles, compilation, ESM interoperation, hooks, and internal bindings in a familiar feature."},
-      "sdc": {
+      "why_study": "The CommonJS loader path connects require to resolution, caching, circular dependencies, wrapper compilation, extension handling, and failure cleanup inside a production runtime.",
+      "learn": [
+        "Use `lib/internal/modules/cjs/loader.js` to study the following transferable techniques and behaviors: Module resolution, cache identity, circular exports, built-in modules, extension dispatch, source wrapping, dynamic compilation, parent-child relationships, and failed-load cleanup."
+      ],
+      "prerequisites": [
+        "Before reading `lib/internal/modules/cjs/loader.js`, be familiar with the following concepts: Expert JavaScript, CommonJS modules, filesystem paths, package resolution, caches, dynamic compilation, and basic runtime internals."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "CommonJS require resolves a module specifier, caches module instances to support reuse and cycles, wraps source with module variables, and executes it in the runtime."
+        ],
+        "reason": "The documented module model is sufficient context; the selected path's difficulty is transferable runtime, cache, resolution, compilation, compatibility, security, and error-recovery engineering."
+      },
+      "learning_path": {
+        "goal": "Understand how Node.js resolves, caches, loads, compiles, and returns a classic CommonJS module while handling built-ins, cycles, extensions, and failures.",
+        "start_here": {
+          "path": "lib/internal/modules/cjs/loader.js",
+          "reason": "lib/internal/modules/cjs/loader.js contains Module._load, Module._resolveFilename, Module.prototype._compile, wrapper execution, caches, and extension dispatch for the selected classic CommonJS trace."
+        },
+        "supporting_files": [
+          "doc/api/modules.md",
+          "test/sequential/test-module-loading.js",
+          "test/parallel/test-module-cache.js"
+        ],
+        "trace": "Start with the documented CommonJS loading model and Module._load, follow relative and module-cache fast paths, circular-export handling, Module._resolveFilename, instance creation, then Module.prototype._compile and wrapSafe; correlate main-module, extension, path, cache, cycle, load-error, and failed-resolution invalidation cases in the module-loading tests."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 300560, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": [], "notes": "Count includes first-party JavaScript, TypeScript, C, C headers, and C++ while excluding tests, deps, docs, fixtures, and build output."},
-        "difficulty": {"score": 5, "signals": ["language runtime internals", "native bindings and memory", "asynchronous operating-system integration"], "reason": "Loaders, V8 contexts, native resources, async hooks, workers, crypto, and platform APIs repeatedly require expert runtime knowledge."},
-        "complexity": {"score": 5, "signals": ["runtime and standard-library platform", "many native subsystems", "cross-platform build and release topology"], "reason": "Bootstrap, modules, JS libraries, native bindings, V8, libuv, crypto, networking, workers, diagnostics, and tooling interact across the system."},
-        "placement": "A large expert runtime with platform-scale architecture reaches SDC 5 on every independent dimension."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "dynamic source compilation and wrappers",
+            "hardened primordial calls and proxies",
+            "internal bindings and loader machinery"
+          ],
+          "reason": "Dynamic compilation, proxy behavior, symbol-keyed internal state, hardened built-ins, format detection, and native runtime interfaces recur throughout the loader."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "resolution and cache state machines",
+            "circular and failed loads",
+            "CommonJS, built-in, extension, and compilation paths"
+          ],
+          "reason": "Caches, parent-child relationships, cycles, rollback, format detection, resolution, extensions, and compilation interact pervasively."
+        },
+        "design_span": {
+          "score": 5,
+          "signals": [
+            "resolver, cache, compiler, VM, and built-ins",
+            "runtime and filesystem boundaries",
+            "platform-wide compatibility policies and tests"
+          ],
+          "reason": "The familiar require path coordinates several major runtime subsystems and pervasive policy mechanisms."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "language and package compatibility",
+            "security and cache correctness",
+            "startup performance, cycles, errors, and cross-platform behavior"
+          ],
+          "reason": "A loader change can break security boundaries, cache identity, cycles, package resolution, built-ins, source maps, performance, diagnostics, or long-standing cross-platform compatibility."
+        },
+        "placement": "The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Internal modules use hardened primordials, explicit validation, structured errors, and comments around compatibility-sensitive behavior.",
-        "architecture": "JavaScript libraries, internal modules, native source, bindings, dependencies, tests, and tooling have established boundaries.",
-        "naming_and_idiom": "Runtime concepts such as contexts, isolates, modules, bindings, handles, hooks, and resources are used consistently.",
-        "tests": "Large parallel, sequential, internet, addon, benchmark, and subsystem suites encode API and platform contracts.",
-        "documentation": "API documentation, contributor guides, architecture notes, and source comments cover both users and runtime developers.",
-        "traceability": "A familiar API such as file opening or require can be traced from JavaScript validation through internal bindings to native code and tests.",
-        "maintainability": "Stable internal conventions, subsystem ownership, error codes, and exhaustive regression tests support a long-lived runtime.",
-        "educational_value": "It lets advanced learners connect JavaScript semantics and APIs to the concrete machinery of a production runtime."
+        "source_quality": "The loader uses hardened primordial operations, structured errors, explicit cache transitions, and detailed comments around circular and compatibility-sensitive cases.",
+        "architecture": "Resolution, module and path caches, built-ins, wrapper compilation, filesystem access, and extension handlers meet at named loader boundaries.",
+        "naming_and_idiom": "Module._load, Module._resolveFilename, Module._compile, wrapSafe, _cache, _pathCache, loaded, parent, and children expose the loader lifecycle.",
+        "tests": "The selected module-loading and cache suites cover main modules, paths, extensions, cycles, load failures, and invalidation after failed resolution.",
+        "documentation": "doc/api/modules.md documents the CommonJS wrapper, resolution algorithm, cache, cycles, main module, and extension behavior followed in source.",
+        "traceability": "A require call can be followed through Module._load, cache and cycle branches, filename resolution, module construction, source compilation, and the selected module tests.",
+        "maintainability": "Stable internal conventions, structured error codes, explicit caches, and broad loader regressions protect long-standing package and platform compatibility.",
+        "educational_value": "The path lets advanced learners connect a familiar JavaScript API to the runtime machinery that preserves identity, cycles, compilation, and recovery."
       },
-      "inspection": {"commit": "4215cc35e25c44f9f4fea5a4541afc862db7ef0a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "lib/internal/modules/cjs/loader.js", "src/node.cc", "test/parallel/test-fs-open.js"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/LICENSE"},
-      "github": {"primary_language": "JavaScript", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "4215cc35e25c44f9f4fea5a4541afc862db7ef0a",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "lib/internal/modules/cjs/loader.js",
+          "doc/api/modules.md",
+          "test/sequential/test-module-loading.js",
+          "test/parallel/test-module-cache.js",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "react",
+      "repository": "react/react",
+      "url": "https://github.com/react/react",
+      "primary_language": "JavaScript",
+      "language_evidence": "JavaScript implements the public packages, reconciler, scheduler integration, renderers, server components, and runtime; Rust supports the compiler.",
+      "description": "A component runtime and rendering platform spanning reconciliation, scheduling, server rendering, native/web renderers, and a compiler.",
+      "real_world_evidence": "The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.",
+      "why_study": "The reconciler work-loop path shows how React assigns a state update to priority lanes, performs interruptible fiber work, rebases deferred updates, and commits effects in order.",
+      "learn": [
+        "Use `packages/react-reconciler/src/ReactFiberWorkLoop.js` to study the following transferable techniques and behaviors: Fiber update queues, priority lanes, root scheduling, synchronous and concurrent rendering, interruption, rebasing, effect collection, and commit ordering."
+      ],
+      "prerequisites": [
+        "Before reading `packages/react-reconciler/src/ReactFiberWorkLoop.js`, be familiar with the following concepts: Advanced JavaScript, recursive trees, queues, cooperative scheduling, priority systems, persistent state, and concurrent state-machine reasoning."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A component update is represented as work on a fiber tree and assigned a priority lane before rendering and committing observable effects."
+        ],
+        "reason": "The repository's tests and source vocabulary make the rendering model learnable; the difficulty comes from transferable scheduling, persistent queues, state machines, interruption, recovery, and side-effect ordering rather than an external specialist discipline."
+      },
+      "learning_path": {
+        "goal": "Understand how React schedules a state update by lane, performs interruptible work on the fiber root, and commits effects in the required order.",
+        "start_here": {
+          "path": "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+          "reason": "ReactFiberWorkLoop.js coordinates scheduled root work, render phases, interruption, completion, and commits after an update enters through the reconciler and class update queue."
+        },
+        "supporting_files": [
+          "packages/react-reconciler/src/ReactFiberReconciler.js",
+          "packages/react-reconciler/src/ReactFiberClassUpdateQueue.js",
+          "packages/react-reconciler/src/ReactFiberRootScheduler.js",
+          "packages/react-reconciler/src/ReactFiberCommitWork.js",
+          "packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.js"
+        ],
+        "trace": "Enter through updateContainer and its queued update, follow scheduleUpdateOnFiber as it marks lanes, continue through root scheduling and concurrent or synchronous rendering, then through commitRoot and priority, interruption, rebasing, and commit-order tests using the no-op renderer and scheduler log."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "Flow-modeled recursive data structures",
+            "higher-order scheduling and renderer contracts",
+            "feature-flagged module composition"
+          ],
+          "reason": "Substantial type modeling, higher-order APIs, recursive fiber structures, and framework conventions shape the path, while the hardest burdens are behavioral and architectural rather than JavaScript metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "priority-lane scheduling and interruption",
+            "update rebasing and deferred work",
+            "render and commit phase state machines"
+          ],
+          "reason": "Concurrent state, priority, starvation prevention, interruption, rebasing, deferred work, effects, and commit ordering interact pervasively and require expert nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 5,
+          "signals": [
+            "reconciler, update queue, root scheduler, and renderer",
+            "concurrent and synchronous render modes",
+            "cross-cutting lane and commit policies"
+          ],
+          "reason": "Understanding the chosen update path requires coordinating major reconciler subsystems, execution modes, renderer contracts, and pervasive scheduling and commit policies."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "observable ordering and consistency",
+            "legacy and concurrent compatibility",
+            "latency, starvation, effect, and rebasing guarantees"
+          ],
+          "reason": "Locally plausible changes can violate rendering consistency, update ordering, effects, scheduling fairness, rebasing, compatibility, memory, or performance elsewhere in the path."
+        },
+        "placement": "The four scores 3/5/5/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "Explicit fiber, lane, render-phase, and commit-phase vocabulary makes the selected scheduling state machine inspectable despite its breadth.",
+        "architecture": "ReactFiberReconciler, ReactFiberClassUpdateQueue, ReactFiberRootScheduler, ReactFiberWorkLoop, and ReactFiberCommitWork divide update creation, prioritization, rendering, and effects.",
+        "naming_and_idiom": "updateContainer, enqueueUpdate, scheduleUpdateOnFiber, renderRootConcurrent, commitRoot, lanes, fibers, and effects preserve one scheduling vocabulary across files.",
+        "tests": "ReactIncrementalUpdates-test.js uses the no-op renderer and scheduler log to cover priority, interruption, rebasing, deferred work, and observable commit order.",
+        "documentation": "Inline invariants, source comments, and repository package documentation explain the phase, lane, update, and commit contracts used by the selected reconciler path.",
+        "traceability": "An update can be followed from updateContainer into the queue, through lane assignment and root scheduling, across render work, and into commit order asserted by scheduler logs.",
+        "maintainability": "Named subsystem boundaries, pervasive invariants, feature gates, and ordering tests constrain changes to the reconciler's shared concurrency rules.",
+        "educational_value": "For prepared learners, the path exposes a production cooperative renderer as concrete queues, priorities, interruptions, and ordered effects rather than as framework magic."
+      },
+      "inspection": {
+        "commit": "2dc7da790d6388b95b83198ca9b588b2ad5f5c0b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+          "packages/react-reconciler/src/ReactFiberReconciler.js",
+          "packages/react-reconciler/src/ReactFiberClassUpdateQueue.js",
+          "packages/react-reconciler/src/ReactFiberRootScheduler.js",
+          "packages/react-reconciler/src/ReactFiberCommitWork.js",
+          "packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.js",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     }
   ]
 }

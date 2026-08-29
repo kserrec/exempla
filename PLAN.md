@@ -415,17 +415,22 @@ Replacement research does not begin until all 200 decisions are recorded.
 
 ### Step 14.1 — Publish the reviewed retained corpus and honest gaps
 
-- [ ] **Objective:** Make the learner-centered model the only active catalog
+- [x] **Objective:** Make the learner-centered model the only active catalog
   model without retaining entries merely to preserve counts.
 - **Work:** Review the complete audit; convert retained entries; remove failed
   entries; append removal evidence without erasing history; regenerate all
-  language pages; update the README to literal counts; switch CI to ordinary
-  validation while gaps exist.
-- **Artifacts:** `catalog/*.json`, `research/rejections.json`,
-  `languages/**/README.md`, `README.md`, `.github/workflows/validate.yml`.
-- **Complete when:** Every canonical file uses schema version 2, no accepted
-  entry contains SDC data, all retained entries match reviewed evidence, and
-  ordinary validation and generated-output checks pass.
+  language pages; independently cold-review all publication prose; update the
+  README to literal counts; switch CI to ordinary validation while gaps exist.
+- **Artifacts:** Per-language `catalog/*.json`, `catalog/schema.json`,
+  `scripts/catalog.py`, `tests/test_catalog.py`, the rebuild and cutover-review
+  records under `research/`, `research/rejections.json`, generated
+  `languages/**/README.md`, public documentation and contribution templates,
+  and `.github/workflows/validate.yml`.
+- **Complete when:** Every per-language canonical catalog uses schema version
+  2 (`catalog/languages.json` remains the separate version-1 registry), no
+  accepted entry contains SDC data, all retained entries match reviewed
+  evidence, all pinned inspection and license paths resolve, and ordinary
+  validation and generated-output checks pass.
 - **Dependencies:** Phase 13.
 
 ## Phase 15 — Gap research and replacement curation
@@ -464,15 +469,16 @@ Replacement research does not begin until all 200 decisions are recorded.
 
 ## Phase 16 — Consistency audit, public workflow, and release
 
-### Step 16.1 — Audit the finished corpus and replace every active SDC workflow
+### Step 16.1 — Audit the finished corpus and verify every public workflow
 
 - [ ] **Objective:** Make the public repository deliver its learner-centered
   promise consistently from navigation through contribution and maintenance.
 - **Work:** Compare neighboring levels and score profiles; recheck domain and
   quality gates, paths, links, commits, licenses, languages, duplicates, counts,
-  gaps, and navigation; replace current SDC documentation and issue workflows;
-  keep `docs/sdc.md` only as a historical notice; run the applicable release
-  gate; publish a new major-version release without moving `v1.0.0`.
+  gaps, and navigation; confirm no current documentation or issue workflow
+  presents SDC as active; keep `docs/sdc.md` only as a historical notice; run
+  the applicable release gate; publish a new major-version release without
+  moving `v1.0.0`.
 - **Artifacts:** `README.md`, `CONTRIBUTING.md`, `docs/**`, `catalog/README.md`,
   issue and pull-request templates, `research/**`, generated pages, final Git
   commit/tag/release.

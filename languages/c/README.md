@@ -1,14 +1,18 @@
 # C
 
-10 qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).
+7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## SDC 1
+## Level 1
+
+No qualified repository has been published at this level. Standards are not lowered to fill a slot.
+
+## Level 2
 
 ### [likle/cwalk](https://github.com/likle/cwalk)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 A lightweight cross-platform library for lexical filesystem path manipulation in C and C++ programs.
 
@@ -16,43 +20,64 @@ A lightweight cross-platform library for lexical filesystem path manipulation in
 
 **Language evidence:** Path parsing, joining, normalization, relative-path calculation, segment iteration, and Unix and Windows rules are implemented in C under src/ with a C public header.
 
-**Why study it:** One source file turns raw strings into a coherent path model while exposing buffer sizing, in-place output, iteration, roots, and platform conventions.
+**Why study it:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions. No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
 
 **What you can learn:**
 
-- Pointer-based string scanning, bounded output, path segments, normalization, relative paths, Unix and Windows roots, in-place transformation, and portable C APIs.
+- Study these transferable C mechanisms in `src/cwalk.c`: pointer-based string and segment scanning, caller-owned bounded output buffers, and in-place input and output overlap.
+- Trace these states and branches from `src/cwalk.c` through its selected supporting files: iterative segment state, dot and parent filtering, and shared normalization and relative-path rules.
+- Identify these architectural responsibilities in the path beginning at `src/cwalk.c`: one implementation module, one public header, and one lexical-path concern.
+- Study these change constraints for the path beginning at `src/cwalk.c`: Unix, drive-root, and UNC compatibility, bounded output with theoretical lengths, and overlapping input and output support.
 
 **Prerequisites:**
 
-- C pointers and arrays, null-terminated strings, structs, enums, size_t, buffers, and basic filesystem path conventions.
+- Before reading `src/cwalk.c`, be comfortable with these mechanisms: pointer-based string and segment scanning, caller-owned bounded output buffers, and in-place input and output overlap.
+- Lexical paths consist of roots, separators, ordinary segments, dot segments, and parent segments under Unix or Windows conventions.
 
-**Start here:** [`src/cwalk.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/src/cwalk.c) — The single implementation file begins with bounded output and segment traversal, then builds the public path operations from those primitives.
+**Coding relevance:**
+
+No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
+
+Required domain context:
+
+- Lexical paths consist of roots, separators, ordinary segments, dot segments, and parent segments under Unix or Windows conventions.
+
+**Learning path:**
+
+- **Goal:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
+- **Start here:** [`src/cwalk.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/src/cwalk.c) — Begin with `src/cwalk.c` because it exposes how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
+- **Then read:**
+  - [`include/cwalk.h`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/include/cwalk.h)
+  - [`test/normalize_test.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/test/normalize_test.c)
+  - [`test/relative_test.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/test/relative_test.c)
+- **Trace:** Start at cwk_path_normalize, follow joined segment iteration through dot and parent removal into bounded output and termination, then compare cwk_path_get_relative's shared segment model; close with normalization and relative-path cases for overlap, undersized buffers, roots, separators, and excessive parent traversal.
 
 **Why this level:**
 
-- **S1:** 904 meaningful implementation LOC measured with tokei 14.0.0. Count covers the complete production source and public header, excluding tests, generated documentation, examples, and build metadata.
-- **D2:** Pointer and buffer care matter, but the algorithms are iterative, documented, and built from a small set of helpers.
-- **C1:** A single component provides pure path transformations without filesystem I/O, services, or extension machinery.
-- **Placement:** S1/D2/C1 averages to 1.33, placing libcwalk at SDC 1.
+- **Language technique 2:** Ordinary C pointers, structs, enums, and size-aware writes are essential, but the path does not require advanced language machinery.
+- **Behavioral reasoning 2:** Several related branches must stay coherent, yet control flow remains local, synchronous, and easy to simulate.
+- **Design span 1:** A flat API and private helpers keep the complete representative trace within one component.
+- **Constraint burden 3:** Multiple portability and memory-safety guarantees materially shape otherwise straightforward transformations.
+- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Buffer writes return theoretical lengths, termination is centralized, and segment state makes pointer traversal explicit.
-- **Architecture:** Private output, root, and segment primitives support a flat public API for joining, normalizing, resolving, and inspecting paths.
-- **Naming and idiom:** cwk_path_get_first_segment, normalize, join, relative, root, basename, dirname, and extension match the domain directly.
-- **Tests:** Focused test files cover every operation, small output buffers, overlapping inputs, empty paths, excessive parent traversal, Unix behavior, and Windows drive and UNC paths.
-- **Documentation:** The README links complete building, embedding, testing, and API reference documentation and states the platform matrix.
-- **Traceability:** A normalization case can be followed from segment iteration through dot and parent filtering, bounded output, termination, and a focused test.
-- **Maintainability:** One implementation unit, a stable header, explicit platform style, and operation-specific tests make changes easy to isolate.
-- **Educational value:** It demonstrates safe string and buffer design in a complete useful library small enough to read in one sitting.
+- **Source quality:** One focused implementation and public header expose explicit output and segment primitives; the documented API and operation-specific tests cover Unix and Windows roots, overlap, small buffers, empty paths, and excessive parent traversal, making the normalization trace direct and maintainable.
+- **Architecture:** The audited architecture of the path beginning at `src/cwalk.c` has these boundaries: one implementation module, one public header, and one lexical-path concern.
+- **Naming and idiom:** `src/cwalk.c` and its supporting files use these characteristic C mechanisms: pointer-based string and segment scanning, caller-owned bounded output buffers, and in-place input and output overlap.
+- **Tests:** Direct tests in `test/normalize_test.c` and `test/relative_test.c` cover these states and branches in the selected path: iterative segment state, dot and parent filtering, and shared normalization and relative-path rules.
+- **Documentation:** `src/cwalk.c` and its selected supporting material document the contracts needed to understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
+- **Traceability:** Start at cwk_path_normalize, follow joined segment iteration through dot and parent removal into bounded output and termination, then compare cwk_path_get_relative's shared segment model; close with normalization and relative-path cases for overlap, undersized buffers, roots, separators, and excessive parent traversal.
+- **Maintainability:** Changes to the path beginning at `src/cwalk.c` are constrained by these audited guarantees: Unix, drive-root, and UNC compatibility, bounded output with theoretical lengths, and overlapping input and output support.
+- **Educational value:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions. No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
 
-**Inspection record:** commit `e98d23f68807208952c179b49e4fd1813f31298d`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `include/cwalk.h`, `src/cwalk.c`, `test/normalize_test.c`, `LICENSE.md`. GitHub Linguist label: C. LOC exclusions: test/, docs/.
+**Inspection record:** commit `e98d23f68807208952c179b49e4fd1813f31298d`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/cwalk.c`, `include/cwalk.h`, `test/normalize_test.c`, `test/relative_test.c`, `LICENSE.md`. GitHub Linguist label: C.
 
-**License:** [MIT](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/LICENSE.md)
+**License:** MIT ([evidence 1](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/LICENSE.md))
 
 ### [zserge/jsmn](https://github.com/zserge/jsmn)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 2 / Behavior 3 / Design 1 / Constraints 3 → Level 2**
 
 A minimal allocation-free JSON tokenizer designed for embedded and resource-constrained C programs.
 
@@ -60,45 +85,64 @@ A minimal allocation-free JSON tokenizer designed for embedded and resource-cons
 
 **Language evidence:** The incremental JSON tokenizer, token model, validation, error reporting, and optional parent-link behavior are implemented entirely in the C header jsmn.h.
 
-**Why study it:** A two-function API exposes a full single-pass state machine, zero-copy token representation, caller-owned memory, incremental parsing, and strictness tradeoffs.
+**Why study it:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures. The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
 
 **What you can learn:**
 
-- Finite-state parsing, zero-copy token spans, caller-owned allocation, incremental input, nested structures, compile-time options, error codes, and header-only C distribution.
+- Study these transferable C mechanisms in `jsmn.h`: header-only implementation switches, caller-owned token arrays, and pointer and index based spans.
+- Trace these states and branches from `jsmn.h` through its selected supporting files: incremental parser position and next-token state, nested container matching, and success, invalid, partial, and no-memory outcomes.
+- Identify these architectural responsibilities in the path beginning at `jsmn.h`: one header, one parser abstraction, and one direct test program.
+- Study these change constraints for the path beginning at `jsmn.h`: zero allocation and zero-copy token spans, caller-selected token capacity, and strict and parent-link compatibility modes.
 
 **Prerequisites:**
 
-- C structs and enums, pointers and arrays, loops and switches, string indexing, preprocessor conditionals, and JSON syntax.
+- Before reading `jsmn.h`, be comfortable with these mechanisms: header-only implementation switches, caller-owned token arrays, and pointer and index based spans.
+- JSON has objects, arrays, strings, primitives, delimiters, and nesting, while jsmn returns token spans rather than allocating a value tree.
 
-**Start here:** [`jsmn.h`](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/jsmn.h) — The whole parser is here; read token allocation and primitive and string parsing before following the main jsmn_parse loop.
+**Coding relevance:**
+
+The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
+
+Required domain context:
+
+- JSON has objects, arrays, strings, primitives, delimiters, and nesting, while jsmn returns token spans rather than allocating a value tree.
+
+**Learning path:**
+
+- **Goal:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
+- **Start here:** [`jsmn.h`](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/jsmn.h) — Begin with `jsmn.h` because it exposes how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
+- **Then read:**
+  - [`test/tests.c`](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/test/tests.c)
+- **Trace:** Follow jsmn_parse through primitive and string scanners, container opening and closing, parent or backward matching, and token allocation; then use the direct tests to compare successful nested parses with invalid escapes, partial input, strict mode, parent links, and JSMN_ERROR_NOMEM retries.
 
 **Why this level:**
 
-- **S1:** 353 meaningful implementation LOC measured with tokei 14.0.0. Count covers the complete production header, excluding tests, examples, documentation, and build metadata.
-- **D2:** Parsing introduces state and edge cases, but the token model and main loop remain compact and plainly structured.
-- **C1:** One component tokenizes JSON without allocation, I/O, object construction, or external dependencies.
-- **Placement:** S1/D2/C1 averages to 1.33, making jsmn an SDC 1 project.
+- **Language technique 2:** The implementation depends on solid C representation and preprocessor fluency without advanced type or memory machinery.
+- **Behavioral reasoning 3:** Several parser states and recovery outcomes interact across calls, making behavior the path's main learning burden.
+- **Design span 1:** The full path is deliberately contained in one cohesive component.
+- **Constraint burden 3:** Memory, incremental-use, and compile-time compatibility contracts all influence parser changes.
+- **Placement:** The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Token allocation, span filling, rollback on incomplete input, strict-mode behavior, and parent tracking are explicit in short functions.
-- **Architecture:** A parser-state struct advances through caller input and fills a caller-owned flat token array that refers back to source spans.
-- **Naming and idiom:** jsmn_parser, jsmntok_t, toksuper, parse_primitive, parse_string, NOMEM, INVAL, and PART reveal the state machine.
-- **Tests:** The suite covers primitives, strings and escapes, arrays, objects, nested and partial input, token counting, insufficient storage, invalid JSON, and optional parent links.
-- **Documentation:** The README explains philosophy, token representation, embedding, compile-time modes, incremental use, examples, and every error result.
-- **Traceability:** A JSON string token can be followed through escape validation, span assignment, parent sizing, return count, and exact token-boundary assertions.
-- **Maintainability:** No dependencies or heap ownership, one source artifact, and exhaustive parser cases minimize integration and regression risk.
-- **Educational value:** It is an unusually clear introduction to production parsing because representation and control flow both fit on one page at a time.
+- **Source quality:** The single public header keeps token types, parser state, allocation, and scanning explicit; its README explains the API and zero-allocation contract, and the direct tests cover strings, escapes, primitives, nesting, partial input, token exhaustion, strict parsing, and parent links.
+- **Architecture:** The audited architecture of the path beginning at `jsmn.h` has these boundaries: one header, one parser abstraction, and one direct test program.
+- **Naming and idiom:** `jsmn.h` and its supporting files use these characteristic C mechanisms: header-only implementation switches, caller-owned token arrays, and pointer and index based spans.
+- **Tests:** Direct tests in `test/tests.c` cover these states and branches in the selected path: incremental parser position and next-token state, nested container matching, and success, invalid, partial, and no-memory outcomes.
+- **Documentation:** `jsmn.h` and its selected supporting material document the contracts needed to understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
+- **Traceability:** Follow jsmn_parse through primitive and string scanners, container opening and closing, parent or backward matching, and token allocation; then use the direct tests to compare successful nested parses with invalid escapes, partial input, strict mode, parent links, and JSMN_ERROR_NOMEM retries.
+- **Maintainability:** Changes to the path beginning at `jsmn.h` are constrained by these audited guarantees: zero allocation and zero-copy token spans, caller-selected token capacity, and strict and parent-link compatibility modes.
+- **Educational value:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures. The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
 
-**Inspection record:** commit `25647e692c7906b96ffd2b05ca54c097948e879c`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `Makefile`, `jsmn.h`, `test/tests.c`, `LICENSE`. GitHub Linguist label: C. LOC exclusions: test/, example/.
+**Inspection record:** commit `25647e692c7906b96ffd2b05ca54c097948e879c`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `jsmn.h`, `test/tests.c`, `LICENSE`. GitHub Linguist label: C.
 
-**License:** [MIT](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/LICENSE)
+**License:** MIT ([evidence 1](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/LICENSE))
 
-## SDC 2
+## Level 3
 
 ### [DaveGamble/cJSON](https://github.com/DaveGamble/cJSON)
 
-**S2 / D2 / C2 → SDC 2**
+**Language 4 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
 
 An ultralightweight JSON parser, tree model, printer, and manipulation library written in portable ANSI C.
 
@@ -106,269 +150,66 @@ An ultralightweight JSON parser, tree model, printer, and manipulation library w
 
 **Language evidence:** JSON parsing, tree ownership, printing, mutation, comparison, JSON Pointer, Patch, Merge Patch, and sorting are C in cJSON.c and cJSON_Utils.c.
 
-**Why study it:** It grows a familiar recursive data format into explicit allocation hooks, owned trees, parsing and printing, mutation, reference nodes, and standards-based utilities.
+**Why study it:** Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure. The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.
 
 **What you can learn:**
 
-- Recursive-descent parsing, linked tree representation, ownership and reference nodes, allocation hooks, dynamic printing, numeric conversion, JSON Pointer and Patch, and ABI-conscious C APIs.
+- Study these transferable C mechanisms in `cJSON.c`: manual recursive tree ownership, intrusive child and sibling links, and pluggable allocation hooks and pointer arithmetic.
+- Trace these states and branches from `cJSON.c` through its selected supporting files: recursive value and object dispatch, bounded parse position and depth state, and success and partial-construction cleanup branches.
+- Identify these architectural responsibilities in the path beginning at `cJSON.c`: public data and ownership API, private parser helpers, and two focused test files.
+- Study these change constraints for the path beginning at `cJSON.c`: bounded and null-terminated input modes, allocator and ownership correctness, and nesting limits, locale-sensitive numbers, and stable error positions.
 
 **Prerequisites:**
 
-- C pointers and structs, dynamic memory, linked lists, recursion, string and numeric conversion, error handling, and JSON syntax.
+- Before reading `cJSON.c`, be comfortable with these mechanisms: manual recursive tree ownership, intrusive child and sibling links, and pluggable allocation hooks and pointer arithmetic.
+- JSON values form a recursive tree of objects, arrays, strings, numbers, booleans, and null, with ownership transferred into containers.
 
-**Start here:** [`cJSON.c`](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/cJSON.c) — Begin with the cJSON node and allocation hooks, then follow parse_value and print_value into their object, array, string, and number helpers.
+**Coding relevance:**
 
-**Why this level:**
+The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.
 
-- **S2:** 3,878 meaningful implementation LOC measured with tokei 14.0.0. Count covers the two production source and public header pairs, excluding tests, the bundled Unity framework, fuzzing, examples, documentation, and build metadata.
-- **D2:** Memory ownership and recursion require care, but data structures and algorithms are conventional and extensively named.
-- **C2:** Two cohesive libraries implement one data format and its transformation utilities without runtime services.
-- **Placement:** S2/D2/C2 makes cJSON a balanced SDC 2 project.
+Required domain context:
 
-**Quality-gate evidence:**
+- JSON values form a recursive tree of objects, arrays, strings, numbers, booleans, and null, with ownership transferred into containers.
 
-- **Source quality:** Allocation hooks, parse bounds, ownership flags, error positions, and print-buffer growth are explicit and guarded throughout the core.
-- **Architecture:** A doubly linked tagged tree connects recursive parsing and printing, while a separate utilities module adds pointer, patch, merge, and sorting operations.
-- **Naming and idiom:** parse_value, print_value, child, next, prev, valueint, valuestring, hooks, detach, and replace expose representation and ownership.
-- **Tests:** Unit suites cover every JSON type, malformed inputs, allocation failures, printing, mutation, comparison, pointer and patch standards, locales, depth, and README examples.
-- **Documentation:** The README documents building, data representation, ownership rules, parsing, printing, manipulation, caveats, and utilities with examples.
-- **Traceability:** An object property can be followed from parse_string through node allocation and child linking, lookup or mutation, printing, deletion, and focused tests.
-- **Maintainability:** A stable small API, explicit compatibility policy, sanitizer and fuzz coverage, and boundary-focused tests constrain manual-memory risks.
-- **Educational value:** It is a practical next step after a tokenizer because it shows the costs and benefits of building an owned object model.
+**Learning path:**
 
-**Inspection record:** commit `fb16e5cf358798aabb049655975cde8427101056`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `cJSON.c`, `cJSON_Utils.c`, `tests/parse_object.c`, `LICENSE`. GitHub Linguist label: C. LOC exclusions: tests/, fuzzing/.
-
-**License:** [MIT](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/LICENSE)
-
-### [libcheck/check](https://github.com/libcheck/check)
-
-**S2 / D3 / C2 → SDC 2**
-
-A unit testing framework for C with fork-based isolation, fixtures, timeouts, diagnostics, and multiple output formats.
-
-**Real-world evidence:** The project publishes the Check library and checkmk tool used to build and run isolated native test suites.
-
-**Language evidence:** Test registration, fixtures, isolated execution, timeout and signal handling, result transport, logging, and the checkmk generator are implemented principally in C.
-
-**Why study it:** Its assertion macros lead into suites, cases, fixtures, process isolation, signals, timeouts, result messaging, logging, and portable fallbacks.
-
-**What you can learn:**
-
-- Test registration, macro APIs, fixtures, fork isolation, signals and timeouts, interprocess result transport, logging formats, portable compatibility, and self-testing frameworks.
-
-**Prerequisites:**
-
-- C macros and function pointers, processes, signals, pipes, dynamic memory, linked collections, build systems, and unit-testing concepts.
-
-**Start here:** [`src/check.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check.c) — The core constructors and test-case model connect the public macros to suites, cases, fixtures, result objects, and runner handoff.
+- **Goal:** Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure.
+- **Start here:** [`cJSON.c`](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/cJSON.c) — Begin with `cJSON.c` because it exposes how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure.
+- **Then read:**
+  - [`cJSON.h`](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/cJSON.h)
+  - [`tests/parse_value.c`](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/tests/parse_value.c)
+  - [`tests/parse_object.c`](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/tests/parse_object.c)
+- **Trace:** Start at cJSON_ParseWithLengthOpts, follow parse_buffer bounds and parse_value dispatch into recursive object parsing, linked child ownership, duplicate-key and depth behavior, and failure cleanup; then close the contract with the focused value and object parser tests and the public ownership rules in cJSON.h.
 
 **Why this level:**
 
-- **S2:** 7,688 meaningful implementation LOC measured with tokei 14.0.0. Count covers the production framework, compatibility library, and checkmk generator, excluding self-tests, documentation, examples, generated files, and build metadata.
-- **D3:** Process behavior and result transport add systems depth, while the framework keeps responsibilities in recognizable modules.
-- **C2:** Several cooperating modules serve one local test-runner concern and a bounded portability surface.
-- **Placement:** S2/D3/C2 averages to 2.33, placing Check at SDC 2.
+- **Language technique 4:** Substantial manual memory and representation technique shapes normal parsing and cleanup work, matching the published C calibration anchor.
+- **Behavioral reasoning 3:** Meaningful recursive state and failure behavior remain traceable within one synchronous parse lifecycle.
+- **Design span 2:** The representative behavior crosses only a small number of clearly separated responsibilities.
+- **Constraint burden 4:** Several interacting memory, compatibility, and malformed-input guarantees constrain ordinary changes.
+- **Placement:** The four scores 4/3/2/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Test lifecycle, fork modes, result types, timeout policy, fixture ordering, and error paths use explicit enums, structs, and helpers.
-- **Architecture:** Suite and case registration feed a runner that selects execution mode, captures results, aggregates statistics, and delegates to log backends.
-- **Naming and idiom:** Suite, TCase, SRunner, SFun, fixture, CK_FORK, TestResult, check_msg, and check_log expose framework roles.
-- **Tests:** The framework tests itself across assertions, fixtures, signals, timeouts, fork and no-fork modes, messaging, logs, XML, TAP, memory failures, and checkmk.
-- **Documentation:** The README and maintained manual cover installation, test construction, fixtures, execution modes, output, build integration, and advanced behavior.
-- **Traceability:** A START_TEST macro can be followed through registration, runner dispatch, child execution or direct call, result serialization, aggregation, log output, and self-tests.
-- **Maintainability:** Execution, messaging, collections, logging, compatibility, and generation are separate modules protected by a self-hosted regression suite.
-- **Educational value:** It reveals the operating-system machinery hidden behind a friendly unit-test macro API.
-
-**Inspection record:** commit `35d9cc011faa0545bf56d5062ae90bbc2688eba7`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `src/check.c`, `src/check_run.c`, `tests/check_check_main.c`, `COPYING.LESSER`. GitHub Linguist label: C. LOC exclusions: tests/, checkmk/test/, doc/.
-
-**License:** [LGPL-2.1-or-later](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/COPYING.LESSER)
-
-## SDC 3
-
-### [akheron/jansson](https://github.com/akheron/jansson)
-
-**S3 / D3 / C2 → SDC 3**
-
-A C library for encoding, decoding, and manipulating JSON with a rich value API and strict error handling.
-
-**Real-world evidence:** The repository releases a stable native library and command-line utility used to handle JSON in production C applications.
-
-**Language evidence:** JSON values, reference counting, hash tables, UTF-8 validation, parsers, dumpers, packing, unpacking, iteration, and memory hooks are C under src/.
-
-**Why study it:** It expands JSON into a mature library design with reference counting, hash tables, stream callbacks, format-driven construction, canonical output, and compatibility guarantees.
-
-**What you can learn:**
-
-- Reference-counted values, hash tables, recursive parsing and dumping, UTF-8 validation, streaming callbacks, variadic pack and unpack formats, custom allocators, and API stability.
-
-**Prerequisites:**
-
-- Comfortable C, ownership and reference counting, hash tables, callbacks, variadic functions, parsing, encodings, and library API design.
-
-**Start here:** [`src/value.c`](https://github.com/akheron/jansson/blob/851a2145e3256f2e67e5dfe24b0e456bf198b741/src/value.c) — Value construction, reference ownership, arrays, objects, hash iteration, mutation, and equality establish the model used by loading and dumping.
-
-**Why this level:**
-
-- **S3:** 10,281 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party production C under src, excluding tests, fuzzers, examples, documentation, generated configuration, and build metadata.
-- **D3:** Several nontrivial concerns recur across the library, but implementations use conventional data structures and clear invariants.
-- **C2:** Multiple cohesive modules implement one serialization domain without services or process orchestration.
-- **Placement:** S3/D3/C2 averages to 2.67, which rounds to SDC 3.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Ownership transfers, reference counts, parse positions, depth limits, UTF-8 checks, allocation failures, and hash invariants are explicit and consistently guarded.
-- **Architecture:** A reference-counted value model and hash table support loader, dumper, pack and unpack interpreter, streaming callbacks, and allocator hooks.
-- **Naming and idiom:** json_t, incref, decref, json_load, json_dump, pack, unpack, error_t, hashtable, and iterator form a stable domain API.
-- **Tests:** API, encoding, decoding, number, UTF-8, allocator, depth, pack and unpack, callback, regression, fuzz, and command-line suites cover success and failure paths.
-- **Documentation:** A maintained reference and tutorial document values, ownership, decoding, encoding, streaming, formats, customization, portability, and changes.
-- **Traceability:** An object from input can be followed through lexical parsing, value allocation and hash insertion, reference ownership, mutation, dumping, cleanup, and API tests.
-- **Maintainability:** Small modules, stable public headers, centralized allocators and errors, versioned releases, and exhaustive failure tests protect a low-level API.
-- **Educational value:** It teaches how a compact C library can add mature ownership and extensibility without becoming a framework.
-
-**Inspection record:** commit `851a2145e3256f2e67e5dfe24b0e456bf198b741`, reviewed 2026-08-28 by Codex. Files sampled: `README.rst`, `CMakeLists.txt`, `src/value.c`, `src/load.c`, `test/suites/api/test_load.c`, `LICENSE`. GitHub Linguist label: C. LOC exclusions: test/, examples/, doc/.
-
-**License:** [MIT](https://github.com/akheron/jansson/blob/851a2145e3256f2e67e5dfe24b0e456bf198b741/LICENSE)
-
-### [libevent/libevent](https://github.com/libevent/libevent)
-
-**S3 / D4 / C3 → SDC 3**
-
-A portable asynchronous event-notification library with event loops, buffered streams, networking protocols, and threading support.
-
-**Real-world evidence:** The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.
-
-**Language evidence:** Event loops, platform polling backends, buffered I/O, listeners, DNS, HTTP, RPC, TLS adapters, threading, timers, and utilities are C across the repository root and include/.
-
-**Why study it:** It connects the event abstraction to epoll, kqueue, poll, select, IOCP, timers, signals, deferred callbacks, watermarks, locks, DNS, HTTP, and TLS.
-
-**What you can learn:**
-
-- Reactor event loops, readiness backends, timers and signals, buffered asynchronous I/O, deferred callbacks, watermarks, thread safety, DNS and HTTP, TLS adapters, and portability.
-
-**Prerequisites:**
-
-- Advanced C, sockets and nonblocking I/O, operating-system polling APIs, callbacks, queues and heaps, threads and locks, networking protocols, and build portability.
-
-**Start here:** [`event.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/event.c) — The event base, backend selection, event registration, timeout queues, activation, callback dispatch, and loop lifecycle establish the core reactor.
-
-**Why this level:**
-
-- **S3:** 43,804 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party production C and headers, excluding tests, samples, documentation, generated build support, historical code, and packaging metadata.
-- **D4:** Correctness depends on subtle readiness, timing, ownership, and concurrency behavior across multiple operating systems.
-- **C3:** Several substantial subsystems and adapters cooperate inside one native networking library.
-- **Placement:** S3/D4/C3 averages to 3.33, placing Libevent at SDC 3.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Backend contracts, event states, reference counts, lock boundaries, callback deferral, watermarks, and timeout invariants are explicit in private structures and helpers.
-- **Architecture:** An event base selects a readiness backend; events and timeout queues drive callbacks; bufferevents, listeners, DNS, HTTP, RPC, and TLS build on that core.
-- **Naming and idiom:** event_base, event_add, active queue, bufferevent, evbuffer, evconnlistener, evdns, evhttp, defer, watermark, and backend expose runtime roles.
-- **Tests:** Large regression suites cover backends, timers, signals, threads, buffers, listeners, DNS, HTTP, RPC, TLS, WebSockets, memory hooks, failures, and platform behavior.
-- **Documentation:** The README, generated API reference, book-style programming guide, examples, and release notes explain both core and protocol layers.
-- **Traceability:** A socket read event can be followed from backend readiness through active queues and priority dispatch into a bufferevent callback, watermark handling, and regression tests.
-- **Maintainability:** Backend operation tables, internal headers, reference counting, feature flags, and broad cross-platform CI isolate variation behind stable APIs.
-- **Educational value:** It is a bounded but deep systems project for learning the machinery beneath asynchronous networking frameworks.
-
-**Inspection record:** commit `335349b9b60c860289c6c47eadadadf18dc58211`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `event.c`, `bufferevent.c`, `test/regress.c`, `LICENSE`. GitHub Linguist label: C. LOC exclusions: test/, sample/, docs/, cmake/, m4/, WIN32-Code/.
-
-**License:** [BSD-3-Clause](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/LICENSE)
-
-## SDC 4
-
-### [curl/curl](https://github.com/curl/curl)
-
-**S4 / D4 / C4 → SDC 4**
-
-A command-line data transfer tool and reusable library supporting URL-based communication across many protocols and platforms.
-
-**Real-world evidence:** The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.
-
-**Language evidence:** Protocol engines, connection reuse, DNS, proxies, TLS adapters, HTTP versions, the multi state machine, URL API, and command-line tool are C under lib/ and src/.
-
-**Why study it:** One easy command rests on URL parsing, connection caching, protocol state machines, proxies, authentication, DNS, TLS, multiplexing, retries, streaming callbacks, and extreme portability.
-
-**What you can learn:**
-
-- Protocol state machines, connection pooling, event-driven multi transfers, URL parsing, DNS, proxies and authentication, TLS backend abstraction, HTTP/2 and HTTP/3, streaming, command-line design, and portability.
-
-**Prerequisites:**
-
-- Advanced C, sockets and nonblocking I/O, HTTP and other Internet protocols, TLS, callbacks, state machines, concurrency, build portability, and large-library navigation.
-
-**Start here:** [`lib/multi.c`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/lib/multi.c) — The multi state machine shows how transfers advance through setup, resolving, connecting, protocol work, completion, retries, multiplexing, and socket and timer callbacks.
-
-**Why this level:**
-
-- **S4:** 152,242 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party libcurl, curl tool, and public headers, excluding tests, documentation, packaging, platform project files, generated content, and build metadata.
-- **D4:** Network correctness, compatibility, and lifetime rules recur across protocol, connection, callback, and backend boundaries.
-- **C4:** Many modular backends cooperate through a mature transfer engine, while remaining one client library and tool suite.
-- **Placement:** S4/D4/C4 makes curl an SDC 4 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Transfer states, ownership, callback contracts, connection reuse rules, protocol capabilities, error codes, and feature guards are explicit throughout the core.
-- **Architecture:** Easy and URL APIs feed the multi engine; connection and protocol handlers compose resolver, proxy, authentication, TLS, HTTP-version, and platform backends; the CLI layers policy above libcurl.
-- **Naming and idiom:** CURL, Curl_easy, Curl_multi, connectdata, Curl_handler, multi_runsingle, conncache, resolver, transfer, and CURLE codes form a consistent model.
-- **Tests:** A very large harness covers protocols, APIs, servers, proxies, TLS backends, DNS, authentication, malformed input, unit behavior, fuzzing, memory checks, platforms, and regressions.
-- **Documentation:** Man pages, API references, protocol and internals documentation, examples, security advisories, release notes, and contributor guides are maintained with the code.
-- **Traceability:** A URL transfer can be followed from option parsing or easy setup into the multi state machine, DNS and connection reuse, protocol handler, callbacks, completion, cleanup, and protocol tests.
-- **Maintainability:** Handler tables, backend interfaces, feature flags, compatibility policy, generated option metadata, and exhaustive CI contain an unusually broad portability surface.
-- **Educational value:** It is an advanced masterclass in evolving a stable C API across decades of protocols and platforms.
-
-**Inspection record:** commit `c2a04c080d79e1eb5d99bc0a73fd71710aa6d345`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `lib/url.c`, `lib/multi.c`, `tests/unit/unit1300.c`, `COPYING`. GitHub Linguist label: C. LOC exclusions: tests/, docs/, packages/, projects/.
-
-**License:** [curl](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/COPYING)
-
-### [redis/redis](https://github.com/redis/redis)
-
-**S4 / D4 / C4 → SDC 4**
-
-An in-memory data structure server providing key-value storage, rich data types, persistence, replication, clustering, scripting, and messaging.
-
-**Real-world evidence:** The repository builds the Redis server and command-line tools deployed as caches, databases, queues, streams, and real-time data services.
-
-**Language evidence:** The server, event processing, command execution, data structures, persistence, replication, clustering, transactions, scripting, memory management, and CLI are C under src/.
-
-**Why study it:** The single-threaded command path is approachable, yet it opens into specialized data structures, an event loop, expirations, persistence, replication, cluster consensus, scripts, modules, and operations.
-
-**What you can learn:**
-
-- Event-driven servers, command dispatch, compact data structures, expiration and eviction, snapshots and append-only persistence, replication, clustering and failover, transactions, scripting, modules, and observability.
-
-**Prerequisites:**
-
-- Advanced C, sockets and event loops, memory ownership, data structures and algorithms, files and process management, distributed systems, replication, persistence, concurrency, and operational debugging.
-
-**Start here:** [`src/server.c`](https://github.com/redis/redis/blob/e1d7d50f9c244ce52f724b279fcb19773fffa98c/src/server.c) — Server initialization and the command-processing path connect configuration, clients, lookup, permissions, execution, propagation, persistence, replication, and statistics.
-
-**Why this level:**
-
-- **S4:** 180,210 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Redis server and tool implementation under src, excluding tests, bundled dependencies, example modules, documentation, generated command data, and build metadata.
-- **D4:** Low-level performance and distributed-state invariants recur across central server paths, though architecture remains deliberately direct.
-- **C4:** Many integrated subsystems form a production data server, but the core deployment and request model are more compact than a multi-service platform.
-- **Placement:** S4/D4/C4 makes Redis a balanced SDC 4 system.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Command, client, object, persistence, replication, and cluster state are explicit in structs and functions, with comments around performance and consistency invariants.
-- **Architecture:** An event loop feeds client protocol parsing and a command table; shared object and data-type modules connect to expiration, persistence, replication, cluster, scripting, and module subsystems.
-- **Naming and idiom:** redisServer, client, robj, processCommand, call, propagate, dirty, expire, RDB, AOF, replication backlog, and cluster state reveal the server model.
-- **Tests:** Tcl integration suites, unit tests, module tests, cluster and Sentinel tests, fuzzers, sanitizer runs, and failure injection cover commands, persistence, networking, replication, failover, and regressions.
-- **Documentation:** The README and official command, data type, persistence, replication, clustering, module, administration, and contributor documentation provide deep context.
-- **Traceability:** A client command can be followed from networking input through RESP parsing, command lookup and validation, execution against an object type, propagation to AOF and replicas, reply buffering, and integration tests.
-- **Maintainability:** Central tables and shared primitives keep behavior discoverable, while subsystem-specific files and an extensive integration harness protect cross-cutting state transitions.
-- **Educational value:** It is a rare advanced database whose direct C architecture still lets a reader trace a request without a framework maze.
-
-**Inspection record:** commit `e1d7d50f9c244ce52f724b279fcb19773fffa98c`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `Makefile`, `src/server.c`, `src/networking.c`, `tests/unit/networking.tcl`, `LICENSE.txt`. GitHub Linguist label: C. LOC exclusions: tests/, deps/, src/modules/.
-
-**License:** [AGPL-3.0-only OR SSPL-1.0 OR LicenseRef-RSALv2](https://github.com/redis/redis/blob/e1d7d50f9c244ce52f724b279fcb19773fffa98c/LICENSE.txt)
-
-## SDC 5
+- **Source quality:** The public header documents ownership and allocator contracts, the implementation names parse state and cleanup branches directly, and the selected private tests exercise value and object parsing, malformed input, depth, duplicate keys, null termination, and allocation failures without pulling in the separate cJSON_Utils feature set.
+- **Architecture:** The audited architecture of the path beginning at `cJSON.c` has these boundaries: public data and ownership API, private parser helpers, and two focused test files.
+- **Naming and idiom:** `cJSON.c` and its supporting files use these characteristic C mechanisms: manual recursive tree ownership, intrusive child and sibling links, and pluggable allocation hooks and pointer arithmetic.
+- **Tests:** Direct tests in `tests/parse_value.c` and `tests/parse_object.c` cover these states and branches in the selected path: recursive value and object dispatch, bounded parse position and depth state, and success and partial-construction cleanup branches.
+- **Documentation:** `cJSON.c` and its selected supporting material document the contracts needed to understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure.
+- **Traceability:** Start at cJSON_ParseWithLengthOpts, follow parse_buffer bounds and parse_value dispatch into recursive object parsing, linked child ownership, duplicate-key and depth behavior, and failure cleanup; then close the contract with the focused value and object parser tests and the public ownership rules in cJSON.h.
+- **Maintainability:** Changes to the path beginning at `cJSON.c` are constrained by these audited guarantees: bounded and null-terminated input modes, allocator and ownership correctness, and nesting limits, locale-sensitive numbers, and stable error positions.
+- **Educational value:** Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure. The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.
+
+**Inspection record:** commit `fb16e5cf358798aabb049655975cde8427101056`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `cJSON.c`, `cJSON.h`, `tests/parse_value.c`, `tests/parse_object.c`, `LICENSE`. GitHub Linguist label: C.
+
+**License:** MIT ([evidence 1](https://github.com/DaveGamble/cJSON/blob/fb16e5cf358798aabb049655975cde8427101056/LICENSE))
+
+## Level 4
 
 ### [git/git](https://github.com/git/git)
 
-**S5 / D5 / C5 → SDC 5**
+**Language 4 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
 
 The distributed version control system implementing content-addressed history, branches, merging, network protocols, and repository maintenance.
 
@@ -376,82 +217,268 @@ The distributed version control system implementing content-addressed history, b
 
 **Language evidence:** Object storage, index and working-tree operations, revision traversal, diff and merge algorithms, refs, transports, protocols, commands, and repository maintenance are principally C across the root and builtin/.
 
-**Why study it:** It joins compact immutable objects to graph algorithms, index and filesystem state, diff and merge engines, refs, packing and compression, transports, protocols, configuration, and a vast porcelain command surface.
+**Why study it:** Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure. The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.
 
 **What you can learn:**
 
-- Content-addressed storage, Merkle DAGs, indexes and working trees, revision walking, diff and merge algorithms, packfiles, refs and transactions, distributed protocols, partial clones, command dispatch, compatibility, and repository recovery.
+- Study these transferable C mechanisms in `run-command.h`: function-pointer lifecycle and task callbacks, explicit child_process and parallel-process structures, and manual file-descriptor and pipe ownership.
+- Trace these states and branches from `run-command.h` through its selected supporting files: prepare, launch, running, finish, signal, and cleanup process states, pipe endpoints shared across parent, child, and error paths, and parallel admission, output, abort, and completion scheduling.
+- Identify these architectural responsibilities in the path beginning at `run-command.h`: public child and parallel-process contract, launch, pipe, cleanup, and scheduler implementation, and dedicated helper and shell integration suite.
+- Study these change constraints for the path beginning at `run-command.h`: fork, exec, and platform-specific spawn portability, descriptor closure and deadlock avoidance on every failure path, and signal cleanup, graceful abort, and deterministic output.
 
 **Prerequisites:**
 
-- Expert C, filesystems and atomic updates, graphs and compression, hashing, networking and protocols, concurrency, shell, security, performance engineering, and navigating long-lived codebases.
+- Before reading `run-command.h`, be comfortable with these mechanisms: function-pointer lifecycle and task callbacks, explicit child_process and parallel-process structures, and manual file-descriptor and pipe ownership.
+- Git's child-process layer launches external commands with controlled arguments, environment, file descriptors, cleanup, and optional parallel scheduling.
 
-**Start here:** [`git.c`](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/git.c) — The main dispatcher shows setup, alias and option handling, built-in command registration, external command fallback, repository context, and process exit behavior.
+**Coding relevance:**
+
+The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.
+
+Required domain context:
+
+- Git's child-process layer launches external commands with controlled arguments, environment, file descriptors, cleanup, and optional parallel scheduling.
+
+**Learning path:**
+
+- **Goal:** Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure.
+- **Start here:** [`run-command.h`](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/run-command.h) — Begin with `run-command.h` because it exposes how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure.
+- **Then read:**
+  - [`run-command.c`](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/run-command.c)
+  - [`t/helper/test-run-command.c`](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/t/helper/test-run-command.c)
+  - [`t/t0061-run-command.sh`](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/t/t0061-run-command.sh)
+- **Trace:** Begin with child_process initialization, arguments, environment, redirection, cleanup, and callback contracts, follow start_command through pipe creation and fork, spawn, or exec setup into finish and signal cleanup, then trace pipe_command and the parallel scheduler's task admission, output buffering, abort, and completion behavior; close with the dedicated helper and t0061 tests.
 
 **Why this level:**
 
-- **S5:** 325,816 meaningful implementation LOC measured with tokei 14.0.0. Count covers meaningful first-party Git command and library implementation, excluding tests, documentation, contrib tools, translations, templates, separate GUI projects, bundled SHA-1 code, generated files, and build metadata.
-- **D5:** Deep algorithms and subtle persistence, concurrency, security, and backward-compatibility invariants are central throughout the system.
-- **C5:** Git is a multi-process distributed system with many durable representations and cross-cutting workflows that must interoperate across versions and platforms.
-- **Placement:** S5/D5/C5 requires SDC 5.
+- **Language technique 4:** Advanced C callback, resource, and representation techniques materially shape the process layer.
+- **Behavioral reasoning 5:** Multiple nonlocal process and scheduler lifecycles interact repeatedly across operating-system boundaries.
+- **Design span 3:** Several clear responsibilities collaborate within one bounded process-control subsystem.
+- **Constraint burden 5:** Expert portability, resource, concurrency, and failure guarantees recur throughout normal process-layer changes.
+- **Placement:** The four scores 4/5/3/5 sum to 17; their arithmetic mean is 4.25 and rounds half-up to Level 4. The published result is Level 4.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Durable formats, lock and transaction rules, ownership, repository context, algorithm invariants, compatibility branches, and error paths are made explicit in focused modules.
-- **Architecture:** Shared plumbing libraries implement objects, indexes, refs, revisions, diffs, merges, packs, configuration, and transport; built-in commands compose them, with helper processes at protocol and credential boundaries.
-- **Naming and idiom:** object_id, repository, index_state, ref_transaction, rev_info, diff_options, unpack_trees_options, transport, refspec, and builtin expose Git's internal model.
-- **Tests:** Thousands of shell, unit, integration, protocol, interoperability, fuzz, performance, leak, and platform tests cover commands, formats, crashes, security boundaries, and historical regressions.
-- **Documentation:** Reference manuals, technical design documents, format and protocol specifications, tutorials, release notes, and contributor process are versioned in the repository.
-- **Traceability:** A commit can be followed from builtin option handling through index refresh and tree writing, commit-object creation, ref transaction and reflog update, hooks, output, and end-to-end tests.
-- **Maintainability:** Stable file formats and protocols are protected by compatibility tests, while subsystem libraries, repository-context migration, technical docs, and disciplined review support incremental evolution.
-- **Educational value:** It is a definitive expert study of a distributed system whose foundational data model is simple but whose real-world guarantees are profound.
+- **Source quality:** run-command.h documents child_process ownership, redirection, callbacks, and parallel APIs; run-command.c isolates launch, finish, cleanup, pipe, and scheduler responsibilities; the helper and shell suite directly cover I/O, missing commands, parallel tasks, output, and graceful abort.
+- **Architecture:** The audited architecture of the path beginning at `run-command.h` has these boundaries: public child and parallel-process contract, launch, pipe, cleanup, and scheduler implementation, and dedicated helper and shell integration suite.
+- **Naming and idiom:** `run-command.h` and its supporting files use these characteristic C mechanisms: function-pointer lifecycle and task callbacks, explicit child_process and parallel-process structures, and manual file-descriptor and pipe ownership.
+- **Tests:** The helper in `t/helper/test-run-command.c` exposes child-process scenarios to `t/t0061-run-command.sh`, whose shell assertions cover input and output, missing commands, parallel tasks, coordinated output, and graceful abort.
+- **Documentation:** `run-command.h` and its selected supporting material document the contracts needed to understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure.
+- **Traceability:** Begin with child_process initialization, arguments, environment, redirection, cleanup, and callback contracts, follow start_command through pipe creation and fork, spawn, or exec setup into finish and signal cleanup, then trace pipe_command and the parallel scheduler's task admission, output buffering, abort, and completion behavior; close with the dedicated helper and t0061 tests.
+- **Maintainability:** Changes to the path beginning at `run-command.h` are constrained by these audited guarantees: fork, exec, and platform-specific spawn portability, descriptor closure and deadlock avoidance on every failure path, and signal cleanup, graceful abort, and deterministic output.
+- **Educational value:** Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure. The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.
 
-**Inspection record:** commit `c73e85354c275c9d409b26445089bc16940fc527`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `Makefile`, `git.c`, `repository.c`, `builtin/commit.c`, `t/t0001-init.sh`, `COPYING`. GitHub Linguist label: C. LOC exclusions: t/, Documentation/, contrib/, po/, templates/, git-gui/, gitk-git/, sha1dc/.
+**Inspection record:** commit `c73e85354c275c9d409b26445089bc16940fc527`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `run-command.h`, `run-command.c`, `t/helper/test-run-command.c`, `t/t0061-run-command.sh`, `COPYING`. GitHub Linguist label: C.
 
-**License:** [GPL-2.0-only](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/COPYING)
+**License:** GPL-2.0-only ([evidence 1](https://github.com/git/git/blob/c73e85354c275c9d409b26445089bc16940fc527/COPYING))
 
-### [postgres/postgres](https://github.com/postgres/postgres)
+### [libcheck/check](https://github.com/libcheck/check)
 
-**S5 / D5 / C5 → SDC 5**
+**Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
 
-A complete relational database system with SQL, extensible types and indexes, transactions, crash recovery, replication, security, and operational tooling.
+A unit testing framework for C with fork-based isolation, fixtures, timeouts, diagnostics, and multiple output formats.
 
-**Real-world evidence:** The repository builds the PostgreSQL database server, client libraries, command-line tools, procedural-language support, and bundled extensions deployed worldwide.
+**Real-world evidence:** The project publishes the Check library and checkmk tool used to build and run isolated native test suites.
 
-**Language evidence:** The SQL frontend, planner and optimizer, executor, storage engines, transactions, write-ahead logging, replication, catalog, server processes, client libraries, tools, and extensions are principally C under src/ and contrib/.
+**Language evidence:** Test registration, fixtures, isolated execution, timeout and signal handling, result transport, logging, and the checkmk generator are implemented principally in C.
 
-**Why study it:** It exposes nearly every database topic in production form: parsing and planning, cost estimation, execution, MVCC, indexes, transactions, locking, WAL, recovery, replication, catalogs, extension hooks, and operations.
+**Why study it:** Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results. Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.
 
 **What you can learn:**
 
-- SQL parsing and rewriting, cost-based optimization, execution plans, storage and buffer management, MVCC, indexes, transactions and locks, WAL and crash recovery, replication, catalogs and types, extensions, security, and database operations.
+- Study these transferable C mechanisms in `src/check.h.in`: public variadic assertion macro machinery, function-pointer test and fixture callbacks, and manual packed message representation.
+- Trace these states and branches from `src/check.h.in` through its selected supporting files: fork and no-fork execution lifecycles, signal, exit, assertion, and timeout outcomes, and setup, test, teardown, and result transitions.
+- Identify these architectural responsibilities in the path beginning at `src/check.h.in`: public macro and registration contract, runner and subprocess boundary, message and packing helpers, and direct framework self-tests.
+- Study these change constraints for the path beginning at `src/check.h.in`: portable fork and no-fork modes, signal and timeout correctness, and failure-safe interprocess reporting.
 
 **Prerequisites:**
 
-- Expert C, relational theory and SQL, compilers and optimization, data structures and storage engines, concurrency control, operating systems, networking, distributed replication, security, performance analysis, and very large-codebase navigation.
+- Before reading `src/check.h.in`, be comfortable with these mechanisms: public variadic assertion macro machinery, function-pointer test and fixture callbacks, and manual packed message representation.
+- A C test framework registers suites and cases, runs tests in-process or in child processes, and reports assertion failures, signals, exits, and timeouts.
 
-**Start here:** [`src/backend/tcop/postgres.c`](https://github.com/postgres/postgres/blob/6c5f1d6074208146930b67c2054509c3e82f6f7f/src/backend/tcop/postgres.c) — The backend main loop and simple-query path connect protocol messages to parsing, rewriting, planning, portals, execution, transactions, errors, statistics, and client responses.
+**Coding relevance:**
+
+Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.
+
+Required domain context:
+
+- A C test framework registers suites and cases, runs tests in-process or in child processes, and reports assertion failures, signals, exits, and timeouts.
+
+**Learning path:**
+
+- **Goal:** Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results.
+- **Start here:** [`src/check.h.in`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check.h.in) — Begin with `src/check.h.in` because it exposes how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results.
+- **Then read:**
+  - [`src/check.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check.c)
+  - [`src/check_run.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check_run.c)
+  - [`src/check_msg.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check_msg.c)
+  - [`src/check_pack.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/src/check_pack.c)
+  - [`tests/check_check_sub.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/tests/check_check_sub.c)
+  - [`tests/check_check_fork.c`](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/tests/check_check_fork.c)
+- **Trace:** Begin with START_TEST and assertion macro expansion in the public contract, follow suite and case registration through check_run's fork or no-fork lifecycle, signal, exit and timeout classification, then trace check_msg and check_pack result transport back to the runner; close with the subprocess and fork-mode self-tests.
 
 **Why this level:**
 
-- **S5:** 1,615,105 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party server, client, utility, procedural-language, and bundled-extension implementation under src and contrib, excluding tests, regression inputs, test tooling, documentation, generated or vendored content, and build metadata.
-- **D5:** Multiple deep computer-science and systems domains are fundamental, and their correctness depends on subtle concurrency and durable-state guarantees.
-- **C5:** The system spans protocols, shared memory, durable storage, background processes, replication topologies, extensions, tools, and decades of compatibility constraints.
-- **Placement:** S5/D5/C5 requires SDC 5.
+- **Language technique 4:** Macro metaprogramming, callbacks, and explicit representation materially shape the framework path.
+- **Behavioral reasoning 4:** Several advanced process and lifecycle states recur, but the lower-anchor rule does not elevate the bounded runner to expert nonlocal behavior.
+- **Design span 3:** Several clear components collaborate while remaining within one test-execution subsystem.
+- **Constraint burden 4:** Portability, isolation, cleanup, and stable result guarantees interact throughout the path.
+- **Placement:** The four scores 4/4/3/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Subsystem interfaces, memory contexts, snapshots, locks, error recovery, transaction states, WAL rules, planner contracts, and durable formats are extensively documented alongside implementation.
-- **Architecture:** Frontend protocol and traffic-cop code drive parser, analyzer, rewriter, planner, portals, and executor; storage, buffer, access methods, transactions, WAL, recovery, replication, catalogs, and background processes provide the database engine.
-- **Naming and idiom:** QueryDesc, PlannedStmt, Portal, EState, Relation, TupleTableSlot, Snapshot, Buffer, XLogRecPtr, ResourceOwner, MemoryContext, and catalog vocabulary expose database internals.
-- **Tests:** Regression, isolation, TAP, recovery, replication, authentication, extension, client, upgrade, fuzz, sanitizer, and platform suites cover SQL behavior and internal guarantees.
-- **Documentation:** The comprehensive manual includes SQL and API references, internals, storage and concurrency chapters, extension guides, administration, replication, security, release notes, and developer conventions.
-- **Traceability:** A SELECT can be followed from protocol input through parse, analyze and rewrite, planner path selection, Portal and Executor lifecycle, access methods and buffers, MVCC visibility, destination output, transaction completion, and regression tests.
-- **Maintainability:** Strict subsystem conventions, hooks, memory and resource ownership systems, versioned catalogs and WAL, broad regression infrastructure, and long-form design comments support sustained evolution.
-- **Educational value:** It is one of the richest available expert codebases for studying a complete database rather than isolated textbook components.
+- **Source quality:** The public macro contract, registration model, runner, message transport, and serialization are separated into named modules; direct self-tests cover assertions, subprocess isolation, fixtures, signals, exits, timeouts, and fork versus no-fork modes, closing a demanding but coherent trace.
+- **Architecture:** The audited architecture of the path beginning at `src/check.h.in` has these boundaries: public macro and registration contract, runner and subprocess boundary, message and packing helpers, and direct framework self-tests.
+- **Naming and idiom:** `src/check.h.in` and its supporting files use these characteristic C mechanisms: public variadic assertion macro machinery, function-pointer test and fixture callbacks, and manual packed message representation.
+- **Tests:** Direct tests in `tests/check_check_sub.c` and `tests/check_check_fork.c` cover these states and branches in the selected path: fork and no-fork execution lifecycles, signal, exit, assertion, and timeout outcomes, and setup, test, teardown, and result transitions.
+- **Documentation:** `src/check.h.in` and its selected supporting material document the contracts needed to understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results.
+- **Traceability:** Begin with START_TEST and assertion macro expansion in the public contract, follow suite and case registration through check_run's fork or no-fork lifecycle, signal, exit and timeout classification, then trace check_msg and check_pack result transport back to the runner; close with the subprocess and fork-mode self-tests.
+- **Maintainability:** Changes to the path beginning at `src/check.h.in` are constrained by these audited guarantees: portable fork and no-fork modes, signal and timeout correctness, and failure-safe interprocess reporting.
+- **Educational value:** Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results. Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.
 
-**Inspection record:** commit `6c5f1d6074208146930b67c2054509c3e82f6f7f`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `configure.ac`, `src/backend/tcop/postgres.c`, `src/backend/executor/execMain.c`, `src/test/regress/sql/select.sql`, `COPYRIGHT`. GitHub Linguist label: C. LOC exclusions: **/test/, **/regress/, **/isolation/, doc/, src/tools/, generated/, vendor/.
+**Inspection record:** commit `35d9cc011faa0545bf56d5062ae90bbc2688eba7`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/check.h.in`, `src/check.c`, `src/check_run.c`, `src/check_msg.c`, `src/check_pack.c`, `tests/check_check_sub.c`, `tests/check_check_fork.c`, `COPYING.LESSER`. GitHub Linguist label: C.
 
-**License:** [PostgreSQL](https://github.com/postgres/postgres/blob/6c5f1d6074208146930b67c2054509c3e82f6f7f/COPYRIGHT)
+**License:** LGPL-2.1-or-later ([evidence 1](https://github.com/libcheck/check/blob/35d9cc011faa0545bf56d5062ae90bbc2688eba7/COPYING.LESSER))
+
+## Level 5
+
+### [curl/curl](https://github.com/curl/curl)
+
+**Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+A command-line data transfer tool and reusable library supporting URL-based communication across many protocols and platforms.
+
+**Real-world evidence:** The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.
+
+**Language evidence:** Protocol engines, connection reuse, DNS, proxies, TLS adapters, HTTP versions, the multi state machine, URL API, and command-line tool are C under lib/ and src/.
+
+**Why study it:** Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs. Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.
+
+**What you can learn:**
+
+- Study these transferable C mechanisms in `lib/multi.c`: opaque public and internal handle representations, callback and socket-operation function pointers, and intrusive transfer and message collections.
+- Trace these states and branches from `lib/multi.c` through its selected supporting files: many concurrent transfer state machines, perform, socket, timer, poll, wakeup, completion, and removal transitions, and reentrant and error-driven lifecycle changes.
+- Identify these architectural responsibilities in the path beginning at `lib/multi.c`: public multi API, internal multihandle and scheduler, protocol adapters at the selected boundary, and public-API integration tests and data.
+- Study these change constraints for the path beginning at `lib/multi.c`: handle ownership, removal, cleanup, and reentrancy, socket, timer, poll, and wakeup interoperability, and cross-platform event-loop and stable public-API compatibility.
+
+**Prerequisites:**
+
+- Before reading `lib/multi.c`, be comfortable with these mechanisms: opaque public and internal handle representations, callback and socket-operation function pointers, and intrusive transfer and message collections.
+- The curl multi interface advances multiple transfers without blocking and tells callers which sockets or timeouts should drive the next step.
+
+**Coding relevance:**
+
+Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.
+
+Required domain context:
+
+- The curl multi interface advances multiple transfers without blocking and tells callers which sockets or timeouts should drive the next step.
+
+**Learning path:**
+
+- **Goal:** Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs.
+- **Start here:** [`lib/multi.c`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/lib/multi.c) — Begin with `lib/multi.c` because it exposes how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs.
+- **Then read:**
+  - [`include/curl/multi.h`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/include/curl/multi.h)
+  - [`lib/multihandle.h`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/lib/multihandle.h)
+  - [`tests/libtest/lib1531.c`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/libtest/lib1531.c)
+  - [`tests/libtest/lib3105.c`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/libtest/lib3105.c)
+  - [`tests/libtest/lib2414.c`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/libtest/lib2414.c)
+  - [`tests/data/test1531`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/data/test1531)
+  - [`tests/data/test3105`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/data/test3105)
+  - [`tests/data/test2414`](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/tests/data/test2414)
+- **Trace:** Begin with the public CURLM lifecycle and multi.c's add, perform, poll, wakeup, info-read, remove, and cleanup paths; follow a transfer through the internal multihandle scheduler while protocol handlers remain adapters, then close with lib1531's perform/fdset/timeout/completion flow, lib3105's repeated removal, lib2414's wakeup-to-poll exit, and their matching test definitions.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced C API and representation techniques recur across the engine, while the hardest work lies in behavior and constraints.
+- **Behavioral reasoning 5:** Multiple nonlocal asynchronous lifecycles interact repeatedly across caller actions, scheduler passes, timers, sockets, and callbacks.
+- **Design span 4:** Several substantial components must be understood together, but the representative trace excludes protocol implementation breadth.
+- **Constraint burden 5:** Expert lifecycle, concurrency, portability, and compatibility guarantees recur throughout ordinary multi-engine work.
+- **Placement:** The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The public multi contract and internal multihandle state are explicit, multi.c centralizes scheduling and lifecycle invariants, and three verified libtests plus matching data drive ordinary progress, duplicate removal, and wakeup-to-poll behavior through the public API.
+- **Architecture:** The audited architecture of the path beginning at `lib/multi.c` has these boundaries: public multi API, internal multihandle and scheduler, protocol adapters at the selected boundary, and public-API integration tests and data.
+- **Naming and idiom:** `lib/multi.c` and its supporting files use these characteristic C mechanisms: opaque public and internal handle representations, callback and socket-operation function pointers, and intrusive transfer and message collections.
+- **Tests:** The public-API libtests `tests/libtest/lib1531.c`, `tests/libtest/lib3105.c`, and `tests/libtest/lib2414.c`, together with their matching `tests/data` definitions, cover perform, fd-set and timeout progress through completion, repeated removal, and wakeup-driven poll exit.
+- **Documentation:** `lib/multi.c` and its selected supporting material document the contracts needed to understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs.
+- **Traceability:** Begin with the public CURLM lifecycle and multi.c's add, perform, poll, wakeup, info-read, remove, and cleanup paths; follow a transfer through the internal multihandle scheduler while protocol handlers remain adapters, then close with lib1531's perform/fdset/timeout/completion flow, lib3105's repeated removal, lib2414's wakeup-to-poll exit, and their matching test definitions.
+- **Maintainability:** Changes to the path beginning at `lib/multi.c` are constrained by these audited guarantees: handle ownership, removal, cleanup, and reentrancy, socket, timer, poll, and wakeup interoperability, and cross-platform event-loop and stable public-API compatibility.
+- **Educational value:** Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs. Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.
+
+**Inspection record:** commit `c2a04c080d79e1eb5d99bc0a73fd71710aa6d345`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `lib/multi.c`, `include/curl/multi.h`, `lib/multihandle.h`, `tests/libtest/lib1531.c`, `tests/libtest/lib3105.c`, `tests/libtest/lib2414.c`, `tests/data/test1531`, `tests/data/test3105`, `tests/data/test2414`, `COPYING`. GitHub Linguist label: C.
+
+**License:** curl ([evidence 1](https://github.com/curl/curl/blob/c2a04c080d79e1eb5d99bc0a73fd71710aa6d345/COPYING))
+
+### [libevent/libevent](https://github.com/libevent/libevent)
+
+**Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+A portable asynchronous event-notification library with event loops, buffered streams, networking protocols, and threading support.
+
+**Real-world evidence:** The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.
+
+**Language evidence:** Event loops, platform polling backends, buffered I/O, listeners, DNS, HTTP, RPC, TLS adapters, threading, timers, and utilities are C across the repository root and include/.
+
+**Why study it:** Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely. The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.
+
+**What you can learn:**
+
+- Study these transferable C mechanisms in `event.c`: opaque public handles and internal structures, callback function pointers and backend operation tables, and intrusive queues, maps, and timeout heap.
+- Trace these states and branches from `event.c` through its selected supporting files: registered, ready, active, executing, persistent, and deleted event states, interleaved I/O, timeout, priority, and thread-notification transitions, and reentrant callback changes to the same event base.
+- Identify these architectural responsibilities in the path beginning at `event.c`: public event API and event-base core, I/O mapping and timeout scheduling, pluggable epoll backend, and core and edge-triggered regression tests.
+- Study these change constraints for the path beginning at `event.c`: cross-platform backend and readiness semantics, callback reentrancy, deletion, and persistence safety, and thread notification, locking, priority, and timeout correctness.
+
+**Prerequisites:**
+
+- Before reading `event.c`, be comfortable with these mechanisms: opaque public handles and internal structures, callback function pointers and backend operation tables, and intrusive queues, maps, and timeout heap.
+- An event loop registers I/O and timeout interests with an operating-system backend, activates ready events, and dispatches callbacks by priority.
+
+**Coding relevance:**
+
+The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.
+
+Required domain context:
+
+- An event loop registers I/O and timeout interests with an operating-system backend, activates ready events, and dispatches callbacks by priority.
+
+**Learning path:**
+
+- **Goal:** Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely.
+- **Start here:** [`event.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/event.c) — Begin with `event.c` because it exposes how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely.
+- **Then read:**
+  - [`include/event2/event.h`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/include/event2/event.h)
+  - [`event-internal.h`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/event-internal.h)
+  - [`evmap.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/evmap.c)
+  - [`epoll.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/epoll.c)
+  - [`minheap-internal.h`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/minheap-internal.h)
+  - [`test/regress.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/test/regress.c)
+  - [`test/regress_et.c`](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/test/regress_et.c)
+- **Trace:** Start at event_base_loop, follow event addition through evmap registration and the epoll backend, place timeout events in the min-heap, then trace readiness and expiration into priority activation and callback dispatch, including persistence, deletion, reentrancy, and thread notification; close with the core and edge-triggered regression tests.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced C representation and callback techniques recur throughout the core without becoming the primary expert burden.
+- **Behavioral reasoning 5:** Multiple nonlocal state machines and callback lifecycles interact repeatedly across the loop, backend, maps, heap, and user callbacks.
+- **Design span 4:** Several substantial subsystem boundaries must be understood together, while protocol handlers remain outside the selected trace.
+- **Constraint burden 5:** Expert portability, lifecycle, concurrency, and scheduling guarantees recur throughout ordinary core-loop changes.
+- **Placement:** The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The public event contract, loop, I/O map, timeout heap, and epoll backend have explicit boundaries and invariants; the broad regression harness and edge-triggered tests exercise registration, activation, persistence, priorities, timeouts, deletion, reentrancy, and backend behavior.
+- **Architecture:** The audited architecture of the path beginning at `event.c` has these boundaries: public event API and event-base core, I/O mapping and timeout scheduling, pluggable epoll backend, and core and edge-triggered regression tests.
+- **Naming and idiom:** `event.c` and its supporting files use these characteristic C mechanisms: opaque public handles and internal structures, callback function pointers and backend operation tables, and intrusive queues, maps, and timeout heap.
+- **Tests:** Direct tests in `test/regress.c` and `test/regress_et.c` cover these states and branches in the selected path: registered, ready, active, executing, persistent, and deleted event states, interleaved I/O, timeout, priority, and thread-notification transitions, and reentrant callback changes to the same event base.
+- **Documentation:** `event.c` and its selected supporting material document the contracts needed to understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely.
+- **Traceability:** Start at event_base_loop, follow event addition through evmap registration and the epoll backend, place timeout events in the min-heap, then trace readiness and expiration into priority activation and callback dispatch, including persistence, deletion, reentrancy, and thread notification; close with the core and edge-triggered regression tests.
+- **Maintainability:** Changes to the path beginning at `event.c` are constrained by these audited guarantees: cross-platform backend and readiness semantics, callback reentrancy, deletion, and persistence safety, and thread notification, locking, priority, and timeout correctness.
+- **Educational value:** Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely. The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.
+
+**Inspection record:** commit `335349b9b60c860289c6c47eadadadf18dc58211`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `event.c`, `include/event2/event.h`, `event-internal.h`, `evmap.c`, `epoll.c`, `minheap-internal.h`, `test/regress.c`, `test/regress_et.c`, `LICENSE`. GitHub Linguist label: C.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/libevent/libevent/blob/335349b9b60c860289c6c47eadadadf18dc58211/LICENSE))
 
 _Generated from `catalog/c.json`; do not edit by hand._

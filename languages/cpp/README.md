@@ -1,14 +1,18 @@
 # C++
 
-10 qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).
+6 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## SDC 1
+## Level 1
+
+No qualified repository has been published at this level. Standards are not lowered to fill a slot.
+
+## Level 2
 
 ### [agauniyal/rang](https://github.com/agauniyal/rang)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 A small header-only library that adds portable terminal colors and text styles through C++ stream operators.
 
@@ -16,89 +20,60 @@ A small header-only library that adds portable terminal colors and text styles t
 
 **Language evidence:** Terminal detection, ANSI and native Windows coloring, stream operators, and public enums are implemented in include/rang.hpp.
 
-**Why study it:** A compact public API exposes the real platform work behind portable terminal styling, including TTY detection and Windows console modes.
+**Why study it:** The rang path shows how a header-only C++ API converts type-safe style and color values into stream output while honoring control mode, terminal detection, and platform fallback.
 
 **What you can learn:**
 
-- Operator overloading, scoped enums, stream buffers, TTY detection, platform compilation, atomic configuration, and header-only packaging.
+- Use `include/rang.hpp` to study the following transferable techniques and behaviors: Scoped style and color enums, stream insertion operators, enum-to-code helpers, automatic, forced and disabled modes, terminal and color-support detection, ANSI output, Windows console handling, redirection, and no-output fallback.
 
 **Prerequisites:**
 
-- C++ streams, enums, operator overloading, conditional compilation, and basic operating-system APIs.
+- Before reading `include/rang.hpp`, be familiar with the following concepts: C++ scoped enums, operator overloading, iostreams, templates, platform conditionals, terminal control sequences, TTY detection, and standard output streams.
 
-**Start here:** [`include/rang.hpp`](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/include/rang.hpp) — The enums lead directly into terminal capability checks and the stream insertion overloads that emit or apply styles.
+**Coding relevance:**
 
-**Why this level:**
+The terminal-style concept is familiar and self-contained; the path teaches transferable stream adaptation, platform detection, scoped configuration, enum APIs, fallback behavior, portability, and behavioral testing.
 
-- **S1:** 424 meaningful implementation LOC measured with tokei 14.0.0. Count covers the complete production header, excluding tests, packaging probes, and build metadata.
-- **D2:** Platform branches require modest systems knowledge, but each operation is short and conventional.
-- **C1:** One component maps style enums to one of two terminal output mechanisms.
-- **Placement:** S1/D2/C1 averages to 1.33, so Rang is an SDC 1 study despite its useful portability boundary.
+Required domain context:
 
-**Quality-gate evidence:**
+- Terminal styling writes color or style control sequences only when the configured control mode and output stream's terminal capabilities allow it.
 
-- **Source quality:** Capability checks, modes, and platform-specific output are small, guarded, and separated inside the implementation namespace.
-- **Architecture:** Public styling enums delegate to a single header's Unix ANSI or Windows console implementation.
-- **Naming and idiom:** style, fg, bg, control, winTerm, supportsColor, and isTerminal state the terminal model plainly.
-- **Tests:** Automated and visual tests exercise stream output, control modes, environment behavior, and terminal backends.
-- **Documentation:** The README documents supported styles, modes, platforms, installation methods, and concrete output examples.
-- **Traceability:** A stream insertion moves from an enum overload through mode and TTY checks to an ANSI sequence or Windows attribute call.
-- **Maintainability:** The narrow API and isolated conditional compilation keep platform changes reviewable.
-- **Educational value:** It teaches that a friendly operator-based API can still expose understandable operating-system boundaries.
+**Learning path:**
 
-**Inspection record:** commit `56419fe3348a475c8dd83852d907794cec0ec798`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `include/rang.hpp`, `test/colorTest.cpp`. GitHub Linguist label: C++. LOC exclusions: test/, test_package/.
-
-**License:** [Unlicense](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/LICENSE)
-
-### [kainjow/Mustache](https://github.com/kainjow/Mustache)
-
-**S1 / D2 / C1 → SDC 1**
-
-A dependency-free, header-only Mustache template engine for STL-compatible narrow and wide string types.
-
-**Real-world evidence:** The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.
-
-**Language evidence:** The complete template parser, data model, renderer, escaping, sections, lambdas, and partials are implemented in mustache.hpp.
-
-**Why study it:** One header contains a real parser-renderer pipeline, a tagged data model, context lookup, escaping, sections, partials, and error reporting.
-
-**What you can learn:**
-
-- Template parsing, tagged data representation, recursive rendering, context stacks, HTML escaping, callbacks, and header-only library design.
-
-**Prerequisites:**
-
-- C++ classes and templates, smart pointers, standard containers, iterators, callbacks, and basic parsing.
-
-**Start here:** [`mustache.hpp`](https://github.com/kainjow/Mustache/blob/3f654942a70c46a775070d7a09ca7acfa3e205b7/mustache.hpp) — The whole library is here; begin with basic_mustache and follow parse, render_internal, and variable lookup.
+- **Goal:** Understand how rang adapts type-safe color and style values to an output stream while honoring control mode, terminal detection, and cross-platform fallback.
+- **Start here:** [`include/rang.hpp`](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/include/rang.hpp) — include/rang.hpp contains the complete enum API, stream operators, control state, terminal detection, color-support checks, and Windows and ANSI output branches.
+- **Then read:**
+  - [`test/test.cpp`](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/test/test.cpp)
+- **Trace:** Follow style, foreground, background, control and color enums into the stream insertion path, then follow automatic, force and off modes through terminal and color-support detection and the Windows or ANSI output branches; close the behavior with test/test.cpp. The catalog's test/colorTest.cpp only demonstrates colors interactively and is not the closing contract test.
 
 **Why this level:**
 
-- **S1:** 1,006 meaningful implementation LOC measured with tokei 14.0.0. Count covers the complete production header and excludes tests, their bundled harness, and build metadata.
-- **D2:** Parsing and recursive sections add one modest concern, while the implementation remains direct and contained.
-- **C1:** One component owns parsing and rendering without services, plugins, persistence, or platform boundaries.
-- **Placement:** S1/D2/C1 averages to 1.33, making this a complete but approachable SDC 1 project.
+- **Language technique 2:** The path uses common professional C++ stream and enum idioms without recurring advanced machinery.
+- **Behavioral reasoning 2:** Several meaningful branches and a small configuration lifecycle remain easy to trace in one header.
+- **Design span 1:** The complete behavior is one focused unit.
+- **Constraint burden 3:** Several material portability and compatibility guarantees constrain an otherwise small implementation.
+- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Parsing state, data variants, rendering contexts, and error positions are explicit in a dependency-free implementation.
-- **Architecture:** A typed data model feeds one parsed component tree and recursive renderer inside a single public header.
-- **Naming and idiom:** Names such as delimiter_set, context, component, render_internal, and get_variable reflect the template domain.
-- **Tests:** The Catch-based suite covers variables, escaping, delimiters, sections, lists, lambdas, partials, whitespace, invalid templates, and wide strings.
-- **Documentation:** The README gives complete feature coverage and runnable examples for the major Mustache constructs.
-- **Traceability:** A template variable can be followed from token parsing through context lookup and escaping into a focused assertion.
-- **Maintainability:** One distributable header and broad behavioral tests keep changes localized despite the hand-built parser.
-- **Educational value:** It demonstrates a whole useful language-processing feature without compiler-framework machinery.
+- **Source quality:** Small enum and stream APIs keep style codes, control modes, stream-specific state, terminal detection, and platform branches explicit.
+- **Architecture:** One header-only component separates public enums and manipulators from control state, environment detection, and platform-specific output helpers.
+- **Naming and idiom:** style, fg, bg, fgB, bgB, control, winTerm, color, setControlMode, isTerminal, supportsColor, and stream operators state output policy.
+- **Tests:** test/test.cpp covers enumeration output, automatic, forced and disabled control, supported and unsupported streams, terminal detection, invalid values, and no-output cases.
+- **Documentation:** The README documents styles, foreground and background colors, control modes, platform behavior, and stream usage corresponding to include/rang.hpp.
+- **Traceability:** A style value can be followed through its insertion operator, control-mode check, terminal and color detection, and ANSI or Windows branch into focused contract assertions.
+- **Maintainability:** A single portable interface, isolated platform checks, and explicit fallback tests constrain changes to terminal compatibility.
+- **Educational value:** The path demonstrates how a tiny cross-platform library layers type safety over conditional operating-system behavior without obscuring its fallbacks.
 
-**Inspection record:** commit `3f654942a70c46a775070d7a09ca7acfa3e205b7`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `mustache.hpp`, `tests/tests.cpp`. GitHub Linguist label: C++. LOC exclusions: tests/.
+**Inspection record:** commit `56419fe3348a475c8dd83852d907794cec0ec798`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `include/rang.hpp`, `test/test.cpp`, `LICENSE`. GitHub Linguist label: C++.
 
-**License:** [BSL-1.0](https://github.com/kainjow/Mustache/blob/3f654942a70c46a775070d7a09ca7acfa3e205b7/LICENSE)
+**License:** Unlicense ([evidence 1](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/LICENSE))
 
-## SDC 2
+## Level 3
 
 ### [CLIUtils/CLI11](https://github.com/CLIUtils/CLI11)
 
-**S2 / D3 / C2 → SDC 2**
+**Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
 
 A command-line parser supporting typed options, flags, subcommands, validation, configuration files, aliases, and rich help output.
 
@@ -106,89 +81,123 @@ A command-line parser supporting typed options, flags, subcommands, validation, 
 
 **Language evidence:** Argument models, parsers, validators, config formats, help formatters, encoding, and public APIs are C++ under include/CLI.
 
-**Why study it:** It turns argv into a typed command tree while handling ambiguity, inheritance, callbacks, platform conventions, configuration, and detailed diagnostics.
+**Why study it:** The CLI11 App path shows how command-line tokens become typed option and subcommand values while preserving validation, callbacks, fallthrough, remaining arguments, repetition, and structured errors.
 
 **What you can learn:**
 
-- Recursive command trees, typed conversion, validators, positional matching, subcommand inheritance, configuration parsing, callbacks, and exception invariants.
+- Use `include/CLI/App.hpp` to study the following transferable techniques and behaviors: Generic option conversion, traits for scalar and container inputs, overloads, callback and validator composition, token classification, option matching, arity, nested subcommands, fallthrough, requirements and exclusions, callback order, remaining tokens, repeated parsing, and errors.
 
 **Prerequisites:**
 
-- C++ templates, callbacks, smart pointers, containers, command-line conventions, parsing, and exception safety.
+- Before reading `include/CLI/App.hpp`, be familiar with the following concepts: Advanced C++ templates and traits, overloads, callbacks, containers, strings, command-line syntax, recursive parsing, validators, exceptions, and header-only library organization.
 
-**Start here:** [`include/CLI/App.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/App.hpp) — App defines the command tree, inherited settings, options, subcommands, callbacks, and parsing entry points before their inline implementation.
+**Coding relevance:**
+
+Command-line concepts are familiar and documented locally; the selected path teaches transferable parser state, declarative APIs, type conversion, callbacks, validation, modular design, and error handling rather than a specialized command grammar.
+
+Required domain context:
+
+- A command-line parser assigns tokens to options and subcommands, converts values, validates relationships, and invokes callbacks or reports structured errors.
+
+**Learning path:**
+
+- **Goal:** Understand how CLI11 maps command-line tokens into typed options and subcommands while preserving validation, callback, fallthrough, remaining-argument, and error contracts.
+- **Start here:** [`include/CLI/App.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/App.hpp) — include/CLI/App.hpp defines the application, option, and subcommand model and leads into App_inl.hpp for the selected token-consumption and validation lifecycle.
+- **Then read:**
+  - [`include/CLI/impl/App_inl.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/impl/App_inl.hpp)
+  - [`include/CLI/Option.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/Option.hpp)
+  - [`include/CLI/impl/Option_inl.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/impl/Option_inl.hpp)
+  - [`include/CLI/TypeTools.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/TypeTools.hpp)
+  - [`tests/AppTest.cpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/tests/AppTest.cpp)
+- **Trace:** Start with App's option and subcommand model, follow parse through token classification, option matching, value collection and conversion, subcommand and remaining-token handling, requirement and exclusion validation, callback ordering, and structured errors; connect Option and TypeTools behavior to the focused application tests.
 
 **Why this level:**
 
-- **S2:** 9,755 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party public and inline implementation headers plus production module sources, excluding tests, examples, docs, and generated single-header output.
-- **D3:** Several parsing and generic concerns interact, but code uses familiar containers and explicit validation paths.
-- **C2:** A few cohesive modules implement one command-line domain within one process.
-- **Placement:** S2/D3/C2 averages to 2.33, making CLI11 an upper SDC 2 project.
+- **Language technique 3:** Generics, traits, overloads, and higher-order composition materially shape the declarative parser API.
+- **Behavioral reasoning 3:** State transitions, recursion, callbacks, and errors materially affect a parse without requiring advanced concurrency or resource reasoning.
+- **Design span 3:** The trace crosses several meaningful library boundaries whose responsibilities remain locally understandable.
+- **Constraint burden 3:** Several material API, compatibility, and correctness guarantees influence normal parser changes.
+- **Placement:** The four scores 3/3/3/3 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Ambiguity checks preserve exception invariants and parsing stages use named helpers rather than one undifferentiated token loop.
-- **Architecture:** App owns the command tree while Option, validators, converters, config handlers, and formatters provide focused collaborators.
-- **Naming and idiom:** App, Option, subcommand, positional, fallthrough, configurable, callback, and formatter are consistent domain terms.
-- **Tests:** The broad suite covers flags, types, subcommands, positionals, config files, Unicode, Windows syntax, errors, callbacks, and fuzz regressions.
-- **Documentation:** The README, book, and examples document common and advanced parsing, integration, testing, and packaging.
-- **Traceability:** An option can be followed from add_option through name-conflict checks, parse classification, conversion, validation, callback, and App tests.
-- **Maintainability:** Public declarations and inline implementations are separated, while tests target the many policy combinations.
-- **Educational value:** It teaches production parsing and generic APIs without the broader concerns of a full application framework.
+- **Source quality:** App, Option, implementation headers, and TypeTools separate declarative configuration, token parsing, typed conversion, validation, callbacks, and errors.
+- **Architecture:** App owns parser and subcommand state, Option owns occurrence and value policy, TypeTools performs generic conversion, and validators and callbacks extend the lifecycle.
+- **Naming and idiom:** App, Option, add_option, add_subcommand, parse, remaining, fallthrough, required, excludes, needs, callback, and ParseError expose command-line policy.
+- **Tests:** AppTest.cpp covers parsing order, option values, subcommands, callbacks, requirements, exclusions, fallthrough, remaining arguments, errors, and repeated parsing.
+- **Documentation:** CLI11's App, Option, subcommand, configuration, validation, callback, and parsing documentation explains the contracts exercised by this path.
+- **Traceability:** A token vector can be followed through App parsing, option or subcommand matching, value collection and TypeTools conversion, validation, callback ordering, remaining handling, and focused tests.
+- **Maintainability:** Separated declaration, implementation, conversion, and validation headers plus focused application tests constrain changes to a broad typed command-line API.
+- **Educational value:** The path demonstrates how generic C++ abstractions support a fluent parser while leaving token state, conversion, callback, and error decisions inspectable.
 
-**Inspection record:** commit `c1cfe00d2f3d862aecfe6e69ec810414d5f4c906`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `include/CLI/App.hpp`, `include/CLI/impl/App_inl.hpp`, `tests/AppTest.cpp`. GitHub Linguist label: C++. LOC exclusions: tests/, examples/, docs/.
+**Inspection record:** commit `c1cfe00d2f3d862aecfe6e69ec810414d5f4c906`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `include/CLI/App.hpp`, `include/CLI/impl/App_inl.hpp`, `include/CLI/Option.hpp`, `include/CLI/impl/Option_inl.hpp`, `include/CLI/TypeTools.hpp`, `tests/AppTest.cpp`, `LICENSE`. GitHub Linguist label: C++.
 
-**License:** [BSD-3-Clause](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/LICENSE)
+**License:** BSD-3-Clause ([evidence 1](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/LICENSE))
 
-### [gabime/spdlog](https://github.com/gabime/spdlog)
+### [kainjow/Mustache](https://github.com/kainjow/Mustache)
 
-**S2 / D3 / C2 → SDC 2**
+**Language 3 / Behavior 2 / Design 2 / Constraints 3 → Level 3**
 
-A high-performance logging library with synchronous and asynchronous loggers, formatters, registries, and many output sinks.
+A dependency-free, header-only Mustache template engine for STL-compatible narrow and wide string types.
 
-**Real-world evidence:** The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.
+**Real-world evidence:** The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.
 
-**Language evidence:** Logger orchestration, asynchronous queues, formatters, registries, and platform-specific sinks are C++ under include/spdlog and src.
+**Language evidence:** The complete template parser, data model, renderer, escaping, sections, lambdas, and partials are implemented in mustache.hpp.
 
-**Why study it:** It connects a familiar logging API to compile-time formatting, sink composition, bounded queues, worker threads, backtraces, files, and platform outputs.
+**Why study it:** The single-header Mustache path shows how C++ parses templates and renders variables, sections, lambdas, and partials against a context stack while preserving escaping and specification compatibility.
 
 **What you can learn:**
 
-- Variadic formatting APIs, sink composition, bounded concurrent queues, asynchronous worker lifecycle, log filtering, formatting, and portability.
+- Use `mustache.hpp` to study the following transferable techniques and behaviors: Generic string and stream support, recursive template data, tokenization, delimiter changes, nested sections, stacked context lookup, scalar, list, object and lambda values, partials, HTML escaping, raw output, whitespace, and parse errors.
 
 **Prerequisites:**
 
-- C++ templates, threads, atomics, mutexes, condition variables, smart pointers, files, and logging concepts.
+- Before reading `mustache.hpp`, be familiar with the following concepts: Modern C++ templates, strings and streams, variants or tagged values, vectors and maps, callbacks, recursion, HTML escaping, and Mustache template syntax.
 
-**Start here:** [`include/spdlog/logger.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/logger.h) — The logger exposes filtering, message construction, sink fan-out, formatting, flushing, and the handoff to asynchronous subclasses.
+**Coding relevance:**
+
+The small documented template vocabulary is sufficient context; the path teaches transferable recursive parsing, variant-like data modeling, context lookup, callback rendering, escaping, error reporting, and compatibility testing.
+
+Required domain context:
+
+- A Mustache template contains variables, escaped or unescaped substitutions, sections that repeat or conditionally render, inverted sections, and partial templates.
+
+**Learning path:**
+
+- **Goal:** Understand how a header-only C++ Mustache engine parses a template and renders variables and nested sections against a context stack while preserving escaping and template compatibility.
+- **Start here:** [`mustache.hpp`](https://github.com/kainjow/Mustache/blob/3f654942a70c46a775070d7a09ca7acfa3e205b7/mustache.hpp) — mustache.hpp contains the entire public data model, token parser, context lookup, escaping, rendering, partial, lambda, and error behavior in one source.
+- **Then read:**
+  - [`tests/tests.cpp`](https://github.com/kainjow/Mustache/blob/3f654942a70c46a775070d7a09ca7acfa3e205b7/tests/tests.cpp)
+- **Trace:** Follow template construction into token parsing, delimiter and section handling, then follow render through stacked context lookup, scalar, list, object and lambda data cases, escaped or raw output, partials, and errors; correlate each branch with the direct rendering and malformed-template tests.
 
 **Why this level:**
 
-- **S2:** 8,142 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party headers and compiled sources, excluding tests, benchmarks, examples, and the bundled fmt dependency.
-- **D3:** Concurrency, formatting, and platform sinks recur, though each is isolated behind recognizable interfaces.
-- **C2:** Several clear modules cooperate within one process and expose limited extension boundaries.
-- **Placement:** S2/D3/C2 averages to 2.33, placing spdlog at SDC 2.
+- **Language technique 3:** Templates, recursive data modeling, and callable composition materially shape the path without requiring expert C++ machinery.
+- **Behavioral reasoning 2:** Meaningful state and branches remain within a direct synchronous parse-and-render lifecycle.
+- **Design span 2:** A few clear responsibilities inside one header and one test suite contain the behavior.
+- **Constraint burden 3:** Several material compatibility, portability, and correctness guarantees influence ordinary parser and renderer changes.
+- **Placement:** The four scores 3/2/2/3 sum to 10; their arithmetic mean is 2.50 and rounds half-up to Level 3. The published result is Level 3.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Hot paths make filtering and ownership explicit, while concurrent queue policies and worker termination are named and tested.
-- **Architecture:** Loggers create messages, formatters render them, sinks own destinations, a registry manages named instances, and a thread pool handles async delivery.
-- **Naming and idiom:** logger, sink, pattern_formatter, async_msg, overflow_policy, and thread_pool match the runtime roles.
-- **Tests:** Focused tests cover async ordering and overflow, sinks, files, rotation, format patterns, errors, configuration, backtraces, and platform behavior.
-- **Documentation:** The README explains build modes, sinks, async setup, customization, formatting, performance, and examples.
-- **Traceability:** A log call can be followed through level filtering, message creation, async enqueue, worker dispatch, sink formatting, and async tests.
-- **Maintainability:** Header-only and compiled modes share implementation files, and destination-specific behavior remains behind sink types.
-- **Educational value:** It is a manageable introduction to performance-aware concurrency and extension-oriented library design.
+- **Source quality:** The header separates template data, tokens, parsing, context lookup, escaping, and rendering into named types and functions despite its single-file distribution.
+- **Architecture:** One header contains distinct parser and renderer boundaries plus data, context-stack, partial, lambda, escaping, and error collaborators.
+- **Naming and idiom:** mustache, data, context, token, parse, render, section, partial, lambda, escape, error_message, and is_valid preserve template vocabulary.
+- **Tests:** tests/tests.cpp covers variables, sections, inverted sections, lists, lambdas, partials, whitespace, delimiter changes, escaping, malformed templates, and specification examples.
+- **Documentation:** The README provides runnable examples and explains template construction, data kinds, rendering, lambdas, partials, escaping, errors, and stream use needed for this path.
+- **Traceability:** A template can be followed from construction through token parsing and nested section matching into stacked data lookup, rendering or escaping, partial expansion, and direct tests.
+- **Maintainability:** Named responsibilities within the header and specification-oriented tests constrain parser and renderer changes without requiring a multi-library build.
+- **Educational value:** The path provides a complete production parser-and-renderer study with generic C++ modeling, callbacks, compatibility rules, and security-sensitive escaping.
 
-**Inspection record:** commit `f5f173a1a57d0e2e0115f2ed71ee7ea316516853`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `include/spdlog/logger.h`, `include/spdlog/details/thread_pool-inl.h`, `tests/test_async.cpp`. GitHub Linguist label: C++. LOC exclusions: tests/, bench/, example/, include/spdlog/fmt/bundled/.
+**Inspection record:** commit `3f654942a70c46a775070d7a09ca7acfa3e205b7`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `mustache.hpp`, `tests/tests.cpp`, `LICENSE`. GitHub Linguist label: C++.
 
-**License:** [MIT](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/LICENSE)
+**License:** BSL-1.0 ([evidence 1](https://github.com/kainjow/Mustache/blob/3f654942a70c46a775070d7a09ca7acfa3e205b7/LICENSE))
 
-## SDC 3
+## Level 4
 
 ### [catchorg/Catch2](https://github.com/catchorg/Catch2)
 
-**S3 / D3 / C3 → SDC 3**
+**Language 5 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
 
 A C++ testing framework with expressive assertions, matchers, generators, test discovery, filtering, reporters, and benchmarking.
 
@@ -196,89 +205,126 @@ A C++ testing framework with expressive assertions, matchers, generators, test d
 
 **Language evidence:** Test registration, assertions, matchers, generators, reporters, command handling, execution, and discovery support are C++ under src/catch2.
 
-**Why study it:** Because the framework tests itself, learners can trace macros into registration, execution, assertion decomposition, event capture, reporting, and end-to-end test scripts.
+**Why study it:** The assertion-macro path shows how Catch2 captures one C++ expression, decomposes operands without double evaluation, and reports faithful values through a managed assertion lifecycle.
 
 **What you can learn:**
 
-- Macro-generated registration, static initialization, expression decomposition, type-erased test invocation, filtering, sharding, reporters, and CLI lifecycle.
+- Use `src/catch2/catch_test_macros.hpp` to study the following transferable techniques and behaviors: Layered variadic macros, expression templates, operator-overload capture, forwarding and traits, unary and binary expression objects, exactly-once evaluation, operand stringification, negation, exception and fatal branches, assertion handlers, and compiler portability.
 
 **Prerequisites:**
 
-- C++ templates and macros, static initialization, polymorphism, exceptions, command-line parsing, testing concepts, and build integration.
+- Before reading `src/catch2/catch_test_macros.hpp`, be familiar with the following concepts: Expert C++ templates, value categories and forwarding, operator overloading and precedence, variadic preprocessor macros, RAII, exceptions, user-defined types, and test-assertion concepts.
 
-**Start here:** [`src/catch2/catch_session.cpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/catch_session.cpp) — Session connects command-line configuration, registry state, test execution, reporters, output, errors, and process exit codes.
+**Coding relevance:**
+
+Assertion semantics are familiar and locally documented; the path teaches transferable macro API design, expression templates, operator overloading, single-evaluation discipline, exception capture, diagnostic construction, and regression testing.
+
+Required domain context:
+
+- An assertion framework evaluates a user's expression once and reports both the original expression and decomposed operand values when it fails.
+
+**Learning path:**
+
+- **Goal:** Understand how a Catch2 assertion macro captures one C++ expression, decomposes its operands without double evaluation, and reports a faithful result through the assertion handler.
+- **Start here:** [`src/catch2/catch_test_macros.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/catch_test_macros.hpp) — src/catch2/catch_test_macros.hpp defines the public REQUIRE and CHECK families that lead into internal expansion, Decomposer expression capture, and AssertionHandler reporting.
+- **Then read:**
+  - [`src/catch2/internal/catch_test_macro_impl.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/internal/catch_test_macro_impl.hpp)
+  - [`src/catch2/internal/catch_decomposer.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/internal/catch_decomposer.hpp)
+  - [`tests/SelfTest/IntrospectiveTests/AssertionHandler.tests.cpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/tests/SelfTest/IntrospectiveTests/AssertionHandler.tests.cpp)
+  - [`tests/SelfTest/UsageTests/Decomposition.tests.cpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/tests/SelfTest/UsageTests/Decomposition.tests.cpp)
+- **Trace:** Follow a public REQUIRE or CHECK macro through the internal assertion expansion and handler lifetime, then follow Decomposer's overloaded <= into unary or binary expression objects, result evaluation and reconstructed operand output; correlate handler state, exception, single-evaluation, operator, negation, and diagnostic tests.
 
 **Why this level:**
 
-- **S3:** 21,367 meaningful implementation LOC measured with tokei 14.0.0. Count covers production framework code under src/catch2, excluding self-tests, scripts, benchmarks, fuzzers, examples, docs, and third-party code.
-- **D3:** Several advanced language mechanisms matter, but orchestration and data structures remain conventional and well named.
-- **C3:** A test crosses registries, configuration, filtering, invocation, assertion capture, reporters, output, and build-system discovery.
-- **Placement:** S3/D3/C3 makes Catch2 a balanced SDC 3 codebase.
+- **Language technique 5:** Multiple advanced macro, template, overload, and value-category mechanisms interact pervasively and require expert C++ command.
+- **Behavioral reasoning 4:** Evaluation state, exceptions, control-flow outcomes, and reporting invariants recur across macro and handler boundaries.
+- **Design span 3:** The trace crosses several meaningful interfaces while remaining one assertion subsystem.
+- **Constraint burden 4:** Multiple strict semantic, compatibility, diagnostic, and portability constraints interact throughout assertion decomposition.
+- **Placement:** The four scores 5/4/3/4 sum to 16; their arithmetic mean is 4.00 and rounds half-up to Level 4. The published result is Level 4.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Framework state and interfaces are explicit, ownership is deliberate, and compatibility macros stay behind dedicated headers.
-- **Architecture:** Registries, session/configuration, test tracking, assertion handling, matchers, reporters, generators, and discovery have distinct roles.
-- **Naming and idiom:** TestCaseHandle, Session, RegistryHub, AssertionHandler, Reporter, and TestSpec expose the framework model.
-- **Tests:** Self-tests, extra executables, approval outputs, and Python/CMake scripts cover framework behavior, diagnostics, discovery, crashes, and regressions.
-- **Documentation:** Versioned user and contributor documentation covers assertions, matchers, generators, reporters, configuration, integrations, and internals.
-- **Traceability:** A declared test can be followed from macro registration into TestRegistry, Session filtering and execution, assertion events, and reporter output.
-- **Maintainability:** Interfaces separate extensions from the core, while the self-hosting test matrix protects many compilers and configurations.
-- **Educational value:** It reveals the machinery behind familiar testing syntax in a repository whose own tests demonstrate the design.
+- **Source quality:** Public macros, internal expansion, decomposer expression types, evaluation, reconstructed diagnostics, and handler lifetime are separated despite intricate macro and template machinery.
+- **Architecture:** catch_test_macros.hpp owns the public surface, catch_test_macro_impl.hpp expands control flow, catch_decomposer.hpp captures expressions, and AssertionHandler owns reporting state.
+- **Naming and idiom:** REQUIRE, CHECK, INTERNAL_CATCH_TEST, AssertionHandler, Decomposer, BinaryExpr, UnaryExpr, ResultDisposition, completed, and handleException expose the assertion model.
+- **Tests:** AssertionHandler.tests.cpp and Decomposition.tests.cpp cover evaluated values, unary and binary expressions, exceptions, messages, negation, short forms, operator behavior, and failure reporting.
+- **Documentation:** Catch2's assertion, decomposition, exception, and macro documentation explains the public behavior and operator limitations represented by this path.
+- **Traceability:** A REQUIRE or CHECK expression can be followed through macro expansion and handler construction into Decomposer's overloaded capture, result reconstruction, exception handling, and exact diagnostic tests.
+- **Maintainability:** Layered boundaries, centralized decomposition, RAII handler state, and introspective compiler-sensitive tests constrain changes to a demanding portable macro API.
+- **Educational value:** The path provides an expert study of how C++ language machinery can improve diagnostics while preserving evaluation semantics and broad user-type compatibility.
 
-**Inspection record:** commit `317ac1ed4c0bb6e6b91eafc817e05c488feffcb3`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `src/catch2/catch_session.cpp`, `src/catch2/internal/catch_test_case_registry_impl.cpp`, `tests/SelfTest/UsageTests/Matchers.tests.cpp`. GitHub Linguist label: C++. LOC exclusions: tests/, benchmarks/, fuzzing/, examples/, third_party/.
+**Inspection record:** commit `317ac1ed4c0bb6e6b91eafc817e05c488feffcb3`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/catch2/catch_test_macros.hpp`, `src/catch2/internal/catch_test_macro_impl.hpp`, `src/catch2/internal/catch_decomposer.hpp`, `tests/SelfTest/IntrospectiveTests/AssertionHandler.tests.cpp`, `tests/SelfTest/UsageTests/Decomposition.tests.cpp`, `LICENSE.txt`. GitHub Linguist label: C++.
 
-**License:** [BSL-1.0](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/LICENSE.txt)
+**License:** BSL-1.0 ([evidence 1](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/LICENSE.txt))
 
-### [fmtlib/fmt](https://github.com/fmtlib/fmt)
+### [gabime/spdlog](https://github.com/gabime/spdlog)
 
-**S3 / D4 / C2 → SDC 3**
+**Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
 
-A fast type-safe formatting library that implements the model behind C++20 std::format and C++23 std::print.
+A high-performance logging library with synchronous and asynchronous loggers, formatters, registries, and many output sinks.
 
-**Real-world evidence:** The repository releases a production formatting library used directly and as the basis of standard-library formatting APIs.
+**Real-world evidence:** The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.
 
-**Language evidence:** Format parsing, compile-time checking, argument erasure, numeric algorithms, Unicode handling, and output APIs are C++ under include/fmt and src.
+**Language evidence:** Logger orchestration, asynchronous queues, formatters, registries, and platform-specific sinks are C++ under include/spdlog and src.
 
-**Why study it:** It combines a small public API with compile-time parsing, type erasure, buffer management, correct floating-point conversion, Unicode, and compiler portability.
+**Why study it:** The asynchronous logger path shows how spdlog hands messages to a bounded queue and worker threads while preserving overflow, ordering, flush, ownership, exceptions, and shutdown contracts.
 
 **What you can learn:**
 
-- Compile-time format parsing, variadic templates, type erasure, output buffers, Dragonbox conversion, Unicode, customization points, and compiler portability.
+- Use `include/spdlog/async_logger-inl.h` to study the following transferable techniques and behaviors: Generic bounded queues, shared and weak ownership, multi-producer and multi-consumer synchronization, blocking and overrun overflow policies, worker scheduling, backend sink dispatch, flush messages, termination, exceptions, queue capacity, and concurrent tests.
 
 **Prerequisites:**
 
-- Advanced C++ templates and constexpr, floating-point representation, parsing, memory layout, iterators, and Unicode basics.
+- Before reading `include/spdlog/async_logger-inl.h`, be familiar with the following concepts: Advanced C++ templates, smart pointers, move semantics, mutexes and condition variables, producer-consumer queues, threads, callbacks, logging sinks, exception handling, and shutdown lifecycles.
 
-**Start here:** [`include/fmt/base.h`](https://github.com/fmtlib/fmt/blob/e76a9520a3c339d2cb6a1510db43a05ea9bd8ae6/include/fmt/base.h) — The base API introduces format strings, argument mapping, buffers, parsing contexts, and the path from typed calls to erased formatting.
+**Coding relevance:**
+
+Logging and bounded queues need only short explanations; the path teaches transferable producer-consumer design, ownership transfer, backpressure, worker lifecycles, synchronization, failure handling, and concurrency testing.
+
+Required domain context:
+
+- An asynchronous logger queues prepared log messages for a background worker; its overflow policy either blocks producers or discards an older message when the bounded queue is full.
+
+**Learning path:**
+
+- **Goal:** Understand how spdlog hands a log message to a bounded asynchronous queue and delivers it on worker threads while preserving overflow, ordering, flush, ownership, and shutdown contracts.
+- **Start here:** [`include/spdlog/async_logger-inl.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/async_logger-inl.h) — include/spdlog/async_logger-inl.h contains sink_it_ and flush_, where logger calls lock thread-pool lifetime and choose asynchronous post operations.
+- **Then read:**
+  - [`include/spdlog/async_logger.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/async_logger.h)
+  - [`include/spdlog/details/thread_pool-inl.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/details/thread_pool-inl.h)
+  - [`include/spdlog/details/mpmc_blocking_q.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/details/mpmc_blocking_q.h)
+  - [`tests/test_async.cpp`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/tests/test_async.cpp)
+  - [`tests/test_mpmc_q.cpp`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/tests/test_mpmc_q.cpp)
+- **Trace:** Follow async_logger::sink_it_ and flush_ as they lock the thread-pool lifetime and post work, then follow thread_pool queue insertion, overflow selection, worker dequeue, backend sink or flush dispatch, and termination; correlate asynchronous logger and direct multi-producer/multi-consumer queue tests.
 
 **Why this level:**
 
-- **S3:** 13,832 meaningful implementation LOC measured with tokei 14.0.0. Count covers production headers and compiled sources, excluding tests, fuzzers, documentation, release tooling, and bundled test dependencies.
-- **D4:** Advanced type machinery, constexpr execution, binary number conversion, and portability recur throughout the core.
-- **C2:** Despite deep internals, the system is one library with a small set of cohesive formatting modules.
-- **Placement:** S3/D4/C2 averages exactly to SDC 3, separating code difficulty from system breadth.
+- **Language technique 3:** Generics and ownership-aware abstractions materially organize the path without expert metaprogramming.
+- **Behavioral reasoning 4:** Concurrency, queue state, scheduling, resource ownership, and shutdown invariants recur and must be reasoned about together.
+- **Design span 3:** The trace crosses several meaningful concurrency and logging boundaries whose responsibilities remain locally understandable.
+- **Constraint burden 4:** Multiple strict concurrency, resource, reliability, and performance guarantees interact across the asynchronous handoff.
+- **Placement:** The four scores 3/4/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Non-obvious algorithms and compatibility branches are documented, assertions protect invariants, and hot abstractions minimize overhead.
-- **Architecture:** A base API and erased argument model support formatting algorithms plus optional ranges, chrono, OS, color, and printf modules.
-- **Naming and idiom:** format_string, parse_context, appender, buffer, formatter, and format_arg consistently describe the pipeline.
-- **Tests:** Extensive unit, compile-failure, fuzz, portability, Unicode, numeric, and integration tests protect both output and diagnostics.
-- **Documentation:** The README and maintained API/syntax documentation explain safety, performance, customization, build modes, and every format family.
-- **Traceability:** A format call can be followed from compile-time string checking through argument mapping, parsing, formatting, buffer append, and format tests.
-- **Maintainability:** Core concepts are centralized and exhaustive tests cover compilers, standards, types, and malformed formats.
-- **Educational value:** It is an excellent study of zero-overhead API design and algorithmic library engineering.
+- **Source quality:** Async logger, thread-pool, and blocking-queue code names posting, overflow selection, dequeue, backend dispatch, flush, termination, and ownership transitions directly.
+- **Architecture:** async_logger owns the public handoff, thread_pool schedules and dispatches work, mpmc_blocking_queue owns bounded synchronization, and backend sinks perform final output.
+- **Naming and idiom:** sink_it_, flush_, post_log, post_flush, async_msg, overflow_policy, overrun_oldest, dequeue_for, process_next_msg_, and terminate state queue behavior.
+- **Tests:** tests/test_async.cpp and tests/test_mpmc_q.cpp cover blocking and overrun policies, queue capacity, ordering, flush, shutdown, exceptions, multiple workers, and concurrent producers and consumers.
+- **Documentation:** spdlog's asynchronous logging documentation explains thread-pool ownership, queue size, overflow policy, worker behavior, and logger lifetime for this exact path.
+- **Traceability:** A log message can be followed from async_logger::sink_it_ through thread_pool insertion and overflow policy, worker dequeue and backend dispatch, then matched to logger and direct queue tests.
+- **Maintainability:** Explicit logger, pool, queue, and sink boundaries plus stress and lifecycle tests constrain concurrency changes across a performance-sensitive handoff.
+- **Educational value:** The path provides a bounded production study of ownership-aware asynchronous delivery in which concurrency, capacity, loss policy, and shutdown are all observable.
 
-**Inspection record:** commit `e76a9520a3c339d2cb6a1510db43a05ea9bd8ae6`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `include/fmt/base.h`, `include/fmt/format.h`, `test/format-test.cc`. GitHub Linguist label: C++. LOC exclusions: test/, doc/, support/.
+**Inspection record:** commit `f5f173a1a57d0e2e0115f2ed71ee7ea316516853`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `include/spdlog/async_logger-inl.h`, `include/spdlog/async_logger.h`, `include/spdlog/details/thread_pool-inl.h`, `include/spdlog/details/mpmc_blocking_q.h`, `tests/test_async.cpp`, `tests/test_mpmc_q.cpp`, `LICENSE`. GitHub Linguist label: C++.
 
-**License:** [MIT](https://github.com/fmtlib/fmt/blob/e76a9520a3c339d2cb6a1510db43a05ea9bd8ae6/LICENSE)
+**License:** MIT ([evidence 1](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/LICENSE))
 
-## SDC 4
+## Level 5
 
 ### [facebook/folly](https://github.com/facebook/folly)
 
-**S5 / D4 / C4 → SDC 4**
+**Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
 
 Meta's performance-oriented collection of C++20 components for concurrency, containers, memory, networking, I/O, executors, futures, and utilities.
 
@@ -286,172 +332,57 @@ Meta's performance-oriented collection of C++20 components for concurrency, cont
 
 **Language evidence:** The component library, futures, coroutines, executors, containers, synchronization, networking, I/O, and portability layers are C++ under folly.
 
-**Why study it:** It offers many expert library case studies under one roof, unified by high-scale performance, portability, concurrency, and careful ownership.
+**Why study it:** The Folly Future path shows how Promise and Future coordinate through synchronized shared state and schedule exactly-once continuations on an Executor across values, exceptions, interruption, cancellation, and races.
 
 **What you can learn:**
 
-- Futures and coroutines, executors, lock-free and concurrent structures, allocators, I/O, networking, portability, benchmarking, and performance tradeoffs.
+- Use `folly/futures/Future.h` to study the following transferable techniques and behaviors: Variadic and conditional continuation types, perfect forwarding, callable adaptation, type erasure, Future and SemiFuture value-category transitions, synchronized shared Core state, executor handoff, continuation chaining, exception transfer, interruption, broken promises, ownership release, destruction, and races.
 
 **Prerequisites:**
 
-- Advanced C++20, concurrency and memory models, atomics, templates, networking, operating-system APIs, performance analysis, and large-library navigation.
+- Before reading `folly/futures/Future.h`, be familiar with the following concepts: Expert C++ templates and traits, forwarding and move semantics, type erasure, atomics and memory ordering, mutex synchronization, executors, futures and promises, exceptions, cancellation, ownership, and concurrent lifecycles.
 
-**Start here:** [`folly/futures/Future.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future.h) — The documented future API leads into shared state, continuations, executors, interruption, error transport, and a large focused test suite.
+**Coding relevance:**
 
-**Why this level:**
+Future, Promise, and Executor concepts are standard concurrency abstractions documented locally; the path's difficulty comes from transferable template API design, shared-state synchronization, scheduling, ownership, cancellation, exception propagation, and race safety.
 
-- **S5:** 245,932 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Folly implementation, excluding tests, benchmarks, documentation, generated build content, and dependency-build tooling.
-- **D4:** Advanced concurrency, representation, allocation, vectorization, and performance constraints recur across central components.
-- **C4:** Many library families interoperate, but Folly remains a component library rather than one distributed product or compiler platform.
-- **Placement:** S5/D4/C4 averages to 4.33, honestly placing this very large library platform at SDC 4.
+Required domain context:
 
-**Quality-gate evidence:**
+- A Future represents a value that may arrive later, a Promise completes it, and an Executor chooses where registered continuations run.
 
-- **Source quality:** Performance-sensitive choices document invariants and ownership, and specialized primitives are backed by reusable low-level utilities.
-- **Architecture:** Relatively independent component families share portability, memory, synchronization, executor, and error-handling foundations.
-- **Naming and idiom:** Future, Promise, Executor, Baton, EventBase, IOBuf, F14, and synchronization terms map consistently to their domains.
-- **Tests:** Component-level unit, stress, benchmark, portability, concurrency, and regression tests accompany the library families.
-- **Documentation:** The README, per-component docs, API comments, examples, and build guidance explain design and use, though breadth requires selective navigation.
-- **Traceability:** A Future continuation can be followed through its shared Core, executor scheduling, result or exception propagation, interruption, and Future tests.
-- **Maintainability:** Component ownership and focused test neighbors help contain a large flat library whose internal dependencies are intentionally permissive.
-- **Educational value:** It is a deep advanced library-reading corpus where learners can choose bounded subsystems before mapping the whole repository.
+**Learning path:**
 
-**Inspection record:** commit `011e8761a42b20085ce3937e73b5b7aaf482d499`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `folly/futures/Future.h`, `folly/executors/CPUThreadPoolExecutor.cpp`, `folly/futures/test/FutureTest.cpp`. GitHub Linguist label: C++. LOC exclusions: **/test/, *Test.cpp, *Benchmark.cpp, build/.
-
-**License:** [Apache-2.0](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/LICENSE)
-
-### [protocolbuffers/protobuf](https://github.com/protocolbuffers/protobuf)
-
-**S5 / D4 / C4 → SDC 4**
-
-A schema language, compiler, binary wire format, reflection system, and multi-language runtime ecosystem for structured data interchange.
-
-**Real-world evidence:** The repository releases protoc and maintained runtime packages used for data exchange and RPC contracts across many languages.
-
-**Language evidence:** The protoc compiler, descriptor system, reflection, generated-code runtime, wire formats, arenas, text/JSON support, and core conformance machinery are principally C++ under src/google/protobuf.
-
-**Why study it:** It joins a recursive-descent language front end to descriptors, code generation, compact binary encoding, reflection, compatibility editions, and many runtime implementations.
-
-**What you can learn:**
-
-- Language parsing, descriptors and reflection, wire encoding, generated APIs, arena allocation, schema evolution, multi-language runtimes, conformance, and build generation.
-
-**Prerequisites:**
-
-- Advanced C++, compilers, binary protocols, memory management, reflection, code generation, API compatibility, and monorepo navigation.
-
-**Start here:** [`src/google/protobuf/compiler/parser.cc`](https://github.com/protocolbuffers/protobuf/blob/5b1c20741838b8359193b97895cb0ff35b4ecf79/src/google/protobuf/compiler/parser.cc) — The readable recursive-descent parser turns source tokens into descriptor protos that drive the compiler and runtime ecosystem.
+- **Goal:** Understand how Folly connects a Promise and Future through synchronized shared state and schedules exactly-once continuations on an Executor across success, exception, cancellation, and race paths.
+- **Start here:** [`folly/futures/Future.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future.h) — folly/futures/Future.h defines the continuation and executor-facing public API that leads into Future-inl.h, Promise.h, and detail/Core.h for shared-state execution.
+- **Then read:**
+  - [`folly/futures/Future-inl.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future-inl.h)
+  - [`folly/futures/Promise.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Promise.h)
+  - [`folly/futures/detail/Core.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/detail/Core.h)
+  - [`folly/Executor.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/Executor.h)
+  - [`folly/futures/test/FutureTest.cpp`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/test/FutureTest.cpp)
+- **Trace:** Begin with Future's continuation and executor-facing API, follow then-style composition into callback installation on the shared Core, then follow Promise fulfillment, state synchronization, executor scheduling, result or exception transfer, interruption, ownership release, and broken-promise behavior; correlate the focused lifecycle, scheduling, exception, move, and race tests.
 
 **Why this level:**
 
-- **S5:** 516,827 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party compiler and production runtimes across supported languages, excluding tests, benchmarks, fuzzers, generated sources, examples, docs, and third-party code.
-- **D4:** Parsing, descriptors, arenas, reflection, encoding, generated APIs, and compatibility rules require several advanced domains.
-- **C4:** Many packages share a schema and compatibility contract, but the repository is a bounded serialization platform rather than a distributed application.
-- **Placement:** S5/D4/C4 averages to 4.33, so Protobuf is a large SDC 4 system rather than being promoted by size alone.
+- **Language technique 5:** Multiple advanced template, value-category, type-erasure, and overload mechanisms interact pervasively throughout the API and implementation.
+- **Behavioral reasoning 5:** Several advanced concurrency, scheduling, recovery, and resource-lifetime concerns interact pervasively and require nonlocal reasoning.
+- **Design span 4:** Many modules, extension points, and execution modes contribute to the future path without requiring the rest of the Folly platform.
+- **Constraint burden 5:** Several system-wide correctness, safety, compatibility, reliability, and performance guarantees interact across the shared asynchronous state.
+- **Placement:** The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5.
 
 **Quality-gate evidence:**
 
-- **Source quality:** Core parsers and descriptor builders expose error recovery and invariants, while low-level runtime paths isolate representation-specific optimization.
-- **Architecture:** Schema parsing feeds descriptors and code generators; language runtimes implement shared wire, reflection, JSON/text, and compatibility contracts.
-- **Naming and idiom:** Descriptor, Message, Field, Arena, CodedStream, Parser, Generator, and Edition consistently connect schema and runtime concepts.
-- **Tests:** Large unit, conformance, compatibility, generated-code, language-runtime, fuzz, and integration suites protect the wire and API contracts.
-- **Documentation:** The README and official language, encoding, API, edition, and contributor documentation cover use and architecture.
-- **Traceability:** A field declaration can be followed through parser output, descriptor construction, code generation, runtime reflection, wire encoding, and descriptor tests.
-- **Maintainability:** Shared descriptors and conformance rules anchor many runtimes, while language-specific packages own their implementation details.
-- **Educational value:** It is a strong advanced study of how one protocol definition becomes compatible code and bytes across ecosystems.
+- **Source quality:** Future, Promise, Core, and Executor code heavily documents state ownership, callback installation, fulfillment, scheduling, result transfer, interruption, and destruction invariants.
+- **Architecture:** Future and Promise expose complementary public handles, Core owns synchronized shared state, Executor controls scheduling, and adapted callbacks connect result modes.
+- **Naming and idiom:** Future, SemiFuture, Promise, Core, Try, thenValue, thenTry, via, setValue, setException, raise, interruptHandler, and broken promise preserve asynchronous vocabulary.
+- **Tests:** FutureTest.cpp covers values, exceptions, continuation forms, executor handoff, ordering, broken promises, interruption, collections, moves, races, and object lifetime.
+- **Documentation:** Folly's Future, Promise, Executor, continuation, cancellation, and exception documentation plus source comments explain the contracts followed here.
+- **Traceability:** A continuation can be followed from Future's then-style API into Core callback installation, Promise fulfillment, synchronized state transition, Executor scheduling, result transfer, and race-focused tests.
+- **Maintainability:** Explicit handle, Core, Executor, and callback boundaries plus heavily instrumented lifecycle tests constrain changes to shared asynchronous state.
+- **Educational value:** The path offers an expert account of typed asynchronous composition where templates, memory ordering, ownership, scheduling, and failure semantics must agree.
 
-**Inspection record:** commit `5b1c20741838b8359193b97895cb0ff35b4ecf79`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `src/google/protobuf/compiler/parser.cc`, `src/google/protobuf/descriptor.cc`, `src/google/protobuf/descriptor_unittest.cc`. GitHub Linguist label: C++. LOC exclusions: **/*test*, **/*benchmark*, **/*fuzz*, **/*generated*, third_party/.
+**Inspection record:** commit `011e8761a42b20085ce3937e73b5b7aaf482d499`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `folly/futures/Future.h`, `folly/futures/Future-inl.h`, `folly/futures/Promise.h`, `folly/futures/detail/Core.h`, `folly/Executor.h`, `folly/futures/test/FutureTest.cpp`, `LICENSE`. GitHub Linguist label: C++.
 
-**License:** [BSD-3-Clause](https://github.com/protocolbuffers/protobuf/blob/5b1c20741838b8359193b97895cb0ff35b4ecf79/LICENSE)
-
-## SDC 5
-
-### [llvm/llvm-project](https://github.com/llvm/llvm-project)
-
-**S5 / D5 / C5 → SDC 5**
-
-A compiler and toolchain monorepo containing LLVM, Clang, LLD, LLDB, MLIR, language runtimes, standard libraries, sanitizers, and optimization tools.
-
-**Real-world evidence:** The repository builds production compilers, linkers, debuggers, runtimes, libraries, and developer tools used across operating systems and hardware targets.
-
-**Language evidence:** LLVM IR, optimization, code generation, Clang, linkers, debuggers, MLIR, runtimes, standard libraries, and tools are overwhelmingly implemented in C++ despite GitHub's specialized LLVM label.
-
-**Why study it:** It is a definitive compiler-platform corpus: language semantics become ASTs and IR, passes transform programs, backends target machines, linkers emit binaries, and runtimes execute them.
-
-**What you can learn:**
-
-- Compiler front ends, semantic analysis, IR design, optimization passes, instruction selection, object formats, linking, debugging, runtimes, target backends, and toolchain testing.
-
-**Prerequisites:**
-
-- Expert C++, compiler theory, programming-language semantics, dataflow analysis, assembly and ABIs, object formats, operating systems, and very large monorepo navigation.
-
-**Start here:** [`llvm/lib/IR/Instructions.cpp`](https://github.com/llvm/llvm-project/blob/6d890e71354accdc496fdd9ef4f1fce8b366c7c4/llvm/lib/IR/Instructions.cpp) — LLVM instruction construction and invariants provide a bounded entry into the shared intermediate representation used by analyses, transforms, and backends.
-
-**Why this level:**
-
-- **S5:** 6,754,140 meaningful implementation LOC measured with tokei 14.0.0. Count covers major first-party compiler, tool, runtime, and library projects, excluding tests, benchmarks, examples, docs, generated content, and third-party code.
-- **D5:** Expert algorithms, domain theory, low-level representation, concurrency, and metaprogramming recur across every major project.
-- **C5:** Front ends, IR, optimizers, backends, linkers, debuggers, runtimes, libraries, tools, and targets form a deeply interconnected platform.
-- **Placement:** S5/D5/C5 makes LLVM Project a maximum SDC 5 capstone.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Core abstractions pair explicit invariants and diagnostics with reusable support libraries and extensive target-independent algorithms.
-- **Architecture:** Shared support and IR layers connect distinct front ends, optimization pipelines, target backends, linkers, debuggers, runtimes, libraries, and tools.
-- **Naming and idiom:** Decl, Sema, Instruction, Pass, MachineFunction, Target, ObjectFile, and Runtime vocabulary remains stable across subsystems.
-- **Tests:** Unit, lit, regression, conformance, code-generation, execution, sanitizer, target, and integration suites cover languages and platforms at enormous scale.
-- **Documentation:** Architecture, command, API, language-reference, target, pass, testing, coding-standard, and contributor documentation is extensive.
-- **Traceability:** An instruction can be traced from Clang semantic analysis into LLVM IR construction, transformations, target lowering, and focused IR tests.
-- **Maintainability:** Project and library boundaries, table-driven definitions, shared ADTs, diagnostics, review conventions, and layered tests support many specialist teams.
-- **Educational value:** It is a premier capstone for understanding production compilers and native toolchains, best approached one subsystem at a time.
-
-**Inspection record:** commit `6d890e71354accdc496fdd9ef4f1fce8b366c7c4`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `llvm/CMakeLists.txt`, `llvm/lib/IR/Instructions.cpp`, `clang/lib/Sema/SemaExpr.cpp`, `llvm/unittests/IR/InstructionsTest.cpp`. GitHub Linguist label: LLVM. LOC exclusions: **/*test*, **/*Test*, **/*benchmark*, **/*examples*, **/*docs*, **/*generated*, third-party/, third_party/.
-
-**License:** [Apache-2.0 WITH LLVM-exception](https://github.com/llvm/llvm-project/blob/6d890e71354accdc496fdd9ef4f1fce8b366c7c4/llvm/LICENSE.TXT)
-
-### [opencv/opencv](https://github.com/opencv/opencv)
-
-**S5 / D5 / C5 → SDC 5**
-
-A computer-vision and image-processing platform spanning matrix primitives, algorithms, video, calibration, machine learning, DNN inference, codecs, and hardware acceleration.
-
-**Real-world evidence:** The repository builds and releases the OpenCV library used by production desktop, mobile, embedded, robotics, and server applications.
-
-**Language evidence:** Core arrays, image processing, calibration, features, video, DNN, codecs, hardware backends, and public APIs are principally C++ across modules.
-
-**Why study it:** It demonstrates how numerical algorithms, data layout, SIMD, CPU dispatch, OpenCL, codecs, device backends, and stable APIs coexist in a long-lived native platform.
-
-**What you can learn:**
-
-- Image and matrix representation, numerical vision algorithms, SIMD and hardware dispatch, GPU backends, codecs, module architecture, bindings, performance testing, and portability.
-
-**Prerequisites:**
-
-- Advanced C++, linear algebra, image processing, numerical methods, memory layout, SIMD/GPU concepts, build configuration, and large-system navigation.
-
-**Start here:** [`modules/core/src/matrix.cpp`](https://github.com/opencv/opencv/blob/397e70d0447d7d5a5ada6dfe3302ee78856eae6b/modules/core/src/matrix.cpp) — Matrix shape, allocation, reference counting, views, copying, and invariants underpin nearly every higher-level OpenCV algorithm.
-
-**Why this level:**
-
-- **S5:** 705,649 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party production modules and apps, excluding tests, performance harnesses, samples, generated bindings/kernels, documentation, and third-party code.
-- **D5:** Expert mathematics, representation, performance, and hardware knowledge recur in core learning paths.
-- **C5:** Core data structures connect dozens of algorithm modules, dispatch layers, device backends, codecs, bindings, and build configurations.
-- **Placement:** All dimensions are 5, making OpenCV an unambiguous SDC 5 platform.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Core code uses assertions, dispatch boundaries, specialized kernels, and explicit data-layout rules to contain performance-sensitive behavior.
-- **Architecture:** A core matrix/runtime layer supports modular algorithm families, codecs, hardware abstraction, DNN, apps, and generated bindings.
-- **Naming and idiom:** Mat, InputArray, OutputArray, cvtColor, AlgorithmHint, HAL, and module names consistently express the vision domain.
-- **Tests:** Module unit, accuracy, regression, performance, backend, codec, binding, and platform suites exercise a vast input and hardware matrix.
-- **Documentation:** API references, tutorials, module guides, samples, wiki material, and contribution rules accompany the codebase.
-- **Traceability:** A color conversion can be followed from cvtColor dispatch through CPU or OpenCL kernels, data-shape checks, and imgproc/core tests.
-- **Maintainability:** Module ownership and hardware abstraction constrain a large compatibility matrix, with tests colocated by domain.
-- **Educational value:** It is a capstone for reading high-performance mathematical software across platform and hardware boundaries.
-
-**Inspection record:** commit `397e70d0447d7d5a5ada6dfe3302ee78856eae6b`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `CMakeLists.txt`, `modules/core/src/matrix.cpp`, `modules/imgproc/src/color.cpp`, `modules/core/test/test_mat.cpp`. GitHub Linguist label: C++. LOC exclusions: **/*test*, **/*perf*, samples/, 3rdparty/, **/*generated*.
-
-**License:** [Apache-2.0](https://github.com/opencv/opencv/blob/397e70d0447d7d5a5ada6dfe3302ee78856eae6b/LICENSE)
+**License:** Apache-2.0 ([evidence 1](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/LICENSE))
 
 _Generated from `catalog/cpp.json`; do not edit by hand._

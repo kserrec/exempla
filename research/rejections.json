@@ -360,6 +360,542 @@
       "failed_requirement": "candidate type",
       "evidence": "The README explicitly describes Penlight as a set of generally useful modules and enumerates independent path, filesystem, argument parsing, configuration, strictness, string, lexer, template, table, collection, iterator, class, functional, and comprehension utilities. That is a library collection rather than one cohesive real-software system under the initial scope.",
       "reconsider": "Reconsider only if the catalog later adds an explicitly labeled standard-library or utility-collection track with different acceptance rules."
+    },
+    {
+      "repository": "expressjs/express",
+      "language": "JavaScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: the 3/3/3/4 profile honestly calculates to Level 3, but Nano ID and jQuery provide clearer self-contained paths for the two available JavaScript Level 3 places.",
+      "reconsider": "Reconsider if a JavaScript Level 3 place opens or the router implementation returns in-repository and a fresh comparison ranks this path above a retained Level 3 entry."
+    },
+    {
+      "repository": "axios/axios",
+      "language": "JavaScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: the path passes both gates and the 2/3/3/4 profile calculates to Level 3, but Nano ID and jQuery rank ahead for the two available JavaScript Level 3 places.",
+      "reconsider": "Reconsider if a JavaScript Level 3 place opens or a fresh comparison ranks this request-and-adapter path above a retained Level 3 entry."
+    },
+    {
+      "repository": "encode/httpx",
+      "language": "Python",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/3/4 calculates to Level 4, but Flask and pytest provide the two clearest, most complementary Python Level 4 paths; HTTPX ranks third.",
+      "reconsider": "Reconsider if a Python Level 4 place opens or a fresh comparison ranks this corrected sync/async streaming path above a retained Level 4 entry."
+    },
+    {
+      "repository": "scrapy/scrapy",
+      "language": "Python",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: 3/5/4/5 sums to 17 and therefore calculates to Level 4, not Level 5; its dual-runtime, broad engine path ranks fourth behind Flask, pytest, and HTTPX for two places.",
+      "reconsider": "Reconsider if a Python Level 4 place opens or a fresh comparison at a later pinned revision finds this corrected crawler-to-engine path clearer than a retained Level 4 entry."
+    },
+    {
+      "repository": "apache/maven",
+      "language": "Java",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/4/5 sums to 16, which calculates to Level 4, but Gson, JUnit 4, and Netty offer clearer bounded paths; Maven ranks fourth for two places.",
+      "reconsider": "Reconsider if a Java Level 4 place opens or a fresh comparison finds the corrected reactor-execution path clearer than a retained Level 4 entry."
+    },
+    {
+      "repository": "netty/netty",
+      "language": "Java",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/4 sums to 15, which calculates to Level 4, but Gson and JUnit 4 provide the two clearest paths; Netty ranks third, ahead of Maven.",
+      "reconsider": "Reconsider if a Java Level 4 place opens or a fresh comparison ranks this corrected pipeline path above a retained Level 4 entry."
+    },
+    {
+      "repository": "apache/cassandra",
+      "language": "Java",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "Understanding ColumnFamilyStore and StorageService materially depends on specialist storage-engine and distributed-database theory that a short prerequisites paragraph cannot supply. Those domain invariants explain the difficulty better than programming technique does, and no production-representative self-contained alternative path was established; the hard gate therefore rejects the repository before quality evaluation or scoring. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative Cassandra behavior whose purpose and implementation can be understood from repository documentation plus short prerequisites without specialist storage-engine or distributed-systems theory."
+    },
+    {
+      "repository": "ramsey/uuid",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, which calculates to Level 3, but FastRoute and Webmozart Assert provide clearer and less repetitive paths; UUID ranks third for two places.",
+      "reconsider": "Reconsider if a PHP Level 3 place opens, focused lazy-proxy tests improve direct traceability, or a fresh comparison ranks this path above a retained Level 3 entry."
+    },
+    {
+      "repository": "guzzle/guzzle",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/4/5 sums to 16, which calculates to Level 4, but Symfony HttpKernel and Monolog offer clearer bounded paths; Guzzle ranks third for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens or a fresh comparison finds this complete client-to-cURL path clearer than a retained Level 4 entry."
+    },
+    {
+      "repository": "composer/composer",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: the corrected path passes both gates and 4/3/4/5 sums to 16, which calculates to Level 4, but Symfony, Monolog, and Guzzle provide clearer or more fully first-party bounded traces; Composer ranks fourth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, Composer internalizes the class-map boundary, or a fresh comparison ranks the autoload path above a retained Level 4 entry."
+    },
+    {
+      "repository": "phpstan/phpstan-src",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/4/4 sums to 15, which calculates to Level 4, but four other candidates offer clearer paths with less specialist orientation; PHPStan ranks fifth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, focused rule-lifecycle documentation or tests further reduce the analyser-context burden, or a fresh comparison ranks it above a retained entry."
+    },
+    {
+      "repository": "nextcloud/server",
+      "language": "PHP",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: the corrected path passes both gates and 3/4/4/5 sums to 16, which calculates to Level 4, but five candidates offer clearer or more compact paths; Nextcloud ranks sixth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, the rename subsystem is isolated from legacy global hooks and services, or a fresh comparison ranks this bounded path above a retained entry."
+    },
+    {
+      "repository": "nodatime/nodatime",
+      "language": "C#",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/2/2/3 sums to 10, whose half-up mean calculates to Level 3, but two clearer paths rank ahead; NodaTime ranks third for two places.",
+      "reconsider": "Reconsider if a C# Level 3 place opens, the fixed-unit arithmetic path becomes materially clearer, or a fresh comparison ranks it above a retained entry."
+    },
+    {
+      "repository": "dotnet/orleans",
+      "language": "C#",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/4/4 sums to 16, which calculates to Level 4, but ASP.NET Core and Dapper provide clearer bounded paths; Orleans ranks third for two places.",
+      "reconsider": "Reconsider if a C# Level 4 place opens, the generated-call path becomes still more compact, or a fresh comparison ranks it above a retained entry."
+    },
+    {
+      "repository": "dotnet/efcore",
+      "language": "C#",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, which calculates to Level 3, but three candidates offer clearer learner paths; EF Core ranks fourth for two places.",
+      "reconsider": "Reconsider if a C# Level 3 place opens, the scalar detector is isolated from the larger relationship machinery, or a fresh comparison ranks it above a retained entry."
+    },
+    {
+      "repository": "sindresorhus/ky",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/4 sums to 15, whose mean of 3.75 rounds to Level 4, but Ky ranks fourth behind Reselect, Angular, and VS Code for the two available TypeScript Level 4 places.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this retry path above a retained entry, or retry timing, hook, timeout, abort, stream, public-source, license, documentation, or test contracts materially change."
+    },
+    {
+      "repository": "react-hook-form/react-hook-form",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4, but React Hook Form ranks fifth of five qualified TypeScript Level 4 paths.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this submission path above a retained entry, or handleSubmit, validation, observable-state, public-type, license, documentation, or focused-test contracts materially change."
+    },
+    {
+      "repository": "nestjs/nest",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/5/4/5 sums to 18, whose half-up mean calculates to Level 5, with two dimensions scoring 5; Nest ranks third behind Zod and tRPC for the two available TypeScript Level 5 places.",
+      "reconsider": "Reconsider if a TypeScript Level 5 place opens, a fresh comparison ranks this injector path above a retained entry, or dependency settlement, scope and context identity, wrapper behavior, public status, license, documentation, or focused tests materially change."
+    },
+    {
+      "repository": "microsoft/vscode",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/5 sums to 16, whose mean calculates to Level 4; despite two dimensions scoring 5, the rounded mean is not 5. VS Code ranks third behind Reselect and Angular for the two available TypeScript Level 4 places.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this piece-tree path above a retained entry, or edit, tree, line-ending, snapshot, performance, public-source, license, documentation, or focused-test guarantees materially change."
+    },
+    {
+      "repository": "fmtlib/fmt",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 5/3/3/5 sums to 16, whose mean calculates to Level 4; fmt ranks third behind spdlog and Catch2 for the two available C++ Level 4 places.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, a fresh comparison ranks this formatting path above a retained entry, or compile-time parsing, argument storage, formatter, diagnostics, public status, license, documentation, or tests materially change."
+    },
+    {
+      "repository": "protocolbuffers/protobuf",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/3/3/4 sums to 12, whose mean calculates to Level 3, but Protobuf ranks third behind Mustache and CLI11 for the two available C++ Level 3 places.",
+      "reconsider": "Reconsider if a C++ Level 3 place opens, a fresh comparison ranks this parser path above a retained entry, or grammar, recovery, location, tokenizer, public-source, license, documentation, or parser-test contracts materially change."
+    },
+    {
+      "repository": "opencv/opencv",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and the published calibration anchor fixes cv::Mat at 4/4/3/5, summing to 16 and calculating to Level 4. OpenCV ranks fifth of five qualified C++ Level 4 paths.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, the published calibration changes, a fresh comparison ranks this path above a retained entry, or Mat ownership, allocator, layout, public-source, license, documentation, or focused tests materially change."
+    },
+    {
+      "repository": "llvm/llvm-project",
+      "language": "C++",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 5/4/2/5 sums to 16, whose mean calculates to Level 4; LLVM SmallVector ranks fourth behind spdlog, Catch2, and fmt for the two available C++ Level 4 places.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, a fresh comparison ranks SmallVector above a retained entry, or its layout, lifetime, growth, aliasing, public-source, license, documentation, or direct tests materially change."
+    },
+    {
+      "repository": "redis/redis-rb",
+      "language": "Ruby",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/2/3 sums to 11, whose 2.75 mean rounds to Level 3; redis-rb ranks fourth behind Tempfile, Jekyll, and Chatwoot SafeFetch for two Ruby Level 3 places.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks this path above a retained entry, the transport becomes first-party and inspectable, or pipeline, Future, error, public-source, license, documentation, or dedicated tests materially change."
+    },
+    {
+      "repository": "ruby/net-http",
+      "language": "Ruby",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/4/3/4 sums to 13, whose 3.25 mean calculates to Level 3; Net::HTTP ranks fifth of five qualified Ruby Level 3 paths because its excellent lifecycle is the most protocol-dense and least bounded to navigate.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks this path above a retained entry, or request, retry, streaming, connection, public-source, dual-license, documentation, or direct-test behavior materially changes."
+    },
+    {
+      "repository": "rails/rails",
+      "language": "Ruby",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/3/4 sums to 14, whose exact 3.5 mean rounds to Level 4; Rails initialization ranks third behind Sidekiq and RuboCop for two Ruby Level 4 places.",
+      "reconsider": "Reconsider if a Ruby Level 4 place opens, a fresh comparison ranks initialization above a retained entry, or initializer DSL, ordering, binding, grouping, public-source, MIT-license, guide, or focused-test behavior materially changes."
+    },
+    {
+      "repository": "discourse/discourse",
+      "language": "Ruby",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/5 sums to 16, calculating to Level 4; Discourse DistributedMutex ranks fourth behind Sidekiq, RuboCop, and Rails initialization for two Ruby Level 4 places.",
+      "reconsider": "Reconsider if a Ruby Level 4 place opens, a fresh comparison ranks this path above a retained entry, or lease, backoff, release, read-only, Redis namespace, public-source, GPL-license, documentation, or concurrency-test behavior materially changes."
+    },
+    {
+      "repository": "chatwoot/chatwoot",
+      "language": "Ruby",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, whose 3.25 mean calculates to Level 3; Chatwoot SafeFetch ranks third behind Tempfile and Jekyll for two Ruby Level 3 places.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks SafeFetch above a retained entry, or SSRF, redirect, streaming, credential, limit, public-source, selected-path license, documentation, or direct-test behavior materially changes."
+    },
+    {
+      "repository": "akheron/jansson",
+      "language": "C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Jansson's ownership path ranks fifth behind Git, Check, PostgreSQL, and Redis for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks this path above a retained entry, or ownership, hashtable, allocator, ordering, C-primary, license, documentation, or direct-test evidence materially changes."
+    },
+    {
+      "repository": "redis/redis",
+      "language": "C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/2/5 sums to 15, whose mean of 3.75 calculates to Level 4; Redis's dictionary ranks fourth behind Git, Check, and PostgreSQL for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks the dictionary above a retained path, or hashing, rehashing, iterator, ownership, C-primary, license, documentation, embedded-test, or integration evidence materially changes."
+    },
+    {
+      "repository": "postgres/postgres",
+      "language": "C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/5 sums to 16, whose mean of 4.00 calculates to Level 4; PostgreSQL's ResourceOwner ranks third behind Git and Check for two C Level 4 places.",
+      "reconsider": "Reconsider if a C Level 4 place opens, a fresh comparison ranks ResourceOwner above a retained path, or ownership, release-order, transaction, scaling, C-primary, license, documentation, or test-module evidence materially changes."
+    },
+    {
+      "repository": "apple/swift-system",
+      "language": "Swift",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/5 sums to 16, whose mean of 4.00 calculates to Level 4; Swift System ranks third behind Alamofire and SwiftLint for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, a fresh comparison ranks this path above a retained entry, or file-operation, platform, ownership, error, documentation, or test evidence materially changes."
+    },
+    {
+      "repository": "signalapp/Signal-iOS",
+      "language": "Swift",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass on the replacement path and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Signal's MessageLoader ranks fourth behind Alamofire, SwiftLint, and Swift System for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, a fresh comparison ranks MessageLoader above a retained path, or loading-state, batch-boundary, consumer, documentation, or dedicated-test evidence materially changes."
+    },
+    {
+      "repository": "mozilla-mobile/firefox-ios",
+      "language": "Swift",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Firefox TabRestorer ranks fifth behind Alamofire, SwiftLint, Swift System, and Signal MessageLoader for two Swift Level 4 places.",
+      "reconsider": "Reconsider if a Swift Level 4 place opens, the restoration design becomes established rather than feature-gated or proposed, a fresh comparison raises its rank, or restoration, manager, delegate, documentation, or focused-test evidence materially changes."
+    },
+    {
+      "repository": "mattn/go-isatty",
+      "language": "Go",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/2/2/3 sums to 9, whose mean of 2.25 calculates to Level 2; go-isatty ranks third behind match and pflag for two Go Level 2 places.",
+      "reconsider": "Reconsider if a Go Level 2 place opens, a fresh comparison raises this path above a retained entry, or platform selection, syscall behavior, fallback, documentation, or focused tests materially change."
+    },
+    {
+      "repository": "spf13/cobra",
+      "language": "Go",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 calculates to Level 3; Cobra ranks third behind cron and Gin for two Go Level 3 places.",
+      "reconsider": "Reconsider if a Go Level 3 place opens, a fresh comparison raises this path above a retained entry, or command resolution, hook ordering, validation, documentation, or focused tests materially change."
+    },
+    {
+      "repository": "gohugoio/hugo",
+      "language": "Go",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/4/5 sums to 17, whose mean of 4.25 calculates to Level 4; Hugo's rebuild path ranks third behind Kubernetes workqueue and Caddy for two Go Level 4 places.",
+      "reconsider": "Reconsider if a Go Level 4 place opens, a fresh comparison ranks the rebuild path above a retained entry, or invalidation, multi-site, resource, recovery, documentation, or integration-test evidence materially changes."
+    },
+    {
+      "repository": "tidyverse/dplyr",
+      "language": "R",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 calculates to Level 4; dplyr mutate ranks fourth behind testthat, glue, and Shiny for two R Level 4 places.",
+      "reconsider": "Reconsider if an R Level 4 place opens, a fresh comparison raises mutate above a retained entry, or data-mask, grouping, recycling, native evaluation, documentation, or focused-test evidence materially changes."
+    },
+    {
+      "repository": "rstudio/shiny",
+      "language": "R",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/5/3/5 sums to 17, whose mean of 4.25 calculates to Level 4; Shiny reactivity ranks third behind testthat and glue for two R Level 4 places.",
+      "reconsider": "Reconsider if an R Level 4 place opens, a fresh comparison raises reactivity above a retained entry, or invalidation, scheduling, domain, error, cleanup, documentation, or focused-test evidence materially changes."
+    },
+    {
+      "repository": "ohmyzsh/ohmyzsh",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "repository quality gate",
+      "evidence": "lib/cli.zsh contains readable production mutation, validation, backup, rollback, and reload behavior, and the README explains plugin configuration, but the only pinned focused test, lib/tests/cli.test.zsh, copies the AWK transformation into its own run_awk function rather than sourcing or invoking _omz::plugin::disable. It therefore cannot catch drift in the production code or test its file replacement, syntax-error rollback, logging, and reload paths. The pinned .github/workflows/main.yml only runs zsh -n syntax checks. The mandatory Tests quality dimension fails despite the MIT license, recognizable architecture, naming, documentation, observable result, maintainability conventions, and educational lesson passing the other dimensions. Remove: the coding-relevance gate passes, but the mandatory repository quality gate fails because the pinned focused test duplicates rather than invokes production logic and CI supplies only syntax checking; no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider when pinned automated tests invoke the production loader or CLI and directly assert plugin ordering or configuration mutation, syntax validation, backup and rollback, and relevant interactive behavior without duplicating the implementation under test."
+    },
+    {
+      "repository": "testssl/testssl.sh",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "The pinned source describes Bash-socket and OpenSSL engines, TLS and cipher capability state, certificate and revocation handling, protocol-specific timeouts, and offensive vulnerability checks; the README defines the tool around TLS ciphers, protocols, and cryptographic flaws, while t/51_badssl.com.t asserts trust-chain and security-severity findings. Specialist TLS, cryptographic, protocol, and security expertise explains the path's difficulty better than programming technique, exactly matching the published calibration hard failure. Remove: the mandatory coding-relevance/domain gate fails at the published testssl.sh calibration anchor, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review establishes a substantial, production-representative core testssl.sh path whose correctness can be understood from repository documentation plus short prerequisites without specialist TLS, cryptographic, protocol, or security-finding expertise."
+    },
+    {
+      "repository": "termux/termux-packages",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "build-package.sh loads a large Android build lifecycle; properties.sh defines Android SDK, NDK, application, rootfs, and safe-path invariants; termux_step_get_dependencies branches on package formats, architectures, on-device builds, cycles, downloads, and Bionic or glibc; and termux_setup_toolchain_29 configures ABI-specific compiler, linker, Go, Rust, sysroot, header, and ELF behavior. Android cross-toolchain and package-release expertise explains the representative path's difficulty better than programming technique, and the dependency helper is not an honest representative rescue when detached from that system. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist Android, ABI, compiler and linker, cross-toolchain, packaging, or release-engineering expertise."
+    },
+    {
+      "repository": "void-linux/void-packages",
+      "language": "Shell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "xbps-src exposes bootstrap, chroot, staged build, repository, architecture, and cross-compile commands; common/xbps-src/libexec/build.sh drives dependency installation, cross sysroots, source phases, subpackages, repository registration, and cleanup; build_dependencies.sh distinguishes host, target, virtual, binary, missing, and cross dependencies; and Manual.md defines XBPS, masterdir, libc, cross-target, package, trigger, and ELF conventions. Distribution packaging and cross-build operations explain the representative path's difficulty better than programming technique, and a generic pipeline or dependency-helper slice would not honestly represent the project. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist XBPS, distribution packaging, chroot and namespace, cross-toolchain, libc and architecture, ELF, repository, or release-engineering expertise."
+    },
+    {
+      "repository": "Kotlin/kotlinx-cli",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; kotlinx-cli ranks third behind Clikt and kotlin-logging, beyond the two-entry cap.",
+      "reconsider": "Reconsider if a Kotlin Level 3 slot opens, the parser or test contract materially improves, maintenance resumes, the obsolete-project status changes, or its relative educational clarity surpasses a retained Level 3 path."
+    },
+    {
+      "repository": "Kotlin/kotlinx.serialization",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; kotlinx.serialization ranks fourth behind Turbine, Moshi, and Ktor among four qualified Kotlin Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if the streaming decoder, both lexer layers, serializer contract, failure-mode coverage, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity changes enough to place it in the top two."
+    },
+    {
+      "repository": "ktorio/ktor",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 5/4/3/4 sums to 16, whose mean is Level 4; Ktor ranks third behind Turbine and Moshi and ahead of kotlinx.serialization among four qualified Kotlin Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if the generic pipeline executor, manual continuation behavior, ordering or recovery contracts, direct tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity changes enough to place it in the top two."
+    },
+    {
+      "repository": "com-lihaoyi/requests-scala",
+      "language": "Scala",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; requests-scala ranks fourth behind http4s, Circe, and uPickle among four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if a Scala Level 4 slot opens, the request or resource-lifecycle contracts materially improve, or its relative educational clarity surpasses a retained Level 4 path."
+    },
+    {
+      "repository": "com-lihaoyi/upickle",
+      "language": "Scala",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 5/3/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; Language 5 also triggers the minimum-Level-4 guard, and uPickle ranks third behind http4s and Circe among four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if a Scala Level 4 slot opens, the Scala 3 derivation or visitor contracts materially improve, or its relative educational clarity surpasses a retained Level 4 path."
+    },
+    {
+      "repository": "apache/spark",
+      "language": "Scala",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "RDD explicitly defines a distributed partition and dependency model, while SparkContext and DAGScheduler turn lineage into stage graphs and coordinate attempts, executors, shuffle boundaries, locality, caching, failure, and retry. Specialist distributed-systems and data-engine theory explains the representative path's difficulty better than programming technique, and a detached event-loop or collection helper would not honestly represent Spark. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central Spark path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist distributed-systems, scheduler, shuffle, storage, or data-engine theory."
+    },
+    {
+      "repository": "scala/scala3",
+      "language": "Scala",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "Compiler and Run expose a superficially generic phase pipeline, but understanding why phases may be ordered or fused and why each transformation is correct immediately depends on compiler semantics, advanced type systems, staging, typed representations, erasure, and backend theory. A shallow phase-runner slice would be a nonrepresentative wrapper, so specialist programming-language and compiler theory explains the difficulty better than general programming technique. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review establishes a substantial, production-representative and directly tested Scala 3 subsystem whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist programming-language semantics, type theory, compiler transformation, staging, or backend expertise."
+    },
+    {
+      "repository": "ScoopInstaller/Scoop",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 2/3/2/3 sums to 10, whose mean of 2.5 rounds half up to Level 3; Scoop ranks third behind ImportExcel and Pode among four qualified PowerShell Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a PowerShell Level 3 slot opens, the two-entry cap changes, or direct cycle and failure closure, documentation, licensing, or comparative educational clarity improves enough to outrank ImportExcel or Pode."
+    },
+    {
+      "repository": "dataplat/dbatools",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/2/2/3 sums to 10, whose mean of 2.5 rounds half up to Level 3; dbatools ranks fourth behind ImportExcel, Pode, and Scoop among four qualified PowerShell Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a PowerShell Level 3 slot opens, the two-entry cap changes, or type conversion, null and schema contracts, direct tests, licensing, or comparative domain-light educational clarity improves enough to outrank ImportExcel or Pode."
+    },
+    {
+      "repository": "Microsoft365DSC/Microsoft365DSC",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "M365DSCReverse coordinates tenant workloads, resource filters, several credential and token modes, dependencies, parallel export, validation, and statistics, while MSFT_AADGroup implements Graph-specific group, owner, member, license, lifecycle, and role behavior. Specialist Microsoft 365, Entra, Graph, licensing, tenant administration, and DSC knowledge explains the representative PowerShell path's difficulty better than programming technique; a detached helper would not honestly represent the project. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central PowerShell path whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist Microsoft 365, Entra, Graph, tenant, licensing, authentication, or DSC administration theory."
+    },
+    {
+      "repository": "felangel/web_socket_client",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; WebSocket Client ranks third behind Dart SDK Future.wait and Shelf router among three qualified Dart Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 3 slot opens, the two-entry cap changes, or lifecycle, recovery, cleanup, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Dart SDK Future.wait or Shelf router."
+    },
+    {
+      "repository": "dart-lang/pub",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Pub hosted cache ranks fourth behind Mocktail, json_serializable, and Flutter reconciliation among five qualified Dart Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or hash-integrity, atomic-cache, offline, recovery, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Mocktail or json_serializable."
+    },
+    {
+      "repository": "sass/dart-sass",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass on the accepted replacement and 3/4/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Dart Sass AsyncImportCache ranks fifth behind Mocktail, json_serializable, Flutter reconciliation, and Pub hosted cache among five qualified Dart Level 4 paths, so the two-entry cap excludes it. The original generated evaluator path remains a literal coding-relevance failure and contributes no score evidence.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or direct AsyncImportCache tests, documentation, cache and invalidation clarity, licensing, or comparative educational value improves enough to outrank the retained paths; reconsider the gate again if the hand-authored cache ceases to be central to public compilation or source parity with the generated synchronous cache is lost."
+    },
+    {
+      "repository": "flutter/flutter",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/5 sums to 15, whose mean of 3.75 rounds to Level 4; the expert constraint score also enforces at least Level 4. Flutter reconciliation ranks third behind Mocktail and json_serializable among five qualified Dart Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or reconciliation, key, lifecycle, performance, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Mocktail or json_serializable."
+    },
+    {
+      "repository": "openid/AppAuth-iOS",
+      "language": "Objective-C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "OIDAuthState and OIDAuthorizationService expose superficially transferable asynchronous state and request modeling, but understanding why transitions, parameters, validations, persistence, refresh coalescing, and errors are correct repeatedly requires OAuth 2.0, OpenID Connect, PKCE, native browser authorization, token, issuer, and provider semantics. Specialist identity-protocol knowledge explains the representative path's difficulty better than programming technique, and a detached model or callback helper would not honestly represent the SDK. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central AppAuth path whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist OAuth 2.0, OpenID Connect, PKCE, token, identity-provider, browser-agent, or native-application security semantics."
+    },
+    {
+      "repository": "kstenerud/KSCrash",
+      "language": "Objective-C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; KSCrash's report-filter pipeline ranks third behind PINOperation and Sparkle among three qualified Objective-C Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if an Objective-C Level 3 slot opens, the two-entry cap changes, or filter composition, ordering, errors, lifecycle tests, MIT licensing, or comparative educational clarity improves enough to outrank the retained paths."
+    },
+    {
+      "repository": "rust-lang/rustc-hash",
+      "language": "Rust",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "The representative implementation can be read mechanically, but understanding why its multiplier, mixing paths, architecture branches, entropy movement, prefix behavior, and security boundary are correct requires specialist hash-function, collision-distribution, microarchitecture, and adversarial-input knowledge. Those domain judgments explain the path's difficulty better than Rust programming technique, and no substantial production-representative alternative path avoids them; the hard gate therefore rejects the repository before quality evaluation or scoring. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative rustc-hash behavior whose correctness and purpose can be understood from repository documentation plus short prerequisites without specialist hash-function design, collision-distribution, security, or microarchitecture expertise."
+    },
+    {
+      "repository": "serde-rs/json",
+      "language": "Rust",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; serde_json's streaming deserializer ranks third behind Axum JSON extraction and anyhow context handling among four qualified Rust Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Rust Level 4 slot opens, the two-entry cap changes, or streaming-deserializer clarity, offset and recovery semantics, test protection, documentation, dual licensing, or comparative educational value improves enough to outrank a retained path."
+    },
+    {
+      "repository": "rustls/rustls",
+      "language": "Rust",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "coding-relevance and domain gate",
+      "evidence": "Understanding the representative connection core and its client, server, verification, message, record, and provider collaborators materially depends on specialist TLS, cryptographic-protocol, PKI, and security-engineering theory that a short prerequisites paragraph cannot supply. Those domain invariants explain the difficulty better than Rust programming technique, and no substantial production-representative self-contained alternative path was established; the hard gate therefore rejects the repository before quality evaluation or scoring. Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative rustls behavior whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist TLS, cryptographic-protocol, PKI, certificate-verification, or security-engineering expertise."
+    },
+    {
+      "repository": "BurntSushi/ripgrep",
+      "language": "Rust",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/4/4 sums to 15, whose mean of 3.75 rounds to Level 4; ripgrep's command-to-search pipeline ranks fourth behind Axum JSON extraction, anyhow context handling, and serde_json streaming among four qualified Rust Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Rust Level 4 slot opens, the two-entry cap changes, or the command-to-search trace, cross-platform tests, output and compatibility documentation, licensing, or comparative educational value improves enough to outrank a retained path."
+    },
+    {
+      "repository": "lunarmodules/luassert",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Luassert ranks fourth behind Luacheck, Busted, and LuaLS diagnostics among four qualified Lua Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 4 slot opens, the two-entry cap changes, or chain resolution, diagnostics, extension, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Luacheck or Busted."
+    },
+    {
+      "repository": "nvim-telescope/telescope.nvim",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/4 sums to 12, whose mean is Level 3; Telescope's bounded entry-manager path ranks third behind Middleclass and lua-resty-lrucache among four qualified Lua Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 3 slot opens, the two-entry cap changes, or ranking, capacity, ordering, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Middleclass or lua-resty-lrucache."
+    },
+    {
+      "repository": "CorsixTH/CorsixTH",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 2/3/3/3 sums to 11, whose mean of 2.75 rounds to Level 3; CorsixTH Announcer ranks fourth behind Middleclass, lua-resty-lrucache, and Telescope's entry manager among four qualified Lua Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 3 slot opens, the two-entry cap changes, or announcer priority, expiry, callback, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank the retained paths."
+    },
+    {
+      "repository": "LuaLS/lua-language-server",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Remove only for capacity: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; the expert constraint score also enforces at least Level 4. LuaLS diagnostics ranks third behind Luacheck and Busted and ahead of Luassert among four qualified Lua Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 4 slot opens, the two-entry cap changes, or diagnostic scheduling, staleness, workspace, rule, protocol, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Luacheck or Busted."
     }
   ]
 }

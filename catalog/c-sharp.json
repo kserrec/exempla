@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "language_slug": "c-sharp",
   "repositories": [
     {
@@ -10,30 +10,101 @@
       "language_evidence": "The guard entry point and validation extension methods under src/GuardClauses are implemented in C#.",
       "description": "A focused library of guard-clause extension methods for validating arguments and returning narrowed, usable values.",
       "real_world_evidence": "The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.",
-      "why_study": "A learner can read nearly all of it while seeing extension methods, nullable annotations, caller argument expressions, generic constraints, exception design, and disciplined tests.",
-      "learn": ["Guard clauses, extension methods, nullable flow annotations, generic constraints, caller argument expressions, exceptions, and boundary testing."],
-      "prerequisites": ["C# methods, generics, nullable reference types, extension methods, exceptions, and collections."],
-      "start_here": {"path": "src/GuardClauses/GuardAgainstNullExtensions.cs", "reason": "The null, empty, default, and predicate guards demonstrate the package's extension pattern and value-returning contract."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 1374, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "samples"], "notes": "Calibration count covers production C# under src, excluding tests, samples, docs, and build metadata."},
-        "difficulty": {"score": 1, "signals": ["direct predicate checks", "standard exceptions"], "reason": "Behavior consists mostly of clear conditions and conventional exceptions using familiar language features."},
-        "complexity": {"score": 1, "signals": ["single extension-method component", "no external systems"], "reason": "Each guard is locally traceable through one static class family and the shared entry point."},
-        "placement": "Small, direct, and locally testable production code makes GuardClauses SDC 1."
+      "why_study": "The null-guard path shows how a tiny C# API combines runtime validation with compiler flow narrowing, automatic caller-expression capture, generic overloads, and a stable exception contract.",
+      "learn": [
+        "Use `src/GuardClauses/GuardAgainstNullExtensions.cs` to study the following transferable techniques and behaviors: Generic reference- and value-type overloads, nullable annotations, NotNull flow guarantees, CallerArgumentExpression, optional exception factories, ArgumentNullException construction, and value-returning guards."
+      ],
+      "prerequisites": [
+        "Before reading `src/GuardClauses/GuardAgainstNullExtensions.cs`, be familiar with the following concepts: C# extension methods, generics and constraints, nullable reference and value types, compiler attributes, delegates, exceptions, and guard clauses."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "The selected behavior is entirely about transferable argument validation, generic nullable-flow contracts, exception construction, and caller-expression capture."
+      },
+      "learning_path": {
+        "goal": "Understand how GuardClauses rejects null arguments while returning a compiler-narrowed value and preserving the caller's argument name and exception contract.",
+        "start_here": {
+          "path": "src/GuardClauses/GuardAgainstNullExtensions.cs",
+          "reason": "src/GuardClauses/GuardAgainstNullExtensions.cs contains the reference- and value-type Null overloads and exposes every selected type-system and exception behavior directly."
+        },
+        "supporting_files": [
+          "src/GuardClauses/Guard.cs",
+          "test/GuardClauses.UnitTests/GuardAgainstNull.cs"
+        ],
+        "trace": "Begin with the reference- and value-type Null extension overloads, follow their generic constraints, nullable annotations, CallerArgumentExpression parameter capture, and optional exception factory into ArgumentNullException, then correlate default and custom names, messages, factories, non-null returns, and nullable value narrowing in GuardAgainstNull tests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "generic reference- and value-type overloads",
+            "nullable-flow attributes and CallerArgumentExpression"
+          ],
+          "reason": "Generics, constraints, compiler flow annotations, and caller-expression capture materially shape the small public API."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "localized null and non-null branches",
+            "optional custom-exception construction"
+          ],
+          "reason": "Validation and error behavior require care but remain synchronous and local to the guard call."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one focused extension unit",
+            "one marker API"
+          ],
+          "reason": "The complete behavior remains in one focused unit with a minimal public marker boundary."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "stable parameter-name and exception contracts",
+            "nullable-analysis compatibility"
+          ],
+          "reason": "The path preserves routine public-API, diagnostic, and compiler-analysis safeguards without several interacting production constraints."
+        },
+        "placement": "The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Guards return validated inputs, use precise framework exceptions, and annotate nullability so runtime and compiler contracts agree.",
-        "architecture": "A tiny Guard entry point is extended by partial static classes grouped by validation concern.",
-        "naming_and_idiom": "Against, Null, NullOrEmpty, OutOfRange, InvalidInput, and CallerArgumentExpression read naturally at call sites.",
-        "tests": "Focused xUnit suites cover valid returns, exception types, parameter names, messages, custom exceptions, generics, and edge values.",
-        "documentation": "The README lists guards, extension guidance, package use, and concise examples.",
-        "traceability": "A call such as Guard.Against.Null stays in one extension method before returning the input or throwing.",
-        "maintainability": "Independent methods, partial files, and matching test classes keep additions isolated.",
-        "educational_value": "It demonstrates polished library fundamentals without domain or framework overhead."
+        "source_quality": "The two overload families state their generic constraints, nullable contracts, captured argument name, optional message, custom factory, and return value explicitly.",
+        "architecture": "A minimal Guard marker API hosts one focused extension unit, while the compiler and ArgumentNullException supply the flow and diagnostic boundaries.",
+        "naming_and_idiom": "Guard, Against, Null, input, parameterName, message, exceptionCreator, NotNull, and CallerArgumentExpression state the guard contract directly.",
+        "tests": "GuardAgainstNull tests cover null and non-null references and nullable values, default and custom names, messages, factories, returned values, and compiler narrowing.",
+        "documentation": "XML documentation and the public guard-clause guidance explain the value-returning null contract, automatic parameter names, and customization points.",
+        "traceability": "A Guard.Against.Null call can be followed through overload selection, compiler-supplied argument text, the null branch, optional exception factory, and focused assertions.",
+        "maintainability": "The narrow extension surface and direct compiler-contract tests make changes to nullability, diagnostics, and exception compatibility easy to review.",
+        "educational_value": "The path demonstrates how a few modern C# features can make a conventional runtime guard improve static flow analysis and caller diagnostics."
       },
-      "inspection": {"commit": "7d55fa5397d73c0fe4e86a2dcab0230d1db57870", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/GuardClauses/Guard.cs", "src/GuardClauses/GuardAgainstNullExtensions.cs", "test/GuardClauses.UnitTests/GuardAgainstNull.cs"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/LICENSE"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "7d55fa5397d73c0fe4e86a2dcab0230d1db57870",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/GuardClauses/GuardAgainstNullExtensions.cs",
+          "src/GuardClauses/Guard.cs",
+          "test/GuardClauses.UnitTests/GuardAgainstNull.cs",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "serilog-sinks-console",
@@ -43,96 +114,108 @@
       "language_evidence": "Console sink configuration, rendering, formatting, platform handling, and theme implementations under src are C#.",
       "description": "A Serilog sink that renders structured log events as text or JSON to standard output or error with ANSI and Windows console themes.",
       "real_world_evidence": "Serilog publishes this NuGet package as the production console output adapter for structured .NET logging.",
-      "why_study": "A compact integration shows configuration extensions, thread-safe output, stream selection, token rendering, ANSI state, platform differences, and approval tests.",
-      "learn": ["Adapter design, synchronized console I/O, structured-log rendering, format tokens, ANSI themes, platform fallbacks, and approval tests."],
-      "prerequisites": ["C# interfaces, text writers, locking, structured logging, terminal escape sequences, and formatting."],
-      "start_here": {"path": "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs", "reason": "The sink selects output, applies formatting and theme behavior, synchronizes writes, and flushes one complete event."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 1630, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "samples", "assets"], "notes": "Count covers production C# under src, excluding tests, sample applications, visual assets, docs, and build support."},
-        "difficulty": {"score": 2, "signals": ["terminal escape state", "synchronized output"], "reason": "Rendering and platform nuances require attention, but they are isolated behind direct formatter and theme abstractions."},
-        "complexity": {"score": 1, "signals": ["one output adapter", "small rendering pipeline"], "reason": "Configuration produces one sink whose output path crosses only formatter, theme, renderer, and console writer classes."},
-        "placement": "The focused architecture keeps this real output integration at SDC 1 despite terminal-specific details."
+      "why_study": "The console-sink path shows how Serilog binds configuration to a renderer and emits every structured event as one synchronized write to standard output or standard error.",
+      "learn": [
+        "Use `src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs` to study the following transferable techniques and behaviors: Configuration extension methods, renderer and theme composition, output-template tokens, format providers, buffered themed output, stream selection, shared locking, and atomic event writes."
+      ],
+      "prerequisites": [
+        "Before reading `src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs`, be familiar with the following concepts: C# classes, extension methods and delegates, interfaces, text writers, locks, structured log events, format providers, and console streams."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A console sink formats each structured log event, optionally applies a theme, and writes it atomically to standard output or standard error."
+        ],
+        "reason": "The logging vocabulary is familiar and short; the path primarily teaches interface composition, conditional buffering, localized synchronization, configuration defaults, and observable formatting."
       },
-      "quality": {
-        "source_quality": "Writes are synchronized and flushed explicitly, platform setup is isolated, and renderers each own one token concern.",
-        "architecture": "Configuration extensions construct a ConsoleSink using formatters, output-token renderers, and interchangeable console themes.",
-        "naming_and_idiom": "ConsoleSink, OutputTemplateRenderer, LevelTokenRenderer, AnsiConsoleTheme, and standardErrorFromLevel state roles plainly.",
-        "tests": "Unit and approval tests cover output templates, JSON and display values, themes, configuration, escaping, and stream choices.",
-        "documentation": "README and examples document default output, templates, JSON, themes, standard error thresholds, and XML configuration.",
-        "traceability": "A LogEvent can be followed through ConsoleSink, a formatter or template renderer, theme writes, and the selected TextWriter.",
-        "maintainability": "Small renderers and theme interfaces isolate new tokens and terminal behavior from sink synchronization.",
-        "educational_value": "It teaches how a narrow production adapter handles formatting and platform edges cleanly."
+      "learning_path": {
+        "goal": "Understand how the Serilog console sink configures a renderer and emits each formatted event as one synchronized console write.",
+        "start_here": {
+          "path": "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs",
+          "reason": "ConsoleSink.cs contains Emit, where stream selection, optional themed buffering, rendering, and the final shared-lock write meet for each event."
+        },
+        "supporting_files": [
+          "src/Serilog.Sinks.Console/ConsoleLoggerConfigurationExtensions.cs",
+          "src/Serilog.Sinks.Console/Sinks/SystemConsole/Output/OutputTemplateRenderer.cs",
+          "test/Serilog.Sinks.Console.Tests/Configuration/ConsoleLoggerConfigurationExtensionsTests.cs",
+          "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs"
+        ],
+        "trace": "Follow console configuration as it chooses a theme and constructs OutputTemplateRenderer and ConsoleSink, then follow Emit as it selects standard output or error, optionally buffers themed output, and protects the final write with the shared lock; correlate configuration output and token-rendering behavior in the focused tests."
       },
-      "inspection": {"commit": "9b75d510787f5d54cf76584a3c3341d7eab0ee0a", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs", "src/Serilog.Sinks.Console/Sinks/SystemConsole/Themes/AnsiConsoleTheme.cs", "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/serilog/serilog-sinks-console/blob/9b75d510787f5d54cf76584a3c3341d7eab0ee0a/LICENSE"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "dapper",
-      "repository": "DapperLib/Dapper",
-      "url": "https://github.com/DapperLib/Dapper",
-      "primary_language": "C#",
-      "language_evidence": "SQL execution, parameter handling, mapping, caching, async operations, type handlers, and AOT support are implemented in C#.",
-      "description": "A lightweight object mapper that extends database connections with fast SQL execution and row-to-object materialization.",
-      "real_world_evidence": "Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.",
-      "why_study": "It shows how a deliberately small public API uses reflection, generated IL, caches, dynamic rows, and asynchronous database contracts for performance.",
-      "learn": ["ADO.NET extension APIs, reflection and IL emission, row mapping, parameter binding, caches, multi-mapping, buffered versus streamed results, and async I/O."],
-      "prerequisites": ["ADO.NET, SQL, generics, reflection, delegates, async tasks, dynamic objects, and basic IL concepts."],
-      "start_here": {"path": "Dapper/SqlMapper.cs", "reason": "The central partial class defines query/execute entry points, identity caches, deserializer generation, parameter binding, and mapping behavior."},
-      "sdc": {
+      "learning_level": {
         "level": 2,
-        "size": {"score": 2, "loc": 7824, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks", "samples", "generated files"], "notes": "Count covers production C# across Dapper libraries, excluding tests, benchmarks, samples, generated output, and build support."},
-        "difficulty": {"score": 3, "signals": ["reflection and emitted IL", "database streaming and async lifecycles"], "reason": "Fast deserializer generation, cache identities, provider quirks, dynamic rows, and asynchronous readers require substantial .NET knowledge."},
-        "complexity": {"score": 2, "signals": ["mapper/parameter/cache modules", "ADO.NET provider boundary"], "reason": "Most behavior flows through one central mapper and a few helper types into standard database interfaces."},
-        "placement": "Compact architecture keeps advanced mapping internals at SDC 2 rather than overstating them."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "formatter and theme interfaces",
+            "delegate-based configuration composition"
+          ],
+          "reason": "Interfaces, callbacks, and ordinary composition shape the path without advanced C# machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "localized buffered versus direct output branch",
+            "one synchronized write lifecycle"
+          ],
+          "reason": "The lock and output choice matter, but all mutable behavior remains localized in one short Emit method and does not require advanced concurrent-state reasoning."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "configuration and sink boundary",
+            "renderer and theme collaborators"
+          ],
+          "reason": "A few small modules contain the complete console-output behavior."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "atomic event output",
+            "theming, redirection, and formatting compatibility",
+            "standard-output and standard-error selection"
+          ],
+          "reason": "Several material reliability and compatibility contracts constrain changes even though the implementation remains compact."
+        },
+        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Performance paths are guarded by type and provider checks, cache keys are explicit, and resource disposal is visible in sync and async code.",
-        "architecture": "A central SqlMapper partial class coordinates commands, parameters, deserializers, grids, dynamic rows, type handlers, and provider settings.",
-        "naming_and_idiom": "CommandDefinition, DynamicParameters, GridReader, TypeHandler, Identity, Query, Execute, and multi-map describe data access directly.",
-        "tests": "Large database-backed suites cover providers, parameters, mapping, buffering, async operations, type handlers, nulls, and regressions.",
-        "documentation": "README, API examples, benchmarks, package docs, and tests explain common and advanced patterns.",
-        "traceability": "A QueryAsync call can be followed through command setup, reader execution, cached deserializer selection, materialization, and disposal.",
-        "maintainability": "Provider switches and mapping helpers live behind a small stable extension-method API and extensive regression coverage.",
-        "educational_value": "It demonstrates how a micro-ORM earns speed and convenience without becoming a full persistence framework."
+        "source_quality": "ConsoleSink.Emit expresses output selection, themed buffering, direct rendering, and synchronized final writing in a short explicit lifecycle.",
+        "architecture": "ConsoleLoggerConfigurationExtensions constructs ConsoleSink with OutputTemplateRenderer and theme collaborators, while the sink owns only output coordination.",
+        "naming_and_idiom": "ConsoleSink, Emit, OutputTemplateRenderer, theme, standardErrorFromLevel, output, syncRoot, and render state console behavior directly.",
+        "tests": "The selected configuration and renderer suites cover output selection, themes, templates, format providers, properties, levels, timestamps, trace identifiers, and rendered text.",
+        "documentation": "The sink README explains output templates, themes, standard-error routing, formatting, and configuration options used by this path.",
+        "traceability": "A Console configuration call can be followed through renderer and sink construction into Emit's stream choice, rendering branch, shared lock, and exact output assertions.",
+        "maintainability": "Separate configuration, rendering, theming, and output responsibilities plus focused text tests localize changes to a compact compatibility surface.",
+        "educational_value": "The path demonstrates how a small sink preserves event formatting and write atomicity under concurrent logging without introducing a large subsystem."
       },
-      "inspection": {"commit": "6d48ef664acc7298c649e2d449d903b3360d5a90", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["Readme.md", "Dapper/SqlMapper.cs", "Dapper/SqlMapper.Async.cs", "tests/Dapper.Tests/AsyncTests.cs"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/DapperLib/Dapper/blob/6d48ef664acc7298c649e2d449d903b3360d5a90/License.txt"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "serilog",
-      "repository": "serilog/serilog",
-      "url": "https://github.com/serilog/serilog",
-      "primary_language": "C#",
-      "language_evidence": "Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.",
-      "description": "A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.",
-      "real_world_evidence": "Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.",
-      "why_study": "Its compact core demonstrates immutable events, template parsing, pipeline composition, contextual enrichment, level control, failure isolation, and stable extension contracts.",
-      "learn": ["Structured events, message-template parsing, immutable values, pipeline composition, filtering, enrichment, sinks, context propagation, and failure handling."],
-      "prerequisites": ["Interfaces, delegates, immutable data, parsing basics, thread safety, logging concepts, and disposable resources."],
-      "start_here": {"path": "src/Serilog/Core/Logger.cs", "reason": "Logger binds templates, constructs events, applies enrichment and filtering, dispatches sinks, and protects the application from logging failures."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 2, "loc": 7067, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks", "samples"], "notes": "Count covers production C# under src/Serilog, excluding tests, benchmarks, samples, assets, and build files."},
-        "difficulty": {"score": 2, "signals": ["message-template parsing", "thread-safe context and dispatch"], "reason": "Parsing and concurrent logging need care, but the core pipeline uses familiar interfaces and explicit immutable records."},
-        "complexity": {"score": 2, "signals": ["parser/enricher/filter/sink pipeline", "small extension surface"], "reason": "Several components compose in one process along a clearly ordered event path."},
-        "placement": "Moderate size and a cohesive structured-event pipeline make Serilog SDC 2."
+      "inspection": {
+        "commit": "9b75d510787f5d54cf76584a3c3341d7eab0ee0a",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs",
+          "src/Serilog.Sinks.Console/ConsoleLoggerConfigurationExtensions.cs",
+          "src/Serilog.Sinks.Console/Sinks/SystemConsole/Output/OutputTemplateRenderer.cs",
+          "test/Serilog.Sinks.Console.Tests/Configuration/ConsoleLoggerConfigurationExtensionsTests.cs",
+          "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs",
+          "LICENSE"
+        ]
       },
-      "quality": {
-        "source_quality": "Logging failures are contained, events are immutable, hot paths avoid avoidable allocation, and pipeline order is explicit.",
-        "architecture": "LoggerConfiguration builds a Logger from level controls, enrichers, filters, sinks, message-template processing, and audit paths.",
-        "naming_and_idiom": "LogEvent, MessageTemplate, Enricher, Filter, Sink, LevelSwitch, ForContext, and WriteTo establish precise vocabulary.",
-        "tests": "Focused suites cover parsing, binding, properties, context, filters, levels, sinks, disposal, concurrency, and failures.",
-        "documentation": "README, wiki, configuration examples, API docs, and ecosystem links explain concepts and extension.",
-        "traceability": "A Log.Information call can be followed through template binding, event construction, enrichment, filtering, and sink emission.",
-        "maintainability": "Small public interfaces and immutable event/value types let external sinks and enrichers evolve independently.",
-        "educational_value": "It shows a clean production implementation of structured logging rather than simple string output."
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/serilog/serilog-sinks-console/blob/9b75d510787f5d54cf76584a3c3341d7eab0ee0a/LICENSE"
+        ]
       },
-      "inspection": {"commit": "49b5339ce85385dc52d4d8e8f2b8308becf23506", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Serilog/Core/Logger.cs", "src/Serilog/LoggerConfiguration.cs", "test/Serilog.Tests/Core/LoggerTests.cs"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/LICENSE"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "fluentvalidation",
@@ -142,162 +225,350 @@
       "language_evidence": "Validator composition, rule components, expression parsing, selectors, conditions, async execution, messages, and results are C#.",
       "description": "A strongly typed validation framework that turns fluent expression-based rules into synchronous or asynchronous validation pipelines.",
       "real_world_evidence": "FluentValidation is released as production validation infrastructure used in .NET services and applications.",
-      "why_study": "It shows how expression trees and fluent builders become reusable rules with cascade modes, conditions, selectors, localization, async validators, and structured failures.",
-      "learn": ["Fluent builders, expression trees, generic rule components, validation contexts, cascade control, async rules, localization, dependency injection, and test helpers."],
-      "prerequisites": ["Generics, delegates, expression trees, async tasks, extension methods, validation patterns, and dependency injection."],
-      "start_here": {"path": "src/FluentValidation/AbstractValidator.cs", "reason": "The base validator registers expression-derived property rules and drives selection, execution, conditions, dependent rules, and results."},
-      "sdc": {
+      "why_study": "The validator path shows how a typed RuleFor expression becomes an authored asynchronous property-rule pipeline with conditions, cascades, dependent rules, cancellation, and structured failures.",
+      "learn": [
+        "Use `src/FluentValidation/AbstractValidator.cs` to study the following transferable techniques and behaviors: Generic fluent builders, expression-tree property capture, cached accessors, validation contexts and selectors, ordered asynchronous components, conditions, class and rule cascades, dependent rules, cancellation, and sync-async parity."
+      ],
+      "prerequisites": [
+        "Before reading `src/FluentValidation/AbstractValidator.cs`, be familiar with the following concepts: Advanced C# generics, expression trees, delegates, async and await, cancellation tokens, fluent APIs, validation rules, collections, and source generation concepts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A validator builds typed property rules, then evaluates their selectors, conditions, validator components, cascade policy, and dependent rules into validation failures."
+        ],
+        "reason": "The validation vocabulary is short and programming-led; the selected authored async path teaches expression-based APIs, generic fluent builders, cached accessors, callbacks, cancellation, conditions, and ordered rule composition."
+      },
+      "learning_path": {
+        "goal": "Understand how FluentValidation turns a typed RuleFor expression into an authored asynchronous property-rule pipeline with conditions, cascade behavior, dependent rules, cancellation, and failures.",
+        "start_here": {
+          "path": "src/FluentValidation/AbstractValidator.cs",
+          "reason": "src/FluentValidation/AbstractValidator.cs contains RuleFor and ValidateInternalAsync, connecting typed rule declaration to selection, cancellation, class-level cascade, and rule execution."
+        },
+        "supporting_files": [
+          "src/FluentValidation/Internal/PropertyRule.cs",
+          "src/FluentValidation/Internal/RuleBase.cs",
+          "src/FluentValidation/Internal/RuleBuilder.cs",
+          "src/FluentValidation.Tests/AbstractValidatorTester.cs",
+          "src/FluentValidation.Tests/ConditionTests.cs",
+          "src/FluentValidation.Tests/CascadingFailuresTester.cs",
+          "src/FluentValidation.Tests/SyncAsyncParityTests.cs"
+        ],
+        "trace": "Follow RuleFor as it captures a typed expression and builds PropertyRule and RuleBuilder, then follow ValidateInternalAsync through cancellation and class-level cascade into PropertyRule.ValidateAsync, selector and condition checks, lazy accessor evaluation, validator components, failure creation, rule-level cascade, and dependent rules; use the focused tests to verify conditions, cascades, failures, and sync/async parity without treating generated output as the teaching source."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 3, "loc": 16382, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "documentation", "build files"], "notes": "Count covers production C# in FluentValidation projects, excluding tests, docs, samples, and build support."},
-        "difficulty": {"score": 3, "signals": ["expression-tree introspection", "generic fluent rule graph", "sync/async execution"], "reason": "Expressions, generic builders, conditional and dependent rule execution, and async validators introduce recurring abstraction and lifecycle reasoning."},
-        "complexity": {"score": 3, "signals": ["builder/rule/validator/selector layers", "localization and DI integration"], "reason": "Validation crosses fluent construction, contexts, selectors, rules, validators, messages, conditions, and result aggregation."},
-        "placement": "Mid-sized source with layered generic execution makes FluentValidation SDC 3."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "generic fluent rule-builder interfaces",
+            "expression-tree property capture and compiled accessor caching",
+            "source-generated sync counterpart to authored async code"
+          ],
+          "reason": "Expression processing and code generation materially shape the API and maintenance model alongside pervasive generic abstractions."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "ordered async rule evaluation",
+            "conditions, selectors, and cascade short circuits",
+            "cancellation and dependent-rule branches"
+          ],
+          "reason": "Meaningful async, conditional, and cascade behavior recurs, but it remains a linear per-validation pipeline rather than an advanced distributed or concurrent state machine."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "validator and builder API",
+            "rule and component model",
+            "context, selector, and failure boundaries"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one property validation."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "sync and async parity",
+            "stable cascade and condition semantics",
+            "cancellation, failure formatting, and extension contracts"
+          ],
+          "reason": "Several material API, correctness, and reliability guarantees constrain changes, but they do not rise to interacting system-wide expert constraints in this bounded path."
+        },
+        "placement": "The four scores 4/3/3/3 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Rule construction and execution are separated, generic contracts preserve types, and cancellation and async boundaries are explicit.",
-        "architecture": "Validators build property and collection rules composed from components, selectors, contexts, message formatters, and result objects.",
-        "naming_and_idiom": "AbstractValidator, RuleFor, PropertyRule, ValidationContext, RuleComponent, CascadeMode, and ValidationFailure form a coherent model.",
-        "tests": "Extensive tests cover validators, expressions, conditions, collections, async behavior, messages, selectors, inheritance, and regressions.",
-        "documentation": "The versioned guide covers every validator, composition pattern, testing, localization, DI, async behavior, and upgrades.",
-        "traceability": "A RuleFor call can be followed from expression parsing into a PropertyRule, its components, context execution, and failures.",
-        "maintainability": "Interfaces and rule components isolate validators and integrations while compatibility is supported by broad behavioral tests.",
-        "educational_value": "It demonstrates how a readable fluent DSL is backed by explicit generic objects and execution policy."
+        "source_quality": "The authored asynchronous implementation explicitly separates validator orchestration, property rules, rule components, conditions, cascades, failures, and dependencies.",
+        "architecture": "AbstractValidator owns the rule set, PropertyRule evaluates one property, RuleBase stores shared policy, RuleBuilder composes validators, and context and selector abstractions control execution.",
+        "naming_and_idiom": "RuleFor, ValidateInternalAsync, PropertyRule, RuleBuilder, ValidationContext, selector, cascade, dependent rules, and ValidationFailure state pipeline intent.",
+        "tests": "The selected validator, condition, cascade, and sync-async-parity suites cover selection, conditions, short circuits, dependencies, cancellation, failures, and generated counterpart agreement.",
+        "documentation": "FluentValidation's rules, conditions, cascade, dependent-rule, asynchronous-validation, and error documentation explains the selected public and runtime contracts.",
+        "traceability": "A RuleFor expression can be followed through PropertyRule and RuleBuilder construction into ValidateInternalAsync, selector and condition checks, component evaluation, failures, cascades, and dependencies.",
+        "maintainability": "Strong generic boundaries, an inspectable authored async source, generated parity checks, and focused policy tests constrain changes across the fluent API.",
+        "educational_value": "The path shows how a declarative type-safe API becomes an ordered cancellable runtime without treating generated synchronous code as the teaching source."
       },
-      "inspection": {"commit": "daa00b795450881c233253488e3ddeb362f59f56", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["docs/index.rst", "src/FluentValidation/AbstractValidator.cs", "src/FluentValidation/Internal/PropertyRule.cs", "src/FluentValidation.Tests/AbstractValidatorTester.cs"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/License.txt"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "daa00b795450881c233253488e3ddeb362f59f56",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/FluentValidation/AbstractValidator.cs",
+          "src/FluentValidation/Internal/PropertyRule.cs",
+          "src/FluentValidation/Internal/RuleBase.cs",
+          "src/FluentValidation/Internal/RuleBuilder.cs",
+          "src/FluentValidation.Tests/AbstractValidatorTester.cs",
+          "src/FluentValidation.Tests/ConditionTests.cs",
+          "src/FluentValidation.Tests/CascadingFailuresTester.cs",
+          "src/FluentValidation.Tests/SyncAsyncParityTests.cs",
+          "License.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/License.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
-      "slug": "nodatime",
-      "repository": "nodatime/nodatime",
-      "url": "https://github.com/nodatime/nodatime",
+      "slug": "serilog",
+      "repository": "serilog/serilog",
+      "url": "https://github.com/serilog/serilog",
       "primary_language": "C#",
-      "language_evidence": "Temporal value types, calendars, time zones, parsers, patterns, providers, serialization, and utilities under src/NodaTime are C#.",
-      "description": "A date and time library with precise immutable types for instants, durations, local values, calendars, time zones, periods, and parsing.",
-      "real_world_evidence": "Noda Time is a released production library used when .NET applications need rigorous temporal modeling and time-zone behavior.",
-      "why_study": "It makes difficult domain semantics explicit through immutable types, carefully separated timelines and calendars, generated time-zone data, parsers, and exhaustive invariants.",
-      "learn": ["Temporal modeling, immutable value types, calendars, time-zone transitions, interval arithmetic, parsing patterns, nanosecond representation, caching, and specification tests."],
-      "prerequisites": ["Advanced C#, value types and operators, calendar arithmetic, time zones, integer overflow, parsing, concurrency, and XML/JSON serialization."],
-      "start_here": {"path": "src/NodaTime/Instant.cs", "reason": "Instant demonstrates the timeline model, trusted versus validated construction, nanosecond representation, arithmetic, conversions, and invariants."},
-      "sdc": {
+      "language_evidence": "Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.",
+      "description": "A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.",
+      "real_world_evidence": "Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.",
+      "why_study": "The Logger path shows how Serilog parses and caches a message template, binds structured properties, enriches and filters one event, emits it to sinks, and contains extension failures.",
+      "learn": [
+        "Use `src/Serilog/Core/Logger.cs` to study the following transferable techniques and behaviors: Message-template tokenization, template caching, property binding, immutable log events, contextual enrichment, filtering, sink dispatch, dynamic levels, trace context, failure isolation, and synchronous and asynchronous disposal."
+      ],
+      "prerequisites": [
+        "Before reading `src/Serilog/Core/Logger.cs`, be familiar with the following concepts: Advanced C# classes and interfaces, generics, delegates, caches, structured logging, immutable values, contextual state, exception handling, and disposal patterns."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A structured log event combines a parsed message template, bound properties, a level, timestamp, exception, and optional trace identifiers before enrichers, filters, and sinks process it."
+        ],
+        "reason": "The logging model is concise and familiar; the path primarily teaches parser and cache design, interface-driven pipelines, contextual enrichment, fault containment, resource cleanup, and stable extension contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how Serilog parses and caches a message template, binds one structured event, enriches and filters it, emits it to sinks, and contains extension failures.",
+        "start_here": {
+          "path": "src/Serilog/Core/Logger.cs",
+          "reason": "src/Serilog/Core/Logger.cs owns Write, where level checks, message-template lookup, property binding, LogEvent creation, enrichment, filtering, and sink emission form one complete trace."
+        },
+        "supporting_files": [
+          "src/Serilog/LoggerConfiguration.cs",
+          "src/Serilog/Core/Pipeline/MessageTemplateCache.cs",
+          "src/Serilog/Parsing/MessageTemplateParser.cs",
+          "src/Serilog/Events/LogEvent.cs",
+          "test/Serilog.Tests/Core/LoggerTests.cs",
+          "test/Serilog.Tests/Parsing/MessageTemplateParserTests.cs"
+        ],
+        "trace": "Follow Logger.Write from level checking through MessageTemplateCache and MessageTemplateParser, property binding, LogEvent construction, enrichment, filtering, and sink emission; then correlate parser tokenization, property precedence, enricher-failure containment, dynamic level switches, trace context, binding, disposal, and async-disposal tests."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 3, "loc": 16037, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "generated time-zone data", "benchmarks", "tools"], "notes": "Count covers production C# in src/NodaTime, excluding tests, generated data, benchmarks, tools, docs, and build support."},
-        "difficulty": {"score": 4, "signals": ["calendar and time-zone domain theory", "nanosecond arithmetic and overflow", "parser pattern machinery"], "reason": "Correctness depends repeatedly on subtle temporal semantics, multiple calendars, ambiguous transitions, bounds, and representation conversions."},
-        "complexity": {"score": 3, "signals": ["value/calendar/time-zone/text subsystems", "provider and serialization boundaries"], "reason": "Several substantial subsystems interoperate around a coherent immutable temporal model without distributed or service topology."},
-        "placement": "Deep domain difficulty raises this S3-sized, well-structured library to the upper end of SDC 3."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "interface-composed enrichers, filters, and sinks",
+            "typed template-token and property model",
+            "contextual and disposable framework idioms"
+          ],
+          "reason": "Substantial framework abstraction and typed pipeline idioms recur without reflection, unsafe code, or pervasive code generation."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "message-template cache state",
+            "ordered enrichment, filtering, and emission",
+            "context propagation and extension-failure containment"
+          ],
+          "reason": "Caching, contextual state, events, failure paths, and cleanup materially affect the trace without expert concurrent scheduling."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "configuration and logger boundaries",
+            "parser and cache layer",
+            "event, enricher, filter, and sink interfaces"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one structured event."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "stable message-template and property semantics",
+            "extension failure isolation",
+            "context, trace, level-switch, and disposal contracts"
+          ],
+          "reason": "Several interacting compatibility, reliability, extension, and resource guarantees constrain pipeline changes."
+        },
+        "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Trusted and untrusted constructors, preconditions, immutable values, overflow checks, and detailed XML comments make invariants explicit.",
-        "architecture": "Core values connect calendars, time zones, providers, text patterns, global utilities, and serialization adapters through narrow types.",
-        "naming_and_idiom": "Instant, Duration, LocalDateTime, ZonedDateTime, DateTimeZone, Period, CalendarSystem, and Pattern distinguish semantics precisely.",
-        "tests": "Extensive unit, data, compatibility, serialization, pattern, calendar, and time-zone tests cover difficult boundary behavior.",
-        "documentation": "A comprehensive user guide, API docs, design notes, migration guides, and time-zone resources explain both model and use.",
-        "traceability": "An instant conversion can be followed through duration representation, a zone provider and interval, calendar mapping, and tested output.",
-        "maintainability": "Immutable domain types, explicit providers, generated-data boundaries, and exhaustive tests control change in a subtle domain.",
-        "educational_value": "It is a model case of using type design to make domain distinctions that ordinary date-time APIs blur."
+        "source_quality": "Logger.Write names each pipeline stage and makes disabled levels, binding failures, extension failures, filtering, and disposal behavior explicit.",
+        "architecture": "LoggerConfiguration assembles the Logger, MessageTemplateCache and MessageTemplateParser produce templates, LogEvent carries data, and enricher, filter, and sink interfaces extend processing.",
+        "naming_and_idiom": "Write, IsEnabled, MessageTemplateCache, MessageTemplateParser, BindMessageTemplate, LogEvent, Enrich, Filter, and sink preserve structured-logging vocabulary.",
+        "tests": "LoggerTests and MessageTemplateParserTests cover tokenization, binding, cache-facing behavior, contextual properties, enrichers, filters, dynamic levels, trace capture, failures, and disposal.",
+        "documentation": "Serilog's message-template, enrichment, filtering, sink, level, and lifecycle documentation explains the contracts implemented by this selected event path.",
+        "traceability": "A Write call can be followed through level gating, cached parsing, property binding, LogEvent creation, enrichment, filtering, sink emission, and corresponding parser and logger assertions.",
+        "maintainability": "Stable event and extension interfaces, a bounded template cache, explicit failure containment, and disposal tests localize pipeline changes.",
+        "educational_value": "The path demonstrates how a production structured logger turns text-like input into a typed extensible event while preserving reliability at every extension seam."
       },
-      "inspection": {"commit": "67f788570b9b5972f52aa316fa1cf32b73439eb6", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/NodaTime/Instant.cs", "src/NodaTime/TimeZones/DateTimeZoneCache.cs", "src/NodaTime.Test/InstantTest.cs"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/nodatime/nodatime/blob/67f788570b9b5972f52aa316fa1cf32b73439eb6/LICENSE.txt"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "49b5339ce85385dc52d4d8e8f2b8308becf23506",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/Serilog/Core/Logger.cs",
+          "src/Serilog/LoggerConfiguration.cs",
+          "src/Serilog/Core/Pipeline/MessageTemplateCache.cs",
+          "src/Serilog/Parsing/MessageTemplateParser.cs",
+          "src/Serilog/Events/LogEvent.cs",
+          "test/Serilog.Tests/Core/LoggerTests.cs",
+          "test/Serilog.Tests/Parsing/MessageTemplateParserTests.cs",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
-      "slug": "orleans",
-      "repository": "dotnet/orleans",
-      "url": "https://github.com/dotnet/orleans",
+      "slug": "dapper",
+      "repository": "DapperLib/Dapper",
+      "url": "https://github.com/DapperLib/Dapper",
       "primary_language": "C#",
-      "language_evidence": "Virtual-actor runtime, grain references, messaging, placement, membership, persistence, serialization, clustering, and hosting are predominantly C#.",
-      "description": "A distributed virtual-actor framework providing grains, durable identity, activation, placement, messaging, clustering, persistence, streams, and hosting.",
-      "real_world_evidence": "Microsoft releases Orleans as a production cloud-native application framework used to build distributed .NET services.",
-      "why_study": "Its source makes actor identity and calls look local while exposing the distributed runtime that handles activation, routing, serialization, membership, failures, persistence, and rebalancing.",
-      "learn": ["Virtual actors, distributed identity and messaging, serialization, placement, membership, activation lifecycles, persistence, streams, retries, and graceful shutdown."],
-      "prerequisites": ["Advanced C#, async concurrency, distributed systems, serialization, dependency injection, networking, persistence, and cluster operations."],
-      "start_here": {"path": "src/Orleans.Core.Abstractions/Runtime/GrainReference.cs", "reason": "GrainReference shows how typed remote identities are represented, serialized, copied, invoked, compared, and connected to runtime services."},
-      "sdc": {
+      "language_evidence": "SQL execution, parameter handling, mapping, caching, async operations, type handlers, and AOT support are implemented in C#.",
+      "description": "A lightweight object mapper that extends database connections with fast SQL execution and row-to-object materialization.",
+      "real_world_evidence": "Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.",
+      "why_study": "The type-deserializer path shows how Dapper converts a data-reader row into a typed object by caching generated IL while preserving constructor, member, null, conversion, tuple, and type-handler contracts.",
+      "learn": [
+        "Use `Dapper/SqlMapper.TypeDeserializerCache.cs` to study the following transferable techniques and behaviors: Reflection-driven mapping, typed deserializer caches, DynamicMethod and ILGenerator, constructor selection, member binding, column conversion, null handling, tuple materialization, custom type handlers, and hot-path performance."
+      ],
+      "prerequisites": [
+        "Before reading `Dapper/SqlMapper.TypeDeserializerCache.cs`, be familiar with the following concepts: Advanced C# generics and delegates, reflection, ADO.NET data readers, constructors and members, runtime IL generation, value conversion, nullable types, and caching."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An ADO.NET data reader exposes typed columns for the current database row, which Dapper maps into a requested object constructor and members."
+        ],
+        "reason": "This row-mapping context fits in a short paragraph; the selected path teaches reflection, dynamic IL generation, typed caches, constructor and member selection, conversion, null handling, and extensibility rather than database theory."
+      },
+      "learning_path": {
+        "goal": "Understand how Dapper converts one data-reader row into a typed object by caching a generated deserializer and honoring constructor, member, conversion, null, and type-handler contracts.",
+        "start_here": {
+          "path": "Dapper/SqlMapper.TypeDeserializerCache.cs",
+          "reason": "Dapper/SqlMapper.TypeDeserializerCache.cs owns the row-shape and target-type cache that supplies generated materializer delegates, making it the clearest entrance before IL emission and type mapping."
+        },
+        "supporting_files": [
+          "Dapper/SqlMapper.cs",
+          "Dapper/DefaultTypeMap.cs",
+          "tests/Dapper.Tests/ConstructorTests.cs",
+          "tests/Dapper.Tests/TypeHandlerTests.cs"
+        ],
+        "trace": "Follow TypeDeserializerCache as it keys and reuses row-reader delegates, then follow SqlMapper.GetTypeDeserializer and GenerateDeserializerFromMap as they inspect columns, select constructors or members through DefaultTypeMap, and emit conversion, null, tuple, and type-handler IL; correlate constructor selection and custom-handler behavior in the focused tests."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 5, "loc": 227174, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "samples", "benchmarks", "generated code"], "notes": "Count covers production C#, JavaScript, and TypeScript under src, excluding tests, samples, benchmarks, generated code, docs, and build output."},
-        "difficulty": {"score": 4, "signals": ["distributed actor concurrency", "serialization and generated proxies", "failure-aware cluster state"], "reason": "Remote invocation, activation races, placement, membership, retries, persistence, and single-threaded actor guarantees require advanced distributed reasoning."},
-        "complexity": {"score": 4, "signals": ["runtime/messaging/placement/membership/persistence subsystems", "multiple hosting and storage integrations"], "reason": "A grain call crosses generated references, serialization, messaging, routing, silo lifecycle, activation, storage, and cluster services."},
-        "placement": "S5 breadth plus D4/C4 distributed-runtime mechanics place Orleans at SDC 4 under the simple average."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "reflection-driven constructor and member selection",
+            "DynamicMethod and ILGenerator materializers",
+            "generic cached delegates and type handlers"
+          ],
+          "reason": "Reflection and runtime code generation are central rather than incidental to the materialization path."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "typed deserializer caching",
+            "column-by-column construction and conversion state",
+            "null, constructor, and handler branches"
+          ],
+          "reason": "Cache state and numerous mapping branches materially affect behavior, but the bounded row conversion remains synchronous and lacks advanced nonlocal scheduling."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "reader-to-deserializer boundary",
+            "type-map and generated-delegate layers",
+            "constructor and type-handler extension points"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one row materialization."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "provider and runtime compatibility",
+            "null and numeric conversion correctness",
+            "constructor, tuple, and type-handler contracts",
+            "hot-path allocation and performance limits"
+          ],
+          "reason": "Several interacting correctness, compatibility, extensibility, and performance guarantees constrain changes to the emitted materializer."
+        },
+        "placement": "The four scores 4/3/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Runtime state machines, cancellation, timeouts, activation ownership, serializer contracts, and cluster transitions are explicitly modeled.",
-        "architecture": "Abstractions connect runtime, messaging, hosting, serialization, clustering, placement, persistence, streaming, transactions, and provider extensions.",
-        "naming_and_idiom": "Grain, GrainReference, Silo, Activation, Placement, Membership, Stream, Reminder, and ClusterClient define the virtual-actor model.",
-        "tests": "Unit, default-cluster, persistence, streaming, serialization, failure, compatibility, provider, and distributed suites cover runtime behavior.",
-        "documentation": "Conceptual guides, tutorials, API references, hosting and deployment guidance, provider docs, and contributor material are extensive.",
-        "traceability": "A typed grain call can be traced through a GrainReference and request serialization into messaging, placement, activation, dispatch, and response.",
-        "maintainability": "Public abstractions, generated-code contracts, provider interfaces, lifecycle participants, and multi-layer tests constrain runtime change.",
-        "educational_value": "It is an unusually accessible production implementation of the virtual-actor model and its distributed machinery."
+        "source_quality": "The bounded materializer path names cache lookup, type-map selection, constructor and member branches, conversion, null handling, tuple logic, and type-handler emission despite intricate IL.",
+        "architecture": "TypeDeserializerCache stores delegates, SqlMapper emits materializers, DefaultTypeMap selects constructors and members, and type handlers provide an explicit extension point.",
+        "naming_and_idiom": "TypeDeserializerCache, GetReader, GetTypeDeserializer, GenerateDeserializerFromMap, DefaultTypeMap, FindConstructor, members, and type handlers expose row materialization.",
+        "tests": "ConstructorTests and TypeHandlerTests cover constructor selection, member mapping, null and conversion behavior, custom handlers, error cases, and cache-facing compatibility.",
+        "documentation": "The README, API examples, and package documentation provide the mapping and type-handler context needed to follow the selected generated materializer.",
+        "traceability": "A reader shape can be followed through TypeDeserializerCache into GetTypeDeserializer, DefaultTypeMap selection, emitted load and conversion IL, and constructor or type-handler tests.",
+        "maintainability": "Named cache and type-map seams plus compatibility tests constrain changes to generated code that sits on a performance-critical public boundary.",
+        "educational_value": "The path demonstrates how reflection and runtime code generation can produce a fast typed mapping API while retaining explicit extension and compatibility rules."
       },
-      "inspection": {"commit": "137d9acc17830f15b13a4eb0058d6cee633cad5e", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Orleans.Core.Abstractions/Runtime/GrainReference.cs", "src/Orleans.Runtime/Silo/Silo.cs", "test/Orleans.DefaultCluster.Tests/GrainReferenceTest.cs"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/dotnet/orleans/blob/137d9acc17830f15b13a4eb0058d6cee633cad5e/LICENSE"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "efcore",
-      "repository": "dotnet/efcore",
-      "url": "https://github.com/dotnet/efcore",
-      "primary_language": "C#",
-      "language_evidence": "DbContext, LINQ translation, metadata, change tracking, state management, updates, migrations, providers, and tooling are C#.",
-      "description": "An object-database mapper that translates LINQ, tracks entity state, generates database updates and migrations, and supports provider extensions.",
-      "real_world_evidence": "Microsoft releases EF Core as production data-access infrastructure for .NET applications and database providers.",
-      "why_study": "It connects expression trees and metadata models to query compilation, identity maps, change detection, transactional updates, migrations, and provider-specific SQL.",
-      "learn": ["LINQ expression translation, metadata models, identity maps, change tracking, unit-of-work state, query compilation, migrations, database providers, and diagnostics."],
-      "prerequisites": ["Advanced C#, expression trees, databases and SQL, transactions, reflection, dependency injection, caching, and compiler-style pipelines."],
-      "start_here": {"path": "src/EFCore/DbContext.cs", "reason": "DbContext exposes the unit-of-work boundary and connects sets, services, tracking, queries, change detection, saves, configuration, and disposal."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 5, "loc": 301586, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks", "samples", "generated code"], "notes": "Count covers production C# under src, excluding tests, benchmarks, samples, generated source, docs, and build artifacts."},
-        "difficulty": {"score": 4, "signals": ["expression-tree query compilation", "change-tracker identity and state", "database provider abstractions"], "reason": "Type mapping, expression rewriting, relational semantics, state transitions, concurrency, migrations, and provider behavior recur across core paths."},
-        "complexity": {"score": 4, "signals": ["query/metadata/tracking/update/migration subsystems", "multiple database providers and tooling modes"], "reason": "A database operation crosses contexts, metadata, services, query compilation, materialization, tracking, update generation, transactions, and providers."},
-        "placement": "EF Core's S5 source volume and advanced, multi-subsystem ORM behavior combine to SDC 4."
+      "inspection": {
+        "commit": "6d48ef664acc7298c649e2d449d903b3360d5a90",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "Dapper/SqlMapper.TypeDeserializerCache.cs",
+          "Dapper/SqlMapper.cs",
+          "Dapper/DefaultTypeMap.cs",
+          "tests/Dapper.Tests/ConstructorTests.cs",
+          "tests/Dapper.Tests/TypeHandlerTests.cs",
+          "License.txt"
+        ]
       },
-      "quality": {
-        "source_quality": "State transitions, service dependencies, async restrictions, lifetimes, query caching, and provider contracts are explicitly documented and typed.",
-        "architecture": "Core services connect metadata, queries, change tracking, updates, storage, diagnostics, migrations, design-time tooling, and providers.",
-        "naming_and_idiom": "DbContext, EntityType, ChangeTracker, StateManager, QueryCompiler, ModificationCommand, Migration, and Provider express ORM roles.",
-        "tests": "Large specification, provider, functional, unit, migration, query, update, concurrency, and compatibility suites exercise behavior.",
-        "documentation": "Concept guides, API docs, provider writing, performance notes, migrations, samples, and breaking-change references are comprehensive.",
-        "traceability": "A LINQ query can be followed through compilation and provider translation into materialization and identity tracking; SaveChanges follows a parallel update path.",
-        "maintainability": "Service interfaces, provider specifications, convention pipelines, diagnostics, and cross-provider tests govern a large abstraction surface.",
-        "educational_value": "It provides a deep production study of translating object and language semantics into database operations."
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/DapperLib/Dapper/blob/6d48ef664acc7298c649e2d449d903b3360d5a90/License.txt"
+        ]
       },
-      "inspection": {"commit": "8e66699fe92713d8cfa9f4b248c0f3711af88d34", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/EFCore/DbContext.cs", "src/EFCore/ChangeTracking/Internal/StateManager.cs", "test/EFCore.Tests/DbContextTest.cs"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/dotnet/efcore/blob/8e66699fe92713d8cfa9f4b248c0f3711af88d34/LICENSE.txt"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "dotnet-runtime",
-      "repository": "dotnet/runtime",
-      "url": "https://github.com/dotnet/runtime",
-      "primary_language": "C#",
-      "language_evidence": "Core libraries are C#, while the CLR, garbage collector, JIT, native hosting, interop, and platform layers use C++, C, and assembly as first-party runtime implementation.",
-      "description": "The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type system, core libraries, interop, diagnostics, and native hosting.",
-      "real_world_evidence": "Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.",
-      "why_study": "It exposes the entire managed execution stack from C# library contracts through object layouts, JIT compilation, garbage collection, exceptions, threading, interop, and operating-system ports.",
-      "learn": ["Runtime type systems, JIT compilation, garbage collection, object layout, core libraries, interop and marshalling, threading, exceptions, diagnostics, native hosting, and portability."],
-      "prerequisites": ["Expert C#, C++, C, assembly, compilers, operating systems, memory models, concurrency, ABIs, garbage collection, and CPU architecture."],
-      "start_here": {"path": "src/libraries/System.Private.CoreLib/src/System/String.cs", "reason": "String shows the managed contract, intrinsic hooks, layout assumptions, spans, allocation, and the boundary between library source and runtime implementation."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 3761600, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "samples", "benchmarks", "generated code", "reference assemblies"], "notes": "Count covers first-party C#, C++, C, assembly, and supporting source under src, excluding tests, samples, benchmarks, generated code, reference-only source, docs, and artifacts."},
-        "difficulty": {"score": 5, "signals": ["JIT and garbage collector internals", "unsafe memory and ABI management", "highly concurrent runtime state"], "reason": "Expert compiler, memory, concurrency, type-system, binary, platform, and performance reasoning is pervasive across central components."},
-        "complexity": {"score": 5, "signals": ["runtime and standard-library platform", "many native and managed subsystems", "cross-platform build and execution topology"], "reason": "Managed calls can cross libraries, intrinsics, the VM, JIT, GC, threading, diagnostics, interop, native hosting, and many OS/architecture ports."},
-        "placement": "Millions of lines and D5/C5 runtime internals make dotnet/runtime definitively SDC 5."
-      },
-      "quality": {
-        "source_quality": "Performance and memory invariants, managed/native boundaries, platform conditions, contracts, and failure paths are documented and heavily tested.",
-        "architecture": "CoreCLR, Mono, NativeAOT, libraries, JIT, GC, diagnostics, hosting, interop, installer, and platform abstractions have explicit ownership.",
-        "naming_and_idiom": "MethodTable, Object, String, GCHeap, JIT, CoreLib, Interop, SafeHandle, and RuntimeType form the execution vocabulary.",
-        "tests": "Runtime, library, JIT, GC, interop, diagnostics, stress, performance, compatibility, and platform matrices exercise the stack.",
-        "documentation": "Design documents, coding guides, runtime notes, API docs, issue policies, build instructions, and performance material are extensive.",
-        "traceability": "A managed operation can be followed from a core-library method through intrinsic or internal-call boundaries into VM/JIT/native implementation and architecture-specific tests.",
-        "maintainability": "Subsystem boundaries, compatibility standards, code generation, platform abstractions, stress infrastructure, and enormous test matrices control risk.",
-        "educational_value": "It is a premier expert-level source for understanding how a modern managed language platform actually executes."
-      },
-      "inspection": {"commit": "c4eee2b76e574b0dd6cfe3387220a905ba69aca6", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/libraries/System.Private.CoreLib/src/System/String.cs", "src/coreclr/vm/object.cpp", "src/libraries/System.Runtime/tests/System.Runtime.Tests/System/StringTests.cs"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/LICENSE.TXT"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     },
     {
       "slug": "aspnetcore",
@@ -307,30 +578,235 @@
       "language_evidence": "HTTP abstractions, Kestrel, hosting, routing, middleware, MVC, Razor, Blazor, SignalR, authentication, and data protection are predominantly C# with first-party web client code.",
       "description": "The ASP.NET Core web platform, including HTTP servers, middleware, routing, hosting, MVC, Razor, Blazor, SignalR, security, and deployment integrations.",
       "real_world_evidence": "Microsoft ships ASP.NET Core as the production web framework and server stack for modern .NET applications.",
-      "why_study": "It connects low-level HTTP parsing and pipelines to application middleware, endpoints, controllers, real-time messaging, UI frameworks, security, diagnostics, and deployment.",
-      "learn": ["HTTP protocol engines, pipelines and backpressure, middleware, routing, hosting, dependency injection, MVC, real-time messaging, rendering, authentication, data protection, and observability."],
-      "prerequisites": ["Expert C#, async I/O, HTTP/1–3, networking, concurrency, web security, compilers/rendering, dependency injection, and distributed deployment."],
-      "start_here": {"path": "src/Servers/Kestrel/Core/src/Internal/Http/HttpProtocol.cs", "reason": "The per-request protocol state connects parsed HTTP data, body pipes, response features, limits, timeouts, diagnostics, and application dispatch."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 666450, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "samples", "benchmarks", "generated and built assets"], "notes": "Count covers production C#, native code, JavaScript, TypeScript, and F# under src, excluding tests, samples, benchmarks, generated/built assets, docs, and artifacts."},
-        "difficulty": {"score": 4, "signals": ["high-performance async protocols", "generated and dynamic application models", "security and distributed real-time behavior"], "reason": "Kestrel, pipelines, HTTP versions, rendering, SignalR, auth, cryptography, and framework activation repeatedly require advanced domain knowledge."},
-        "complexity": {"score": 5, "signals": ["platform-scale server and framework graph", "many application and deployment modes", "cross-cutting security and diagnostics"], "reason": "Requests cross servers, features, hosting, middleware, routing, endpoints, MVC or UI stacks, auth, diagnostics, and deployment integrations."},
-        "placement": "S5 and C5 make the full ASP.NET Core platform SDC 5."
+      "why_study": "The ApplicationBuilder path shows how ASP.NET Core folds middleware into an ordered request-delegate pipeline and adapts both conventional and factory-created components with dependency injection and reliable release.",
+      "learn": [
+        "Use `src/Http/Http/src/Builder/ApplicationBuilder.cs` to study the following transferable techniques and behaviors: Higher-order RequestDelegate composition, reverse pipeline folding, asynchronous ordering and short circuits, reflection-based Invoke discovery, expression compilation, AOT-compatible fallback, injected and keyed services, per-request activation, and finally-based release."
+      ],
+      "prerequisites": [
+        "Before reading `src/Http/Http/src/Builder/ApplicationBuilder.cs`, be familiar with the following concepts: Advanced C# delegates, async and await, reflection, expression trees, dependency injection, service scopes, interfaces and factories, HTTP middleware, exceptions, and disposal lifecycles."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An ASP.NET Core request pipeline is an ordered nesting of middleware delegates; each component can perform work before and after calling the next component or short-circuit the request."
+        ],
+        "reason": "The middleware model fits in a short prerequisite paragraph; this corrected path teaches delegate composition, reflection and expression compilation, dependency injection, per-request activation and release, async control flow, and runtime fallback rather than HTTP protocol rules."
+      },
+      "learning_path": {
+        "goal": "Understand how ASP.NET Core composes an ordered request-delegate pipeline and adapts conventional or factory-created middleware with dependency injection and reliable per-request release.",
+        "start_here": {
+          "path": "src/Http/Http/src/Builder/ApplicationBuilder.cs",
+          "reason": "ApplicationBuilder.cs contains Use and Build, which reveal how middleware factories are stored and folded around a terminal RequestDelegate before adaptation details are introduced."
+        },
+        "supporting_files": [
+          "src/Http/Http.Abstractions/src/IApplicationBuilder.cs",
+          "src/Http/Http.Abstractions/src/Extensions/UseMiddlewareExtensions.cs",
+          "src/Http/Http.Abstractions/src/IMiddleware.cs",
+          "src/Http/Http.Abstractions/src/IMiddlewareFactory.cs",
+          "src/Http/Http/src/MiddlewareFactory.cs",
+          "src/Http/Http/test/ApplicationBuilderTests.cs",
+          "src/Http/Http.Abstractions/test/UseMiddlewareTest.cs"
+        ],
+        "trace": "Follow ApplicationBuilder.Use as it stores middleware factories and Build as it folds them in reverse around the terminal delegate, then follow UseMiddlewareExtensions as it validates Invoke or InvokeAsync, chooses compiled-expression or reflection fallback service injection, or creates IMiddleware per request and releases it in finally; correlate ordering, terminal, endpoint, signature, service, factory, and release tests."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "higher-order RequestDelegate composition",
+            "reflection-based middleware discovery",
+            "expression-tree compilation with runtime fallback"
+          ],
+          "reason": "Reflection, expression compilation, and sophisticated delegate composition are central to middleware adaptation."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "ordered nested async execution and short circuiting",
+            "per-request middleware activation and finally release",
+            "compiled and reflection invocation branches"
+          ],
+          "reason": "Async ordering, lifecycle, and fallback behavior materially affect requests, but the bounded pipeline does not require advanced protocol or distributed state reasoning."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "builder and request-delegate boundary",
+            "reflection and interface middleware binders",
+            "dependency-injection and factory lifecycle"
+          ],
+          "reason": "Several meaningful framework boundaries contribute directly to one middleware invocation."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "middleware signature and DI compatibility",
+            "dynamic-code and AOT fallback behavior",
+            "ordering, short-circuit, exception, and release guarantees"
+          ],
+          "reason": "Several interacting compatibility, reliability, extensibility, and resource guarantees constrain the pipeline."
+        },
+        "placement": "The four scores 4/3/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Hot protocol paths document state and allocation choices, request features expose explicit contracts, and lifecycle cleanup is strongly tested.",
-        "architecture": "Shared abstractions connect servers, HTTP features, hosting, middleware, routing, MVC, Razor, Blazor, SignalR, identity, data protection, and tools.",
-        "naming_and_idiom": "HttpContext, FeatureCollection, RequestDelegate, Middleware, Endpoint, Kestrel, Hub, Razor, and Host define the platform model.",
-        "tests": "Unit, functional, server, browser, interop, security, stress, performance, compatibility, and deployment suites cover the platform.",
-        "documentation": "Product docs, API references, architecture notes, server guidance, security material, samples, and contributor docs are comprehensive.",
-        "traceability": "A request can be followed from Kestrel protocol state through HttpContext features, middleware and routing into an endpoint and response pipeline.",
-        "maintainability": "Feature interfaces, shared frameworks, subsystem directories, compatibility policy, generated-code boundaries, and broad matrices constrain change.",
-        "educational_value": "It is an advanced end-to-end study of how a production web platform spans sockets, protocols, frameworks, UI, and operations."
+        "source_quality": "ApplicationBuilder and UseMiddlewareExtensions make ordering, terminal behavior, signature validation, invocation branches, service resolution, and release paths explicit.",
+        "architecture": "IApplicationBuilder defines composition, ApplicationBuilder builds delegates, UseMiddlewareExtensions supplies conventional and interface binders, and IMiddlewareFactory owns per-request activation and release.",
+        "naming_and_idiom": "Use, Build, RequestDelegate, UseMiddleware, Invoke, InvokeAsync, IMiddleware, IMiddlewareFactory, Create, and Release expose the pipeline contract.",
+        "tests": "ApplicationBuilderTests and UseMiddlewareTest cover ordering, terminal and endpoint mistakes, signature validation, dependency and keyed-service injection, dynamic-code fallback, factory failures, and release.",
+        "documentation": "Source documentation for ApplicationBuilder, UseMiddlewareExtensions, the middleware interfaces, and MiddlewareFactory explains composition, invocation, dependency injection, activation, and release contracts.",
+        "traceability": "A Use call can be followed into reverse Build folding, conventional reflection or compiled binding, interface-factory creation, asynchronous invocation, and finally release with direct tests.",
+        "maintainability": "Stable delegate and factory interfaces, explicit binder branches, AOT fallback coverage, and lifecycle tests isolate middleware extensibility from pipeline composition.",
+        "educational_value": "The path demonstrates how a compact higher-order pipeline supports reflection, dependency injection, per-request ownership, and ahead-of-time constraints without losing traceability."
       },
-      "inspection": {"commit": "8c1a406592b06b954acac509fa4725ca560b2e53", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Http/Http/src/DefaultHttpContext.cs", "src/Servers/Kestrel/Core/src/Internal/Http/HttpProtocol.cs", "src/Http/Http/test/DefaultHttpContextTests.cs"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/LICENSE.txt"},
-      "github": {"primary_language": "C#", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "8c1a406592b06b954acac509fa4725ca560b2e53",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/Http/Http/src/Builder/ApplicationBuilder.cs",
+          "src/Http/Http.Abstractions/src/IApplicationBuilder.cs",
+          "src/Http/Http.Abstractions/src/Extensions/UseMiddlewareExtensions.cs",
+          "src/Http/Http.Abstractions/src/IMiddleware.cs",
+          "src/Http/Http.Abstractions/src/IMiddlewareFactory.cs",
+          "src/Http/Http/src/MiddlewareFactory.cs",
+          "src/Http/Http/test/ApplicationBuilderTests.cs",
+          "src/Http/Http.Abstractions/test/UseMiddlewareTest.cs",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "dotnet-runtime",
+      "repository": "dotnet/runtime",
+      "url": "https://github.com/dotnet/runtime",
+      "primary_language": "C#",
+      "language_evidence": "Core libraries are C#, while the CLR, garbage collector, JIT, native hosting, interop, and platform layers use C++, C, and assembly as first-party runtime implementation.",
+      "description": "The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type system, core libraries, interop, diagnostics, and native hosting.",
+      "real_world_evidence": "Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.",
+      "why_study": "The TaskAwaiter path exposes how .NET registers and runs an await continuation while preserving contexts, scheduler policy, race safety, inlining rules, fault behavior, and forced asynchronous execution.",
+      "learn": [
+        "Use `src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs` to study the following transferable techniques and behaviors: Awaiter and async-state-machine interfaces, Task continuation registration, SynchronizationContext and TaskScheduler capture, ExecutionContext flow, lock-free completion races, inline versus queued execution, ThreadPool scheduling, cancellation, faults, and exactly-once guarantees."
+      ],
+      "prerequisites": [
+        "Before reading `src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs`, be familiar with the following concepts: Expert C# async and await, Tasks, generics, delegates, SynchronizationContext, TaskScheduler, ExecutionContext, volatile and interlocked operations, thread pools, and memory-ordering concepts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "The selected all-C# path is core transferable runtime programming: await continuation registration, captured execution context, synchronization and scheduler choice, lock-free completion, inlining, queuing, cancellation, and error behavior."
+      },
+      "learning_path": {
+        "goal": "Understand how an awaited Task registers and eventually runs a continuation while preserving execution context, scheduler and synchronization-context policy, race safety, inlining rules, and asynchronous-continuation guarantees.",
+        "start_here": {
+          "path": "src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs",
+          "reason": "TaskAwaiter.cs contains OnCompletedInternal, the compiler-facing handoff that turns an await into Task continuation registration with explicit context and scheduling policy."
+        },
+        "supporting_files": [
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/TaskContinuation.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/ThreadPoolTaskScheduler.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/System.Runtime.CompilerServices/TaskAwaiterTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/RunContinuationsAsynchronouslyTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/ExecutionContextFlowTest.cs"
+        ],
+        "trace": "Follow TaskAwaiter.OnCompletedInternal into Task.SetContinuationForAwait as it chooses a SynchronizationContext, non-default TaskScheduler, ExecutionContext-capturing continuation, or direct state-machine registration; follow AddTaskContinuation's completion race and FinishContinuations into AwaitTaskContinuation inlining or ThreadPoolTaskScheduler queuing, then correlate scheduler/context capture, ConfigureAwait, forced asynchronous continuations, execution-context lifetime, and race behavior in the focused tests."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "awaiter and async-state-machine interfaces",
+            "generic continuation and completion abstractions",
+            "volatile and interlocked synchronization with specialized runtime hooks"
+          ],
+          "reason": "Advanced async, generic, low-level synchronization, and runtime-specific C# techniques are central, while the bounded path does not require multiple pervasive Level 5 language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "lock-free registration versus completion races",
+            "execution, synchronization, and scheduler context flow",
+            "inline versus queued continuation scheduling",
+            "cancellation, faults, child completion, and debugger state"
+          ],
+          "reason": "Multiple expert concurrency, scheduling, lifecycle, and nonlocal state concerns are pervasive and tightly coupled."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "compiler awaiter boundary",
+            "Task state and continuation subsystem",
+            "scheduler, ThreadPool, ExecutionContext, and SynchronizationContext integration"
+          ],
+          "reason": "The trace crosses broad runtime architecture and many core subsystems while remaining bounded to continuation execution."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "memory ordering and exactly-once continuation execution",
+            "context and scheduler compatibility",
+            "deadlock, stack-overflow, fairness, performance, and allocation limits",
+            "debugger, tracing, cancellation, and exception contracts"
+          ],
+          "reason": "System-wide runtime safety, correctness, compatibility, observability, and performance guarantees interact throughout the path."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "TaskAwaiter, Task, continuation, and scheduler code documents registration, completion races, context capture, inlining, queuing, cancellation, and debugger invariants extensively.",
+        "architecture": "The compiler awaiter boundary delegates to Task state, specialized continuation objects, SynchronizationContext, TaskScheduler, ExecutionContext, and ThreadPoolTaskScheduler.",
+        "naming_and_idiom": "OnCompletedInternal, SetContinuationForAwait, AddTaskContinuation, FinishContinuations, AwaitTaskContinuation, RunContinuationsAsynchronously, and scheduler names expose the lifecycle.",
+        "tests": "The selected TaskAwaiter, RunContinuationsAsynchronously, and ExecutionContextFlow suites cover scheduler and context capture, ConfigureAwait, races, forced queuing, context lifetime, faults, and platform cases.",
+        "documentation": "Extensive invariants in the TaskAwaiter, Task, continuation, and scheduler source comments document context capture, continuation scheduling, race handling, and exactly-once execution for this path.",
+        "traceability": "An await can be followed from TaskAwaiter.OnCompletedInternal through continuation selection and race-safe registration into completion-time inlining or ThreadPoolTaskScheduler queuing and focused tests.",
+        "maintainability": "Documented invariants, specialized continuation types, low-level synchronization boundaries, and targeted concurrency tests protect a performance-critical runtime contract.",
+        "educational_value": "The path gives expert learners a concrete account of async continuation semantics beneath the language syntax, including the races and context policies ordinary code depends on."
+      },
+      "inspection": {
+        "commit": "c4eee2b76e574b0dd6cfe3387220a905ba69aca6",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/TaskContinuation.cs",
+          "src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/ThreadPoolTaskScheduler.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/System.Runtime.CompilerServices/TaskAwaiterTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/RunContinuationsAsynchronouslyTests.cs",
+          "src/libraries/System.Runtime/tests/System.Threading.Tasks.Tests/Task/ExecutionContextFlowTest.cs",
+          "LICENSE.TXT"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/LICENSE.TXT"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-28"
+      }
     }
   ]
 }
