@@ -1072,6 +1072,14 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4. Both gates pass, but turbine and moshi already fill the two Kotlin Level 4 places with more complementary asynchronous-flow testing and reflection-or-codegen serialization paths. Java is unavailable locally, so Gradle reported that no Java runtime existed and the focused JVM suite could not execute; source and direct tests were inspected. The API is explicitly experimental; segments may share byte arrays but only an owner may append, shared segments cannot be recycled or mutated, pool implementations differ by target, source and sink close state is enforced, and filesystem and Okio integration remain outside the bounded path.",
       "reconsider": "Reconsider if a Kotlin Level 4 place opens, the two-entry cap changes, the API stabilizes, or comparative review finds the multiplatform segmented-buffer and ownership path stronger and sufficiently distinct; retain its calculated Level 4 and every experimental, sharing, recycling, platform, lifecycle, and scope boundary."
+    },
+    {
+      "repository": "com-lihaoyi/os-lib",
+      "language": "Scala",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but scopt and retry already fill the two Scala Level 3 places with more complementary parser-combinator and effectful retry-policy paths. Java is unavailable locally, so the Mill suite could not execute; source and direct tests were inspected. Output callbacks run concurrently and must be thread safe; call aggregates stdout and stderr chunks but cross-stream order reflects arrival; timeout termination depends on JVM and platform behavior; shutdown hooks, process trees, pipe failure, inherited streams, environment propagation, and binary compatibility constrain changes; and the path excludes operating-system process implementation.",
+      "reconsider": "Reconsider if a Scala Level 3 place opens, the two-entry cap changes, or comparative review finds the typed subprocess, concurrent-pumper, pipeline, timeout, and cleanup path stronger and sufficiently distinct; retain its calculated Level 3 and all platform, lifecycle, ordering, and scope boundaries."
     }
   ]
 }
