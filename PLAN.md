@@ -399,7 +399,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **13.11 Go**
 - [x] **13.12 R**
 - [x] **13.13 Shell**
-- [ ] **13.14 Kotlin**
+- [x] **13.14 Kotlin**
 - [ ] **13.15 Scala**
 - [ ] **13.16 PowerShell**
 - [ ] **13.17 Dart**

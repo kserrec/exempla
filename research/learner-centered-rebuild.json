@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 130,
+  "reviewed_entry_total": 140,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -9706,12 +9706,838 @@
         "status": "agree",
         "notes": "Independent inspection confirmed that XBPS transactions, staged packages, host and target dependencies, masterdirs and chroots, cross sysroots, architecture and libc profiles, triggers, repository metadata, and installation validation dominate the representative path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
       }
+    },
+    {
+      "repository": "JakeWharton/picnic",
+      "language": "Kotlin",
+      "prior_level": 1,
+      "pinned_commit": "bc8832efb604ecdd80abedc0648fdb3ca813d714",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A text table contains rows and cells whose content is measured, aligned, styled, and drawn into a character canvas."
+        ],
+        "evidence": "The short table-layout vocabulary is subordinate to transferable lessons in receiver DSLs, builder composition, immutable models, style resolution, measurement, layout, drawing, and observable text rendering."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The receiver DSL maps cleanly into named table, row, cell, style, layout, and render responsibilities; model and rendering code is readable; DslTest closes the selected multiline-output behavior; the README gives rendered examples and styling guidance; and the exact public pin, Apache-2.0 license, stable API, direct trace, and maintainable boundaries satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a Kotlin receiver DSL builds a styled table model that is measured, laid out, and drawn as multiline text.",
+        "start_path": "picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt",
+        "supporting_files": [
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt",
+          "picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt",
+          "picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with table and row receiver builders, follow their immutable model and inherited styles into simple cell measurement, table coordinate calculation, clipped drawing, and multiline output, then close with DslTest. Row and column span behavior is deliberately excluded from the scored core."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "DSL-marked receiver lambdas",
+            "builder composition and delegated style implementation",
+            "higher-order layout factory"
+          ],
+          "reason": "Receiver-based construction and delegation materially shape the path, establishing substantial abstraction without recurring advanced metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "synchronous model construction",
+            "localized measure, layout, and draw passes",
+            "multiline alignment and style branches"
+          ],
+          "reason": "The selected observable has meaningful local state and branching, but excludes span behavior and does not require nonlocal lifecycle or state-machine reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "receiver DSL and immutable model",
+            "layout and text-rendering components",
+            "one direct output test"
+          ],
+          "reason": "A few clear modules in one process contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "style precedence must reach the rendered cell",
+            "measured multiline content must fit the allocated canvas",
+            "observable alignment must remain stable"
+          ],
+          "reason": "Routine output, validation, and stable-API safeguards constrain the bounded transformation."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/2/2 sums to 9, whose mean of 2.25 is Level 2; Picnic is the sole qualified Kotlin Level 2 path and ranks first.",
+      "reconsider": "Reconsider if the receiver DSL, model-to-render trace, multiline output contract, direct test, documentation, Apache-2.0 licensing, or relative Kotlin Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, the bounded receiver-DSL-to-render path, and retention. The independent review initially scored Behavior 3 because measurement, layout, and drawing recur; root reconciliation applied the lower anchor because the scored observable excludes spans and remains a synchronous localized transformation, resolving 3/2/2/2 and Level 2 rank 1."
+      }
+    },
+    {
+      "repository": "Kotlin/kotlinx-cli",
+      "language": "Kotlin",
+      "prior_level": 1,
+      "pinned_commit": "32112b630b3f1e01c2b446173410be895d456e5e",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Command-line arguments include named options, positional arguments, prefixes, values, and nested subcommands."
+        ],
+        "evidence": "The concise command-line vocabulary is subordinate to reusable lessons in typed conversion, property delegates, stateful token parsing, recursive commands, validation, defaults, and precise diagnostics."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "ArgParser, option types, and converters have recognizable responsibilities and deliberate names; OptionsTests and SubcommandsTests cover prefix styles, repeated values, defaults, strict ordering, and recursive commands; the README documents purpose and usage; and the exact public pin, Apache-2.0 license, direct trace, stable revision, and explicit obsolete-project notice satisfy all eight quality dimensions despite maintenance having ended.",
+      "learning_path": {
+        "goal": "Understand how a typed Kotlin command-line parser registers delegated options and arguments, consumes several option syntaxes, and recursively dispatches subcommands.",
+        "start_path": "core/commonMain/src/ArgParser.kt",
+        "supporting_files": [
+          "core/commonMain/src/Options.kt",
+          "core/commonMain/src/ArgType.kt",
+          "core/commonTest/src/OptionsTests.kt",
+          "core/commonTest/src/SubcommandsTests.kt",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with ArgParser registration and parse state, follow delegated option types and string conversion through Linux, JVM, and GNU token forms, defaults, repeated values, positional arguments, and recursive subcommands, then close with the focused option and subcommand suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic typed argument converters",
+            "property delegates for parsed values",
+            "fluent option-type transformations"
+          ],
+          "reason": "Generics, delegates, and higher-order option construction materially shape the path without recurring expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "mutable token and parsing state",
+            "recursive subcommand parsing",
+            "defaults, required values, repetition, and error transitions"
+          ],
+          "reason": "The parser and nested-command lifecycle require nontrivial state reasoning while remaining synchronous and bounded."
+        },
+        "design_span": {
+          "signals": [
+            "parser and descriptor boundary",
+            "typed option and conversion modules",
+            "direct behavior tests"
+          ],
+          "reason": "One process and a few explicit modules contain the selected behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "Linux, JVM, and GNU prefix styles",
+            "strict and permissive subcommand ordering",
+            "required, default, repeated, delimited, and typed-value contracts",
+            "stable diagnostics and delegated access rules"
+          ],
+          "reason": "Several syntax, compatibility, validation, and API guarantees influence ordinary parser changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; kotlinx-cli ranks third behind Clikt and kotlin-logging, beyond the two-entry cap.",
+      "reconsider": "Reconsider if a Kotlin Level 3 slot opens, the parser or test contract materially improves, maintenance resumes, the obsolete-project status changes, or its relative educational clarity surpasses a retained Level 3 path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the same parser path, both gate passes, 3/3/2/3 scores, Level 3 rank 3, explicit obsolete-but-stable status, and capacity-only removal."
+      }
+    },
+    {
+      "repository": "cashapp/turbine",
+      "language": "Kotlin",
+      "prior_level": 2,
+      "pinned_commit": "408104d0874678455ff997913bd3f698039f5c25",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Flow test observes emitted items, normal completion, and errors through a channel-backed assertion API."
+        ],
+        "evidence": "Coroutine and Flow vocabulary is programming subject matter; the path directly teaches concurrent collection, structured cancellation, terminal events, timeouts, cleanup, exception causality, and race-sensitive testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Flow adaptation, channel assertions, public contracts, event modeling, and coroutine helpers remain separated and clearly named; FlowTest and ChannelTest exercise cancellation, terminal events, unconsumed events, timeouts, names, and errors; the README explains lifecycle obligations and virtual-time interaction; and the exact public pin, Apache-2.0 license, small maintainable surface, and direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Turbine turns concurrent Flow collection into an ordered, timeout-bounded assertion lifecycle with explicit cleanup and terminal events.",
+        "start_path": "src/commonMain/kotlin/app/cash/turbine/flow.kt",
+        "supporting_files": [
+          "src/commonMain/kotlin/app/cash/turbine/Turbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt",
+          "src/commonMain/kotlin/app/cash/turbine/channel.kt",
+          "src/commonMain/kotlin/app/cash/turbine/Event.kt",
+          "src/commonMain/kotlin/app/cash/turbine/coroutines.kt",
+          "src/commonTest/kotlin/app/cash/turbine/FlowTest.kt",
+          "src/commonTest/kotlin/app/cash/turbine/ChannelTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with Flow.test and testIn, follow undispatched collection into ChannelTurbine and item, completion, or error events, then trace timeout selection, cancellation and join, remaining-event reporting, and exception preservation into the direct Flow and Channel assertions."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic suspend extension functions and receiver contexts",
+            "CoroutineScope and Channel delegation",
+            "sealed terminal-event modeling and context elements"
+          ],
+          "reason": "Substantial coroutine and higher-order abstractions shape the path without manual continuations or multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent Flow collection and channel delivery",
+            "structured cancellation and completion",
+            "timeouts, unconsumed events, and exception-cause preservation",
+            "wall-clock and virtual-time interaction"
+          ],
+          "reason": "Concurrency, cancellation, event propagation, and cleanup invariants recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "Flow adapter",
+            "channel-backed assertion implementation",
+            "event and timeout helpers",
+            "direct common tests"
+          ],
+          "reason": "Several meaningful collection, assertion, lifecycle, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "collection must start promptly without losing hot-flow events",
+            "cancellation must stop and join backing work",
+            "timeouts must not be distorted by virtual test time",
+            "terminal and unconsumed exceptions must retain actionable causes"
+          ],
+          "reason": "Concurrency, cleanup, timing, diagnostic, and test-determinism guarantees interact throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; Turbine ranks first of the four qualified Kotlin Level 4 paths.",
+      "reconsider": "Reconsider if collection, timeout, cancellation, event, or cleanup behavior, direct Flow and Channel tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection selected the same Flow-to-channel lifecycle, confirmed the direct implementation and tests, both gate passes, 3/4/3/4 scores, Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "oshai/kotlin-logging",
+      "language": "Kotlin",
+      "prior_level": 2,
+      "pinned_commit": "0aaa57ccef9e1cc619de0d30bd65cc0a7271332d",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A logging facade checks a level, lazily creates an event, and forwards it to a platform backend while preserving the caller location."
+        ],
+        "evidence": "Logging vocabulary is short and subordinate to transferable lessons in lazy APIs, receiver builders, common-to-platform adapters, compatibility facades, payload forwarding, and observability contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The common KLogger contract, event builder, factory entry point, and SLF4J location-aware adapter have recognizable responsibilities and direct names; LoggingWithLocationTest verifies ordinary, lazy, fluent, null, and entry/exit call sites; the README documents lazy evaluation and backend behavior; and the exact public pin, Apache-2.0 license, stable facade, and direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a multiplatform Kotlin logging facade keeps messages lazy while preserving markers, payloads, causes, and the original source location through an SLF4J adapter.",
+        "start_path": "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt",
+        "supporting_files": [
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLoggingEventBuilder.kt",
+          "src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt",
+          "src/javaMain/kotlin/io/github/oshai/kotlinlogging/slf4j/internal/LocationAwareKLogger.kt",
+          "src/jvmTest/kotlin/io/github/oshai/kotlinlogging/LoggingWithLocationTest.kt",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with KLogger level methods and the receiver event builder, follow enabled checks and lazy message, marker, cause, and payload collection into LocationAwareKLogger, then close with exact caller-class, method, and line assertions for ordinary, lazy, fluent, null, and entry/exit calls."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "receiver-lambda event builder",
+            "default interface methods and higher-order message suppliers",
+            "generic backend delegation"
+          ],
+          "reason": "Higher-order facade abstractions materially shape the API without recurring reflection, code generation, or expert type machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "level-enabled branch",
+            "lazy event population",
+            "payload and non-payload forwarding"
+          ],
+          "reason": "Behavior has meaningful local branching but no nontrivial state machine or lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "common multiplatform API",
+            "event-builder abstraction",
+            "Java and SLF4J adapter boundary",
+            "backend-observable integration test"
+          ],
+          "reason": "Several meaningful common, platform, backend, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "disabled messages must remain unevaluated",
+            "the original caller location must survive wrapper frames",
+            "markers, causes, payloads, and null messages must retain backend semantics",
+            "the common API must remain compatible across platforms and SLF4J variants"
+          ],
+          "reason": "Performance, source-location, payload, multiplatform, and backend-compatibility guarantees interact throughout the facade."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/2/3/4 sums to 12, whose mean of 3.00 is Level 3; kotlin-logging ranks second of the three qualified Kotlin Level 3 paths.",
+      "reconsider": "Reconsider if laziness, location, marker or payload contracts, the common-to-SLF4J boundary, direct location tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the same lazy common-to-SLF4J location path, both gate passes, 3/2/3/4 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "ajalt/clikt",
+      "language": "Kotlin",
+      "prior_level": 3,
+      "pinned_commit": "fa2e48c54995a88d492f05568a64889d99994877",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A command-line parser maps option and argument tokens into typed command invocations, including nested subcommands."
+        ],
+        "evidence": "The concise command-line vocabulary is subordinate to reusable lessons in delegated APIs, token-state machines, recursive parsing, extension boundaries, error aggregation, validation, and compatibility-oriented tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public parser facade, parser internals, option contract, command invocations, and context responsibilities are explicit; OptionTest and SubcommandTest exhaustively cover aliases, grouped and attached values, arity, typo suggestions, nesting, repeated subcommands, and failures; the README clearly introduces the DSL; and the exact public pin, Apache-2.0 license, maintainable boundaries, and direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Clikt turns a delegated command DSL into recursively parsed, finalized, validated, and executable command invocations.",
+        "start_path": "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt",
+        "supporting_files": [
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt",
+          "clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/OptionTest.kt",
+          "test/src/commonTest/kotlin/com/github/ajalt/clikt/parameters/SubcommandTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with tokenize, parse, finalize, and run, follow CommandParser as it normalizes tokens, expands aliases and argument files, distinguishes long, short, numeric, argument, and subcommand cases, then trace option finalization and validation into the direct option and nested-subcommand tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic command and invocation types",
+            "delegated option framework idiom",
+            "higher-order context and finalization hooks"
+          ],
+          "reason": "Generics, delegates, and framework idioms materially shape the trace; the lower anchor controls because advanced type or implicit machinery does not recur pervasively."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "mutable token-consumption state",
+            "recursive subcommand parsing",
+            "separate parsing, finalization, validation, and execution stages",
+            "alias, argument-file, arity, and error branches"
+          ],
+          "reason": "A nontrivial synchronous parser lifecycle materially affects the trace without advanced concurrent or recovery behavior."
+        },
+        "design_span": {
+          "signals": [
+            "public parser facade",
+            "internal token parser",
+            "option and invocation boundaries",
+            "context, finalization, and test boundaries"
+          ],
+          "reason": "Several meaningful parsing, model, lifecycle, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "grouped, attached, transformed, and interspersed token forms",
+            "recursive and repeated subcommand semantics",
+            "option arity, eager handling, value sources, defaults, and validation",
+            "cross-platform behavior, localization, completion, and diagnostic compatibility"
+          ],
+          "reason": "Multiple grammar, extension, validation, portability, and compatibility guarantees interact throughout the parser."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 is Level 3; Clikt ranks first of the three qualified Kotlin Level 3 paths.",
+      "reconsider": "Reconsider if token parsing, delegated option, subcommand, finalization, or diagnostic behavior, direct tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection selected the same parser-and-option path and confirmed both gate passes, the lower-anchor 3/3/3/4 scores, Level 3 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "square/moshi",
+      "language": "Kotlin",
+      "prior_level": 3,
+      "pinned_commit": "889013ec2edb8d8034902662a1dc8c4f3b3f8111",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Moshi maps JSON values to and from Kotlin and Java object models through composable adapters."
+        ],
+        "evidence": "The short serialization vocabulary is subordinate to transferable programming lessons in generic factory lookup, recursive construction, cycle breaking, cache publication, reentrancy, reflection boundaries, and focused contract tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Moshi exposes a readable public adapter lookup path, isolates Kotlin reflection behind a factory, and directly tests circular construction and deferred publication; focused MoshiTest cases close precedence and lookup-stack behavior; the README, exact public pin, Apache-2.0 license, stable boundaries, and narrow trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Moshi resolves, constructs, temporarily defers, and safely caches recursive adapters without exposing incomplete adapters to callers.",
+        "start_path": "moshi/src/main/java/com/squareup/moshi/Moshi.kt",
+        "supporting_files": [
+          "moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt",
+          "moshi/src/test/java/com/squareup/moshi/CircularAdaptersTest.java",
+          "moshi/src/test/java/com/squareup/moshi/DeferredAdapterTest.java",
+          "moshi/src/test/java/com/squareup/moshi/MoshiTest.java",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start at Moshi.adapter and its factory walk, follow the thread-local LookupChain as recursive requests receive deferred adapters and successful outermost lookup publishes a synchronized cache snapshot, inspect the Kotlin reflection factory as a concrete recursive boundary, then close the trace with the direct circular and deferred tests plus only MoshiTest's lookup-stack and factory-precedence cases."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reified and KType-based adapter APIs",
+            "generic factories and type-token normalization",
+            "thread-local lookup context and deferred generic stubs",
+            "Kotlin reflection and Java type-system interoperation"
+          ],
+          "reason": "Advanced generic and reflective techniques recur across lookup and concrete adapter construction, but the trace does not require pervasive compiler-level type machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered factory search and next-adapter continuation",
+            "recursive lookup with placeholder binding",
+            "thread-local nested lookup stacks",
+            "outermost success, failure, cleanup, and cache-publication branches"
+          ],
+          "reason": "Correctness depends on a nonlocal recursive construction lifecycle, reentrancy, cleanup, and publication across nested lookups, matching the advanced behavior anchor."
+        },
+        "design_span": {
+          "signals": [
+            "public lookup facade",
+            "factory extension boundary",
+            "lookup-chain and deferred-adapter mechanism",
+            "direct recursion and cache tests"
+          ],
+          "reason": "Several meaningful implementation and verification boundaries cooperate, while the representative path remains one cohesive adapter-resolution subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "recursive types and circular adapter graphs",
+            "thread safety and cache visibility",
+            "factory ordering and skip-past semantics",
+            "nullability, annotations, reflection, and actionable lookup diagnostics"
+          ],
+          "reason": "Multiple interacting compatibility, concurrency, extension, recursion, and diagnostic guarantees constrain the lookup design."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; Moshi ranks second of the four qualified Kotlin Level 4 paths.",
+      "reconsider": "Reconsider if adapter factory ordering, recursive lookup, deferred binding, synchronized cache publication, the direct circular/deferred tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the adapter lookup and circular-cache trace, required CircularAdaptersTest and DeferredAdapterTest closure, both gate passes, 4/4/3/4 scores, Level 4 rank 2, and retention; broad MoshiTest coverage is used only for focused lookup-stack and factory-precedence cases."
+      }
+    },
+    {
+      "repository": "Kotlin/kotlinx.serialization",
+      "language": "Kotlin",
+      "prior_level": 4,
+      "pinned_commit": "25c2a755cbe6926a63003f3a51527bb731e8cd14",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The selected path decodes JSON text through serializer-driven Kotlin object construction."
+        ],
+        "evidence": "JSON syntax is compact context for reusable lessons in descriptor-driven dispatch, streaming tokenization, parser state, strategy selection, coercion, strictness, structured diagnostics, and failure-mode testing; unrelated formats and compiler-plugin breadth are excluded."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The serializer contract, JSON facade, streaming decoder, abstract and string lexer layers, and direct malformed-input suite form a documented source-to-test path; the exact public pin, Apache-2.0 license, maintained multiplatform structure, clear boundaries, and representative failure tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a serializer-driven streaming JSON decoder coordinates descriptors with a stateful lexer while preserving strict parsing and useful failure locations.",
+        "start_path": "formats/json/commonMain/src/kotlinx/serialization/json/internal/StreamingJsonDecoder.kt",
+        "supporting_files": [
+          "core/commonMain/src/kotlinx/serialization/KSerializer.kt",
+          "formats/json/commonMain/src/kotlinx/serialization/json/Json.kt",
+          "formats/json/commonMain/src/kotlinx/serialization/json/internal/lexer/AbstractJsonLexer.kt",
+          "formats/json/commonMain/src/kotlinx/serialization/json/internal/lexer/StringJsonLexer.kt",
+          "formats/json-tests/commonTest/src/kotlinx/serialization/json/JsonParserFailureModesTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with StreamingJsonDecoder's descriptor-dependent mode and element selection, follow scalar and structure reads into AbstractJsonLexer and the string-backed token source, relate decoded values to the KSerializer and Json facade contracts, then close with malformed-input, trailing-token, depth, number, escape, and path-diagnostic failures."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic serializer and deserializer strategies",
+            "descriptor-driven polymorphic dispatch",
+            "inline and multiplatform internal APIs",
+            "typed decoding contracts across nullable and structured values"
+          ],
+          "reason": "Generic strategies, descriptors, inline machinery, and multiplatform abstractions recur materially without reaching expert metaprogramming or compiler-internal breadth."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "stateful token cursor and structure modes",
+            "descriptor-dependent element selection",
+            "unknown-key, coercion, separator, depth, and failure branches",
+            "path-aware nested decode state"
+          ],
+          "reason": "The decoder and lexer form an advanced, branching state machine whose nested position and failure behavior require nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "serializer contract",
+            "JSON configuration facade",
+            "streaming decoder",
+            "abstract and concrete lexer boundaries",
+            "direct failure-mode tests"
+          ],
+          "reason": "Several meaningful contracts and implementation layers cooperate, but the selected trace remains a bounded JSON decoder rather than a platform-wide span."
+        },
+        "constraint_burden": {
+          "signals": [
+            "strict JSON grammar and complete-input consumption",
+            "coercion, unknown-key, null, and enum configuration",
+            "numeric overflow, escapes, nesting depth, and trailing commas",
+            "multiplatform consistency and path-rich diagnostics"
+          ],
+          "reason": "Several interacting correctness, configuration, portability, and diagnostic guarantees recur throughout the decoder path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; kotlinx.serialization ranks fourth behind Turbine, Moshi, and Ktor among four qualified Kotlin Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if the streaming decoder, both lexer layers, serializer contract, failure-mode coverage, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity changes enough to place it in the top two.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the same bounded JSON decoder path, including both AbstractJsonLexer and StringJsonLexer, both gate passes, 4/4/3/4 scores, Level 4 rank 4, and capacity removal."
+      }
+    },
+    {
+      "repository": "Kotlin/kotlinx.coroutines",
+      "language": "Kotlin",
+      "prior_level": 4,
+      "pinned_commit": "f63a04bacb8beeafcc9d49199b1e4bb08931b7eb",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The selected Job path coordinates structured coroutine lifetimes, cancellation, completion, and parent-child relationships."
+        ],
+        "evidence": "Coroutine vocabulary is programming-language and concurrency infrastructure, and the trace teaches transferable state-machine, lock-free transition, lifecycle, callback, ownership, exception, and concurrency reasoning without relying on an external specialist domain."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The public Job contract, JobSupport state machine, and focused state, completion, parent-cancellation, and completable-job suites give direct implementation-to-contract closure; the README, exact public pin, Apache-2.0 license, mature multiplatform maintenance, explicit invariants, and coherent bounded trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how kotlinx.coroutines implements a thread-safe Job lifecycle across activation, completion, cancellation, child waiting, handler invocation, and exception aggregation.",
+        "start_path": "kotlinx-coroutines-core/common/src/JobSupport.kt",
+        "supporting_files": [
+          "kotlinx-coroutines-core/common/src/Job.kt",
+          "kotlinx-coroutines-core/common/test/JobStatesTest.kt",
+          "kotlinx-coroutines-core/common/test/JobTest.kt",
+          "kotlinx-coroutines-core/common/test/ParentCancellationTest.kt",
+          "kotlinx-coroutines-core/common/test/CompletableJobTest.kt",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with JobSupport's state representation and atomic transition loops, follow start, cancel, make-completing, child-wait, finalization, exception aggregation, and handler notification against the public Job lifecycle contract, then close each transition and parent-child edge with the focused state, cancellation, completion, and completable-job tests; unrelated scheduler, continuation, channel, and SharedFlow machinery is excluded."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "atomicfu-backed compare-and-set loops",
+            "lock-free linked-list state and conditional additions",
+            "sealed internal state families, sentinels, and type refinement",
+            "inline fast paths and carefully controlled internal visibility"
+          ],
+          "reason": "Low-level atomic, lock-free, type-state, and performance techniques are pervasive across the selected lifecycle implementation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "multi-phase incomplete, finishing, completed, and cancelled states",
+            "racing completion and cancellation transitions",
+            "parent-child attachment, waiting, propagation, and detachment",
+            "handler ordering, exception aggregation, suppression, and finalization"
+          ],
+          "reason": "Correctness depends on expert nonlocal reasoning across concurrent state transitions, nested ownership, callbacks, and exceptional completion."
+        },
+        "design_span": {
+          "signals": [
+            "public Job lifecycle contract",
+            "central JobSupport state machine",
+            "lock-free node and child-handle collaborators",
+            "focused lifecycle and parent-child verification"
+          ],
+          "reason": "Several meaningful contract, implementation, collaboration, and test boundaries cooperate, but the representative path deliberately remains one subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "lock-free thread safety and linearizable state publication",
+            "structured parent-child cancellation and completion guarantees",
+            "exactly-once handler invocation under races",
+            "exception ownership, aggregation, suppression, and reporting",
+            "hot-path performance and multiplatform consistency"
+          ],
+          "reason": "Expert concurrency, lifecycle, exception, compatibility, and performance guarantees interact pervasively throughout the path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/3/5 sums to 18, whose mean of 4.50 rounds to Level 5; three dimensions independently score 5, satisfying the Level 5 guard, and the Job lifecycle ranks first of the two qualified Kotlin Level 5 paths.",
+      "reconsider": "Reconsider if Job state transitions, parent-child lifecycle, cancellation or exception guarantees, direct lifecycle tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 5 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection selected the same bounded Job lifecycle path and confirmed both gate passes, 5/5/3/5 scores, satisfaction of the Level 5 guard, Level 5 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "ktorio/ktor",
+      "language": "Kotlin",
+      "prior_level": 5,
+      "pinned_commit": "6b20bd02a684a3543bf2e4d2fa2f9c83a83189e4",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Ktor's generic pipeline executes ordered suspending interceptors and underlies higher-level client and server processing."
+        ],
+        "evidence": "The selected path is a domain-neutral middleware pipeline rather than HTTP feature breadth, teaching transferable phase ordering, interceptor composition, continuation state, suspension, nested proceed calls, context handoff, recovery, copy-on-write mutation, and contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Pipeline, PipelineContext, SuspendFunctionGun, and PhaseContent expose distinct public and internal responsibilities, while direct pipeline, phase, and contract tests cover ordering, merge, mutation, suspension, nested proceed, and failure behavior; the README, exact public pin, Apache-2.0 license, maintained multiplatform structure, and bounded trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Ktor composes and executes a mutable ordered pipeline of suspending interceptors while preserving phase, continuation, and recovery contracts.",
+        "start_path": "ktor-utils/common/src/io/ktor/util/pipeline/Pipeline.kt",
+        "supporting_files": [
+          "ktor-utils/common/src/io/ktor/util/pipeline/PipelineContext.kt",
+          "ktor-utils/common/src/io/ktor/util/pipeline/SuspendFunctionGun.kt",
+          "ktor-utils/common/src/io/ktor/util/pipeline/PhaseContent.kt",
+          "ktor-utils/common/test/io/ktor/util/PipelineTest.kt",
+          "ktor-utils/common/test/io/ktor/util/PipelinePhasesTest.kt",
+          "ktor-utils/common/test/io/ktor/util/PipelineContractsTest.kt",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with phase and interceptor registration in Pipeline, follow flattened interceptor snapshots into PipelineContext and SuspendFunctionGun's manual continuation loop, suspension, proceed, finish, context switch, and failure recovery, then close ordering, merge, mutation, nested execution, and continuation contracts in the three direct test suites; HTTP routing and client/server feature breadth is excluded."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "manual coroutine continuation implementation",
+            "intrinsics-based suspend and resume control",
+            "generic suspending interceptor chains",
+            "atomic copy-on-write pipeline snapshots and context elements"
+          ],
+          "reason": "Expert coroutine, continuation, generic, and atomic techniques are pervasive in the bounded execution machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "phase-ordered interceptor execution",
+            "manual index and subject state across suspension",
+            "nested proceed, proceedWith, and finish control",
+            "context scheduling, resume, failure, and stack-recovery branches"
+          ],
+          "reason": "The manual continuation state machine, scheduling and context handoff, and recovery match the explicit advanced Behavior-4 anchor; the lower-score borderline rule controls because expert nonlocal reasoning is not pervasive beyond this bounded pipeline path."
+        },
+        "design_span": {
+          "signals": [
+            "public pipeline and context contracts",
+            "phase storage and flattened-cache boundary",
+            "manual continuation executor",
+            "direct ordering and contract tests"
+          ],
+          "reason": "Several meaningful API, storage, execution, and verification boundaries cooperate while remaining one cohesive pipeline subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable phase ordering and merge semantics",
+            "safe mutation and snapshot reuse",
+            "suspend, resume, context, and double-resume correctness",
+            "nested proceed, finish, exception, stack-trace, performance, and multiplatform behavior"
+          ],
+          "reason": "Multiple interacting lifecycle, coroutine, ordering, mutation, recovery, portability, and performance guarantees recur throughout the executor."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 5/4/3/4 sums to 16, whose mean is Level 4; Ktor ranks third behind Turbine and Moshi and ahead of kotlinx.serialization among four qualified Kotlin Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if the generic pipeline executor, manual continuation behavior, ordering or recovery contracts, direct tests, documentation, Apache-2.0 licensing, or relative Kotlin Level 4 educational clarity changes enough to place it in the top two.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent reviewer initially proposed Behavioral Reasoning 5 because of the manual continuation and recovery machinery. Root adjudication kept 4: within this bounded path, the continuation state machine, scheduling and context handoff, and recovery match the explicit Behavior-4 anchor but do not make expert nonlocal reasoning pervasive enough for 5. Both reviews otherwise agreed on the path, gate passes, 5/4/3/4 final profile, Level 4 rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "JetBrains/kotlin",
+      "language": "Kotlin",
+      "prior_level": 5,
+      "pinned_commit": "893937b03bee8acd82c4c6201732d9e29cb3d932",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The selected JVM command-line compiler pipeline transforms Kotlin source through frontend analysis, FIR-to-IR conversion, backend code generation, and output writing."
+        ],
+        "evidence": "Compiler construction is programming infrastructure rather than an external specialist domain, and the trace teaches transferable staged architecture, typed intermediate representations, diagnostics, extension coordination, code generation, lifecycle, and output-integrity reasoning."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The command entry, explicit JVM pipeline, frontend, FIR-to-IR bridge, backend, output phase, and integration test form an unusually complete source-to-artifact trace; repository documentation, the exact public pin, mature maintenance, explicit JetBrains Apache-2.0 license text with separately documented third-party exceptions, and direct jar-output closure satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how the Kotlin JVM command-line compiler coordinates configuration, frontend analysis, FIR-to-IR conversion, JVM backend generation, and safe artifact output as an explicit staged pipeline.",
+        "start_path": "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt",
+        "supporting_files": [
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFrontendPipelinePhase.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFir2IrPipelinePhase.kt",
+          "compiler/fir/entrypoint/src/org/jetbrains/kotlin/fir/pipeline/convertToIr.kt",
+          "compiler/fir/fir2ir/src/org/jetbrains/kotlin/fir/backend/Fir2IrConverter.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmBackendPipelinePhase.kt",
+          "compiler/ir/backend.jvm/entrypoint/src/org/jetbrains/kotlin/backend/jvm/JvmIrCodegenFactory.kt",
+          "compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmWriteOutputsPhase.kt",
+          "compiler/tests-integration/tests/org/jetbrains/kotlin/cli/JarOutputTest.kt",
+          "ReadMe.md",
+          "license/README.md",
+          "license/LICENSE.txt"
+        ],
+        "trace": "Start with JvmCliPipeline's ordered phase composition and K2JVMCompiler entry, follow frontend session and analysis output into JvmFir2IrPipelinePhase, convertToIr and Fir2IrConverter, continue through JvmBackendPipelinePhase and JvmIrCodegenFactory, then finish at JvmWriteOutputsPhase and JarOutputTest's artifact contracts; unrelated IDE, Native, JavaScript, build, and plugin subsystems are excluded."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 5,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "strongly typed generic pipeline phases and artifacts",
+            "compiler-internal FIR and IR type systems",
+            "visitor, symbol, scope, extension, and lowering machinery",
+            "advanced Kotlin and JVM interoperation throughout code generation"
+          ],
+          "reason": "Expert type, compiler, generic pipeline, representation, and code-generation techniques are pervasive across every stage."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "multi-stage configuration and diagnostic lifecycle",
+            "frontend session, analysis, and failure propagation",
+            "FIR-to-IR conversion with symbol and component coordination",
+            "backend generation, incremental outputs, jar writing, and cleanup"
+          ],
+          "reason": "Correctness requires expert nonlocal reasoning across staged transformations, shared compiler state, diagnostics, failure policies, generated artifacts, and output finalization."
+        },
+        "design_span": {
+          "signals": [
+            "command-line entry and configuration",
+            "explicit phase-pipeline framework",
+            "frontend, FIR, IR, and backend subsystems",
+            "code-generation and artifact-output boundaries",
+            "integration-level output verification"
+          ],
+          "reason": "The coherent source-to-jar trace necessarily spans many architecturally distinct compiler subsystems and integration boundaries."
+        },
+        "constraint_burden": {
+          "signals": [
+            "language semantic and diagnostic compatibility",
+            "stable FIR-to-IR symbol and type translation",
+            "JVM bytecode, metadata, classpath, module, and plugin contracts",
+            "incremental, reproducible, safe jar and directory output",
+            "performance and compatibility across a large evolving compiler"
+          ],
+          "reason": "Expert semantic, representation, extension, artifact, performance, and backward-compatibility guarantees interact pervasively across the pipeline."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/5/5 sums to 20, whose mean is Level 5; all four dimensions score 5, satisfying the Level 5 guard, and the JVM compiler pipeline ranks second of the two qualified Kotlin Level 5 paths.",
+      "reconsider": "Reconsider if the staged JVM compiler pipeline, frontend-to-IR-to-backend trace, jar-output contracts, documentation, licensing evidence and third-party exceptions, or relative Kotlin Level 5 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the same bounded JVM CLI pipeline through frontend, FIR-to-IR, backend, and output, both gate passes, 5/5/5/5 scores, satisfaction of the Level 5 guard, Level 5 rank 2, and retention. GitHub supplies no repository-wide license identifier at this pin; license/LICENSE.txt covers JetBrains-authored code under Apache-2.0 and license/README.md documents third-party exceptions, so the record does not claim one unqualified SPDX license for every file."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 87,
-      "remove": 43
+      "retain": 94,
+      "remove": 46
     },
     "by_language": {
       "JavaScript": {
@@ -9960,33 +10786,52 @@
           "4": 2,
           "5": 0
         }
+      },
+      "Kotlin": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 3,
+          "4": 4,
+          "5": 2
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 26,
-        "retain": 25,
-        "remove": 1
+        "reviewed": 28,
+        "retain": 26,
+        "remove": 2
       },
       "2": {
-        "reviewed": 26,
-        "retain": 20,
+        "reviewed": 28,
+        "retain": 22,
         "remove": 6
       },
       "3": {
-        "reviewed": 26,
-        "retain": 16,
+        "reviewed": 28,
+        "retain": 18,
         "remove": 10
       },
       "4": {
-        "reviewed": 26,
-        "retain": 12,
-        "remove": 14
+        "reviewed": 28,
+        "retain": 13,
+        "remove": 15
       },
       "5": {
-        "reviewed": 26,
-        "retain": 14,
-        "remove": 12
+        "reviewed": 28,
+        "retain": 15,
+        "remove": 13
       }
     },
     "by_new_level": {
@@ -9996,28 +10841,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 23,
-        "retain": 22,
+        "scored": 24,
+        "retain": 23,
         "remove": 1
       },
       "3": {
-        "scored": 34,
-        "retain": 24,
-        "remove": 10
+        "scored": 37,
+        "retain": 26,
+        "remove": 11
       },
       "4": {
-        "scored": 52,
-        "retain": 26,
-        "remove": 26
+        "scored": 56,
+        "retain": 28,
+        "remove": 28
       },
       "5": {
-        "scored": 16,
-        "retain": 15,
+        "scored": 18,
+        "retain": 17,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 38,
+      "qualified_alternate_over_capacity": 41,
       "coding_relevance_domain_gate": 4,
       "repository_quality_gate": 1
     }
