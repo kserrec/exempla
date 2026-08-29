@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 150,
+  "reviewed_entry_total": 160,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -11254,12 +11254,741 @@
         "status": "agree",
         "notes": "Independent exact-pin inspection confirmed that denotations, typing, trees, staging, erasure, transformations, TASTy, and backend semantics dominate the representative compiler path; both reviews agree on the hard domain rejection, quality not evaluated status, absence of scores and level, and removal. No focused PhasesTest.scala or PhasesTests.scala exists at the pin, so only the verified broad CompilationTests.scala is recorded."
       }
+    },
+    {
+      "repository": "lipkau/PSIni",
+      "language": "PowerShell",
+      "prior_level": 1,
+      "pinned_commit": "6895c42fdba461a1a171fe70e11d67c037bac1d0",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An INI document is line-oriented configuration text containing sections, comments, keys, values, and repeated-key policy."
+        ],
+        "evidence": "That small vocabulary is subordinate to transferable PowerShell lessons in advanced-function input, regular-expression classification, ordered object construction, localized parser state, duplicate handling, and encoding-aware file boundaries."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Import-Ini keeps section, comment, key, and duplicate branches explicit; its focused Pester suite directly closes literal paths, multiple files, string input, comments, custom comment characters, empty sections, keys without values, quoted values, and returned ordering; the README documents the object shape and switches; and the exact public pin, MIT license, narrow maintained module, and observable behavior satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a compact PowerShell advanced function parses line-oriented configuration text into an ordered object model without losing its practical edge cases.",
+        "start_path": "PSIni/Public/Import-Ini.ps1",
+        "supporting_files": [
+          "Tests/Import-Ini.Unit.Tests.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Import-Ini's path, literal-path, and string parameter sets, follow each line through section, comment, and key-value matching into ordered case-insensitive dictionaries, observe how repeated values and the no-section sentinel are represented, then close malformed and compatibility behavior in the direct import suite. Export-Ini is intentionally outside this import-only scored trace."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "advanced-function parameter sets and pipeline input",
+            "regular-expression switch branches",
+            "ordered case-insensitive dictionaries and ArrayList promotion"
+          ],
+          "reason": "Common professional PowerShell idioms materially shape the parser, but no advanced runtime or metaprogramming machinery recurs."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "current-section parser state",
+            "localized duplicate and comment policy branches",
+            "bounded file, literal-path, and string input modes"
+          ],
+          "reason": "Behavior is a synchronous line transformation with only local parser state and explicit branches."
+        },
+        "design_span": {
+          "signals": [
+            "one public parser",
+            "one ordered result representation",
+            "one direct contract suite"
+          ],
+          "reason": "The complete scored behavior is contained in one cohesive implementation unit and its tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "input order and case behavior must remain stable",
+            "comments, empty sections, valueless keys, and repeated keys need defined policies",
+            "path modes, text input, and encoding behavior must remain compatible"
+          ],
+          "reason": "Several parser and compatibility guarantees recur even though the control flow is compact."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean is Level 2; PSIni ranks first of the two qualified PowerShell Level 2 paths.",
+      "reconsider": "Reconsider if ordered parsing, duplicate or comment policies, encoding and input-mode contracts, direct tests, documentation, MIT licensing, or relative PowerShell Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded Import-Ini-to-direct-test trace, 2/2/1/3 scores, Level 2 rank 1, and retention; both reviews kept Export-Ini outside the scored path."
+      }
+    },
+    {
+      "repository": "deadlydog/Invoke-MsBuild",
+      "language": "PowerShell",
+      "prior_level": 1,
+      "pinned_commit": "7fee8e141296ea6c337e433537d7061f52e24157",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "MSBuild discovery means locating the executable or developer command prompt across conventional Visual Studio installation generations and architectures."
+        ],
+        "evidence": "The short tool vocabulary is subordinate to transferable lessons in filesystem probing, version ordering, architecture selection, fallbacks, parameter validation, and isolating operating-system dependencies behind focused tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The discovery helpers expose their path candidates and version fallbacks directly, while Invoke-MsBuild.Tests creates representative Visual Studio 2017 through 2026 layouts and closes newest-version, 32-bit, 64-bit, and command-prompt selection; the README documents supported discovery behavior; and the exact public pin, MIT license, compact implementation, and focused observable suite satisfy all eight quality dimensions for this narrowed path.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell adapter discovers a versioned external build executable across operating-system installation conventions and validates its fallback choices.",
+        "start_path": "src/Invoke-MsBuild/Invoke-MsBuild.psm1",
+        "supporting_files": [
+          "src/Tests/Invoke-MsBuild.Tests.ps1",
+          "ReadMe.md",
+          "License.md"
+        ],
+        "trace": "Begin at Get-LatestMsBuildPath, follow conventional Visual Studio and MSBuild directory candidates through version sorting, architecture choice, legacy fallback, and missing-path behavior, then close those decisions in the fake-installation tests. The broader invocation, process, logging, cleanup, and result lifecycle is intentionally not claimed because the listed suite does not directly close it."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PowerShell functions over filesystem and .NET path APIs",
+            "version-aware sorting and candidate filtering",
+            "mockable operating-system discovery"
+          ],
+          "reason": "The path uses common professional PowerShell and .NET interoperation without recurring advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered candidate probing",
+            "newest-installation and architecture branches",
+            "legacy and missing-installation fallbacks"
+          ],
+          "reason": "The discovery decision tree is synchronous, bounded, and locally inspectable."
+        },
+        "design_span": {
+          "signals": [
+            "one production module",
+            "one external installation-layout boundary",
+            "one focused test suite"
+          ],
+          "reason": "A single cohesive module contains the complete scored discovery behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "Visual Studio generations use different directory layouts",
+            "32-bit and 64-bit executable choices must remain correct",
+            "newest-version ordering and legacy fallbacks must remain compatible"
+          ],
+          "reason": "Several platform and backward-compatibility contracts constrain an otherwise small adapter."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean is Level 2; Invoke-MsBuild ranks second of the two qualified PowerShell Level 2 paths.",
+      "reconsider": "Reconsider if executable-layout support, version or architecture selection, direct discovery tests, documentation, MIT licensing, or relative PowerShell Level 2 educational clarity materially changes; do not broaden the scored path without direct process-lifecycle tests.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, 2/2/1/3 scores, Level 2 rank 2, and retention. Both reviews found that the listed test closes discovery rather than the broad build-process lifecycle, so the final trace is explicitly narrowed to Get-LatestMsBuildPath."
+      }
+    },
+    {
+      "repository": "nightroman/Invoke-Build",
+      "language": "PowerShell",
+      "prior_level": 2,
+      "pinned_commit": "16e0279db6dcc3845d0a550373e1f9f137f2f51b",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A parallel build coordinator starts independent build scripts as workers while limiting concurrency and collecting their results."
+        ],
+        "evidence": "That small build vocabulary is subordinate to transferable lessons in asynchronous PowerShell instances, bounded scheduling, coordinator state, timeout and cancellation, output capture, nested invocation, and aggregated failure reporting."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Build-Parallel keeps pending, active, completed, failed, and timed-out worker state observable; its direct test build and Parallel.test suite close concurrency limits, overlapping execution, partial failure, timeout, nested use, information output, and invalid input; the parallel-build guide and design notes explain the coordinator boundary; and the exact public pin, Apache-2.0 license, mature compact implementation, and executable scenarios satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell coordinator schedules several build scripts concurrently, limits active workers, and preserves output, timeout, and failure contracts.",
+        "start_path": "Build-Parallel.ps1",
+        "supporting_files": [
+          "Invoke-Build.ps1",
+          "Tests/Build-Parallel/Parallel.build.ps1",
+          "Tests/Build-Parallel/Parallel.test.ps1",
+          "Docs/Parallel-Builds.md",
+          "Docs/Design-Notes.md",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Build-Parallel's queue, MaximumBuilds admission rule, PowerShell instance creation, BeginInvoke and EndInvoke lifecycle, completion polling, timeout stop, output collection, and final error aggregation; use Invoke-Build only as the worker boundary, then close concurrent success, partial failure, timeout, nesting, and validation in the dedicated build and test scripts plus design notes."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "System.Management.Automation.PowerShell instances",
+            "BeginInvoke and EndInvoke asynchronous handles",
+            "scriptblock, stream, and structured error handling"
+          ],
+          "reason": "Asynchronous PowerShell APIs and language-native worker composition materially shape the path without recurring expert runtime manipulation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "pending, active, completed, failed, and timed-out worker states",
+            "bounded admission and completion polling",
+            "cancellation, cleanup, nesting, and aggregated recovery"
+          ],
+          "reason": "Scheduling and failure state must be followed across several asynchronous workers and lifecycle transitions, matching the Level 4 anchor."
+        },
+        "design_span": {
+          "signals": [
+            "parallel coordinator",
+            "Invoke-Build worker boundary",
+            "direct executable build and contract-test layer"
+          ],
+          "reason": "Several cohesive components and one asynchronous runtime boundary contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "MaximumBuilds must bound concurrency",
+            "output and errors must remain attributable to the correct worker",
+            "timeouts, partial failures, nested calls, and cleanup must remain correct"
+          ],
+          "reason": "Concurrency, timeout, resource, compatibility, and error contracts recur throughout the coordinator."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Invoke-Build ranks second of the two qualified PowerShell Level 4 paths.",
+      "reconsider": "Reconsider if worker admission, asynchronous lifecycle, timeout, cleanup or error aggregation, direct parallel tests, design documentation, Apache-2.0 licensing, or relative PowerShell Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, 3/4/3/4 scores, Level 4 rank 2, and retention, but the independent review initially started from the broader task-graph and incremental engine. Root resolved the path disagreement with the representative-path criterion: the final bounded trace starts at Build-Parallel, uses engine internals only as a worker boundary, and closes in the direct parallel tests and design notes."
+      }
+    },
+    {
+      "repository": "PoshCode/ModuleBuilder",
+      "language": "PowerShell",
+      "prior_level": 2,
+      "pinned_commit": "3b19a45518b99aded3ecc20e709d96a19a3e937b",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A module build generator rewrites PowerShell source blocks while preserving valid module structure and source meaning."
+        ],
+        "evidence": "The compact module-build vocabulary is subordinate to transferable lessons in syntax trees, visitor dispatch, source extents, ordered text replacement, scriptblock generation, closure capture, reparsing, and transformation contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Merge-ScriptBlock and ConvertToAst keep parsing, named-block discovery, visitor decisions, and extent replacement explicit; TextReplacement and Invoke-ScriptGenerator isolate ordered mutation and generator invocation; focused tests reparse transformed output and verify begin, process, end, function, parameter, and parse-error behavior; the README documents source generation; and the exact public pin, MIT license, maintained pipeline, and observable AST contracts satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how PowerShell's parser and AST can drive a source-to-source generator that merges scriptblocks without corrupting syntax or execution structure.",
+        "start_path": "Source/Public/Merge-ScriptBlock.ps1",
+        "supporting_files": [
+          "Source/Private/ConvertToAst.ps1",
+          "Source/Classes/10. TextReplacement.ps1",
+          "Source/Public/Invoke-ScriptGenerator.ps1",
+          "Tests/Private/ConvertToAst.Tests.ps1",
+          "Tests/Public/Merge-ScriptBlock.Tests.ps1",
+          "ReadMe.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Merge-ScriptBlock's BlockGenerator visitor over NamedBlockAst and FunctionDefinitionAst nodes, follow ConvertToAst selection and exact source extents into ordered TextReplacement edits and Invoke-ScriptGenerator execution, then reparse the generated text and close begin, process, end, parameter, function, and parse-failure behavior in the two direct AST suites."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PowerShell parser, token, extent, and typed AST hierarchy APIs",
+            "custom AST visitor dispatch over named blocks and functions",
+            "scriptblock closures, generated source, ordered replacements, and reparsing"
+          ],
+          "reason": "Multiple advanced PowerShell language and compiler-facing mechanisms interact pervasively across the selected transformation, meeting the expert Language 5 anchor."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "parse, visit, collect, replace, generate, and reparse stages",
+            "ordered source-offset mutation",
+            "begin, process, end, parameter, and function cases"
+          ],
+          "reason": "The learner follows a multistage synchronous transformation whose state is explicit and bounded."
+        },
+        "design_span": {
+          "signals": [
+            "AST conversion boundary",
+            "visitor and replacement model",
+            "generator invocation and direct parse-contract tests"
+          ],
+          "reason": "Several cohesive components cooperate across parser, transformation, generator, and test boundaries."
+        },
+        "constraint_burden": {
+          "signals": [
+            "replacement offsets and ordering must preserve source structure",
+            "parameter and named-block semantics must survive merging",
+            "generated text must reparse without errors across supported PowerShell versions"
+          ],
+          "reason": "Syntax preservation, transformation ordering, semantic compatibility, and version guarantees recur throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 5/3/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; the Language 5 guard also requires at least Level 4, and ModuleBuilder ranks first of the two qualified PowerShell Level 4 paths.",
+      "reconsider": "Reconsider if AST visitor, extent replacement, generated-source or reparsing contracts, direct AST tests, documentation, MIT licensing, or relative PowerShell Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the Merge-ScriptBlock-to-ConvertToAst/TextReplacement/Invoke-ScriptGenerator trace, recurring expert PowerShell machinery supporting 5/3/3/4, Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "ScoopInstaller/Scoop",
+      "language": "PowerShell",
+      "prior_level": 3,
+      "pinned_commit": "b588a06e41d920d2123ec70aee682bae14935939",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An application manifest names ordinary, runtime, script, and helper dependencies that must be installed before the requested package."
+        ],
+        "evidence": "That short package-manager vocabulary is subordinate to transferable lessons in recursive graph traversal, resolved and unresolved state, cycle detection, stable topological output, architecture-aware dependency selection, and testable lookup boundaries."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Get-Dependency keeps resolved and unresolved sets, recursive lookup, cycle rejection, helper injection, bucket identity, and output ordering explicit; Scoop-Depends.Tests mocks the manifest boundary and directly closes ordinary, script, runtime, helper, and bucket-preserving order; the README documents the package model; and the exact public pin, dual Unlicense-or-MIT license, maintained implementation, and observable tests satisfy all eight quality dimensions for this dependency-only path.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell package manager resolves a manifest dependency graph into a stable install order while rejecting cycles and preserving architecture and bucket identity.",
+        "start_path": "lib/depends.ps1",
+        "supporting_files": [
+          "lib/manifest.ps1",
+          "test/Scoop-Depends.Tests.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Get-Dependency's Resolved and Unresolved collections, follow recursive Get-Manifest lookup through ordinary, script, runtime, architecture-specific helper, and bucket-qualified dependencies, observe cycle rejection and postorder emission, then close order and identity behavior in the focused dependency suite. The broad download, extraction, hook, shim, persistence, and installer lifecycle is outside the scored trace."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PowerShell functions, arrays, and hashtables",
+            "recursive function calls",
+            "mockable manifest lookup"
+          ],
+          "reason": "The resolver uses common professional PowerShell techniques without advanced runtime or metaprogramming machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive dependency traversal",
+            "resolved and unresolved graph state",
+            "cycle detection and topological output"
+          ],
+          "reason": "The learner must follow nonlocal graph state across recursive calls, matching the Level 3 anchor."
+        },
+        "design_span": {
+          "signals": [
+            "dependency resolver",
+            "manifest lookup boundary",
+            "focused mocked contract suite"
+          ],
+          "reason": "A few cohesive units contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "dependencies must precede dependents without duplication",
+            "cycles must terminate with a visible failure",
+            "architecture helpers and bucket-qualified identities must remain correct"
+          ],
+          "reason": "Several graph-ordering and compatibility guarantees constrain changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 2/3/2/3 sums to 10, whose mean of 2.5 rounds half up to Level 3; Scoop ranks third behind ImportExcel and Pode among four qualified PowerShell Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a PowerShell Level 3 slot opens, the two-entry cap changes, or direct cycle and failure closure, documentation, licensing, or comparative educational clarity improves enough to outrank ImportExcel or Pode.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded dependency-resolver path rather than the broad installer lifecycle, 2/3/2/3 scores, Level 3 rank 3, and removal only for capacity."
+      }
+    },
+    {
+      "repository": "dfinke/ImportExcel",
+      "language": "PowerShell",
+      "prior_level": 3,
+      "pinned_commit": "5387c061461c811d106b125588f064c4739342cb",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An Excel workbook exposes worksheets, rectangular cell ranges, header rows, typed values, and an open or owned package resource."
+        ],
+        "evidence": "That short spreadsheet vocabulary is subordinate to transferable lessons in pipeline adapters, typed .NET interoperation, input normalization, resource ownership, row-to-object mapping, validation, and deterministic cleanup."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Import-Excel keeps path and caller-owned package modes, stream creation, worksheet selection, range derivation, header policies, row mapping, error wrapping, and finally-based disposal visible; Open-ExcelPackage and Close-ExcelPackage make ownership explicit; focused tests exercise real XLSX artifacts, explicit open-import-close use, path and pipeline input, multiple files and sheets, range bounds, object values, and performance; the README documents the adapter; and the exact public pin, Apache-2.0 license, mature maintained module, and observable artifact tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell adapter opens an Excel package, turns bounded worksheet cells into ordered objects, and releases only the resources it owns.",
+        "start_path": "Public/Import-Excel.ps1",
+        "supporting_files": [
+          "Public/Open-ExcelPackage.ps1",
+          "Public/Close-ExcelPackage.ps1",
+          "__tests__/ImportExcelTests/Simple.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelEndRowEndColumn.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelReadSheets.tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with Import-Excel's path-versus-ExcelPackage parameter sets, follow path validation and stream loading into worksheet selection, row and column bounds, header derivation, duplicate rejection, typed cell extraction, ordered PSCustomObject rows, and finally-based close and disposal; compare caller-owned Open-ExcelPackage and Close-ExcelPackage behavior, then close simple, multiple-sheet, bounded-range, pipeline, resource, and performance behavior in the focused import suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "advanced-function parameter sets and pipeline modes",
+            "typed OfficeOpenXml and .NET stream interoperation",
+            "ordered dynamic object construction and compiled matching"
+          ],
+          "reason": "Advanced cmdlet composition, pipeline behavior, typed .NET resources, and dynamic property construction materially shape the adapter without expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "path-owned versus caller-owned package lifecycle",
+            "state across several files, worksheets, rows, and columns",
+            "header, range, empty-data, failure, and cleanup branches"
+          ],
+          "reason": "The learner follows resource and iteration state across several stages while the lifecycle remains bounded to one import operation."
+        },
+        "design_span": {
+          "signals": [
+            "public import adapter",
+            "open and close resource boundary",
+            "focused real-artifact contract suites"
+          ],
+          "reason": "A few cohesive modules and one third-party package boundary contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "valid extensions, paths, worksheets, dimensions, and unique headers",
+            "range, no-header, supplied-header, data-only, text, and date semantics",
+            "caller ownership, stream disposal, multi-file and multi-sheet output, performance, and cross-platform compatibility"
+          ],
+          "reason": "Artifact validity, mapping, ownership, error, performance, and compatibility guarantees recur throughout the adapter."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/2/4 sums to 12, whose mean is Level 3; ImportExcel ranks first of four qualified PowerShell Level 3 paths.",
+      "reconsider": "Reconsider if package ownership, header and range mapping, typed import, disposal or artifact contracts, focused tests, documentation, Apache-2.0 licensing, or relative PowerShell Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, 3/3/2/4 scores, Level 3 rank 1, and retention, but the independent review initially preferred Export-Excel's serializer path. Root resolved the path disagreement with the representative-path criterion: the final trace starts at Import-Excel and follows its adapter and resource-ownership contract through focused import tests."
+      }
+    },
+    {
+      "repository": "pester/Pester",
+      "language": "PowerShell",
+      "prior_level": 4,
+      "pinned_commit": "bfcbd4d2b0fc5e89d058f59da19feabf853d33c2",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Describe and It declare nested test blocks whose discovery, filtering, setup, execution, result, and cleanup lifecycle is managed by the framework runtime."
+        ],
+        "evidence": "That familiar testing vocabulary is subordinate to transferable expert PowerShell lessons in scriptblock scope, session-state manipulation, dynamic test generation, tree construction, recursive lifecycle execution, plugin hooks, error capture, timing, filtering, and isolation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Describe and It validate and register ordinary and data-driven scriptblocks, while Pester.Runtime makes block and test objects, discovery state, execution state, scope switching, setup and teardown, plugin callbacks, filtering, timing, errors, and results explicit; focused runtime and RSpec suites exercise nesting, data expansion, scope fidelity, setup paths, filtering, skip and failure behavior, and result aggregation; the README documents the DSL and lifecycle; and the exact public pin, Apache-2.0 license, mature maintained framework, and deep self-tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Pester turns Describe and It scriptblocks into a discovered test tree and then executes that tree with correct scopes, hooks, errors, timing, filtering, and results.",
+        "start_path": "src/functions/Describe.ps1",
+        "supporting_files": [
+          "src/functions/It.ps1",
+          "src/Pester.Runtime.ps1",
+          "src/Pester.RSpec.ps1",
+          "tst/Pester.Runtime.ts.ps1",
+          "tst/Pester.RSpec.ts.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Describe and It validation, parameterized block and test registration, and interactive handling; follow New-Block and New-Test into Pester.Runtime's discovery tree, recursive Invoke-Block execution, session-state and scriptblock scope switching, setup and teardown order, plugin callbacks, filtering, errors, timing, and result decoration in Pester.RSpec; then close nested, generated, scoped, skipped, failed, and filtered lifecycle behavior in the focused runtime and DSL suites."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dynamic scriptblock generation and closure handling",
+            "reflection over nonpublic SessionState internals and scope reassignment",
+            "data-driven DSL registration, framework object construction, and safe-command indirection"
+          ],
+          "reason": "Multiple expert PowerShell runtime, scope, reflection, and dynamic-language mechanisms interact pervasively across declaration, discovery, and execution."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "separate discovery and execution phases over a recursive block tree",
+            "nested setup, teardown, plugin, filtering, skip, error, timing, and result state",
+            "scope isolation and recovery across containers, blocks, and tests"
+          ],
+          "reason": "Expert nonlocal lifecycle reasoning is pervasive across nested state machines, callbacks, scopes, failures, and recovery."
+        },
+        "design_span": {
+          "signals": [
+            "public Describe and It DSL",
+            "runtime tree and lifecycle engine",
+            "RSpec orchestration and result layer",
+            "focused self-hosting contract suites"
+          ],
+          "reason": "Several major subsystems and boundaries cooperate, while the selected trace remains narrower than the entire framework including mocking, coverage, and parallel orchestration."
+        },
+        "constraint_burden": {
+          "signals": [
+            "discovery must never accidentally execute test bodies",
+            "user scopes, data parameters, setup and teardown order, filters, skip and result semantics must remain exact",
+            "failures must be isolated, attributed, timed, cleaned up, and compatible across PowerShell versions and platforms"
+          ],
+          "reason": "Scope, lifecycle, error, isolation, determinism, API, version, and platform guarantees are pervasive and tightly coupled."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 rounds to Level 5; three dimensions score 5, satisfying the Level 5 guard, and Pester is the sole qualified PowerShell Level 5 path.",
+      "reconsider": "Reconsider if discovery/execution separation, scope, setup and teardown, filtering, isolation, error or result contracts, focused lifecycle tests, documentation, Apache-2.0 licensing, or PowerShell Level 5 representativeness materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, 5/5/4/5 scores, Level 5 rank 1, and retention, but the independent review initially centered the broader runtime-to-mock-and-parallel path. Root resolved the breadth disagreement with the representative-path criterion: the final bounded trace begins with Describe and It and follows their discovery and execution lifecycle through focused runtime and DSL tests."
+      }
+    },
+    {
+      "repository": "dataplat/dbatools",
+      "language": "PowerShell",
+      "prior_level": 4,
+      "pinned_commit": "0473789e928c8e9e7d891770c95cfcfa76724d3e",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A .NET DataTable is a typed rows-and-columns representation commonly used as an adapter for bulk database operations."
+        ],
+        "evidence": "That short data-container context is subordinate to transferable lessons in pipeline collection, runtime type inspection, schema inference, null normalization, special-type adapters, row construction, caller-selected conversion policy, and direct contract testing; the path accepts ordinary PowerShell objects and does not require SQL administration theory."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "ConvertTo-DbaDataTable keeps accepted-type selection, special type conversion, column inference, raw mode, null policy, DataTable cloning, row creation, and pipeline lifecycle visible in one command; its direct suite exercises primitive and special types, DBNull, arrays, script properties, conversion choices, ignored nulls, raw behavior, cloning, and pipeline input; command help documents inputs and outputs; and the exact public pin, MIT license, maintained implementation, and observable tests satisfy all eight quality dimensions for this bounded adapter.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell pipeline adapter infers a typed DataTable schema from arbitrary objects and normalizes each value without losing null or conversion policy.",
+        "start_path": "public/ConvertTo-DbaDataTable.ps1",
+        "supporting_files": [
+          "tests/ConvertTo-DbaDataTable.Tests.ps1",
+          "readme.md",
+          "license"
+        ],
+        "trace": "Start with ConvertTo-DbaDataTable's begin, process, and end lifecycle, follow Convert-Type, Convert-SpecialType, and Add-Column from the first object's properties into schema inference, cached special-column policy, DBNull handling, row population, raw mode, and DataTable cloning, then close primitive, TimeSpan, size, date, array, script-property, null, pipeline, and cloning behavior in the direct suite."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "begin, process, and end pipeline lifecycle",
+            "runtime PSPropertyInfo and .NET type inspection",
+            "nested conversion helpers and typed DataTable construction"
+          ],
+          "reason": "Advanced cmdlet and .NET interoperation techniques materially shape the adapter without recurring expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "first-row schema inference",
+            "localized per-column special conversion state",
+            "bounded null, raw, clone, and row-population branches"
+          ],
+          "reason": "The transformation is synchronous and localized to one pipeline invocation despite several explicit cases."
+        },
+        "design_span": {
+          "signals": [
+            "one public adapter",
+            "one .NET DataTable boundary",
+            "one direct comprehensive suite"
+          ],
+          "reason": "A few nested helpers inside one command contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "column types and converted values must agree",
+            "null, arrays, script properties, special values, and raw mode need stable semantics",
+            "pipeline input and DataTable cloning must not add or lose schema"
+          ],
+          "reason": "Several type, schema, null, and compatibility guarantees constrain ordinary changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 3/2/2/3 sums to 10, whose mean of 2.5 rounds half up to Level 3; dbatools ranks fourth behind ImportExcel, Pode, and Scoop among four qualified PowerShell Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a PowerShell Level 3 slot opens, the two-entry cap changes, or type conversion, null and schema contracts, direct tests, licensing, or comparative domain-light educational clarity improves enough to outrank ImportExcel or Pode.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gate passes, 3/2/2/3 scores, Level 3 rank 4, and capacity removal, but the independent review initially preferred Connect-DbaInstance. Root resolved the representative-path disagreement in favor of the more domain-light ConvertTo-DbaDataTable adapter and its direct test suite."
+      }
+    },
+    {
+      "repository": "Badgerati/Pode",
+      "language": "PowerShell",
+      "prior_level": 5,
+      "pinned_commit": "512a99018dc13027de2d746d5467c4d39a9401b2",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP route associates a method and normalized path pattern with a handler, middleware, endpoint, and optional access metadata."
+        ],
+        "evidence": "That short routing vocabulary is subordinate to transferable lessons in scriptblock composition, registry design, normalization, validation, duplicate policy, regex matching, metadata inheritance, concurrent collections, and direct behavior testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Add-PodeRoute keeps method and path validation, group inheritance, route normalization, scriptblock and middleware conversion, authentication and access injection, endpoint indexing, duplicate handling, and stored route objects explicit; Find-PodeRoute makes exact, wildcard, regex, and endpoint lookup visible; the direct unit suite closes add, find, remove, clear, endpoint, middleware, static, duplicate, content-type, and invalid-input behavior; the README documents routing; and the exact public pin, MIT license, maintained implementation, and observable tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a PowerShell web framework turns declarative method, path, handler, middleware, and endpoint inputs into a normalized route registry and retrieves the correct match.",
+        "start_path": "src/Public/Routes.ps1",
+        "supporting_files": [
+          "src/Private/Routes.ps1",
+          "tests/unit/Routes.Tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Begin at Add-PodeRoute, follow method and path validation, route-group inheritance, placeholder-to-regex normalization, scoped handler and middleware conversion, access and authentication middleware injection, endpoint-aware duplicate policy, and registry insertion; continue to Find-PodeRoute's exact, wildcard, regex, and endpoint filtering, then close registration, lookup, removal, duplicate, middleware, static-route, content-type, and failure behavior in the direct unit suite."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "scriptblock and middleware composition",
+            "scoped-variable conversion and splatted metadata",
+            "ordered and concurrent route registries with regex normalization"
+          ],
+          "reason": "Advanced cmdlet, scriptblock, collection, and dynamic metadata techniques materially shape registration without expert runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized registration mutation",
+            "explicit validation and duplicate branches",
+            "bounded exact, wildcard, regex, and endpoint lookup"
+          ],
+          "reason": "The selected registry path is synchronous and locally inspectable; request and server lifecycles are deliberately outside it."
+        },
+        "design_span": {
+          "signals": [
+            "public route DSL",
+            "private matcher and registry",
+            "middleware, endpoint, access metadata, and direct unit-test boundaries"
+          ],
+          "reason": "Several cohesive components and adapter boundaries cooperate around one route model."
+        },
+        "constraint_burden": {
+          "signals": [
+            "methods, literal and parameterized paths, endpoints, and duplicate policy must remain consistent",
+            "group, middleware, authentication, access, content, and OpenAPI metadata must compose in the right order",
+            "lookup, static-route safety, error behavior, and cross-platform PowerShell compatibility must remain stable"
+          ],
+          "reason": "Routing, composition, safety, API, and compatibility guarantees recur throughout registration and lookup."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/2/3/4 sums to 12, whose mean is Level 3; Pode ranks second of four qualified PowerShell Level 3 paths.",
+      "reconsider": "Reconsider if route normalization, registry, middleware, endpoint, duplicate or lookup contracts, direct unit tests, documentation, MIT licensing, or relative PowerShell Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the domain-light Add-PodeRoute-to-Find-PodeRoute registry trace instead of the broad server and protocol platform, 3/2/3/4 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "Microsoft365DSC/Microsoft365DSC",
+      "language": "PowerShell",
+      "prior_level": 5,
+      "pinned_commit": "f79f29719b824fd534d51839f87f728cf83d64d1",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The representative reverse-configuration and AADGroup path extracts, compares, applies, and exports Microsoft 365 and Entra tenant resources through DSC and Microsoft Graph.",
+          "Correct behavior depends on workload and resource selection, tenant authentication modes, Graph group and membership models, owners, licenses, dynamic membership rules, lifecycle policies, deleted objects, role assignments, configuration dependencies, and DSC present, absent, and drift semantics."
+        ],
+        "evidence": "M365DSCReverse coordinates tenant workloads, resource filters, several credential and token modes, dependencies, parallel export, validation, and statistics, while MSFT_AADGroup implements Graph-specific group, owner, member, license, lifecycle, and role behavior. Specialist Microsoft 365, Entra, Graph, licensing, tenant administration, and DSC knowledge explains the representative PowerShell path's difficulty better than programming technique; a detached helper would not honestly represent the project."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the representative Microsoft365DSC path from tenant configuration extraction into a concrete Entra group resource's get, compare, set, and export lifecycle.",
+        "start_path": "Modules/Microsoft365DSC/Modules/M365DSCReverse.psm1",
+        "supporting_files": [
+          "Modules/Microsoft365DSC/DscResources/MSFT_AADGroup/MSFT_AADGroup.psm1",
+          "Tests/Unit/Microsoft365DSC/Microsoft365DSC.AADGroup.Tests.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with reverse extraction's workload and resource filtering, authentication selection, configuration dependencies, sequential or parallel export, validation, and statistics; follow one representative AADGroup resource through Graph lookup, present or absent comparison, creation, update, deletion, owners, members, licenses, membership rules, lifecycle and role behavior, then use the direct mocked suite to expose the recurring tenant-domain dependencies that cause the hard gate failure."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central PowerShell path whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist Microsoft 365, Entra, Graph, tenant, licensing, authentication, or DSC administration theory.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed that tenant workloads, Graph resources, authentication modes, group membership, owners, licenses, lifecycle policies, roles, and DSC state semantics dominate the representative path; both reviews agree on the hard domain rejection, quality not evaluated status, absence of scores and level, and removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 100,
-      "remove": 50
+      "retain": 107,
+      "remove": 53
     },
     "by_language": {
       "JavaScript": {
@@ -11546,33 +12275,52 @@
           "4": 4,
           "5": 1
         }
+      },
+      "PowerShell": {
+        "reviewed": 10,
+        "retain": 7,
+        "remove": 3,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 4,
+          "4": 2,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 30,
-        "retain": 28,
+        "reviewed": 32,
+        "retain": 30,
         "remove": 2
       },
       "2": {
-        "reviewed": 30,
-        "retain": 23,
+        "reviewed": 32,
+        "retain": 25,
         "remove": 7
       },
       "3": {
-        "reviewed": 30,
-        "retain": 19,
-        "remove": 11
+        "reviewed": 32,
+        "retain": 20,
+        "remove": 12
       },
       "4": {
-        "reviewed": 30,
-        "retain": 15,
-        "remove": 15
+        "reviewed": 32,
+        "retain": 16,
+        "remove": 16
       },
       "5": {
-        "reviewed": 30,
-        "retain": 15,
-        "remove": 15
+        "reviewed": 32,
+        "retain": 16,
+        "remove": 16
       }
     },
     "by_new_level": {
@@ -11582,29 +12330,29 @@
         "remove": 0
       },
       "2": {
-        "scored": 25,
-        "retain": 24,
+        "scored": 27,
+        "retain": 26,
         "remove": 1
       },
       "3": {
-        "scored": 39,
-        "retain": 28,
-        "remove": 11
+        "scored": 43,
+        "retain": 30,
+        "remove": 13
       },
       "4": {
-        "scored": 60,
-        "retain": 30,
+        "scored": 62,
+        "retain": 32,
         "remove": 30
       },
       "5": {
-        "scored": 19,
-        "retain": 18,
+        "scored": 20,
+        "retain": 19,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 43,
-      "coding_relevance_domain_gate": 6,
+      "qualified_alternate_over_capacity": 45,
+      "coding_relevance_domain_gate": 7,
       "repository_quality_gate": 1
     }
   }
