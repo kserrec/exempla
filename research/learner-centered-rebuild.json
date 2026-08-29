@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "review_started_at": "2026-08-28",
-  "review_completed_at": null,
+  "review_completed_at": "2026-08-29",
   "source_catalog_release": "v1.0.0",
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 190,
+  "reviewed_entry_total": 200,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -14233,12 +14233,800 @@
         "status": "agree",
         "notes": "Independent exact-pin review confirmed both gate passes, selection of the bounded MPSC implementation with direct and Loom tests rather than the broad runtime scheduler, 5/5/4/5 scores, guarded Level 5 rank 1, and retention."
       }
+    },
+    {
+      "repository": "lunarmodules/say",
+      "language": "Lua",
+      "prior_level": 1,
+      "pinned_commit": "fe1475fe2acaf844bd030c2ff998bc99ed8930ed",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A namespaced message registry looks up a string in the active namespace, falls back to another namespace, and substitutes positional values."
+        ],
+        "evidence": "That short localization vocabulary is subordinate to transferable lessons in table-backed state, metatable call and index behavior, validation, fallback lookup, deterministic formatting, compatibility, and focused specification tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The sole production module keeps namespace creation, fallback selection, registration, lookup, parameter validation, conversion, formatting, and registry inspection explicit; names communicate intent and the metatable surface is small; say_spec.lua directly covers namespace isolation, fallback behavior, missing keys, values, formatting arguments, nils, explicit argument counts, type failures, and registry access; the README explains the API; the set-to-call trace is complete; and the exact public pin, MIT license, stable source, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a compact Lua module stores namespaced messages, falls back across namespaces, validates interpolation values, and exposes a callable lookup API.",
+        "start_path": "src/say/init.lua",
+        "supporting_files": [
+          "spec/say_spec.lua",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Read set_namespace, set_fallback, and set to see registry mutation, then follow the __call metamethod through argument validation, active and fallback namespace lookup, string conversion, explicit or inferred argument count, and formatting; finish with __index registry access and the direct specification cases."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "ordinary module tables and closures",
+            "small __call and __index metatable surface",
+            "table.unpack compatibility fallback"
+          ],
+          "reason": "Common professional Lua idioms shape the API without advanced metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized active and fallback namespace state",
+            "validation and missing-key branches",
+            "bounded positional conversion and formatting"
+          ],
+          "reason": "Meaningful state and branching remain synchronous, local, and direct."
+        },
+        "design_span": {
+          "signals": [
+            "one production module",
+            "one in-memory registry",
+            "one direct specification"
+          ],
+          "reason": "One focused unit contains the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "namespace and fallback selection must remain deterministic",
+            "missing keys, nils, non-table arguments, explicit counts, and values need stable semantics",
+            "callable and indexable public API compatibility must be preserved"
+          ],
+          "reason": "The path carries routine validation and small stable-API safeguards rather than several material guarantees."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/2 sums to 7, whose mean of 1.75 rounds to Level 2; Say is the sole qualified Lua Level 2 path.",
+      "reconsider": "Reconsider if namespace, fallback, interpolation, validation or callable-API contracts, direct tests, documentation, MIT licensing, or Lua Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Both reviews confirmed both gate passes, the complete one-module registry-to-call trace, 2/2/1/2 scores, Level 2 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "kikito/middleclass",
+      "language": "Lua",
+      "prior_level": 1,
+      "pinned_commit": "359f0e2742f51ca77801b513ec91eb9029de8de4",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The library implements classes, instances, inheritance, static members, mixins, and metamethods on top of Lua tables and metatables."
+        ],
+        "evidence": "The path is entirely transferable language and library engineering: dynamic dispatch, method declaration and propagation, inheritance, allocation, mixin composition, weak subclass tracking, custom indexing, and behavioral self-tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "middleclass.lua keeps class creation, instance dictionaries, declaration, propagation, allocation, inheritance, static lookup, mixins, and metamethod wrappers compact and named by responsibility; focused class, instance, mixin, and metamethod specifications expose ordinary and edge behavior; the README explains the object model; a declaration can be traced through subclass propagation to instance dispatch and tests; the implementation is internally consistent despite its deliberate metatable density; and the exact public pin, MIT license, maintained source, and broad direct tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a single Lua module builds classes and inheritance by translating method declarations into metatable-backed instance and subclass behavior.",
+        "start_path": "middleclass.lua",
+        "supporting_files": [
+          "spec/classes_spec.lua",
+          "spec/instances_spec.lua",
+          "spec/mixins_spec.lua",
+          "spec/metamethods_spec.lua",
+          "README.md",
+          "MIT-LICENSE.txt"
+        ],
+        "trace": "Start with _createClass and its class, static, and instance metatables; follow __newindex into _declareInstanceMethod and recursive _propagateInstanceMethod, then trace subclass allocation, inherited initialization, static lookup, custom __index wrapping, mixin inclusion, and metamethod dispatch into the four focused specifications."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interacting class, instance, static, and custom-index metatables",
+            "__index, __newindex, __call, __tostring, rawget, and weak-table machinery",
+            "dynamic method propagation and mixin composition"
+          ],
+          "reason": "Advanced Lua metaprogramming machinery recurs throughout every central behavior."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive propagation through a live subclass hierarchy",
+            "declared, inherited, removed, and overridden method state",
+            "allocation, initialization, mixin, static, and metamethod dispatch branches"
+          ],
+          "reason": "Nontrivial mutable class relationships must be followed across declarations, subclasses, and instances."
+        },
+        "design_span": {
+          "signals": [
+            "one production file",
+            "one class-system component",
+            "direct behavior specifications"
+          ],
+          "reason": "The entire path remains one focused unit despite dense internals."
+        },
+        "constraint_burden": {
+          "signals": [
+            "declared, inherited, overridden, and removed methods must propagate without clobbering subclass declarations",
+            "class, static, instance, custom-index, mixin, and metamethod lookup must remain coherent",
+            "allocation, initialization, type predicates, weak subclass references, and public API compatibility constrain changes"
+          ],
+          "reason": "Several material dispatch, identity, inheritance, and compatibility guarantees influence ordinary changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 4/3/1/3 sums to 11, whose mean of 2.75 rounds to Level 3; Middleclass ranks first of four qualified Lua Level 3 paths.",
+      "reconsider": "Reconsider if metatable dispatch, propagation, inheritance, mixin, static or allocation contracts, direct tests, documentation, MIT licensing, or comparative Lua Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Both reviews confirmed both gate passes, the bounded class-construction and method-propagation trace, recurring advanced metatable machinery supporting 4/3/1/3, Level 3 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "openresty/lua-resty-lrucache",
+      "language": "Lua",
+      "prior_level": 2,
+      "pinned_commit": "ad373f457a091ffa85de984938f948bc1721d922",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A bounded least-recently-used cache promotes reads, evicts the least recent entry at capacity, and can expire entries by time-to-live."
+        ],
+        "evidence": "That standard data-structure context is subordinate to transferable lessons in LuaJIT FFI structs and pointers, intrusive queues, bidirectional key-node indexes, bounded allocation, eviction, expiration, flags, representation parity, and invariant-focused tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The main module makes FFI queue allocation, free and cache queues, key-node maps, pointer identity, recency promotion, expiration, deletion, eviction, flags, count and capacity explicit; pureffi provides a distinct representation with the same contract; names mirror queue and cache operations; mirrored sanity suites plus flag tests cover hits, misses, promotion, eviction, expiry, replacement, deletion, capacity, counts, and implementation parity; README.markdown documents use and constraints; the set-or-get-to-queue-mutation trace is complete; and the exact public pin, BSD-2-Clause licensing in README.markdown, stable OpenResty source, and direct tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how an OpenResty Lua cache maintains bounded LRU order, expiration, flags, and constant-time lookup across its FFI-backed representations.",
+        "start_path": "lib/resty/lrucache.lua",
+        "supporting_files": [
+          "lib/resty/lrucache/pureffi.lua",
+          "t/001-sanity.t",
+          "t/100-pureffi/001-sanity.t",
+          "t/008-user-flags.t",
+          "README.markdown"
+        ],
+        "trace": "Start with queue cdefs, allocation, pointer conversion, and new; follow set through free-node acquisition or tail eviction, bidirectional map updates, queue removal and head insertion, TTL and flags; follow get promotion and stale reporting, then delete and flush recycling; compare pureffi's representation and close equivalent behavior in both sanity suites and the flag suite."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "LuaJIT FFI cdefs, arrays, structs, pointer arithmetic, casts, and memory fill",
+            "intrusive sentinel queues and numeric pointer identity",
+            "metatable API plus optional optimized table modules and alternate pure-FFI representation"
+          ],
+          "reason": "Advanced low-level LuaJIT and representation machinery recurs throughout cache operations."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "promotion, replacement, eviction, expiration, deletion, and flush transitions",
+            "coordinated free queue, cache queue, hash table, and bidirectional maps",
+            "stale-value and user-flag behavior"
+          ],
+          "reason": "Nontrivial mutable cache state spans several linked representations but remains within one object."
+        },
+        "design_span": {
+          "signals": [
+            "public cache API",
+            "two bounded internal representations",
+            "mirrored OpenResty test boundary"
+          ],
+          "reason": "A few clear modules and representations contain the behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "queue links, sentinels, pointer identity, key-node maps, counts, and capacity must remain mutually consistent",
+            "promotion, eviction, expiry, stale returns, flags, deletion, replacement, and flush must preserve contract",
+            "FFI memory safety, LuaJIT and OpenResty compatibility, constant-time operations, and parity across implementations constrain changes"
+          ],
+          "reason": "Multiple strict memory, representation, performance, lifecycle, and compatibility guarantees interact."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 4/3/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; lua-resty-lrucache ranks second of four qualified Lua Level 3 paths.",
+      "reconsider": "Reconsider if queue, pointer, eviction, expiration, flags, representation-parity or compatibility contracts, mirrored tests, documentation, BSD-2-Clause licensing, or comparative Lua Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Both reviews confirmed both gate passes, the FFI queue and mirrored-representation cache trace, 4/3/2/4 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "lunarmodules/luassert",
+      "language": "Lua",
+      "prior_level": 2,
+      "pinned_commit": "a1c4902b0528d90f04214e2f334a01c2fb747bce",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An assertion library resolves chained modifier and assertion names, evaluates a predicate, and formats either a successful return or an informative failure."
+        ],
+        "evidence": "That familiar testing context is subordinate to transferable lessons in dynamic fluent APIs, metatable dispatch, per-assertion state, aliases and namespaces, modifier ordering, deep matching, extension registries, formatting, stack attribution, and direct self-tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "assert.lua makes chained name resolution and invocation visible, state.lua isolates assertion-local state, assertions and modifiers register behavior, match owns recursive comparison, and formatters own diagnostics; names follow the fluent testing vocabulary; assertions_spec directly covers truth, equality, errors, type and pattern checks, negation, modifiers, messages, custom assertions, namespaces, aliases, parameters, and failures; the README documents extension; the chain-to-result-or-error trace is complete; and the exact public pin, MIT license, maintained source, and deep self-tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Luassert turns a fluent chain of modifier and assertion names into isolated state, predicate evaluation, recursive comparison, and a correctly attributed failure message.",
+        "start_path": "src/assert.lua",
+        "supporting_files": [
+          "src/assertions.lua",
+          "src/state.lua",
+          "src/modifiers.lua",
+          "src/match.lua",
+          "src/formatters/init.lua",
+          "spec/assertions_spec.lua",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with the assertion object's __index and __call resolution, follow names through modifier and assertion registries into isolated state, negation and parameter handling, then trace predicate or recursive match output into formatter selection, message interpolation, stack attribution, and thrown failure; close built-in, custom, alias, namespace, modifier, and diagnostic behavior in assertions_spec.lua."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dynamic __index and __call fluent dispatch",
+            "runtime assertion, modifier, namespace, alias, and formatter registries",
+            "recursive matching and stack-aware dynamic error construction"
+          ],
+          "reason": "Advanced Lua metaprogramming and dynamic extension machinery recurs across the assertion path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered modifier and negation state",
+            "recursive deep-match and predicate branches",
+            "custom registration, invocation, result, and failure transitions"
+          ],
+          "reason": "Nontrivial state and evaluation cross several stages without advanced concurrency or recovery."
+        },
+        "design_span": {
+          "signals": [
+            "fluent public proxy",
+            "state, assertion, modifier, matching, and formatting modules",
+            "extension and direct self-test boundaries"
+          ],
+          "reason": "Several meaningful modules cooperate around one assertion lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "chain resolution, aliases, namespaces, modifiers, negation, and parameter order must compose exactly",
+            "deep equality, type, pattern, error, spy and custom assertion behavior must remain compatible",
+            "message formatting, value rendering, stack attribution, extension APIs, and test-framework compatibility interact"
+          ],
+          "reason": "Multiple strict semantic, diagnostic, extension, and compatibility guarantees recur."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Luassert ranks fourth behind Luacheck, Busted, and LuaLS diagnostics among four qualified Lua Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 4 slot opens, the two-entry cap changes, or chain resolution, diagnostics, extension, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Luacheck or Busted.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Both reviews confirmed both gate passes, the bounded fluent-assertion-to-state-to-diagnostic trace, 4/3/3/4 scores, Level 4 rank 4, and removal only for capacity."
+      }
+    },
+    {
+      "repository": "lunarmodules/busted",
+      "language": "Lua",
+      "prior_level": 3,
+      "pinned_commit": "22f8089f461a563fb9553ab56f926c6805850833",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A test framework registers nested describe and it blocks, runs setup and teardown hooks in defined order, and reports pass, fail, pending, and error results."
+        ],
+        "evidence": "That standard testing vocabulary is subordinate to transferable lessons in dynamic DSL construction, block trees, event publication, environment scoping, recursive synchronous execution, hook ordering, failure recovery, filtering, result state, and self-hosting tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Core and Block make DSL registration, parent-child structure, tags and events explicit; Environment controls test-file globals, Runner and Execute coordinate discovery and recursive synchronous lifecycle execution, hooks, errors, pending, and cleanup; names follow test-framework idiom; core_spec and execution_order_sync_spec directly close nesting, registration, ordering, hooks, failures, pending, and cleanup; the README documents the lifecycle; the DSL-to-result trace is complete; and the exact public pin, MIT license, maintained framework, and direct self-tests satisfy all eight quality dimensions. The scored path deliberately excludes spec/async_spec.lua because its relevant asynchronous examples remain pending and cannot support an inflated async trace.",
+      "learning_path": {
+        "goal": "Understand how Busted builds a nested test block tree from its DSL and executes it synchronously with correct hook, event, error, pending, and cleanup order.",
+        "start_path": "busted/core.lua",
+        "supporting_files": [
+          "busted/block.lua",
+          "busted/environment.lua",
+          "busted/execute.lua",
+          "busted/runner.lua",
+          "busted/modules/test_file_loader.lua",
+          "spec/core_spec.lua",
+          "spec/execution_order_sync_spec.lua",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Core registering describe, it, hooks, pending, and tags into Block nodes, follow Environment and the test-file loader through discovery, then trace Runner and Execute recursively through setup, child execution, event emission, protected errors, pending state, teardown, cleanup, and results; close the exact synchronous order in core_spec and execution_order_sync_spec. Do not use the pending async specification as evidence."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dynamic describe, it, hook, and pending DSL injection",
+            "environment and function-scope manipulation",
+            "metatable-backed block objects, callbacks, varargs, and protected invocation"
+          ],
+          "reason": "Advanced dynamic-language and environment machinery recurs across registration and execution."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "separate discovery and execution over a nested block tree",
+            "ordered setup, test, child, teardown, cleanup, and event lifecycle",
+            "failure, error, pending, filtering, and recovery state"
+          ],
+          "reason": "Advanced nonlocal lifecycle and recovery reasoning recurs across nested callbacks and state."
+        },
+        "design_span": {
+          "signals": [
+            "public DSL and core registry",
+            "block, environment, runner, execute, and file-loader layers",
+            "self-hosting lifecycle specifications"
+          ],
+          "reason": "Several meaningful framework boundaries cooperate while the broader output and pending async surfaces are excluded."
+        },
+        "constraint_burden": {
+          "signals": [
+            "discovery must not accidentally execute test bodies and nested order must remain exact",
+            "setup, teardown, cleanup, pending, filters, errors, events, and result attribution must compose safely",
+            "user environments, extension APIs, output integrations, Lua versions, and backward compatibility constrain changes"
+          ],
+          "reason": "Multiple strict lifecycle, isolation, recovery, extension, and compatibility guarantees interact."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; Busted ranks second of four qualified Lua Level 4 paths. Pending asynchronous examples are excluded from the evidence and scores.",
+      "reconsider": "Reconsider if synchronous discovery, execution, hook, pending, error, cleanup or event contracts, direct tests, documentation, MIT licensing, or comparative Lua Level 4 clarity materially changes; score asynchronous behavior only when direct non-pending tests close it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews accepted both gates and the synchronous DSL and execution lifecycle. One review initially treated async_spec.lua as advanced behavior evidence, but root applied the observable-test rule because the relevant async examples are pending. The final bounded synchronous path remains 4/4/3/4, Level 4 rank 2, and retained."
+      }
+    },
+    {
+      "repository": "lunarmodules/luacheck",
+      "language": "Lua",
+      "prior_level": 3,
+      "pinned_commit": "2f764bdcabe8b7c19deadf0e9bb2adc19df1a4c5",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A static analyzer tokenizes and parses Lua source, resolves scopes and control flow, detects warnings, and filters them through configuration."
+        ],
+        "evidence": "The path is transferable compiler and tooling engineering: lexing, parsing, intermediate representation, staged analysis, scope and data-flow state, warning construction, filtering, configuration, diagnostics, and direct stage tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "check.lua names and orders the analysis stages; lexer and parser expose source structure, linearize converts syntax into an analysis sequence, resolve_locals builds scope and value relationships, detect_unused_locals consumes those facts, and filter applies policy; stage boundaries and warning data are explicit; check_spec and resolve_locals_spec close syntax, scope, control-flow, warning, option, and failure behavior; the README documents rules and configuration; source can be traced stage by stage into a final warning; and the exact public pin, MIT license, stable maintained analyzer, and deep specifications satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Luacheck turns Lua source into scoped analysis facts and then emits and filters warnings without losing source locations or control-flow meaning.",
+        "start_path": "src/luacheck/check.lua",
+        "supporting_files": [
+          "src/luacheck/lexer.lua",
+          "src/luacheck/parser.lua",
+          "src/luacheck/stages/linearize.lua",
+          "src/luacheck/stages/resolve_locals.lua",
+          "src/luacheck/stages/detect_unused_locals.lua",
+          "src/luacheck/filter.lua",
+          "spec/check_spec.lua",
+          "spec/resolve_locals_spec.lua",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin with check.lua's exact stage sequence, follow tokens and locations from lexer into parser syntax nodes, then trace linearize's control-flow representation, resolve_locals' nested scopes, definitions, accesses and values, detect_unused_locals' cross-scope warning decisions, and final option filtering; close end-to-end and local-resolution contracts in the two direct specifications."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "closure-based lexer and recursive-descent parser machinery",
+            "tagged table models for syntax, lines, scopes, values, and warnings",
+            "higher-order staged transforms and policy filters"
+          ],
+          "reason": "Substantial Lua abstractions materially shape the analyzer, but advanced metaprogramming is not pervasive."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "lexical position, token, syntax, control-flow, scope, definition, access, value, mutation, and warning state interact",
+            "loops, closures, branches, labels, returns, unreachable paths, shadowing, recursion, mutation, and upvalues alter later stages",
+            "errors, inline directives, options, standards, filtering, and warning ranges must remain coherent end to end"
+          ],
+          "reason": "Several advanced analysis concerns interact pervasively, so expert nonlocal reasoning across stages is unavoidable."
+        },
+        "design_span": {
+          "signals": [
+            "lexer and parser front end",
+            "linearization, scope-resolution, data-flow, and detector stages",
+            "configuration, standards, filter, reporting, CLI, and direct stage-test boundaries"
+          ],
+          "reason": "A broad but explicit analyzer architecture contributes to the selected source-to-warning path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "every Lua syntax and dialect form must preserve exact token, source-range, scope, control-flow, definition, use, mutation, and closure semantics",
+            "a locally plausible stage change can create false positives, suppress real warnings, corrupt later facts, or misattribute diagnostics across many rules",
+            "configuration, inline directives, standards, compatibility, deterministic output, performance, and historical warning behavior interact system-wide"
+          ],
+          "reason": "Several system-wide semantic, diagnostic, compatibility, determinism, and performance guarantees require expert change discipline."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/5/4/5 sums to 17, whose mean of 4.25 rounds to Level 4. Two dimensions score 5, but the rounded mean is not 5, so the Level 5 guard is not satisfied; Luacheck ranks first of four qualified Lua Level 4 paths.",
+      "reconsider": "Reconsider if stage order, syntax, scope, control-flow, data-flow, warning or filter contracts, direct stage tests, documentation, MIT licensing, or comparative Lua Level 4 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Both reviews confirmed both gate passes, the exact lexer-to-parser-to-linearize-to-resolve_locals-to-unused-detection-to-filter path, 3/5/4/5 scores, guarded Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "nvim-telescope/telescope.nvim",
+      "language": "Lua",
+      "prior_level": 4,
+      "pinned_commit": "40aedd8a68c78a656a10a8d62d80c54af59420fb",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A fuzzy finder receives candidate entries, computes sorter scores, keeps only eligible results, and presents them in stable ranked order."
+        ],
+        "evidence": "The bounded path avoids the broad Neovim picker lifecycle and is led by transferable ranked-collection engineering: comparator design, linked-list insertion and removal, score cutoffs, bounded result replacement, stable ordering, identity maps, updates, and focused unit tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "entry_manager isolates candidate admission, scoring, identity, insertion, update, removal, capacity, and result retrieval; sorters isolate scoring and discard policy, while linked_list owns ordered nodes; names reveal each responsibility; dedicated entry_manager, sorters, and linked_list specifications cover ordering, ties, cutoffs, replacement, deletion, updates, iteration, and limits; the README orients the finder model; the candidate-to-ranked-list trace is complete; and the exact public pin, MIT license, maintained implementation, and direct unit tests satisfy all eight quality dimensions for this bounded path.",
+      "learning_path": {
+        "goal": "Understand how Telescope scores candidate entries and maintains a bounded, stable ranked result list as entries are added, updated, removed, and retrieved.",
+        "start_path": "lua/telescope/entry_manager.lua",
+        "supporting_files": [
+          "lua/telescope/sorters.lua",
+          "lua/telescope/algos/linked_list.lua",
+          "lua/tests/automated/entry_manager_spec.lua",
+          "lua/tests/automated/sorters_spec.lua",
+          "lua/tests/automated/linked_list_spec.lua",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with entry_manager accepting a candidate, follow Sorter scoring and discard decisions, entry identity and score comparison into linked-list insertion, then trace maximum-result replacement, ties, updates, removal, clearing, indexing, iteration, and retrieval; close each collection and scoring invariant in the three direct specifications."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "closure-configured managers and sorter callbacks",
+            "callable and metatable-backed sorter abstractions",
+            "custom linked-list nodes, iterators, comparators, and identity maps"
+          ],
+          "reason": "Substantial functional and data-structure abstractions shape the path without pervasive advanced metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "stateful add, score, insert, update, remove, clear, and retrieve lifecycle",
+            "bounded capacity and worst-entry replacement",
+            "discard, tie, identity, and stable-order branches"
+          ],
+          "reason": "Nontrivial ranked-collection state crosses several operations but remains bounded and synchronous."
+        },
+        "design_span": {
+          "signals": [
+            "entry manager",
+            "sorter boundary",
+            "linked-list implementation and direct unit suites"
+          ],
+          "reason": "A few clear modules contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "score direction, discard thresholds, ties, comparator order, identity, and stable ranking must agree",
+            "bounded replacement, updates, removals, indexes, linked nodes, iteration, and counts must remain consistent",
+            "performance under rapid candidate streams, Neovim compatibility, sorter extensions, and public behavior constrain changes"
+          ],
+          "reason": "Multiple strict ordering, representation, capacity, performance, extension, and compatibility guarantees interact."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/4 sums to 12, whose mean is Level 3; Telescope's bounded entry-manager path ranks third behind Middleclass and lua-resty-lrucache among four qualified Lua Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 3 slot opens, the two-entry cap changes, or ranking, capacity, ordering, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Middleclass or lua-resty-lrucache.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The broad picker, finder, previewer, window, mapping, action, and completion lifecycle supported a higher and less coherent placement. Root applied the bounded-path rule and accepted the directly tested entry_manager, sorter, and linked-list subsystem at 3/3/2/4, Level 3 rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "CorsixTH/CorsixTH",
+      "language": "Lua",
+      "prior_level": 4,
+      "pinned_commit": "c3ebe5d79e34ea0fef83d099be28a43ee01fa992",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "The game announcer queues audio announcements, assigns priorities and expiry times, and decides on each tick whether an item is still relevant and allowed to play."
+        ],
+        "evidence": "The original application-composition path is too broad and game-domain-heavy. The bounded Announcer replacement needs only that short context and is led by transferable priority-queue, deduplication, expiry, scheduling, callback, configuration, adapter, and test-double reasoning."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Announcer keeps priority constants, queue entries, duplicate policy, expiry, pause and facility guards, randomized timing, playback, subtitles, callbacks, and tick progression explicit; game_ui shows the central construction boundary; names match the lifecycle; announcer_spec supplies date, world, UI, config, and audio doubles and directly covers empty, disabled, duplicate, priority, expired, paused, facility, playback, and callback behavior; project documentation orients the application; the queue-to-tick-to-play trace is complete; and the exact public pin, MIT license, maintained implementation, and observable tests satisfy all eight quality dimensions for this replacement.",
+      "learning_path": {
+        "goal": "Understand how CorsixTH's announcer admits, deduplicates, prioritizes, expires, and schedules queued audio work through a tick-driven callback lifecycle.",
+        "start_path": "CorsixTH/Lua/announcer.lua",
+        "supporting_files": [
+          "CorsixTH/Lua/game_ui.lua",
+          "CorsixTH/Luatest/spec/announcer_spec.lua",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with Announcer construction and playAnnouncement entry creation, follow duplicate rejection, priority and expiry fields into onTick's enabled, paused, facility, relevance, busy, and timing branches, then trace audio and subtitle dispatch, played callbacks, queue removal, and next-target scheduling; close behavior against the direct app, date, UI, and audio doubles."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "ordinary class-style tables and methods",
+            "queue tables, callbacks, constants, and optional arguments",
+            "mocked app adapters"
+          ],
+          "reason": "Common professional Lua object and callback idioms contain the path without advanced machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "tick-driven queued state and current playback ownership",
+            "priority, duplicate, expiry, pause, facility, random-delay, and relevance transitions",
+            "asynchronous played callback and next-target scheduling"
+          ],
+          "reason": "Nontrivial event, time, queue, and callback behavior materially affects the trace."
+        },
+        "design_span": {
+          "signals": [
+            "announcer scheduling component",
+            "game UI construction boundary",
+            "world date, configuration, audio, subtitle, and direct test-double boundaries"
+          ],
+          "reason": "Several meaningful but locally understandable application adapters contribute."
+        },
+        "constraint_burden": {
+          "signals": [
+            "priority order, duplicate policy, expiry, pause and facility rules must remain consistent",
+            "only one announcement may own playback while callbacks and queue removal advance correctly",
+            "audio, subtitle, configuration, date, random timing, save compatibility, and gameplay expectations constrain changes"
+          ],
+          "reason": "Several queue, timing, adapter, lifecycle, and compatibility guarantees influence changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 2/3/3/3 sums to 11, whose mean of 2.75 rounds to Level 3; CorsixTH Announcer ranks fourth behind Middleclass, lua-resty-lrucache, and Telescope's entry manager among four qualified Lua Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 3 slot opens, the two-entry cap changes, or announcer priority, expiry, callback, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank the retained paths.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog application root mixes game, UI, campaign, configuration, persistence, and native-engine context and is not a coherent educational path. Root accepted the central, directly tested Announcer subsystem as the best honest replacement, resolving both gates to pass, 2/3/3/3, Level 3 rank 4, and capacity removal."
+      }
+    },
+    {
+      "repository": "Kong/kong",
+      "language": "Lua",
+      "prior_level": 5,
+      "pinned_commit": "fa9c3b695af72668f135cb17bbb84a8b4dc511d2",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Cluster events propagate invalidation or coordination messages among Kong nodes by persisting events, polling them, deduplicating delivery, and invoking channel subscribers."
+        ],
+        "evidence": "That short distributed-event context is subordinate to transferable expert engineering in database-backed pub/sub, shared-memory cursors and deduplication, timers, locks, delayed delivery, pagination, node identity, callback isolation, failure recovery, cross-worker coordination, and integration testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "cluster_events/init.lua exposes validation, strategy selection, broadcast, subscribe, shared-memory cursors, polling locks, pagination, lookback, same-node suppression, deduplication, delayed callbacks, protected delivery, timer rescheduling, and recovery; postgres and off strategies isolate persistence modes, concurrency and time helpers isolate runtime contracts; names communicate invariants; the dedicated integration suite covers singleton construction, node identity, polling startup, broadcast, delivery, same-node suppression, lookback, pagination, callback errors, and delay; developer documentation orients the platform; the broadcast-to-durable-poll-to-subscriber trace is complete; and the exact public pin, Apache-2.0 license, maintained production source, and direct integration tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Kong durably broadcasts a cluster event and delivers it once to remote-node subscribers despite polling intervals, delays, pagination, worker concurrency, and failures.",
+        "start_path": "kong/cluster_events/init.lua",
+        "supporting_files": [
+          "kong/cluster_events/strategies/postgres.lua",
+          "kong/cluster_events/strategies/off.lua",
+          "kong/concurrency.lua",
+          "kong/tools/time.lua",
+          "spec/02-integration/06-invalidations/01-cluster_events_spec.lua",
+          "README.md",
+          "DEVELOPER.md",
+          "LICENSE"
+        ],
+        "trace": "Start with new selecting a strategy, server-time cursor, node identity and shared-memory state; follow broadcast into durable insertion, subscribe into polling startup, then poll through concurrency locks, lookback cursor, paged database selection, cursor advancement, same-node suppression, shared-memory deduplication, not-before delay, protected callbacks, error handling, cleanup, and recurring timer scheduling; close the lifecycle in the dedicated cluster-events integration suite."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 5,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "metatable modules and strategy polymorphism",
+            "iterator-based database pagination and callback registries",
+            "OpenResty timers, shared dictionaries, protected calls, and concurrency helpers"
+          ],
+          "reason": "Substantial framework and runtime abstractions shape the path without pervasive expert Lua metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "durable publish, recurring poll, shared cursor, lookback, pagination, deduplication, delayed delivery, callback, and cleanup state interact",
+            "multiple nodes and workers race through database time, local time, shared memory, locks, timers, and same-node suppression",
+            "database, timer, lock, cursor-eviction, callback, scheduling, and shutdown failures require distinct recovery behavior"
+          ],
+          "reason": "Several advanced distributed, concurrent, scheduled, persistent, and recovery concerns interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "cluster-event public API and channel registry",
+            "PostgreSQL and off persistence strategies",
+            "database connector, node identity, OpenResty workers, shared memory, locks, timers, clock, and integration-test subsystems"
+          ],
+          "reason": "The selected behavior coordinates several major runtime, persistence, process, and platform subsystems."
+        },
+        "constraint_burden": {
+          "signals": [
+            "events must not be lost, replayed incorrectly, delivered to the publishing node, duplicated across workers, or observed before not-before time",
+            "database and local clocks, lookback, TTL, cursor eviction, polling interval, delay, page boundaries, locks, and shared-memory expiration interact",
+            "a local change can break cluster convergence, callback isolation, database load, worker liveness, upgrade compatibility, reliability, or performance"
+          ],
+          "reason": "Several system-wide correctness, liveness, durability, timing, recovery, compatibility, and performance guarantees require expert change discipline."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 3/5/5/5 sums to 18, whose mean of 4.5 rounds half up to Level 5; three dimensions score 5, satisfying the Level 5 guard. Kong cluster events is the sole qualified Lua Level 5 path.",
+      "reconsider": "Reconsider if cluster-event durability, polling, cursor, deduplication, timing, locking, callback, recovery or integration contracts, documentation, Apache-2.0 licensing, or Lua Level 5 representativeness materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog runloop path was too broad and mixed proxy, router, database, plugin, clustering, cache, and PDK behavior. Root accepted the central cluster-events subsystem and its dedicated integration suite as the clearest representative expert path, resolving the final scores to 3/5/5/5, guarded Level 5 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "LuaLS/lua-language-server",
+      "language": "Lua",
+      "prior_level": 5,
+      "pinned_commit": "7a73c7889c1ec981dfd76fba38f5096379f62f99",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A language server schedules diagnostics for changing workspace files, runs enabled static checks, and publishes only results that still correspond to current document state."
+        ],
+        "evidence": "Language Server Protocol vocabulary remains a short primer; the difficult work is transferable asynchronous analysis orchestration, file and workspace state, cancellation and staleness, parser and VM dependencies, diagnostic dispatch, configuration and severity policy, multi-file invalidation, performance, and direct diagnostic testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "provider/diagnostic.lua makes request scheduling, delay, cancellation, file and workspace checks, progress, caching, publication, and stale-result suppression visible; core/diagnostics/init.lua centralizes enabled-check dispatch and policy, files and workspace own changing source state, and proto owns client publication; names match language-server responsibilities; the diagnostic suite covers individual rules, configuration, ranges, severities, globals, cross-file facts, syntax and type behavior; README and CONTRIBUTING orient the server; the file-change-to-current-diagnostics trace is complete; and the exact public pin, MIT license, maintained production server, and deep tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how LuaLS schedules diagnostics for a changed file, gathers parser and workspace facts, runs configured checks, rejects stale work, and publishes current results.",
+        "start_path": "script/provider/diagnostic.lua",
+        "supporting_files": [
+          "script/core/diagnostics/init.lua",
+          "script/files.lua",
+          "script/workspace/workspace.lua",
+          "script/proto/proto.lua",
+          "test/diagnostics/init.lua",
+          "README.md",
+          "CONTRIBUTING.md",
+          "LICENSE"
+        ],
+        "trace": "Start with the provider receiving or scheduling diagnostic work, follow file version, workspace readiness, delay, cancellation, progress, cache and stale-result checks into core diagnostics' enabled-rule dispatch over parser and VM facts, then trace range and severity normalization through proto publication; close rule, configuration, range, cross-file, syntax, and type behavior in the diagnostic suite."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "coroutine-style await scheduling and callbacks",
+            "typed-by-convention file, workspace, parser, VM, diagnostic, and protocol table models",
+            "higher-order diagnostic registry and provider dispatch"
+          ],
+          "reason": "Substantial asynchronous and framework abstractions shape the path without pervasive advanced Lua metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "delayed, cancellable, versioned diagnostic jobs over changing files",
+            "workspace load, parser, VM, cross-file, configuration, cache, progress, stale-result, and publication state",
+            "error, syntax, ignored-file, disabled-rule, closed-file, and superseded-work paths"
+          ],
+          "reason": "Advanced nonlocal event, cache, cancellation, analysis, and publication reasoning recurs across the lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "LSP provider and protocol layer",
+            "file and workspace state",
+            "parser, VM, diagnostic registry, configuration, progress, cache, and broad rule-test boundaries"
+          ],
+          "reason": "Many modules, extension points, analysis layers, and execution policies contribute to the selected path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "diagnostics must use the correct file version, workspace, parse tree, inferred facts, ranges, encoding, configuration, severity, globals, and cross-file state",
+            "cancellation, delay, caching, invalidation, progress, stale suppression, disabled rules, syntax failures, and publication order interact",
+            "a local change can create incorrect editor diagnostics, publish stale results, degrade responsiveness, break protocol compatibility, or destabilize thousands of rule and inference cases"
+          ],
+          "reason": "Several system-wide correctness, freshness, protocol, compatibility, responsiveness, and diagnostic guarantees require expert change discipline."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; the expert constraint score also enforces at least Level 4. LuaLS diagnostics ranks third behind Luacheck and Busted and ahead of Luassert among four qualified Lua Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Lua Level 4 slot opens, the two-entry cap changes, or diagnostic scheduling, staleness, workspace, rule, protocol, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Luacheck or Busted.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The original provider-to-whole-language-server trace was too broad for a coherent placement. Root retained the representative but bounded diagnostics lifecycle through file and workspace state, enabled checks, stale-work suppression, publication, and direct diagnostics tests, resolving it to 3/4/4/5, Level 4 rank 3, and capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 127,
-      "remove": 63
+      "retain": 133,
+      "remove": 67
     },
     "by_language": {
       "JavaScript": {
@@ -14601,33 +15389,52 @@
           "4": 4,
           "5": 2
         }
+      },
+      "Lua": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 4,
+          "4": 4,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 38,
-        "retain": 35,
+        "reviewed": 40,
+        "retain": 37,
         "remove": 3
       },
       "2": {
-        "reviewed": 38,
-        "retain": 30,
-        "remove": 8
+        "reviewed": 40,
+        "retain": 31,
+        "remove": 9
       },
-      "3": {
-        "reviewed": 38,
-        "retain": 28,
-        "remove": 10
-      },
+    "3": {
+      "reviewed": 40,
+      "retain": 26,
+      "remove": 14
+    },
       "4": {
-        "reviewed": 38,
+        "reviewed": 40,
         "retain": 17,
-        "remove": 21
+        "remove": 23
       },
       "5": {
-        "reviewed": 38,
-        "retain": 21,
-        "remove": 17
+        "reviewed": 40,
+        "retain": 22,
+        "remove": 18
       }
     },
     "by_new_level": {
@@ -14637,28 +15444,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 31,
-        "retain": 30,
+        "scored": 32,
+        "retain": 31,
         "remove": 1
       },
       "3": {
-        "scored": 51,
-        "retain": 36,
-        "remove": 15
+        "scored": 55,
+        "retain": 38,
+        "remove": 17
       },
       "4": {
-        "scored": 73,
-        "retain": 38,
-        "remove": 35
+        "scored": 77,
+        "retain": 40,
+        "remove": 37
       },
       "5": {
-        "scored": 24,
-        "retain": 23,
+        "scored": 25,
+        "retain": 24,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 52,
+      "qualified_alternate_over_capacity": 56,
       "coding_relevance_domain_gate": 10,
       "repository_quality_gate": 1
     }
