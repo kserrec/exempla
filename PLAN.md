@@ -305,7 +305,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 9.1 — Guide issues and pull requests into the evidence workflow
 
-- [ ] **Objective:** Make the public GitHub contribution surfaces enforce the
+- [x] **Objective:** Make the public GitHub contribution surfaces enforce the
   same evidence standards as the repository documentation.
 - **Work:** Add focused issue forms for repository candidates, factual
   corrections, SDC disputes, and maintenance problems; disable unstructured
@@ -315,6 +315,6 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 - **Artifacts:** `.github/ISSUE_TEMPLATE/*.yml`,
   `.github/pull_request_template.md`, updates to `CONTRIBUTING.md`.
 - **Complete when:** The forms and pull-request template are present on `main`,
-  GitHub recognizes both community-health surfaces, and all existing catalog
-  checks still pass.
+  the form and chooser definitions pass their published schemas, GitHub reports
+  the pull-request template, and all existing catalog checks still pass.
 - **Dependencies:** Phase 8.
