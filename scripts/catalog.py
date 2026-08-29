@@ -576,9 +576,37 @@ def validate_gap_research(
     accepted_total = 0
     rejected_total = 0
     rejection_records = rejections.get("rejections", [])
+    record_fields = (
+        "order",
+        "language_slug",
+        "language",
+        "researched_at",
+        "starting_entries",
+        "gaps_before",
+        "discovery_channels",
+        "candidates",
+        "accepted",
+        "rejected",
+        "gaps_after",
+        "conclusion",
+    )
+    candidate_fields = (
+        "repository",
+        "pinned_commit",
+        "discovered_via",
+        "inspection_files",
+        "decision",
+        "coding_relevance_status",
+        "coding_relevance_evidence",
+        "quality_status",
+        "quality_evidence",
+        "decision_evidence",
+        "second_review",
+    )
     for index, raw_record in enumerate(records):
         prefix = f"research/learner-centered-gap-research.json languages[{index}]"
         record = require_object(raw_record, prefix, errors)
+        require_exact_keys(record, record_fields, prefix, errors)
         expected_language = languages[index]
         if record.get("order") != index + 1:
             errors.append(f"{prefix}.order: expected {index + 1}")
@@ -598,6 +626,16 @@ def validate_gap_research(
         ]
         if len(channel_ids) != len(channels) or len(set(channel_ids)) != len(channel_ids):
             errors.append(f"{prefix}.discovery_channels: channel ids must be present and unique")
+        for channel_index, raw_channel in enumerate(channels):
+            channel_prefix = f"{prefix}.discovery_channels[{channel_index}]"
+            channel = require_object(raw_channel, channel_prefix, errors)
+            require_exact_keys(channel, ("id", "channel", "sources", "evidence"), channel_prefix, errors)
+            require_text(channel.get("id"), f"{channel_prefix}.id", errors)
+            require_text(channel.get("channel"), f"{channel_prefix}.channel", errors, 10)
+            require_text_list(
+                channel.get("sources"), f"{channel_prefix}.sources", errors, unique=True
+            )
+            require_text(channel.get("evidence"), f"{channel_prefix}.evidence", errors, 20)
         starting_entries = record.get("starting_entries")
         if not isinstance(starting_entries, list):
             errors.append(f"{prefix}.starting_entries: expected list")
@@ -622,27 +660,122 @@ def validate_gap_research(
         for candidate_index, raw_candidate in enumerate(candidates):
             candidate_prefix = f"{prefix}.candidates[{candidate_index}]"
             candidate = require_object(raw_candidate, candidate_prefix, errors)
+            coding_status = candidate.get("coding_relevance_status")
+            quality_status = candidate.get("quality_status")
+            scored = coding_status == "pass" and quality_status == "pass"
+            required_candidate_fields = candidate_fields + (
+                ("scores", "calculated_level") if scored else ()
+            )
+            require_exact_keys(candidate, required_candidate_fields, candidate_prefix, errors)
             repository = require_text(
                 candidate.get("repository"), f"{candidate_prefix}.repository", errors
             )
+            if repository and not REPOSITORY_RE.fullmatch(repository):
+                errors.append(f"{candidate_prefix}.repository: expected owner/name")
             key = repository.lower()
             if key in candidate_keys:
                 errors.append(f"{candidate_prefix}.repository: duplicate gap candidate")
             if key:
                 candidate_keys.add(key)
+            pinned_commit = require_text(
+                candidate.get("pinned_commit"), f"{candidate_prefix}.pinned_commit", errors
+            )
+            if pinned_commit and not COMMIT_RE.fullmatch(pinned_commit):
+                errors.append(
+                    f"{candidate_prefix}.pinned_commit: expected 40 lowercase hexadecimal characters"
+                )
+            discovered_via = require_text_list(
+                candidate.get("discovered_via"),
+                f"{candidate_prefix}.discovered_via",
+                errors,
+                unique=True,
+            )
+            for channel_id in discovered_via:
+                if channel_id not in channel_ids:
+                    errors.append(
+                        f"{candidate_prefix}.discovered_via: unknown channel id {channel_id}"
+                    )
+            inspection_files = require_text_list(
+                candidate.get("inspection_files"),
+                f"{candidate_prefix}.inspection_files",
+                errors,
+                minimum_items=3,
+                unique=True,
+            )
+            for file_index, file_path in enumerate(inspection_files):
+                if not is_safe_relative_path(file_path):
+                    errors.append(
+                        f"{candidate_prefix}.inspection_files[{file_index}]: expected canonical safe non-dotenv relative path"
+                    )
+            if coding_status not in ("pass", "fail"):
+                errors.append(
+                    f"{candidate_prefix}.coding_relevance_status: expected pass or fail"
+                )
+            if quality_status not in ("pass", "fail"):
+                errors.append(f"{candidate_prefix}.quality_status: expected pass or fail")
+            require_text(
+                candidate.get("coding_relevance_evidence"),
+                f"{candidate_prefix}.coding_relevance_evidence",
+                errors,
+                20,
+            )
+            require_text(
+                candidate.get("quality_evidence"),
+                f"{candidate_prefix}.quality_evidence",
+                errors,
+                20,
+            )
+            require_text(
+                candidate.get("decision_evidence"),
+                f"{candidate_prefix}.decision_evidence",
+                errors,
+                20,
+            )
             decision = candidate.get("decision")
             candidate_decisions[repository] = decision
-            scores = require_object(candidate.get("scores"), f"{candidate_prefix}.scores", errors)
-            ordered_scores = tuple(require_score(scores.get(name), f"{candidate_prefix}.scores.{name}", errors) for name in DIMENSION_FIELDS)
-            calculated = candidate.get("calculated_level")
-            if None not in ordered_scores:
-                expected_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
-                if calculated != expected_level:
-                    errors.append(
-                        f"{candidate_prefix}.calculated_level: scores require Level {expected_level}"
+            calculated = None
+            if scored:
+                scores = require_object(
+                    candidate.get("scores"), f"{candidate_prefix}.scores", errors
+                )
+                require_exact_keys(scores, DIMENSION_FIELDS, f"{candidate_prefix}.scores", errors)
+                ordered_scores = tuple(
+                    require_score(
+                        scores.get(name), f"{candidate_prefix}.scores.{name}", errors
                     )
+                    for name in DIMENSION_FIELDS
+                )
+                calculated = candidate.get("calculated_level")
+                if None not in ordered_scores:
+                    expected_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
+                    if calculated != expected_level:
+                        errors.append(
+                            f"{candidate_prefix}.calculated_level: scores require Level {expected_level}"
+                        )
+            second_review = require_object(
+                candidate.get("second_review"), f"{candidate_prefix}.second_review", errors
+            )
+            require_exact_keys(
+                second_review,
+                ("reviewer", "status", "notes"),
+                f"{candidate_prefix}.second_review",
+                errors,
+            )
+            require_text(
+                second_review.get("reviewer"), f"{candidate_prefix}.second_review.reviewer", errors
+            )
+            require_text(
+                second_review.get("notes"),
+                f"{candidate_prefix}.second_review.notes",
+                errors,
+                20,
+            )
+            if second_review.get("status") != "agree":
+                errors.append(f"{candidate_prefix}.second_review.status: expected agree")
             if decision == "accept":
                 accepted_total += 1
+                if not scored:
+                    errors.append(f"{candidate_prefix}: acceptance requires both gates to pass")
                 entry = canonical_entries.get(key)
                 if entry is None:
                     errors.append(f"{candidate_prefix}: accepted candidate missing from catalog")
@@ -651,9 +784,6 @@ def validate_gap_research(
                         errors.append(f"{candidate_prefix}: accepted pin differs from catalog")
                     if entry.get("learning_level", {}).get("level") != calculated:
                         errors.append(f"{candidate_prefix}: accepted Level differs from catalog")
-                second_review = candidate.get("second_review")
-                if not isinstance(second_review, dict) or second_review.get("status") != "agree":
-                    errors.append(f"{candidate_prefix}.second_review: acceptance requires agreement")
             elif decision == "reject":
                 rejected_total += 1
                 if key in canonical_entries:

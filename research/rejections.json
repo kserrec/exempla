@@ -896,6 +896,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Remove only for capacity: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; the expert constraint score also enforces at least Level 4. LuaLS diagnostics ranks third behind Luacheck and Busted and ahead of Luassert among four qualified Lua Level 4 paths, so the two-entry cap excludes it.",
       "reconsider": "Reconsider if a Lua Level 4 slot opens, the two-entry cap changes, or diagnostic scheduling, staleness, workspace, rule, protocol, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Luacheck or Busted."
+    },
+    {
+      "repository": "pallets/markupsafe",
+      "language": "Python",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/2/4 sums to 11, whose mean of 2.75 rounds half up to Level 3; Click and Requests retain stronger source-closed Python Level 3 paths, so the two-entry cap excludes MarkupSafe. The scores were locked before capacity was inspected.",
+      "reconsider": "Reconsider if a Python Level 3 place opens, a retained path weakens on re-audit, or explicit native-versus-speedup parity tests materially strengthen MarkupSafe's comparative path."
+    },
+    {
+      "repository": "tox-dev/platformdirs",
+      "language": "Python",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/3/4 sums to 12, whose mean is Level 3; Click and Requests retain stronger and less repetitive Python Level 3 learning paths, so the two-entry cap excludes platformdirs. The scores were locked before capacity was inspected.",
+      "reconsider": "Reconsider if a Python Level 3 place opens, a retained path weakens on re-audit, or a future inspection adds the XDG mixin and materially strengthens platformdirs' source-complete Unix and macOS trace."
     }
   ]
 }

@@ -111,12 +111,139 @@
       "rejected": [],
       "gaps_after": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 1 paths. JavaScript now has two accepted repositories at every level."
+    },
+    {
+      "order": 2,
+      "language_slug": "python",
+      "language": "Python",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "dbader/schedule", "level": 2},
+        {"repository": "pallets/itsdangerous", "level": 2},
+        {"repository": "pallets/click", "level": 3},
+        {"repository": "psf/requests", "level": 3},
+        {"repository": "pallets/flask", "level": 4},
+        {"repository": "pytest-dev/pytest", "level": 4},
+        {"repository": "apache/airflow", "level": 5},
+        {"repository": "home-assistant/core", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "pypi-registry",
+          "channel": "official Python package registry and release metadata",
+          "sources": [
+            "https://pypi.org/project/MarkupSafe/",
+            "https://pypi.org/pypi/MarkupSafe/json",
+            "https://pypi.org/project/platformdirs/",
+            "https://pypi.org/pypi/platformdirs/json"
+          ],
+          "evidence": "PyPI supplied current package purpose, release, license, and source-repository evidence for two installable production libraries without treating downloads as an admission rule."
+        },
+        {
+          "id": "curated-python-lists",
+          "channel": "independently curated Python ecosystem catalogs",
+          "sources": [
+            "https://github.com/vinta/awesome-python#html-manipulation",
+            "https://awesome-python.com/"
+          ],
+          "evidence": "The curated HTML-manipulation section independently surfaced MarkupSafe and the searchable catalog supplied neighboring small-library leads for comparison."
+        },
+        {
+          "id": "github-small-source-search",
+          "channel": "GitHub public Python source and maintenance search",
+          "sources": [
+            "https://github.com/search?q=language%3APython+archived%3Afalse+stars%3A%3E500+size%3A%3C5000&type=repositories"
+          ],
+          "evidence": "A size-bounded public-source search deliberately sampled smaller maintained Python repositories rather than searching for a desired Level."
+        },
+        {
+          "id": "maintainer-organizations",
+          "channel": "established maintainers' smaller production libraries",
+          "sources": [
+            "https://github.com/pallets/markupsafe",
+            "https://github.com/tox-dev/platformdirs",
+            "https://github.com/pallets",
+            "https://github.com/tox-dev"
+          ],
+          "evidence": "Reviewing focused libraries maintained by the Pallets and tox-dev organizations corroborated genuine production purpose and supplied the exact source candidates for inspection."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "pallets/markupsafe",
+          "pinned_commit": "b2e4d9c7687be25695fffbe93a37622302b24fb1",
+          "discovered_via": ["pypi-registry", "curated-python-lists", "maintainer-organizations"],
+          "inspection_files": [
+            "src/markupsafe/__init__.py",
+            "src/markupsafe/_native.py",
+            "src/markupsafe/_speedups.c",
+            "tests/test_escape.py",
+            "tests/test_markupsafe.py",
+            "README.md",
+            "pyproject.toml",
+            "LICENSE.txt"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The short distinction between untrusted text, escaped text, and explicitly trusted markup is repository-explained; the path primarily teaches transferable trust-boundary APIs, Python data-model hooks, safe-type propagation, formatting adaptation, fallback design, and compatibility engineering.",
+          "quality_status": "pass",
+          "quality_evidence": "The public trust boundary and both escape backends are focused, responsibilities are explicit, documentation closes the context, and direct tests cover five-character Unicode escaping, __html__ interoperation, safe addition, interpolation, formatting, return types, and Markup propagation.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 4},
+          "calculated_level": 3,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/2/4 sums to 11, whose mean of 2.75 rounds half up to Level 3; Click and Requests retain stronger source-closed Python Level 3 paths, so the two-entry cap excludes MarkupSafe. The scores were locked before capacity was inspected.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "After the inspection added direct Markup behavior tests and the C speedup backend, the reviewer independently confirmed both gates, all eight findings, the 3/2/2/4 profile, Level 3 formula, exact claim boundary, and capacity result."
+          }
+        },
+        {
+          "repository": "tox-dev/platformdirs",
+          "pinned_commit": "bd77b0dc378e5e12a1085db1ef9987d074e07880",
+          "discovered_via": ["pypi-registry", "github-small-source-search", "maintainer-organizations"],
+          "inspection_files": [
+            "src/platformdirs/__init__.py",
+            "src/platformdirs/api.py",
+            "src/platformdirs/unix.py",
+            "src/platformdirs/windows.py",
+            "src/platformdirs/macos.py",
+            "tests/test_api.py",
+            "tests/test_unix.py",
+            "tests/test_windows.py",
+            "tests/test_macos.py",
+            "README.md",
+            "pyproject.toml",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Platform directory conventions require only a short primer; the selected path primarily teaches a stable facade over operating-system policy, environmental inputs, filesystem effects, native fallbacks, and cross-platform testing.",
+          "quality_status": "pass",
+          "quality_evidence": "The facade, abstract API, and platform implementations have coherent boundaries; direct shared, Unix, Windows, and macOS tests cover forwarding, environment precedence, platform outputs, lazy directory creation, deduplication, root policy, and resolver fallbacks.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 3, "constraint_burden": 4},
+          "calculated_level": 3,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/3/4 sums to 12, whose mean is Level 3; Click and Requests retain stronger and less repetitive Python Level 3 learning paths, so the two-entry cap excludes platformdirs. The scores were locked before capacity was inspected.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the bounded public facade and Windows/Unix/macOS path, both gates, all eight findings, the 3/2/3/4 profile, Level 3 formula, claim limitations, and capacity comparison."
+          }
+        }
+      ],
+      "accepted": [],
+      "rejected": [
+        "pallets/markupsafe",
+        "tox-dev/platformdirs"
+      ],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 3 paths, not Level 1 paths. Both Level 3 places already contain stronger retained entries, so Python keeps two honest Level 1 gaps without weakening scores or moving candidates."
     }
   ],
   "summary": {
-    "languages_completed": 1,
+    "languages_completed": 2,
     "accepted_new_total": 2,
-    "rejected_new_total": 0,
+    "rejected_new_total": 2,
     "current_entry_total": 135,
     "remaining_gap_total": 65
   }

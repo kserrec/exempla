@@ -9,8 +9,8 @@ Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through production implementation and tests. The catalog currently has
 **135 qualified repositories across 20 languages**. Its **65 open slots are
 honest research gaps** after the learner-centered re-review and the completed
-JavaScript replacement pass; no standard is lowered to preserve an arbitrary
-count.
+JavaScript and Python replacement-research passes; no standard is lowered to
+preserve an arbitrary count.
 
 ## Browse the catalog
 
@@ -72,8 +72,9 @@ Repository quality remains a separate [pass/fail gate](docs/qualification.md).
 - Canonical schema-version-2 JSON under [`catalog/`](catalog/README.md)
   deterministically generates every language page.
 
-Automation verifies structure and public facts. It never admits, rejects, or
-scores a repository.
+Automation validates local structure, formulas, reconciliation, and generated
+output. Human inspection establishes public facts and makes admission,
+rejection, and scoring decisions.
 
 ## Contributing
 

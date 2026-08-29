@@ -295,6 +295,50 @@ class CatalogIntegrationTests(unittest.TestCase):
             )
         )
 
+    def test_gap_candidate_evidence_fields_are_validated(self) -> None:
+        mutations = (
+            ("missing inspection files", lambda candidate: candidate.pop("inspection_files"), "missing fields inspection_files"),
+            ("invalid pin", lambda candidate: candidate.__setitem__("pinned_commit", "main"), "40 lowercase hexadecimal"),
+            ("dotenv inspection", lambda candidate: candidate["inspection_files"].append("config/.env.local"), "canonical safe non-dotenv"),
+            ("unknown channel", lambda candidate: candidate["discovered_via"].append("invented-channel"), "unknown channel id"),
+            ("invalid coding gate", lambda candidate: candidate.__setitem__("coding_relevance_status", "unknown"), "coding_relevance_status: expected pass or fail"),
+            ("invalid quality gate", lambda candidate: candidate.__setitem__("quality_status", "unknown"), "quality_status: expected pass or fail"),
+            ("missing second review", lambda candidate: candidate.pop("second_review"), "missing fields second_review"),
+        )
+        for label, mutate, expected in mutations:
+            with self.subTest(label=label):
+                root = self.make_root()
+                self.add_research(root)
+                gap_path = root / "research" / "learner-centered-gap-research.json"
+                audit = json.loads(gap_path.read_text(encoding="utf-8"))
+                mutate(audit["languages"][1]["candidates"][0])
+                gap_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+                self.assertTrue(
+                    any(expected in error for error in catalog_tool.validate_catalog(root)),
+                    expected,
+                )
+
+    def test_hard_gate_rejection_is_unscored_but_qualified_candidate_is_scored(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        gap_path = root / "research" / "learner-centered-gap-research.json"
+        audit = json.loads(gap_path.read_text(encoding="utf-8"))
+        candidate = audit["languages"][1]["candidates"][0]
+        candidate["coding_relevance_status"] = "fail"
+        candidate.pop("scores")
+        candidate.pop("calculated_level")
+        gap_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertEqual(catalog_tool.validate_catalog(root), [])
+
+        candidate["coding_relevance_status"] = "pass"
+        gap_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "missing fields scores, calculated_level" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
     def test_later_reconsideration_may_follow_the_ordered_cutover_rejections(self) -> None:
         root = self.make_root()
         self.add_research(root)
