@@ -387,7 +387,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 ### Steps 13.1–13.20 — Review every existing language catalog
 
 - [x] **13.1 JavaScript**
-- [ ] **13.2 Python**
+- [x] **13.2 Python**
 - [ ] **13.3 Java**
 - [ ] **13.4 PHP**
 - [ ] **13.5 C#**
