@@ -300,3 +300,21 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 - **Complete when:** Anonymous access succeeds and local `main` matches
   `origin/main` with no uncommitted recognized changes.
 - **Dependencies:** Phase 7.
+
+## Phase 9 — Public collaboration readiness
+
+### Step 9.1 — Guide issues and pull requests into the evidence workflow
+
+- [ ] **Objective:** Make the public GitHub contribution surfaces enforce the
+  same evidence standards as the repository documentation.
+- **Work:** Add focused issue forms for repository candidates, factual
+  corrections, and SDC disputes; disable unstructured public issues; add a
+  pull-request template that distinguishes observed facts from proposed
+  changes and carries the relevant release checks; document how contributors
+  should choose among those entry points.
+- **Artifacts:** `.github/ISSUE_TEMPLATE/*.yml`,
+  `.github/pull_request_template.md`, updates to `CONTRIBUTING.md`.
+- **Complete when:** The forms and pull-request template are present on `main`,
+  GitHub recognizes both community-health surfaces, and all existing catalog
+  checks still pass.
+- **Dependencies:** Phase 8.
