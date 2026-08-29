@@ -992,6 +992,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject as a qualified capacity alternate: both gates pass and 4/5/3/5 sums to 17, whose mean is Level 4; RuboCop and Sidekiq retain more complementary metaprogrammed-analysis and durable-job lifecycle paths, so the two-entry cap excludes Puma. The scores were locked before capacity was inspected. The canonical scope is default queue_requests true in one server process: Server accepts, first sends to ThreadPool, moves incomplete Client input to Reactor, and returns readiness to ThreadPool; queue_requests false bypasses Reactor. Cluster and forking, TLS, native HTTP parser correctness, Rack response streaming, plugins, fiber-per-request, and platform-specific nio4r behavior are outside scope. docs/architecture.md incorrectly puts Reactor before the first pool handoff, while lib/puma/dsl.rb matches source. Some tests use real sleeps, and asynchronous Thread#raise and kill are contained last-resort shutdown mechanisms. Selected Ruby source and test files passed syntax checks, but tests were not run because Bundler, nio4r, test helpers, and the compiled parser extension were unavailable.",
       "reconsider": "Reconsider if a Ruby Level 4 place opens, the two-entry cap changes, a retained Level 4 path weakens on re-audit, or comparative review shows Puma's bounded accept, readiness, thread-pool, backpressure, and shutdown path now provides stronger and sufficiently distinct learning value; rerank it at Level 4 without inflating design span into an open Level 5 place."
+    },
+    {
+      "repository": "benhoyt/inih",
+      "language": "C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but cwalk and jsmn already fill the two C Level 2 places with more complementary path-navigation and zero-allocation tokenization lessons. The direct GCC matrix in tests/unittest.sh completed successfully. The parser intentionally delegates value interpretation to the callback, continuation lines are emitted as repeated callback values rather than concatenated, the default line limit is compile-time configured, and compile-time variants must be consistent across the build.",
+      "reconsider": "Reconsider if a C Level 2 place opens, the two-entry cap changes, or comparative review finds the callback-driven, configurable INI stream path stronger and sufficiently distinct; retain its calculated Level 2 and explicit continuation, line-limit, and build-configuration boundaries."
+    },
+    {
+      "repository": "cktan/tomlc99",
+      "language": "C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maintainability and educational value",
+      "evidence": "Reject at the repository-quality gate: the exact pinned README marks tomlc99 obsolete and names tomlc17 as its replacement. The implementation and tests exist and remain readable, but selecting the superseded parser for new study would teach an explicitly retired design while the maintainer's current replacement is available. The hard failure precedes numerical scoring or capacity comparison.",
+      "reconsider": "Reconsider only if the maintainer reverses the obsolete status and resumes this implementation as the supported line, or if the repository is evaluated solely as documented historical context rather than a new learner exemplar."
     }
   ]
 }

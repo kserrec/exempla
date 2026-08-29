@@ -231,6 +231,132 @@
       }
     },
     {
+      "slug": "tomlc17",
+      "repository": "cktan/tomlc17",
+      "url": "https://github.com/cktan/tomlc17",
+      "primary_language": "C",
+      "language_evidence": "The public API, hand-written scanner and recursive-descent parser, tagged value tree, arena and growable-cell allocators, merge behavior, teardown, and direct tests are first-party C in src/ and test/.",
+      "description": "A lightweight C17 TOML parser that builds an owned typed tree and supports lookup, merge, structural comparison, source locations, and custom allocators.",
+      "real_world_evidence": "The repository ships an embeddable C library for reading TOML configuration, documents C and C++ integration, and validates its parser against the standard toml-test corpus.",
+      "why_study": "Understand how tomlc17 scans a bounded byte buffer, builds an owned tagged tree, and releases every allocation on success or failure. TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.",
+      "learn": [
+        "Study these transferable C mechanisms in `src/tomlc17.c`: pointer-and-length spans over caller input, tagged unions for heterogeneous values, and separate arena and growable-cell allocation strategies.",
+        "Trace these states and branches from `src/tomlc17.c` through its selected supporting files: scanner token and lookahead state, recursive table, array, scalar, and dotted-key construction, and success, malformed-input, allocation-failure, merge, and teardown paths.",
+        "Identify these architectural responsibilities in the path beginning at `src/tomlc17.c`: scanner, recursive-descent parser, typed tree and lookup API, memory ownership layer, and focused parser, pool, and merge tests.",
+        "Study these change constraints for the path beginning at `src/tomlc17.c`: TOML grammar and UTF-8 conformance, bounded input and stable source locations, result-owned pointer lifetime and complete failure cleanup, and C99, C17, C++, allocator, and sanitizer compatibility."
+      ],
+      "prerequisites": [
+        "Before reading `src/tomlc17.c`, be comfortable with pointers, structs, enums, unions, recursion, function pointers, dynamic allocation, and explicit ownership in C.",
+        "TOML maps keys to typed scalar, array, and table values; dotted keys and table headers construct nested paths, and malformed documents must fail without leaking a partial tree."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "TOML maps keys to typed scalar, array, and table values; dotted keys and table headers construct nested paths, and malformed documents must fail without leaking a partial tree."
+        ],
+        "reason": "TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing."
+      },
+      "learning_path": {
+        "goal": "Understand how tomlc17 scans a bounded byte buffer, builds an owned tagged tree, and releases every allocation on success or failure.",
+        "start_here": {
+          "path": "src/tomlc17.c",
+          "reason": "Begin at `toml_parse_named`, then read the scanner, parser, tree construction, and pool helpers in the same translation unit so every ownership transition remains visible."
+        },
+        "supporting_files": [
+          "src/tomlc17.h",
+          "DESIGN.md",
+          "API.md",
+          "test/parser/parser.c",
+          "test/parser/run.sh",
+          "test/pool/test1.c",
+          "test/merge/test1.c"
+        ],
+        "trace": "Start at toml_parse_named, follow parser initialization and scan_next into table, array, key-value, and scalar dispatch, watch spans become pool-owned normalized strings and tagged tree nodes, then trace both error and success cleanup through datum_free and pool_destroy; close with malformed parser fixtures, allocator-boundary tests, and merge ownership tests that free inputs before reading the result."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "pointer-and-length source spans and scanner snapshots",
+            "tagged unions and recursive heterogeneous tree construction",
+            "pluggable allocator callbacks with arena and growable-cell storage"
+          ],
+          "reason": "Nontrivial type modeling and manual ownership materially shape the path, while the implementation deliberately avoids pervasive metaprogramming or platform-specific expert machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "scanner position, lookahead, and token-mode transitions",
+            "recursive table, array, dotted-key, and scalar parsing",
+            "partial-tree failure cleanup and independently owned merge results"
+          ],
+          "reason": "Several parser and ownership states interact across the synchronous lifecycle, but concurrency and distributed recovery are absent."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "scanner and recursive-descent parser",
+            "public typed-tree and lookup API",
+            "arena, growable storage, teardown, merge, and focused test boundaries"
+          ],
+          "reason": "The trace crosses several meaningful responsibilities even though the implementation remains intentionally amalgamated into one source file."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "TOML grammar, numeric, timestamp, escape, and UTF-8 compatibility",
+            "bounded source positions and result-owned pointer lifetime",
+            "allocation-failure cleanup, custom allocators, and C and C++ portability"
+          ],
+          "reason": "Grammar conformance, memory safety, ownership, error reporting, and language interoperability recur together through ordinary parser changes."
+        },
+        "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
+      },
+      "quality": {
+        "source_quality": "The implementation names scanner, parser, tree, and allocator responsibilities directly, uses one cleanup contract for every result, and avoids hidden dependencies; focused tests exercise syntax, pool boundaries, structural equivalence, merge behavior, and ownership after freeing inputs under address and undefined-behavior sanitizers.",
+        "architecture": "DESIGN.md maps the scanner, recursive-descent parser, typed tree, cell storage, string pool, merge, comparison, and teardown boundaries to exact source functions and ownership rules.",
+        "naming_and_idiom": "The path demonstrates idiomatic explicit C representation through spans, tagged unions, function-pointer allocator hooks, recursive helpers, and narrow public structures with opaque internal ownership.",
+        "tests": "The selected parser fixture suite covers valid and invalid tables, arrays, dotted keys, and values; pool tests cover allocation thresholds and page growth; merge tests cover overrides, recursive tables, array-of-table behavior, type conflicts, empty inputs, and result lifetime after both inputs are freed.",
+        "documentation": "README.md, API.md, DESIGN.md, and OPTIONS.md explain integration, public lifetime rules, every major internal boundary, global allocator constraints, and the standard conformance suite.",
+        "traceability": "A learner can follow toml_parse_named through scan_next and parse dispatch into tagged nodes and pooled strings, then reach explicit cleanup and direct parser, pool, and merge tests without leaving the selected files.",
+        "maintainability": "The revision centralizes result ownership, isolates unsynchronized global allocator configuration, asserts allocator invariants, documents threading limits, and runs focused tests with compiler warnings plus address and undefined-behavior sanitizers.",
+        "educational_value": "The path combines practical parsing with visible low-level ownership and failure handling while keeping the format vocabulary subordinate to reusable C engineering lessons."
+      },
+      "inspection": {
+        "commit": "64a063b8636a4b48d142f978270f5e53e605e240",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "Codex cold self-review"
+        ],
+        "files": [
+          "src/tomlc17.c",
+          "src/tomlc17.h",
+          "README.md",
+          "DESIGN.md",
+          "API.md",
+          "OPTIONS.md",
+          "test/parser/parser.c",
+          "test/parser/run.sh",
+          "test/pool/test1.c",
+          "test/merge/test1.c",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/cktan/tomlc17/blob/64a063b8636a4b48d142f978270f5e53e605e240/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "cjson",
       "repository": "DaveGamble/cJSON",
       "url": "https://github.com/DaveGamble/cJSON",

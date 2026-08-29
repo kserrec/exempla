@@ -1535,13 +1535,118 @@
         "5": 0
       },
       "conclusion": "Four independent discovery channels and four exact-pin inspections found one qualified Level 2 path, two distinct qualified Level 5 concurrency paths, and one qualified Level 4 capacity alternate. Base64 fills the open Level 2 place, concurrent-ruby and Async fill both Level 5 places, and Puma remains a durable Level 4 alternative. Both Level 1 places remain honest because no candidate was moved downward to fill them."
+    },
+    {
+      "order": 9,
+      "language_slug": "c",
+      "language": "C",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "likle/cwalk", "level": 2},
+        {"repository": "zserge/jsmn", "level": 2},
+        {"repository": "DaveGamble/cJSON", "level": 3},
+        {"repository": "git/git", "level": 4},
+        {"repository": "libcheck/check", "level": 4},
+        {"repository": "curl/curl", "level": 5},
+        {"repository": "libevent/libevent", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 1, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "c-package-registries",
+          "channel": "C and C++ package registries",
+          "sources": [
+            "https://vcpkg.io/en/package/inih.html",
+            "https://github.com/conan-io/conan-center-index/tree/master/recipes/inih"
+          ],
+          "evidence": "vcpkg and Conan supplied production packaging and reverse-use leads for the deliberately small inih parser without treating registry presence as qualification."
+        },
+        {
+          "id": "curated-c-libraries",
+          "channel": "independently curated C library index",
+          "sources": [
+            "https://github.com/oz123/awesome-c#ini",
+            "https://github.com/oz123/awesome-c#json"
+          ],
+          "evidence": "The curated configuration-parser categories exposed small INI, JSON, TOML, and neighboring parser implementations for comparison across varied sizes."
+        },
+        {
+          "id": "github-c-source",
+          "channel": "GitHub C source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/benhoyt/inih",
+            "https://github.com/cktan/tomlc99",
+            "https://github.com/cktan/tomlc17"
+          ],
+          "evidence": "Public source and current GitHub metadata established the exact revisions, first-party C paths, archive state, project status, tests, documentation, and license material used for inspection."
+        },
+        {
+          "id": "toml-standard-ecosystem",
+          "channel": "official TOML specification and conformance ecosystem",
+          "sources": [
+            "https://toml.io/en/",
+            "https://github.com/toml-lang/toml-test",
+            "https://github.com/cktan/tomlc17/blob/main/DESIGN.md"
+          ],
+          "evidence": "The specification, official conformance harness, and maintainer design tour supplied the parser contract and memory-model context needed to bound tomlc17's coding path."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "benhoyt/inih",
+          "pinned_commit": "577ae2dee1f0d9c2d11c7f10375c1715f3d6940c",
+          "discovered_via": ["c-package-registries", "curated-c-libraries", "github-c-source"],
+          "inspection_files": ["ini.c", "ini.h", "README.md", "tests/unittest.c", "tests/unittest.sh", "tests/unittest_alloc.c", "tests/unittest_string.c", "LICENSE.txt"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "INI needs only a short section-and-key primer; the path teaches callbacks, line-oriented parsing, compile-time policies, bounded buffers, optional allocation, recovery, and direct baseline tests.",
+          "quality_status": "pass",
+          "quality_evidence": "The compact implementation, narrow stream and callback boundary, idiomatic configurable C API, direct malformed-input and allocation variants, extensive option documentation, complete stream-to-handler trace, explicit portability notes, and unusually strong small-library teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 3},
+          "calculated_level": 2,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but cwalk and jsmn already fill the two C Level 2 places with more complementary path-navigation and zero-allocation tokenization lessons. The direct GCC matrix in tests/unittest.sh completed successfully. The parser intentionally delegates value interpretation to the callback, continuation lines are emitted as repeated callback values rather than concatenated, the default line limit is compile-time configured, and compile-time variants must be consistent across the build.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin, source and test paths, both gates, all eight findings, 2/2/1/3 Level 2 formula, full capacity, BSD-3-Clause license, successful GCC matrix, and every callback, continuation, line-limit, and compile-time boundary."}
+        },
+        {
+          "repository": "cktan/tomlc99",
+          "pinned_commit": "29076dfd095bbbbd50a3c1b2760d29f4b83e74ac",
+          "discovered_via": ["curated-c-libraries", "github-c-source", "toml-standard-ecosystem"],
+          "inspection_files": ["README.md", "toml.c", "toml.h", "unittest/t1.c", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "A TOML parser can teach transferable scanner, recursive parsing, tree ownership, malformed-input handling, and cleanup with only a short format primer.",
+          "quality_status": "fail",
+          "quality_evidence": "The repository's own current README states that this library is obsolete and directs users to tomlc17; publishing the superseded implementation as the new exemplar would fail maintainability and educational-value findings when the maintained replacement is publicly inspectable.",
+          "decision_evidence": "Reject at the repository-quality gate: the exact pinned README marks tomlc99 obsolete and names tomlc17 as its replacement. The implementation and tests exist and remain readable, but selecting the superseded parser for new study would teach an explicitly retired design while the maintainer's current replacement is available. The hard failure precedes numerical scoring or capacity comparison.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, the literal obsolete notice and replacement link in README.md, the existing C source, tests, and license, and agreed that maintainability and educational value fail before scoring."}
+        },
+        {
+          "repository": "cktan/tomlc17",
+          "pinned_commit": "64a063b8636a4b48d142f978270f5e53e605e240",
+          "discovered_via": ["github-c-source", "toml-standard-ecosystem"],
+          "inspection_files": ["src/tomlc17.c", "src/tomlc17.h", "README.md", "DESIGN.md", "API.md", "OPTIONS.md", "test/parser/parser.c", "test/parser/run.sh", "test/pool/test1.c", "test/merge/test1.c", "LICENSE"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional scanner, parser, tree, and allocator code, documented internal boundaries, idiomatic explicit ownership, direct valid, invalid, allocator, merge, and lifetime tests, detailed API and design guides, full parse-to-cleanup traceability, centralized result ownership, and strong systems-teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "calculated_level": 3,
+          "decision_evidence": "The scores were written before capacity was checked. The 3/3/3/4 profile sums to 13, whose mean of 3.25 rounds to Level 3; both gates pass and the open C Level 3 place accepts tomlc17. Focused parser, pool, equivalence, and merge suites compiled with C17 warnings plus address and undefined-behavior sanitizers and all passed. The selected path excludes C++20 accessors and the external full toml-test installation; allocator configuration is global and unsynchronized, source spans are bounded by the caller buffer, individual pooled strings cannot be freed, and the format parser is not a general serialization framework.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and parse-to-scanner-to-tree-to-pool-to-cleanup path, both gates and all eight findings, 3/3/3/4 Level 3 result, open slot, first-party C and MIT evidence, passing sanitizer-backed focused suites, and the allocator, lifetime, pooling, C++, external-conformance, and scope boundaries."}
+        }
+      ],
+      "accepted": ["cktan/tomlc17"],
+      "rejected": ["benhoyt/inih", "cktan/tomlc99"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and three exact-pin inspections produced one accepted Level 3 parser, one qualified Level 2 capacity alternate, and one hard quality rejection for the obsolete predecessor. tomlc17 fills the only score-supported open place; both Level 1 places remain honest because no candidate was simplified or moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 8,
-    "accepted_new_total": 11,
-    "rejected_new_total": 12,
-    "current_entry_total": 144,
-    "remaining_gap_total": 56
+    "languages_completed": 9,
+    "accepted_new_total": 12,
+    "rejected_new_total": 14,
+    "current_entry_total": 145,
+    "remaining_gap_total": 55
   }
 }
