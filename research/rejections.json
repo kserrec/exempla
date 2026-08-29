@@ -1024,6 +1024,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but pflag and match already fill the two Go Level 2 places with more complementary configuration and pattern-matching lessons. The Go toolchain is unavailable locally, so source and tests were inspected but not executed. Parse deliberately accepts several nonstandard forms and must not be used as validation; random pooling changes entropy-reader call behavior and is protected by a mutex; UUID generation is uniqueness-oriented identification rather than encryption, authentication, or authorization.",
       "reconsider": "Reconsider if a Go Level 2 place opens, the two-entry cap changes, or comparative review finds the fixed-array parsing, error, encoding-interface, random-source, pooling, and table-driven-test path stronger and sufficiently distinct; preserve the permissive-parse and non-security boundaries."
+    },
+    {
+      "repository": "r-lib/crayon",
+      "language": "R",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3. Both gates pass, but withr and ggplot2 already fill the two R Level 3 places with more complementary scoped-state and layered-graphics paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. The pinned README says crayon is superseded by cli for new projects while promising continued important bug fixes; terminal capability and options affect emitted styles, byte and display width differ, and correct nested styling depends on restoring enclosing ANSI state.",
+      "reconsider": "Reconsider if an R Level 3 place opens, the two-entry cap changes, crayon resumes feature development, or comparative review finds its closure-built, vectorized, nested ANSI-state path stronger and sufficiently distinct; retain the calculated Level 3 and the explicit supersession and terminal-behavior boundaries."
+    },
+    {
+      "repository": "r-lib/prettyunits",
+      "language": "R",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/2/3 sums to 9, whose mean of 2.25 rounds to Level 2. Both gates pass, but pkgconfig and rematch2 already fill the two R Level 2 places with more complementary configuration and match-structure paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. Decimal bytes and SI quantities use different prefix tables, formatting styles intentionally trade padding and precision, negative values retain sign after magnitude selection, large values clamp to the largest named unit, and standalone closure environments must remain base-only.",
+      "reconsider": "Reconsider if an R Level 2 place opens, the two-entry cap changes, or comparative review finds the vectorized magnitude, formatting, rounding, and standalone-closure path stronger and sufficiently distinct; preserve its calculated Level 2 and prefix, precision, clamping, and environment boundaries."
     }
   ]
 }

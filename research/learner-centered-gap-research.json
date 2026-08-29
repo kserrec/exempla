@@ -1846,12 +1846,103 @@
       "rejected": ["google/uuid"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and two exact-pin inspections found a qualified compact Level 2 alternate and a distinct Level 5 concurrent ClientConn path. gRPC-Go fills the only score-supported open place; both Level 1 places remain honest because UUID was not moved downward."
+    },
+    {
+      "order": 12,
+      "language_slug": "r",
+      "language": "R",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "r-lib/pkgconfig", "level": 2},
+        {"repository": "r-lib/rematch2", "level": 2},
+        {"repository": "r-lib/withr", "level": 3},
+        {"repository": "tidyverse/ggplot2", "level": 3},
+        {"repository": "r-lib/testthat", "level": 4},
+        {"repository": "tidyverse/glue", "level": 4},
+        {"repository": "nimble-dev/nimble", "level": 5},
+        {"repository": "wch/r-source", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "r-cran-registry",
+          "channel": "official Comprehensive R Archive Network package registry",
+          "sources": [
+            "https://cran.r-project.org/package=crayon",
+            "https://cran.r-project.org/package=prettyunits"
+          ],
+          "evidence": "CRAN supplied canonical package identities, release documentation, source-package records, and production distribution evidence for two deliberately compact R libraries."
+        },
+        {
+          "id": "r-universe-builds",
+          "channel": "R-universe package build and metadata service",
+          "sources": [
+            "https://r-lib.r-universe.dev/crayon",
+            "https://r-lib.r-universe.dev/prettyunits"
+          ],
+          "evidence": "R-universe supplied an independently rendered view of package metadata, exports, documentation, builds, and dependency surfaces without assigning learner levels."
+        },
+        {
+          "id": "r-maintainer-docs",
+          "channel": "maintainer package documentation",
+          "sources": [
+            "https://r-lib.github.io/crayon/",
+            "https://r-lib.github.io/prettyunits/"
+          ],
+          "evidence": "The maintainers' rendered documentation exposed supported use, examples, formatting contracts, and crayon's explicit supersession and support policy."
+        },
+        {
+          "id": "github-r-source",
+          "channel": "GitHub R source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/r-lib/crayon",
+            "https://github.com/r-lib/prettyunits"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, meaningful first-party R implementation and test paths, repository status, documentation, and pinned MIT license evidence."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "r-lib/crayon",
+          "pinned_commit": "846317afdb813575b97883fd0a4e654f6a5fc4f4",
+          "discovered_via": ["r-cran-registry", "r-universe-builds", "r-maintainer-docs", "github-r-source"],
+          "inspection_files": ["README.md", "R/machinery.R", "R/string_operations.R", "tests/testthat/test-color.R", "tests/testthat/test-operations.R", "tests/testthat/test-styles.R", "LICENSE", "LICENSE.md"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "ANSI style vocabulary needs only a short primer; the path teaches closures, S3-style objects, dynamic function construction, vector recycling, regular-expression spans, nested state restoration, option-driven behavior, and boundary-focused tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional style and ANSI-aware string modules, clear construction and application boundaries, idiomatic vectorized R and closures, direct nested, reset, substring, width, malformed, and option tests, public reference documentation, traceable text-to-style behavior, an explicit support policy, and strong language-teaching value satisfy all eight findings despite feature development moving to cli.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 2, "constraint_burden": 3},
+          "calculated_level": 3,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3. Both gates pass, but withr and ggplot2 already fill the two R Level 3 places with more complementary scoped-state and layered-graphics paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. The pinned README says crayon is superseded by cli for new projects while promising continued important bug fixes; terminal capability and options affect emitted styles, byte and display width differ, and correct nested styling depends on restoring enclosing ANSI state.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin, support and supersession language, style-construction-to-ANSI-aware-string path, both gates and all eight findings, 3/3/2/3 Level 3 formula, full capacity, R and MIT evidence, unavailable toolchain, and the capability, width, vectorization, and nested-state boundaries."}
+        },
+        {
+          "repository": "r-lib/prettyunits",
+          "pinned_commit": "a321ec23ea30b904540bb8b0d30f2a519512d90e",
+          "discovered_via": ["r-cran-registry", "r-universe-builds", "r-maintainer-docs", "github-r-source"],
+          "inspection_files": ["README.md", "R/sizes.R", "R/numbers.R", "R/rounding.R", "tests/testthat/test-bytes.R", "tests/testthat/test-numbers.R", "LICENSE", "LICENSE.md"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Metric and byte prefixes need only a short primer; the path teaches vectorized masks and indexing, closure-contained standalone functions, magnitude selection, matrix-backed suffix lookup, rounding policy, formatted output, and exact boundary tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Compact intentional formatter closures, one clear compute-to-format boundary, idiomatic vectorized R, direct invalid, empty, negative, NA, NaN, boundary, style, and standalone-dependency tests, public examples and reference docs, full numeric-input-to-output traceability, centralized tables and rounding, and unusually accessible R teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "calculated_level": 2,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/2/3 sums to 9, whose mean of 2.25 rounds to Level 2. Both gates pass, but pkgconfig and rematch2 already fill the two R Level 2 places with more complementary configuration and match-structure paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. Decimal bytes and SI quantities use different prefix tables, formatting styles intentionally trade padding and precision, negative values retain sign after magnitude selection, large values clamp to the largest named unit, and standalone closure environments must remain base-only.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and numeric-vector-to-magnitude-to-rounding-to-formatting path, both gates and all eight findings, 2/2/2/3 Level 2 formula, full capacity, R and MIT evidence, unavailable toolchain, and the prefix, precision, negative, clamping, and standalone-environment boundaries."}
+        }
+      ],
+      "accepted": [],
+      "rejected": ["r-lib/crayon", "r-lib/prettyunits"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 2 and Level 3 alternatives, but both calculated buckets were already full. Both Level 1 places remain honest because neither candidate was simplified or moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 11,
+    "languages_completed": 12,
     "accepted_new_total": 14,
-    "rejected_new_total": 16,
+    "rejected_new_total": 18,
     "current_entry_total": 147,
     "remaining_gap_total": 53
   }
