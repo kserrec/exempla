@@ -3,6 +3,127 @@
   "language_slug": "ruby",
   "repositories": [
     {
+      "slug": "base64",
+      "repository": "ruby/base64",
+      "url": "https://github.com/ruby/base64",
+      "primary_language": "Ruby",
+      "language_evidence": "The published encoding and decoding APIs, URL-safe adaptation, padding repair, and direct behavioral tests are first-party Ruby in lib/ and test/.",
+      "description": "Ruby's standard Base64 library for printable encoding of binary data, including strict and URL-safe variants.",
+      "real_world_evidence": "The repository publishes the base64 default gem used by Ruby applications and the Ruby standard library.",
+      "why_study": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/base64.rb`: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.",
+        "Trace these states and branches from `lib/base64.rb` through its selected supporting files: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.",
+        "Identify these architectural responsibilities in the path beginning at `lib/base64.rb`: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.",
+        "Study these change constraints for the path beginning at `lib/base64.rb`: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips."
+      ],
+      "prerequisites": [
+        "Before reading `lib/base64.rb`, be comfortable with these mechanisms: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.",
+        "Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.",
+        "domain_context": [
+          "Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input.",
+        "start_here": {
+          "path": "lib/base64.rb",
+          "reason": "Begin with `lib/base64.rb` because it contains the complete MIME, strict, and URL-safe encoding and decoding path."
+        },
+        "supporting_files": [
+          "test/base64/test_base64.rb",
+          "README.md",
+          "sig/base64.rbs",
+          "test_sig/test_base64.rb"
+        ],
+        "trace": "Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "module-function APIs",
+            "Array and String pack/unpack delegation",
+            "keyword arguments with localized string transformation"
+          ],
+          "reason": "The complete path uses ordinary Ruby functions and string operations around a standard primitive boundary."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "MIME versus strict behavior",
+            "padded versus unpadded URL-safe encoding",
+            "URL-safe decoding with conditional padding repair"
+          ],
+          "reason": "Several visible variants and boundary branches must be compared, but state remains local and linear."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one focused public module",
+            "Ruby's binary pack/unpack primitive boundary",
+            "one direct behavioral test suite"
+          ],
+          "reason": "The behavior is deliberately concentrated in six small methods and one direct test file."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "RFC-2045 and RFC-4648 alphabet differences",
+            "strict versus permissive input",
+            "exact padding and newline contracts",
+            "binary-string round trips"
+          ],
+          "reason": "Multiple externally visible encoding, padding, newline, and malformed-input contracts shape otherwise tiny methods."
+        },
+        "placement": "The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "Six compact methods delegate the bit-level transform to Ruby's documented pack/unpack primitives and keep URL-safe alphabet and padding policy explicit; direct tests cover empty input, binary bytes, strict malformed input, padded and unpadded variants, and round trips.",
+        "architecture": "The audited architecture of the path beginning at `lib/base64.rb` has these boundaries: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.",
+        "naming_and_idiom": "`lib/base64.rb` and its supporting files use these characteristic Ruby mechanisms: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.",
+        "tests": "Direct tests in `test/base64/test_base64.rb` cover these states and branches in the selected path: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.",
+        "documentation": "Inline API documentation, type signatures, and README examples distinguish the three method pairs, padding, newlines, and malformed-input behavior. The URL-safe decoder RDoc overstates alphabet rejection: valid-length standard `+` and `/` input is accepted, as source and tests show.",
+        "traceability": "Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc.",
+        "maintainability": "Changes to the path beginning at `lib/base64.rb` are constrained by these audited guarantees: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips.",
+        "educational_value": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing."
+      },
+      "inspection": {
+        "commit": "9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "lib/base64.rb",
+          "test/base64/test_base64.rb",
+          "README.md",
+          "sig/base64.rbs",
+          "test_sig/test_base64.rb",
+          "COPYING",
+          "BSDL"
+        ]
+      },
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/COPYING",
+          "https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/BSDL"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "pathname",
       "repository": "ruby/pathname",
       "url": "https://github.com/ruby/pathname",
@@ -608,6 +729,283 @@
         "primary_language": "Ruby",
         "archived": false,
         "metadata_checked_at": "2026-08-28"
+      }
+    },
+    {
+      "slug": "concurrent-ruby",
+      "repository": "ruby-concurrency/concurrent-ruby",
+      "url": "https://github.com/ruby-concurrency/concurrent-ruby",
+      "primary_language": "Ruby",
+      "language_evidence": "The selected promise graph, executor handoff, atomic state, fallback synchronization, documentation, and direct behavioral specs are first-party Ruby; optional native atomic backends are not required by this path.",
+      "description": "A production concurrency toolkit whose promise framework composes asynchronous tasks, dependency graphs, executors, and single-assignment results.",
+      "real_world_evidence": "The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.",
+      "why_study": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/concurrent-ruby/concurrent/promises.rb`: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
+        "Trace these states and branches from `lib/concurrent-ruby/concurrent/promises.rb` through its selected supporting files: pending, reserved, fulfilled, and rejected resolution, then versus rescue propagation, callback registration racing with resolution, and delayed graph touch and blocking wait paths.",
+        "Identify these architectural responsibilities in the path beginning at `lib/concurrent-ruby/concurrent/promises.rb`: public factories and Future API, immutable result-state objects, blocked promise graph, executor boundary, and atomic and blocking synchronization boundary.",
+        "Study these change constraints for the path beginning at `lib/concurrent-ruby/concurrent/promises.rb`: exactly-once resolution, callback visibility under races, rejection and non-StandardError propagation, executor inheritance, timeout and spurious-wakeup correctness, and multiple Ruby runtime backends."
+      ],
+      "prerequisites": [
+        "Before reading `lib/concurrent-ruby/concurrent/promises.rb`, be comfortable with these mechanisms: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
+        "A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.",
+        "domain_context": [
+          "A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers.",
+        "start_here": {
+          "path": "lib/concurrent-ruby/concurrent/promises.rb",
+          "reason": "Begin with `lib/concurrent-ruby/concurrent/promises.rb` because it exposes the complete public factory, dependency, resolution, callback, and observation path."
+        },
+        "supporting_files": [
+          "lib/concurrent-ruby/concurrent/configuration.rb",
+          "lib/concurrent-ruby/concurrent/synchronization/object.rb",
+          "lib/concurrent-ruby/concurrent/collection/lock_free_stack.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_reference.rb",
+          "lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb",
+          "spec/concurrent/promises_spec.rb",
+          "docs-source/promises-main.md",
+          "docs-source/promises.in.md"
+        ],
+        "trace": "Start at Promises.future and Future#then or #rescue, follow BlockedPromise dependency registration into ThenPromise or RescuePromise executor posting, then follow evaluate_to into the CAS-backed fulfilled or rejected state, callback draining, and wait or value! observation; close with direct promise specs for arguments, executors, callbacks, timeouts, branching, delay, rejection, reservation, duplicate assignment, and spurious wakeups. Mutex-backed atomic fallbacks and blocking waits mean the selected path must not be described as universally lock-free."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "blocks and mixins as asynchronous APIs",
+            "private state and promise subclasses",
+            "atomic accessors, callbacks, aliases, and executor dispatch"
+          ],
+          "reason": "Advanced Ruby object, block, mixin, callback, and generated atomic-accessor techniques recur, without enough pervasive expert metaprogramming for 5."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "pending, reserved, fulfilled, and rejected resolution",
+            "then versus rescue propagation",
+            "callback registration racing with resolution",
+            "delayed graph touch and blocking wait paths"
+          ],
+          "reason": "Concurrent resolution, dependency graphs, executor timing, callbacks, failure, delay, and blocking observation interact nonlocally."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public factories and Future API",
+            "immutable result-state objects",
+            "blocked promise graph",
+            "executor boundary",
+            "atomic and blocking synchronization boundary"
+          ],
+          "reason": "Several strong concurrency boundaries collaborate across one bounded promise framework."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "exactly-once resolution",
+            "callback visibility under races",
+            "rejection and non-StandardError propagation",
+            "executor inheritance",
+            "timeout and spurious-wakeup correctness",
+            "multiple Ruby runtime backends"
+          ],
+          "reason": "Atomicity, visibility, scheduling, failure, timeout, and cross-runtime guarantees interact so a local change can break distant consumers."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. Behavioral reasoning and constraint burden both score 5, satisfying the Level 5 guardrail. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "The large promises implementation is dense but deliberately partitioned into public futures, immutable states, blocked promise types, and resolution helpers; direct specs close its core races and lifecycle. CamelCase final ivars are an explicit synchronization convention rather than ordinary Ruby style.",
+        "architecture": "The audited architecture of the path beginning at `lib/concurrent-ruby/concurrent/promises.rb` has these boundaries: public factories and Future API, immutable result-state objects, blocked promise graph, executor boundary, and atomic and blocking synchronization boundary.",
+        "naming_and_idiom": "`lib/concurrent-ruby/concurrent/promises.rb` and its supporting files use these characteristic Ruby mechanisms: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
+        "tests": "Direct specs in `spec/concurrent/promises_spec.rb` cover these states and branches in the selected path: pending, reserved, fulfilled, and rejected resolution, then versus rescue propagation, callback registration racing with resolution, and delayed graph touch and blocking wait paths.",
+        "documentation": "The promise guide documents states, graphs, error paths, executor selection, callbacks, and blocking observation; its broad lock-free wording must be read with the source's mutex-backed atomic fallbacks and explicit Mutex/ConditionVariable waits.",
+        "traceability": "Start at Promises.future and Future#then or #rescue, follow BlockedPromise dependency registration into ThenPromise or RescuePromise executor posting, then follow evaluate_to into the CAS-backed fulfilled or rejected state, callback draining, and wait or value! observation; close with direct promise specs for arguments, executors, callbacks, timeouts, branching, delay, rejection, reservation, duplicate assignment, and spurious wakeups. Mutex-backed atomic fallbacks and blocking waits mean the selected path must not be described as universally lock-free.",
+        "maintainability": "Changes to the path beginning at `lib/concurrent-ruby/concurrent/promises.rb` are constrained by these audited guarantees: exactly-once resolution, callback visibility under races, rejection and non-StandardError propagation, executor inheritance, timeout and spurious-wakeup correctness, and multiple Ruby runtime backends. The 2,184-line core file and runtime backend selection increase review scope.",
+        "educational_value": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries."
+      },
+      "inspection": {
+        "commit": "0b88d5ff75f69b3740c8f0868e76f833cb2fd45d",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "lib/concurrent-ruby/concurrent/promises.rb",
+          "lib/concurrent-ruby/concurrent/configuration.rb",
+          "lib/concurrent-ruby/concurrent/synchronization/object.rb",
+          "lib/concurrent-ruby/concurrent/collection/lock_free_stack.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_reference.rb",
+          "lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_fixnum.rb",
+          "lib/concurrent-ruby/concurrent/atomic/mutex_atomic_fixnum.rb",
+          "spec/concurrent/promises_spec.rb",
+          "docs-source/promises-main.md",
+          "docs-source/promises.in.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "async",
+      "repository": "socketry/async",
+      "url": "https://github.com/socketry/async",
+      "primary_language": "Ruby",
+      "language_evidence": "Task lifecycle, Fiber scheduling, promise state, cancellation, timeout behavior, tree ownership, and their direct tests are substantive first-party Ruby; io-event supplies selector internals outside the selected path.",
+      "description": "A composable fiber-based asynchronous I/O framework with structured task trees, cancellation, timeouts, and Ruby's Fiber scheduler integration.",
+      "real_world_evidence": "The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.",
+      "why_study": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/async/task.rb`: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",
+        "Trace these states and branches from `lib/async/task.rb` through its selected supporting files: initialized, running, completed, failed, and cancelled tasks, hierarchical and deferred cancellation, suspension, resumption, timeout injection, and transient-child lifetime.",
+        "Identify these architectural responsibilities in the path beginning at `lib/async/task.rb`: public Async entry and Reactor, hierarchical Task and Node ownership, Scheduler and selector boundary, Promise result boundary, and cancellation and timeout operations.",
+        "Study these change constraints for the path beginning at `lib/async/task.rb`: task-tree integrity and reparenting, one-shot result propagation, cancellation-cause preservation, interruption-point semantics, timer cleanup and stale-wakeup avoidance, and selector, worker, and user-resource shutdown."
+      ],
+      "prerequisites": [
+        "Before reading `lib/async/task.rb`, be comfortable with these mechanisms: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",
+        "Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
+        "domain_context": [
+          "Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout.",
+        "start_here": {
+          "path": "lib/async/task.rb",
+          "reason": "Begin with `lib/async/task.rb` because it exposes the task state machine, Fiber execution, child creation, result propagation, cancellation, and finish lifecycle."
+        },
+        "supporting_files": [
+          "lib/kernel/async.rb",
+          "lib/async/reactor.rb",
+          "lib/async/scheduler.rb",
+          "lib/async/node.rb",
+          "lib/async/promise.rb",
+          "lib/async/cancel.rb",
+          "lib/async/timeout.rb",
+          "test/async/task.rb",
+          "test/async/scheduler.rb",
+          "test/async/reactor.rb",
+          "test/async/timeout.rb",
+          "guides/tasks/readme.md",
+          "guides/scheduler/readme.md"
+        ],
+        "trace": "Start at the public Async entry, follow Reactor and Scheduler binding into Task#run, greedy Fiber scheduling and suspension, then follow completion or failure into Promise resolution and task-tree consumption; branch through hierarchical or deferred cancellation and timeout injection, and close with task, scheduler, reactor, and timeout tests for causes, transient children, stale wakeups, interrupts, cleanup, and shutdown. Cancellation remains cooperative, timeout is delivered at an interruption point, io-event owns selector internals, and user-owned sockets or files still require ensure cleanup."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "Fiber scheduler integration",
+            "exception-based cooperative cancellation",
+            "block-scoped task construction",
+            "Promise and task-tree abstractions"
+          ],
+          "reason": "Advanced Fiber, scheduler, exception, block, and ensure mechanics recur, without enough distinct expert metaprogramming or reflection for 5."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "initialized, running, completed, failed, and cancelled tasks",
+            "hierarchical and deferred cancellation",
+            "suspension, resumption, and timeout injection",
+            "transient-child lifetime"
+          ],
+          "reason": "Scheduling, task and promise state, suspension, cancellation, timeout, reparenting, interruption, and teardown interact nonlocally."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public Async entry and Reactor",
+            "hierarchical Task and Node ownership",
+            "Scheduler and selector boundary",
+            "Promise result boundary",
+            "cancellation and timeout operations"
+          ],
+          "reason": "Multiple strong subsystem boundaries collaborate within one bounded cooperative-concurrency framework."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "task-tree integrity and reparenting",
+            "one-shot result propagation",
+            "cancellation-cause preservation",
+            "interruption-point semantics",
+            "timer cleanup and stale-wakeup avoidance",
+            "selector, worker, and user-resource shutdown"
+          ],
+          "reason": "Lifecycle, scheduling, interruption, ownership, cleanup, and resource guarantees interact so local changes can fail across the task tree."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. Behavioral reasoning and constraint burden both score 5, satisfying the Level 5 guardrail. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "Task, Node, Promise, Scheduler, cancellation, and timeout responsibilities make lifecycle invariants explicit, and direct tests cover hard interruption and teardown cases. Two stale Task annotations describe a finished-to-cancelled transition and `:complete` status that implementation and tests correctly treat as a no-op and `:completed`; those annotations are excluded from the learning trace.",
+        "architecture": "The audited architecture of the path beginning at `lib/async/task.rb` has these boundaries: public Async entry and Reactor, hierarchical Task and Node ownership, Scheduler and selector boundary, Promise result boundary, and cancellation and timeout operations.",
+        "naming_and_idiom": "`lib/async/task.rb` and its supporting files use these characteristic Ruby mechanisms: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",
+        "tests": "Direct tests in `test/async/task.rb`, `test/async/scheduler.rb`, `test/async/reactor.rb`, and `test/async/timeout.rb` cover these states and branches in the selected path: initialized, running, completed, failed, and cancelled tasks, hierarchical and deferred cancellation, suspension, resumption, timeout injection, and transient-child lifetime.",
+        "documentation": "Task and scheduler guides explain the public lifecycle and cooperative model; the selected trace follows source and tests rather than the two stale Task status annotations, and cross-thread interruption retains a documented missed-wakeup window before scheduler sleep.",
+        "traceability": "Start at the public Async entry, follow Reactor and Scheduler binding into Task#run, greedy Fiber scheduling and suspension, then follow completion or failure into Promise resolution and task-tree consumption; branch through hierarchical or deferred cancellation and timeout injection, and close with task, scheduler, reactor, and timeout tests for causes, transient children, stale wakeups, interrupts, cleanup, and shutdown. Cancellation remains cooperative, timeout is delivered at an interruption point, io-event owns selector internals, and user-owned sockets or files still require ensure cleanup.",
+        "maintainability": "Changes to the path beginning at `lib/async/task.rb` are constrained by these audited guarantees: task-tree integrity and reparenting, one-shot result propagation, cancellation-cause preservation, interruption-point semantics, timer cleanup and stale-wakeup avoidance, and selector, worker, and user-resource shutdown.",
+        "educational_value": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing."
+      },
+      "inspection": {
+        "commit": "e8ecf5804802143f58983dc3f8c519c287d9dd9b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "lib/kernel/async.rb",
+          "lib/async/task.rb",
+          "lib/async/node.rb",
+          "lib/async/promise.rb",
+          "lib/async/cancel.rb",
+          "lib/async/timeout.rb",
+          "lib/async/scheduler.rb",
+          "lib/async/reactor.rb",
+          "test/async/task.rb",
+          "test/async/scheduler.rb",
+          "test/async/reactor.rb",
+          "test/async/timeout.rb",
+          "guides/tasks/readme.md",
+          "guides/scheduler/readme.md",
+          "license.md"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/license.md"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
       }
     }
   ]

@@ -1266,13 +1266,282 @@
         "5": 0
       },
       "conclusion": "Five independent discovery channels and four exact-pin inspections found qualified Level 2, Level 3, Level 4, and Level 5 paths. GSL and Asio fill the open Level 2 and Level 5 places; semver and nameof remain durable qualified capacity alternatives at their calculated Levels 3 and 4. Both Level 1 places remain honest because no candidate was moved downward to fill them."
+    },
+    {
+      "order": 8,
+      "language_slug": "ruby",
+      "language": "Ruby",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "ruby/pathname",
+          "level": 2
+        },
+        {
+          "repository": "jekyll/jekyll",
+          "level": 3
+        },
+        {
+          "repository": "ruby/tempfile",
+          "level": 3
+        },
+        {
+          "repository": "rubocop/rubocop",
+          "level": 4
+        },
+        {
+          "repository": "sidekiq/sidekiq",
+          "level": 4
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
+      "discovery_channels": [
+        {
+          "id": "rubygems-registry",
+          "channel": "official Ruby package registry",
+          "sources": [
+            "https://rubygems.org/gems/base64",
+            "https://rubygems.org/gems/async",
+            "https://rubygems.org/gems/concurrent-ruby",
+            "https://rubygems.org/gems/puma"
+          ],
+          "evidence": "RubyGems established all four candidates as distributable production gems and supplied package purpose, Ruby-version, release, ownership, repository, and license leads without treating downloads as qualification."
+        },
+        {
+          "id": "ruby-toolbox-curation",
+          "channel": "independently curated Ruby ecosystem categories",
+          "sources": [
+            "https://www.ruby-toolbox.com/categories/concurrent_processing",
+            "https://www.ruby-toolbox.com/categories/web_servers"
+          ],
+          "evidence": "The independent concurrency and web-server categories surfaced Async, concurrent-ruby, and Puma alongside neighboring production alternatives without prescribing a learner Level."
+        },
+        {
+          "id": "github-ruby-source",
+          "channel": "GitHub Ruby source, maintenance, size, and organization review",
+          "sources": [
+            "https://github.com/ruby/base64",
+            "https://github.com/socketry/async",
+            "https://github.com/ruby-concurrency/concurrent-ruby",
+            "https://github.com/puma/puma"
+          ],
+          "evidence": "Public source and current GitHub metadata confirmed all four repositories, their first-party Ruby implementation, maintenance status, exact revisions, and the source, tests, documentation, and license material used for pin-level inspection."
+        },
+        {
+          "id": "official-ruby-project-docs",
+          "channel": "maintainer-authored standard-library, concurrency, and server documentation",
+          "sources": [
+            "https://docs.ruby-lang.org/en/master/Base64.html",
+            "https://socketry.github.io/async/",
+            "https://ruby-concurrency.github.io/concurrent-ruby/master/Concurrent/Promises.html",
+            "https://puma.io/puma/"
+          ],
+          "evidence": "Maintainer documentation supplied the public encoding policies, task and scheduler model, promise vocabulary, and Puma server configuration used to bound domain context and compare public claims with pinned implementation behavior."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "ruby/base64",
+          "pinned_commit": "9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6",
+          "discovered_via": [
+            "rubygems-registry",
+            "github-ruby-source",
+            "official-ruby-project-docs"
+          ],
+          "inspection_files": [
+            "lib/base64.rb",
+            "test/base64/test_base64.rb",
+            "sig/base64.rbs",
+            "test_sig/test_base64.rb",
+            "README.md",
+            "base64.gemspec",
+            "COPYING",
+            "BSDL"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Base64 needs only a short alphabet and padding primer; the path teaches transferable module functions, keyword options, binary strings, strict-versus-permissive parsing, normalization before delegation, compatibility constraints, and boundary-focused tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Six intentional methods, one focused module boundary, direct Ruby API vocabulary, direct empty, binary, padding, malformed, line-wrap, and URL-variant tests, extensive RDoc and signatures, one-method-to-primitive traceability, shared strict helpers, and strong compact production teaching value support all eight findings; the URL-safe decoder documentation's alphabet-rejection overstatement is disclosed rather than repeated.",
+          "scores": {
+            "language_technique": 1,
+            "behavioral_reasoning": 2,
+            "design_span": 1,
+            "constraint_burden": 3
+          },
+          "calculated_level": 2,
+          "decision_evidence": "The scores were written before capacity was checked. The 1/2/1/3 profile sums to 7, whose mean of 1.75 rounds half up to Level 2; both gates pass and the one open Ruby Level 2 place accepts base64. The direct suite passed 9 tests and 73 assertions, and a focused probe passed canonical vectors, strict malformed cases, and an unpadded URL-safe binary round trip; RBS unit tooling was unavailable, so type tests were inspected but not run. The repository wraps Ruby runtime pack/unpack rather than implementing the bit-level codec; permissive decode64 is not validation; urlsafe_decode64 accepts valid-length standard + and / input despite stronger RDoc wording; unpadded length modulo four equal to one still fails; and the whole-string API is not streaming, cryptography, authentication, sanitization, or a complete MIME transport.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and six-method wrapper-to-runtime-codec path, both gates and all eight findings, the 1/2/1/3 Level 2 result, the open slot, Ruby and dual-license evidence, the 9-test and 73-assertion result, and the runtime-delegation, permissive-decoding, URL-alphabet, unpadded-input, whole-string, and non-cryptographic limits."
+          }
+        },
+        {
+          "repository": "ruby-concurrency/concurrent-ruby",
+          "pinned_commit": "0b88d5ff75f69b3740c8f0868e76f833cb2fd45d",
+          "discovered_via": [
+            "rubygems-registry",
+            "ruby-toolbox-curation",
+            "github-ruby-source",
+            "official-ruby-project-docs"
+          ],
+          "inspection_files": [
+            "lib/concurrent-ruby/concurrent/promises.rb",
+            "lib/concurrent-ruby/concurrent/configuration.rb",
+            "lib/concurrent-ruby/concurrent/synchronization/object.rb",
+            "lib/concurrent-ruby/concurrent/collection/lock_free_stack.rb",
+            "lib/concurrent-ruby/concurrent/atomic/atomic_reference.rb",
+            "lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb",
+            "lib/concurrent-ruby/concurrent/atomic/atomic_fixnum.rb",
+            "lib/concurrent-ruby/concurrent/atomic/mutex_atomic_fixnum.rb",
+            "spec/concurrent/promises_spec.rb",
+            "docs-source/promises-main.md",
+            "docs-source/promises.in.md",
+            "README.md",
+            "concurrent-ruby.gemspec",
+            "LICENSE.txt"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Futures and executors need only a short concurrency primer; the path teaches transferable blocks, asynchronous state machines, atomic single assignment, callback races, executor handoff, rejection recovery, timeout and blocking behavior, and dependency graphs.",
+          "quality_status": "pass",
+          "quality_evidence": "Dense but deliberately partitioned state and promise classes, explicit public, immutable-state, blocked-graph, executor, and synchronization boundaries, idiomatic promise and Ruby vocabulary, direct graph, callback, timeout, executor, reservation, and wakeup specs, extensive qualified documentation, full factory-to-CAS-to-observation traceability, localized backend boundaries, and exceptional production concurrency teaching value support all eight findings.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/4/5 profile sums to 18, whose mean is Level 5 and satisfies the Level 5 guardrail; both gates pass and one of two open Ruby Level 5 places accepts concurrent-ruby's future-to-resolution path. A no-dependency Ruby probe verified future-to-then, rejection-to-rescue, zip, delay, and duplicate-assignment rejection. RSpec and Bundler were unavailable, so the upstream suite was inspected but not run. The path is not universally lock-free: wait and value use Mutex and ConditionVariable and fallback atomics use mutexes; callback ordering is not promised; user-value mutation, executor internals, actor and channel behavior, cross-runtime memory details, and automatic cancellation are outside scope; non-StandardError is recorded as rejection and re-raised on the worker.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and factory-to-executor-to-CAS-resolution-to-callback and observation path, both gates and all eight findings, the 4/5/4/5 Level 5 result, the open slot, Ruby and MIT evidence, the focused probe, and the mutex-fallback, callback-ordering, cancellation, shared-mutation, executor, cross-runtime, and subsystem-scope boundaries."
+          }
+        },
+        {
+          "repository": "socketry/async",
+          "pinned_commit": "e8ecf5804802143f58983dc3f8c519c287d9dd9b",
+          "discovered_via": [
+            "rubygems-registry",
+            "ruby-toolbox-curation",
+            "github-ruby-source",
+            "official-ruby-project-docs"
+          ],
+          "inspection_files": [
+            "lib/kernel/async.rb",
+            "lib/async/task.rb",
+            "lib/async/node.rb",
+            "lib/async/promise.rb",
+            "lib/async/cancel.rb",
+            "lib/async/timeout.rb",
+            "lib/async/scheduler.rb",
+            "lib/async/reactor.rb",
+            "test/async/task.rb",
+            "test/async/scheduler.rb",
+            "test/async/reactor.rb",
+            "test/async/timeout.rb",
+            "guides/tasks/readme.md",
+            "guides/scheduler/readme.md",
+            "async.gemspec",
+            "license.md"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Explicit task and cancellation invariants, clean facade, task-tree, scheduler, promise, and selector boundaries, recurring idiomatic Fiber, exception, block, and ensure mechanics, direct lifecycle, cancellation, interrupt, timeout, transient, stale-wakeup, and close tests, strong qualified guides, complete entry-to-teardown traceability, localized ownership and one-shot resolution, and exceptional structured-concurrency teaching value support all eight findings; two stale Task status annotations are disclosed and excluded.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/4/5 profile sums to 18, whose mean is Level 5 and satisfies the Level 5 guardrail; both gates pass and the remaining Ruby Level 5 place accepts Async's structured task path. Focused tests were not run because the host Ruby 3.2 is below this pin's Ruby 3.3 minimum and sus, io-event, console, and fiber annotation dependencies are unavailable; nothing was installed. Cancellation is cooperative Fiber exception injection, timeout delivery occurs at an interruption point, user resources still require ensure cleanup, io-event owns selector internals, and cross-thread interruption retains a documented and tested missed-wakeup window before scheduler sleep. Two stale Task annotations show a finished-to-cancelled transition and :complete status; implementation and tests make cancellation after resolution a no-op and use :completed.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and Async-entry-to-Reactor-to-Task-to-Scheduler-to-Promise-to-cancellation and teardown path, both gates and all eight findings, the 4/5/4/5 Level 5 result, the open slot, Ruby and MIT evidence, the local non-execution reasons, and the cooperative-cancellation, interruption-point, user-resource, selector, cross-thread, and stale-annotation boundaries."
+          }
+        },
+        {
+          "repository": "puma/puma",
+          "pinned_commit": "c60e81421a7fafc627f2f35c1ff865bfd9e478dd",
+          "discovered_via": [
+            "rubygems-registry",
+            "ruby-toolbox-curation",
+            "github-ruby-source",
+            "official-ruby-project-docs"
+          ],
+          "inspection_files": [
+            "lib/puma/server.rb",
+            "lib/puma/thread_pool.rb",
+            "lib/puma/reactor.rb",
+            "lib/puma/client.rb",
+            "lib/puma/dsl.rb",
+            "test/test_thread_pool.rb",
+            "test/test_puma_server.rb",
+            "test/helpers/test_puma/shutdown_requests.rb",
+            "test/test_puma_server_notify_close_race.rb",
+            "test/test_puma_server_shutdown_debug.rb",
+            "test/test_puma_server_ssl.rb",
+            "README.md",
+            "docs/architecture.md",
+            "puma.gemspec",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Socket readiness, request completeness, and Rack need only a short introduction; the path teaches transferable nonblocking I/O, bounded work queues, thread coordination, timeout and re-entry state, graceful and forced shutdown, backpressure, and resource ownership.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional scheduling source, coherent Server, Client, Reactor, ThreadPool, and selector boundaries, clear readiness and shutdown vocabulary, direct queue, spawn, trim, reaping, timeout, keepalive, race, and shutdown tests, adequate documentation with one disclosed stale flow, complete accept-to-reentry-to-close traceability, localized invariants with contained last-resort thread interruption, and strong concurrency teaching value support all eight findings.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 3,
+            "constraint_burden": 5
+          },
+          "calculated_level": 4,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 4/5/3/5 sums to 17, whose mean is Level 4; RuboCop and Sidekiq retain more complementary metaprogrammed-analysis and durable-job lifecycle paths, so the two-entry cap excludes Puma. The scores were locked before capacity was inspected. The canonical scope is default queue_requests true in one server process: Server accepts, first sends to ThreadPool, moves incomplete Client input to Reactor, and returns readiness to ThreadPool; queue_requests false bypasses Reactor. Cluster and forking, TLS, native HTTP parser correctness, Rack response streaming, plugins, fiber-per-request, and platform-specific nio4r behavior are outside scope. docs/architecture.md incorrectly puts Reactor before the first pool handoff, while lib/puma/dsl.rb matches source. Some tests use real sleeps, and asynchronous Thread#raise and kill are contained last-resort shutdown mechanisms. Selected Ruby source and test files passed syntax checks, but tests were not run because Bundler, nio4r, test helpers, and the compiled parser extension were unavailable.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and Server-accept-to-ThreadPool-to-incomplete-Client-to-Reactor-to-ThreadPool-to-request and staged-shutdown path, both gates and all eight findings, the 4/5/3/5 Level 4 result, full capacity, Ruby and BSD-3-Clause evidence, the stale architecture prose, syntax checks, local non-execution reasons, and every queued single-process and subsystem-scope boundary."
+          }
+        }
+      ],
+      "accepted": [
+        "ruby/base64",
+        "ruby-concurrency/concurrent-ruby",
+        "socketry/async"
+      ],
+      "rejected": [
+        "puma/puma"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "conclusion": "Four independent discovery channels and four exact-pin inspections found one qualified Level 2 path, two distinct qualified Level 5 concurrency paths, and one qualified Level 4 capacity alternate. Base64 fills the open Level 2 place, concurrent-ruby and Async fill both Level 5 places, and Puma remains a durable Level 4 alternative. Both Level 1 places remain honest because no candidate was moved downward to fill them."
     }
   ],
   "summary": {
-    "languages_completed": 7,
-    "accepted_new_total": 8,
-    "rejected_new_total": 11,
-    "current_entry_total": 141,
-    "remaining_gap_total": 59
+    "languages_completed": 8,
+    "accepted_new_total": 11,
+    "rejected_new_total": 12,
+    "current_entry_total": 144,
+    "remaining_gap_total": 56
   }
 }
