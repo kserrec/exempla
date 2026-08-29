@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 120,
+  "reviewed_entry_total": 130,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -9087,12 +9087,631 @@
         "status": "disagree_resolved",
         "notes": "The catalog mixed the language manual and C runtime rather than one R-authored trace. Root reconciliation adopts the literate and generated R compiler path, applies the lower Behavior and Design anchors at 5/4/4/5, corrects the pinned license to GPL-2.0-only OR GPL-3.0-only, and resolves Level 5 rank 1 and retention."
       }
+    },
+    {
+      "repository": "fsaintjacques/semver-tool",
+      "language": "Shell",
+      "prior_level": 1,
+      "pinned_commit": "1a547a75f946717223fb7ca821ba6f3f337e9aca",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Semantic Versioning orders major, minor, patch, and prerelease identifiers while ignoring build metadata for precedence."
+        ],
+        "evidence": "The version grammar is stated in the program and README, and the bounded path teaches Bash regular-expression captures, array-based comparison, validation, transformation, and command dispatch without requiring specialist domain knowledge."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "src/semver separates validation, field ordering, prerelease bumping, extraction, and dispatch into specification-named functions; compare, validate, and bump Bats suites directly cover precedence, invalid forms, transformations, metadata, and argument errors; the README documents the complete contract; and the pinned Apache-2.0 license, focused single-file architecture, direct trace, and maintained tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations.",
+        "start_path": "src/semver",
+        "supporting_files": [
+          "test/compare.bats",
+          "test/validate.bats",
+          "test/bump.bats",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with SEMVER_REGEX and validate_version, follow BASH_REMATCH fields into compare_fields and compare_version, then trace bump and get dispatch; close with the exact precedence, invalid-version, and transformation cases in the three Bats suites."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Bash regular expressions and BASH_REMATCH captures",
+            "arrays, parameter expansion, and indirect variable lookup"
+          ],
+          "reason": "These are meaningful professional Bash idioms, but substantial abstraction or advanced metaprogramming does not recur in the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "validation and command-error branches",
+            "numeric, lexical, missing-field, and prerelease ordering cases",
+            "localized bump and extraction state"
+          ],
+          "reason": "The path has meaningful branching and local state while remaining synchronous and easy to trace."
+        },
+        "design_span": {
+          "signals": [
+            "one production executable",
+            "focused helper functions behind one command dispatcher"
+          ],
+          "reason": "The complete behavior remains one focused unit."
+        },
+        "constraint_burden": {
+          "signals": [
+            "the published SemVer grammar must be accepted exactly",
+            "numeric and alphanumeric prerelease identifiers have different ordering",
+            "build metadata must not affect precedence",
+            "bump and extraction commands must preserve the remaining contract"
+          ],
+          "reason": "Several specification, compatibility, and command-contract guarantees constrain ordinary changes."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean of 2.00 is Level 2; semver-tool ranks first of the two qualified Shell Level 2 paths.",
+      "reconsider": "Reconsider if the SemVer grammar, comparison or transformation contract, direct Bats coverage, documentation, Apache-2.0 licensing, or relative Shell Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on the path, both gates, Level 2, rank 1, and retention. The independent review proposed Language 3 for captures and indirect arrays; root reconciliation applied the lower anchor because these remain common professional Bash idioms rather than recurring substantial abstraction, resolving 2/2/1/3."
+      }
+    },
+    {
+      "repository": "bats-core/bats-support",
+      "language": "Shell",
+      "prior_level": 1,
+      "pinned_commit": "0954abb9925cad550424cebca2b99255d4eabe96",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Bats helper libraries format diagnostic values and write them to caller-selected output streams."
+        ],
+        "evidence": "The short testing-library context is subordinate to reusable lessons in sourced modules, arrays, line transforms, stream discipline, prefixes, alignment, and focused behavior contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "load.bash exposes small output, error, and language modules; batslib function names state their transformations; src/output.bash is readable and bounded; the print-key-value test exercises empty, single-line, multiline, prefixed, marked, and aligned output; the README documents loading and compatibility; and the pinned 0BSD license, direct trace, stable API, and reusable lesson satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a small sourced Bash library produces consistent single-line and multiline diagnostic output without losing stream or formatting contracts.",
+        "start_path": "src/output.bash",
+        "supporting_files": [
+          "load.bash",
+          "src/error.bash",
+          "test/50-output-16-batslib_print_kv_single_or_multi.bats",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with line counting and batslib_print_kv_single_or_multi, follow prefixes, widths, multiline values, and selected file descriptors through the output helpers, then close with the narrowly named Bats cases and the load entry point."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "sourced Bash modules and arrays",
+            "process substitution and caller-selected file descriptors",
+            "parameter expansion for formatting"
+          ],
+          "reason": "Common professional Bash library and stream idioms shape the path without advanced abstraction."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "empty, single-line, and multiline branches",
+            "prefix, width, marker, and output-stream choices"
+          ],
+          "reason": "Formatting has meaningful local branches and mutable counters but no nonlocal lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "one focused output module",
+            "one load boundary and one direct test family"
+          ],
+          "reason": "The selected behavior stays within one focused unit."
+        },
+        "constraint_burden": {
+          "signals": [
+            "multiline alignment must remain stable",
+            "caller-selected streams and prefixes must be preserved",
+            "empty and decorated values need explicit handling"
+          ],
+          "reason": "Routine production formatting, stream, and error safeguards constrain the helper."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/2 sums to 7, whose mean of 1.75 rounds to Level 2; bats-support ranks second of the two qualified Shell Level 2 paths.",
+      "reconsider": "Reconsider if the sourced API, multiline and stream contracts, focused tests, documentation, 0BSD licensing, or relative Shell Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed the same src/output.bash trace, 2/2/1/2 scores, Level 2 rank 2, gate passes, and retention."
+      }
+    },
+    {
+      "repository": "ko1nksm/getoptions",
+      "language": "Shell",
+      "prior_level": 2,
+      "pinned_commit": "139d121807db67f632b412b2a00ece851df73203",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An option definition describes flags, required and optional values, subcommands, validation, and remaining positional arguments."
+        ],
+        "evidence": "Command-line option vocabulary is concise; the path primarily teaches portable Shell metaprogramming, quoting, generated parsers, stateful scanning, callbacks, modular extensions, and cross-shell contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "lib/getoptions_base.sh uses deliberate emitters and a definition vocabulary rather than accidental density, abbreviation remains an optional module, src/getoptions and src/gengetoptions expose delivery and embedding, the ShellSpec suites directly cover scanning modes, option forms, callbacks, validation, ambiguity, subcommands, quoting, and errors, the README documents purpose and portability, and the pinned CC0-1.0 license plus direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a portable Shell definition DSL emits and evaluates a parser for flags, values, validation, scanning modes, abbreviations, subcommands, and rest arguments.",
+        "start_path": "lib/getoptions_base.sh",
+        "supporting_files": [
+          "lib/getoptions_abbr.sh",
+          "src/getoptions",
+          "src/gengetoptions",
+          "spec/getoptions_base_spec.sh",
+          "spec/getoptions_abbr_spec.sh",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with getoptions definition collection and its quoting and code emitters, follow flag, param, option, validation, scanning-mode, subcommand, rest, and error definitions into the generated parser, then close with the direct base and abbreviation ShellSpec contexts and the executable delivery layer."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "nested definition functions and dynamic dispatch",
+            "portable quoting and indirect variables",
+            "eval-based Shell code generation"
+          ],
+          "reason": "Advanced metaprogramming and generated-code mechanisms recur, but the bounded generator does not require several distinct expert language systems interacting pervasively."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "definition collection followed by generated parser execution",
+            "default, stop, and subcommand scanning modes",
+            "flag, value, validation, ambiguity, rest, and error states"
+          ],
+          "reason": "A nontrivial parser state machine materially shapes the path, while concurrency, scheduling, recovery, or comparable advanced nonlocal behavior does not recur."
+        },
+        "design_span": {
+          "signals": [
+            "base parser generator",
+            "optional abbreviation module",
+            "executable and embedding delivery layer",
+            "direct specification suites"
+          ],
+          "reason": "Several meaningful generator, extension, delivery, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "portable behavior across POSIX-like shells",
+            "generated code and eval quoting must remain safe and exact",
+            "GNU-style option forms, modes, callbacks, and errors must remain compatible",
+            "optional modules and embedding must preserve the generated contract"
+          ],
+          "reason": "Multiple portability, quoting, grammar, extension, and compatibility guarantees interact throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; getoptions ranks second of the two qualified Shell Level 4 paths.",
+      "reconsider": "Reconsider if parser-generation machinery, quoting or portability guarantees, grammar breadth, modular boundaries, direct ShellSpec coverage, CC0-1.0 licensing, or relative Shell Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on the path, gate passes, Level 4, and retention. The independent review proposed 5/4/3/4; root reconciliation applied the lower anchors because one bounded eval/code-generation system does not establish multiple recurring expert language mechanisms and its deterministic parser states remain nontrivial rather than advanced nonlocal behavior, resolving 4/3/3/4 and rank 2."
+      }
+    },
+    {
+      "repository": "rbenv/rbenv",
+      "language": "Shell",
+      "prior_level": 2,
+      "pinned_commit": "07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A shim is a small executable placed earlier in PATH so a version manager can choose the real runtime command."
+        ],
+        "evidence": "The short runtime-selection context is subordinate to transferable lessons in filesystem reconciliation, lock ownership, cleanup traps, generated wrappers, plugin hooks, exact-name matching, and behavior-driven tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "libexec/rbenv-rehash documents each phase, uses narrow functions and explicit ownership, rbenv-hooks isolates extension discovery, test/rehash.bats directly covers empty and concurrent runs, permissions, creation, outdated and stale shims, exact names, paths with spaces, GEM_HOME, hook state, and shell integration, the README explains the mechanism, and the pinned MIT license and direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how rbenv safely reconciles a directory of executable shims with installed runtimes and plugin-provided commands.",
+        "start_path": "libexec/rbenv-rehash",
+        "supporting_files": [
+          "libexec/rbenv-hooks",
+          "test/rehash.bats",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with the noclobber prototype-shim lock and EXIT cleanup, follow prototype generation, installed executable discovery, plugin hook sourcing, shim installation, and stale removal, then close with the rehash tests for concurrency, permissions, spaces, exact names, and preserved shell state."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "arrays, process substitution, and parameter expansion",
+            "heredoc-generated shim and sourced plugin hooks",
+            "EXIT trap and noclobber lock idioms"
+          ],
+          "reason": "Common professional Bash process, file, and extension idioms shape the path without substantial abstraction."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "lock acquisition, owned cleanup, and failed acquisition",
+            "prototype creation and outdated-shim replacement",
+            "registered, installed, stale, and removed shim states"
+          ],
+          "reason": "A nontrivial resource and reconciliation lifecycle materially affects the trace."
+        },
+        "design_span": {
+          "signals": [
+            "rehash reconciler",
+            "hook discovery boundary",
+            "generated shim and direct test suite"
+          ],
+          "reason": "One process and a few explicit components contain the behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "only one rehash process may own the prototype",
+            "cleanup must occur on every owned exit path",
+            "upgrades and stale commands must reconcile without deleting valid exact-name shims",
+            "spaces, permissions, hook IFS, GEM_HOME, and shell behavior must remain compatible"
+          ],
+          "reason": "Concurrency, cleanup, filesystem reconciliation, extension, and compatibility guarantees interact throughout rehash."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 2/3/2/4 sums to 11, whose mean of 2.75 rounds to Level 3; rbenv rehash ranks first of the two qualified Shell Level 3 paths.",
+      "reconsider": "Reconsider if shim ownership, reconciliation or hook behavior, direct concurrency and edge-case tests, documentation, MIT licensing, or relative Shell Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection selected the same rehash-and-hooks path and confirmed 2/3/2/4, Level 3 rank 1, both gate passes, and retention."
+      }
+    },
+    {
+      "repository": "pyenv/pyenv",
+      "language": "Shell",
+      "prior_level": 3,
+      "pinned_commit": "4733cca31b0f63eab95937f179584ba0d47d44d5",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Shell startup files establish environment variables, PATH entries, completions, and wrapper functions for interactive sessions."
+        ],
+        "evidence": "Startup-file vocabulary is short and the selected path teaches cross-language code generation, parent-shell detection, persistent configuration safeguards, idempotent PATH handling, and directly tested compatibility without Python build-toolchain breadth."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "libexec/pyenv-init separates detection, setup generation, startup-file checks, appending, PATH handling, completion, rehash, and wrapper generation into named functions; test/init.bats directly covers modes, detected and explicit shells, Bash, Zsh, Ksh, Fish, PowerShell, setup refusal, unreadable files, existing code, directory creation, newlines, and PATH behavior; the README documents initialization; and the pinned MIT license plus direct trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how pyenv detects a caller shell, emits compatible initialization code, and safely installs startup configuration across several shell languages.",
+        "start_path": "libexec/pyenv-init",
+        "supporting_files": [
+          "test/init.bats",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with mode parsing and parent-shell detection, follow profile selection and Bash/Zsh/Ksh, Fish, and PowerShell setup generation into startup-file preflight and append behavior, then trace PATH de-duplication, completions, rehash, and wrapper emission; close with the focused init Bats suite."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Bash that generates Bash, Zsh, Ksh, Fish, and PowerShell code",
+            "arrays and shell-specific parameter and quoting machinery",
+            "dynamic wrapper-function and PATH-program generation"
+          ],
+          "reason": "Cross-shell code generation and advanced quoting recur throughout initialization."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "help, path, print, detect-shell, and install modes",
+            "shell detection and profile-selection branches",
+            "unchecked, refused, created, appended, and failed configuration states"
+          ],
+          "reason": "Persistent setup and generated-runtime state form a nontrivial but bounded lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "shell and profile detection",
+            "dialect-specific code emitters",
+            "startup-file validation and mutation",
+            "PATH, completion, rehash, and wrapper behavior",
+            "direct init tests"
+          ],
+          "reason": "Several meaningful generation, persistence, runtime, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "generated syntax must be correct in several shell languages",
+            "PATH changes must be ordered and idempotent",
+            "all startup files must pass preflight before any write",
+            "existing configuration, unreadable files, shell differences, and historical SSH behavior must fail safely"
+          ],
+          "reason": "Cross-shell compatibility, persistence safety, idempotence, and startup reliability constraints interact throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; pyenv initialization ranks first of the two qualified Shell Level 4 paths.",
+      "reconsider": "Reconsider if supported shell dialects, startup-file safety, PATH or wrapper contracts, focused init tests, documentation, MIT licensing, or relative Shell Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection selected the same pyenv-init path and confirmed 4/3/3/4, Level 4 rank 1, both gate passes, and retention."
+      }
+    },
+    {
+      "repository": "ohmyzsh/ohmyzsh",
+      "language": "Shell",
+      "prior_level": 3,
+      "pinned_commit": "4b657407c98bbc8830ae66c2ac7ff3d737c55a83",
+      "decision": "remove",
+      "removal_reason": "repository_quality_gate",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Oh My Zsh manages a user's Zsh plugins by reading and rewriting the plugins array in the shell startup configuration."
+        ],
+        "evidence": "The bounded plugin-disable path teaches Zsh parameter flags, dynamic AWK construction, configuration transformation, syntax validation, backup and rollback, and interactive reload behavior without specialist domain knowledge."
+      },
+      "quality_status": "fail",
+      "quality_evidence": "lib/cli.zsh contains readable production mutation, validation, backup, rollback, and reload behavior, and the README explains plugin configuration, but the only pinned focused test, lib/tests/cli.test.zsh, copies the AWK transformation into its own run_awk function rather than sourcing or invoking _omz::plugin::disable. It therefore cannot catch drift in the production code or test its file replacement, syntax-error rollback, logging, and reload paths. The pinned .github/workflows/main.yml only runs zsh -n syntax checks. The mandatory Tests quality dimension fails despite the MIT license, recognizable architecture, naming, documentation, observable result, maintainability conventions, and educational lesson passing the other dimensions.",
+      "learning_path": {
+        "goal": "Evaluate how the Oh My Zsh CLI removes plugins from one-line and multiline Zsh configuration while preserving valid syntax and rolling back failed changes.",
+        "start_path": "lib/cli.zsh",
+        "supporting_files": [
+          "lib/tests/cli.test.zsh",
+          ".github/workflows/main.yml",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start at _omz::plugin::disable, follow plugin selection into the dynamically constructed AWK state machine, temporary output, backup and replacement, zsh syntax validation, rollback, logging, and optional reload, then compare that production trace with the duplicated run_awk implementation and syntax-only CI that fail to protect it."
+      },
+      "evidence": "Remove: the coding-relevance gate passes, but the mandatory repository quality gate fails because the pinned focused test duplicates rather than invokes production logic and CI supplies only syntax checking; no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider when pinned automated tests invoke the production loader or CLI and directly assert plugin ordering or configuration mutation, syntax validation, backup and rollback, and relevant interactive behavior without duplicating the implementation under test.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed that the apparent CLI test reimplements the AWK transformation and pinned CI only checks syntax; the Tests quality-dimension failure, absence of scores and level, repository_quality_gate removal, and reconsideration condition all agree."
+      }
+    },
+    {
+      "repository": "testssl/testssl.sh",
+      "language": "Shell",
+      "prior_level": 4,
+      "pinned_commit": "853850e3f4433c7717035a84cfe873dd0e63dfd3",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The scanner constructs and interprets TLS handshakes, cipher and protocol negotiation, certificate chains, trust and revocation results, and vulnerability-specific probes.",
+          "Correct findings depend on OpenSSL behavior, cryptographic capabilities, STARTTLS service conventions, and security severity interpretation."
+        ],
+        "evidence": "The pinned source describes Bash-socket and OpenSSL engines, TLS and cipher capability state, certificate and revocation handling, protocol-specific timeouts, and offensive vulnerability checks; the README defines the tool around TLS ciphers, protocols, and cryptographic flaws, while t/51_badssl.com.t asserts trust-chain and security-severity findings. Specialist TLS, cryptographic, protocol, and security expertise explains the path's difficulty better than programming technique, exactly matching the published calibration hard failure."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed scanner path from transport and TLS engine initialization through protocol, cipher, certificate, vulnerability, and report findings.",
+        "start_path": "testssl.sh",
+        "supporting_files": [
+          "Readme.md",
+          "Coding_Convention.md",
+          "t/10_baseline_ipv4_http.t",
+          "t/31_isJSON_valid.t",
+          "t/51_badssl.com.t",
+          "t/Readme.md",
+          "LICENSE"
+        ],
+        "trace": "The proposed trace starts in scanner initialization and immediately enters Bash sockets or OpenSSL behavior, TLS records and handshakes, cipher and protocol discovery, certificate trust and revocation, vulnerability probes, finding severity, and structured reports; the baseline, JSON, and public-endpoint tests preserve those domain-specific interpretations."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails at the published testssl.sh calibration anchor, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review establishes a substantial, production-representative core testssl.sh path whose correctness can be understood from repository documentation plus short prerequisites without specialist TLS, cryptographic, protocol, or security-finding expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed that TLS records and handshakes, ciphers, certificates, trust and revocation, OpenSSL behavior, vulnerability probes, and severity interpretation dominate the representative scanner path; the calibrated hard rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
+    },
+    {
+      "repository": "dokku/dokku",
+      "language": "Shell",
+      "prior_level": 4,
+      "pinned_commit": "c712429b095e8bbd58029787b64a9f23f98cb5fb",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Dokku commands are implemented by enabled plugins whose executable files follow a documented command and exit-status convention."
+        ],
+        "evidence": "The bounded execute_dokku_cmd trace needs only concise plugin-dispatch vocabulary and primarily teaches associative alias maps, argument adaptation, extension precedence, dynamic executable routing, compatibility fallback, and explicit exit semantics; Docker, Git deployment, proxies, certificates, and Kubernetes are excluded."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The dokku executable names the command-routing phases and keeps plugin discovery explicit, plugins/common/functions provides shared logging and narrowly called helpers, core_2.bats directly verifies unknown-command behavior and invokes routed core commands, plugin.bats exercises plugin commands through the same public executable, the README and testing guide orient the command architecture, and the pinned MIT license, stable extension boundary, direct observable trace, and production purpose satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Dokku resolves aliases and dispatches a command through enabled plugin subcommands and the legacy command protocol.",
+        "start_path": "dokku",
+        "supporting_files": [
+          "plugins/common/functions",
+          "tests/unit/core_2.bats",
+          "tests/unit/plugin.bats",
+          "docs/development/testing.md",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start at execute_dokku_cmd, follow associative alias replacement, command and application argument adaptation, default, exact, and colon-subcommand executable lookup, then trace the legacy commands fan-out through not-implemented, valid, and error exits to the unknown-command result; close with core and plugin Bats cases. SSH authorization and deployment-platform breadth are excluded."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Bash associative alias map and arrays",
+            "parameter-based plugin and subcommand decomposition",
+            "dynamic executable dispatch through a framework convention"
+          ],
+          "reason": "A substantial convention-driven plugin framework idiom materially shapes the path without recurring code generation or expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "alias, default, exact subcommand, colon subcommand, and legacy fallback states",
+            "implemented, not implemented, valid, and failed exit outcomes",
+            "application argument and selected build-capture branches"
+          ],
+          "reason": "The command lifecycle and extension fallback are nontrivial, while the bounded trace does not include advanced platform scheduling or recovery."
+        },
+        "design_span": {
+          "signals": [
+            "public command router",
+            "enabled-plugin filesystem boundary",
+            "new subcommand and legacy command protocols",
+            "shared helper and Bats integration boundaries"
+          ],
+          "reason": "Several meaningful routing, extension, compatibility, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "new and legacy plugin protocols must remain compatible",
+            "resolution precedence and argument adaptation must be deterministic",
+            "reserved exit statuses must distinguish fallback, success, and failure",
+            "unknown commands must fail through the public contract"
+          ],
+          "reason": "Several extension, compatibility, ordering, and error guarantees constrain the dispatcher."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass on the bounded dispatcher and 3/3/3/3 sums to 12, whose mean of 3.00 is Level 3; Dokku ranks second of the two qualified Shell Level 3 paths.",
+      "reconsider": "Reconsider if command resolution, alias or plugin protocols, exit-status compatibility, direct Bats evidence, documentation, MIT licensing, or relative Shell Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection rejected a broad deployment-platform trace, selected the same bounded execute_dokku_cmd path, and confirmed 3/3/3/3, Level 3 rank 2, both gate passes, and retention."
+      }
+    },
+    {
+      "repository": "termux/termux-packages",
+      "language": "Shell",
+      "prior_level": 5,
+      "pinned_commit": "dd1290e0fc0912dae71ab8627ded804566d28e92",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The Termux package engine cross-builds a Unix userland for Android across architectures, Android API levels, Bionic and glibc variants, and many language toolchains.",
+          "Its normal lifecycle resolves package dependencies, prepares NDK sysroots and compiler triples, applies platform patches, builds package formats, and feeds architecture-specific repositories."
+        ],
+        "evidence": "build-package.sh loads a large Android build lifecycle; properties.sh defines Android SDK, NDK, application, rootfs, and safe-path invariants; termux_step_get_dependencies branches on package formats, architectures, on-device builds, cycles, downloads, and Bionic or glibc; and termux_setup_toolchain_29 configures ABI-specific compiler, linker, Go, Rust, sysroot, header, and ELF behavior. Android cross-toolchain and package-release expertise explains the representative path's difficulty better than programming technique, and the dependency helper is not an honest representative rescue when detached from that system."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed Termux package-build path from global build state through dependency resolution and Android toolchain preparation to a package recipe and CI artifact.",
+        "start_path": "build-package.sh",
+        "supporting_files": [
+          "scripts/properties.sh",
+          "scripts/build/termux_step_get_dependencies.sh",
+          "scripts/build/toolchain/termux_setup_toolchain_29.sh",
+          "packages/bash/build.sh",
+          "scripts/bin/validation",
+          ".github/workflows/packages.yml",
+          "README.md",
+          "LICENSE.md"
+        ],
+        "trace": "The proposed trace starts with build state and lifecycle modules, crosses Android and Termux property invariants, dependency cycles and package formats, NDK and ABI-specific compiler, linker, sysroot, language-toolchain and ELF setup, then reaches a package recipe and architecture CI; those recurring dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist Android, ABI, compiler and linker, cross-toolchain, packaging, or release-engineering expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed that Android NDK and API levels, ABI triples, Bionic and glibc, compiler and linker flags, sysroots, package formats, cross-language toolchains, and release artifacts dominate the representative path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
+    },
+    {
+      "repository": "void-linux/void-packages",
+      "language": "Shell",
+      "prior_level": 5,
+      "pinned_commit": "876ee5650a22d8ef731e955dd1c629b962a329e3",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "xbps-src builds Void Linux packages through staged source builds, package templates, XBPS dependency transactions, isolated masterdirs, and native or cross target profiles.",
+          "Correctness depends on host and target dependency classes, architectures and libc variants, chroots and namespaces, sysroots, subpackages, triggers, repository metadata, and package-installation validation."
+        ],
+        "evidence": "xbps-src exposes bootstrap, chroot, staged build, repository, architecture, and cross-compile commands; common/xbps-src/libexec/build.sh drives dependency installation, cross sysroots, source phases, subpackages, repository registration, and cleanup; build_dependencies.sh distinguishes host, target, virtual, binary, missing, and cross dependencies; and Manual.md defines XBPS, masterdir, libc, cross-target, package, trigger, and ELF conventions. Distribution packaging and cross-build operations explain the representative path's difficulty better than programming technique, and a generic pipeline or dependency-helper slice would not honestly represent the project."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed xbps-src path from public command and build-stage dispatch through dependency installation, cross preparation, package creation, repository registration, and CI installation validation.",
+        "start_path": "xbps-src",
+        "supporting_files": [
+          "common/xbps-src/libexec/build.sh",
+          "common/xbps-src/shutils/build_dependencies.sh",
+          "common/hooks/post-install/04-create-xbps-metadata-scripts.sh",
+          "srcpkgs/bash/template",
+          ".github/workflows/build.yaml",
+          "common/travis/check-install.sh",
+          "Manual.md",
+          "README.md",
+          "COPYING"
+        ],
+        "trace": "The proposed trace starts with xbps-src target and masterdir selection, crosses XBPS dependency transactions, native and cross sysroots, staged fetch through package operations, subpackages, triggers, architecture repositories, and cleanup, then reaches multi-architecture and dual-libc CI installation checks; those recurring dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist XBPS, distribution packaging, chroot and namespace, cross-toolchain, libc and architecture, ELF, repository, or release-engineering expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent inspection confirmed that XBPS transactions, staged packages, host and target dependencies, masterdirs and chroots, cross sysroots, architecture and libc profiles, triggers, repository metadata, and installation validation dominate the representative path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 81,
-      "remove": 39
+      "retain": 87,
+      "remove": 43
     },
     "by_language": {
       "JavaScript": {
@@ -9322,33 +9941,52 @@
           "4": 4,
           "5": 2
         }
+      },
+      "Shell": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 24,
-        "retain": 23,
+        "reviewed": 26,
+        "retain": 25,
         "remove": 1
       },
       "2": {
-        "reviewed": 24,
-        "retain": 18,
+        "reviewed": 26,
+        "retain": 20,
         "remove": 6
       },
       "3": {
-        "reviewed": 24,
-        "retain": 15,
-        "remove": 9
+        "reviewed": 26,
+        "retain": 16,
+        "remove": 10
       },
       "4": {
-        "reviewed": 24,
-        "retain": 11,
-        "remove": 13
+        "reviewed": 26,
+        "retain": 12,
+        "remove": 14
       },
       "5": {
-        "reviewed": 24,
+        "reviewed": 26,
         "retain": 14,
-        "remove": 10
+        "remove": 12
       }
     },
     "by_new_level": {
@@ -9358,18 +9996,18 @@
         "remove": 0
       },
       "2": {
-        "scored": 21,
-        "retain": 20,
+        "scored": 23,
+        "retain": 22,
         "remove": 1
       },
       "3": {
-        "scored": 32,
-        "retain": 22,
+        "scored": 34,
+        "retain": 24,
         "remove": 10
       },
       "4": {
-        "scored": 50,
-        "retain": 24,
+        "scored": 52,
+        "retain": 26,
         "remove": 26
       },
       "5": {
@@ -9380,7 +10018,8 @@
     },
     "removal_reasons": {
       "qualified_alternate_over_capacity": 38,
-      "coding_relevance_domain_gate": 1
+      "coding_relevance_domain_gate": 4,
+      "repository_quality_gate": 1
     }
   }
 }
