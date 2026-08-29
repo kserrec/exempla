@@ -1112,6 +1112,22 @@
       "failed_requirement": "maintained project",
       "evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/async. The asynchronous implementation, documentation, and tests remain substantial, but accepting the retired repository would give learners a non-current contribution and maintenance surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
       "reconsider": "Reconsider the actively maintained async package at a stable dart-lang/core revision after independently inspecting its current first-party Dart implementation, tests, documentation, metadata, license, and learning path; do not reuse this retired repository's pin."
+    },
+    {
+      "repository": "nicklockwood/FXKeychain",
+      "language": "Objective-C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maintainability and direct test quality",
+      "evidence": "Reject at the repository-quality gate: the exact pinned README says the project is deprecated, will receive no future updates or bug fixes, and users should migrate; the last pinned commit is from 2017. The wrapper handles Security framework queries, serialization, access groups, accessibility, deletion, and potentially hostile stored values but supplies examples rather than an automated behavior or failure suite. The Apple toolchain is unavailable locally, but that does not cause the rejection: the support termination and absent direct tests are observed in the repository. The hard failures precede numerical scoring and the Level 1 gap was not consulted.",
+      "reconsider": "Reconsider only an actively supported successor at a stable pin after direct automated tests cover add, update, lookup, deletion, serialization, invalid values, access groups, accessibility, platform differences, error propagation, and hostile stored data; rerun every quality finding before scoring."
+    },
+    {
+      "repository": "AliSoftware/OHHTTPStubs",
+      "language": "Objective-C",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/4/5 sums to 17, whose mean of 4.25 rounds to Level 4. Both gates pass, but SBJson and SDWebImage already fill the two Objective-C Level 4 places with more complementary incremental parsing and concurrent image-pipeline paths. The Apple SDK and Xcode toolchain are unavailable locally, so source and XCTest suites were inspected but not executed. The path excludes the operating system's URL-loading implementation, Swift helpers, AFNetworking internals, optional HTTPMessage and Mocktail formats, and real transport; background sessions cannot use custom protocols, upload progress is not simulated, zero-delay redirects have a documented platform-dependent race, stub cleanup is caller-owned, callbacks and client delivery are asynchronous, and method swizzling plus platform availability constrain changes.",
+      "reconsider": "Reconsider if an Objective-C Level 4 place opens, the two-entry cap changes, or comparative review finds the custom URLProtocol, runtime-swizzling, timed-stream, redirect, cancellation, and asynchronous-test path stronger and sufficiently distinct; retain calculated Level 4 and every platform, lifecycle, and scope boundary."
     }
   ]
 }

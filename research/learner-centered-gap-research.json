@@ -2396,12 +2396,103 @@
       "rejected": ["dart-lang/path", "dart-lang/async"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
       "conclusion": "Four discovery channels and three exact-pin inspections produced two hard maintainability rejections for repositories whose packages moved to dart-lang/core and one distinct Level 5 incremental build path. dart-lang/build fills one score-supported Level 5 place; both Level 1 places and the second Level 5 place remain honest because no candidate was moved or duplicated to manufacture coverage."
+    },
+    {
+      "order": 18,
+      "language_slug": "objective-c",
+      "language": "Objective-C",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "mirego/MCUIViewLayout", "level": 2},
+        {"repository": "shinyfrog/TextBundle", "level": 2},
+        {"repository": "pinterest/PINOperation", "level": 3},
+        {"repository": "sparkle-project/Sparkle", "level": 3},
+        {"repository": "SBJson/SBJson", "level": 4},
+        {"repository": "SDWebImage/SDWebImage", "level": 4},
+        {"repository": "gnachman/iTerm2", "level": 5},
+        {"repository": "gnustep/libs-base", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "objc-cocoapods-registry",
+          "channel": "official CocoaPods package registry",
+          "sources": [
+            "https://cocoapods.org/pods/FXKeychain",
+            "https://cocoapods.org/pods/OHHTTPStubs"
+          ],
+          "evidence": "CocoaPods supplied canonical package identities, released versions, Objective-C classification, installation records, documented APIs, platform support, and real consumer-facing purposes for a compact keychain wrapper and a URL-loading test library."
+        },
+        {
+          "id": "github-objc-source",
+          "channel": "GitHub Objective-C source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/nicklockwood/FXKeychain",
+            "https://github.com/AliSoftware/OHHTTPStubs"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, first-party Objective-C implementation, test presence, maintenance and deprecation state, documentation, and pinned license evidence."
+        },
+        {
+          "id": "objc-maintainer-guides",
+          "channel": "maintainer-authored API, usage, compatibility, and limitation guides",
+          "sources": [
+            "https://github.com/nicklockwood/FXKeychain/blob/master/README.md",
+            "https://github.com/AliSoftware/OHHTTPStubs/blob/master/README.md",
+            "https://github.com/AliSoftware/OHHTTPStubs/wiki/Usage-Examples"
+          ],
+          "evidence": "Maintainer guides exposed FXKeychain's explicit end-of-support notice and OHHTTPStubs' matcher, response, timing, automatic registration, cleanup, compatibility, and known-limitation contracts used to bound both reviews."
+        },
+        {
+          "id": "apple-platform-docs",
+          "channel": "official Apple Security and Foundation documentation",
+          "sources": [
+            "https://developer.apple.com/documentation/security/keychain-services",
+            "https://developer.apple.com/documentation/foundation/url-loading-system",
+            "https://developer.apple.com/documentation/foundation/urlprotocol"
+          ],
+          "evidence": "Apple's primary platform documentation supplied the short Keychain Services and custom URLProtocol context needed to distinguish platform-domain details from transferable Objective-C implementation, lifecycle, and testing lessons."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "nicklockwood/FXKeychain",
+          "pinned_commit": "30ed71e159b130cbae3660f70a095110d68e00ce",
+          "discovered_via": ["objc-cocoapods-registry", "github-objc-source", "objc-maintainer-guides", "apple-platform-docs"],
+          "inspection_files": ["README.md", "FXKeychain/FXKeychain.h", "FXKeychain/FXKeychain.m", "FXKeychain.podspec.json", "Examples/Basic Example/FXKeychainExample/ViewController.m", "Examples/Advanced Example/FXKeychainExample/ViewController.m", "LICENCE.md"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "A short Keychain Services primer is sufficient; the wrapper teaches Objective-C dictionary construction, Core Foundation bridging, keyed subscripting, serialization, platform conditionals, accessibility policy, error translation, and security-sensitive input boundaries.",
+          "quality_status": "fail",
+          "quality_evidence": "The repository contains real compact Objective-C implementation, detailed API documentation, examples, and an MIT license, but README.md opens with an explicit deprecation warning that the project will receive no future updates or bug fixes. The repository also contains no direct automated tests for its security-sensitive storage behavior, so maintainability and direct-test findings materially fail before scoring.",
+          "decision_evidence": "Reject at the repository-quality gate: the exact pinned README says the project is deprecated, will receive no future updates or bug fixes, and users should migrate; the last pinned commit is from 2017. The wrapper handles Security framework queries, serialization, access groups, accessibility, deletion, and potentially hostile stored values but supplies examples rather than an automated behavior or failure suite. The Apple toolchain is unavailable locally, but that does not cause the rejection: the support termination and absent direct tests are observed in the repository. The hard failures precede numerical scoring and the Level 1 gap was not consulted.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Objective-C implementation, API documentation, examples, MIT license, literal no-future-updates deprecation notice, 2017 revision, and absence of direct automated tests, and agreed that maintainability and test quality fail before scoring or capacity."}
+        },
+        {
+          "repository": "AliSoftware/OHHTTPStubs",
+          "pinned_commit": "c582400a38590a3dabb4353416d9d46cb7278d06",
+          "discovered_via": ["objc-cocoapods-registry", "github-objc-source", "objc-maintainer-guides", "apple-platform-docs"],
+          "inspection_files": ["README.md", "Sources/OHHTTPStubs/include/HTTPStubs.h", "Sources/OHHTTPStubs/HTTPStubs.m", "Sources/OHHTTPStubs/HTTPStubsResponse.m", "Sources/OHHTTPStubs/HTTPStubsMethodSwizzling.m", "Sources/OHHTTPStubs/HTTPStubs+NSURLSessionConfiguration.m", "Tests/OHHTTPStubsTests/NSURLSessionTests.m", "Tests/OHHTTPStubsTests/NSURLConnectionDelegateTests.m", "Tests/OHHTTPStubsTests/TimingTests.m", "Tests/OHHTTPStubsTests/NilValuesTests.m", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Custom URL loading needs only a short Foundation primer; the path teaches Objective-C blocks, runtime method replacement, class loading, synchronized shared registries, protocol delegation, run-loop scheduling, stream chunking, manual C buffers, redirects, cancellation, errors, callbacks, and asynchronous integration tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional registry, protocol, response, swizzling, and compatibility modules; recognizable matcher-to-response-to-client-callback boundaries; idiomatic ARC Objective-C with blocks, synchronization, runtime APIs, streams, and platform guards; extensive request, error, timing, cancellation, cookie, redirect, header, session, connection, nil, and adapter tests; detailed API and limitation docs; complete stub-registration-to-URLProtocol-to-client traceability; centralized lifecycle and response behavior; and strong platform-integration teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 4, "constraint_burden": 5},
+          "calculated_level": 4,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/4/5 sums to 17, whose mean of 4.25 rounds to Level 4. Both gates pass, but SBJson and SDWebImage already fill the two Objective-C Level 4 places with more complementary incremental parsing and concurrent image-pipeline paths. The Apple SDK and Xcode toolchain are unavailable locally, so source and XCTest suites were inspected but not executed. The path excludes the operating system's URL-loading implementation, Swift helpers, AFNetworking internals, optional HTTPMessage and Mocktail formats, and real transport; background sessions cannot use custom protocols, upload progress is not simulated, zero-delay redirects have a documented platform-dependent race, stub cleanup is caller-owned, callbacks and client delivery are asynchronous, and method swizzling plus platform availability constrain changes.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and matcher-to-reverse-priority-registry-to-URLProtocol-to-response-delay-and-stream-to-redirect-or-error-to-client-callback path, both gates and all eight findings, 4/4/4/5 Level 4 formula, full capacity, Objective-C and MIT evidence, unavailable Apple toolchain, and every OS, Swift, adapter, format, background-session, upload, redirect, cleanup, asynchronous, runtime, and platform boundary."}
+        }
+      ],
+      "accepted": [],
+      "rejected": ["nicklockwood/FXKeychain", "AliSoftware/OHHTTPStubs"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections produced one hard deprecation and test-quality rejection plus one qualified Level 4 capacity alternate. Both Objective-C Level 1 places remain honest because neither candidate was moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 17,
+    "languages_completed": 18,
     "accepted_new_total": 16,
-    "rejected_new_total": 27,
+    "rejected_new_total": 29,
     "current_entry_total": 149,
     "remaining_gap_total": 51
   }
