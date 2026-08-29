@@ -108,7 +108,7 @@
       "primary_language": "C#",
       "language_evidence": "Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.",
       "description": "A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.",
-      "real_world_evidence": "Serilog is released as widely used production logging infrastructure with a large sink and integration ecosystem.",
+      "real_world_evidence": "Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.",
       "why_study": "Its compact core demonstrates immutable events, template parsing, pipeline composition, contextual enrichment, level control, failure isolation, and stable extension contracts.",
       "learn": ["Structured events, message-template parsing, immutable values, pipeline composition, filtering, enrichment, sinks, context propagation, and failure handling."],
       "prerequisites": ["Interfaces, delegates, immutable data, parsing basics, thread safety, logging concepts, and disposable resources."],

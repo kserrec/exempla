@@ -146,7 +146,7 @@ A lightweight object mapper that extends database connections with fast SQL exec
 
 A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.
 
-**Real-world evidence:** Serilog is released as widely used production logging infrastructure with a large sink and integration ecosystem.
+**Real-world evidence:** Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.
 
 **Language evidence:** Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.
 

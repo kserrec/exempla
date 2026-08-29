@@ -243,7 +243,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 6.1 — Verify live repository facts
 
-- [ ] **Objective:** Catch catalog drift and factual metadata errors.
+- [x] **Objective:** Catch catalog drift and factual metadata errors.
 - **Work:** Check that every URL resolves publicly; the pinned revision exists;
   the license permits source inspection; the primary-language classification
   is sensible; and no repository is duplicated inappropriately.
@@ -253,7 +253,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 6.2 — Cross-check the SDC distribution
 
-- [ ] **Objective:** Use the full corpus to find obvious cross-language grading
+- [x] **Objective:** Use the full corpus to find obvious cross-language grading
   inconsistencies without statistical overengineering.
 - **Work:** Compare neighboring levels and repositories with similar S/D/C
   profiles; identify absurd ordering, dimension dominance, and misplaced size
