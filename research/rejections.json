@@ -216,6 +216,22 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The inspected revision is a qualified compact JSON AST, parser, printer, and format library of 1,037 production Scala lines, but requests-scala and scopt provide more domain variety in the two SDC 2 slots while uPickle and circe already supply deeper serialization paths.",
       "reconsider": "Eligible as an additional Scala SDC 2 entry, especially for a parser-focused or serialization progression."
+    },
+    {
+      "repository": "devblackops/Terminal-Icons",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "After excluding the large static glyph table, the inspected module still contains 2,941 meaningful production PowerShell lines across theme persistence, preference migration, color conversion, icon resolution, formatting, and public commands; it belongs in S2 and cannot honestly fill an SDC 1 slot.",
+      "reconsider": "Eligible as an additional PowerShell SDC 2 project, especially for a terminal formatting and theming path."
+    },
+    {
+      "repository": "PowerShellOrg/PSDepend",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected 4,359-line production module is a qualified dependency handler with topological ordering, semantic version ranges, extensible dependency scripts, downloads, package managers, credentials, and a broad Pester suite; Scoop provides the stronger package-lifecycle path in the two SDC 3 slots while ImportExcel adds a distinct document-automation domain.",
+      "reconsider": "Eligible as an additional PowerShell SDC 3 entry, especially for a dependency-graph or extensible command-dispatch path."
     }
   ]
 }
