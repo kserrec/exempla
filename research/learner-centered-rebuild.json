@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 180,
+  "reviewed_entry_total": 190,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -13518,12 +13518,727 @@
         "status": "agree",
         "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog's framework-wide path with the bounded notification-center implementation and three direct suites, 5/5/3/5 scores, Level 5 rank 2, LGPL-2.0-or-later source plus GPL-2.0-only test licensing, and retention."
       }
+    },
+    {
+      "repository": "rust-lang/rustc-hash",
+      "language": "Rust",
+      "prior_level": 1,
+      "pinned_commit": "6ced6cb4235295509102d05f8915e0bb0d8cfe54",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "FxHasher is a fast non-cryptographic hash selected for rustc and deliberately trades denial-of-service resistance for compiler throughput.",
+          "Its constants, polynomial mixing, word-size branches, byte compression, widening multiplication, bit rotation, and hash-table bucket behavior are choices from hash-function design rather than ordinary collection use."
+        ],
+        "evidence": "The representative implementation can be read mechanically, but understanding why its multiplier, mixing paths, architecture branches, entropy movement, prefix behavior, and security boundary are correct requires specialist hash-function, collision-distribution, microarchitecture, and adversarial-input knowledge. Those domain judgments explain the path's difficulty better than Rust programming technique, and no substantial production-representative alternative path avoids them; the hard gate therefore rejects the repository before quality evaluation or scoring."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed FxHasher path from typed writes and byte compression through polynomial mixing, architecture specialization, final rotation, seeded builders, and deterministic collection behavior.",
+        "start_path": "src/lib.rs",
+        "supporting_files": [
+          "src/seeded_state.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-APACHE"
+        ],
+        "trace": "The proposed trace begins with FxHasher and the standard Hasher methods, then enters the selected multiplier, wrapping polynomial update, byte compression and widening multiplication branches, 32-bit and 64-bit specialization, entropy rotation for hash-table bucket selection, seeded BuildHasher state, and exact vectors; those choices are the specialist hashing-domain evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative rustc-hash behavior whose correctness and purpose can be understood from repository documentation plus short prerequisites without specialist hash-function design, collision-distribution, security, or microarchitecture expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent review confirmed that the representative path's multiplier selection, polynomial and widening-multiply mixing, architecture specialization, entropy placement, collision behavior, performance tradeoffs, and non-cryptographic security boundary depend materially on specialist hashing theory; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
+    },
+    {
+      "repository": "withoutboats/heck",
+      "language": "Rust",
+      "prior_level": 1,
+      "pinned_commit": "252c1906cefefb8d13ecad7fce7b8f27ce6437e0",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Identifier case styles split text into words and then format those words as snake, kebab, title, train, shouty, or camel case.",
+          "Unicode uppercase and lowercase conversion can expand or contextually change a character, so the implementation iterates characters rather than bytes."
+        ],
+        "evidence": "The short naming-convention and Unicode primer is subordinate to transferable lessons in stateful text scanning, boundary detection, callback-based reuse, trait and Display API design, no_std constraints, and table-driven edge-case testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The shared transform makes delimiter, lowercase-to-uppercase, acronym, digit, and Unicode boundary state explicit; each small case module supplies only word and separator formatting through descriptive traits and Display adapters; inline matrices cover punctuation, repeated separators, acronyms, digits, Greek sigma, and Unicode case expansion; crate documentation defines the rules before the code; the input-to-boundary-to-style trace is complete; and the exact public pin, dual license, dependency-free maintained source, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how heck scans Unicode text into words once and reuses that boundary engine to implement several allocation and display-oriented case-conversion APIs.",
+        "start_path": "src/lib.rs",
+        "supporting_files": [
+          "src/snake.rs",
+          "src/lower_camel.rs",
+          "src/upper_camel.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Start with the documented word-boundary rules and transform's WordMode state, follow delimiter splitting and lowercase, uppercase, acronym, digit, and trailing-word transitions into the formatting callbacks, then compare snake, lower-camel, and upper-camel trait and Display adapters and close the edge cases in their inline test matrices."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic FnMut formatting callbacks over borrowed string slices",
+            "trait-based owned conversion and zero-allocation Display adapters",
+            "Unicode-aware character indexing in a no_std crate"
+          ],
+          "reason": "Substantial Rust abstractions shape reuse and public ergonomics, but the path avoids unsafe code, concurrency, macros, and advanced type machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "local tri-state word-boundary scan",
+            "acronym, mixed-case, delimiter, digit, and trailing-word branches",
+            "contextual final-sigma lowercase handling"
+          ],
+          "reason": "Several edge-sensitive states must be traced, but they remain local to one deterministic pass without asynchronous or nonlocal behavior."
+        },
+        "design_span": {
+          "signals": [
+            "one shared tokenization and formatting engine",
+            "parallel style modules over one internal contract",
+            "public conversion traits and Display wrappers"
+          ],
+          "reason": "A few clear units cooperate while the complete behavior stays within one compact library boundary."
+        },
+        "constraint_burden": {
+          "signals": [
+            "all case styles must share identical word-boundary semantics",
+            "Unicode expansion, acronym, digit, and separator behavior must remain exact",
+            "no_std compatibility and formatting without intermediate allocation must be preserved"
+          ],
+          "reason": "Multiple user-visible text and portability guarantees interact, although failure remains confined to deterministic string conversion."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/2/2/3 sums to 10, whose mean of 2.5 rounds half up to Level 3; heck ranks first of two qualified Rust Level 3 paths.",
+      "reconsider": "Reconsider if the shared word-boundary engine, Unicode behavior, no_std and allocation contract, public conversion traits, inline test protection, dual licensing, or comparative Rust Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the bounded shared-transform path and style-module tests, 3/2/2/3 scores, half-up Level 3 placement, rank 1, and retention."
+      }
+    },
+    {
+      "repository": "dtolnay/anyhow",
+      "language": "Rust",
+      "prior_level": 2,
+      "pinned_commit": "c63b279f3f4af2b02ca6267d9eb47d6d10497f69",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Application error context adds a higher-level explanation while preserving the lower-level source error for reporting and inspection."
+        ],
+        "evidence": "That short error-handling primer is subordinate to transferable systems-programming lessons in generic conversion, lazy context, type erasure, custom vtables, pointer ownership, source-chain traversal, downcasting, backtrace preservation, conditional compilation, and safety contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Context starts at a small idiomatic Result and Option extension trait and leads through explicitly named construction paths into concentrated pointer and vtable machinery; ownership transfers, allocation layouts, source chaining, backtrace selection, downcast type checks, and drop responsibilities carry safety comments; Chain isolates traversal; direct context and downcast suites cover every layer, mutation, failed matches, root causes, drop behavior, and alignment; public documentation explains intended use; the context-to-representation-to-traversal trace is complete; and the exact public pin, dual license, maintained source, and focused runtime and compile-time tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how anyhow adds lazy application context to errors while preserving source traversal and concrete-type downcasting through a type-erased owned representation.",
+        "start_path": "src/context.rs",
+        "supporting_files": [
+          "src/error.rs",
+          "src/ptr.rs",
+          "src/chain.rs",
+          "tests/test_context.rs",
+          "tests/test_downcast.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Begin with Context implementations for Result and Option, follow eager or lazy context into Error construction and ContextError, then trace the owned, borrowed, and mutable pointer wrappers and selected ErrorVTable functions that preserve sources, backtraces, formatting, downcasting, and destruction; finish with Chain traversal and the direct context, root-cause, downcast, mutation, alignment, and drop tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "unsafe custom pointer ownership and lifetime wrappers",
+            "type erasure through manually selected function-pointer vtables",
+            "generic context conversion, trait objects, downcasting, and conditional std or no_std implementations"
+          ],
+          "reason": "Expert Rust representation machinery is central and recurring: soundness depends on raw-pointer casts, allocation layout, lifetime reconstruction, type identity, and exact ownership transfer."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "context wraps while preserving both context and source type identities",
+            "owned, shared, and mutable downcasts traverse distinct representation cases",
+            "source chains, root causes, formatting, backtraces, and destruction follow related but different paths"
+          ],
+          "reason": "Advanced nonlocal representation and ownership reasoning recurs across construction, traversal, downcast, formatting, and drop behavior."
+        },
+        "design_span": {
+          "signals": [
+            "public Context and Error API boundary",
+            "error representation, pointer, vtable, chain, formatting, and backtrace units",
+            "direct runtime and compile-time contract suites"
+          ],
+          "reason": "Several meaningful internal layers cooperate, but they remain focused on one in-process application-error abstraction."
+        },
+        "constraint_burden": {
+          "signals": [
+            "raw-pointer layout, alignment, aliasing, ownership, Send and Sync, and drop must remain sound",
+            "context and source downcasting, chain order, formatting, and backtrace identity must remain exact",
+            "std, no_std, compiler-configuration, API compatibility, error size, and zero-cost ergonomic expectations interact"
+          ],
+          "reason": "Several system-wide memory-safety, representation, compatibility, and semantic guarantees interact; a locally plausible change can introduce undefined behavior or silently lose an error's identity."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 5/4/3/5 sums to 17, whose mean of 4.25 rounds to Level 4; the expert-language and expert-constraint scores also enforce at least Level 4. Anyhow ranks second of four qualified Rust Level 4 paths.",
+      "reconsider": "Reconsider if Context construction, pointer or vtable soundness, downcast and chain behavior, std or no_std compatibility, direct tests, dual licensing, documentation, or comparative Rust Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the learner-friendly Context-to-error-representation path rather than a broad crate tour, 5/4/3/5 scores, Level 4 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "dtolnay/semver",
+      "language": "Rust",
+      "prior_level": 2,
+      "pinned_commit": "280ebcb6edac3aa4cdc545dbff8a26c5ac4861fe",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Semantic versions have major, minor, patch, prerelease, and build components, while Cargo-style requirements add exact, range, caret, tilde, wildcard, conjunction, and disjunction operators."
+        ],
+        "evidence": "The concise version-requirement grammar is documented in the repository, and the path is programming-led: typed domain modeling, allocation-conscious parsing, position-aware failures, operator-specific predicates, normalization, formatting, and executable specification tests explain its difficulty."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The hand-written parser uses small named functions for numeric identifiers, metadata, operators, comparators, disjunction depth, and exact error positions; the evaluator separates exact, greater, less, tilde, caret, wildcard, and prerelease predicates; public value types mirror the specification; focused suites enumerate valid and invalid syntax, overflow, every operator family, prerelease exceptions, display round trips, ordering, equality, and regressions; documentation explains Cargo's flavor; the text-to-comparator-to-match trace is complete; and the exact public pin, dual license, maintained dependency-light source, and dense boundary tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how semver parses Cargo-style version and requirement strings into typed comparators and evaluates their exact, range, wildcard, and prerelease meaning.",
+        "start_path": "src/parse.rs",
+        "supporting_files": [
+          "src/lib.rs",
+          "src/eval.rs",
+          "tests/test_version.rs",
+          "tests/test_version_req.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Start with FromStr for Version, VersionReq, and Comparator, follow cursor slices through numeric and metadata identifiers, operator and wildcard parsing, comparator normalization, disjunction handling, and position-aware errors; then trace the resulting comparators through exact, inequality, tilde, caret, wildcard, and prerelease predicates and close each rule family in the direct version and requirement suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "borrowed string-slice parsing with lifetimes and position-aware errors",
+            "typed enums and compact value models for grammar operators",
+            "trait-based parsing, ordering, hashing, and formatting"
+          ],
+          "reason": "Substantial Rust type and borrowing techniques shape the implementation, but the path avoids unsafe code, concurrency, and expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "grammar state for missing and optional version components",
+            "operator-specific lower and upper bound behavior",
+            "wildcard, conjunction, disjunction, and prerelease compatibility cases"
+          ],
+          "reason": "Several interdependent syntax and matching branches require deliberate reasoning, though all behavior is deterministic and in-process."
+        },
+        "design_span": {
+          "signals": [
+            "public version and requirement value model",
+            "parser and position-aware error boundary",
+            "evaluator, formatter, and specification-focused suites"
+          ],
+          "reason": "Several clear units contribute to the complete text-to-semantics path without crossing external systems."
+        },
+        "constraint_burden": {
+          "signals": [
+            "Cargo-compatible caret, tilde, wildcard, range, and prerelease meanings must remain exact",
+            "overflow, leading zeros, missing components, error positions, ordering, and display round trips interact",
+            "no_std or allocation modes, public value layout, and long-lived ecosystem compatibility constrain changes"
+          ],
+          "reason": "Multiple strict specification and compatibility guarantees recur; small local parser or predicate changes can silently alter dependency selection."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3; semver ranks second of two qualified Rust Level 3 paths.",
+      "reconsider": "Reconsider if Cargo-compatible grammar or matching semantics, error positions, formatting and ordering, no_std support, focused tests, dual licensing, documentation, or comparative Rust Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the complete parser-to-evaluator path, 3/3/3/4 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "serde-rs/json",
+      "language": "Rust",
+      "prior_level": 3,
+      "pinned_commit": "afdf6fc67247dd7fa4fcde1381e6ecc6bcc7a30e",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A streaming JSON deserializer reads consecutive JSON values from a string, byte slice, or I/O reader and reports how many bytes have been consumed so a caller can resume or recover.",
+          "Serde drives deserialization through typed visitors, so the JSON parser emits data-model events rather than constructing only one fixed value representation."
+        ],
+        "evidence": "That short JSON and Serde primer is subordinate to transferable parser engineering: generic input adapters, byte-level grammar, borrowed and owned values, visitor dispatch, streaming state, recursion limits, persistent I/O failures, exact offsets, iterator fusion, and exhaustive malformed-input tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Deserializer makes whitespace, token, string, number, sequence, map, enum, recursion, and end-of-input state explicit; the Read trait cleanly unifies strings, slices, and I/O while preserving borrowing and byte offsets; StreamDeserializer localizes iterator progress, recoverable EOF, persistent failures, and fused termination; descriptive names follow JSON and Serde vocabulary; stream.rs directly checks all three input modes, offsets after successes and failures, incomplete data, persistent errors, primitive streams, and mixed values, while broader parser regressions protect grammar; public documentation includes recovery examples; the bytes-to-visitor-to-offset trace is complete; and the exact public pin, dual license, maintained source, and exhaustive tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how serde_json turns string, slice, or I/O input into a stream of typed JSON values while preserving grammar errors, byte offsets, retry boundaries, and fused termination.",
+        "start_path": "src/de.rs",
+        "supporting_files": [
+          "src/read.rs",
+          "src/error.rs",
+          "tests/stream.rs",
+          "tests/test.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Begin with Deserializer constructors for str, slice, and reader inputs, follow the Read abstraction through whitespace and token parsing into Serde visitors, sequences, maps, errors, recursion limits, and end validation, then enter into_iter and StreamDeserializer::next to trace offsets, recoverable EOF, persistent failure, and fused completion; close equivalent input modes and every offset and error transition in stream.rs."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic lifetime-parameterized Read adapters with borrowed and owned outputs",
+            "Serde visitor and data-model trait implementations",
+            "typed streaming and fused iterators across slice, string, and I/O inputs"
+          ],
+          "reason": "Advanced generic, borrowing, and trait abstractions recur throughout the path, though unsafe representation machinery is not central."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "incremental grammar state across consecutive values",
+            "byte-offset transitions after success, syntax failure, EOF, and persistent I/O failure",
+            "recursion, borrowing, token lookahead, visitor control flow, and iterator fusion"
+          ],
+          "reason": "Advanced nonlocal parser and stream-state reasoning recurs across input adapters, grammar, visitor calls, failure recovery, and iteration."
+        },
+        "design_span": {
+          "signals": [
+            "generic input-adapter boundary",
+            "JSON grammar and Serde visitor engine",
+            "stream iterator, error model, and direct cross-input contract suite"
+          ],
+          "reason": "Several meaningful library layers cooperate, but the selected trace remains a bounded deserialization path rather than the whole crate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "JSON grammar, borrowing, UTF-8, numeric, nesting, and recursion-limit semantics must remain exact",
+            "slice, string, and I/O readers must agree on values, errors, line and column, and byte offsets",
+            "recoverable EOF, persistent failures, iterator fusion, Serde compatibility, feature modes, and performance interact"
+          ],
+          "reason": "Multiple strict parsing, streaming, representation, compatibility, and performance guarantees recur across otherwise separate implementation units."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; serde_json's streaming deserializer ranks third behind Axum JSON extraction and anyhow context handling among four qualified Rust Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Rust Level 4 slot opens, the two-entry cap changes, or streaming-deserializer clarity, offset and recovery semantics, test protection, documentation, dual licensing, or comparative educational value improves enough to outrank a retained path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the bounded streaming-deserializer path rather than a whole-format tour, 4/4/3/4 scores, Level 4 rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "tokio-rs/axum",
+      "language": "Rust",
+      "prior_level": 3,
+      "pinned_commit": "8f6bb9cead28a3880fe2e448a41ffbfe2c7fe7d9",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP request extractor validates request metadata, consumes the body once, and either gives typed input to a handler or turns a rejection into an HTTP response.",
+          "JSON media types include application/json and structured suffixes such as application/cloudevents+json."
+        ],
+        "evidence": "The short HTTP and media-type primer is documented by Axum; the selected path is programming-led and teaches generic async extraction, body ownership, typed rejection design, source-aware serialization errors, response conversion, optional inputs, API documentation, and direct contract tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Json's FromRequest, OptionalFromRequest, from_bytes, and IntoResponse implementations keep content-type policy, body buffering, path-aware deserialization, syntax-versus-data rejection, serialization failure, headers, and statuses in one readable path; shared extractor and response traits make framework boundaries explicit; rejection types are named by failure meaning; inline tests directly cover required and optional bodies, accepted and rejected media types, syntax, data, missing content type, response headers, and serialization failures; public module documentation gives use and error-handling examples; the request-to-value-or-rejection-to-response trace is complete; and the exact public pin, MIT license, maintained source, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Axum's Json type consumes and validates an HTTP request body, produces precise typed rejections, and serializes a typed response with correct metadata.",
+        "start_path": "axum/src/json.rs",
+        "supporting_files": [
+          "axum/src/extract/rejection.rs",
+          "axum-core/src/extract/mod.rs",
+          "axum-core/src/response/into_response.rs",
+          "README.md",
+          "axum/Cargo.toml",
+          "LICENSE"
+        ],
+        "trace": "Start with Json<T> and its FromRequest implementation, follow content-type recognition and one-time body buffering into from_bytes and serde_path_to_error, distinguish syntax, data, bytes, and missing-content-type rejections and their IntoResponse behavior, then trace OptionalFromRequest and outbound serialization, content type, and failure handling; close each branch in json.rs's inline async tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic async FromRequest and OptionalFromRequest trait implementations",
+            "associated rejection types and IntoResponse conversion",
+            "Serde bounds, path-aware generic errors, and ownership of a streaming HTTP body"
+          ],
+          "reason": "Advanced generic and asynchronous framework abstractions recur and materially shape the path, without requiring unsafe code or expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "required versus optional content-type and body states",
+            "body buffering followed by syntax-versus-data error classification",
+            "inbound rejection and outbound serialization response paths"
+          ],
+          "reason": "Several request and error branches must align across asynchronous boundaries, but the complete lifecycle remains one bounded extractor and response component."
+        },
+        "design_span": {
+          "signals": [
+            "shared extractor contract and one-time body boundary",
+            "Json adapter and typed rejection family",
+            "response conversion and direct inline contract tests"
+          ],
+          "reason": "Several meaningful framework units cooperate while the selected path avoids the broader router and middleware architecture."
+        },
+        "constraint_burden": {
+          "signals": [
+            "body ownership, limits, optionality, content-type rules, and deserialization must remain coordinated",
+            "syntax, data, byte, missing-type, and serialization failures must map to stable statuses and bodies",
+            "Serde, HTTP, Tower-compatible response, API, security, compatibility, and observability expectations interact"
+          ],
+          "reason": "Multiple strict protocol-adapter and compatibility guarantees recur, and plausible local changes can consume a body incorrectly or misclassify client and server failures."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Axum's bounded JSON extractor and rejection path ranks first of four qualified Rust Level 4 paths.",
+      "reconsider": "Reconsider if Json extraction, body ownership, rejection mapping, response serialization, shared trait contracts, inline tests, MIT licensing, documentation, or comparative Rust Level 4 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, selection of the bounded Json extractor, rejection, and response path instead of broad routing, 4/3/3/4 scores, Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "rustls/rustls",
+      "language": "Rust",
+      "prior_level": 4,
+      "pinned_commit": "3925f65934364edafe8d6b20707d9e5e6183648e",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The proposed connection path parses attacker-controlled TLS records and handshake messages, advances distinct TLS 1.2 and 1.3 client or server states, authenticates certificates, derives traffic keys, protects records, and manages resumption and secrets.",
+          "Correctness depends on protocol transcript rules, cipher-suite and cryptographic-provider behavior, public-key infrastructure, certificate verification policy, downgrade resistance, and adversarial network assumptions."
+        ],
+        "evidence": "Understanding the representative connection core and its client, server, verification, message, record, and provider collaborators materially depends on specialist TLS, cryptographic-protocol, PKI, and security-engineering theory that a short prerequisites paragraph cannot supply. Those domain invariants explain the difficulty better than Rust programming technique, and no substantial production-representative self-contained alternative path was established; the hard gate therefore rejects the repository before quality evaluation or scoring."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the proposed rustls connection path from encrypted records and handshake state through certificate verification, key transitions, plaintext release, resumption, and connection I/O.",
+        "start_path": "rustls/src/conn/mod.rs",
+        "supporting_files": [
+          "rustls/src/client/connection.rs",
+          "rustls/src/server/connection.rs",
+          "rustls/src/verify.rs",
+          "rustls/src/msgs/message/mod.rs",
+          "README.md",
+          "SECURITY.md",
+          "LICENSE"
+        ],
+        "trace": "The proposed trace begins in common connection state and immediately crosses encrypted-record framing, state-specific handshake messages, transcript and key schedules, certificate and signature verification, traffic-secret transitions, alert and error policy, plaintext release, resumption, client and server roles, cryptographic providers, and hostile-input tests; those recurring dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative rustls behavior whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist TLS, cryptographic-protocol, PKI, certificate-verification, or security-engineering expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent review confirmed that TLS records and handshakes, transcript and key schedules, cipher suites, certificates, PKI verification, provider behavior, resumption, downgrade and adversarial-network assumptions dominate the representative path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
+      }
+    },
+    {
+      "repository": "BurntSushi/ripgrep",
+      "language": "Rust",
+      "prior_level": 4,
+      "pinned_commit": "3fce3b5bb0236da2df6d99672afb8a719642eca7",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A recursive search command combines regular-expression matching with filesystem traversal and Git-style ignore and glob precedence.",
+          "Search may run sequentially for ordered output or in parallel for throughput, while printers preserve human or machine-readable result contracts."
+        ],
+        "evidence": "The short regex, traversal, and command-line primer is documented by ripgrep; transferable configuration normalization, pipeline construction, concurrency, byte-oriented I/O, encoding and binary policy, process adaptation, output protocols, cancellation, and regression design explain the path's difficulty."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "main.rs exposes mode selection and separates sequential from parallel execution; HiArgs centralizes the conversion from many flags into matcher, walker, searcher, worker, printer, encoding, preprocessing, and sort policy; SearchWorker names path, reader, decompression, and preprocessor branches; Haystack isolates per-entry metadata; dedicated workspace crates preserve lower-level responsibilities; integration suites cover flags, ignores, globs, binary data, encodings, multiline, replacement, compressed input, errors, JSON, and regressions; the user guide documents interactions; the command-to-walk-to-search-to-output trace is complete; and the exact public pin, permissive dual license, maintained source, and extensive tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how ripgrep turns normalized command-line policy into sequential or parallel filesystem traversal, per-file search workers, and stable human or machine output.",
+        "start_path": "crates/core/main.rs",
+        "supporting_files": [
+          "crates/core/flags/hiargs.rs",
+          "crates/core/search.rs",
+          "crates/core/haystack.rs",
+          "tests/feature.rs",
+          "tests/misc.rs",
+          "tests/regression.rs",
+          "GUIDE.md",
+          "COPYING"
+        ],
+        "trace": "Start at main and run as parsed arguments select a mode, follow HiArgs as it constructs the matcher, walker, searcher, printer, and SearchWorker, then compare sequential and parallel traversal into Haystack conversion, preprocessor or decompression branches, path or reader search, match sinks, cancellation, and result aggregation; close representative flag interactions and failure cases in feature, misc, and regression suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic matcher, writer, searcher, and match-sink composition",
+            "closure-built parallel workers and shared cancellation state",
+            "typed builders and command, reader, path, and output adapters"
+          ],
+          "reason": "Substantial idiomatic Rust traits, generics, builders, and concurrency shape the path, but expert unsafe or type-level machinery is not central."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "sequential versus parallel traversal and output timing",
+            "ignore, glob, binary, encoding, preprocessor, decompression, and matcher interactions",
+            "early quit, error aggregation, sorting, counts, and printer-specific completion"
+          ],
+          "reason": "Advanced nonlocal configuration and pipeline behavior recurs from flags through traversal, per-file search, output, and termination."
+        },
+        "design_span": {
+          "signals": [
+            "CLI parsing and high-level policy normalization",
+            "ignore-aware walker, matcher, searcher, haystack, worker, and printer boundaries",
+            "sequential, parallel, process, filesystem, terminal, and JSON output integrations"
+          ],
+          "reason": "Several independently meaningful components and external operating-system boundaries cooperate across the complete command path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "ignore and glob precedence, path reporting, binary and encoding policy, and regex semantics must remain exact",
+            "parallelism, ordering, cancellation, errors, counts, context, and output formats must interact correctly",
+            "cross-platform filesystem, terminal, process, compressed-input, performance, and command-line compatibility guarantees recur"
+          ],
+          "reason": "Multiple strict behavioral, platform, compatibility, and performance guarantees span the pipeline; plausible local changes can silently alter search results or machine output."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/4/4 sums to 15, whose mean of 3.75 rounds to Level 4; ripgrep's command-to-search pipeline ranks fourth behind Axum JSON extraction, anyhow context handling, and serde_json streaming among four qualified Rust Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Rust Level 4 slot opens, the two-entry cap changes, or the command-to-search trace, cross-platform tests, output and compatibility documentation, licensing, or comparative educational value improves enough to outrank a retained path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the bounded command-to-search pipeline, 3/4/4/4 scores, Level 4 rank 4, and capacity removal."
+      }
+    },
+    {
+      "repository": "rust-lang/cargo",
+      "language": "Rust",
+      "prior_level": 5,
+      "pinned_commit": "e7167a4bac50fd878ce18530e901624d83be218e",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Cargo turns compilation units and their artifact dependencies into runnable jobs; a GNU-compatible jobserver supplies shared concurrency tokens so Cargo, rustc, build scripts, and nested make processes do not collectively oversubscribe the machine.",
+          "Fresh jobs execute compiler work while fresh jobs can replay cached metadata and messages without rerunning the process."
+        ],
+        "evidence": "The short build-unit and jobserver primer is documented in the selected modules. Transferable dependency-graph scheduling, bounded concurrency, process orchestration, state machines, message queues, failure propagation, cancellation, output serialization, cache freshness, and compatibility engineering explain the path's difficulty."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "job_queue/mod.rs opens with an unusually complete architecture guide and makes enqueue, dependency readiness, jobserver acquisition, spawning, message draining, freshness, diagnostics, completion, errors, and shutdown explicit through JobQueue, DrainState, Job, JobState, and Message; generic DependencyQueue isolates graph readiness and cycle invariants with direct unit tests; BuildRunner shows queue construction and jobserver ownership; jobserver tests exercise creation, inheritance, nested tools, explicit -j interaction, and invalid descriptors; names mirror build concepts; the build-unit-to-token-to-process-to-artifact trace is complete; and the exact public pin, dual license, maintained Rust-project source, and focused unit and integration tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Cargo schedules dependency-ordered compiler jobs under a shared jobserver limit while coordinating freshness, process output, diagnostics, artifacts, failures, and shutdown.",
+        "start_path": "src/compiler/job_queue/mod.rs",
+        "supporting_files": [
+          "src/util/dependency_queue.rs",
+          "src/compiler/job_queue/job.rs",
+          "src/compiler/job_queue/job_state.rs",
+          "src/compiler/build_runner/mod.rs",
+          "src/ops/cargo_compile/mod.rs",
+          "tests/testsuite/jobserver.rs",
+          "README.md",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Begin with the JobQueue module guide, follow BuildRunner as it creates or inherits the jobserver and enqueues compile units, then trace DependencyQueue readiness and artifact edges into DrainState's execution loop, token acquisition, fresh or dirty Job execution, JobState messages, diagnostics, artifacts, failures, cancellation, and shutdown; close graph behavior in DependencyQueue's unit tests and process-sharing and warning behavior in jobserver.rs."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic dependency queues keyed by units and artifact edges",
+            "thread-safe Arc queues, job closures, process adapters, and typed message enums",
+            "lifetime-parameterized build contexts and job states across worker threads"
+          ],
+          "reason": "Advanced generic, lifetime, threading, callback, and process abstractions recur, but unsafe memory machinery is not the defining technique of this selected path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "dependency readiness, artifact edges, freshness, and build-script expansion alter future runnable work",
+            "jobserver tokens, worker completion, diagnostic messages, output, and process failures arrive concurrently",
+            "cancellation, error selection, child cleanup, deadlock avoidance, progress, and final artifact state interact"
+          ],
+          "reason": "Expert nonlocal graph, concurrency, event-order, process-lifecycle, and failure reasoning recurs throughout the scheduler; validating a change requires reasoning across many possible execution orders."
+        },
+        "design_span": {
+          "signals": [
+            "build-runner and compiler-unit preparation",
+            "generic dependency queue, JobQueue, DrainState, Job, JobState, and message components",
+            "jobserver, rustc and build-script process, diagnostic, artifact, progress, and integration-test boundaries"
+          ],
+          "reason": "Several independently meaningful components and external process boundaries cooperate in a bounded but substantial build-execution subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "dependency order, artifact readiness, freshness, and exactly-once completion must remain correct",
+            "jobserver token accounting, concurrency, wakeups, output ordering, diagnostics, failure selection, cancellation, and child cleanup interact",
+            "GNU make interoperability, inherited descriptors, nested tools, cross-platform processes, performance, reproducibility, and long-lived Cargo output compatibility constrain changes"
+          ],
+          "reason": "Several system-wide correctness, liveness, resource, compatibility, and reproducibility guarantees interact; locally plausible scheduler changes can deadlock builds, oversubscribe nested processes, lose diagnostics, or publish incomplete artifacts."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 4/5/4/5 sums to 18, whose mean of 4.5 rounds half up to Level 5; two dimensions at score 5 satisfy the Level 5 guard. Cargo's compiler job queue ranks second of two qualified Rust Level 5 paths.",
+      "reconsider": "Reconsider if dependency or artifact scheduling, jobserver token and process semantics, freshness, message and diagnostic handling, failure cleanup, focused tests, dual licensing, documentation, or comparative Rust Level 5 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, the bounded JobQueue path with DependencyQueue, JobState, BuildRunner, and focused jobserver tests, 4/5/4/5 scores, guarded Level 5 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "tokio-rs/tokio",
+      "language": "Rust",
+      "prior_level": 5,
+      "pinned_commit": "ea91b33ca57ff0581b38e735cc108f831bccbdaa",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A bounded multi-producer, single-consumer channel gives senders permits before enqueueing values so capacity creates backpressure; closing prevents new sends while allowing already queued values and outstanding permits to resolve.",
+          "Loom systematically explores small concurrent executions by substituting modeled atomics, threads, and synchronization primitives."
+        ],
+        "evidence": "The short channel and model-checking primer is documented by Tokio. Transferable async API design, atomic state, lock-free linked storage, waker protocols, semaphore permits, backpressure, cancellation safety, close and drop ownership, panic safety, model checking, and exhaustive direct tests explain the path's difficulty."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "bounded.rs documents send, reserve, try_send, receiver, permit, close, and count contracts; chan.rs isolates shared strong and weak sender state, semaphore integration, list enqueue and dequeue, receiver wakeups, closure, and panic-safe draining; list.rs and block.rs localize lock-free positions, readiness bits, allocation, reclamation, and UnsafeCell access with safety comments; BatchSemaphore owns fair capacity acquisition and cancellation; names express channel roles; sync_mpsc.rs exhaustively covers capacity, ordering, reservation, cancellation, closure, counts, weak senders, drop and panic behavior, while loom_mpsc.rs and loom_semaphore_batch.rs explore critical interleavings; public documentation orients the learner; the permit-to-enqueue-to-wakeup-to-receive-or-close trace is complete; and the exact public pin, MIT license, maintained source, and direct plus model-checked tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Tokio's bounded MPSC channel coordinates permits, lock-free message storage, receiver wakeups, cancellation, closure, and destruction safely across concurrent senders.",
+        "start_path": "tokio/src/sync/mpsc/bounded.rs",
+        "supporting_files": [
+          "tokio/src/sync/mpsc/mod.rs",
+          "tokio/src/sync/mpsc/chan.rs",
+          "tokio/src/sync/mpsc/list.rs",
+          "tokio/src/sync/mpsc/block.rs",
+          "tokio/src/sync/batch_semaphore.rs",
+          "tokio/src/sync/tests/loom_mpsc.rs",
+          "tokio/src/sync/tests/loom_semaphore_batch.rs",
+          "tokio/tests/sync_mpsc.rs",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin with bounded channel construction and the Sender, Receiver, and Permit APIs, follow send or reserve into BatchSemaphore capacity acquisition and cancellation, then enter chan.rs as a value claims a list position, writes through block UnsafeCell state, marks readiness, wakes the receiver, and is polled or drained; trace sender counts, close, outstanding permits, receiver and sender drops, block reclamation, and panic guards, then close ordinary behavior in sync_mpsc.rs and adversarial interleavings in the two Loom suites."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "unsafe lock-free linked blocks with UnsafeCell and atomic readiness state",
+            "generic semaphore-backed channel core, pinned futures, wakers, permits, and lifetime-bound reservations",
+            "atomic reference counts, memory ordering, panic guards, and Loom-substitutable concurrency primitives"
+          ],
+          "reason": "Expert Rust concurrency and unsafe representation machinery is central and recurring; soundness depends on atomic ordering, aliasing, initialization, pinning, ownership, and destructor contracts."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "many concurrent send, reserve, cancel, receive, close, wake, and drop interleavings",
+            "capacity permits, list positions, readiness bits, sender counts, and receiver state evolve nonlocally",
+            "empty versus disconnected observation, outstanding permits, block reclamation, and panic paths alter completion"
+          ],
+          "reason": "Expert nonlocal concurrency, liveness, cancellation, ownership, and event-order reasoning recurs; validating behavior requires considering adversarial interleavings rather than one trace."
+        },
+        "design_span": {
+          "signals": [
+            "public bounded Sender, Receiver, reserve, and Permit API",
+            "shared channel core, batch semaphore, lock-free list and block storage, waker and close state",
+            "runtime-independent direct suites and Loom model-checking boundaries"
+          ],
+          "reason": "Several independently meaningful concurrency components cooperate in one bounded channel subsystem, while the broader Tokio scheduler, networking, timer, and process architecture is deliberately excluded."
+        },
+        "constraint_burden": {
+          "signals": [
+            "memory safety, initialization, aliasing, atomic ordering, reclamation, and panic-safe destruction must remain sound",
+            "FIFO delivery, exact capacity, fair permits, cancellation safety, wakeup freedom, close semantics, counts, and no lost messages interact",
+            "cross-runtime operation, blocking and async APIs, performance, Loom equivalence, public compatibility, and downstream ecosystem expectations constrain changes"
+          ],
+          "reason": "Several system-wide safety, liveness, resource, ordering, compatibility, and performance guarantees interact; a locally plausible change can cause undefined behavior, deadlock, a lost wakeup, capacity leakage, or message loss."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 rounds to Level 5; three dimensions at score 5 satisfy the Level 5 guard. Tokio's bounded MPSC channel ranks first of two qualified Rust Level 5 paths.",
+      "reconsider": "Reconsider if bounded-channel memory safety, atomic ordering, capacity and permit semantics, wakeup, cancellation, close or drop behavior, direct and Loom tests, MIT licensing, documentation, or comparative Rust Level 5 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin review confirmed both gate passes, selection of the bounded MPSC implementation with direct and Loom tests rather than the broad runtime scheduler, 5/5/4/5 scores, guarded Level 5 rank 1, and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 121,
-      "remove": 59
+      "retain": 127,
+      "remove": 63
     },
     "by_language": {
       "JavaScript": {
@@ -13867,32 +14582,51 @@
           "4": 2,
           "5": 2
         }
+      },
+      "Rust": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 0,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 0,
+          "3": 2,
+          "4": 4,
+          "5": 2
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 36,
-        "retain": 34,
-        "remove": 2
+        "reviewed": 38,
+        "retain": 35,
+        "remove": 3
       },
       "2": {
-        "reviewed": 36,
-        "retain": 28,
+        "reviewed": 38,
+        "retain": 30,
         "remove": 8
       },
       "3": {
-        "reviewed": 36,
-        "retain": 27,
-        "remove": 9
+        "reviewed": 38,
+        "retain": 28,
+        "remove": 10
       },
       "4": {
-        "reviewed": 36,
+        "reviewed": 38,
         "retain": 17,
-        "remove": 19
+        "remove": 21
       },
       "5": {
-        "reviewed": 36,
-        "retain": 19,
+        "reviewed": 38,
+        "retain": 21,
         "remove": 17
       }
     },
@@ -13908,24 +14642,24 @@
         "remove": 1
       },
       "3": {
-        "scored": 49,
-        "retain": 34,
+        "scored": 51,
+        "retain": 36,
         "remove": 15
       },
       "4": {
-        "scored": 69,
-        "retain": 36,
-        "remove": 33
+        "scored": 73,
+        "retain": 38,
+        "remove": 35
       },
       "5": {
-        "scored": 22,
-        "retain": 21,
+        "scored": 24,
+        "retain": 23,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 50,
-      "coding_relevance_domain_gate": 8,
+      "qualified_alternate_over_capacity": 52,
+      "coding_relevance_domain_gate": 10,
       "repository_quality_gate": 1
     }
   }

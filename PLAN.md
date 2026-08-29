@@ -404,7 +404,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **13.16 PowerShell**
 - [x] **13.17 Dart**
 - [x] **13.18 Objective-C**
-- [ ] **13.19 Rust**
+- [x] **13.19 Rust**
 - [ ] **13.20 Lua**
 - **Artifact:** `research/learner-centered-rebuild.json`.
 - **Complete when:** Every one of the 200 prior entries has an evidence-backed,
