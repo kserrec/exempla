@@ -2026,12 +2026,102 @@
       "rejected": ["magicmonty/bash-git-prompt", "nvm-sh/nvm"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
       "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 3 and Level 4 alternatives, but both calculated buckets were already full. The two Level 1 and two Level 5 places remain honest because neither candidate was moved to fit an open bucket."
+    },
+    {
+      "order": 14,
+      "language_slug": "kotlin",
+      "language": "Kotlin",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "JakeWharton/picnic", "level": 2},
+        {"repository": "ajalt/clikt", "level": 3},
+        {"repository": "oshai/kotlin-logging", "level": 3},
+        {"repository": "cashapp/turbine", "level": 4},
+        {"repository": "square/moshi", "level": 4},
+        {"repository": "JetBrains/kotlin", "level": 5},
+        {"repository": "Kotlin/kotlinx.coroutines", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "kotlin-maven-central",
+          "channel": "Maven Central package registry",
+          "sources": [
+            "https://central.sonatype.com/artifact/com.chibatching.kotpref/kotpref",
+            "https://central.sonatype.com/artifact/org.jetbrains.kotlinx/kotlinx-io-core/versions"
+          ],
+          "evidence": "Maven Central supplied canonical coordinates, releases, dependency metadata, declared licenses, and real consumer evidence for an Android preference library and a multiplatform I/O runtime."
+        },
+        {
+          "id": "kotlin-api-docs",
+          "channel": "official and independently hosted Kotlin API documentation",
+          "sources": [
+            "https://javadoc.io/doc/com.chibatching.kotpref/kotpref/latest/index.html",
+            "https://kotlinlang.org/api/kotlinx-io/navigation.html",
+            "https://kotlinlang.org/api/kotlinx-io/kotlinx-io-core/kotlinx.io/-segment/"
+          ],
+          "evidence": "Rendered API references exposed the delegated preference model and the buffer, source, sink, segment, ownership, and pooling contracts used to bound each path."
+        },
+        {
+          "id": "github-kotlin-source",
+          "channel": "GitHub Kotlin source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/chibatching/Kotpref",
+            "https://github.com/Kotlin/kotlinx-io"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, first-party Kotlin implementation and test paths, archive status, current maintenance, documentation, and pinned Apache license material."
+        },
+        {
+          "id": "kotlin-maintainer-guides",
+          "channel": "maintainer architecture and usage guides",
+          "sources": [
+            "https://github.com/chibatching/Kotpref/blob/master/README.md",
+            "https://github.com/Kotlin/kotlinx-io/blob/master/README.md",
+            "https://github.com/Kotlin/kotlinx-io/blob/master/core/Module.md"
+          ],
+          "evidence": "Maintainer guides supplied real integration examples, experimental-status disclosure, multiplatform scope, and the linked-segment buffer model without assigning a learner level."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "chibatching/Kotpref",
+          "pinned_commit": "d3e76d062ccaf19234e8d2f6c573f58b95cdd976",
+          "discovered_via": ["kotlin-maven-central", "kotlin-api-docs", "github-kotlin-source", "kotlin-maintainer-guides"],
+          "inspection_files": ["README.md", "kotpref/src/main/kotlin/com/chibatching/kotpref/KotprefModel.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/BulkEdit.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/AbstractPref.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/StringSetPref.kt", "kotpref/src/test/java/com/chibatching/kotpref/KotprefModelTest.kt", "kotpref/src/test/java/com/chibatching/kotpref/BulkEditTest.kt", "kotpref/src/test/java/com/chibatching/kotpref/pref/StringSetPrefTest.kt", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Android preferences need only a short primer; the path teaches property delegates, generic preference adapters, delegated interfaces, mutable collection wrappers, batched edits, synchronous versus asynchronous persistence, and direct behavior tests.",
+          "quality_status": "fail",
+          "quality_evidence": "The implementation and tests remain substantive, but GitHub marks the exact repository archived. An archived snapshot cannot satisfy the catalog's maintained-project finding for a new learner exemplar, so the hard quality gate fails before numerical scoring or capacity comparison.",
+          "decision_evidence": "Reject at the repository-quality gate: GitHub reports chibatching/Kotpref archived at the exact pinned revision. Its Kotlin delegates, preference wrappers, bulk-edit behavior, tests, documentation, and Apache license remain inspectable, but the read-only repository cannot satisfy the maintained-project requirement. The hard failure precedes numerical scoring and the open Kotlin Level 2 bucket was not consulted.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, archived GitHub state, existing Kotlin implementation, direct Android preference tests, documentation and Apache license, and agreed that maintainability fails before scoring or capacity."}
+        },
+        {
+          "repository": "Kotlin/kotlinx-io",
+          "pinned_commit": "362bdc35e159bad6da1e08101c8321792d762281",
+          "discovered_via": ["kotlin-maven-central", "kotlin-api-docs", "github-kotlin-source", "kotlin-maintainer-guides"],
+          "inspection_files": ["README.md", "core/Module.md", "core/common/src/Buffer.kt", "core/common/src/Segment.kt", "core/common/src/SegmentPool.kt", "core/common/src/RealSource.kt", "core/common/src/RealSink.kt", "core/common/test/CommonBufferTest.kt", "core/common/test/CommonRealSourceTest.kt", "core/jvm/test/PoolingTest.kt", "LICENSE", "NOTICE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Buffered I/O needs a concise source, sink, and segment primer; the path teaches multiplatform abstractions, inline and extension APIs, linked-list mutation, ownership and copy sharing, platform-specific pools, numeric and UTF-8 encoding, lifecycle state, and cross-segment tests.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional core modules, explicit buffer, segment, source, sink, and platform boundaries, idiomatic Kotlin multiplatform code, extensive boundary, ownership, pooling, encoding, closed-state, and platform tests, official API and module docs, complete byte-flow traceability, centralized segment invariants, and exceptional low-level Kotlin teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 3, "constraint_burden": 4},
+          "calculated_level": 4,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4. Both gates pass, but turbine and moshi already fill the two Kotlin Level 4 places with more complementary asynchronous-flow testing and reflection-or-codegen serialization paths. Java is unavailable locally, so Gradle reported that no Java runtime existed and the focused JVM suite could not execute; source and direct tests were inspected. The API is explicitly experimental; segments may share byte arrays but only an owner may append, shared segments cannot be recycled or mutated, pool implementations differ by target, source and sink close state is enforced, and filesystem and Okio integration remain outside the bounded path.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and Buffer-to-Segment-to-pool-to-Source-and-Sink path, both gates and all eight findings, 4/4/3/4 Level 4 formula, full capacity, Kotlin and Apache evidence, unavailable Java runtime, and every experimental-API, ownership, sharing, recycling, platform, lifecycle, and scope boundary."}
+        }
+      ],
+      "accepted": [],
+      "rejected": ["chibatching/Kotpref", "Kotlin/kotlinx-io"],
+      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections produced one hard maintainability rejection for an archived project and one qualified Level 4 capacity alternate. The Level 1 and Level 2 gaps remain honest because no candidate was moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 13,
+    "languages_completed": 14,
     "accepted_new_total": 14,
-    "rejected_new_total": 20,
+    "rejected_new_total": 22,
     "current_entry_total": 147,
     "remaining_gap_total": 53
   }

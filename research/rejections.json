@@ -1056,6 +1056,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/5 sums to 16, whose mean is Level 4. Both gates pass, but getoptions and pyenv already fill the two Shell Level 4 places with more complementary parser-generation and multi-process shim paths. Focused path, install-lock, and injection tests passed locally; one separate nvmrc fixture probe could not run because its referenced fixture subtree was absent from the research checkout and was not used as evidence. nvm must be sourced to mutate the caller's environment; shell and utility differences constrain portability; PATH, MANPATH, NODE_PATH, aliases, mirrors, architecture, checksums, download fallbacks, concurrent installs, signals, and stale locks interact; and the path does not teach Node's runtime implementation.",
       "reconsider": "Reconsider if a Shell Level 4 place opens, the two-entry cap changes, or comparative review finds the portable version-resolution, download-integrity, install-lock, and environment-rewrite path stronger and sufficiently distinct; preserve all sourcing, portability, integrity, concurrency, and scope boundaries."
+    },
+    {
+      "repository": "chibatching/Kotpref",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maintained project",
+      "evidence": "Reject at the repository-quality gate: GitHub reports chibatching/Kotpref archived at the exact pinned revision. Its Kotlin delegates, preference wrappers, bulk-edit behavior, tests, documentation, and Apache license remain inspectable, but the read-only repository cannot satisfy the maintained-project requirement. The hard failure precedes numerical scoring and the open Kotlin Level 2 bucket was not consulted.",
+      "reconsider": "Reconsider only if the repository becomes actively maintained again at a stable pin, or a maintained successor adopts the substantive delegated-preference implementation and its direct tests; rerun both gates before scoring."
+    },
+    {
+      "repository": "Kotlin/kotlinx-io",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4. Both gates pass, but turbine and moshi already fill the two Kotlin Level 4 places with more complementary asynchronous-flow testing and reflection-or-codegen serialization paths. Java is unavailable locally, so Gradle reported that no Java runtime existed and the focused JVM suite could not execute; source and direct tests were inspected. The API is explicitly experimental; segments may share byte arrays but only an owner may append, shared segments cannot be recycled or mutated, pool implementations differ by target, source and sink close state is enforced, and filesystem and Okio integration remain outside the bounded path.",
+      "reconsider": "Reconsider if a Kotlin Level 4 place opens, the two-entry cap changes, the API stabilizes, or comparative review finds the multiplatform segmented-buffer and ownership path stronger and sufficiently distinct; retain its calculated Level 4 and every experimental, sharing, recycling, platform, lifecycle, and scope boundary."
     }
   ]
 }
