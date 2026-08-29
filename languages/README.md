@@ -2,7 +2,7 @@
 
 Choose a language, then browse from Level 1 (most approachable) through Level 5 (most demanding).
 
-The catalog currently contains **148 qualified repositories across 20 languages**. Empty cells are honest research gaps.
+The catalog currently contains **149 qualified repositories across 20 languages**. Empty cells are honest research gaps.
 
 | Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -22,7 +22,7 @@ The catalog currently contains **148 qualified repositories across 20 languages*
 | [Kotlin](kotlin/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
 | [Scala](scala/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
 | [PowerShell](powershell/README.md) | 7 | 0 | 2 | 2 | 2 | 1 |
-| [Dart](dart/README.md) | 6 | 0 | 2 | 2 | 2 | 0 |
+| [Dart](dart/README.md) | 7 | 0 | 2 | 2 | 2 | 1 |
 | [Objective-C](objective-c/README.md) | 8 | 0 | 2 | 2 | 2 | 2 |
 | [Rust](rust/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [Lua](lua/README.md) | 6 | 0 | 1 | 2 | 2 | 1 |

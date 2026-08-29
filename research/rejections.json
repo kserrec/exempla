@@ -1096,6 +1096,22 @@
       "failed_requirement": "meaningful first-party PowerShell implementation and maintained project",
       "evidence": "Reject at the eligibility and repository-quality gates: GitHub reports the repository archived, Microsoft Learn and README.md say active development has ended, and the substantive production runtime is C# under src/code rather than PowerShell. The PowerShell files are manifests, build and deployment scripts, extension examples, and a Pester integration harness around the binary module; they do not make the runtime a meaningful first-party PowerShell implementation. The hard failures precede numerical scoring and the open Level 5 place was not consulted.",
       "reconsider": "Reconsider for PowerShell only if an actively maintained successor contains a substantive first-party PowerShell runtime path with direct tests; otherwise evaluate the current binary runtime as a C# candidate if its archived status is independently resolved."
+    },
+    {
+      "repository": "dart-lang/path",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maintained project",
+      "evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/path. The source, platform strategies, documentation, and tests remain strong, but accepting the retired repository would pin learners to a non-current ownership and contribution surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
+      "reconsider": "Reconsider the actively maintained path package at a stable dart-lang/core revision after independently inspecting its current first-party Dart implementation, tests, documentation, metadata, license, and learning path; do not reuse this retired repository's pin."
+    },
+    {
+      "repository": "dart-lang/async",
+      "language": "Dart",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maintained project",
+      "evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/async. The asynchronous implementation, documentation, and tests remain substantial, but accepting the retired repository would give learners a non-current contribution and maintenance surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
+      "reconsider": "Reconsider the actively maintained async package at a stable dart-lang/core revision after independently inspecting its current first-party Dart implementation, tests, documentation, metadata, license, and learning path; do not reuse this retired repository's pin."
     }
   ]
 }

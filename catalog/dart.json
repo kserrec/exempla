@@ -701,6 +701,148 @@
         "archived": false,
         "metadata_checked_at": "2026-08-28"
       }
+    },
+    {
+      "slug": "build",
+      "repository": "dart-lang/build",
+      "url": "https://github.com/dart-lang/build",
+      "primary_language": "Dart",
+      "language_evidence": "The selected build planning, incremental state, dependency invalidation, execution, resource lifecycle, and direct unit, integration, and stress suites are handwritten first-party Dart under build_runner.",
+      "description": "Dart's modular code-generation toolkit and build runner, including incremental planning, dependency tracking, builder execution, and persistent build state.",
+      "real_world_evidence": "The Dart team publishes build_runner on pub.dev as the standard command-line entry point used by Dart and Flutter code generators such as json_serializable, built_value, Mockito, and Freezed.",
+      "why_study": "Understand how build_runner turns sources and configured builder phases into an incremental execution plan, reuses compatible cached state, invalidates changed dependency paths, runs concurrent build actions, and persists the next build's state. The code-generation vocabulary needs only a short primer; the path teaches transferable graph planning, content-addressed change detection, lifecycle state, concurrency, failure recovery, caching, and adversarial testing.",
+      "learn": [
+        "Study these advanced Dart mechanisms in `build_runner/lib/src/build_plan/build_plan.dart`: asynchronous filesystem inspection, immutable built_value plans, typed AssetId maps and sets, content digests, phase-indexed build steps, and clean-versus-incremental construction.",
+        "Trace source creation, update, deletion, generated-output modification, lazy build demand, transitive invalidation, builder failure, resource disposal, and successful-state persistence through BuildPlan, BuildStepPlan, Build, BuildState, AssetContent, and InputTracker.",
+        "Identify these architectural responsibilities: configuration and phase planning, source and declared-output indexing, previous-build compatibility, mutable execution state, builder-facing filesystem access, dependency tracking, resolver reuse, and direct unit, integration, and randomized stress verification.",
+        "Study these change constraints: only compatible cached state may be reused; content digests rather than timestamps determine changes; deleted inputs invalidate transitive declared outputs; externally modified outputs obey the chosen strategy; phases serialize while actions within a phase may run concurrently; resources close after all work; and failures must not publish invalid success state."
+      ],
+      "prerequisites": [
+        "Be fluent with Dart futures, streams, generics, collections, exceptions, filesystem I/O, package layouts, hashing, immutable value objects, and asynchronous tests.",
+        "A builder maps primary input assets to declared output assets in ordered phases; build_runner records input and output dependencies so later runs can skip unaffected work and rebuild invalidated paths."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A builder maps primary input assets to declared output assets in ordered phases; build_runner records input and output dependencies so later runs can skip unaffected work and rebuild invalidated paths."
+        ],
+        "reason": "The code-generation vocabulary needs only a short primer; the path teaches transferable graph planning, content-addressed change detection, lifecycle state, concurrency, failure recovery, caching, and adversarial testing."
+      },
+      "learning_path": {
+        "goal": "Understand how build_runner plans and executes a compatible incremental build while preserving dependency, output, concurrency, failure, and resource-lifecycle guarantees.",
+        "start_here": {
+          "path": "build_runner/lib/src/build_plan/build_plan.dart",
+          "reason": "Begin with BuildPlan.load because it finds present and previous assets, chooses clean or compatible incremental planning, compares persisted digests, classifies source and output changes, and computes the BuildStepPlan consumed by execution."
+        },
+        "supporting_files": [
+          "build_runner/lib/src/build_plan/build_step_plan.dart",
+          "build_runner/lib/src/build_plan/previous_build.dart",
+          "build_runner/lib/src/build/build.dart",
+          "build_runner/lib/src/build/asset_content.dart",
+          "build_runner/lib/src/build/build_state/build_state.dart",
+          "build_runner/lib/src/build/input_tracker.dart",
+          "build_runner/test/build/build_test.dart",
+          "build_runner/test/build/build_state/build_state_test.dart",
+          "build_runner/test/invalidation/asset_input_invalidation_test.dart",
+          "build_runner/test/invalidation/invalidation_stress_test.dart",
+          "build_runner/test/integration_tests/build_command_invalidation_test.dart",
+          "build_runner/test/build/deferred_writes_test.dart",
+          "build_runner/README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with BuildPlan loading previous state and discovering current sources and cache files; follow clean or incremental classification through digest comparison, output strategy, source additions and deletions, transitive declared-output invalidation, and BuildStepPlan recomputation; then follow Build through phase scheduling, lazy work, builder-facing reads and writes, dependency recording, failure handling, resource disposal, resolver reset, and finished-state persistence; close with direct no-change, changed-input, deleted-input, generated-input, external-output, concurrent-phase, failure, deferred-write, transitive-graph, command, and randomized invalidation tests."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "asynchronous filesystem and builder execution with futures, zones, and completers",
+            "typed immutable plans and mutable execution state over nested maps, sets, and multimaps",
+            "content digests, package asset identifiers, lazy futures, and testing overrides",
+            "generated built_value companions supporting handwritten state models"
+          ],
+          "reason": "Advanced asynchronous, generic, immutable-state, collection, hashing, and error-handling techniques recur throughout the selected path."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "clean, compatible incremental, changed, deleted, missing, retained, invalid, skipped, failed, and successful states",
+            "transitive dependency and declared-output invalidation across ordered phases",
+            "lazy demand, concurrent actions, deferred writes, resource disposal, and resolver lifecycle",
+            "cache loss, stale output, failure recovery, and randomized change sequences"
+          ],
+          "reason": "Several coupled graph, filesystem, cache, execution, failure, and lifecycle state machines interact nonlocally across successive builds."
+        },
+        "design_span": {
+          "score": 5,
+          "signals": [
+            "configuration, package, phase, and build-step planning boundaries",
+            "filesystem discovery, previous-state loading, digest comparison, and output strategy",
+            "execution engine, builder filesystem, dependency tracker, resolver, resource manager, and persistent state",
+            "unit, integration, regression, command-level, and randomized stress verification"
+          ],
+          "reason": "The learning trace crosses many substantial planning, I/O, graph, execution, lifecycle, persistence, and verification boundaries while remaining inside build_runner's incremental core."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "compatible-state and content-digest correctness across repeated builds",
+            "transitive invalidation without rebuilding unaffected work",
+            "declared-versus-actual output ownership, hidden assets, package boundaries, and external modifications",
+            "phase ordering, intra-phase concurrency, lazy demand, failure retention, and exactly-once resource cleanup",
+            "stable observable generated output despite cache loss, process restarts, and workspace layouts"
+          ],
+          "reason": "Interacting graph, cache, filesystem, concurrency, failure, lifecycle, performance, and compatibility guarantees constrain every stage of the path."
+        },
+        "placement": "The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "BuildPlan, BuildStepPlan, Build, BuildState, AssetContent, and InputTracker state their roles and keep change classification, planning, execution, content, and dependency operations in focused types and methods.",
+        "architecture": "BuildPlan combines configuration, previous state, and filesystem observations into a BuildStepPlan and BuildInputs; Build executes that plan through a builder filesystem while BuildState records contents and results for the next run.",
+        "naming_and_idiom": "BuildPlan, PreviousBuild, BuildInputs, BuildStepPlan, BuildState, AssetContent, InputTracker, invalidOutputs, retainedOutputContents, and transitiveDeclaredOutputsOf expose the model in idiomatic Dart.",
+        "tests": "The selected suites exercise phase concurrency, lazy actions, generated and hidden inputs, cached reads, unchanged and changed builds, deletion cleanup, output modification, transitive invalidation graphs, deferred writes, command behavior, regression cases, and randomized stress sequences.",
+        "documentation": "build_runner/README.md documents builders, phases from a user perspective, build and watch operation, output and internal files, workspace behavior, and configuration; source comments document the selected planner and state contracts.",
+        "traceability": "A discovered asset can be followed through digest comparison and change classification into a planned build step, builder execution and dependency reads, recorded output content, direct assertions, and serialized follow-on state.",
+        "maintainability": "Planning and execution are separated, compatibility and change rules are centralized, generated value support is distinct from handwritten logic, and layered deterministic plus stress tests protect the dangerous incremental boundaries.",
+        "educational_value": "The path exposes the real machinery behind an everyday Dart command and ties advanced graph, cache, asynchronous, resource, and failure concepts to observable rebuild decisions."
+      },
+      "inspection": {
+        "commit": "c25d2e1e41e463bcdd9282146c0cd4c9dfadc909",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "Codex cold self-review"
+        ],
+        "files": [
+          "build_runner/lib/src/build_plan/build_plan.dart",
+          "build_runner/lib/src/build_plan/build_step_plan.dart",
+          "build_runner/lib/src/build_plan/previous_build.dart",
+          "build_runner/lib/src/build/build.dart",
+          "build_runner/lib/src/build/asset_content.dart",
+          "build_runner/lib/src/build/build_state/build_state.dart",
+          "build_runner/lib/src/build/input_tracker.dart",
+          "build_runner/test/build/build_test.dart",
+          "build_runner/test/build/build_state/build_state_test.dart",
+          "build_runner/test/invalidation/asset_input_invalidation_test.dart",
+          "build_runner/test/invalidation/invalidation_stress_test.dart",
+          "build_runner/test/integration_tests/build_command_invalidation_test.dart",
+          "build_runner/test/build/deferred_writes_test.dart",
+          "build_runner/README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/dart-lang/build/blob/c25d2e1e41e463bcdd9282146c0cd4c9dfadc909/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Dart",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     }
   ]
 }

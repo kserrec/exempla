@@ -2293,13 +2293,116 @@
       "rejected": ["EvotecIT/PSWriteColor", "PowerShell/SecretManagement"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
       "conclusion": "Four discovery channels and two exact-pin inspections produced one hard test-quality rejection and one hard language-eligibility plus maintainability rejection. The Level 1 and Level 5 places remain honest because neither candidate passed both gates or received a score."
+    },
+    {
+      "order": 17,
+      "language_slug": "dart",
+      "language": "Dart",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "felangel/equatable", "level": 2},
+        {"repository": "VeryGoodOpenSource/formz", "level": 2},
+        {"repository": "dart-lang/sdk", "level": 3},
+        {"repository": "dart-lang/shelf", "level": 3},
+        {"repository": "felangel/mocktail", "level": 4},
+        {"repository": "google/json_serializable.dart", "level": 4}
+      ],
+      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "discovery_channels": [
+        {
+          "id": "dart-pub-registry",
+          "channel": "official pub.dev package registry",
+          "sources": [
+            "https://pub.dev/packages/path",
+            "https://pub.dev/packages/async",
+            "https://pub.dev/packages/build_runner"
+          ],
+          "evidence": "The official registry supplied canonical package identities, published releases, Dart SDK constraints, package documentation, publishers, and production distribution evidence for two compact libraries and the standard code-generation runner."
+        },
+        {
+          "id": "dart-api-docs",
+          "channel": "official generated Dart package API documentation",
+          "sources": [
+            "https://pub.dev/documentation/path/latest/",
+            "https://pub.dev/documentation/async/latest/",
+            "https://pub.dev/documentation/build_runner/latest/"
+          ],
+          "evidence": "Generated API documentation supplied the public path-style, asynchronous utility, builder, asset, and execution contracts used to identify bounded learning paths before repository inspection."
+        },
+        {
+          "id": "github-dart-source",
+          "channel": "GitHub Dart source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/dart-lang/path",
+            "https://github.com/dart-lang/async",
+            "https://github.com/dart-lang/build"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, meaningful first-party Dart implementation, direct tests and documentation, pinned BSD licenses, the archived state of path and async, and active build_runner development."
+        },
+        {
+          "id": "dart-build-guides",
+          "channel": "official Dart tooling and maintainer build_runner guides",
+          "sources": [
+            "https://dart.dev/tools/build_runner",
+            "https://github.com/dart-lang/build/blob/master/build_runner/README.md"
+          ],
+          "evidence": "Official guides established build_runner's standard production role, the builder and generated-asset vocabulary, build and watch workflows, output and internal-state boundaries, configuration, workspaces, and the user-visible incremental context for the selected implementation path."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "dart-lang/path",
+          "pinned_commit": "7e3d5d87220133ad9cc99f82e85a826011a62859",
+          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source"],
+          "inspection_files": ["README.md", "lib/path.dart", "lib/src/context.dart", "lib/src/style.dart", "test/path_test.dart", "test/context_test.dart", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "POSIX, Windows, and URL path syntax needs only a short primer; the implementation teaches string scanning, platform strategy objects, normalization, joining, relative-path calculation, URI conversion, edge-case contracts, and table-driven tests.",
+          "quality_status": "fail",
+          "quality_evidence": "The pinned repository contains clear, mature implementation and extensive direct tests, but GitHub marks it archived and README.md states that the package moved to dart-lang/core. This retired repository cannot satisfy the maintained-project finding for a new exemplar even though the package continues elsewhere.",
+          "decision_evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/path. The source, platform strategies, documentation, and tests remain strong, but accepting the retired repository would pin learners to a non-current ownership and contribution surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Dart implementation and direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."}
+        },
+        {
+          "repository": "dart-lang/build",
+          "pinned_commit": "c25d2e1e41e463bcdd9282146c0cd4c9dfadc909",
+          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source", "dart-build-guides"],
+          "inspection_files": ["build_runner/README.md", "build_runner/lib/src/build_plan/build_plan.dart", "build_runner/lib/src/build_plan/build_step_plan.dart", "build_runner/lib/src/build_plan/previous_build.dart", "build_runner/lib/src/build/build.dart", "build_runner/lib/src/build/asset_content.dart", "build_runner/lib/src/build/build_state/build_state.dart", "build_runner/lib/src/build/input_tracker.dart", "build_runner/test/build/build_test.dart", "build_runner/test/build/build_state/build_state_test.dart", "build_runner/test/invalidation/asset_input_invalidation_test.dart", "build_runner/test/invalidation/invalidation_stress_test.dart", "build_runner/test/integration_tests/build_command_invalidation_test.dart", "build_runner/test/build/deferred_writes_test.dart", "LICENSE"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "The code-generation vocabulary needs only a short primer; the path teaches transferable asynchronous state machines, graph planning, content-addressed change detection, transitive invalidation, caching, concurrency, failure recovery, resource lifecycle, and adversarial testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Focused planning, state, execution, content, and dependency types; explicit phase, package, filesystem, and lifecycle boundaries; idiomatic advanced Dart; extensive no-op, update, deletion, failure, concurrency, hidden-asset, output-strategy, command, graph, and randomized stress tests; official user guides and source comments; complete asset-to-plan-to-execution-to-next-state traceability; centralized compatibility and invalidation rules; and exceptional incremental-systems teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and one of two open Dart Level 5 places accepts build_runner's incremental planning and execution path. The Dart toolchain is unavailable locally, so source and direct suites were inspected but not executed. The path excludes builder-specific generation semantics, analyzer implementation, bootstrap compilation, daemon and server protocols, watch notification delivery, Dart compiler internals, and generated built_value companions; compatible state, digest equality, output strategy, declared and actual output ownership, transitive deletion, phase ordering, concurrent actions, lazy work, failure state, resource disposal, package boundaries, and workspace layout remain explicit constraints.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and asset-discovery-to-plan-to-digest-comparison-to-invalidation-to-execution-to-finished-state path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open capacity, Dart and BSD evidence, unavailable toolchain, and every generation, analyzer, compiler, daemon, watch, output, graph, concurrency, lifecycle, package, and workspace boundary."}
+        },
+        {
+          "repository": "dart-lang/async",
+          "pinned_commit": "d6a6a4dbe0c636e42d6cf4ede88ed5a33e35a6ca",
+          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source"],
+          "inspection_files": ["README.md", "lib/async.dart", "lib/src/cancelable_operation.dart", "lib/src/stream_queue.dart", "test/cancelable_operation_test.dart", "test/stream_queue_test.dart", "LICENSE"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Futures, streams, cancellation, and queued consumption are general programming mechanisms; the selected utilities teach completers, subscriptions, generic wrappers, event ordering, cancellation propagation, buffering, failure behavior, and direct asynchronous tests.",
+          "quality_status": "fail",
+          "quality_evidence": "The pinned repository contains mature first-party Dart utilities and extensive direct tests, but GitHub marks it archived and README.md states that the package moved to dart-lang/core. This retired repository cannot satisfy the maintained-project finding for a new exemplar even though the package continues elsewhere.",
+          "decision_evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/async. The asynchronous implementation, documentation, and tests remain substantial, but accepting the retired repository would give learners a non-current contribution and maintenance surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Dart futures and streams implementation, direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."}
+        }
+      ],
+      "accepted": ["dart-lang/build"],
+      "rejected": ["dart-lang/path", "dart-lang/async"],
+      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "conclusion": "Four discovery channels and three exact-pin inspections produced two hard maintainability rejections for repositories whose packages moved to dart-lang/core and one distinct Level 5 incremental build path. dart-lang/build fills one score-supported Level 5 place; both Level 1 places and the second Level 5 place remain honest because no candidate was moved or duplicated to manufacture coverage."
     }
   ],
   "summary": {
-    "languages_completed": 16,
-    "accepted_new_total": 15,
-    "rejected_new_total": 25,
-    "current_entry_total": 148,
-    "remaining_gap_total": 52
+    "languages_completed": 17,
+    "accepted_new_total": 16,
+    "rejected_new_total": 27,
+    "current_entry_total": 149,
+    "remaining_gap_total": 51
   }
 }
