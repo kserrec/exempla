@@ -2487,13 +2487,103 @@
       "rejected": ["nicklockwood/FXKeychain", "AliSoftware/OHHTTPStubs"],
       "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and two exact-pin inspections produced one hard deprecation and test-quality rejection plus one qualified Level 4 capacity alternate. Both Objective-C Level 1 places remain honest because neither candidate was moved downward."
+    },
+    {
+      "order": 19,
+      "language_slug": "rust",
+      "language": "Rust",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {"repository": "dtolnay/semver", "level": 3},
+        {"repository": "withoutboats/heck", "level": 3},
+        {"repository": "dtolnay/anyhow", "level": 4},
+        {"repository": "tokio-rs/axum", "level": 4},
+        {"repository": "rust-lang/cargo", "level": 5},
+        {"repository": "tokio-rs/tokio", "level": 5}
+      ],
+      "gaps_before": {"1": 2, "2": 2, "3": 0, "4": 0, "5": 0},
+      "discovery_channels": [
+        {
+          "id": "rust-crates-registry",
+          "channel": "official crates.io package registry",
+          "sources": [
+            "https://crates.io/crates/byteorder",
+            "https://crates.io/crates/anstyle"
+          ],
+          "evidence": "The Rust package registry supplied canonical crate identities, current releases, dependency and feature records, license declarations, repository links, and production distribution evidence for two focused libraries."
+        },
+        {
+          "id": "rust-docs-rs",
+          "channel": "docs.rs published Rust API documentation",
+          "sources": [
+            "https://docs.rs/byteorder/latest/byteorder/",
+            "https://docs.rs/anstyle/latest/anstyle/"
+          ],
+          "evidence": "Published rustdoc exposed byteorder's sealed endian trait and I/O extension contract and anstyle's stable, low-overhead, const-friendly Style, Color, Effects, and Reset vocabulary before source inspection."
+        },
+        {
+          "id": "github-rust-source",
+          "channel": "GitHub Rust source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/BurntSushi/byteorder",
+            "https://github.com/rust-cli/anstyle"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact revisions, meaningful first-party Rust, current archive and maintenance status, direct tests and CI, documentation, and pinned license evidence."
+        },
+        {
+          "id": "rust-maintainer-guides",
+          "channel": "maintainer README, policy, compatibility, and workspace guides",
+          "sources": [
+            "https://github.com/BurntSushi/byteorder/blob/master/README.md",
+            "https://github.com/rust-cli/anstyle/blob/main/crates/anstyle/README.md",
+            "https://github.com/rust-cli/anstyle/blob/main/CONTRIBUTING.md"
+          ],
+          "evidence": "Maintainer guides supplied no_std and minimum-version policy, standard-library alternatives, anstyle's interoperability and low-overhead purpose, companion-crate boundaries, contribution workflow, and the scope needed for bounded scoring."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "BurntSushi/byteorder",
+          "pinned_commit": "5a82625fae462e8ba64cec8146b24a372b4d75c6",
+          "discovered_via": ["rust-crates-registry", "rust-docs-rs", "github-rust-source", "rust-maintainer-guides"],
+          "inspection_files": ["README.md", "Cargo.toml", "src/lib.rs", "src/io.rs", ".github/workflows/ci.yml", "LICENSE-MIT", "UNLICENSE", "COPYING"],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Endianness needs only a short byte-order primer; the path teaches sealed traits, type-level marker enums, generics, I/O extension traits, integer and float conversion, sign extension, no_std feature design, macros, panics, aliases, property tests, and executable documentation.",
+          "quality_status": "pass",
+          "quality_evidence": "Direct conversion and I/O modules, explicit ByteOrder and extension-trait boundaries, idiomatic generic and macro-assisted Rust, hundreds of round-trip, variable-width, slice, panic, regression, and doctests, detailed API and compatibility docs, complete bytes-to-number-to-I/O traceability, centralized endian implementations and conservative version policy, and strong binary-data teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "calculated_level": 3,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/2/2/3 sums to 10, whose mean of 2.50 rounds half up to Level 3. Both gates pass, but semver and heck already fill the two Rust Level 3 places with more complementary typed requirement parsing and Unicode word-boundary paths. `cargo test --all-features` passed 680 unit and property tests plus 122 doctests at the exact pin. The path excludes protocol-specific binary formats and unsafe memory reinterpretation; byte widths and slice lengths are strict, sign extension must match the requested width, I/O errors propagate, no_std and minimum compiler policy remain supported, type-level endian markers are sealed for compatibility, and modern standard numeric conversions overlap some use cases.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and byte-slice-to-sealed-endian-trait-to-conversion-to-Read-and-Write-extension path, both gates and all eight findings, 3/2/2/3 Level 3 formula, full capacity, passing 680-unit-plus-122-doctest suite, Rust and dual Unlicense-or-MIT evidence, and every format, width, sign, I/O, no_std, compiler, sealing, standard-library, and scope boundary."}
+        },
+        {
+          "repository": "rust-cli/anstyle",
+          "pinned_commit": "38da5ad7a435269eb30b9bf6f734bbe8bf1844e8",
+          "discovered_via": ["rust-crates-registry", "rust-docs-rs", "github-rust-source", "rust-maintainer-guides"],
+          "inspection_files": ["crates/anstyle/src/style.rs", "crates/anstyle/src/color.rs", "crates/anstyle/src/effect.rs", "crates/anstyle/src/reset.rs", "crates/anstyle/src/lib.rs", "crates/anstyle/tests/testsuite.rs", "crates/anstyle/tests/no_leading_zero.vte", "crates/anstyle/README.md", "crates/anstyle/Cargo.toml", "crates/anstyle/LICENSE-MIT", "crates/anstyle/LICENSE-APACHE"],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation.",
+          "quality_status": "pass",
+          "quality_evidence": "Small intentional Style, Color, Effects, Reset, and DisplayBuffer modules; explicit value, rendering, and reset boundaries; idiomatic traits and const builders; meaningful maximum-buffer, alignment, palette snapshot, doctest, and no_std checks; extensive public examples and purpose docs; exact Style-to-bytes traceability; centralized metadata and exhaustive variants; and strong compact-library teaching value satisfy all eight findings.",
+          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "calculated_level": 2,
+          "decision_evidence": "The scores were written before capacity was checked. The 2/2/2/3 profile sums to 9, whose mean of 2.25 rounds to Level 2; both gates pass and one of two open Rust Level 2 places accepts anstyle's core value-to-ANSI-bytes path. `cargo test -p anstyle@1.0.14 --all-features` passed eight unit tests, one snapshot test, and 34 doctests, while `cargo check -p anstyle@1.0.14 --no-default-features` passed the no_std build; the unversioned package selector was initially ambiguous because the workspace also resolved anstyle 1.0.13, so the exact current package selector was used. The path excludes parsing, terminal capability detection, stream adaptation, Windows console translation, SVG or ROFF conversion, and third-party styling adapters; public API stability, exact bytes, const use, no_std, low overhead, fixed buffer capacity, alignment-independent formatting, and the private ASCII-only basis of the single unsafe UTF-8 conversion remain explicit constraints.",
+          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and Style-to-Effects-and-Color-to-fixed-buffer-to-reset path, both gates and all eight findings, 2/2/2/3 Level 2 formula, open capacity, passing version-qualified all-feature tests and no_std check, Rust and dual MIT-or-Apache evidence, and every parser, terminal, stream, platform, conversion, adapter, API, byte, const, no_std, overhead, capacity, formatting, and unsafe boundary."}
+        }
+      ],
+      "accepted": ["rust-cli/anstyle"],
+      "rejected": ["BurntSushi/byteorder"],
+      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "conclusion": "Four discovery channels and two exact-pin inspections with executable Rust verification found a qualified Level 3 binary conversion alternate and a distinct Level 2 style-value path. anstyle fills one score-supported Level 2 place; both Level 1 places and the second Level 2 place remain honest because byteorder was not moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 18,
-    "accepted_new_total": 16,
-    "rejected_new_total": 29,
-    "current_entry_total": 149,
-    "remaining_gap_total": 51
+    "languages_completed": 19,
+    "accepted_new_total": 17,
+    "rejected_new_total": 30,
+    "current_entry_total": 150,
+    "remaining_gap_total": 50
   }
 }

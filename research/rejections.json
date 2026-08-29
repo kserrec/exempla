@@ -1128,6 +1128,14 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/4/5 sums to 17, whose mean of 4.25 rounds to Level 4. Both gates pass, but SBJson and SDWebImage already fill the two Objective-C Level 4 places with more complementary incremental parsing and concurrent image-pipeline paths. The Apple SDK and Xcode toolchain are unavailable locally, so source and XCTest suites were inspected but not executed. The path excludes the operating system's URL-loading implementation, Swift helpers, AFNetworking internals, optional HTTPMessage and Mocktail formats, and real transport; background sessions cannot use custom protocols, upload progress is not simulated, zero-delay redirects have a documented platform-dependent race, stub cleanup is caller-owned, callbacks and client delivery are asynchronous, and method swizzling plus platform availability constrain changes.",
       "reconsider": "Reconsider if an Objective-C Level 4 place opens, the two-entry cap changes, or comparative review finds the custom URLProtocol, runtime-swizzling, timed-stream, redirect, cancellation, and asynchronous-test path stronger and sufficiently distinct; retain calculated Level 4 and every platform, lifecycle, and scope boundary."
+    },
+    {
+      "repository": "BurntSushi/byteorder",
+      "language": "Rust",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/2/2/3 sums to 10, whose mean of 2.50 rounds half up to Level 3. Both gates pass, but semver and heck already fill the two Rust Level 3 places with more complementary typed requirement parsing and Unicode word-boundary paths. `cargo test --all-features` passed 680 unit and property tests plus 122 doctests at the exact pin. The path excludes protocol-specific binary formats and unsafe memory reinterpretation; byte widths and slice lengths are strict, sign extension must match the requested width, I/O errors propagate, no_std and minimum compiler policy remain supported, type-level endian markers are sealed for compatibility, and modern standard numeric conversions overlap some use cases.",
+      "reconsider": "Reconsider if a Rust Level 3 place opens, the two-entry cap changes, or comparative review finds the sealed endian-trait, variable-width conversion, I/O extension, no_std, macro, and property-test path stronger and sufficiently distinct; retain calculated Level 3 and every format, width, sign, I/O, platform, compatibility, and scope boundary."
     }
   ]
 }

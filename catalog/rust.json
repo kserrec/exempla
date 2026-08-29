@@ -3,6 +3,141 @@
   "language_slug": "rust",
   "repositories": [
     {
+      "slug": "anstyle",
+      "repository": "rust-cli/anstyle",
+      "url": "https://github.com/rust-cli/anstyle",
+      "primary_language": "Rust",
+      "language_evidence": "The selected Style, Color, Effects, Reset, fixed display buffer, public API, doctests, unit tests, and snapshot test are handwritten first-party Rust under crates/anstyle.",
+      "description": "A small no_std-compatible Rust crate defining interoperable ANSI terminal style, color, effect, and reset value types.",
+      "real_world_evidence": "The rust-cli project publishes anstyle on crates.io as the shared style vocabulary used by command-line libraries including anstream and clap's color output ecosystem.",
+      "why_study": "Follow an immutable Style through effect and color composition into exact ANSI display bytes and a conditional reset. ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation.",
+      "learn": [
+        "Use Rust enums, newtypes, Option fields, copyable value builders, From conversions, Display, Iterator, and operator traits to model composable styling without exposing a rendering dependency.",
+        "Trace Style formatting through Effects metadata and Color variants into exact foreground, background, underline, and reset escape bytes.",
+        "Understand how a small fixed-capacity DisplayBuffer writes decimal color components without allocation and why its single unchecked UTF-8 conversion is safe under the type's private write methods.",
+        "Verify API stability, const use, no_std compilation, exact output, formatting behavior, and edge values through doctests, focused unit tests, and a checked-in output snapshot."
+      ],
+      "prerequisites": [
+        "Rust structs and enums, Option, traits, iterators, bit operations, formatting, const functions, feature flags, byte slices, and basic unsafe-block reasoning.",
+        "ANSI terminal styling is expressed as short escape sequences; a style may combine effects and foreground, background, or underline colors, then emit a reset sequence after the value."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "ANSI terminal styling is expressed as short escape sequences; a style may combine effects and foreground, background, or underline colors, then emit a reset sequence after the value."
+        ],
+        "reason": "ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation."
+      },
+      "learning_path": {
+        "goal": "Understand how anstyle composes a copyable terminal Style and renders exact ANSI effect, color, and reset bytes with no required allocation.",
+        "start_here": {
+          "path": "crates/anstyle/src/style.rs",
+          "reason": "Begin with Style because its immutable builder methods assemble the public value, and its Display implementation exposes the full branch from effects and optional colors to alternate-format reset output."
+        },
+        "supporting_files": [
+          "crates/anstyle/src/color.rs",
+          "crates/anstyle/src/effect.rs",
+          "crates/anstyle/src/reset.rs",
+          "crates/anstyle/src/lib.rs",
+          "crates/anstyle/tests/testsuite.rs",
+          "crates/anstyle/tests/no_leading_zero.vte",
+          "crates/anstyle/README.md",
+          "crates/anstyle/Cargo.toml",
+          "crates/anstyle/LICENSE-MIT",
+          "crates/anstyle/LICENSE-APACHE"
+        ],
+        "trace": "Start with Style::new and its const-friendly foreground, background, underline, and effect builders; follow Display into EffectsDisplay and Color's ANSI, 256-color, or RGB branch; trace numeric components through the private fixed DisplayBuffer and conditional alternate-format reset; then verify bit-set operations, conversions, exact maximum buffer output, alignment independence, all palette values without leading zeroes, public examples, and no_std compilation."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "copyable structs and enums with Option fields and immutable builders",
+            "ordinary Display, From, Iterator, and bit-operator implementations",
+            "const functions, feature-gated standard I/O, and a private fixed byte buffer",
+            "one isolated unchecked UTF-8 conversion behind ASCII-only private writers"
+          ],
+          "reason": "Common professional value modeling, trait implementations, iterators, and feature conventions shape the path; the one unsafe conversion is small, isolated, and locally justified rather than recurring advanced machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "optional effect and color branches",
+            "bit insertion, removal, containment, and iteration",
+            "foreground, background, underline, and reset rendering choices",
+            "one small mutable length cursor while encoding decimal components"
+          ],
+          "reason": "Meaningful local branches and compact state exist, but the synchronous value-to-bytes flow remains easy to trace."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "Style composition module",
+            "Color and fixed-buffer rendering module",
+            "Effects and Reset modules",
+            "doctest, unit-test, and snapshot boundary"
+          ],
+          "reason": "A few clear modules cooperate inside one small crate and one process."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "exact interoperable escape bytes and stable public value types",
+            "const-friendly and no_std-compatible core API",
+            "low compile-time, binary-size, and allocation overhead",
+            "fixed-buffer capacity and UTF-8 safety",
+            "formatting flags must not introduce padding into control sequences"
+          ],
+          "reason": "Several compatibility, portability, performance, allocation, byte-exactness, and safety guarantees influence otherwise local code."
+        },
+        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds to Level 2. The published result is Level 2."
+      },
+      "quality": {
+        "source_quality": "Style, Color, Effects, Reset, and DisplayBuffer use direct small methods, exhaustive variants, explicit comments, and one narrowly documented unsafe block rather than hidden control flow.",
+        "architecture": "Style owns optional colors and effect bits; Effects maps enabled bits to metadata; Color variants render through static strings or a fixed buffer; Reset closes the display contract.",
+        "naming_and_idiom": "Style, Color, AnsiColor, Ansi256Color, RgbColor, Effects, EffectIter, DisplayBuffer, render_fg, render_bg, and render_reset communicate the model with idiomatic value and trait patterns.",
+        "tests": "Eight focused unit tests, one checked-in snapshot test, and 34 passing doctests cover maximum buffer output, formatting alignment, reset and effect behavior, public builders and operators, and all 16 palette values without leading zeroes; a no-default-features cargo check verifies the no_std boundary.",
+        "documentation": "Crate-level docs and README explain the interoperability purpose, priorities, core Style example, companion adapters, user parsers, converters, utilities, and dual license; public methods carry executable examples.",
+        "traceability": "A Style value can be followed directly through its Display branch into Effects and Color rendering, exact bytes or reset output, then into unit, snapshot, and doctest assertions.",
+        "maintainability": "The public model is separated from rendering helpers, exhaustive enums and centralized metadata expose additions, no_std and std paths are explicit, and current CI plus focused executable examples protect the compact contract.",
+        "educational_value": "The crate turns familiar colored command output into a short, complete lesson in professional Rust value APIs, traits, exact formatting, portability, and a carefully bounded unsafe optimization."
+      },
+      "inspection": {
+        "commit": "38da5ad7a435269eb30b9bf6f734bbe8bf1844e8",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "Codex cold self-review"
+        ],
+        "files": [
+          "crates/anstyle/src/style.rs",
+          "crates/anstyle/src/color.rs",
+          "crates/anstyle/src/effect.rs",
+          "crates/anstyle/src/reset.rs",
+          "crates/anstyle/src/lib.rs",
+          "crates/anstyle/tests/testsuite.rs",
+          "crates/anstyle/tests/no_leading_zero.vte",
+          "crates/anstyle/README.md",
+          "crates/anstyle/Cargo.toml",
+          "crates/anstyle/LICENSE-MIT",
+          "crates/anstyle/LICENSE-APACHE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT OR Apache-2.0",
+        "urls": [
+          "https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-MIT",
+          "https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-APACHE"
+        ]
+      },
+      "github": {
+        "primary_language": "Rust",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "semver",
       "repository": "dtolnay/semver",
       "url": "https://github.com/dtolnay/semver",
