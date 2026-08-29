@@ -120,6 +120,22 @@
       "failed_requirement": "target SDC level",
       "evidence": "The library is only 87 production lines, but it implements topological sorting and Tarjan's strongly connected components algorithm through a caller-supplied graph traversal protocol; S1/D3/C1 rounds to SDC 2 rather than the open SDC 1 slot.",
       "reconsider": "Eligible as an additional Ruby SDC 2 project or for an algorithms-focused expansion."
+    },
+    {
+      "repository": "rxi/ini",
+      "language": "C",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "tests",
+      "evidence": "The pinned repository contains the parser, header, README, and license but no test suite or executable test path, so its behavior cannot meet the catalog's hard verification requirement.",
+      "reconsider": "Reconsider if a maintained revision adds tests for sections, values, comments, whitespace, malformed lines, and buffer limits."
+    },
+    {
+      "repository": "jwerle/b64.c",
+      "language": "C",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The 193-line codec has a working happy-path test file, but its assertions cover a small set of literal round trips and do not exercise malformed input or allocation failures; jsmn and libcwalk provide stronger boundary-focused study paths for the two SDC 1 slots.",
+      "reconsider": "Eligible for a future encoding-focused expansion after broader error and allocation tests are present."
     }
   ]
 }
