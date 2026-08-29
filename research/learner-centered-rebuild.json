@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 160,
+  "reviewed_entry_total": 170,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -11983,12 +11983,798 @@
         "status": "agree",
         "notes": "Independent exact-pin inspection confirmed that tenant workloads, Graph resources, authentication modes, group membership, owners, licenses, lifecycle policies, roles, and DSC state semantics dominate the representative path; both reviews agree on the hard domain rejection, quality not evaluated status, absence of scores and level, and removal."
       }
+    },
+    {
+      "repository": "felangel/equatable",
+      "language": "Dart",
+      "prior_level": 1,
+      "pinned_commit": "f98a58960545ba72b51d0eacf746af393a0c6b24",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A value object defines equality and hashing from the properties that constitute its value."
+        ],
+        "evidence": "That short vocabulary is subordinate to transferable lessons in operator contracts, immutable data, recursive collection comparison, hashing, runtime-type checks, configuration, and focused unit testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Equatable and EquatableMixin keep the value contract explicit while equatable_utils centralizes recursive iterable, map, set, numeric, equality, and hash behavior; names match Dart idiom; direct tests cover identity, runtime types, nulls, nesting, ordering, sets, maps, hashes, configuration, mixins, and string output; the README explains use and immutability; the props-to-equality-or-hash trace is complete; and the exact public pin, MIT license, compact maintained source, and contract-focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a Dart value object derives consistent equality, hashing, and diagnostic output from an explicit property list.",
+        "start_path": "lib/src/equatable.dart",
+        "supporting_files": [
+          "lib/src/equatable_utils.dart",
+          "test/equatable_test.dart",
+          "test/equatable_utils_test.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Equatable.props, operator ==, hashCode, and stringify; follow the shared utilities through runtime-type checks, recursive iterable, map, and set comparison, order-sensitive and order-insensitive behavior, hash combination, and diagnostics; then close each contract in the two direct unit suites."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "operator overrides and mixin composition",
+            "generic iterable, map, and set utilities",
+            "ordinary package configuration and null-safe Dart"
+          ],
+          "reason": "Common professional Dart idioms shape the path without advanced type or runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive nested-value comparison",
+            "localized type and equality branches",
+            "deterministic hash and string derivation"
+          ],
+          "reason": "Meaningful branching and recursion remain synchronous, stateless, and easy to trace."
+        },
+        "design_span": {
+          "signals": [
+            "one value-object abstraction",
+            "one shared utility layer",
+            "two direct unit suites"
+          ],
+          "reason": "One focused component contains the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "equality and hashCode must remain consistent",
+            "nested maps, sets, iterables, nulls, and numeric values need stable semantics",
+            "runtime-type, ordering, mixin, and public API behavior must remain compatible"
+          ],
+          "reason": "Several material semantic and compatibility guarantees constrain otherwise local code."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean is Level 2; Equatable ranks first of two qualified Dart Level 2 paths.",
+      "reconsider": "Reconsider if equality, hashing, nested-collection, runtime-type, configuration or display contracts, direct tests, documentation, MIT licensing, or comparative Dart Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the props-to-recursive-equality-and-hash trace, 2/2/1/3 scores, Level 2 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "VeryGoodOpenSource/formz",
+      "language": "Dart",
+      "prior_level": 1,
+      "pinned_commit": "57a4e1e7efb13eb1fea614158ccdd1fc52d4f969",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A form input can distinguish an untouched value from a modified value and expose a typed validation error."
+        ],
+        "evidence": "That familiar context is subordinate to transferable lessons in generic modeling, immutable state, validation, lazy memoization, aggregate predicates, enum extensions, value semantics, and direct unit tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The single production library clearly separates submission status, typed input state, validation, optional error caching, equality, and aggregate form queries; names such as pure, dirty, validator, displayError, inputs, and isValid communicate intent; tests cover state, errors, one-time caching, equality, hashes, strings, aggregation, and every status predicate; the README and API comments orient the learner; the value-to-validator-to-form trace is complete; and the exact public pin, MIT license, internally consistent source, and direct tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a small Dart model makes input interaction state, typed validation, cached errors, and aggregate form validity explicit.",
+        "start_path": "lib/formz.dart",
+        "supporting_files": [
+          "test/formz_test.dart",
+          "test/helpers/name_input.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin with FormzInput.pure and dirty, follow value and status through validator, error, displayError, equality, and FormzInputErrorCacheMixin, then aggregate several inputs through Formz and FormzMixin validity and submission predicates and close the behavior in formz_test.dart."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic value and error modeling",
+            "abstract classes, mixins, and late final memoization",
+            "enum extensions and immutable value semantics"
+          ],
+          "reason": "Generics and compositional language abstractions materially shape the model, reaching the substantial-abstraction anchor."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "pure and dirty input state",
+            "localized validation and display branches",
+            "lazy validation-result caching"
+          ],
+          "reason": "State and caching are meaningful but remain local and deterministic."
+        },
+        "design_span": {
+          "signals": [
+            "one production file",
+            "one in-memory validation model",
+            "one focused test fixture and suite"
+          ],
+          "reason": "The full path stays inside one focused component."
+        },
+        "constraint_burden": {
+          "signals": [
+            "pure and dirty transitions must preserve the value",
+            "typed error and display policy must agree",
+            "optional caching must not change validation semantics"
+          ],
+          "reason": "The path carries routine production safeguards and a small stable API rather than interacting strict constraints."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/1/2 sums to 8, whose mean is Level 2; Formz ranks second of two qualified Dart Level 2 paths.",
+      "reconsider": "Reconsider if typed-input, pure and dirty, validation, cache, equality or aggregate-form contracts, direct tests, documentation, MIT licensing, or comparative Dart Level 2 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the one-file input-to-validation-and-aggregate trace, 3/2/1/2 scores, Level 2 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "felangel/mocktail",
+      "language": "Dart",
+      "prior_level": 2,
+      "pinned_commit": "d6a96e15b9203d33af61083e02e8c40ac07192d6",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A mocking library records method invocations, returns configured responses, and later verifies calls made by a test."
+        ],
+        "evidence": "That standard testing vocabulary is subordinate to transferable lessons in runtime interception, generic fallback handling, matcher reconstruction, global recording modes, call history, asynchronous observation, diagnostics, and state reset."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Mock.noSuchMethod makes the stubbing, verification, until-called, and ordinary-call mode switch visible; the matcher helpers reconstruct and compare invocations; names mirror testing intent; the package self-suite covers methods, getters, setters, generics, named and positional matchers, captures, fallback values, futures, streams, errors, counts, ordering, waiting, and reset; the package README documents the fluent API and null-safety requirements; the intercepted-call-to-response-or-verification trace is complete; and the exact public pin, MIT license, maintained source, and deep tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a null-safe Dart mocking library intercepts a call, reconstructs its matchers, selects a stubbed response, records history, and verifies the invocation.",
+        "start_path": "packages/mocktail/lib/src/mocktail.dart",
+        "supporting_files": [
+          "packages/mocktail/lib/src/_register_matcher.dart",
+          "packages/mocktail/lib/src/_invocation_matcher.dart",
+          "packages/mocktail/test/mocktail_test.dart",
+          "packages/mocktail/README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin at Mock.noSuchMethod and its recording-mode switch, follow matcher registration and Invocation reconstruction into expectation selection, fallback handling, a canned response or real-call record, capture and verification, then close generic, null-safe, asynchronous, ordering, count, error, and reset behavior in the package self-tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "noSuchMethod and runtime Invocation interception",
+            "generic fallback synthesis under sound null safety",
+            "runtime matcher registration and argument reconstruction"
+          ],
+          "reason": "Advanced Dart runtime and type-system machinery recurs throughout the central call path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "global stubbing, verification, waiting, and ordinary-call modes",
+            "shared call history, capture, count, and ordering state",
+            "asynchronous Future, Stream, and until-called behavior with reset and failure paths"
+          ],
+          "reason": "Several nonlocal modes and histories must remain coherent across calls and asynchronous observation."
+        },
+        "design_span": {
+          "signals": [
+            "central mock runtime",
+            "bounded matcher-registration and invocation-matching helpers",
+            "one package self-test boundary"
+          ],
+          "reason": "A few explicit modules inside one test-library runtime contain the behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "sound null safety and generic return fallback must remain valid",
+            "named, positional, captured, ordered, and counted arguments must retain exact semantics",
+            "async, stream, error, reset, diagnostic, and testing-library compatibility contracts interact"
+          ],
+          "reason": "Multiple strict type, state, asynchronous, diagnostic, and compatibility guarantees recur across the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/2/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Mocktail ranks first of five qualified Dart Level 4 paths.",
+      "reconsider": "Reconsider if runtime interception, fallback, matcher reconstruction, recording-mode, history, async or verification contracts, package tests, documentation, MIT licensing, or relative Dart Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded noSuchMethod-to-matcher-to-verification trace and package README, 4/4/2/4 scores, Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "felangel/web_socket_client",
+      "language": "Dart",
+      "prior_level": 2,
+      "pinned_commit": "a1111df94451261b19f69bfa0cef17ba1e179c40",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A WebSocket exposes a bidirectional message channel whose connection may fail, close, and reconnect."
+        ],
+        "evidence": "Protocol framing is delegated, so that short context is subordinate to transferable asynchronous state-machine, retry scheduling, backoff, timeout, subscription, platform-adapter, and resource-cleanup lessons."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "WebSocket keeps connection guards, state publication, retry scheduling, timeout, send, and close behavior explicit; Connection and Backoff isolate responsibilities while conditional imports separate browser and dart:io adapters; direct tests use local servers to cover failed connects, retries, recovery, states, messages, sends, timeouts, protocols, close codes, cleanup, and backoff progression; the README documents lifecycle and policy; the failure-to-reconnect trace is complete; and the exact public pin, MIT license, maintained source, and observable tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a cross-platform Dart WebSocket client publishes connection state, retries failures with backoff, recovers message flow, and releases resources on shutdown.",
+        "start_path": "lib/src/web_socket.dart",
+        "supporting_files": [
+          "lib/src/connection.dart",
+          "lib/src/backoff/binary_exponential_backoff.dart",
+          "lib/src/_web_socket_connect/_web_socket_connect.dart",
+          "lib/src/_web_socket_connect/_web_socket_connect_io.dart",
+          "lib/src/_web_socket_connect/_web_socket_connect_html.dart",
+          "test/src/web_socket_test.dart",
+          "test/src/backoff/binary_exponential_backoff_test.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with constructor-triggered connect, follow adapter selection, Connecting and Connected publication, message forwarding, failure or timeout into Disconnected and Reconnecting, scheduled backoff and reset into Reconnected, then trace idempotent close through timer, subscription, channel, and controller cleanup and close the lifecycle against local-server tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Futures, streams, subscriptions, and sealed connection states",
+            "conditional browser and dart:io imports",
+            "callback-driven backoff and adapter composition"
+          ],
+          "reason": "Substantial asynchronous and platform abstractions materially shape the path without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "connection and reconnection state machine",
+            "timer, timeout, subscription, stream, and channel ownership",
+            "failure recovery, backoff reset, and client-close races"
+          ],
+          "reason": "Advanced nonlocal lifecycle and recovery reasoning recurs across asynchronous resources."
+        },
+        "design_span": {
+          "signals": [
+            "connection orchestrator",
+            "backoff and state components",
+            "browser and dart:io adapter boundary"
+          ],
+          "reason": "A few clear modules contain one client lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "state ordering, retry timing, timeout, and backoff progression must agree",
+            "messages, sends, protocols, errors, stack traces, and close codes must remain observable",
+            "timers, subscriptions, channels, controllers, repeated close, and cross-platform behavior must remain safe"
+          ],
+          "reason": "Multiple strict lifecycle, resource, API, recovery, and platform guarantees interact."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; WebSocket Client ranks third behind Dart SDK Future.wait and Shelf router among three qualified Dart Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 3 slot opens, the two-entry cap changes, or lifecycle, recovery, cleanup, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Dart SDK Future.wait or Shelf router.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes because protocol framing is delegated, the bounded connection, retry, recovery, and cleanup trace, 3/4/2/4 scores, Level 3 rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "dart-lang/shelf",
+      "language": "Dart",
+      "prior_level": 3,
+      "pinned_commit": "3dbf65bedad2f1d97c5bae227b68a4ed1551a320",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP router associates a method and path pattern with a handler and exposes matched path parameters to the request."
+        ],
+        "evidence": "That short routing vocabulary is subordinate to transferable lessons in trie indexing, ordered matching, regular-expression parameters, immutable request updates, middleware composition, synchronous or asynchronous dispatch, and direct contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Router keeps route registration, mounted handlers, method handling, ordered candidates, parameter extraction, request path and context updates, middleware, and FutureOr dispatch explicit; Trie and RouterEntry expose clear boundaries and names; router_test directly covers methods, HEAD, order, parameters, mounts, trailing slashes, middleware, sync and async handlers, and failures; package documentation closes setup and use; the selected trace is complete; and the exact public pin, maintained source, and selected-path licenses Apache-2.0 for shelf_router and BSD-3-Clause for shelf Request satisfy all eight quality dimensions. The cutover must record the selected-path expression Apache-2.0 AND BSD-3-Clause rather than treating the path as uniformly root BSD-3-Clause.",
+      "learning_path": {
+        "goal": "Understand how Shelf Router registers path patterns, narrows ordered candidates through a trie, extracts parameters, updates a request, applies middleware, and dispatches a handler.",
+        "start_path": "pkgs/shelf_router/lib/src/router.dart",
+        "supporting_files": [
+          "pkgs/shelf_router/lib/src/trie.dart",
+          "pkgs/shelf_router/lib/src/router_entry.dart",
+          "pkgs/shelf/lib/src/request.dart",
+          "pkgs/shelf_router/test/router_test.dart",
+          "pkgs/shelf_router/README.md",
+          "pkgs/shelf_router/LICENSE",
+          "LICENSE"
+        ],
+        "trace": "Start with Router.add and route-pattern parsing, follow trie insertion and ordered candidate lookup into RouterEntry matching, method and HEAD handling, parameter extraction, request context and path updates, mounted middleware, and synchronous or asynchronous handler dispatch, then close priority, parameters, mounts, trailing-slash, middleware, response, and failure behavior in router_test.dart."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-order Handler and Middleware composition",
+            "FutureOr dispatch and dynamic handler invocation",
+            "typed trie, route-entry, regular-expression, and immutable Request abstractions"
+          ],
+          "reason": "Substantial framework and composition idioms materially shape routing without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "stateful route registration and ordered lookup",
+            "parameter extraction and request transformation",
+            "mounted middleware and synchronous or asynchronous dispatch"
+          ],
+          "reason": "Several nontrivial behaviors cross the trace, but they remain locally understandable and do not require advanced recovery or concurrency."
+        },
+        "design_span": {
+          "signals": [
+            "router public API",
+            "trie and route-entry matching layer",
+            "core Request, middleware, handler, and direct-test boundaries"
+          ],
+          "reason": "Several meaningful package and adapter boundaries contribute to one coherent dispatch path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "method, HEAD, route order, parameter, and trailing-slash semantics must remain stable",
+            "mounted paths, context, middleware, sync, async, and response behavior must compose correctly",
+            "public API and cross-package Apache-2.0 and BSD-3-Clause cutover evidence must remain accurate"
+          ],
+          "reason": "Several routing, composition, compatibility, and distribution guarantees influence ordinary changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/3 sums to 12, whose mean is Level 3; Shelf router ranks second of three qualified Dart Level 3 paths. The final selected path carries Apache-2.0 AND BSD-3-Clause license evidence for catalog cutover.",
+      "reconsider": "Reconsider if route registration, trie ordering, parameter, Request, middleware, dispatch or test contracts, documentation, selected-path licensing, or comparative Dart Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog message.dart start with the coherent router-to-trie-to-Request-to-router-test trace, 3/3/3/3 scores, Level 3 rank 2, retention, and the selected-path Apache-2.0 AND BSD-3-Clause license evidence."
+      }
+    },
+    {
+      "repository": "google/json_serializable.dart",
+      "language": "Dart",
+      "prior_level": 3,
+      "pinned_commit": "9ccf5da684914cc332b60d5e030f9288aa29ac62",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Generic JSON serialization supplies conversion callbacks for type parameters that cannot be inferred or instantiated directly at runtime."
+        ],
+        "evidence": "That short serialization context is subordinate to transferable lessons in analyzer-driven metadata inspection, generic API design, code generation, staged source construction, configuration, error reporting, and generated-contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "GeneratorHelper makes annotated-class validation, field selection, sorting, accessibility, constructor handling, and generated-member assembly explicit; DecodeHelper, EncoderHelper, and TypeHelper separate directions and type dispatch; names align with analyzer and source-generation idiom; the generic-factory fixtures compare generated callback signatures and nested conversions against checked-in output and runtime behavior; package documentation explains genericArgumentFactories; the annotation-to-generated-code trace is complete; and the exact public pin, BSD-3-Clause license, maintained generator, and direct fixture tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how json_serializable generates fromJson and toJson callback parameters for a generic annotated class and threads those callbacks through nested fields.",
+        "start_path": "json_serializable/lib/src/generator_helper.dart",
+        "supporting_files": [
+          "json_serializable/lib/src/decode_helper.dart",
+          "json_serializable/lib/src/encoder_helper.dart",
+          "json_serializable/lib/src/type_helper.dart",
+          "json_serializable/test/generic_files/generic_argument_factories.dart",
+          "json_serializable/test/generic_files/generic_argument_factories.g.dart",
+          "json_serializable/test/generic_files/generic_test.dart",
+          "json_serializable/README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with GeneratorHelper reading class configuration and accessible fields, follow genericArgumentFactories into generated fromJson and toJson callback parameters, then trace decode and encode helper selection through nested type arguments and compare emitted source and runtime behavior with the generic fixture, checked-in generated file, and direct test."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "analyzer element and annotation inspection",
+            "generic callback-signature synthesis",
+            "source generation and type-helper dispatch"
+          ],
+          "reason": "Advanced reflection-like analyzer APIs, generics, annotations, and generated code recur throughout the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "configuration-dependent field and constructor selection",
+            "staged decode and encode expression generation",
+            "explicit unsupported-type and inaccessible-member failures"
+          ],
+          "reason": "Nontrivial transformation and error behavior spans several stages without advanced nonlocal lifecycle reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "analyzer and annotation input boundary",
+            "generator, decode, encode, and type-helper layers",
+            "fixture, generated-source, and runtime-test boundary"
+          ],
+          "reason": "Several meaningful layers cooperate while remaining locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "generic callback signatures and nested type arguments must remain type-correct",
+            "constructors, null safety, field access, annotations, renaming, and configuration precedence must compose",
+            "generated source and public package behavior must remain compatible across analyzer and Dart versions"
+          ],
+          "reason": "Multiple strict type, configuration, generated-output, and compatibility guarantees interact."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; json_serializable ranks second of five qualified Dart Level 4 paths.",
+      "reconsider": "Reconsider if generic-factory, analyzer, constructor, null-safety, generated-output or compatibility contracts, direct fixtures and tests, documentation, BSD-3-Clause licensing, or comparative Dart Level 4 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded generic-factory generation trace through helper stages and checked-in output, 4/3/3/4 scores, Level 4 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "dart-lang/pub",
+      "language": "Dart",
+      "prior_level": 4,
+      "pinned_commit": "8be46bd8538d4763aabe93a47a242dd5a3b0d9f3",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A package cache stores downloaded package versions and hosted version metadata so later commands can reuse valid content or operate offline."
+        ],
+        "evidence": "That short package-manager context is subordinate to transferable lessons in layered caches, freshness, concurrency control, network and disk boundaries, content-hash integrity, atomic replacement, offline behavior, corruption recovery, and direct integration testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SystemCache exposes package-cache lookup and download ownership, CachedSource defines the reusable source contract, and HostedSource keeps version-listing freshness, archive download, hash verification, temporary extraction, and atomic cache installation visible; names and records communicate state; direct tests cover already-cached packages, avoided network requests, cached pubspecs, offline operation, corruption and redownload behavior; cache_layout.md documents persistence; the request-to-valid-cache trace is complete; and the exact public pin, BSD-3-Clause license, maintained implementation, and observable tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Pub reuses or downloads a hosted package, validates its content hash, and installs it atomically into the system cache while supporting offline operation.",
+        "start_path": "lib/src/system_cache.dart",
+        "supporting_files": [
+          "lib/src/source/cached.dart",
+          "lib/src/source/hosted.dart",
+          "doc/cache_layout.md",
+          "test/cache/add/already_cached_test.dart",
+          "test/get/hosted/avoid_network_requests_test.dart",
+          "test/get/hosted/cached_pubspec_test.dart",
+          "test/hosted/offline_test.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with SystemCache resolving a package through CachedSource, follow HostedSource through cached version metadata, freshness and offline choices, scheduled network fetch, archive download, content-hash verification, temporary extraction, and atomic move into the version directory, then close reuse, no-network, cached-pubspec, already-cached, offline, and recovery behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "asynchronous Futures and typed source abstractions",
+            "records, patterns, and package-reference modeling",
+            "scheduled closures over network and filesystem adapters"
+          ],
+          "reason": "Substantial Dart abstractions shape the path without recurring advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "coordinated memory, metadata, archive, and package-directory caches",
+            "asynchronous network and disk resource ownership with shared download scheduling",
+            "freshness, offline, corruption, hash-failure, cleanup, and recovery transitions"
+          ],
+          "reason": "Advanced nonlocal cache, resource, concurrency, and recovery reasoning recurs across the trace."
+        },
+        "design_span": {
+          "signals": [
+            "SystemCache ownership layer",
+            "CachedSource abstraction and HostedSource implementation",
+            "network, archive, filesystem, persistence-document, and integration-test boundaries"
+          ],
+          "reason": "Several meaningful layers and adapters cooperate around one package-cache lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "content hashes, archive extraction, directory identity, and atomic replacement must preserve integrity",
+            "freshness, offline, network-minimization, concurrency, cleanup, and corruption recovery must interact safely",
+            "cache layout and behavior must remain compatible across Pub and Dart versions and platforms"
+          ],
+          "reason": "Multiple strict integrity, persistence, resource, recovery, compatibility, and platform guarantees recur."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Pub hosted cache ranks fourth behind Mocktail, json_serializable, and Flutter reconciliation among five qualified Dart Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or hash-integrity, atomic-cache, offline, recovery, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Mocktail or json_serializable.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the broader solver path with the programming-led SystemCache-to-CachedSource-to-hosted hash-and-atomic-install trace, 3/4/3/4 scores, Level 4 rank 4, and capacity removal."
+      }
+    },
+    {
+      "repository": "sass/dart-sass",
+      "language": "Dart",
+      "prior_level": 4,
+      "pinned_commit": "62243d455aa1d2ac7462e4c0ddda964ffbc82363",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Sass importer canonicalizes a load URL and returns stylesheet contents; the forImport flag distinguishes legacy import from use and forward loads.",
+          "The catalog evaluator path is generated from async_evaluate.dart and requires pervasive Sass language semantics, so it is rejected as the learning path."
+        ],
+        "evidence": "The independently identified AsyncImportCache replacement is central and programming-led: public asynchronous compile entry points construct it, and it owns importer ordering, relative and canonical URL identity, context-sensitive cacheability, parsed-result reuse, invalidation, load times, browser and filesystem behavior, and error propagation. Only a short importer primer is needed; asynchronous caching and resource correctness explain the difficulty."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The hand-authored async_import_cache.dart is the source of truth for both asynchronous compilation and the synchronized generated import_cache.dart; it keeps whole-chain and per-importer canonicalization caches, containing-URL context, relative loads, parsed stylesheet results, invalidation, load times, and importer errors explicit; importer and context boundaries are recognizable and idiomatic; dart_api_test directly exercises asynchronous load-path race behavior, browser_test exercises asynchronous browser import guards, importer_test covers canonicalization reuse, relative resolution, containing URLs, noncanonical schemes, source maps and errors through the synchronized twin, and double_check_test verifies source-to-generated checksum parity; public compile APIs and README orient the learner; the trace is complete; and the exact public pin, MIT license, maintained source, and behavioral tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Dart Sass asynchronously canonicalizes import URLs, decides when results are safe to cache, loads and reuses parsed stylesheets, and invalidates context-sensitive entries.",
+        "start_path": "lib/src/async_import_cache.dart",
+        "supporting_files": [
+          "lib/sass.dart",
+          "lib/src/importer.dart",
+          "lib/src/importer/async.dart",
+          "lib/src/importer/canonicalize_context.dart",
+          "test/dart_api_test.dart",
+          "test/browser_test.dart",
+          "test/dart_api/importer_test.dart",
+          "test/double_check_test.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin where compileAsync and compileStringAsync construct AsyncImportCache, follow canonicalize through base-relative resolution, ordered importer attempts, CanonicalizeContext and containing-URL access, whole-chain versus per-importer cache selection, then follow import into load, parsed stylesheet and result caches, invalidation and load-time tracking; close asynchronous race and browser guards directly, canonicalization and importer behavior through the synchronized generated twin, and source parity through the checksum test."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "records and pattern-matching over cached optional results",
+            "generic typed caches and asynchronous importer interfaces",
+            "context-scoped callbacks and synchronized source generation"
+          ],
+          "reason": "Substantial Dart abstractions materially shape the path, but advanced metaprogramming or type machinery does not recur in the selected source."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered asynchronous importer chain with relative-base fallback",
+            "whole-chain and per-importer caches whose safety depends on contextual URL access",
+            "load, parse, reuse, invalidation, timing, browser, filesystem, and error behavior"
+          ],
+          "reason": "Advanced nonlocal caching, asynchronous sequencing, context, and invalidation reasoning recurs throughout the trace."
+        },
+        "design_span": {
+          "signals": [
+            "public asynchronous compilation boundary",
+            "import cache, importer, canonicalization-context, parser, and I/O boundaries",
+            "direct async, browser, synchronized-twin, and generation-parity test boundaries"
+          ],
+          "reason": "Several meaningful compiler-load layers and execution modes contribute while remaining locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "canonical URL identity, base-relative behavior, importer order, and forImport semantics must remain consistent",
+            "context-dependent cacheability, invalidation, parsed-result reuse, load times, source maps, and errors must interact correctly",
+            "asynchronous and generated synchronous implementations, browser and filesystem modes, public APIs, and compatibility must remain aligned"
+          ],
+          "reason": "Multiple strict cache, identity, invalidation, mode-parity, platform, and compatibility guarantees recur."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass on the accepted replacement and 3/4/3/4 sums to 14, whose mean of 3.5 rounds half up to Level 4; Dart Sass AsyncImportCache ranks fifth behind Mocktail, json_serializable, Flutter reconciliation, and Pub hosted cache among five qualified Dart Level 4 paths, so the two-entry cap excludes it. The original generated evaluator path remains a literal coding-relevance failure and contributes no score evidence.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or direct AsyncImportCache tests, documentation, cache and invalidation clarity, licensing, or comparative educational value improves enough to outrank the retained paths; reconsider the gate again if the hand-authored cache ceases to be central to public compilation or source parity with the generated synchronous cache is lost.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The primary review initially hard-rejected the catalog's generated and Sass-semantics-heavy evaluator and found no scoreable path. The independent reviewer confirmed that rejection but identified hand-authored AsyncImportCache as a central representative replacement, with public compile entry points, direct asynchronous and browser tests, comprehensive synchronized-twin importer tests, and checksum parity. Root accepted the replacement under the best-honest-path rule, resolving Dart Sass to both gates pass, 3/4/3/4, Level 4 rank 5, and capacity removal."
+      }
+    },
+    {
+      "repository": "dart-lang/sdk",
+      "language": "Dart",
+      "prior_level": 5,
+      "pinned_commit": "967bed205c83cba3ac05b0f8d084d11291e93ff1",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Future.wait combines several asynchronous results into one ordered result and defines how errors and successful values are handled."
+        ],
+        "evidence": "The path is entirely transferable asynchronous-library engineering: completion ordering, shared state, eager and deferred error policy, cleanup ownership, error zones, protocol breaches, type soundness, and focused standard-library tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Future.wait documents and implements ordering, shared completion count, first-error state, eager and deferred error completion, cleanup of earlier and later successes, asynchronous cleanup errors, empty input, and iterable or then protocol breaches in one bounded implementation; names and comments expose invariants; future_test.dart and futures_test.dart directly cover typed empties, permutations, timing, single and multiple errors, eager errors, cleanup values and failures, stack traces, zones, and malformed inputs; standard-library documentation orients the reader; the call-to-completion trace is complete; and the exact public pin, BSD-3-Clause license, maintained SDK source, and exhaustive tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Future.wait preserves input order while coordinating concurrent completions, first-error policy, optional eager failure, and cleanup of successful values.",
+        "start_path": "sdk/lib/async/future.dart",
+        "supporting_files": [
+          "sdk/lib/async/future_impl.dart",
+          "tests/lib/async/future_test.dart",
+          "tests/lib/async/futures_test.dart",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start at Future.wait, follow iteration and position capture into shared remaining and values state, then trace successful completions, first-error sentinel transition, eager or deferred failure, cleanup of values received before and after the error through Future.sync, protocol-breach handling, and final typed result construction; close ordering, timing, cleanup, error, stack, zone, and empty-input behavior in the direct suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic Future<List<T>> construction",
+            "closures capturing stable input positions",
+            "internal future completion and zone-aware asynchronous error idioms"
+          ],
+          "reason": "Substantial generic and asynchronous library abstractions materially shape the path without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent out-of-order completion with ordered output",
+            "shared success-to-first-error state and eager or deferred completion",
+            "cleanup of prior and later values plus asynchronous cleanup and protocol errors"
+          ],
+          "reason": "Advanced nonlocal completion, error, cleanup, and timing reasoning recurs across callbacks."
+        },
+        "design_span": {
+          "signals": [
+            "one public standard-library combinator",
+            "one internal future completion boundary",
+            "two direct contract suites"
+          ],
+          "reason": "A few clear units contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "input ordering, result types, first-error identity, and stack traces must remain exact",
+            "eager mode, deferred mode, cleanup timing, cleanup errors, zones, and malformed Future behavior must interact safely",
+            "standard-library API, implementation compatibility, performance, and error-delivery guarantees constrain changes"
+          ],
+          "reason": "Multiple strict concurrency, cleanup, type, error, compatibility, and performance guarantees recur."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/4/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; Dart SDK Future.wait ranks first of three qualified Dart Level 3 paths.",
+      "reconsider": "Reconsider if Future.wait ordering, eager-error, cleanup, zone, type, compatibility or performance contracts, direct tests, BSD-3-Clause licensing, documentation, or comparative Dart Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog compiler/runtime breadth with the bounded Future.wait implementation and its direct suites, 3/4/2/4 scores, Level 3 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "flutter/flutter",
+      "language": "Dart",
+      "prior_level": 5,
+      "pinned_commit": "0116c837eb60174e7bd81c5b1dde6fc6990ccc81",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A widget describes desired user-interface configuration while an Element retains the corresponding mounted identity and lifecycle position in the tree."
+        ],
+        "evidence": "That short framework primer is subordinate to transferable lessons in keyed tree reconciliation, identity, lifecycle, ordered diffing, state preservation, slot updates, reparenting, deactivation, diagnostics, performance, and direct framework tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Widget.canUpdate, Element.updateChild, and Element.updateChildren document and expose type-and-key reuse, top and bottom synchronization, keyed middle lookup, inflation, update, deactivation, slot movement, and GlobalKey retaking; lifecycle and key-registry names communicate intent; framework_test directly covers key movement and reparenting, early rebuilds, duplicate keys, type changes, deactivation-sensitive cases, and diagnostics; extensive inline documentation and the package README orient the learner; the old-children-to-new-elements trace is complete; and the exact public pin, BSD-3-Clause license, maintained framework source, and contract-focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Flutter reconciles old child Elements with a new Widget list while preserving keyed state, lifecycle validity, and render order.",
+        "start_path": "packages/flutter/lib/src/widgets/framework.dart",
+        "supporting_files": [
+          "packages/flutter/test/widgets/framework_test.dart",
+          "packages/flutter/README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Widget.canUpdate and Element.updateChild, then follow updateChildren through matching prefixes and suffixes, the keyed middle-child map, unkeyed reuse, inflation, slot updates, and leftover deactivation; continue through inflateWidget and GlobalKey retaking and registration, then close movement, reparenting, early rebuild, duplicate-key, changed-type, deactivation, and diagnostic behavior in framework_test.dart."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic framework classes and polymorphic lifecycle hooks",
+            "keyed identity and callback-driven child visitation",
+            "typed nullable state and collection-based reconciliation"
+          ],
+          "reason": "Substantial framework abstractions materially shape the path, but advanced reflection, metaprogramming, or code generation does not recur."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered multi-child diff with prefix, suffix, keyed-middle, and unkeyed cases",
+            "stateful update, inflate, move, reparent, deactivate, and retake lifecycle",
+            "GlobalKey registry, reservations, duplicate detection, and rebuild interactions"
+          ],
+          "reason": "Advanced nonlocal tree, identity, lifecycle, and event-order reasoning recurs throughout reconciliation."
+        },
+        "design_span": {
+          "signals": [
+            "Widget compatibility contract",
+            "Element reconciliation and lifecycle engine",
+            "BuildOwner key registry, render-slot boundary, and direct framework tests"
+          ],
+          "reason": "Several meaningful framework layers and runtime boundaries cooperate in one bounded reconciliation path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "state identity, key uniqueness, lifecycle order, ancestry, ownership, and render-slot order interact",
+            "locally plausible reuse or movement can corrupt retained state, deactivate live elements, duplicate a GlobalKey, or misorder rendering",
+            "linear-time common cases, debug and release behavior, hot-reload type changes, diagnostics, compatibility, and tree integrity must all remain stable"
+          ],
+          "reason": "Several system-wide correctness, identity, lifecycle, performance, diagnostic, and compatibility guarantees interact, meeting the expert change-discipline anchor."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/5 sums to 15, whose mean of 3.75 rounds to Level 4; the expert constraint score also enforces at least Level 4. Flutter reconciliation ranks third behind Mocktail and json_serializable among five qualified Dart Level 4 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if a Dart Level 4 slot opens, the two-entry cap changes, or reconciliation, key, lifecycle, performance, direct-test, documentation, licensing, or comparative educational clarity improves enough to outrank Mocktail or json_serializable.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded Widget.canUpdate-to-updateChild-and-updateChildren reconciliation trace and direct framework tests, 3/4/3/5 scores, Level 4 rank 3, and capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 107,
-      "remove": 53
+      "retain": 113,
+      "remove": 57
     },
     "by_language": {
       "JavaScript": {
@@ -12294,33 +13080,52 @@
           "4": 2,
           "5": 1
         }
+      },
+      "Dart": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 3,
+          "4": 5,
+          "5": 0
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 32,
-        "retain": 30,
+        "reviewed": 34,
+        "retain": 32,
         "remove": 2
       },
       "2": {
-        "reviewed": 32,
-        "retain": 25,
-        "remove": 7
+        "reviewed": 34,
+        "retain": 26,
+        "remove": 8
       },
       "3": {
-        "reviewed": 32,
-        "retain": 20,
+        "reviewed": 34,
+        "retain": 22,
         "remove": 12
       },
       "4": {
-        "reviewed": 32,
+        "reviewed": 34,
         "retain": 16,
-        "remove": 16
+        "remove": 18
       },
       "5": {
-        "reviewed": 32,
-        "retain": 16,
-        "remove": 16
+        "reviewed": 34,
+        "retain": 17,
+        "remove": 17
       }
     },
     "by_new_level": {
@@ -12330,19 +13135,19 @@
         "remove": 0
       },
       "2": {
-        "scored": 27,
-        "retain": 26,
+        "scored": 29,
+        "retain": 28,
         "remove": 1
       },
       "3": {
-        "scored": 43,
-        "retain": 30,
-        "remove": 13
+        "scored": 46,
+        "retain": 32,
+        "remove": 14
       },
       "4": {
-        "scored": 62,
-        "retain": 32,
-        "remove": 30
+        "scored": 67,
+        "retain": 34,
+        "remove": 33
       },
       "5": {
         "scored": 20,
@@ -12351,7 +13156,7 @@
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 45,
+      "qualified_alternate_over_capacity": 49,
       "coding_relevance_domain_gate": 7,
       "repository_quality_gate": 1
     }
