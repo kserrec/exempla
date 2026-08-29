@@ -320,6 +320,46 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The inspected 4,058-line production crate is a qualified SDC 3 study of reference-counted byte storage, ownership transitions, unsafe internals, buffer traits, and extensive tests, but serde_json and Axum provide broader initial domain variety.",
       "reconsider": "Eligible for a future low-level memory, network-buffer, or unsafe-Rust learning path."
+    },
+    {
+      "repository": "kikito/inspect.lua",
+      "language": "Lua",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "meaningful primary-language classification",
+      "evidence": "The repository's README says the project was rewritten in Teal, directs contributors to modify inspect.tl, and says to generate inspect.lua from it; the Makefile runs `tl gen inspect.tl`. The shipped Lua file is therefore generated output rather than the first-party authored source this catalog promises to teach.",
+      "reconsider": "Reconsider for a future Teal catalog or a deliberately labeled generated-output study, not as a handwritten Lua exemplar."
+    },
+    {
+      "repository": "LuaRocks/luarocks",
+      "language": "Lua",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "meaningful primary-language classification",
+      "evidence": "The changelog records a transition of the implementation from Lua to Teal, and teal.sh finds each .tl source and invokes `tl gen` to emit the corresponding .lua file. The current repository ships those generated Lua files beside the authored Teal sources.",
+      "reconsider": "Reconsider for a future Teal learning path or a package-manager study that labels generated Lua separately from authored source."
+    },
+    {
+      "repository": "luvit/luvit",
+      "language": "Lua",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "traceable first-party learning path",
+      "evidence": "package.lua labels luvit as a meta package and declares 31 separately versioned luvit/* dependencies for the substantive buffer, process, filesystem, networking, HTTP, TLS, stream, timer, and utility behavior. Reading the assembled deps tree as one repository would count separately owned packages as if they were this repository's first-party implementation.",
+      "reconsider": "Reconsider as an ecosystem map with each dependency pinned, inspected, licensed, and scored as its own project rather than as one bundled codebase."
+    },
+    {
+      "repository": "folke/lazy.nvim",
+      "language": "Lua",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "After excluding the 2,798-line generated community registry, the inspected tree contains 8,072 Lua lines across plugin specifications, dependency resolution, loading, caching, Git tasks, package sources, asynchronous management, and the user interface. S2/D4/C4 averages to 3.33 and belongs at SDC 3, not the open SDC 4 slot.",
+      "reconsider": "Eligible as an additional Lua SDC 3 project, especially for a Neovim package-management and asynchronous task path."
+    },
+    {
+      "repository": "lunarmodules/Penlight",
+      "language": "Lua",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "candidate type",
+      "evidence": "The README explicitly describes Penlight as a set of generally useful modules and enumerates independent path, filesystem, argument parsing, configuration, strictness, string, lexer, template, table, collection, iterator, class, functional, and comprehension utilities. That is a library collection rather than one cohesive real-software system under the initial scope.",
+      "reconsider": "Reconsider only if the catalog later adds an explicitly labeled standard-library or utility-collection track with different acceptance rules."
     }
   ]
 }

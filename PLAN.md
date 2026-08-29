@@ -236,7 +236,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.20 — Lua
 
-- [ ] Same objective, work, completion criteria, and dependencies as Step 5.1.
+- [x] Same objective, work, completion criteria, and dependencies as Step 5.1.
 - **Artifacts:** `catalog/lua.json`, `languages/lua/README.md`, rejection records.
 
 ## Phase 6 — Corpus-wide audit and recalibration
