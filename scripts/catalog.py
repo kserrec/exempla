@@ -96,6 +96,19 @@ def combined_level(size: int, difficulty: int, complexity: int) -> int:
     return level
 
 
+def calculate_learning_level(
+    language: int, behavior: int, design: int, constraints: int
+) -> int:
+    """Calculate the public learner level from four path-centered scores."""
+    scores = (language, behavior, design, constraints)
+    level = (sum(scores) + 2) // 4
+    if 5 in scores:
+        level = max(level, 4)
+    if level == 5 and sum(score == 5 for score in scores) < 2:
+        level = 4
+    return level
+
+
 def require_object(value: Any, path: str, errors: list[str]) -> dict[str, Any]:
     if not isinstance(value, dict):
         errors.append(f"{path}: expected object")
@@ -109,6 +122,16 @@ def require_keys(
     missing = [key for key in required if key not in value]
     if missing:
         errors.append(f"{path}: missing fields {', '.join(missing)}")
+
+
+def require_exact_keys(
+    value: dict[str, Any], required: tuple[str, ...], path: str, errors: list[str]
+) -> None:
+    """Require all named fields and reject unrecognized structured data."""
+    require_keys(value, required, path, errors)
+    unexpected = sorted(set(value) - set(required))
+    if unexpected:
+        errors.append(f"{path}: unexpected fields {', '.join(unexpected)}")
 
 
 def require_text(value: Any, path: str, errors: list[str], minimum: int = 1) -> str:
@@ -302,6 +325,283 @@ def validate_repository(
     return errors
 
 
+def validate_repository_v2(
+    entry: Any,
+    language: dict[str, Any],
+    index: int,
+    seen_repositories: set[str],
+    seen_slugs: set[str],
+) -> list[str]:
+    """Validate one path-centered schema-version-2 repository record."""
+    errors: list[str] = []
+    prefix = f"catalog/{language['slug']}.json repositories[{index}]"
+    item = require_object(entry, prefix, errors)
+    required = (
+        "slug",
+        "repository",
+        "url",
+        "primary_language",
+        "language_evidence",
+        "description",
+        "real_world_evidence",
+        "why_study",
+        "learn",
+        "prerequisites",
+        "coding_relevance",
+        "learning_path",
+        "learning_level",
+        "quality",
+        "inspection",
+        "license",
+        "github",
+    )
+    require_exact_keys(item, required, prefix, errors)
+
+    slug = require_text(item.get("slug"), f"{prefix}.slug", errors)
+    if slug and not SLUG_RE.fullmatch(slug):
+        errors.append(f"{prefix}.slug: use lowercase letters, digits, and single hyphens")
+    if slug in seen_slugs:
+        errors.append(f"{prefix}.slug: duplicate within language: {slug}")
+    if slug:
+        seen_slugs.add(slug)
+
+    repository = require_text(item.get("repository"), f"{prefix}.repository", errors)
+    if repository and not REPOSITORY_RE.fullmatch(repository):
+        errors.append(f"{prefix}.repository: expected owner/name")
+    repository_key = repository.lower()
+    if repository_key in seen_repositories:
+        errors.append(f"{prefix}.repository: duplicate across catalog: {repository}")
+    if repository:
+        seen_repositories.add(repository_key)
+
+    url = require_text(item.get("url"), f"{prefix}.url", errors)
+    expected_url = f"https://github.com/{repository}" if repository else ""
+    if url and expected_url and url.rstrip("/") != expected_url:
+        errors.append(f"{prefix}.url: expected {expected_url}")
+
+    primary_language = require_text(
+        item.get("primary_language"), f"{prefix}.primary_language", errors
+    )
+    if primary_language and primary_language != language["name"]:
+        errors.append(
+            f"{prefix}.primary_language: expected catalog language {language['name']}"
+        )
+    require_text(
+        item.get("language_evidence"),
+        f"{prefix}.language_evidence",
+        errors,
+        minimum=20,
+    )
+    for field in ("description", "real_world_evidence", "why_study"):
+        require_text(item.get(field), f"{prefix}.{field}", errors, minimum=20)
+    require_text_list(item.get("learn"), f"{prefix}.learn", errors)
+    require_text_list(item.get("prerequisites"), f"{prefix}.prerequisites", errors)
+
+    coding_relevance = require_object(
+        item.get("coding_relevance"), f"{prefix}.coding_relevance", errors
+    )
+    require_exact_keys(
+        coding_relevance,
+        ("gate", "domain_context", "reason"),
+        f"{prefix}.coding_relevance",
+        errors,
+    )
+    gate = require_text(
+        coding_relevance.get("gate"), f"{prefix}.coding_relevance.gate", errors
+    )
+    if gate and gate != "pass":
+        errors.append(f"{prefix}.coding_relevance.gate: expected constant pass")
+    require_text_list(
+        coding_relevance.get("domain_context"),
+        f"{prefix}.coding_relevance.domain_context",
+        errors,
+        minimum_items=0,
+    )
+    require_text(
+        coding_relevance.get("reason"),
+        f"{prefix}.coding_relevance.reason",
+        errors,
+        minimum=20,
+    )
+
+    learning_path = require_object(
+        item.get("learning_path"), f"{prefix}.learning_path", errors
+    )
+    require_exact_keys(
+        learning_path,
+        ("goal", "start_here", "supporting_files", "trace"),
+        f"{prefix}.learning_path",
+        errors,
+    )
+    require_text(
+        learning_path.get("goal"), f"{prefix}.learning_path.goal", errors, minimum=20
+    )
+    start_here = require_object(
+        learning_path.get("start_here"), f"{prefix}.learning_path.start_here", errors
+    )
+    require_exact_keys(
+        start_here,
+        ("path", "reason"),
+        f"{prefix}.learning_path.start_here",
+        errors,
+    )
+    start_path = require_text(
+        start_here.get("path"), f"{prefix}.learning_path.start_here.path", errors
+    )
+    require_text(
+        start_here.get("reason"),
+        f"{prefix}.learning_path.start_here.reason",
+        errors,
+        minimum=20,
+    )
+    if start_path and not is_safe_relative_path(start_path):
+        errors.append(
+            f"{prefix}.learning_path.start_here.path: expected safe non-dotenv relative path"
+        )
+    supporting_files = require_text_list(
+        learning_path.get("supporting_files"),
+        f"{prefix}.learning_path.supporting_files",
+        errors,
+    )
+    for file_index, file_path in enumerate(supporting_files):
+        if not is_safe_relative_path(file_path):
+            errors.append(
+                f"{prefix}.learning_path.supporting_files[{file_index}]: expected safe non-dotenv relative path"
+            )
+    if start_path and start_path in supporting_files:
+        errors.append(
+            f"{prefix}.learning_path.supporting_files: must contain paths in addition to start_here.path"
+        )
+    if len(set(supporting_files)) != len(supporting_files):
+        errors.append(f"{prefix}.learning_path.supporting_files: duplicate path")
+    require_text(
+        learning_path.get("trace"),
+        f"{prefix}.learning_path.trace",
+        errors,
+        minimum=20,
+    )
+
+    learning_level = require_object(
+        item.get("learning_level"), f"{prefix}.learning_level", errors
+    )
+    dimension_names = (
+        "language_technique",
+        "behavioral_reasoning",
+        "design_span",
+        "constraint_burden",
+    )
+    require_exact_keys(
+        learning_level,
+        ("level", *dimension_names, "placement"),
+        f"{prefix}.learning_level",
+        errors,
+    )
+    level = require_score(
+        learning_level.get("level"), f"{prefix}.learning_level.level", errors
+    )
+    scores: dict[str, int | None] = {}
+    for dimension in dimension_names:
+        judgment = require_object(
+            learning_level.get(dimension),
+            f"{prefix}.learning_level.{dimension}",
+            errors,
+        )
+        require_exact_keys(
+            judgment,
+            ("score", "signals", "reason"),
+            f"{prefix}.learning_level.{dimension}",
+            errors,
+        )
+        scores[dimension] = require_score(
+            judgment.get("score"),
+            f"{prefix}.learning_level.{dimension}.score",
+            errors,
+        )
+        require_text_list(
+            judgment.get("signals"),
+            f"{prefix}.learning_level.{dimension}.signals",
+            errors,
+        )
+        require_text(
+            judgment.get("reason"),
+            f"{prefix}.learning_level.{dimension}.reason",
+            errors,
+            minimum=20,
+        )
+    require_text(
+        learning_level.get("placement"),
+        f"{prefix}.learning_level.placement",
+        errors,
+        minimum=20,
+    )
+    ordered_scores = tuple(scores[name] for name in dimension_names)
+    if level is not None and None not in ordered_scores:
+        expected_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
+        if level != expected_level:
+            profile = "/".join(str(score) for score in ordered_scores)
+            errors.append(
+                f"{prefix}.learning_level.level: scores {profile} require Level {expected_level}, not {level}"
+            )
+
+    quality = require_object(item.get("quality"), f"{prefix}.quality", errors)
+    require_exact_keys(quality, QUALITY_FIELDS, f"{prefix}.quality", errors)
+    for field in QUALITY_FIELDS:
+        require_text(quality.get(field), f"{prefix}.quality.{field}", errors, minimum=20)
+
+    inspection = require_object(item.get("inspection"), f"{prefix}.inspection", errors)
+    require_exact_keys(
+        inspection,
+        ("commit", "inspected_at", "reviewers", "files"),
+        f"{prefix}.inspection",
+        errors,
+    )
+    commit = require_text(inspection.get("commit"), f"{prefix}.inspection.commit", errors)
+    if commit and not COMMIT_RE.fullmatch(commit):
+        errors.append(
+            f"{prefix}.inspection.commit: expected 40 lowercase hexadecimal characters"
+        )
+    require_date(inspection.get("inspected_at"), f"{prefix}.inspection.inspected_at", errors)
+    require_text_list(inspection.get("reviewers"), f"{prefix}.inspection.reviewers", errors)
+    files = require_text_list(
+        inspection.get("files"), f"{prefix}.inspection.files", errors, minimum_items=3
+    )
+    for file_index, file_path in enumerate(files):
+        if not is_safe_relative_path(file_path):
+            errors.append(
+                f"{prefix}.inspection.files[{file_index}]: expected safe non-dotenv relative path"
+            )
+    for path_name, path_value in [
+        ("start_here.path", start_path),
+        *((f"supporting_files[{index}]", value) for index, value in enumerate(supporting_files)),
+    ]:
+        if path_value and path_value not in files:
+            errors.append(
+                f"{prefix}.learning_path.{path_name}: must also appear in inspection.files"
+            )
+
+    license_info = require_object(item.get("license"), f"{prefix}.license", errors)
+    require_exact_keys(license_info, ("spdx", "url"), f"{prefix}.license", errors)
+    require_text(license_info.get("spdx"), f"{prefix}.license.spdx", errors)
+    license_url = require_text(license_info.get("url"), f"{prefix}.license.url", errors)
+    if license_url and repository and not license_url.startswith(expected_url + "/"):
+        errors.append(f"{prefix}.license.url: expected a URL inside {expected_url}")
+
+    github = require_object(item.get("github"), f"{prefix}.github", errors)
+    require_exact_keys(
+        github,
+        ("primary_language", "archived", "metadata_checked_at"),
+        f"{prefix}.github",
+        errors,
+    )
+    require_text(github.get("primary_language"), f"{prefix}.github.primary_language", errors)
+    if type(github.get("archived")) is not bool:
+        errors.append(f"{prefix}.github.archived: expected boolean")
+    require_date(
+        github.get("metadata_checked_at"), f"{prefix}.github.metadata_checked_at", errors
+    )
+    return errors
+
+
 def validate_languages(data: dict[str, Any]) -> tuple[list[dict[str, Any]], list[str]]:
     errors: list[str] = []
     if data.get("schema_version") != 1:
@@ -363,8 +663,11 @@ def validate_catalog(root: Path = ROOT, complete: bool = False) -> list[str]:
             except CatalogError as error:
                 errors.append(str(error))
                 continue
-            if data.get("schema_version") != 1:
-                errors.append(f"catalog/{language['slug']}.json schema_version: expected 1")
+            schema_version = data.get("schema_version")
+            if schema_version not in (1, 2):
+                errors.append(
+                    f"catalog/{language['slug']}.json schema_version: expected 1 or 2"
+                )
             if data.get("language_slug") != language["slug"]:
                 errors.append(
                     f"catalog/{language['slug']}.json language_slug: expected {language['slug']}"
@@ -376,23 +679,24 @@ def validate_catalog(root: Path = ROOT, complete: bool = False) -> list[str]:
             total += len(repositories)
             seen_slugs: set[str] = set()
             for index, entry in enumerate(repositories):
-                errors.extend(
-                    validate_repository(entry, language, index, seen_repositories, seen_slugs)
-                )
+                validator = validate_repository_v2 if schema_version == 2 else validate_repository
+                errors.extend(validator(entry, language, index, seen_repositories, seen_slugs))
+            level_key = "learning_level" if schema_version == 2 else "sdc"
+            level_label = "Level" if schema_version == 2 else "SDC"
             levels = Counter(
-                entry.get("sdc", {}).get("level")
+                entry.get(level_key, {}).get("level")
                 for entry in repositories
-                if isinstance(entry, dict) and isinstance(entry.get("sdc"), dict)
+                if isinstance(entry, dict) and isinstance(entry.get(level_key), dict)
             )
             for level in range(1, 6):
                 count = levels[level]
                 if count > 2:
                     errors.append(
-                        f"catalog/{language['slug']}.json: SDC {level} has {count} entries; maximum is 2"
+                        f"catalog/{language['slug']}.json: {level_label} {level} has {count} entries; maximum is 2"
                     )
                 if complete and count != 2:
                     errors.append(
-                        f"catalog/{language['slug']}.json: SDC {level} requires 2 entries; found {count}"
+                        f"catalog/{language['slug']}.json: {level_label} {level} requires 2 entries; found {count}"
                     )
         if complete and total != 200:
             errors.append(f"complete catalog requires 200 repositories; found {total}")
@@ -409,19 +713,31 @@ def markdown_escape(value: str) -> str:
 
 def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, Any]]) -> str:
     total = sum(len(catalogs[language["slug"]]["repositories"]) for language in languages)
+    versions = {catalogs[language["slug"]].get("schema_version") for language in languages}
+    if len(versions) != 1:
+        raise CatalogError("cannot generate a partially migrated catalog")
+    version = versions.pop()
+    if version not in (1, 2):
+        raise CatalogError(f"cannot generate unsupported catalog schema version {version}")
+    level_label = "Level" if version == 2 else "SDC"
+    level_key = "learning_level" if version == 2 else "sdc"
+    rubric_link = (
+        "../docs/learning-levels.md" if version == 2 else "../docs/sdc.md"
+    )
+    rubric_name = "how learning levels work" if version == 2 else "how SDC works"
     lines = [
         "# Languages",
         "",
-        "Choose a language, then browse from SDC 1 (most approachable) through SDC 5 (most demanding).",
+        f"Choose a language, then browse from {level_label} 1 (most approachable) through {level_label} 5 (most demanding).",
         "",
         f"The catalog currently contains **{total} repositories across {len(languages)} languages**.",
         "",
-        "| Language | Entries | SDC 1 | SDC 2 | SDC 3 | SDC 4 | SDC 5 |",
+        f"| Language | Entries | {level_label} 1 | {level_label} 2 | {level_label} 3 | {level_label} 4 | {level_label} 5 |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for language in languages:
         repositories = catalogs[language["slug"]]["repositories"]
-        counts = Counter(entry["sdc"]["level"] for entry in repositories)
+        counts = Counter(entry[level_key]["level"] for entry in repositories)
         lines.append(
             f"| [{markdown_escape(language['name'])}]({language['slug']}/README.md) | "
             + f"{len(repositories)} | "
@@ -431,7 +747,7 @@ def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, 
     lines.extend(
         [
             "",
-            "Read [how SDC works](../docs/sdc.md), the [quality gate](../docs/qualification.md), "
+            f"Read [{rubric_name}]({rubric_link}), the [quality gate](../docs/qualification.md), "
             "or the [language selection rationale](../docs/language-selection.md).",
             "",
             "_Generated by `python3 scripts/catalog.py generate`; do not edit by hand._",
@@ -441,7 +757,7 @@ def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, 
     return "\n".join(lines)
 
 
-def render_repository(entry: dict[str, Any]) -> list[str]:
+def render_repository_v1(entry: dict[str, Any]) -> list[str]:
     sdc = entry["sdc"]
     size = sdc["size"]
     difficulty = sdc["difficulty"]
@@ -513,19 +829,137 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
     return lines
 
 
+def render_repository_v2(entry: dict[str, Any]) -> list[str]:
+    learning_level = entry["learning_level"]
+    language = learning_level["language_technique"]
+    behavior = learning_level["behavioral_reasoning"]
+    design = learning_level["design_span"]
+    constraints = learning_level["constraint_burden"]
+    learning_path = entry["learning_path"]
+    inspection = entry["inspection"]
+    start_here = learning_path["start_here"]
+    start_url = f"{entry['url']}/blob/{inspection['commit']}/{start_here['path']}"
+    license_info = entry["license"]
+    lines = [
+        f"### [{entry['repository']}]({entry['url']})",
+        "",
+        f"**Language {language['score']} / Behavior {behavior['score']} / Design {design['score']} / Constraints {constraints['score']} → Level {learning_level['level']}**",
+        "",
+        entry["description"],
+        "",
+        f"**Real-world evidence:** {entry['real_world_evidence']}",
+        "",
+        f"**Language evidence:** {entry['language_evidence']}",
+        "",
+        f"**Why study it:** {entry['why_study']}",
+        "",
+        "**What you can learn:**",
+        "",
+    ]
+    lines.extend(f"- {item}" for item in entry["learn"])
+    lines.extend(["", "**Prerequisites:**", ""])
+    lines.extend(f"- {item}" for item in entry["prerequisites"])
+    lines.extend(
+        [
+            "",
+            "**Coding relevance:**",
+            "",
+            entry["coding_relevance"]["reason"],
+            "",
+        ]
+    )
+    domain_context = entry["coding_relevance"]["domain_context"]
+    if domain_context:
+        lines.extend(["Required domain context:", ""])
+        lines.extend(f"- {item}" for item in domain_context)
+        lines.append("")
+    else:
+        lines.extend(["No specialist domain context is required.", ""])
+    lines.extend(
+        [
+            "**Learning path:**",
+            "",
+            f"- **Goal:** {learning_path['goal']}",
+            f"- **Start here:** [`{start_here['path']}`]({start_url}) — {start_here['reason']}",
+            "- **Then read:**",
+        ]
+    )
+    for file_path in learning_path["supporting_files"]:
+        file_url = f"{entry['url']}/blob/{inspection['commit']}/{file_path}"
+        lines.append(f"  - [`{file_path}`]({file_url})")
+    lines.extend(
+        [
+            f"- **Trace:** {learning_path['trace']}",
+            "",
+            "**Why this level:**",
+            "",
+            f"- **Language technique {language['score']}:** {language['reason']}",
+            f"- **Behavioral reasoning {behavior['score']}:** {behavior['reason']}",
+            f"- **Design span {design['score']}:** {design['reason']}",
+            f"- **Constraint burden {constraints['score']}:** {constraints['reason']}",
+            f"- **Placement:** {learning_level['placement']}",
+            "",
+            "**Quality-gate evidence:**",
+            "",
+        ]
+    )
+    quality_labels = {
+        "source_quality": "Source quality",
+        "architecture": "Architecture",
+        "naming_and_idiom": "Naming and idiom",
+        "tests": "Tests",
+        "documentation": "Documentation",
+        "traceability": "Traceability",
+        "maintainability": "Maintainability",
+        "educational_value": "Educational value",
+    }
+    lines.extend(
+        f"- **{quality_labels[field]}:** {entry['quality'][field]}" for field in QUALITY_FIELDS
+    )
+    reviewed_files = ", ".join(f"`{path}`" for path in inspection["files"])
+    archive_note = " Archived repository." if entry["github"]["archived"] else ""
+    github_language = entry["github"]["primary_language"]
+    lines.extend(
+        [
+            "",
+            f"**Inspection record:** commit `{inspection['commit']}`, reviewed {inspection['inspected_at']} by {', '.join(inspection['reviewers'])}. Files sampled: {reviewed_files}. GitHub Linguist label: {github_language}.{archive_note}",
+            "",
+            f"**License:** [{license_info['spdx']}]({license_info['url']})",
+            "",
+        ]
+    )
+    return lines
+
+
+def render_repository(entry: dict[str, Any]) -> list[str]:
+    if "learning_level" in entry:
+        return render_repository_v2(entry)
+    return render_repository_v1(entry)
+
+
 def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
-    repositories = sorted(data["repositories"], key=lambda entry: (entry["sdc"]["level"], entry["repository"].lower()))
+    version = data.get("schema_version")
+    if version not in (1, 2):
+        raise CatalogError(f"cannot generate unsupported catalog schema version {version}")
+    level_key = "learning_level" if version == 2 else "sdc"
+    level_label = "Level" if version == 2 else "SDC"
+    rubric_name = "learning-level rubric" if version == 2 else "SDC rubric"
+    rubric_path = "../../docs/learning-levels.md" if version == 2 else "../../docs/sdc.md"
+    repositories = sorted(
+        data["repositories"],
+        key=lambda entry: (entry[level_key]["level"], entry["repository"].lower()),
+    )
     lines = [
         f"# {language['name']}",
         "",
-        f"{len(repositories)} qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).",
+        f"{len(repositories)} qualified repositories. Scores assume the learner described in [the {rubric_name}]({rubric_path}).",
         "",
         "[← All languages](../README.md)",
         "",
     ]
     for level in range(1, 6):
-        lines.extend([f"## SDC {level}", ""])
-        entries = [entry for entry in repositories if entry["sdc"]["level"] == level]
+        lines.extend([f"## {level_label} {level}", ""])
+        entries = [entry for entry in repositories if entry[level_key]["level"] == level]
         if not entries:
             lines.extend(
                 [

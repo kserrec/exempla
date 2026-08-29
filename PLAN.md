@@ -337,6 +337,11 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ## Phase 11 — CI action runtime refresh
 
+This maintenance phase remains pending, but the explicitly requested
+learner-centered rebuild in Phases 12–16 takes priority. Complete Phase 11
+after the rebuild rather than mixing an unrelated action-runtime change into
+the catalog migration.
+
 ### Step 11.1 — Remove the Node.js 20 action deprecation warning
 
 - [ ] **Objective:** Keep the GitHub release gate on supported action runtimes
@@ -348,3 +353,131 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 - **Complete when:** The exact workflow still passes all three project checks
   and GitHub no longer reports that either action targets Node.js 20.
 - **Dependencies:** Phase 10.
+
+## Phase 12 — Learner-centered ranking foundation
+
+### Step 12.1 — Implement and smoke-test the simple learning-level mechanism
+
+- [x] **Objective:** Replace repository-wide SDC ranking with a path-centered,
+  four-dimension measure of transferable programming growth.
+- **Work:** Write the short public rubric; add the pure four-score formula and
+  focused unit cases; define schema-version-2 learning-path, coding-relevance,
+  and score evidence; update validation and generation; score 10–15 varied
+  existing paths as a smoke test; record only the minimum wording correction
+  needed to remove an obvious calibration failure.
+- **Artifacts:** `docs/learning-levels.md`,
+  `docs/learning-level-calibration.md`, the version-2 contract and rendering in
+  `scripts/catalog.py` and `tests/test_catalog.py`; canonical
+  `catalog/schema.json` activation remains part of the all-at-once Phase 14
+  cutover required by the rebuild specification.
+- **Complete when:** The formula examples, input validation, path
+  relationships, gap-tolerant mode, deterministic generation, and learner
+  rendering pass focused tests without adding a dependency or an automated
+  scoring mechanism.
+- **Dependencies:** Phases 2–4 and the learner-centered rebuild specification.
+
+## Phase 13 — Re-review the v1.0.0 catalog
+
+Each step reviews the ten existing entries for one language in canonical
+catalog order. Source, tests, documentation, license, pinned commit, quality,
+domain relevance, learning path, score evidence, and formula are inspected
+before a retain/remove decision. A second reviewer checks every decision.
+Replacement research does not begin until all 200 decisions are recorded.
+
+### Steps 13.1–13.20 — Review every existing language catalog
+
+- [ ] **13.1 JavaScript**
+- [ ] **13.2 Python**
+- [ ] **13.3 Java**
+- [ ] **13.4 PHP**
+- [ ] **13.5 C#**
+- [ ] **13.6 TypeScript**
+- [ ] **13.7 C++**
+- [ ] **13.8 Ruby**
+- [ ] **13.9 C**
+- [ ] **13.10 Swift**
+- [ ] **13.11 Go**
+- [ ] **13.12 R**
+- [ ] **13.13 Shell**
+- [ ] **13.14 Kotlin**
+- [ ] **13.15 Scala**
+- [ ] **13.16 PowerShell**
+- [ ] **13.17 Dart**
+- [ ] **13.18 Objective-C**
+- [ ] **13.19 Rust**
+- [ ] **13.20 Lua**
+- **Artifact:** `research/learner-centered-rebuild.json`.
+- **Complete when:** Every one of the 200 prior entries has an evidence-backed,
+  independently reviewed decision and the audit summaries reconcile exactly.
+- **Dependencies:** Step 12.1.
+
+## Phase 14 — Schema-version-2 cutover
+
+### Step 14.1 — Publish the reviewed retained corpus and honest gaps
+
+- [ ] **Objective:** Make the learner-centered model the only active catalog
+  model without retaining entries merely to preserve counts.
+- **Work:** Review the complete audit; convert retained entries; remove failed
+  entries; append removal evidence without erasing history; regenerate all
+  language pages; update the README to literal counts; switch CI to ordinary
+  validation while gaps exist.
+- **Artifacts:** `catalog/*.json`, `research/rejections.json`,
+  `languages/**/README.md`, `README.md`, `.github/workflows/validate.yml`.
+- **Complete when:** Every canonical file uses schema version 2, no accepted
+  entry contains SDC data, all retained entries match reviewed evidence, and
+  ordinary validation and generated-output checks pass.
+- **Dependencies:** Phase 13.
+
+## Phase 15 — Gap research and replacement curation
+
+### Steps 15.1–15.20 — Research each language in canonical order
+
+- [ ] **15.1 JavaScript**
+- [ ] **15.2 Python**
+- [ ] **15.3 Java**
+- [ ] **15.4 PHP**
+- [ ] **15.5 C#**
+- [ ] **15.6 TypeScript**
+- [ ] **15.7 C++**
+- [ ] **15.8 Ruby**
+- [ ] **15.9 C**
+- [ ] **15.10 Swift**
+- [ ] **15.11 Go**
+- [ ] **15.12 R**
+- [ ] **15.13 Shell**
+- [ ] **15.14 Kotlin**
+- [ ] **15.15 Scala**
+- [ ] **15.16 PowerShell**
+- [ ] **15.17 Dart**
+- [ ] **15.18 Objective-C**
+- [ ] **15.19 Rust**
+- [ ] **15.20 Lua**
+- **Work:** Calculate real gaps, use at least three independent discovery
+  channels per language, inspect pinned implementation/tests/docs, record every
+  serious rejection and reconsideration condition, score before consulting the
+  open bucket, and accept at most the strongest two entries per level.
+- **Artifacts:** Canonical and generated catalog files,
+  `research/rejections.json`, and rebuild-audit research summaries.
+- **Complete when:** Each slot contains two qualified repositories or records
+  the channels and plausible candidates behind an honest unresolved gap.
+- **Dependencies:** Phase 14.
+
+## Phase 16 — Consistency audit, public workflow, and release
+
+### Step 16.1 — Audit the finished corpus and replace every active SDC workflow
+
+- [ ] **Objective:** Make the public repository deliver its learner-centered
+  promise consistently from navigation through contribution and maintenance.
+- **Work:** Compare neighboring levels and score profiles; recheck domain and
+  quality gates, paths, links, commits, licenses, languages, duplicates, counts,
+  gaps, and navigation; replace current SDC documentation and issue workflows;
+  keep `docs/sdc.md` only as a historical notice; run the applicable release
+  gate; publish a new major-version release without moving `v1.0.0`.
+- **Artifacts:** `README.md`, `CONTRIBUTING.md`, `docs/**`, `catalog/README.md`,
+  issue and pull-request templates, `research/**`, generated pages, final Git
+  commit/tag/release.
+- **Complete when:** All completion criteria in the rebuild specification are
+  evidenced, current docs contain no active SDC method, CI matches the README's
+  honest completeness claim, tests and applicable validation pass, the remote
+  release is verified, and Git is clean and synchronized.
+- **Dependencies:** Phase 15.
