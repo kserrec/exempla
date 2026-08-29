@@ -456,7 +456,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **15.17 Dart**
 - [x] **15.18 Objective-C**
 - [x] **15.19 Rust**
-- [ ] **15.20 Lua**
+- [x] **15.20 Lua**
 - **Work:** Calculate real gaps, use at least three independent discovery
   channels per language, inspect pinned implementation/tests/docs, record every
   serious rejection and reconsideration condition, score before consulting the

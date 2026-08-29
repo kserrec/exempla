@@ -2,7 +2,7 @@
 
 Choose a language, then browse from Level 1 (most approachable) through Level 5 (most demanding).
 
-The catalog currently contains **150 qualified repositories across 20 languages**. Empty cells are honest research gaps.
+The catalog currently contains **151 qualified repositories across 20 languages**. Empty cells are honest research gaps.
 
 | Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -25,7 +25,7 @@ The catalog currently contains **150 qualified repositories across 20 languages*
 | [Dart](dart/README.md) | 7 | 0 | 2 | 2 | 2 | 1 |
 | [Objective-C](objective-c/README.md) | 8 | 0 | 2 | 2 | 2 | 2 |
 | [Rust](rust/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
-| [Lua](lua/README.md) | 6 | 0 | 1 | 2 | 2 | 1 |
+| [Lua](lua/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
 
 Read [how learning levels work](../docs/learning-levels.md), the [coding-relevance and quality gates](../docs/qualification.md), or the [language selection rationale](../docs/language-selection.md).
 

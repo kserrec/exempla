@@ -594,6 +594,136 @@
       }
     },
     {
+      "slug": "apisix",
+      "repository": "apache/apisix",
+      "url": "https://github.com/apache/apisix",
+      "primary_language": "Lua",
+      "language_evidence": "Lua implements the Standalone Admin API, configuration validation and propagation, OpenResty worker events and timers, per-resource hot-reload state, stream routing, request phases, and the production gateway runtime; the selected integration suites exercise that Lua behavior.",
+      "description": "A cloud-native API and AI gateway with dynamic routing, load balancing, policy plugins, observability, standalone and distributed configuration modes, and HTTP, stream, and extensible runtime paths.",
+      "real_world_evidence": "The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.",
+      "why_study": "APISIX's API-driven standalone configuration path is an expert trace through validation, monotonic resource versions, shared memory, subsystem-specific events, per-worker polling, hot route rebuilds, and safe traffic handling before the first configuration arrives.",
+      "learn": [
+        "Trace a full configuration update from the Admin API through validation, version and digest decisions, shared-memory publication, HTTP and stream worker synchronization, per-resource cache mutation, route rebuild, and request behavior before and after configuration arrives."
+      ],
+      "prerequisites": [
+        "Readers should know advanced Lua, OpenResty and Nginx worker phases, timers and shared dictionaries, event callbacks, schema validation, versioned configuration, HTTP and stream routing, and asynchronous failure handling."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "API-driven standalone mode accepts a complete gateway configuration through an Admin API, stores it in shared memory, and hot-updates each worker without restarting the gateway.",
+          "OpenResty's HTTP and stream subsystems use separate Lua virtual machines and event sockets, so stream workers poll shared state even when HTTP workers can receive an event directly."
+        ],
+        "reason": "That short gateway and worker-model primer is documented in the selected files. Transferable validation, versioned state replacement, idempotence, shared-memory publication, event and polling coordination, hot reload, availability during initialization, fault isolation, and integration testing explain the path's difficulty."
+      },
+      "learning_path": {
+        "goal": "Understand how APISIX validates and distributes an API-driven standalone configuration across HTTP and stream workers while preserving version order, idempotence, hot routing, and safe behavior before the first update.",
+        "start_here": {
+          "path": "apisix/admin/standalone.lua",
+          "reason": "The reviewed trace begins in standalone.lua because its update handler owns request parsing, digest idempotence, full-resource version decisions, shared-memory publication, worker notification, and the cross-subsystem polling fallback."
+        },
+        "supporting_files": [
+          "apisix/admin/config_validate.lua",
+          "apisix/core/config_yaml.lua",
+          "apisix/events.lua",
+          "apisix/router.lua",
+          "apisix/stream/router/ip_port.lua",
+          "apisix/init.lua",
+          "t/admin/standalone.t",
+          "t/admin/standalone-stream.t",
+          "t/admin/standalone.spec.ts",
+          "docs/en/latest/deployment-modes.md",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start in the Standalone Admin API update handler and follow body parsing into batch schema and duplicate validation, digest idempotence, per-resource monotonic version checks, final-config construction, JSON publication in the standalone shared dictionary, and worker-event posting; continue through subsystem-specific event setup and the stream polling fallback into config_yaml's per-worker update and resource sync, then follow stream router version detection and empty-startup handling into stream_preread_phase matching; close the path with the Jest API contract, Test::Nginx hot-update and version cases, and the exact regression for a connection arriving before the first configuration."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "OpenResty phase callbacks, timers, shared dictionaries, and subsystem-specific event adapters",
+            "module-local mutable worker state, metatable-backed configuration objects, closures, protected calls, and dynamic resource modules",
+            "Lua control-flow and table machinery coordinate schema dispatch, incremental cache mutation, and route construction"
+          ],
+          "reason": "Advanced Lua and OpenResty runtime machinery recurs across the main trace, but one bounded path does not require multiple pervasive expert-level language mechanisms beyond that framework fluency."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "Admin updates, shared-memory state, HTTP events, stream polling, worker timers, per-resource versions, and route rebuilds evolve asynchronously",
+            "digest replay, stale versions, missing resources, validation failures, same-second updates, worker startup, and first-config absence alter the state transition",
+            "separate Lua virtual machines, event delivery, periodic retry, request arrival, hot replacement, and shutdown interact nonlocally"
+          ],
+          "reason": "Expert nonlocal reasoning across asynchronous publication, per-worker state, scheduling, failures, initialization, and live traffic is unavoidable throughout the selected behavior."
+        },
+        "design_span": {
+          "score": 5,
+          "signals": [
+            "Standalone Admin API and batch configuration validator",
+            "shared dictionary, worker-event adapter, YAML configuration provider, and per-resource configuration objects",
+            "HTTP and stream Lua runtimes, stream router, Nginx request phases, production documentation, and multi-layer integration suites"
+          ],
+          "reason": "Understanding the behavior requires coordinating several major control, storage, process, runtime, routing, and test subsystems rather than one local component."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "complete replacement, digest idempotence, monotonic per-resource versions, schema validity, duplicate detection, and retained unchanged resources must agree",
+            "HTTP and stream workers must converge through shared memory despite separate event buses, same-second updates, restarts, crashes, and timer scheduling",
+            "hot routing must remain available and secure while empty startup, invalid input, stale input, missing resources, worker readiness, reliability, and performance interact"
+          ],
+          "reason": "Several system-wide correctness, ordering, availability, security, recovery, compatibility, and performance guarantees interact so a locally plausible change can reject valid state, publish stale state, strand workers, or abort live traffic."
+        },
+        "placement": "The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "The selected modules make validation, version decisions, publication, event and polling coordination, cache mutation, router rebuild, empty startup, and request failure paths explicit.",
+        "architecture": "The Admin handler, validator, shared dictionary, event adapter, configuration provider, per-worker resource objects, router, and request phase have recognizable responsibilities and boundaries.",
+        "naming_and_idiom": "update_and_broadcast_config, validate_configuration, conf_version, sync_data, _automatic_fetch, stream_init_worker, create_router, and matched_route communicate the live configuration lifecycle in idiomatic OpenResty Lua.",
+        "tests": "Forty Jest cases and seventeen Test::Nginx cases cover JSON and YAML updates, digests, versions, modified indexes, validation, duplicates, additions, deletion, routes and stream routes; a focused regression protects a stream connection before the first configuration.",
+        "documentation": "The deployment-mode guide explains file-driven and API-driven standalone operation, full updates, version rules, digests, security requirements, hot reload, and empty startup; README.md provides gateway orientation.",
+        "traceability": "A configuration can be followed from one HTTP update through validation and publication into worker-local resource state, route reconstruction, live request behavior, and direct integration assertions.",
+        "maintainability": "Version, validation, publication, resource synchronization, and routing responsibilities are separated, and layered direct suites protect both API contracts and cross-worker runtime behavior.",
+        "educational_value": "The path joins a familiar configuration API to the exact concurrency, lifecycle, and consistency mechanisms needed to hot-update a production event-driven gateway safely."
+      },
+      "inspection": {
+        "commit": "a64f2baa06b1c7d55e53051f3430f39bf9f4024c",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "apisix/admin/standalone.lua",
+          "apisix/admin/config_validate.lua",
+          "apisix/core/config_yaml.lua",
+          "apisix/events.lua",
+          "apisix/router.lua",
+          "apisix/stream/router/ip_port.lua",
+          "apisix/init.lua",
+          "t/admin/standalone.t",
+          "t/admin/standalone-stream.t",
+          "t/admin/standalone.spec.ts",
+          "docs/en/latest/deployment-modes.md",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Lua",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "kong",
       "repository": "Kong/kong",
       "url": "https://github.com/Kong/kong",

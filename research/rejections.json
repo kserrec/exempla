@@ -1136,6 +1136,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/2/2/3 sums to 10, whose mean of 2.50 rounds half up to Level 3. Both gates pass, but semver and heck already fill the two Rust Level 3 places with more complementary typed requirement parsing and Unicode word-boundary paths. `cargo test --all-features` passed 680 unit and property tests plus 122 doctests at the exact pin. The path excludes protocol-specific binary formats and unsafe memory reinterpretation; byte widths and slice lengths are strict, sign extension must match the requested width, I/O errors propagate, no_std and minimum compiler policy remain supported, type-level endian markers are sealed for compatibility, and modern standard numeric conversions overlap some use cases.",
       "reconsider": "Reconsider if a Rust Level 3 place opens, the two-entry cap changes, or comparative review finds the sealed endian-trait, variable-width conversion, I/O extension, no_std, macro, and property-test path stronger and sufficiently distinct; retain calculated Level 3 and every format, width, sign, I/O, platform, compatibility, and scope boundary."
+    },
+    {
+      "repository": "rxi/log.lua",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "stable tests, coherent implementation-to-test path, and direct test quality",
+      "evidence": "Reject at the repository-quality gate: the exact pinned repository contains only README.md, log.lua, and LICENSE and provides no automated tests. The module's runtime branches include severity filtering, caller-source discovery, color formatting, variadic conversion and rounding, file creation and append, and unchecked file-open behavior, but examples do not assert any of those contracts. A direct Lua 5.4 smoke probe loaded the module and observed filtering plus fatal output, which confirms implementation exists but cannot replace a regression suite. The hard failure precedes numerical scoring and the open Lua buckets were not consulted.",
+      "reconsider": "Reconsider at a stable pin only after direct automated tests assert severity filtering, caller metadata, color and plain formatting, variadic conversion and rounding, output routing, file creation and append, invalid levels, and file-open failures; then rerun all eight findings before scoring."
+    },
+    {
+      "repository": "pkulchenko/serpent",
+      "language": "Lua",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/1/4 sums to 12, whose mean is 3.00 and produces Level 3. Both gates pass, but middleclass and lua-resty-lrucache already fill the two Lua Level 3 places with more complementary metatable object-model and FFI-backed cache-invariant paths. `LUA_PATH='./src/?.lua;;' lua t/test.lua` passed the exact pin's direct suite, including 100 randomized round trips. The path excludes user-defined userdata beyond documented conversions, threads, function upvalues and environments, and metatable preservation; shared and self references, functions and globals, deterministic formatting, numeric precision and locale, Lua 5.1 through 5.4 behavior, output limits, best-effort safe loading, and unsafe opt-out remain interacting constraints.",
+      "reconsider": "Reconsider if a Lua Level 3 place opens, the two-entry cap changes, or comparative review finds the recursive graph-identity, deferred-reference, dynamic-code, safe-load, compatibility, limit, and randomized-test path stronger and sufficiently distinct; retain calculated Level 3 and every data-type, identity, formatting, numeric, locale, version, loading, safety, and scope boundary."
     }
   ]
 }
