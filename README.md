@@ -81,8 +81,10 @@ is good or what level it deserves.
 ## Contributing
 
 Corrections, well-researched candidates, and maintenance improvements are
-welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before editing catalog data.
-The complete ownership and refresh procedure is in
+welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before editing catalog data or
+use the [structured issue chooser](https://github.com/kserrec/exempla/issues/new/choose)
+to submit the evidence for a candidate, correction, SDC dispute, or maintenance
+problem. The complete ownership and refresh procedure is in
 [docs/maintenance.md](docs/maintenance.md).
 
 The project uses only Python's standard library for validation and generation.

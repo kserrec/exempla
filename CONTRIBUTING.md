@@ -21,6 +21,30 @@ Read these documents before proposing a catalog change:
 Do not hand-edit anything under `languages/`. Those pages are generated from
 the JSON under `catalog/`.
 
+## Choose the right contribution path
+
+Use the focused GitHub form that matches the evidence you have:
+
+- [Propose a repository](https://github.com/kserrec/exempla/issues/new?template=01-repository-candidate.yml)
+  after inspecting a pinned revision and completing the qualification and SDC
+  work. This proposes a review; it does not pre-approve the candidate.
+- [Report a catalog correction](https://github.com/kserrec/exempla/issues/new?template=02-catalog-correction.yml)
+  when a specific existing fact is demonstrably incorrect at the revision the
+  entry records.
+- [Dispute an SDC placement](https://github.com/kserrec/exempla/issues/new?template=03-sdc-dispute.yml)
+  when observed source signals support a different published rubric anchor.
+- [Report a maintenance problem](https://github.com/kserrec/exempla/issues/new?template=04-maintenance-problem.yml)
+  for reproducible faults in validation, generation, tests, navigation, or
+  contributor documentation.
+
+Blank public issues are disabled so that every report arrives with the minimum
+information needed to evaluate it. Maintainers can still open a blank issue
+when an unusual case does not fit a form.
+
+If you already have a complete, evidence-backed change, you may open a pull
+request directly. GitHub will load the repository's checklist automatically;
+answer every applicable section and write `Not applicable` for the others.
+
 ## Local setup
 
 You need Git and Python 3.12 or newer. Validation and generation use only the
