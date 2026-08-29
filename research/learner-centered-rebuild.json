@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 30,
+  "reviewed_entry_total": 40,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -2213,12 +2213,787 @@
         "status": "agree",
         "notes": "Independently confirmed that LSM storage, SSTable and compaction lifecycle, repair metadata, token topology, gossip, streaming, and Paxos assumptions dominate the proposed path; the hard domain rejection, quality not evaluated status, absence of scores and level, and removal all agree."
       }
+    },
+    {
+      "repository": "doctrine/lexer",
+      "language": "PHP",
+      "prior_level": 1,
+      "pinned_commit": "e96fe45e92a54233726014a7cc7340abf29bb14c",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A lexer splits an input string into typed tokens and exposes a cursor with lookahead for a parser to consume."
+        ],
+        "evidence": "The lexer vocabulary and regular-expression model fit in a short prerequisite paragraph; the selected path primarily teaches generic template APIs, token construction, mutable cursor state, validation, and precise source offsets."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "A focused abstract lexer and immutable token value object have explicit responsibilities and parser vocabulary, documented generic extension hooks, direct input-to-token traceability, and tests for movement, peeking, reset, positions, enum types, invalid input, Unicode, and locale-sensitive edge cases, making the path readable, maintainable, and educational.",
+      "learning_path": {
+        "goal": "Understand how Doctrine's reusable lexer scans an input string into typed tokens and maintains lookahead, peeking, and cursor invariants for subclasses.",
+        "start_path": "src/AbstractLexer.php",
+        "supporting_files": [
+          "src/Token.php",
+          "tests/AbstractLexerTest.php"
+        ],
+        "trace": "Follow setInput through the composed regular expression, preg_split capture offsets, scan, and the subclass getType hook into Token values; then follow moveNext, peek, glimpse, skipUntil, reset, and token checks while correlating movement, position, Unicode, enum-type, locale, and invalid-input tests in AbstractLexerTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PHPDoc templates for token value and token type",
+            "abstract pattern and token-recognition hooks",
+            "enum, integer, and string token-type modeling"
+          ],
+          "reason": "Generic type relationships and a typed template-method API materially shape the extension contract, satisfying substantial abstraction without advanced runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized token-array and cursor state",
+            "lookahead, peek, and reset branches",
+            "invalid-input recognition"
+          ],
+          "reason": "Meaningful mutable state and branches require care but remain synchronous and localized in one lexer."
+        },
+        "design_span": {
+          "signals": [
+            "one abstract lexer component",
+            "one token value object"
+          ],
+          "reason": "The complete behavior stays in one focused unit with two narrow subclass hooks."
+        },
+        "constraint_burden": {
+          "signals": [
+            "regex capture and byte-offset accuracy",
+            "stable cursor semantics",
+            "Unicode, locale, and invalid-input safeguards"
+          ],
+          "reason": "Input validation, offsets, explicit errors, and a small stable API impose routine production safeguards rather than several interacting guarantees."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/1/2 sums to 8, which calculates to Level 2 independently of catalog demand.",
+      "reconsider": "Reconsider if the generic extension contract, cursor behavior, public source status, license, documentation, or focused edge-case tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Independently confirmed the source and test path and both gates; final reconciliation raises language technique for the recurring generic token contract while keeping behavior, span, and constraints at their lower anchors, yielding 3/2/1/2 and Level 2."
+      }
+    },
+    {
+      "repository": "webmozarts/assert",
+      "language": "PHP",
+      "prior_level": 1,
+      "pinned_commit": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An assertion library validates runtime values, while its generated mixin adds nullOr, all, and allNullOr variants of the base assertion methods."
+        ],
+        "evidence": "The assertion and generated-API context is self-contained; the path primarily teaches reflection, code generation, signature and PHPDoc transformation, compatibility policy, and testing generated behavior."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The hand-written generator names each transformation, isolates signature and documentation rewriting, produces a clearly marked trait, and is backed indirectly but broadly by AssertTest's base, nullOr, all, allNullOr, message, and error cases; project documentation, stable public contracts, and reproducible generated output keep the path traceable and maintainable despite the generated trait's deliberate repetition.",
+      "learning_path": {
+        "goal": "Understand how Webmozart Assert reflects over its base assertions and generates type-preserving nullOr, all, and allNullOr runtime variants.",
+        "start_path": "bin/src/MixinGenerator.php",
+        "supporting_files": [
+          "bin/generate.php",
+          "src/Assert.php",
+          "src/Mixin.php",
+          "tests/AssertTest.php"
+        ],
+        "trace": "Begin with bin/generate.php, follow MixinGenerator as ReflectionClass and ReflectionMethod enumerate Assert methods, reduce native union and intersection types, transform PHPDoc assertions, defaults, return types, and method bodies, and emit the Mixin trait; then correlate the generated nullOr, all, and allNullOr methods with the parameterized success, failure, lazy-message, and custom-message cases in AssertTest."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "ReflectionClass and ReflectionMethod introspection",
+            "native union and intersection type rewriting",
+            "PHP source and static-analysis annotation generation"
+          ],
+          "reason": "Reflection, metaprogramming, and code generation recur throughout the selected behavior and require advanced PHP machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "deterministic method-family generation",
+            "localized skip and transformation branches",
+            "explicit default and documentation handling"
+          ],
+          "reason": "The generator has many cases but its synchronous transformation state remains locally traceable."
+        },
+        "design_span": {
+          "signals": [
+            "maintainer generation entry point",
+            "base assertion API and generated runtime trait"
+          ],
+          "reason": "A few clear modules contain the generator-to-runtime behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "native signature and default-value fidelity",
+            "Psalm and PHPStan assertion compatibility",
+            "stable generated runtime API across three method families"
+          ],
+          "reason": "Runtime behavior, native types, PHPDoc types, static-analyser limitations, defaults, messages, and backward-compatible method families interact across the path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 4/2/2/4 sums to 12, which calculates to Level 3; this path ranks second among three qualified PHP Level 3 candidates.",
+      "reconsider": "Reconsider if generation ceases to produce the public runtime API, the generated variants lose meaningful tests, or a fresh PHP Level 3 comparison ranks a qualified alternate above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog's Assert.php-to-Mixin.php description did not expose the implementation mechanism and could be mistaken for runtime magic. Final reconciliation adopts the independent review's reflection-driven generator-to-runtime trace, confirms indirect tests of all generated method families, and uses 4/2/2/4, Level 3, rank 2, and retention."
+      }
+    },
+    {
+      "repository": "nikic/FastRoute",
+      "language": "PHP",
+      "prior_level": 2,
+      "pinned_commit": "1c961398bef1ff6ecd8b273bef651d7afe90312b",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP router parses static and parameterized route declarations, compiles them into dispatch data, and returns matched, not-matched, or method-not-allowed results for a method and URI."
+        ],
+        "evidence": "The route syntax and three dispatch outcomes need only a short primer; the path primarily teaches staged parsing and compilation, regular-expression construction, strategy boundaries, data modeling, validation, and deterministic dispatch."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Parser, collector, data-generator, dispatcher, and result responsibilities are explicit and idiomatic; focused parser and shared dispatcher tests expose optional segments, placeholders, invalid captures, duplicate and shadow routes, method behavior, and result contracts, making the full staged path readable, traceable, maintainable, and educational.",
+      "learning_path": {
+        "goal": "Understand how FastRoute turns a route declaration into compiled static or regular-expression dispatch data and returns the correct dispatch result for an HTTP method and URI.",
+        "start_path": "src/RouteParser/Std.php",
+        "supporting_files": [
+          "src/RouteCollector.php",
+          "src/DataGenerator/RegexBasedAbstract.php",
+          "src/DataGenerator/GroupCountBased.php",
+          "src/Dispatcher/RegexBasedAbstract.php",
+          "src/Dispatcher/GroupCountBased.php",
+          "test/RouteParser/StdTest.php",
+          "test/Dispatcher/GroupCountBasedTest.php",
+          "test/Dispatcher/DispatcherTestCase.php"
+        ],
+        "trace": "Follow Std.parse through optional suffix expansion, placeholder extraction, and capturing-group rejection; continue through RouteCollector into RegexBasedAbstract's static and variable route validation and GroupCountBased's combined regular expressions, then through the regex dispatcher into Matched, NotMatched, or MethodNotAllowed while correlating parser cases and the inherited shared dispatcher contract tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interfaces and abstract strategy bases",
+            "callable handlers and typed result objects",
+            "ordinary object-oriented composition"
+          ],
+          "reason": "Interfaces, callbacks, inheritance, and ecosystem conventions shape the path without generics, reflection, or other advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "route syntax expansion and validation",
+            "compiled static and variable dispatch data",
+            "method fallback and dispatch-result transitions"
+          ],
+          "reason": "The staged parser-to-compiled-data-to-dispatch trace has nontrivial state and interactions beyond localized branching."
+        },
+        "design_span": {
+          "signals": [
+            "parser and collector boundary",
+            "data-generator strategies",
+            "dispatcher and result layers"
+          ],
+          "reason": "The trace crosses several meaningful, locally understandable components and interfaces."
+        },
+        "constraint_burden": {
+          "signals": [
+            "optional-segment and placeholder grammar",
+            "duplicate, shadow, and capture-group rejection",
+            "HTTP method fallback and backward-compatible result forms"
+          ],
+          "reason": "Syntax, regular-expression safety, route precedence, HTTP semantics, and compatibility impose several material guarantees."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 2/3/3/3 sums to 11, which calculates to Level 3; this is the clearest of three qualified PHP Level 3 paths.",
+      "reconsider": "Reconsider if the staged parser-generator-dispatcher behavior or shared contract tests materially change, or if a fresh PHP Level 3 comparison ranks another qualified path above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The original inspected path omitted RouteCollector, the data-generation layer, RegexBasedAbstract, parser tests, and DispatcherTestCase; GroupCountBasedTest alone only selects the implementation. Final reconciliation adopts the complete trace and the lower language anchor, confirming 2/3/3/3, Level 3, rank 1, and retention."
+      }
+    },
+    {
+      "repository": "ramsey/uuid",
+      "language": "PHP",
+      "prior_level": 2,
+      "pinned_commit": "da5b521600a707d2dd097598464bd3090de850f5",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 3,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A UUID has a canonical textual and byte representation; this path delays construction of the full UUID value until an operation needs more than those representations."
+        ],
+        "evidence": "Canonical UUID syntax requires only brief context and version-generation rules are deliberately excluded; the path primarily teaches validation, lazy proxies, caching, interface compatibility, serialization, and delegation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Factories, the lazy proxy, and concrete UUID values have recognizable boundaries and stable names; validation, byte and string equivalence, lazy return, advanced access, version creation, and serialization tests make the path traceable, while repetitive interface delegation is explicit and does not undermine maintainability or its lazy-proxy lesson.",
+      "learning_path": {
+        "goal": "Understand how ramsey/uuid validates a UUID string, returns a cheap lazy proxy, preserves fast string and byte operations, and unwraps and caches a full UUID only when richer behavior is requested.",
+        "start_path": "src/Uuid.php",
+        "supporting_files": [
+          "src/Lazy/LazyUuidFromString.php",
+          "src/UuidFactory.php",
+          "tests/UuidTest.php"
+        ],
+        "trace": "Follow Uuid.fromString through normalization and fast validation into LazyUuidFromString, observe its direct string, byte, comparison, and serialization operations, then follow an advanced method into the cached unwrap and UuidFactory construction path; correlate valid and invalid forms, lazy instance selection, byte and string equivalence, versions, and serialization in UuidTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interface-preserving lazy proxy",
+            "nontrivial UUID value and factory type model",
+            "delegation across current and deprecated API methods"
+          ],
+          "reason": "The proxy and value-type abstraction materially shape the path beyond ordinary class composition."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "lazy-to-materialized state transition",
+            "cached unwrap behavior",
+            "validation and serialization branches"
+          ],
+          "reason": "Caching and delayed construction materially affect observable operations and require a nontrivial state trace."
+        },
+        "design_span": {
+          "signals": [
+            "public static API",
+            "lazy proxy boundary",
+            "factory and concrete value construction"
+          ],
+          "reason": "The trace crosses several meaningful interfaces and layers while remaining within UUID construction."
+        },
+        "constraint_burden": {
+          "signals": [
+            "canonical string and byte identity",
+            "immutability and serialized compatibility",
+            "complete current and deprecated interface behavior"
+          ],
+          "reason": "Representation fidelity, validation, immutability, lazy equivalence, serialization, and backward compatibility interact across the proxy path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, which calculates to Level 3, but FastRoute and Webmozart Assert provide clearer and less repetitive paths; UUID ranks third for two places.",
+      "reconsider": "Reconsider if a PHP Level 3 place opens, focused lazy-proxy tests improve direct traceability, or a fresh comparison ranks this path above a retained Level 3 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "UuidV7.php did not belong to a coherent Uuid.fromString trace and would introduce avoidable version-specific domain context. Final reconciliation adopts the independent review's LazyUuidFromString and UuidFactory path, confirms 3/3/3/4 and Level 3, and records rank 3 capacity removal."
+      }
+    },
+    {
+      "repository": "guzzle/guzzle",
+      "language": "PHP",
+      "prior_level": 3,
+      "pinned_commit": "7b7b04a0f5a548bfe9ced4b56f5661deee229ac3",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 3,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP client prepares a request and options, composes middleware, delegates transfer to a cURL handler, and resolves a response or error through a promise."
+        ],
+        "evidence": "HTTP request, response, and cURL concepts are documented and fit in short prerequisites; the path primarily teaches middleware composition, asynchronous control flow, resource pooling, error recovery, option policy, and layered adapter design."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Client, middleware stack, handler, and cURL factory responsibilities are recognizable and documented; option validation and cleanup are explicit, and focused client, stack, handler, and factory tests cover request construction, middleware order, handles, retries, callbacks, proxy and TLS options, failures, and cleanup, making this broad path maintainable and educational despite its size.",
+      "learning_path": {
+        "goal": "Understand how Guzzle prepares an HTTP request, composes its middleware, manages a cURL transfer and reusable handle, and resolves success or failure through its asynchronous interface.",
+        "start_path": "src/Client.php",
+        "supporting_files": [
+          "src/HandlerStack.php",
+          "src/Handler/CurlHandler.php",
+          "src/Handler/CurlFactory.php",
+          "tests/ClientTest.php",
+          "tests/HandlerStackTest.php",
+          "tests/Handler/CurlHandlerTest.php",
+          "tests/Handler/CurlFactoryTest.php"
+        ],
+        "trace": "Follow Client.requestAsync through URI and option preparation into the resolved HandlerStack, then through CurlHandler into CurlFactory's handle creation, option application, callback wiring, transfer completion, error classification, retries, cleanup, and handle release; correlate client construction, middleware ordering, cURL behavior, failure, reuse, and cleanup tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "callable middleware composition",
+            "PSR request, response, and factory interfaces",
+            "typed option and promise conventions"
+          ],
+          "reason": "Higher-order composition, interface-rich type modeling, and ecosystem abstractions materially shape the path without pervasive metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous promise completion",
+            "cURL handle ownership and pooling",
+            "callback, retry, failure, and cleanup flows"
+          ],
+          "reason": "Resource ownership, asynchronous completion, recovery, and cleanup recur across client and handler boundaries and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "client and PSR factory layer",
+            "middleware stack and handler boundary",
+            "cURL option, transfer, and pooling machinery"
+          ],
+          "reason": "Many modules, extension points, execution modes, and cross-cutting request policies contribute directly to one transfer."
+        },
+        "constraint_burden": {
+          "signals": [
+            "HTTP, proxy, TLS, authentication, and redirect semantics",
+            "connection and handle reuse with deterministic cleanup",
+            "streaming, callbacks, error compatibility, and performance"
+          ],
+          "reason": "Several system-wide correctness, security, portability, compatibility, resource, and performance guarantees interact so a locally plausible change can fail elsewhere in the transfer path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/4/5 sums to 16, which calculates to Level 4, but Symfony HttpKernel and Monolog offer clearer bounded paths; Guzzle ranks third for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens or a fresh comparison finds this complete client-to-cURL path clearer than a retained Level 4 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The original Client.php-to-CurlHandler.php sample omitted HandlerStack, CurlFactory, and their focused tests, so it could not substantiate the architecture and constraint scores. Final reconciliation adopts the corrected complete path and 3/4/4/5; it ranks Guzzle third, while the independent comparison had placed Composer ahead, because Guzzle's trace remains wholly first-party and directly covered across each boundary."
+      }
+    },
+    {
+      "repository": "Seldaek/monolog",
+      "language": "PHP",
+      "prior_level": 3,
+      "pinned_commit": "2a50ae6f387a6da963bf2e2662803a01517a58ca",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A logger creates a record, optionally processes it, offers it to ordered handlers until bubbling stops, and must prevent recursive logging from becoming an infinite loop."
+        ],
+        "evidence": "Logging levels, processors, and handlers are familiar and documented; the path primarily teaches typed pipeline design, lazy initialization, event propagation, Fiber-local reentrancy state, exception routing, resource lifecycle, and cleanup."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Logger, immutable record, handler contract, processing trait, and processing-handler responsibilities are explicit and idiomatic; source comments explain bubbling, cycle detection, and reset semantics, while focused tests cover handler selection and order, processor-once behavior, errors, reset, recursive logging, Fibers, and cleanup, yielding a compact, traceable, maintainable, and unusually educational production path.",
+      "learning_path": {
+        "goal": "Understand how Monolog creates and processes one log record, propagates it through bubbling handlers, contains processor or handler failures, and detects recursive logging independently in each Fiber.",
+        "start_path": "src/Monolog/Logger.php",
+        "supporting_files": [
+          "src/Monolog/LogRecord.php",
+          "src/Monolog/Handler/HandlerInterface.php",
+          "src/Monolog/Handler/ProcessableHandlerTrait.php",
+          "src/Monolog/Handler/AbstractProcessingHandler.php",
+          "tests/Monolog/LoggerTest.php"
+        ],
+        "trace": "Follow Logger.addRecord as it normalizes the level, increments global or Fiber-local recursion depth, constructs LogRecord, delays processors until a handler accepts the record, clones and propagates it until bubbling stops, routes exceptions, and decrements depth in finally; connect the handler pipeline to ProcessableHandlerTrait and AbstractProcessingHandler and correlate ordering, processor, exception, recursive, Fiber, close, and reset tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "typed immutable LogRecord and Level enum",
+            "handler interfaces, callable processors, and traits",
+            "WeakMap keyed by Fiber objects"
+          ],
+          "reason": "Framework idioms, higher-order processors, traits, enums, and nontrivial type modeling materially shape the path without several pervasive expert mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "Fiber-local recursive logging state",
+            "lazy processor initialization and handler bubbling",
+            "exception routing and finally-based depth cleanup"
+          ],
+          "reason": "Reentrancy, event propagation, failure containment, resource lifecycle, and cross-cutting cleanup recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "logger and immutable record",
+            "processor and handler extension boundaries",
+            "processing and output-handler lifecycle"
+          ],
+          "reason": "The trace crosses several meaningful, locally understandable interfaces and components without spanning the entire handler ecosystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "PSR-3 and legacy level compatibility",
+            "once-only processing and deterministic bubbling",
+            "reentrancy containment, exception isolation, reset, and cleanup"
+          ],
+          "reason": "Compatibility, ordering, recursive safety, failure behavior, lifecycle reuse, and resource cleanup interact throughout the logging path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/3/4 sums to 14, whose half-up mean calculates to Level 4; this compact pipeline ranks second among six qualified PHP Level 4 paths.",
+      "reconsider": "Reconsider if Fiber-safe cycle detection, handler-pipeline semantics, or focused tests materially change, or if a fresh PHP Level 4 comparison ranks a qualified alternate above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Expanded the original Logger-to-AbstractProcessingHandler sample with LogRecord, HandlerInterface, ProcessableHandlerTrait, and the Fiber recursion tests that substantiate nonlocal behavior and constraints; independently confirmed both gates, 3/4/3/4, Level 4, rank 2, and retention."
+      }
+    },
+    {
+      "repository": "composer/composer",
+      "language": "PHP",
+      "prior_level": 4,
+      "pinned_commit": "2616959b478c47ef3968dde41ec98bd7cba6d050",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 4,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Composer reads installed package autoload metadata, combines PSR-0, PSR-4, class-map, and file rules, and writes PHP files that construct a runtime class loader.",
+          "The catalog's former dependency-solver path instead requires SAT propagation, decision levels, conflict analysis, learned clauses, and watched literals."
+        ],
+        "evidence": "The former Solver path fails the coding-relevance gate because specialist SAT and CDCL theory explains its difficulty better than programming skill. The bounded autoload-generation replacement needs only familiar package and namespace context and primarily teaches reflection-adjacent code generation, deterministic transformation, filesystem boundaries, event hooks, compatibility, and generated-runtime design, so the repository passes through this alternative."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Package-map construction, autoload parsing, class scanning delegation, output generation, and runtime loading are deliberately named and documented; extensive fixture-based tests cover root and vendor packages, development filtering, PSR and class-map rules, authoritative and APCu modes, platform checks, ambiguity, paths, and generated output, making the corrected path stable, traceable, maintainable, and educational despite its large generator.",
+      "learning_path": {
+        "goal": "Understand how Composer converts installed-package autoload metadata into deterministic PHP maps and bootstrap code that configure its runtime ClassLoader.",
+        "start_path": "src/Composer/Autoload/AutoloadGenerator.php",
+        "supporting_files": [
+          "src/Composer/Autoload/ClassLoader.php",
+          "src/Composer/Installer/InstallationManager.php",
+          "tests/Composer/Test/Autoload/AutoloadGeneratorTest.php"
+        ],
+        "trace": "Follow AutoloadGenerator.dump as it establishes development mode, builds installed paths through InstallationManager, parses and orders PSR-0, PSR-4, class-map, file, and exclusion rules, delegates scanning to composer/class-map-generator, and emits map, static, runtime, files, and platform-check PHP; then follow the generated bootstrap into ClassLoader and correlate fixture outputs, filtering, ambiguity, portability, authoritative, APCu, and platform tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PHP source and static bootstrap generation",
+            "Closure binding in generated runtime code",
+            "rich package, repository, and loader type contracts"
+          ],
+          "reason": "Code generation and implicit generated-runtime machinery recur in the central behavior and require advanced PHP fluency."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "development-package filtering",
+            "evented generation lifecycle",
+            "filesystem scanning, ordering, and conditional output"
+          ],
+          "reason": "Events, derived state, filesystem effects, and multiple generation modes materially affect the trace without pervasive concurrency or recovery state machines."
+        },
+        "design_span": {
+          "signals": [
+            "package repository and installation paths",
+            "autoload parser and external class-map scanner",
+            "filesystem, event, generated-output, and runtime-loader boundaries"
+          ],
+          "reason": "Many modules, extension points, output modes, and cross-cutting policies contribute to autoload generation."
+        },
+        "constraint_burden": {
+          "signals": [
+            "PSR rule precedence and deterministic package order",
+            "portable generated paths, symlinks, and PHP compatibility",
+            "development filtering, platform checks, ambiguity, and performance modes"
+          ],
+          "reason": "Several system-wide correctness, compatibility, portability, performance, and generated-code guarantees interact so local changes can break installed projects elsewhere."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: the corrected path passes both gates and 4/3/4/5 sums to 16, which calculates to Level 4, but Symfony, Monolog, and Guzzle provide clearer or more fully first-party bounded traces; Composer ranks fourth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, Composer internalizes the class-map boundary, or a fresh comparison ranks the autoload path above a retained Level 4 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews reject the original SAT solver path on the domain gate but confirm that rejection does not disqualify the repository because autoload generation is representative and programming-led. The proposed src/Composer/Autoload/ClassMapGenerator.php support file is a deprecated unused wrapper, so final reconciliation replaces it with ClassLoader.php and InstallationManager.php, confirms 4/3/4/5 and Level 4, and resolves the independent rank-3 versus primary rank-4 comparison in favor of rank 4 because class scanning crosses an external package boundary."
+      }
+    },
+    {
+      "repository": "phpstan/phpstan-src",
+      "language": "PHP",
+      "prior_level": 4,
+      "pinned_commit": "4f80a48ebac54bee75500661a1664ae52df56ace",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 5,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A PHPStan Rule declares the PHP parser node type it accepts and returns diagnostics when the analyser visits a matching node with a Scope.",
+          "The catalog's broader whole-analyser framing risks requiring abstract-interpretation and type-lattice theory that is unnecessary for this extension lifecycle."
+        ],
+        "evidence": "AST nodes, scope, and diagnostics fit in a short prerequisite paragraph when the trace is limited to rule registration and invocation; the selected path primarily teaches generic extension contracts, class-hierarchy dispatch, traversal callbacks, diagnostics, caching, and framework boundaries rather than specialist static-analysis theory."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Rule, registry, file analyser, traversal callback, and top-level analyser responsibilities are named and strongly typed; extension documentation and focused registry and analyser tests cover node-class dispatch, parent and interface registration, rule execution, ignores, exceptions, dependencies, and diagnostics, making the corrected path coherent, traceable, maintainable, and educational.",
+      "learning_path": {
+        "goal": "Understand how PHPStan registers a generic custom Rule for an AST node type, selects it through the node hierarchy, invokes it during file traversal, and turns its result into diagnostics.",
+        "start_path": "src/Rules/Rule.php",
+        "supporting_files": [
+          "src/Rules/Registry.php",
+          "src/Rules/DirectRegistry.php",
+          "src/Analyser/FileAnalyser.php",
+          "src/Analyser/FileAnalyserCallback.php",
+          "src/Analyser/Analyser.php",
+          "tests/PHPStan/Rules/DirectRegistryTest.php",
+          "tests/PHPStan/Analyser/AnalyserTest.php"
+        ],
+        "trace": "Begin with Rule's generic node contract, follow DirectRegistry as it indexes rules and resolves exact classes, parents, and interfaces with caching, then follow FileAnalyser traversal into FileAnalyserCallback's matching-rule invocation and diagnostic transformation before Analyser aggregates file results; correlate registry hierarchy and cache behavior plus rule errors, ignores, exceptions, dependencies, and file analysis in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "PHPDoc generic Rule node contracts",
+            "class-string and intersection-scope type modeling",
+            "attribute-marked extension interfaces and dynamic hierarchy dispatch"
+          ],
+          "reason": "Advanced static type machinery and implicit class-hierarchy dispatch recur across the extension path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "node-hierarchy registry caching",
+            "AST traversal callbacks",
+            "diagnostic, ignore, exception, and dependency aggregation"
+          ],
+          "reason": "Caching, traversal state, callbacks, and error aggregation materially affect the trace, but expert abstract-interpretation state is outside the corrected path."
+        },
+        "design_span": {
+          "signals": [
+            "public rule extension contract",
+            "registry and AST traversal layers",
+            "file analysis, diagnostic, ignore, and result boundaries"
+          ],
+          "reason": "Many framework modules and cross-cutting extension and diagnostic policies contribute to one rule execution."
+        },
+        "constraint_burden": {
+          "signals": [
+            "generic extension compatibility",
+            "complete node parent and interface dispatch",
+            "diagnostic locations, ignores, performance caching, and analyser error behavior"
+          ],
+          "reason": "Extension compatibility, hierarchy correctness, performance, precise diagnostics, ignore policy, and error containment interact across the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/4/4 sums to 15, which calculates to Level 4, but four other candidates offer clearer paths with less specialist orientation; PHPStan ranks fifth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, focused rule-lifecycle documentation or tests further reduce the analyser-context burden, or a fresh comparison ranks it above a retained entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The primary review initially treated the broad Analyser path as Level 5. The independent review found that framing both invited specialist abstract-interpretation theory and overstated expert behavior; final reconciliation adopts the clearer Rule-to-DirectRegistry-to-FileAnalyserCallback extension lifecycle, uses the lower behavioral anchor, and confirms 4/3/4/4, Level 4, rank 5, and capacity removal."
+      }
+    },
+    {
+      "repository": "symfony/symfony",
+      "language": "PHP",
+      "prior_level": 5,
+      "pinned_commit": "c69a0a62bc6cff4c25ae9447e16f52960dba71af",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP kernel turns a Request into a Response by dispatching request, controller, arguments, view, response, exception, and finish events around controller resolution and invocation."
+        ],
+        "evidence": "The HTTP request-response lifecycle and event names are documented and familiar; the path primarily teaches staged framework orchestration, extension events, nested request context, exception recovery, cleanup, and strict lifecycle contracts."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Kernel, resolver, request stack, and event responsibilities are explicit, consistently named, and documented; HttpKernelTest exercises short circuits, controller and argument resolution, view conversion, response filtering, exceptions, streamed responses, nested requests, finish and terminate behavior, making the compact lifecycle highly readable, traceable, maintainable, and educational.",
+      "learning_path": {
+        "goal": "Understand how Symfony HttpKernel transforms one Request into a Response through resolver and event extension points while preserving nested-request context and recovering from exceptions.",
+        "start_path": "src/Symfony/Component/HttpKernel/HttpKernel.php",
+        "supporting_files": [
+          "src/Symfony/Component/HttpKernel/HttpKernelInterface.php",
+          "src/Symfony/Component/HttpKernel/Controller/ControllerResolver.php",
+          "src/Symfony/Component/HttpKernel/Event/RequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerArgumentsEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ViewEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ResponseEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ExceptionEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/FinishRequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/TerminateEvent.php",
+          "src/Symfony/Component/HttpKernel/Tests/HttpKernelTest.php"
+        ],
+        "trace": "Follow HttpKernel.handle as it pushes the RequestStack and dispatches RequestEvent, resolves and filters the controller and arguments, invokes the controller, converts a non-Response through ViewEvent, filters the Response, or recovers through ExceptionEvent; then follow streamed-response context restoration, FinishRequestEvent, stack cleanup, and termination while correlating each lifecycle branch in HttpKernelTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "interface-driven controller and argument resolution",
+            "typed event hierarchy and dispatcher composition",
+            "callable controllers and streamed-response callbacks"
+          ],
+          "reason": "Framework idioms, event types, callbacks, and substantial interface composition materially shape the path without pervasive advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered event propagation and short circuits",
+            "nested request-stack state",
+            "exception recovery, streamed callbacks, finish, and termination"
+          ],
+          "reason": "Event propagation, nested lifecycle state, recovery, callback context, and cleanup recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "kernel and request-stack orchestration",
+            "controller and argument resolver boundaries",
+            "event-dispatch, response, exception, and termination extension points"
+          ],
+          "reason": "Many framework modules and extension points contribute directly to one request lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "strict event and resolver ordering",
+            "nested and streamed request-context integrity",
+            "exception status, response filtering, finish, and termination compatibility"
+          ],
+          "reason": "Ordering, extension compatibility, context integrity, recovery, response correctness, and cleanup guarantees interact throughout the kernel."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/4/4 sums to 15, which calculates to Level 4; this is the clearest of six qualified PHP Level 4 paths.",
+      "reconsider": "Reconsider if the request lifecycle, event contracts, or focused tests materially change, or if a fresh PHP Level 4 comparison ranks another qualified path above it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "ContainerBuilder.php is unrelated to the selected per-request trace and the bounded HttpKernel path does not reach Level 5. Final reconciliation removes that file, adds the actual resolver and event sequence, confirms 3/4/4/4 and Level 4, and retains Symfony at comparative rank 1."
+      }
+    },
+    {
+      "repository": "nextcloud/server",
+      "language": "PHP",
+      "prior_level": 5,
+      "pinned_commit": "529c4e4a6b236e6367e926d9a375ae9600335d73",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "capacity_rank": 6,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Nextcloud presents a scoped virtual filesystem over mounted storage backends, so a rename may stay within one backend, cross backends, or move a mount while preserving locks and metadata."
+        ],
+        "evidence": "Virtual paths, mounts, shared and exclusive locks, and cache updates fit in a short prerequisite paragraph when the trace is limited to View.rename; the path primarily teaches adapters, resource ownership, cross-backend operations, event and cache consistency, recovery, and security boundaries."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Although View is a large legacy class with global service and hook calls, the bounded rename, mount, storage, locking, and update responsibilities are explicitly named, and ViewTest exhaustively covers same- and cross-storage moves, mount restrictions, hooks, cache and timestamps, lock transitions, and unlock-on-exception; that focused trace remains maintainable and educational enough to pass without treating the former composition root as an exemplar.",
+      "learning_path": {
+        "goal": "Understand how Nextcloud safely renames a file or mount within or across storage backends while preserving its virtual-root boundary, locks, cache state, hooks, and share restrictions.",
+        "start_path": "lib/private/Files/View.php",
+        "supporting_files": [
+          "lib/private/Files/Filesystem.php",
+          "lib/private/Files/Mount/MountPoint.php",
+          "lib/public/Files/Mount/IMountPoint.php",
+          "lib/public/Files/Storage/IStorage.php",
+          "tests/lib/Files/ViewTest.php"
+        ],
+        "trace": "Follow View.rename as it normalizes paths inside the view root, rejects child moves and invalid targets, acquires source and target locks, resolves mounts and storage-internal paths, validates movable and shared mounts, performs same-storage rename, cross-storage moveFromStorage, or mount relocation, updates cache and hooks, downgrades locks, and releases every lock in finally; correlate cross-storage, mount, share, hook, cache, overwrite, lock-transition, and exception-cleanup tests in ViewTest."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "mount and storage interface adapters",
+            "typed exception and locking contracts",
+            "conditional PHPDoc path types and legacy hook callbacks"
+          ],
+          "reason": "Substantial interface-based abstraction and type modeling materially shape the operation without multiple pervasive expert PHP mechanisms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "shared-to-exclusive lock transitions and finally cleanup",
+            "same-storage, cross-storage, and mount-move branches",
+            "cache updates, hooks, failures, and recovery"
+          ],
+          "reason": "Resource ownership, cross-backend state, event propagation, consistency, and recovery recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "scoped virtual filesystem view",
+            "mount manager and storage adapters",
+            "locking, cache, share, hook, and update policies"
+          ],
+          "reason": "Many modules and cross-cutting policies contribute to one rename without requiring the entire Nextcloud server composition root."
+        },
+        "constraint_burden": {
+          "signals": [
+            "virtual-root path security and mount/share restrictions",
+            "cross-backend data and cache consistency",
+            "lock ordering, exception cleanup, hooks, timestamps, and compatibility"
+          ],
+          "reason": "Several system-wide safety, consistency, reliability, compatibility, and resource guarantees interact so a local rename change can violate behavior elsewhere."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: the corrected path passes both gates and 3/4/4/5 sums to 16, which calculates to Level 4, but five candidates offer clearer or more compact paths; Nextcloud ranks sixth for two places.",
+      "reconsider": "Reconsider if a PHP Level 4 place opens, the rename subsystem is isolated from legacy global hooks and services, or a fresh comparison ranks this bounded path above a retained entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The original Server.php and lib/base.php composition-root path is not locally teachable and cannot substantiate Level 5, but that failure does not disqualify the repository. Final reconciliation adopts the independent review's representative View.rename subsystem, confirms its programming-led domain and quality passes, uses 3/4/4/5 and Level 4, and records rank 6 capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 23,
-      "remove": 7
+      "retain": 28,
+      "remove": 12
     },
     "by_language": {
       "JavaScript": {
@@ -2277,33 +3052,52 @@
           "4": 4,
           "5": 1
         }
+      },
+      "PHP": {
+        "reviewed": 10,
+        "retain": 5,
+        "remove": 5,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 3,
+          "4": 6,
+          "5": 0
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 6,
-        "retain": 6,
+        "reviewed": 8,
+        "retain": 8,
         "remove": 0
       },
       "2": {
-        "reviewed": 6,
-        "retain": 5,
-        "remove": 1
-      },
-      "3": {
-        "reviewed": 6,
-        "retain": 4,
+        "reviewed": 8,
+        "retain": 6,
         "remove": 2
       },
-      "4": {
-        "reviewed": 6,
-        "retain": 3,
+      "3": {
+        "reviewed": 8,
+        "retain": 5,
         "remove": 3
       },
+      "4": {
+        "reviewed": 8,
+        "retain": 3,
+        "remove": 5
+      },
       "5": {
-        "reviewed": 6,
-        "retain": 5,
-        "remove": 1
+        "reviewed": 8,
+        "retain": 6,
+        "remove": 2
       }
     },
     "by_new_level": {
@@ -2313,19 +3107,19 @@
         "remove": 0
       },
       "2": {
-        "scored": 6,
-        "retain": 6,
+        "scored": 7,
+        "retain": 7,
         "remove": 0
       },
       "3": {
-        "scored": 8,
-        "retain": 6,
-        "remove": 2
+        "scored": 11,
+        "retain": 8,
+        "remove": 3
       },
       "4": {
-        "scored": 10,
-        "retain": 6,
-        "remove": 4
+        "scored": 16,
+        "retain": 8,
+        "remove": 8
       },
       "5": {
         "scored": 5,
@@ -2334,7 +3128,7 @@
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 6,
+      "qualified_alternate_over_capacity": 11,
       "coding_relevance_domain_gate": 1
     }
   }
