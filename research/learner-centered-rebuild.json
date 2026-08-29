@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 110,
+  "reviewed_entry_total": 120,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -8327,12 +8327,772 @@
         "status": "disagree_resolved",
         "notes": "The catalog mixed compiler and runtime paths that did not form one teachable trace. Root reconciliation adopts the clearer bounded runtime-channel lifecycle, which independently sustains 5/5/4/5 and the Level 5 guard, and resolves sole Level 5 rank 1 and retention."
       }
+    },
+    {
+      "repository": "r-lib/pkgconfig",
+      "language": "R",
+      "prior_level": 1,
+      "pinned_commit": "687e3154aa407642649beb00334940c71d6f22d9",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A package can expose configuration values with package-local defaults and user overrides."
+        ],
+        "evidence": "Package configuration vocabulary is immediate; the path teaches environments, delayed and substituted expressions, namespace lookup, caller-sensitive access, validation, and scoped global override behavior."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/getset.R keeps the compact API and environment rules together, while focused API, error, and global-environment tests cover defaults, overrides, package lookup, invalid names, missing values, and caller context.",
+      "learning_path": {
+        "goal": "Understand how pkgconfig implements package-scoped defaults and user overrides with a tiny metaprogrammed R API.",
+        "start_path": "R/getset.R",
+        "supporting_files": [
+          "tests/testthat/test-api.R",
+          "tests/testthat/test-errors.R",
+          "tests/testthat/test-globalenv.R"
+        ],
+        "trace": "Start with get_config and set_config, follow substituted package and key expressions into namespace and global override environments, then trace default and error behavior; close with focused tests for API calls, invalid inputs, and global-environment caller cases."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "substitute and caller-expression capture",
+            "namespace and environment manipulation",
+            "non-standard argument interpretation"
+          ],
+          "reason": "Advanced R metaprogramming techniques recur throughout the tiny API."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "package default and user override states",
+            "present, absent, and invalid key branches",
+            "namespace and global caller contexts"
+          ],
+          "reason": "A few local lookup states recur without a larger lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "one compact get and set API",
+            "direct focused tests"
+          ],
+          "reason": "The complete behavior is contained in one production file."
+        },
+        "constraint_burden": {
+          "signals": [
+            "overrides must not erase package defaults",
+            "missing and invalid keys must fail predictably",
+            "caller lookup must resolve the intended package"
+          ],
+          "reason": "The API has meaningful safeguards, but they remain few and local enough for Constraint 2."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 4/2/1/2 sums to 9, whose mean of 2.25 calculates to Level 2; pkgconfig ranks first of two qualified R Level 2 paths.",
+      "reconsider": "Reconsider if expression capture, package lookup, override semantics, error behavior, documentation, or focused tests materially change, or a stronger R Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether the metaprogramming-heavy implementation should lift the whole path and whether its API safeguards merited Constraint 3. Root reconciliation keeps Language 4 but the compact Behavior 2, Design 1, and Constraint 2 anchors, resolving Level 2 rank 1 and retention."
+      }
+    },
+    {
+      "repository": "r-lib/rematch2",
+      "language": "R",
+      "prior_level": 1,
+      "pinned_commit": "be7c3a05c060dce37277098967d42ffc695a6943",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A regular-expression match becomes a character matrix whose capture groups can be indexed like a structured result."
+        ],
+        "evidence": "Regex capture vocabulary is brief; the path teaches vectorized execution, match and capture attributes, matrix construction, S3 indexing, drop behavior, missing matches, and focused tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/exec.R builds one-match results and capture metadata, R/indexing.R preserves the result contract under subsetting, and focused execution and indexing tests cover named groups, absent matches, dimensions, drops, and edge cases.",
+      "learning_path": {
+        "goal": "Understand how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing.",
+        "start_path": "R/exec.R",
+        "supporting_files": [
+          "R/indexing.R",
+          "tests/testthat/test-exec.R",
+          "tests/testthat/test-indexing.R"
+        ],
+        "trace": "Start with re_exec turning regexec positions and lengths into a match matrix and named capture metadata, then follow the S3 indexing method as rows, columns, and drop rules preserve or simplify the result; close with execution and indexing tests. The broader exec-all path is intentionally omitted."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "vector and matrix construction",
+            "attributes and S3 indexing",
+            "named capture handling"
+          ],
+          "reason": "Familiar intermediate R data-shaping and S3 techniques recur."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "matched and unmatched outcomes",
+            "named and unnamed captures",
+            "subset and drop branches"
+          ],
+          "reason": "A few related result-shaping states recur within a bounded operation."
+        },
+        "design_span": {
+          "signals": [
+            "execution result builder",
+            "indexing method",
+            "two direct test files"
+          ],
+          "reason": "Two cohesive components cover creation and consumption of one result type."
+        },
+        "constraint_burden": {
+          "signals": [
+            "positions, lengths, and capture names must align",
+            "missing matches must retain coherent dimensions",
+            "indexing must honor ordinary matrix drop rules"
+          ],
+          "reason": "The constraints are material but small and directly observable."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/2/2 sums to 8, whose mean of 2.00 calculates to Level 2; rematch2 ranks second of two qualified R Level 2 paths.",
+      "reconsider": "Reconsider if match construction, capture metadata, indexing, drop semantics, documentation, or focused tests materially change, or a stronger R Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether to include exec-all and broader vectorized matching. Root reconciliation keeps the clearer one-execution plus indexing trace, applies the lower 2/2/2/2 anchors, and resolves Level 2 rank 2 and retention."
+      }
+    },
+    {
+      "repository": "tidyverse/glue",
+      "language": "R",
+      "prior_level": 2,
+      "pinned_commit": "da9c73f7a3de6a27f3103cb5bb2355820a4c3a6a",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Glue scans template text, evaluates expressions between delimiters, transforms values, and combines vectorized output."
+        ],
+        "evidence": "Interpolation vocabulary is immediate; the path teaches captured evaluation environments, parser callbacks, delimiter and escape state, transformer extension, vector recycling, missing values, and a C scanning boundary."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/glue.R defines glue_data and the public evaluation contract, transformer.R isolates expression evaluation, utils.R handles recycling and cleanup, src/glue.c implements the scanner state machine, and test-glue.R broadly covers delimiters, escapes, evaluation, vectors, missing values, transformers, and errors.",
+      "learning_path": {
+        "goal": "Understand how glue_data scans an interpolation template, evaluates embedded R expressions, transforms values, and produces vectorized output.",
+        "start_path": "R/glue.R",
+        "supporting_files": [
+          "R/transformer.R",
+          "R/utils.R",
+          "src/glue.c",
+          "tests/testthat/test-glue.R"
+        ],
+        "trace": "Start at glue_data's data and environment setup, follow delimiters and callbacks into the transformer and C scanner, then trace value conversion, recycling, missing-value policy, trimming, and output construction; close with the focused glue tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "captured environments and expression evaluation",
+            "transformer callback extension",
+            "R-to-C scanner interface"
+          ],
+          "reason": "Advanced R evaluation and native-boundary techniques recur across interpolation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "literal, expression, escaped delimiter, and quoted states",
+            "evaluated, missing, null, vector, and error outcomes",
+            "transform and output assembly phases"
+          ],
+          "reason": "Nontrivial parser and evaluation states recur, but remain bounded rather than advanced nonlocal Behavior 4."
+        },
+        "design_span": {
+          "signals": [
+            "public R facade",
+            "transformer and utility layer",
+            "native scanner and focused tests"
+          ],
+          "reason": "A few cohesive components cover template input through evaluated output."
+        },
+        "constraint_burden": {
+          "signals": [
+            "escaping and delimiter state must remain exact",
+            "evaluation must occur in the promised data and environment scope",
+            "vector recycling, missing values, and errors must preserve output contracts"
+          ],
+          "reason": "Parsing, evaluation, vectorization, and extension guarantees recur in ordinary use."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; glue ranks second of four qualified R Level 4 paths.",
+      "reconsider": "Reconsider if scanning, evaluation scope, transformer behavior, vectorization, native integration, documentation, or direct tests materially change, or a stronger R Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether glue's evaluation and parser state merited Behavior 4. Root reconciliation uses the lower recurring Behavior 3 anchor, keeps Language and Constraints at 4, resolves 4/3/3/4 at Level 4, and retains glue at rank 2."
+      }
+    },
+    {
+      "repository": "r-lib/withr",
+      "language": "R",
+      "prior_level": 2,
+      "pinned_commit": "d82e4bc2d69a34f044ad205210e26207bfb8f3e0",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A with_* wrapper temporarily changes process or session state, evaluates user code, and restores the previous value on exit."
+        ],
+        "evidence": "Temporary-state vocabulary is familiar; the bounded generated-wrapper path teaches substitute and eval, delayed cleanup, dynamic wrapper generation, option capture, error-safe restoration, and nested scope behavior."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/with_.R defines the wrapper generator and restoration structure, options.R supplies a representative state family, and test-with.R directly checks generated wrappers, nesting, errors, visibility, environments, and restoration.",
+      "learning_path": {
+        "goal": "Understand how withr generates scoped wrappers that evaluate code under temporary state and reliably restore the previous state.",
+        "start_path": "R/with_.R",
+        "supporting_files": [
+          "R/options.R",
+          "tests/testthat/test-with.R"
+        ],
+        "trace": "Start with the wrapper generator capturing expressions and cleanup callbacks, follow a representative option change through deferred restoration and evaluation in the caller environment, then examine nesting and error exits; close with focused tests for generated wrappers and restoration."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "substitute and caller-environment evaluation",
+            "programmatic wrapper generation",
+            "deferred cleanup callbacks"
+          ],
+          "reason": "Advanced R metaprogramming recurs throughout generated with_* wrappers."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "captured, changed, evaluating, restoring, and restored states",
+            "normal, nested, and error exits",
+            "visible and invisible result propagation"
+          ],
+          "reason": "Several related scoped-state transitions recur within a bounded restoration lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "wrapper generator",
+            "representative option implementation",
+            "direct restoration tests"
+          ],
+          "reason": "A small set of cohesive pieces covers generated wrappers and cleanup."
+        },
+        "constraint_burden": {
+          "signals": [
+            "prior state must restore on success and error",
+            "nested scopes must restore in stack order",
+            "evaluation environment and result visibility must remain correct"
+          ],
+          "reason": "Restoration and evaluation guarantees recur, but remain locally contained."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 4/3/2/3 sums to 12, whose mean of 3.00 calculates to Level 3; withr ranks first of two qualified R Level 3 paths.",
+      "reconsider": "Reconsider if wrapper generation, restoration, evaluation scope, nesting, documentation, or focused tests materially change, or a stronger R Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether to score the full package's many state families. Root reconciliation scores only the generated wrapper and representative restoration path, resolves the lower 4/3/2/3 anchors at Level 3, and retains it at rank 1."
+      }
+    },
+    {
+      "repository": "r-lib/testthat",
+      "language": "R",
+      "prior_level": 3,
+      "pinned_commit": "9b6f12b9f50c297b4b5f485f728a2a19305770eb",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "test_that evaluates a test block, records expectation conditions, and reports structured outcomes."
+        ],
+        "evidence": "Testing vocabulary is familiar; the path teaches captured evaluation, condition signaling, expectation objects, reporter callbacks, nested contexts, failure and skip policy, and self-tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/test-that.R is the actual block execution entry, expectation.R defines structured success and failure conditions, reporter.R exposes lifecycle callbacks, and direct test-that and expectation suites cover passing, failure, errors, skips, warnings, snapshots of results, and reporter interaction.",
+      "learning_path": {
+        "goal": "Understand how testthat evaluates one test block, turns expectations into structured conditions, and reports passing, failure, error, and skip outcomes.",
+        "start_path": "R/test-that.R",
+        "supporting_files": [
+          "R/expectation.R",
+          "R/reporter.R",
+          "tests/testthat/test-test-that.R",
+          "tests/testthat/test-expectation.R"
+        ],
+        "trace": "Start at test_that and its block evaluation, follow expectation signaling and condition capture into reporter lifecycle callbacks, then trace success, failure, error, skip, and cleanup outcomes; close with focused self-tests for blocks and expectation objects."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "captured expressions and caller environments",
+            "custom condition signaling and handling",
+            "R6-style reporter callback protocols"
+          ],
+          "reason": "Advanced R evaluation and condition techniques recur across test execution."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "starting, evaluating, expecting, reporting, and completing states",
+            "pass, failure, error, warning, skip, and cleanup branches",
+            "nested block and reporter event ordering"
+          ],
+          "reason": "Several coupled execution and outcome states recur throughout a test block."
+        },
+        "design_span": {
+          "signals": [
+            "test block runner",
+            "expectation condition model",
+            "reporter boundary and focused self-tests"
+          ],
+          "reason": "A few cohesive components cover execution through observable reporting."
+        },
+        "constraint_burden": {
+          "signals": [
+            "conditions must be classified without swallowing unexpected errors",
+            "reporter events and nested contexts must remain ordered",
+            "skip, failure, cleanup, and result visibility contracts must hold"
+          ],
+          "reason": "Condition, ordering, compatibility, and cleanup guarantees recur in ordinary test execution."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 calculates to Level 4; testthat ranks first of four qualified R Level 4 paths.",
+      "reconsider": "Reconsider if block execution, condition classification, reporter ordering, cleanup, documentation, or focused self-tests materially change, or a stronger R Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog start did not identify the actual test-block execution entry clearly. Root reconciliation corrects the start to R/test-that.R, bounds the trace through expectations and reporters, resolves 4/4/3/4 at Level 4, and retains it at rank 1."
+      }
+    },
+    {
+      "repository": "tidyverse/dplyr",
+      "language": "R",
+      "prior_level": 3,
+      "pinned_commit": "d5e94e7fa8fd4a5f79c1a707d1842216bb4c691f",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "mutate evaluates column expressions against a table or grouped table and adds, changes, relocates, or removes columns."
+        ],
+        "evidence": "Ordinary table and grouping context is subordinate; the path teaches data-mask evaluation, quosures, grouped iteration, lazy column materialization, native callbacks, recycling, dependency ordering, and error context."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/mutate.R defines the public operation and column-placement contract, data-mask.R owns evaluation and group state, src/mutate.cpp implements native grouped evaluation callbacks, and test-mutate.R broadly covers creation, dependency, grouping, recycling, removal, placement, errors, and edge cases.",
+      "learning_path": {
+        "goal": "Understand how dplyr evaluates mutate expressions in a data mask and materializes coherent columns across ordinary and grouped data.",
+        "start_path": "R/mutate.R",
+        "supporting_files": [
+          "R/data-mask.R",
+          "src/mutate.cpp",
+          "tests/testthat/test-mutate.R"
+        ],
+        "trace": "Start with mutate's generic and data-frame method, follow expression capture and column planning into the DataMask and native grouped evaluation callback, then trace recycling, dependency on newly created columns, removal, placement, and errors; close with focused mutate tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "quosure capture and tidy evaluation",
+            "R6-style data-mask state",
+            "R-to-C++ grouped evaluation callbacks"
+          ],
+          "reason": "Advanced R evaluation and native-integration techniques recur throughout mutation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "captured, planned, evaluated, recycled, materialized, relocated, and removed states",
+            "ungrouped, grouped, rowwise, null, and error branches",
+            "dependencies among new columns"
+          ],
+          "reason": "Several coupled evaluation and column-state transitions recur across normal mutate work."
+        },
+        "design_span": {
+          "signals": [
+            "public mutate facade",
+            "DataMask evaluator",
+            "native grouped callback and focused tests"
+          ],
+          "reason": "A few cohesive components cover expression input through materialized columns."
+        },
+        "constraint_burden": {
+          "signals": [
+            "group size and vector recycling must remain consistent",
+            "new-column dependencies and placement must be deterministic",
+            "mask cleanup, errors, types, and grouping metadata must remain coherent"
+          ],
+          "reason": "Evaluation, grouping, recycling, type, and cleanup guarantees recur in ordinary use."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 calculates to Level 4; dplyr mutate ranks fourth behind testthat, glue, and Shiny for two R Level 4 places.",
+      "reconsider": "Reconsider if an R Level 4 place opens, a fresh comparison raises mutate above a retained entry, or data-mask, grouping, recycling, native evaluation, documentation, or focused-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether table semantics failed the domain gate and how broadly to include dplyr internals. Root reconciliation treats ordinary table and group context as subordinate, bounds the trace to mutate and its DataMask/native evaluator, resolves 4/4/3/4, and removes it only at Level 4 rank 4."
+      }
+    },
+    {
+      "repository": "tidyverse/ggplot2",
+      "language": "R",
+      "prior_level": 4,
+      "pinned_commit": "6870419aa6e106c3580c45c81d5b688cb31758bd",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "ggproto provides inheritance and method dispatch for ggplot2 components such as Geom prototypes."
+        ],
+        "evidence": "Plot-component vocabulary is brief; the replacement path teaches prototype inheritance, parent-method dispatch, environment-backed objects, cloning, method binding, extension contracts, and direct tests without the full plot-build pipeline."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "R/ggproto.R contains the prototype system and dispatch helpers, geom-.R shows a representative extension consumer, and test-ggproto.R plus test-layer.R verify inheritance, parent calls, fields, methods, copying, errors, and integration with layers.",
+      "learning_path": {
+        "goal": "Understand how ggplot2 implements prototype inheritance and bound methods in R and uses that system for extensible plot components.",
+        "start_path": "R/ggproto.R",
+        "supporting_files": [
+          "R/geom-.R",
+          "tests/testthat/test-ggproto.R",
+          "tests/testthat/test-layer.R"
+        ],
+        "trace": "Start with ggproto object construction and parent links, follow field lookup and bound method dispatch including parent-method calls, then inspect Geom as a representative extension contract; close with ggproto and layer tests for inheritance, copying, dispatch, errors, and integration."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "environment-backed prototype objects",
+            "dynamic method binding and parent dispatch",
+            "custom printing, lookup, and cloning behavior"
+          ],
+          "reason": "Advanced R object-system and metaprogramming techniques recur across ggproto."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "local and inherited lookup",
+            "field and method outcomes",
+            "construction, copy, and error branches"
+          ],
+          "reason": "A few related dispatch states recur without the nonlocal behavior of a full plot build."
+        },
+        "design_span": {
+          "signals": [
+            "ggproto core",
+            "representative Geom consumer",
+            "direct object and layer tests"
+          ],
+          "reason": "A compact core and one extension consumer form the bounded lesson."
+        },
+        "constraint_burden": {
+          "signals": [
+            "lookup and parent dispatch must preserve receiver identity",
+            "methods and fields must remain distinguishable",
+            "copying and extension contracts must avoid accidental shared mutation"
+          ],
+          "reason": "Several inheritance and extension guarantees recur but remain locally testable."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and the published calibration scores 4/2/2/3 sum to 11, whose mean of 2.75 calculates to Level 3; ggproto ranks second of two qualified R Level 3 paths.",
+      "reconsider": "Reconsider if the published calibration anchor changes, or prototype inheritance, method dispatch, extension, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog's plot-build path was broader than the exact calibration evidence. Root reconciliation replaces it with the clearer ggproto extension path, preserves the published 4/2/2/3 scores, and resolves Level 3 rank 2 and retention."
+      }
+    },
+    {
+      "repository": "rstudio/shiny",
+      "language": "R",
+      "prior_level": 4,
+      "pinned_commit": "81844600fc15f1952838546faa6699d0506ce7f9",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An Observable tracks reactive dependencies and invalidates scheduled Observers when its value becomes stale."
+        ],
+        "evidence": "Reactive-graph vocabulary is concise; the bounded path teaches captured expressions, dependency registration, invalidation propagation, priority scheduling, domains, flush cycles, weak references, error state, and direct tests without Shiny application or TypeScript breadth."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "reactives.R defines Observable and Observer state, react.R owns dependency and flush coordination, priorityqueue.R makes execution order explicit, reactive-domains.R scopes lifecycle callbacks, and test-reactivity.r directly covers invalidation, scheduling, priorities, errors, isolation, domains, suspension, and cleanup.",
+      "learning_path": {
+        "goal": "Understand how Shiny records reactive dependencies, propagates invalidation, and schedules Observers through priority-ordered flush cycles.",
+        "start_path": "R/reactives.R",
+        "supporting_files": [
+          "R/react.R",
+          "R/priorityqueue.R",
+          "R/reactive-domains.R",
+          "tests/testthat/test-reactivity.r"
+        ],
+        "trace": "Start with Observable and Observer construction and execution, follow dependency registration into invalidation callbacks and the priority queue, then trace flush, suspension, errors, and domain lifecycle; close with direct reactivity tests. Application and TypeScript breadth are excluded."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "R6-style mutable reactive objects",
+            "captured expression and context evaluation",
+            "callbacks, weak references, and priority queue integration"
+          ],
+          "reason": "Advanced R evaluation and mutable-object techniques recur across reactivity."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "clean, running, invalidated, scheduled, suspended, errored, destroyed, and flushed states",
+            "dependency registration and cascading invalidation",
+            "priority, isolation, domain, error, and re-entrancy branches"
+          ],
+          "reason": "Many tightly coupled reactive states and nonlocal transitions recur in ordinary use."
+        },
+        "design_span": {
+          "signals": [
+            "Observable and Observer core",
+            "dependency and flush coordinator",
+            "priority queue and domain support",
+            "direct reactivity tests"
+          ],
+          "reason": "A few cohesive components cover the bounded reactive subsystem, not the whole application framework."
+        },
+        "constraint_burden": {
+          "signals": [
+            "dependencies must invalidate exactly the correct downstream observers",
+            "priority, batching, suspension, and re-entrancy must preserve deterministic flush behavior",
+            "errors, domains, destruction, and cleanup must not leave stale graph state"
+          ],
+          "reason": "Expert graph, ordering, lifecycle, error, and cleanup constraints recur throughout reactivity."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/5/3/5 sums to 17, whose mean of 4.25 calculates to Level 4; Shiny reactivity ranks third behind testthat and glue for two R Level 4 places.",
+      "reconsider": "Reconsider if an R Level 4 place opens, a fresh comparison raises reactivity above a retained entry, or invalidation, scheduling, domain, error, cleanup, documentation, or focused-test evidence materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on including shinyapp and TypeScript surfaces and whether broad framework design forced Level 5. Root reconciliation scores only Observable, Observer, flush, priority, and domain behavior, keeps the lower Design 3 anchor, resolves 4/5/3/5 at Level 4, and removes it only at rank 3."
+      }
+    },
+    {
+      "repository": "nimble-dev/nimble",
+      "language": "R",
+      "prior_level": 5,
+      "pinned_commit": "0181166733112cdaaf4edf7d7b0817a8f03cbdac",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A nimbleFunction declares typed setup and run code that NIMBLE specializes, generates as C++, compiles, and exposes back to R."
+        ],
+        "evidence": "The selected compiler path needs typed arithmetic and native-interface vocabulary, not Bayesian or statistical expertise; it teaches custom AST and type processing, project compilation state, code generation, native registration, reflection, specialization, and R/C++ interoperability."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "nimbleFunction_core.R defines the user-authored function abstraction, nimbleProject.R owns compilation state, nimbleFunction_compile.R and genCpp_generateCpp.R perform specialization and C++ generation, cppInterfaces_nimbleFunctions.R exposes compiled objects, and test-nimbleFunctionInterfaces.R closes the typed arithmetic compiler and interface trace. The repository contains substantial first-party R despite GitHub's C++ label, and relevant files carry a BSD-3-Clause or GPL-2.0-or-later mixture rather than one uniform whole-tree license.",
+      "learning_path": {
+        "goal": "Understand how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface.",
+        "start_path": "packages/nimble/R/nimbleFunction_core.R",
+        "supporting_files": [
+          "packages/nimble/R/nimbleProject.R",
+          "packages/nimble/R/nimbleFunction_compile.R",
+          "packages/nimble/R/genCpp_generateCpp.R",
+          "packages/nimble/R/cppInterfaces_nimbleFunctions.R",
+          "packages/nimble/tests/testthat/test-nimbleFunctionInterfaces.R"
+        ],
+        "trace": "Start with nimbleFunction setup and typed run declarations, follow specialization and type information into nimbleProject compilation state and generated C++, then trace compilation and native interface creation back to callable R objects; close with interface tests using typed arithmetic and ordinary compiled functions, without Bayesian model evidence."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 5,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "captured R code and custom type specialization",
+            "AST transformation and generated C++",
+            "reflection and native R/C++ interface construction"
+          ],
+          "reason": "Multiple expert R metaprogramming, compiler, and interoperation mechanisms recur throughout the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "declared, specialized, generated, compiling, loaded, callable, and failed states",
+            "setup and run separation",
+            "type, code-generation, compiler, loading, and interface branches"
+          ],
+          "reason": "Several advanced compiler lifecycle states recur, though the typed arithmetic trace is bounded below broad expert runtime behavior."
+        },
+        "design_span": {
+          "signals": [
+            "nimbleFunction language surface",
+            "project and compilation coordinator",
+            "type and code-generation pipeline",
+            "native interface layer",
+            "end-to-end interface tests"
+          ],
+          "reason": "Multiple major compiler and runtime-interface components coordinate end to end."
+        },
+        "constraint_burden": {
+          "signals": [
+            "R semantics and inferred types must map coherently to generated C++",
+            "generated declarations, compiled symbols, and R interfaces must agree",
+            "project caching, compilation failure, loading, ownership, and cleanup must remain safe"
+          ],
+          "reason": "Expert semantic, type, generation, native ABI, lifecycle, and failure constraints recur throughout compilation."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass on the compiler replacement and 5/4/5/5 sums to 19, whose mean of 4.75 reaches Level 5 with three dimensions scored 5; NIMBLE compiler ranks second of two qualified R Level 5 paths.",
+      "reconsider": "Reconsider if the typed compiler, code-generation, project, native-interface, first-party R, per-file license, documentation, or direct interface-test evidence materially changes, or a stronger R Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog's original BUGS_model path hard-fails the coding/domain gate because meaningful study requires specialist Bayesian and statistical-model expertise. That failure is literal and is not used as compiler evidence. Root reconciliation applies the calibration reconsideration condition to the independently verified nimbleFunction compiler and code-generation replacement, which passes both gates without Bayesian evidence and resolves 5/4/5/5, Level 5 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "wch/r-source",
+      "language": "R",
+      "prior_level": 5,
+      "pinned_commit": "780021752eb83a71e2198019acf069ba8741103b",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "R's compiler transforms R expressions and functions into byte-code instructions executed by the R runtime."
+        ],
+        "evidence": "Compiler vocabulary is introduced directly; the R-authored path teaches language-object traversal, lexical environment analysis, constant handling, control-flow compilation, instruction emission, optimization, byte-code objects, and compiler self-tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "compiler.nw is the literate R source of the compiler, generated cmp.R is the shipped implementation, compile.Rd documents the public contract, and basics, loop, environment, and constant tests exercise expression, closure, control-flow, scope, and constant compilation. Pinned copyright evidence supports GPL-2.0-only OR GPL-3.0-only, correcting the catalog's later-version claim.",
+      "learning_path": {
+        "goal": "Understand how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics.",
+        "start_path": "src/library/compiler/noweb/compiler.nw",
+        "supporting_files": [
+          "src/library/compiler/R/cmp.R",
+          "src/library/compiler/man/compile.Rd",
+          "src/library/compiler/tests/basics.R",
+          "src/library/compiler/tests/loop.R",
+          "src/library/compiler/tests/envir.R",
+          "src/library/compiler/tests/const.R"
+        ],
+        "trace": "Start in the literate compiler at expression and function compilation, follow lexical environment and constant analysis through control-flow and instruction emission into the generated cmp.R implementation, then compare the documented compile API; close with basic, loop, environment, and constant tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "recursive manipulation of R language objects",
+            "lexical environment and closure analysis",
+            "instruction construction, dispatch tables, and compiler metaprogramming"
+          ],
+          "reason": "Multiple expert R language and compiler techniques recur throughout the implementation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "parsed, analyzed, optimized, emitted, assembled, and compiled states",
+            "literal, call, branch, loop, closure, environment, and fallback paths",
+            "compile and evaluation error behavior"
+          ],
+          "reason": "Several advanced compiler states and branches recur, while the selected trace remains bounded to byte-code compilation."
+        },
+        "design_span": {
+          "signals": [
+            "literate compiler source",
+            "generated shipped R implementation",
+            "public compile API documentation",
+            "semantic compiler test families"
+          ],
+          "reason": "Several major pieces cover source, generated artifact, API, and semantic verification without mixing in the C runtime."
+        },
+        "constraint_burden": {
+          "signals": [
+            "compiled code must preserve interpreted R semantics and lexical scope",
+            "control flow, constants, promises, environments, and fallbacks must emit valid byte code",
+            "optimization and instruction changes must remain compatible with runtime expectations"
+          ],
+          "reason": "Expert semantic-preservation, scope, control-flow, compatibility, and optimization constraints recur across compilation."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/4/4/5 sums to 18, whose mean of 4.50 reaches Level 5 with two dimensions scored 5; R's byte-code compiler ranks first of two qualified R Level 5 paths.",
+      "reconsider": "Reconsider if compiler semantics, generated source parity, byte-code compatibility, scope, optimization, tests, or the pinned GPL-2.0-only OR GPL-3.0-only licensing evidence materially changes, or a stronger R Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The catalog mixed the language manual and C runtime rather than one R-authored trace. Root reconciliation adopts the literate and generated R compiler path, applies the lower Behavior and Design anchors at 5/4/4/5, corrects the pinned license to GPL-2.0-only OR GPL-3.0-only, and resolves Level 5 rank 1 and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 73,
-      "remove": 37
+      "retain": 81,
+      "remove": 39
     },
     "by_language": {
       "JavaScript": {
@@ -8543,32 +9303,51 @@
           "4": 3,
           "5": 1
         }
+      },
+      "R": {
+        "reviewed": 10,
+        "retain": 8,
+        "remove": 2,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 4,
+          "5": 2
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 22,
-        "retain": 21,
+        "reviewed": 24,
+        "retain": 23,
         "remove": 1
       },
       "2": {
-        "reviewed": 22,
-        "retain": 16,
+        "reviewed": 24,
+        "retain": 18,
         "remove": 6
       },
       "3": {
-        "reviewed": 22,
-        "retain": 14,
-        "remove": 8
+        "reviewed": 24,
+        "retain": 15,
+        "remove": 9
       },
       "4": {
-        "reviewed": 22,
-        "retain": 10,
-        "remove": 12
+        "reviewed": 24,
+        "retain": 11,
+        "remove": 13
       },
       "5": {
-        "reviewed": 22,
-        "retain": 12,
+        "reviewed": 24,
+        "retain": 14,
         "remove": 10
       }
     },
@@ -8579,28 +9358,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 19,
-        "retain": 18,
+        "scored": 21,
+        "retain": 20,
         "remove": 1
       },
       "3": {
-        "scored": 30,
-        "retain": 20,
+        "scored": 32,
+        "retain": 22,
         "remove": 10
       },
       "4": {
-        "scored": 46,
-        "retain": 22,
-        "remove": 24
+        "scored": 50,
+        "retain": 24,
+        "remove": 26
       },
       "5": {
-        "scored": 14,
-        "retain": 13,
+        "scored": 16,
+        "retain": 15,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 36,
+      "qualified_alternate_over_capacity": 38,
       "coding_relevance_domain_gate": 1
     }
   }
