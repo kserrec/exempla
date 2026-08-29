@@ -204,7 +204,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.14 — Kotlin
 
-- [ ] Same objective, work, completion criteria, and dependencies as Step 5.1.
+- [x] Same objective, work, completion criteria, and dependencies as Step 5.1.
 - **Artifacts:** `catalog/kotlin.json`, `languages/kotlin/README.md`, rejection records.
 
 ### Step 5.15 — Scala

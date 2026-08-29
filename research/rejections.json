@@ -184,6 +184,22 @@
       "failed_requirement": "stable in-repository tests",
       "evidence": "The pinned tree contains production source and CI workflows but no behavior test suite; the workflows clone the separate acmesh-official/acmetest default branch without a revision pin, so the tests used for a run cannot be reproduced from the accepted repository revision alone.",
       "reconsider": "Reconsider if behavior tests are included in the repository or the external harness and every required fixture are pinned to immutable revisions recorded with the candidate."
+    },
+    {
+      "repository": "JakeWharton/timber",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "target SDC level",
+      "evidence": "The inspected revision contains 1,240 production lines across the common logging contract, Android implementation, and lint checks; caller-stack tag inference, thread-local tags, multiple trees, platform adaptation, and lint integration support S1/D2/C2, which rounds to SDC 2 rather than the open SDC 1 slot.",
+      "reconsider": "Eligible as an additional Kotlin SDC 2 project, especially for an Android-focused learning path."
+    },
+    {
+      "repository": "Kotlin/kotlinx.collections.immutable",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The 5,698-line production core is a qualified SDC 3 study of persistent vectors, bitmap-indexed hash tries, structural sharing, ownership-aware builders, and contract and stress tests; Clikt and Moshi provide broader domain variety for the initial two SDC 3 slots.",
+      "reconsider": "Eligible for a future data-structures path or any expansion beyond two Kotlin repositories per level."
     }
   ]
 }
