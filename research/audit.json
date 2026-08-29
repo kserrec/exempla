@@ -56,6 +56,31 @@
     ],
     "decision": "Dimension means and median LOC rise monotonically by public level. Reviewed boundary overlap follows the published formula and guardrails; no unexplained inversion or dimension dominance required a score or placement change."
   },
+  "learner_navigation": {
+    "status": "pass",
+    "audited_commit": "6d2e571c6963af92289c150c5bcb2d6ddde0267c",
+    "markdown_files_checked": 27,
+    "relative_links_resolved": 70,
+    "root_to_language_index": true,
+    "language_routes": 20,
+    "level_routes": 100,
+    "rendered_repository_entries": 200,
+    "entries_with_prerequisites": 200,
+    "entries_with_start_links": 200,
+    "entries_with_quality_gate_evidence": 200,
+    "entries_with_license_links": 200,
+    "entries_relying_on_stars_or_popularity": 0,
+    "correction": "README.md had no link to the generated language index. A Browse the catalog route was added and the outdated construction status was updated before the passing audit."
+  },
+  "clean_snapshot_verification": {
+    "status": "pass",
+    "commit": "6d2e571c6963af92289c150c5bcb2d6ddde0267c",
+    "method": "Extracted the committed tree with git archive while explicitly excluding all dotenv naming variants, then ran the checks outside the working tree.",
+    "unit_tests_passed": 13,
+    "catalog_validation_complete": true,
+    "generated_markdown_complete_and_current": true,
+    "audit_json_valid": true
+  },
   "passed_repositories": [
     "Alamofire/Alamofire",
     "Badgerati/Pode",

@@ -265,7 +265,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 6.3 — Run learner-navigation and quality-gate audit
 
-- [ ] **Objective:** Prove the finished repository delivers its promise to a
+- [x] **Objective:** Prove the finished repository delivers its promise to a
   GitHub visitor.
 - **Work:** Traverse README → language → level → repository; verify required
   prose and prerequisites; recheck each quality-gate pass; run all validation,
