@@ -1,0 +1,833 @@
+{
+  "schema_version": 1,
+  "review_started_at": "2026-08-28",
+  "review_completed_at": null,
+  "source_catalog_release": "v1.0.0",
+  "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
+  "current_language_total": 20,
+  "current_entry_total": 200,
+  "reviewed_entry_total": 10,
+  "decisions": [
+    {
+      "repository": "sindresorhus/p-limit",
+      "language": "JavaScript",
+      "prior_level": 1,
+      "pinned_commit": "df476048d023ff868cd45b35ee47f5fb0ca2b25a",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [],
+        "evidence": "The selected path is entirely about transferable promise scheduling, bounded concurrency, state transitions, and error propagation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "One focused runtime module, explicit queue invariants, a narrow documented API, and behavior tests make the path readable, traceable, and maintainable.",
+      "learning_path": {
+        "goal": "Understand how p-limit admits, queues, runs, and completes promise-returning tasks while preserving a concurrency cap.",
+        "start_path": "index.js",
+        "supporting_files": [
+          "test.js",
+          "index.d.ts"
+        ],
+        "trace": "Call the returned generator, follow enqueue as it stores a runnable closure, resumeNext as it increments activeCount, run as it adopts success or failure, and next as it releases capacity; then correlate the concurrency, error, queue, and async-context tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "closures and promise composition",
+            "callable object properties and bound callbacks"
+          ],
+          "reason": "The path uses common professional JavaScript idioms—closures, async functions, promise adoption, property descriptors, and bound callbacks—without expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "FIFO queue state",
+            "microtask scheduling",
+            "success and failure continuation"
+          ],
+          "reason": "Admission, active and pending counts, microtask order, synchronous throws, rejected promises, and queue resumption materially affect the trace."
+        },
+        "design_span": {
+          "signals": [
+            "one runtime module",
+            "one in-memory queue component"
+          ],
+          "reason": "The complete behavior remains in one factory and one source file, with the declaration and tests explaining its public boundary."
+        },
+        "constraint_burden": {
+          "signals": [
+            "hard concurrency bound",
+            "promise error propagation",
+            "async-context and counter accuracy"
+          ],
+          "reason": "A correct change must preserve the concurrency ceiling, queue progress after failures, observable counts, result and rejection adoption, and asynchronous execution context."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: the path passes both gates and the 2/3/1/3 profile calculates to Level 2 without considering catalog demand.",
+      "reconsider": "Reconsider if the queue contract, implementation trace, public source status, license, or focused test protection materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independently confirmed the gates, complete path, 2/3/1/3 scoring, Level 2 formula, and retention."
+      }
+    },
+    {
+      "repository": "mafintosh/pump",
+      "language": "JavaScript",
+      "prior_level": 1,
+      "pinned_commit": "714c0a70a8199104bf65a57582009d42f81d8d94",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Node.js stream emits completion, close, and error events and may own an operating-system resource."
+        ],
+        "evidence": "The short stream context is documented by the project; the path primarily teaches transferable lifecycle coordination, cleanup, and once-only completion."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The small module isolates lifecycle cleanup, preserves the first error, documents its leak-prevention purpose, and exercises real Node and browser stream behavior.",
+      "learning_path": {
+        "goal": "Understand how pump tears down every stream and completes exactly once when a pipeline closes or fails.",
+        "start_path": "index.js",
+        "supporting_files": [
+          "test-node.js",
+          "test-browser.js"
+        ],
+        "trace": "Follow each stream through the destroyer helper and end-of-stream callback, then follow the pump reduction as an error fans cleanup across siblings and the final writable triggers the one callback; confirm closure and returned-stream behavior in both integration scripts."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "callbacks and event emitters",
+            "function composition over stream objects"
+          ],
+          "reason": "Callbacks, event emitters, CommonJS modules, array reduction, and duck-typed stream operations are ordinary professional Node.js idioms."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "close and error event ordering",
+            "once-only destruction state",
+            "cleanup fan-out"
+          ],
+          "reason": "Several asynchronous lifecycle events may arrive in different orders, and local flags coordinate destruction, error preservation, and final completion."
+        },
+        "design_span": {
+          "signals": [
+            "single pipeline module",
+            "one focused destroyer helper"
+          ],
+          "reason": "The whole production behavior fits in one module and one list of streams."
+        },
+        "constraint_burden": {
+          "signals": [
+            "file-descriptor cleanup",
+            "first-error preservation",
+            "legacy stream compatibility"
+          ],
+          "reason": "A correct change must avoid leaks and duplicate callbacks while preserving distinct cleanup behavior for filesystem streams, request streams, and older implementations."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: the path passes both gates and the 2/3/1/3 profile calculates to Level 2.",
+      "reconsider": "Reconsider if supported stream lifecycles, public maintenance evidence, license, or the integration tests no longer justify studying this pinned path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independently confirmed the gates, stream lifecycle path, 2/3/1/3 scoring, Level 2 formula, and retention."
+      }
+    },
+    {
+      "repository": "ai/nanoid",
+      "language": "JavaScript",
+      "prior_level": 2,
+      "pinned_commit": "07a39d62d84c21af5046fe6b2ef7b3e36ee557db",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Mapping random bytes to an alphabet is uniform only when remainder values that would bias a symbol are rejected; the implementation explains this with a concrete 17-symbol example."
+        ],
+        "evidence": "The required probability is elementary and self-contained in source comments; the path mainly teaches secure API use, rejection sampling, typed arrays, validation, portability, and performance-conscious implementation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The implementation explains every non-obvious constant, keeps Node and browser variants aligned, documents its security contract, and tests distribution, bounds, custom alphabets, and runtime behavior.",
+      "learning_path": {
+        "goal": "Understand how Nano ID converts cryptographically random bytes into uniformly distributed custom-alphabet identifiers without runtime-size or modulo-bias errors.",
+        "start_path": "index.js",
+        "supporting_files": [
+          "index.browser.js",
+          "test/index.test.js"
+        ],
+        "trace": "Start with customRandom's cutoff and power-of-two fast path, follow rejected bytes and size validation into the returned generator, compare the browser variant's random source, and verify length, bounds, custom alphabet, and flat-distribution tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "typed arrays and buffers",
+            "closures and bitwise operations"
+          ],
+          "reason": "The path uses common professional typed-array, closure, module, and bitwise idioms rather than metaprogramming or expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized rejection loop",
+            "buffer chunk and offset state"
+          ],
+          "reason": "Several branches and a small retry lifecycle matter, but the state remains local and directly visible."
+        },
+        "design_span": {
+          "signals": [
+            "Node and browser entry points",
+            "shared alphabet and generator contract"
+          ],
+          "reason": "A few explicit runtime modules implement the same small public abstraction."
+        },
+        "constraint_burden": {
+          "signals": [
+            "uniform output distribution",
+            "cryptographic random source",
+            "runtime request limits and performance"
+          ],
+          "reason": "Security, distribution correctness, hostile size conversion, browser random-byte limits, cross-runtime equivalence, collision properties, and hot-path performance interact throughout the selected generator."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: the path passes both gates, is one of JavaScript's two clearest Level 3 paths, and the 2/2/2/4 profile calculates to Level 3.",
+      "reconsider": "Reconsider if its randomness contract comes to require advanced cryptographic theory, its source stops explaining the probability locally, or a stronger qualified Level 3 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independently confirmed the coding gate, rejection-sampling path, 2/2/2/4 scoring, Level 3 formula, top comparative rank, and retention."
+      }
+    },
+    {
+      "repository": "expressjs/express",
+      "language": "JavaScript",
+      "prior_level": 2,
+      "pinned_commit": "023767fe9872e029271df1418f73401bff20ff40",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Node.js HTTP server passes request and response objects through an ordered middleware router."
+        ],
+        "evidence": "The short HTTP and middleware context is documented by Express; the selected behavior teaches reusable adaptation, pipeline, error-finalization, and API design."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Application, request, response, and view responsibilities remain recognizable, the stable public surface is documented, and tests cover mounting, dispatch, responses, and errors; routing implementation is delegated to a separate dependency.",
+      "learning_path": {
+        "goal": "Understand how an Express application adapts native request and response objects, enters middleware routing, and finalizes a response or error.",
+        "start_path": "lib/application.js",
+        "supporting_files": [
+          "lib/express.js",
+          "lib/response.js",
+          "test/app.js",
+          "test/app.use.js",
+          "test/app.router.js",
+          "test/res.send.js"
+        ],
+        "trace": "Start at the public createApplication factory, then follow app.handle as it installs final error handling, links and re-prototypes the native objects, initializes locals, and hands control to the external router; follow response helpers into send and correlate callable applications, mounting, middleware dispatch, router behavior, and observable sends in focused tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "function-object application API",
+            "prototype replacement and lazy properties",
+            "callback middleware composition"
+          ],
+          "reason": "Prototype mutation, callable application objects, lazy router construction, and middleware callbacks materially shape the framework path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous middleware flow",
+            "mounting and error paths",
+            "request-response lifecycle"
+          ],
+          "reason": "Routing callbacks, mounted applications, response completion, and error finalization create nontrivial behavior across one request."
+        },
+        "design_span": {
+          "signals": [
+            "application-router boundary",
+            "request, response, and final-handler layers"
+          ],
+          "reason": "The trace crosses several meaningful framework boundaries, including a separately packaged router, while their responsibilities remain understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "HTTP semantics",
+            "security-sensitive response handling",
+            "long-lived API compatibility"
+          ],
+          "reason": "Headers, body types, methods, errors, native object behavior, security encoding, and extensive backward compatibility interact across the path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: the 3/3/3/4 profile honestly calculates to Level 3, but Nano ID and jQuery provide clearer self-contained paths for the two available JavaScript Level 3 places.",
+      "reconsider": "Reconsider if a JavaScript Level 3 place opens or the router implementation returns in-repository and a fresh comparison ranks this path above a retained Level 3 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added the omitted public factory plus focused mounting, router, middleware, and response tests at the pinned commit; gate results, scores, formula, and alternate removal were independently confirmed."
+      }
+    },
+    {
+      "repository": "axios/axios",
+      "language": "JavaScript",
+      "prior_level": 3,
+      "pinned_commit": "fede1d1562e308077da7994305d63fb7722b66ac",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP client turns configuration into a request through a runtime-specific transport adapter and returns a response promise."
+        ],
+        "evidence": "The required HTTP context is ordinary and documented; the path primarily teaches interceptor composition, configuration normalization, adapter boundaries, cancellation, transformations, and portable error handling."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Core orchestration is separated from transport details, vocabulary follows the request lifecycle, documentation covers every public stage, and focused and integration tests exercise adapters, cancellation, headers, transforms, and failures.",
+      "learning_path": {
+        "goal": "Understand how an Axios request merges and validates configuration, executes request and response interceptors, dispatches through an adapter, and transforms success or failure.",
+        "start_path": "lib/core/Axios.js",
+        "supporting_files": [
+          "lib/core/dispatchRequest.js",
+          "lib/adapters/http.js",
+          "tests/unit/core/dispatchRequest.test.js",
+          "tests/unit/adapters/http.test.js"
+        ],
+        "trace": "Follow Axios._request from merge and header flattening through synchronous or promise-based interceptor chains, dispatchRequest's cancellation and transforms, the selected adapter, and response or rejection normalization; then correlate dispatch, transformation, cancellation, transport, and failure behavior in the focused tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "classes and promise chains",
+            "adapter and interceptor composition"
+          ],
+          "reason": "The implementation uses conventional classes, closures, promises, object normalization, and composable adapters familiar in professional JavaScript."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "synchronous and asynchronous interceptor branches",
+            "cancellation and error continuations",
+            "request and response transformations"
+          ],
+          "reason": "Interceptor order, thenable recovery, cancellation checkpoints, adapter settlement, and success versus error transformations materially affect the trace."
+        },
+        "design_span": {
+          "signals": [
+            "configuration and core layers",
+            "dispatch and runtime adapter boundary",
+            "header, transform, and error helpers"
+          ],
+          "reason": "A request crosses several meaningful but locally understandable modules and an environment-specific adapter."
+        },
+        "constraint_burden": {
+          "signals": [
+            "browser and Node compatibility",
+            "HTTP and cancellation semantics",
+            "safe configuration and stable errors"
+          ],
+          "reason": "Cross-runtime transports, header rules, streams, cancellation, proxy behavior, unsafe inherited configuration, error identity, and backward compatibility interact across normal changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: the path passes both gates and the 2/3/3/4 profile calculates to Level 3, but Nano ID and jQuery rank ahead for the two available JavaScript Level 3 places.",
+      "reconsider": "Reconsider if a JavaScript Level 3 place opens or a fresh comparison ranks this request-and-adapter path above a retained Level 3 entry.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Replaced the misaligned Axios stack-decoration test with focused dispatchRequest and HTTP-adapter tests; independently ranked third among the four qualified Level 3 paths, so removal replaces retention."
+      }
+    },
+    {
+      "repository": "jquery/jquery",
+      "language": "JavaScript",
+      "prior_level": 3,
+      "pinned_commit": "71c0dd14927c41d1aab5ce5ef2687d7808a4186b",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A DOM element is a browser object, and a jQuery collection wraps zero or more elements behind a chainable API."
+        ],
+        "evidence": "The short DOM context is sufficient; collection construction, prototype design, recursive extension, input classification, compatibility, and security hardening are transferable programming lessons."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The mature module structure and extensive QUnit suite make compatibility branches intentional and reviewable, though long-lived browser and API history makes the selected path less immediately clear than the retained Level 3 paths.",
+      "learning_path": {
+        "goal": "Understand how jQuery constructs an array-like chainable collection from different selector inputs and extends its shared prototype safely.",
+        "start_path": "src/core.js",
+        "supporting_files": [
+          "src/core/init.js",
+          "test/unit/core.js"
+        ],
+        "trace": "Start at the jQuery factory and prototype, follow init as it classifies empty values, DOM nodes, callbacks, IDs, and HTML, then follow extend's shallow and deep copy rules; correlate constructor, extension, recursion, and security cases in the core tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "prototype-based fluent objects",
+            "constructor indirection",
+            "recursive extension and array-like modeling"
+          ],
+          "reason": "Prototype aliasing, constructor indirection, dynamic input classification, array-like collections, and recursive extension materially shape the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "many constructor branches",
+            "localized recursive deep merge",
+            "explicit document-ready and selector callbacks"
+          ],
+          "reason": "Input kind and context select explicit synchronous branches, while recursive merge and ready callbacks remain localized rather than forming a distributed state machine."
+        },
+        "design_span": {
+          "signals": [
+            "core factory and init module",
+            "one shared collection prototype"
+          ],
+          "reason": "The selected behavior stays within a few closely related core modules and their focused tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "browser compatibility",
+            "prototype-pollution defense",
+            "stable historical API and performance"
+          ],
+          "reason": "DOM quirks, accepted selector forms, deep-copy semantics, prototype safety, modular builds, performance, and decades of compatibility interact in the core path."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: the path passes both gates, ranks second among the four qualified JavaScript Level 3 paths, and the corrected 3/2/2/4 profile calculates to Level 3.",
+      "reconsider": "Reconsider if the core and init path stops being directly testable or a fresh comparison identifies a clearer qualified JavaScript Level 3 path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Corrected behavioral reasoning from 3 to 2 because the selected behavior is explicit synchronous branching with localized recursion; independently ranked second, so retention replaces removal."
+      }
+    },
+    {
+      "repository": "prettier/prettier",
+      "language": "JavaScript",
+      "prior_level": 4,
+      "pinned_commit": "0283c8848ecb541c7ea0601ff274799bce1b39e5",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A formatter parses source into an abstract syntax tree, converts it to a layout document, and prints that document under width and option constraints."
+        ],
+        "evidence": "The repository documents the compiler-shaped pipeline, and its hard parts teach transferable parsing adapters, staged transformations, immutable layout representations, deterministic output, and compatibility engineering."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Named pipeline stages isolate difficult algorithms, parser and printer contracts are explicit, contributor documentation is strong, and fixture, snapshot, and integration tests expose syntax, option, cursor, and regression behavior.",
+      "learning_path": {
+        "goal": "Understand how Prettier formats source through parsing, AST-to-document conversion, document printing, and cursor preservation.",
+        "start_path": "src/main/core.js",
+        "supporting_files": [
+          "src/language-js/parse/babel.js",
+          "src/main/ast-to-doc.js",
+          "src/document/printer/printer.js",
+          "src/main/get-cursor-node.js",
+          "tests/format/js/arrays/format.test.js",
+          "tests/format/js/arrays/__snapshots__/format.test.js.snap",
+          "tests/integration/__tests__/cursor-offset.js"
+        ],
+        "trace": "Follow coreFormat into parser resolution and parseText, then through printAstToDoc and the document printer; continue through line-ending, comment, and cursor-node relocation handling, and finish with a concrete JavaScript arrays fixture, its expected snapshot, and cursor-offset integration tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-order asynchronous composition",
+            "plugin objects and AST modeling",
+            "nontrivial option and result shapes"
+          ],
+          "reason": "Higher-order composition, parser plugins, AST and document modeling, and asynchronous stages materially shape the path without pervasive expert JavaScript machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "multi-stage parse-to-print flow",
+            "cursor-node state mapping",
+            "comment and recovery interactions"
+          ],
+          "reason": "Parsing, comment attachment, document layout, cursor-node tracking, diff-based relocation, and error recovery create recurring nonlocal invariants."
+        },
+        "design_span": {
+          "signals": [
+            "parser plugin boundary",
+            "AST-to-document pipeline",
+            "document renderer and fixture matrix"
+          ],
+          "reason": "Many modules, language plugins, intermediate representations, option policies, and test fixtures contribute to one formatting request."
+        },
+        "constraint_burden": {
+          "signals": [
+            "syntax and parser compatibility",
+            "deterministic stable output",
+            "cursor, comment, and line-ending preservation"
+          ],
+          "reason": "A locally plausible change can alter syntax coverage, comments, formatting stability, cursor positions, line endings, plugin behavior, or performance across languages."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: the path passes both gates and the 3/4/4/4 profile calculates to Level 4.",
+      "reconsider": "Reconsider if the formatter pipeline stops being traceable from documented source and fixtures, or if its compatibility burden or public facts materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added the omitted AST-to-document implementation, document printer, concrete fixture/snapshot pair, and cursor implementation/integration test; removed unsupported range claims. Gates, scores, formula, and retention were independently confirmed."
+      }
+    },
+    {
+      "repository": "eslint/eslint",
+      "language": "JavaScript",
+      "prior_level": 4,
+      "pinned_commit": "5634542be580750ffb1a5766470f9e9c72719696",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A linter parses source into an abstract syntax tree and invokes configured rule listeners as that tree is traversed."
+        ],
+        "evidence": "The short static-analysis context is documented; the selected path teaches transferable visitor dispatch, extension isolation, configuration, diagnostics, suppression, conflict-safe fixes, caching, and error handling."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Public orchestration, the linter engine, configuration, rules, and source-code fixer have recognizable responsibilities; extensive tests and extension documentation expose traversal, diagnostics, fixes, suppression, and plugin contracts.",
+      "learning_path": {
+        "goal": "Understand how ESLint parses one source file, creates isolated rule listeners, traverses the source, reports and suppresses diagnostics, and applies safe iterative fixes.",
+        "start_path": "lib/eslint/eslint.js",
+        "supporting_files": [
+          "lib/eslint/eslint-helpers.js",
+          "lib/linter/linter.js",
+          "lib/linter/source-code-fixer.js",
+          "tests/lib/linter/linter.js"
+        ],
+        "trace": "Enter through ESLint.lintText and its configuration and result helpers, continue into Linter verification, parser and SourceCode creation, runRules, rule-context creation, and visitor dispatch, then follow reports through suppression and source-code-fixer passes; confirm message ordering, rule failures, suppression, and autofix behavior in the linter tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-order visitor listeners",
+            "plugin and parser interfaces",
+            "private slots and nontrivial source models"
+          ],
+          "reason": "Visitor callbacks, dynamic rule contexts, plugin interfaces, private state, and structured AST/source models materially shape the path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "event-driven traversal",
+            "multipass autofix",
+            "suppression and error propagation"
+          ],
+          "reason": "Rule listeners, traversal order, processor blocks, inline directives, suppression accounting, fix conflicts, repeated verification, and plugin failures interact nonlocally."
+        },
+        "design_span": {
+          "signals": [
+            "public API and configuration loaders",
+            "parser, source, visitor, rule, and fix subsystems",
+            "result and reporting helpers"
+          ],
+          "reason": "One lint request crosses many extension points, services, representation boundaries, and cross-cutting diagnostic policies."
+        },
+        "constraint_burden": {
+          "signals": [
+            "third-party extension isolation",
+            "stable diagnostics and fix ranges",
+            "parser, configuration, source, and API compatibility"
+          ],
+          "reason": "Correctness, deterministic diagnostics, safe fixes, plugin errors, source ranges, configuration semantics, and compatibility recur throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: the path passes both gates and the 3/4/4/4 profile calculates to Level 4.",
+      "reconsider": "Reconsider if rule isolation, source traceability, documentation, or test coverage materially degrades, or if the inspected public facts change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Routed the trace through ESLint.lintText, added its helpers and the source-code fixer, and removed cache/worker claims outside the selected path; gates, 3/4/4/4 scoring, formula, and retention were independently confirmed."
+      }
+    },
+    {
+      "repository": "react/react",
+      "language": "JavaScript",
+      "prior_level": 5,
+      "pinned_commit": "2dc7da790d6388b95b83198ca9b588b2ad5f5c0b",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A component update is represented as work on a fiber tree and assigned a priority lane before rendering and committing observable effects."
+        ],
+        "evidence": "The repository's tests and source vocabulary make the rendering model learnable; the difficulty comes from transferable scheduling, persistent queues, state machines, interruption, recovery, and side-effect ordering rather than an external specialist discipline."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Package boundaries, explicit phase and lane vocabulary, source invariants, specialized test renderers, scheduler logs, and extensive priority, rebasing, and ordering tests make an expert path evidence-backed despite its breadth.",
+      "learning_path": {
+        "goal": "Understand how React schedules a state update by lane, performs interruptible work on the fiber root, and commits effects in the required order.",
+        "start_path": "packages/react-reconciler/src/ReactFiberWorkLoop.js",
+        "supporting_files": [
+          "packages/react-reconciler/src/ReactFiberReconciler.js",
+          "packages/react-reconciler/src/ReactFiberClassUpdateQueue.js",
+          "packages/react-reconciler/src/ReactFiberRootScheduler.js",
+          "packages/react-reconciler/src/ReactFiberCommitWork.js",
+          "packages/react-reconciler/src/__tests__/ReactIncrementalUpdates-test.js"
+        ],
+        "trace": "Enter through updateContainer and its queued update, follow scheduleUpdateOnFiber as it marks lanes, continue through root scheduling and concurrent or synchronous rendering, then through commitRoot and priority, interruption, rebasing, and commit-order tests using the no-op renderer and scheduler log."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 5,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Flow-modeled recursive data structures",
+            "higher-order scheduling and renderer contracts",
+            "feature-flagged module composition"
+          ],
+          "reason": "Substantial type modeling, higher-order APIs, recursive fiber structures, and framework conventions shape the path, while the hardest burdens are behavioral and architectural rather than JavaScript metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "priority-lane scheduling and interruption",
+            "update rebasing and deferred work",
+            "render and commit phase state machines"
+          ],
+          "reason": "Concurrent state, priority, starvation prevention, interruption, rebasing, deferred work, effects, and commit ordering interact pervasively and require expert nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "reconciler, update queue, root scheduler, and renderer",
+            "concurrent and synchronous render modes",
+            "cross-cutting lane and commit policies"
+          ],
+          "reason": "Understanding the chosen update path requires coordinating major reconciler subsystems, execution modes, renderer contracts, and pervasive scheduling and commit policies."
+        },
+        "constraint_burden": {
+          "signals": [
+            "observable ordering and consistency",
+            "legacy and concurrent compatibility",
+            "latency, starvation, effect, and rebasing guarantees"
+          ],
+          "reason": "Locally plausible changes can violate rendering consistency, update ordering, effects, scheduling fairness, rebasing, compatibility, memory, or performance elsewhere in the path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: the path passes both gates, the 3/5/5/5 mean rounds to 5, and three dimensions independently satisfy the Level 5 contract.",
+      "reconsider": "Reconsider if this update path becomes unrepresentative, cannot be traced through public tests, or comes to require an external domain rather than expert programming knowledge.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added the update-queue, root-scheduler, and commit-work implementations needed by the trace and removed unsupported server/compiler/suspense breadth; gates, scores, formula, and retention were independently confirmed."
+      }
+    },
+    {
+      "repository": "nodejs/node",
+      "language": "JavaScript",
+      "prior_level": 5,
+      "pinned_commit": "4215cc35e25c44f9f4fea5a4541afc862db7ef0a",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "CommonJS require resolves a module specifier, caches module instances to support reuse and cycles, wraps source with module variables, and executes it in the runtime."
+        ],
+        "evidence": "The documented module model is sufficient context; the selected path's difficulty is transferable runtime, cache, resolution, compilation, compatibility, security, and error-recovery engineering."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Established internal boundaries and vocabulary, hardened primordial operations, detailed comments, API documentation, and large module-loading regression suites make the expert runtime path traceable and maintainable.",
+      "learning_path": {
+        "goal": "Understand how Node.js resolves, caches, loads, compiles, and returns a classic CommonJS module while handling built-ins, cycles, extensions, and failures.",
+        "start_path": "lib/internal/modules/cjs/loader.js",
+        "supporting_files": [
+          "doc/api/modules.md",
+          "test/sequential/test-module-loading.js",
+          "test/parallel/test-module-cache.js"
+        ],
+        "trace": "Start with the documented CommonJS loading model and Module._load, follow relative and module-cache fast paths, circular-export handling, Module._resolveFilename, instance creation, then Module.prototype._compile and wrapSafe; correlate main-module, extension, path, cache, cycle, load-error, and failed-resolution invalidation cases in the module-loading tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 5,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "dynamic source compilation and wrappers",
+            "hardened primordial calls and proxies",
+            "internal bindings and loader machinery"
+          ],
+          "reason": "Dynamic compilation, proxy behavior, symbol-keyed internal state, hardened built-ins, format detection, and native runtime interfaces recur throughout the loader."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "resolution and cache state machines",
+            "circular and failed loads",
+            "CommonJS, built-in, extension, and compilation paths"
+          ],
+          "reason": "Caches, parent-child relationships, cycles, rollback, format detection, resolution, extensions, and compilation interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "resolver, cache, compiler, VM, and built-ins",
+            "runtime and filesystem boundaries",
+            "platform-wide compatibility policies and tests"
+          ],
+          "reason": "The familiar require path coordinates several major runtime subsystems and pervasive policy mechanisms."
+        },
+        "constraint_burden": {
+          "signals": [
+            "language and package compatibility",
+            "security and cache correctness",
+            "startup performance, cycles, errors, and cross-platform behavior"
+          ],
+          "reason": "A loader change can break security boundaries, cache identity, cycles, package resolution, built-ins, source maps, performance, diagnostics, or long-standing cross-platform compatibility."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: the path passes both gates, the 4/5/5/5 mean rounds to 5, and three dimensions independently satisfy the Level 5 contract.",
+      "reconsider": "Reconsider if the CommonJS path ceases to be representative or traceable, or if public metadata, license, source quality, documentation, or tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree_after_correction",
+        "notes": "Added the pinned CommonJS documentation, narrowed unsupported hook/ESM claims to the classic loading path, and described the cache test as failed-resolution invalidation rather than execution rollback; gates, scores, formula, and retention were independently confirmed."
+      }
+    }
+  ],
+  "summary": {
+    "decisions": {
+      "retain": 8,
+      "remove": 2
+    },
+    "by_language": {
+      "JavaScript": {
+        "reviewed": 10,
+        "retain": 8,
+        "remove": 2,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 4,
+          "4": 2,
+          "5": 2
+        }
+      }
+    },
+    "by_prior_level": {
+      "1": {
+        "reviewed": 2,
+        "retain": 2,
+        "remove": 0
+      },
+      "2": {
+        "reviewed": 2,
+        "retain": 1,
+        "remove": 1
+      },
+      "3": {
+        "reviewed": 2,
+        "retain": 1,
+        "remove": 1
+      },
+      "4": {
+        "reviewed": 2,
+        "retain": 2,
+        "remove": 0
+      },
+      "5": {
+        "reviewed": 2,
+        "retain": 2,
+        "remove": 0
+      }
+    },
+    "by_new_level": {
+      "1": {
+        "scored": 0,
+        "retain": 0,
+        "remove": 0
+      },
+      "2": {
+        "scored": 2,
+        "retain": 2,
+        "remove": 0
+      },
+      "3": {
+        "scored": 4,
+        "retain": 2,
+        "remove": 2
+      },
+      "4": {
+        "scored": 2,
+        "retain": 2,
+        "remove": 0
+      },
+      "5": {
+        "scored": 2,
+        "retain": 2,
+        "remove": 0
+      }
+    },
+    "removal_reasons": {
+      "qualified_alternate_over_capacity": 2
+    }
+  }
+}
