@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 140,
+  "reviewed_entry_total": 150,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -10532,12 +10532,734 @@
         "status": "agree",
         "notes": "Independent inspection confirmed the same bounded JVM CLI pipeline through frontend, FIR-to-IR, backend, and output, both gate passes, 5/5/5/5 scores, satisfaction of the Level 5 guard, Level 5 rank 2, and retention. GitHub supplies no repository-wide license identifier at this pin; license/LICENSE.txt covers JetBrains-authored code under Apache-2.0 and license/README.md documents third-party exceptions, so the record does not claim one unqualified SPDX license for every file."
       }
+    },
+    {
+      "repository": "softwaremill/retry",
+      "language": "Scala",
+      "prior_level": 1,
+      "pinned_commit": "f5d887b23adb8c34b2dc891a4d25a6263e300c48",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A retry policy classifies a Future result, chooses whether and when to try deferred work again, and optionally modifies the delay with backoff or jitter."
+        ],
+        "evidence": "The small retry vocabulary is subordinate to transferable lessons in deferred computation, asynchronous recursion, policy composition, type-class predicates, delay scheduling, bounded arithmetic, and failure propagation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Policy, Defaults, Success, and Jitter have narrow named responsibilities; PolicySpec and JitterSpec directly cover attempt counts, by-name evaluation, failures, timing, conditions, caps, bounds, and overflow; the README documents every policy and the external odelay timer boundary; and the exact public pin, MIT license, compact maintained implementation, and observable tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a compact Scala library composes nonblocking retry policies around deferred Future work while preserving result, delay, and failure contracts.",
+        "start_path": "retry/src/main/scala/Policy.scala",
+        "supporting_files": [
+          "retry/src/main/scala/Defaults.scala",
+          "retry/src/main/scala/Jitter.scala",
+          "retry/src/main/scala/Success.scala",
+          "retry/src/test/scala/PolicySpec.scala",
+          "retry/src/test/scala/JitterSpec.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Policy's directly, pause, backoff, conditional, and fail-fast implementations; follow deferred Future evaluation through Success classification, countdown recursion, Defaults and odelay scheduling, then close capped delay, jitter, attempt-count, timing, and failure behavior in the two focused suites. Timer is supplied by the external odelay dependency, so no nonexistent repository-local Timer.scala is listed."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic Future policies and deferred by-name work",
+            "contravariant implicit Success type class",
+            "higher-order and partial-function policy decorators"
+          ],
+          "reason": "Generics, Futures, type-class dispatch, and higher-order composition materially shape the path without recurring expert metaprogramming or type machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous recursive retries",
+            "countdown and condition state",
+            "scheduled delays, success classification, and failure propagation"
+          ],
+          "reason": "The learner must follow asynchronous repetition and policy state across Future completion while the lifecycle remains bounded to one retry operation."
+        },
+        "design_span": {
+          "signals": [
+            "policy and default scheduling boundary",
+            "success and jitter strategies",
+            "two direct contract suites"
+          ],
+          "reason": "A few cohesive modules and one external timer boundary contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "work must remain deferred and nonblocking",
+            "attempt counts and failure values must remain exact",
+            "backoff caps, jitter bounds, timing, and overflow must stay valid"
+          ],
+          "reason": "Several asynchronous, arithmetic, timing, and API guarantees constrain ordinary policy changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; retry ranks first of the two qualified Scala Level 3 paths.",
+      "reconsider": "Reconsider if deferred execution, retry counts, delay scheduling, jitter or overflow contracts, direct tests, documentation, MIT licensing, or relative Scala Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the Policy-to-Success/Jitter/test trace, 3/3/2/3 scores, Level 3 rank 1, and retention. Both reviews also confirmed that Timer comes from odelay and that no repository-local Timer.scala may be recorded."
+      }
+    },
+    {
+      "repository": "typelevel/case-insensitive",
+      "language": "Scala",
+      "prior_level": 1,
+      "pinned_commit": "2b28be5341a0f1c6bc5c00a8486622f26018ae9c",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A CIString compares, hashes, orders, interpolates, and extracts strings using locale-independent case-insensitive semantics."
+        ],
+        "evidence": "The short text vocabulary is subordinate to reusable programming lessons in value-object invariants, equality and hash contracts, cached computation, ordering, type-class instances, compatibility shims, property testing, and Unicode edge cases."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "CIString centralizes and documents equality, hash, ordering, and Cats instances; platform-version interpolation stays isolated; CIStringSuite and TurkeySuite directly enforce laws and Unicode boundaries; the README explains the artifact; and the exact public pin, Apache-2.0 license, tiny maintained surface, and complete observable trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a small Scala value type preserves lawful case-insensitive equality, hashing, ordering, interpolation, and Unicode behavior.",
+        "start_path": "core/src/main/scala/org/typelevel/ci/CIString.scala",
+        "supporting_files": [
+          "core/src/main/scala/org/typelevel/ci/package.scala",
+          "core/src/main/scala-3/org/typelevel/ci/compat.scala",
+          "tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala",
+          "tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with CIString equality, cached normalized hashing, ordering, containment, and Cats instances; follow the package and Scala 3 compatibility layers into interpolation and extraction; then close equality/hash laws, serialization, containment, Turkish-I, and sharp-s behavior in the direct suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "immutable value abstraction with companion instances",
+            "Cats Order, Hash, LowerBounded, Monoid, and Show instances",
+            "cross-version interpolator and extractor compatibility"
+          ],
+          "reason": "Type-class instances and compatibility abstractions materially shape the public value semantics without advanced metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized equality and ordering branches",
+            "cached hash calculation",
+            "synchronous string transformation"
+          ],
+          "reason": "The behavior is subtle but remains a synchronous localized value transformation with no nonlocal lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "one core value type and companion",
+            "thin version compatibility shim",
+            "direct property suites"
+          ],
+          "reason": "One abstraction contains the meaningful production behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "equals and hashCode must remain substitutable",
+            "ordering and Cats laws must agree with equality",
+            "Unicode and cross-platform interpolation behavior must remain stable"
+          ],
+          "reason": "Several semantic, algebraic, Unicode, serialization, and compatibility guarantees constrain the small implementation."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/1/3 sums to 9, whose mean of 2.25 is Level 2; case-insensitive is the sole qualified Scala Level 2 path and ranks first.",
+      "reconsider": "Reconsider if equality, hashing, ordering, Unicode, interpolation, law tests, documentation, Apache-2.0 licensing, or relative Scala Level 2 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed CIString.scala as the clearest start, both gate passes, the value-semantics path and direct tests, 3/2/1/3 scores, Level 2 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "scopt/scopt",
+      "language": "Scala",
+      "prior_level": 2,
+      "pinned_commit": "f1906911a989320a87c0670fb2e654d48731747d",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A command-line parser maps option, positional, and command tokens into a typed application configuration and explicit effects."
+        ],
+        "evidence": "The concise command-line vocabulary is subordinate to transferable lessons in generic readers, declarative builders, immutable descriptions, token-state execution, recursive commands, validation, and effect separation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "OParser, OptionDef, ORunner, and Read expose distinct declaration, representation, execution, and conversion responsibilities; ImmutableParserSpec and MonadicParserSpec directly cover both APIs, token forms, commands, validation, rendering, fallback, and effects; the README supplies complete examples; and the exact public pin, MIT license, multiplatform maintenance, and traceable behavior satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how scopt turns a typed declarative option DSL into token matching, configuration updates, validation, and separately interpreted effects.",
+        "start_path": "shared/src/main/scala/scopt/OParser.scala",
+        "supporting_files": [
+          "shared/src/main/scala/scopt/OptionDef.scala",
+          "shared/src/main/scala/scopt/ORunner.scala",
+          "shared/src/main/scala/scopt/Read.scala",
+          "shared/src/test/scala/scopttest/ImmutableParserSpec.scala",
+          "shared/src/test/scala/scopttest/MonadicParserSpec.scala",
+          "README.md",
+          "LICENSE.md"
+        ],
+        "trace": "Start with OParser's typed builder operations, follow the resulting OptionDefs into ORunner's token loop, pending options and arguments, commands, occurrence checks, configuration actions, validation, and emitted effects, then close both supported parser APIs in the direct suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic typed Read instances",
+            "immutable builder DSL and higher-order configuration actions",
+            "algebraic option kinds and explicit effects"
+          ],
+          "reason": "Generics, typed readers, higher-order updates, and algebraic descriptions recur without expert language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "synchronous token-consumption loop",
+            "pending option, positional, and command branches",
+            "localized validation and fallback behavior"
+          ],
+          "reason": "The parser has meaningful state and branching, but the selected lifecycle remains synchronous and locally inspectable."
+        },
+        "design_span": {
+          "signals": [
+            "declarative parser facade",
+            "option representation and typed conversion",
+            "runner, validation, effect, and dual-API test boundaries"
+          ],
+          "reason": "Several meaningful declaration, representation, execution, conversion, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "short, long, grouped, attached, command, and positional token forms",
+            "occurrence, fallback, validation, and usage contracts",
+            "functional and object-oriented API parity across platforms"
+          ],
+          "reason": "Several syntax, validation, API, rendering, and portability guarantees constrain parser changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/2/3/3 sums to 11, whose mean of 2.75 rounds to Level 3; scopt ranks second of the two qualified Scala Level 3 paths.",
+      "reconsider": "Reconsider if token execution, validation, effects, dual-API parity, direct tests, documentation, MIT licensing, or relative Scala Level 3 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the OParser-to-ORunner path, the lower Behavior-2 anchor, 3/2/3/3 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "com-lihaoyi/requests-scala",
+      "language": "Scala",
+      "prior_level": 2,
+      "pinned_commit": "e3619c19ef551067d2979ced99b434d45bb60986",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A synchronous HTTP client builds a request, owns or shares a Java HttpClient, follows redirects, persists cookies, decodes a response, and releases transport resources."
+        ],
+        "evidence": "The bounded HTTP vocabulary is documented in the repository and remains subordinate to transferable lessons in facade design, Java interoperability, stateful sessions, recursive control flow, streaming ownership, cleanup, and failure normalization."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Requester, Session, package facade, and request/response models have clear responsibilities; RequestTests and ResourceLeakTests directly cover redirects, cookies, compression, timeouts, failures, streaming, and resource bounds; the readme documents the entire public client; and the exact public pin, MIT license, compact implementation, and observable local tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how requests-scala turns one friendly synchronous call into transport configuration, redirects, cookies, streaming response handling, and explicit client cleanup.",
+        "start_path": "requests/src/requests/Requester.scala",
+        "supporting_files": [
+          "requests/src/requests/Session.scala",
+          "requests/src/requests/Model.scala",
+          "requests/src/requests/package.scala",
+          "requests/test/src/requests/RequestTests.scala",
+          "requests/test/src/requests/ResourceLeakTests.scala",
+          "readme.md",
+          "LICENSE"
+        ],
+        "trace": "Start at Requester.stream, follow URL, header, body, shared-or-temporary Java HttpClient, synchronized cookie, redirect recursion, decompression, response construction, exception mapping, and finally-based stream and executor cleanup, then close protocol and thread-leak contracts in the direct tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Scala facade and generic request-body conversions",
+            "Java HttpClient and stream interoperability",
+            "higher-order session defaults and platform reflection fallback"
+          ],
+          "reason": "Substantial Scala and Java abstractions shape the implementation without recurring expert type or metaprogramming techniques."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive redirects and cookie-session state",
+            "stream and temporary-client ownership lifecycle",
+            "decompression, timeout, exception, and cleanup interactions"
+          ],
+          "reason": "Resource lifecycle, recursive transport behavior, mutable session state, and recovery interact across normal and failure paths."
+        },
+        "design_span": {
+          "signals": [
+            "public facade and requester",
+            "session and Java transport boundary",
+            "request and response models plus integration tests"
+          ],
+          "reason": "Several meaningful API, session, transport, model, and verification boundaries cooperate in one client."
+        },
+        "constraint_burden": {
+          "signals": [
+            "redirect, cookie, authentication, compression, and timeout semantics",
+            "buffered and streaming response ownership",
+            "temporary executor cleanup and bounded thread growth",
+            "JDK-version and TLS compatibility"
+          ],
+          "reason": "Protocol, resource, timing, compatibility, and security-adjacent transport guarantees interact throughout the request lifecycle."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; requests-scala ranks fourth behind http4s, Circe, and uPickle among four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if a Scala Level 4 slot opens, the request or resource-lifecycle contracts materially improve, or its relative educational clarity surpasses a retained Level 4 path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the Requester.stream resource-lifecycle path, 3/4/3/4 scores, Level 4 rank 4, and capacity-only removal."
+      }
+    },
+    {
+      "repository": "com-lihaoyi/upickle",
+      "language": "Scala",
+      "prior_level": 3,
+      "pinned_commit": "87e0b24b8c811e174ebd680839e4edf1e62abe71",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A case-class JSON codec derives readers and writers at compile time, then drives a format-neutral visitor to decode or encode product and sum values."
+        ],
+        "evidence": "Serialization vocabulary is short and subordinate to transferable lessons in inline derivation, quoted macros, mirrors, visitor protocols, generated product and sum handling, recursive type classes, validation, defaults, and compatibility."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Api exposes the public read/write entry, Visitor defines the runtime protocol, Scala 3 Readers, Writers, and macros isolate derivation machinery, CaseClassReadWriters owns shared product behavior, and MacroTests directly close generated-code contracts; the readme documents codecs and customization; and the exact public pin, MIT license, maintained modules, and coherent bounded trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how uPickle derives a Scala 3 case-class JSON codec and connects generated product or sum logic to a format-neutral runtime visitor.",
+        "start_path": "upickle/src/upickle/Api.scala",
+        "supporting_files": [
+          "upickle/core/src/upickle/core/Visitor.scala",
+          "upickle/implicits/src/upickle/implicits/CaseClassReadWriters.scala",
+          "upickle/implicits/src-3/upickle/implicits/MacroImplicits.scala",
+          "upickle/implicits/src-3/upickle/implicits/Readers.scala",
+          "upickle/implicits/src-3/upickle/implicits/Writers.scala",
+          "upickle/implicits/src-3/upickle/implicits/macros.scala",
+          "upickle/test/src/upickletest/MacroTests.scala",
+          "readme.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Api read, write, and default entry points; follow the implicit Reader or Writer into Scala 3 Mirror and quoted-macro derivation, generated case-class field visitors, product or sum tagging, defaults and unknown or missing keys, then close compile-time and runtime codec contracts in MacroTests. JSON parser and MessagePack breadth are excluded from the scored derivation path."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Scala 3 inline Mirror product and sum derivation",
+            "quoted reflection macros and generated snippets",
+            "recursive generic Reader and Writer type classes",
+            "visitor variance, casts, and compile-time field metadata"
+          ],
+          "reason": "Expert macro, mirror, generic, and type-class machinery is pervasive in the bounded derivation-to-visitor path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive visitor traversal",
+            "field-index and object-context state",
+            "default, missing, unknown, product, and sum branches"
+          ],
+          "reason": "Generated codecs coordinate nontrivial traversal and validation state while remaining synchronous and bounded."
+        },
+        "design_span": {
+          "signals": [
+            "public API and type-class entry",
+            "compile-time derivation modules",
+            "runtime visitor and case-class codec boundary",
+            "direct macro contract tests"
+          ],
+          "reason": "Several meaningful public, compile-time, runtime, and verification boundaries cooperate in one codec path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "product, sum, tag, default, missing, and unknown-field compatibility",
+            "recursive and currently-deriving safeguards",
+            "Scala-version macro and generated-code compatibility",
+            "stable wire output and actionable failures"
+          ],
+          "reason": "Multiple interacting derivation, wire, validation, recursion, and compatibility guarantees recur throughout the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove only for capacity: both gates pass and 5/3/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; Language 5 also triggers the minimum-Level-4 guard, and uPickle ranks third behind http4s and Circe among four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if a Scala Level 4 slot opens, the Scala 3 derivation or visitor contracts materially improve, or its relative educational clarity surpasses a retained Level 4 path.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, 5/3/3/4 scores, Level 4 rank 3, and capacity removal, but initially selected different path starts and breadth. Root reconciliation chose Api.scala as the honest public entry and bounded the trace to verified Scala 3 derivation, Visitor, shared case-class codec machinery, and MacroTests; the broader format-first path is excluded."
+      }
+    },
+    {
+      "repository": "circe/circe",
+      "language": "Scala",
+      "prior_level": 3,
+      "pinned_commit": "2fb611bb49619e4287b6ac048d2283c2781f4943",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A JSON decoder traverses a cursor, produces typed values or precise failures, and can fail fast or accumulate independent errors."
+        ],
+        "evidence": "The small JSON vocabulary is subordinate to transferable lessons in higher-kinded type classes, recursive traversal, cursor state and history, applicative error accumulation, validation, and stack-safe composition."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Decoder, ACursor, HCursor, and Json expose distinct typed-decoding, navigation, success-or-failure, and data-model responsibilities; DecoderSuite directly covers primitive, collection, product, recursive, missing-field, history, fail-fast, and accumulating behavior; the README documents the library; and the exact public pin, Apache-2.0 license, maintained cross-platform modules, and bounded trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Circe composes typed decoders over immutable JSON cursors while preserving navigation history and both fail-fast and accumulating error semantics.",
+        "start_path": "modules/core/shared/src/main/scala/io/circe/Decoder.scala",
+        "supporting_files": [
+          "modules/core/shared/src/main/scala/io/circe/ACursor.scala",
+          "modules/core/shared/src/main/scala/io/circe/HCursor.scala",
+          "modules/core/shared/src/main/scala/io/circe/Json.scala",
+          "modules/tests/shared/src/test/scala/io/circe/DecoderSuite.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Decoder's typed entry points and instances, follow fail-fast or accumulating application through HCursor success, ACursor failure and history, recursive JSON and collection traversal, and precise DecodingFailure construction, then close those contracts in DecoderSuite. Jawn parsing and generic macro derivation are separate optional modules and are excluded from this bounded core-decoder path."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-kinded Decoder type class and Cats instances",
+            "MonadError, ApplicativeError, Validated, Kleisli, StateT, and Defer composition",
+            "generic recursive and collection decoder construction"
+          ],
+          "reason": "Advanced functional and higher-kinded abstractions recur across the entire selected decoder path without expert macro machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive JSON and collection traversal",
+            "cursor focus, success, failure, and history state",
+            "fail-fast versus accumulating error propagation"
+          ],
+          "reason": "Nontrivial traversal and error state cross decoder composition, but the path remains synchronous and has no advanced resource or concurrency lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "JSON data model",
+            "successful and failed cursor abstractions",
+            "decoder type class and direct contract suite"
+          ],
+          "reason": "Several meaningful model, navigation, decoding, failure, and verification boundaries cooperate in one core module."
+        },
+        "constraint_burden": {
+          "signals": [
+            "fail-fast and accumulating results must remain semantically aligned",
+            "cursor histories and missing-field failures must stay precise",
+            "recursive and collection decoders must remain stack-safe and lawful",
+            "cross-platform and binary-compatible public behavior"
+          ],
+          "reason": "Error-mode parity, diagnostics, recursion, laws, and compatibility guarantees recur and interact throughout decoder implementation and tests."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/3/3/4 sums to 14, whose mean of 3.50 rounds to Level 4; Circe ranks second of the four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if cursor history, decoder composition, fail-fast or accumulating contracts, direct tests, documentation, Apache-2.0 licensing, or relative Scala Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded Decoder-to-ACursor/HCursor path, 4/3/3/4 scores, Level 4 rank 2, and retention. Both reviews excluded unrelated Jawn and derivation modules, and no nonexistent Cursor.scala is listed."
+      }
+    },
+    {
+      "repository": "typelevel/cats-effect",
+      "language": "Scala",
+      "prior_level": 4,
+      "pinned_commit": "3d4486d47a22a40ba33f822cf4adb1eccfdb4feb",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An IO fiber interprets an effect algebra while coordinating asynchronous suspension, cancellation, finalization, joining, tracing, and runtime scheduling."
+        ],
+        "evidence": "Concurrency and runtime scheduling are core programming subject matter; the path directly teaches effect interpreters, manual continuation state, lock-free publication, work stealing, cancellation masks, finalizers, fairness, and race-sensitive contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "IO defines the effect nodes, IOFiber contains the interpreter, IORuntime and the work-stealing pool expose scheduling boundaries, and IOFiberSuite plus IOConcurrencySuite directly exercise stack safety, async execution, cancellation, finalizers, fairness, races, and errors; starvation documentation explains the runtime model; and the exact public pin, Apache-2.0 license, mature maintenance, and source-to-test trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Cats Effect interprets IO as a cancelable fiber and schedules it fairly on a work-stealing runtime while preserving asynchronous and finalization guarantees.",
+        "start_path": "core/shared/src/main/scala/cats/effect/IOFiber.scala",
+        "supporting_files": [
+          "core/shared/src/main/scala/cats/effect/IO.scala",
+          "core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala",
+          "core/jvm/src/main/scala/cats/effect/unsafe/IORuntimeCompanionPlatform.scala",
+          "core/jvm-native/src/main/scala/cats/effect/unsafe/WorkStealingThreadPool.scala",
+          "core/jvm-native/src/main/scala/cats/effect/unsafe/WorkerThread.scala",
+          "tests/shared/src/test/scala/cats/effect/IOFiberSuite.scala",
+          "tests/jvm-native/src/test/scala/cats/effect/IOConcurrencySuite.scala",
+          "docs/core/starvation-and-tuning.md",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with IOFiber's run loop and continuation stacks, map each interpreted tag back to IO's algebra, follow asynchronous suspension and resumption, cancellation masks, finalizer unwinding, outcomes and joins into IORuntime and the JVM/Native work-stealing scheduler, then close stack, race, fairness, cancellation, and error contracts in the direct suites and starvation guide."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-kinded effect algebra and type-class instances",
+            "manual tagged interpreter with unchecked continuation casts",
+            "atomics, barriers, lock-free queues, and work-stealing scheduler",
+            "specialized arrays and low-level runtime optimization"
+          ],
+          "reason": "Expert functional, generic, continuation, atomic, and low-level runtime techniques are pervasive across the selected fiber-to-scheduler trace."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous suspend and resume state machine",
+            "concurrent scheduling and work stealing",
+            "cancellation masking and finalizer unwinding",
+            "join, outcome, error, fairness, and race interactions"
+          ],
+          "reason": "Correctness requires expert nonlocal reasoning across concurrency, scheduling, cancellation, finalization, recovery, and publication state."
+        },
+        "design_span": {
+          "signals": [
+            "IO algebra and public API",
+            "fiber interpreter",
+            "runtime and platform scheduler",
+            "work-stealing workers, direct tests, and operational documentation"
+          ],
+          "reason": "Several substantial algebra, interpreter, runtime, platform, scheduler, verification, and documentation boundaries cooperate in one coherent execution path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stack safety and exactly-once asynchronous resumption",
+            "memory visibility and race-safe publication",
+            "structured cancellation and finalizer ordering",
+            "fairness, starvation resistance, throughput, and cross-platform behavior",
+            "stable error, trace, outcome, and join semantics"
+          ],
+          "reason": "Expert concurrency, lifecycle, memory-model, fairness, performance, diagnostic, and compatibility guarantees interact pervasively."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 rounds to Level 5; three dimensions independently score 5, satisfying the Level 5 guard, and Cats Effect is the sole qualified Scala Level 5 path and ranks first.",
+      "reconsider": "Reconsider if IO interpretation, async suspension, cancellation or finalization, runtime scheduling, work-stealing behavior, direct tests, documentation, Apache-2.0 licensing, or relative Scala Level 5 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, IOFiber.scala as the representative start, the IO/runtime/work-stealing/test trace, 5/5/4/5 scores, satisfaction of the Level 5 guard, Level 5 rank 1, and retention. The work-stealing implementation is correctly recorded under core/jvm-native, not the nonexistent core/jvm path."
+      }
+    },
+    {
+      "repository": "http4s/http4s",
+      "language": "Scala",
+      "prior_level": 4,
+      "pinned_commit": "a95ed19a5d377276d1eb98d93897cea45cbad921",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An effect-polymorphic HTTP client acquires a response as a Resource so the caller can consume a streaming body and reliably release the underlying connection."
+        ],
+        "evidence": "The short HTTP request and response vocabulary is documented locally and remains subordinate to transferable lessons in higher-kinded interfaces, Resource ownership, streaming values, scoped use, transformation, error handling, cleanup, and contract tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The client guide states the Resource ownership contract; Client, HttpApp, and Message separate acquisition, application, and streaming message responsibilities; ClientSuite directly exercises successful use, failures, disposal, transformations, status handling, and resource behavior; and the exact public pin, Apache-2.0 license, maintained cross-platform architecture, and complete documented trace satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how http4s models a client response as an effectful Resource so streaming body consumption, errors, transformation, and connection release remain safely scoped.",
+        "start_path": "docs/docs/client.md",
+        "supporting_files": [
+          "client/shared/src/main/scala/org/http4s/client/Client.scala",
+          "core/shared/src/main/scala/org/http4s/HttpApp.scala",
+          "core/shared/src/main/scala/org/http4s/Message.scala",
+          "client/shared/src/test/scala/org/http4s/client/ClientSuite.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Begin with the client guide's warning that a response is a managed Resource, follow Client.run, fetch, expect, status validation, and transformations through HttpApp and Message's streamed body, then close success, failure, disposal, mapping, and scoped-use behavior in ClientSuite. Ember parser, server, and protocol breadth are deliberately excluded."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "higher-kinded Client[F] and HttpApp[F] abstractions",
+            "Cats Effect Resource and MonadCancel constraints",
+            "fs2 streaming Message bodies and functional transformations"
+          ],
+          "reason": "Advanced effect-polymorphic, Resource, and stream abstractions recur throughout the bounded client path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "response acquisition and release lifecycle",
+            "streaming body consumption within a scope",
+            "status, decode, application, and transport failures",
+            "cleanup across transformations and cancellation"
+          ],
+          "reason": "Resource ownership, streaming evaluation, errors, transformation, and cleanup require advanced nonlocal lifecycle reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "documented client contract",
+            "Client and HttpApp effect boundaries",
+            "Message stream model and direct ClientSuite verification"
+          ],
+          "reason": "Several meaningful documentation, client, application, message, resource, and verification boundaries cooperate."
+        },
+        "constraint_burden": {
+          "signals": [
+            "responses must be released on success, failure, and cancellation",
+            "stream bodies must not escape their valid resource scope",
+            "status and decoding helpers must preserve failures and cleanup",
+            "effect-polymorphic and cross-platform API compatibility"
+          ],
+          "reason": "Lifecycle, streaming, error, cancellation, API, and portability guarantees interact throughout ordinary client use."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; http4s ranks first of the four qualified Scala Level 4 paths.",
+      "reconsider": "Reconsider if Resource ownership, streaming body, failure or cleanup contracts, direct client tests, documentation, Apache-2.0 licensing, or relative Scala Level 4 educational clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "Both reviews agreed on both gates, 4/4/3/4 scores, Level 4 rank 1, and retention, but the independent reviewer preferred the Ember parser/server trace. Root reconciliation chose the primary review's clearer domain-light Client Resource path from docs/docs/client.md through Client, HttpApp, Message, and ClientSuite; parser and server breadth are excluded."
+      }
+    },
+    {
+      "repository": "apache/spark",
+      "language": "Scala",
+      "prior_level": 5,
+      "pinned_commit": "024120dc960517021a887b51865220f544340362",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "Spark's representative scheduler converts resilient distributed dataset lineage into shuffle-separated stages and tasks across executors.",
+          "Correctness depends on partitions, data locality, cached blocks, shuffle availability, stage attempts, fetch failures, speculative work, executor loss, and distributed recovery."
+        ],
+        "evidence": "RDD explicitly defines a distributed partition and dependency model, while SparkContext and DAGScheduler turn lineage into stage graphs and coordinate attempts, executors, shuffle boundaries, locality, caching, failure, and retry. Specialist distributed-systems and data-engine theory explains the representative path's difficulty better than programming technique, and a detached event-loop or collection helper would not honestly represent Spark."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the representative Spark path that turns an RDD action and lineage into scheduler stages, tasks, distributed execution, and recovery.",
+        "start_path": "core/src/main/scala/org/apache/spark/scheduler/DAGScheduler.scala",
+        "supporting_files": [
+          "core/src/main/scala/org/apache/spark/rdd/RDD.scala",
+          "core/src/main/scala/org/apache/spark/SparkContext.scala",
+          "core/src/test/scala/org/apache/spark/scheduler/DAGSchedulerSuite.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with DAGScheduler job submission and stage construction, follow RDD lineage and SparkContext into shuffle boundaries, result and shuffle stages, task submission, completion events, attempts, locality, cached blocks, executor and fetch failures, and recovery, then compare those invariants with DAGSchedulerSuite; the recurring distributed dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central Spark path whose purpose and correctness can be understood from repository documentation plus short prerequisites without specialist distributed-systems, scheduler, shuffle, storage, or data-engine theory.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed that RDD lineage, shuffle stages, partitions, locality, executors, cached blocks, attempts, fetch failures, and recovery dominate the representative path; both reviews agree on the hard domain rejection, quality not evaluated status, absence of scores and level, and removal."
+      }
+    },
+    {
+      "repository": "scala/scala3",
+      "language": "Scala",
+      "prior_level": 5,
+      "pinned_commit": "2106c166d34e5451661d1ab812016cf7c9870c80",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "The representative Scala 3 compiler pipeline orders parsing, typing, TASTy, staging, inlining, erasure, lowering, optimization, and JVM or JavaScript backend phases.",
+          "Correct phase composition and execution depend on typed trees, symbols, contexts, denotations, type inference, staging, semantic transformations, erasure, serialization, and backend contracts."
+        ],
+        "evidence": "Compiler and Run expose a superficially generic phase pipeline, but understanding why phases may be ordered or fused and why each transformation is correct immediately depends on compiler semantics, advanced type systems, staging, typed representations, erasure, and backend theory. A shallow phase-runner slice would be a nonrepresentative wrapper, so specialist programming-language and compiler theory explains the difficulty better than general programming technique."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the representative Scala 3 compilation path from phase assembly through typed frontend work, transformations, TASTy, and backend execution.",
+        "start_path": "compiler/src/dotty/tools/dotc/Compiler.scala",
+        "supporting_files": [
+          "compiler/src/dotty/tools/dotc/Run.scala",
+          "compiler/src/dotty/tools/dotc/core/Phases.scala",
+          "compiler/src/dotty/tools/dotc/typer/Typer.scala",
+          "compiler/src/dotty/tools/dotc/core/Types.scala",
+          "compiler/src/dotty/tools/dotc/transform/MegaPhase.scala",
+          "compiler/src/dotty/tools/dotc/core/tasty/TastyPickler.scala",
+          "compiler/test/dotty/tools/dotc/CompilationTests.scala",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Compiler's phase plan and Run's compilation-unit lifecycle, follow Phases and MegaPhase ordering and fusion into Typer, core types, TASTy serialization, transformations, and backends, then observe that the available CompilationTests suite is broad rather than a focused generic-phase contract; those recurring semantic dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review establishes a substantial, production-representative and directly tested Scala 3 subsystem whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist programming-language semantics, type theory, compiler transformation, staging, or backend expertise.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed that denotations, typing, trees, staging, erasure, transformations, TASTy, and backend semantics dominate the representative compiler path; both reviews agree on the hard domain rejection, quality not evaluated status, absence of scores and level, and removal. No focused PhasesTest.scala or PhasesTests.scala exists at the pin, so only the verified broad CompilationTests.scala is recorded."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 94,
-      "remove": 46
+      "retain": 100,
+      "remove": 50
     },
     "by_language": {
       "JavaScript": {
@@ -10805,33 +11527,52 @@
           "4": 4,
           "5": 2
         }
+      },
+      "Scala": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 4,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 28,
-        "retain": 26,
+        "reviewed": 30,
+        "retain": 28,
         "remove": 2
       },
       "2": {
-        "reviewed": 28,
-        "retain": 22,
-        "remove": 6
+        "reviewed": 30,
+        "retain": 23,
+        "remove": 7
       },
       "3": {
-        "reviewed": 28,
-        "retain": 18,
-        "remove": 10
+        "reviewed": 30,
+        "retain": 19,
+        "remove": 11
       },
       "4": {
-        "reviewed": 28,
-        "retain": 13,
+        "reviewed": 30,
+        "retain": 15,
         "remove": 15
       },
       "5": {
-        "reviewed": 28,
+        "reviewed": 30,
         "retain": 15,
-        "remove": 13
+        "remove": 15
       }
     },
     "by_new_level": {
@@ -10841,29 +11582,29 @@
         "remove": 0
       },
       "2": {
-        "scored": 24,
-        "retain": 23,
+        "scored": 25,
+        "retain": 24,
         "remove": 1
       },
       "3": {
-        "scored": 37,
-        "retain": 26,
+        "scored": 39,
+        "retain": 28,
         "remove": 11
       },
       "4": {
-        "scored": 56,
-        "retain": 28,
-        "remove": 28
+        "scored": 60,
+        "retain": 30,
+        "remove": 30
       },
       "5": {
-        "scored": 18,
-        "retain": 17,
+        "scored": 19,
+        "retain": 18,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 41,
-      "coding_relevance_domain_gate": 4,
+      "qualified_alternate_over_capacity": 43,
+      "coding_relevance_domain_gate": 6,
       "repository_quality_gate": 1
     }
   }
