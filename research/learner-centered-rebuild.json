@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 50,
+  "reviewed_entry_total": 60,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -3747,12 +3747,771 @@
         "status": "agree_after_correction",
         "notes": "Both reviews reject Kestrel HttpProtocol.cs as a representative learner path because HTTP protocol machinery dominates it and the catalog's DefaultHttpContext test does not cover that trace. The corrected ApplicationBuilder and UseMiddleware lifecycle passes both gates and confirms 4/3/3/4, Level 4, comparative rank 1, and retention."
       }
+    },
+    {
+      "repository": "developit/mitt",
+      "language": "TypeScript",
+      "prior_level": 1,
+      "pinned_commit": "6b41670516ed8e8b738612f60491995470aa63b3",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An event emitter stores callbacks by event name and invokes them when that event is emitted; a wildcard listener receives every event."
+        ],
+        "evidence": "The event model is familiar and self-contained; the selected path teaches transferable generic API modeling, callback registration, mutation-safe iteration, and dispatch ordering rather than external domain rules."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The complete runtime and public types are compact and idiomatic, the README documents named and wildcard behavior, and runtime plus compilation tests cover registration, removal, duplicates, symbols, wildcard order, and accepted and rejected event-map calls.",
+      "learning_path": {
+        "goal": "Understand how one small event emitter keeps named and wildcard subscriptions type-safe while remaining safe when handlers mutate the registry during dispatch.",
+        "start_path": "src/index.ts",
+        "supporting_files": [
+          "test/index_test.ts",
+          "test/test-types-compilation.ts"
+        ],
+        "trace": "Read the event-map, handler, and overloaded emitter types beside on, off, and emit; follow a named event through the Map-backed handler slice and then the wildcard slice, and verify runtime order, mutation behavior, symbol keys, and compile-time event and payload constraints in the two tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 2
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic event maps with keyed payload lookup",
+            "mapped handler storage and overloaded emit calls",
+            "named and wildcard handler type relationships"
+          ],
+          "reason": "Generics, keyed access, mapped types, and overloads materially shape every public operation, establishing substantial abstraction without expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "Map-backed mutable subscriptions",
+            "listener snapshots during dispatch",
+            "named-before-wildcard ordering"
+          ],
+          "reason": "Meaningful mutation and ordering branches remain localized inside three short operations."
+        },
+        "design_span": {
+          "signals": [
+            "one emitter factory",
+            "one in-memory handler registry"
+          ],
+          "reason": "The complete behavior is one focused source unit with direct tests."
+        },
+        "constraint_burden": {
+          "signals": [
+            "event-key and payload compatibility",
+            "duplicate and removal semantics",
+            "stable wildcard order under mutation"
+          ],
+          "reason": "A small public API and routine production safeguards must remain consistent, but no system-wide guarantee is involved."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 3/2/1/2 sums to 8, whose mean calculates to Level 2; mitt is the only qualified TypeScript Level 2 path.",
+      "reconsider": "Reconsider if the typed event contract, dispatch snapshot or ordering behavior, public source status, license, documentation, or runtime and compilation tests materially change, or if a clearer TypeScript Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The two reviews differed on how much supporting type evidence the compact runtime path required. Root reconciliation applied the representative-path criterion, retained src/index.ts as the complete behavior, added the verified compilation test to the runtime suite, and fixed 3/2/1/2, Level 2, and retention."
+      }
+    },
+    {
+      "repository": "reduxjs/redux",
+      "language": "TypeScript",
+      "prior_level": 1,
+      "pinned_commit": "71606661ac515bdd64c199a6bb508401c7cf736f",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Redux store gives actions to a reducer to compute the next state and notifies subscribers after each completed dispatch."
+        ],
+        "evidence": "Reducer and store concepts need only a short explanation; the path teaches generic API contracts, state transitions, reentrancy guards, listener snapshotting, validation, and error recovery that transfer to event-driven libraries."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Store and reducer contracts are explicit, dispatch failures use precise runtime errors, public documentation identifies this core as useful for learning, and focused tests cover actions, nested dispatch, subscription snapshots, unsubscription, reducer replacement, observable interoperation, and recovery after reducer errors.",
+      "learning_path": {
+        "goal": "Understand how Redux dispatches a validated action through a reducer while preserving state, listener snapshot, reentrancy, and generic store contracts.",
+        "start_path": "src/createStore.ts",
+        "supporting_files": [
+          "src/types/store.ts",
+          "src/types/reducers.ts",
+          "src/utils/isPlainObject.ts",
+          "test/createStore.spec.ts"
+        ],
+        "trace": "Start with createStore's overloads and Store contract, follow dispatch through plain-object and type validation, the reducer reentrancy guard and state replacement, then through the current-versus-next listener snapshot; correlate nested dispatch, subscription mutation, thrown reducers, replacement, and observable tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic Store, Reducer, and action relationships",
+            "overloaded creation and enhancer signatures",
+            "higher-order reducer and listener composition"
+          ],
+          "reason": "Generic inference, overloads, and higher-order contracts materially shape the store API without requiring expert TypeScript machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "state transitions and nested dispatch",
+            "current and next listener snapshots",
+            "reentrancy guards and recovery after reducer errors"
+          ],
+          "reason": "Events, mutable snapshots, nested calls, and failure recovery create nontrivial behavior across each dispatch."
+        },
+        "design_span": {
+          "signals": [
+            "store implementation and public type boundary",
+            "reducer contracts and action-validation helper"
+          ],
+          "reason": "A few explicit modules inside one small state-container core contain the trace."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable public store and enhancer compatibility",
+            "listener snapshot and nested-dispatch guarantees",
+            "action validation, observable, and error-recovery contracts"
+          ],
+          "reason": "Several material compatibility and reliability guarantees influence ordinary changes to dispatch."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; Redux is the only qualified TypeScript Level 3 path.",
+      "reconsider": "Reconsider if the learning-oriented core is removed or ceases maintenance, or if store types, action validation, dispatch semantics, public status, license, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews proposed different supporting breadth around createStore. Root reconciliation kept one dispatch-centered path, included only the store and reducer contracts, plain-object validator, and matching tests needed to follow it, and resolved the placement at 3/3/2/3, Level 3, retained."
+      }
+    },
+    {
+      "repository": "sindresorhus/ky",
+      "language": "TypeScript",
+      "prior_level": 2,
+      "pinned_commit": "d27ad21266d162ee218d4ea69dce192b84b6f967",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "HTTP clients may retry selected methods and status codes after a delay while respecting server Retry-After guidance, abort signals, and an overall time budget."
+        ],
+        "evidence": "Fetch and retry concepts are standard and documented locally; the hard work is transferable asynchronous policy, scheduling, cancellation, hook composition, stream ownership, and failure handling rather than protocol specialization."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The Fetch-based core separates retry timing, option normalization, and timeout helpers, documents hook and retry contracts in detail, and has focused tests for status and method policy, Retry-After formats, jitter, request and total timeouts, aborts, network failures, hook replacement, response streams, and cleanup.",
+      "learning_path": {
+        "goal": "Understand how Ky retries a Fetch request without violating hook, timeout, cancellation, response-body, or server-directed delay contracts.",
+        "start_path": "source/core/Ky.ts",
+        "supporting_files": [
+          "source/core/retry-timing.ts",
+          "source/utils/normalize.ts",
+          "source/utils/timeout.ts",
+          "test/retry.ts",
+          "test/hooks.ts"
+        ],
+        "trace": "Follow Ky.create into request and response hooks, then follow retry eligibility, Retry-After or backoff calculation, total-budget accounting, abortable delay, request replacement, timeout wrapping, and final body cancellation; correlate the retry and hook suites with each branch."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic response and schema result typing",
+            "private-field async composition",
+            "typed hook and retry option modeling"
+          ],
+          "reason": "Generics and nontrivial type modeling materially shape the client, but multiple expert TypeScript mechanisms do not dominate this runtime path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "retry scheduling under request and total time budgets",
+            "hooks that may replace requests or responses",
+            "abort propagation, network recovery, and stream ownership",
+            "recursive retry and error-state transitions"
+          ],
+          "reason": "Several advanced asynchronous, scheduling, recovery, cancellation, and resource-lifetime concerns interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "request core and retry-timing boundary",
+            "normalization and timeout utilities",
+            "hook and Fetch platform interfaces"
+          ],
+          "reason": "The trace crosses several meaningful implementation and platform boundaries whose responsibilities remain locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "HTTP method, status, and Retry-After compatibility",
+            "request and total timeout guarantees",
+            "abort, stream, clone, cleanup, and cross-runtime behavior"
+          ],
+          "reason": "Multiple strict timing, compatibility, portability, and resource guarantees interact throughout retries."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/4 sums to 15, whose mean of 3.75 rounds to Level 4, but Ky ranks fourth behind Reselect, Angular, and VS Code for the two available TypeScript Level 4 places.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this retry path above a retained entry, or retry timing, hook, timeout, abort, stream, public-source, license, documentation, or test contracts materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on retry support files and placed Ky differently in the crowded Level 4 comparison. Root reconciliation bounded the trace to the retry, timing, normalization, timeout, and hook behavior, confirmed 3/5/3/4, and ranked it fourth under the representative-path educational comparison."
+      }
+    },
+    {
+      "repository": "reduxjs/reselect",
+      "language": "TypeScript",
+      "prior_level": 2,
+      "pinned_commit": "73e20494780057cd44f2debc143eb7ef6178e19a",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A memoized selector derives a result from arguments and reuses the prior result when the relevant argument identities have not changed."
+        ],
+        "evidence": "Memoization and reference equality need only a short explanation; the path teaches reusable cache topology, generic API design, equality policy, garbage-collection-aware structures, diagnostics, and performance tradeoffs."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The cache algorithm and selector assembly expose explicit responsibilities and counters, public documentation explains WeakMap memoization behavior and tradeoffs, and runtime and type tests cover inference, cache hits, exceptions, equality, weak references, nested selectors, diagnostics, and high-call-count behavior.",
+      "learning_path": {
+        "goal": "Understand how Reselect memoizes arbitrary argument tuples with weak and strong cache branches, then composes that memoizer into a typed selector with stable result identity.",
+        "start_path": "src/weakMapMemoize.ts",
+        "supporting_files": [
+          "src/createSelectorCreator.ts",
+          "src/types.ts",
+          "test/reselect.spec.ts",
+          "website/docs/api/weakMapMemoize.mdx"
+        ],
+        "trace": "Start with weakMapMemoize's object-versus-primitive cache tree, result equality, WeakRef handling, generation changes, and exception behavior; follow createSelectorCreator as it installs separate argument and result memoizers and exposes recomputation diagnostics, then verify the runtime, inference, equality, and performance contracts in tests and the pinned API documentation."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "variadic selector and memoizer generics",
+            "conditional and tuple-based result inference",
+            "typed memoizer metadata and override options"
+          ],
+          "reason": "Advanced type-system features recur in selector composition, but the weak-cache-centered trace does not require multiple expert mechanisms pervasively enough for score 5."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "object and primitive cache-tree traversal",
+            "generation replacement and promotion",
+            "result equality, WeakRef, exceptions, and diagnostics"
+          ],
+          "reason": "Cache state, garbage-collection-sensitive choices, equality policy, and failure behavior require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "memoizer and selector-creator modules",
+            "shared public type contracts"
+          ],
+          "reason": "A few clear modules inside one library abstraction contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "referential-result and inference compatibility",
+            "garbage-collection and primitive-cache behavior",
+            "exception, recomputation-counter, and performance guarantees"
+          ],
+          "reason": "Several strict API, memory, correctness, and performance constraints interact across the two memoization layers."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/2/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; Reselect ranks first of five qualified TypeScript Level 4 paths.",
+      "reconsider": "Reconsider if the weak-cache generation algorithm, selector type contracts, result-equality behavior, public source status, license, documentation, or runtime and type tests materially change, or a stronger Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed over a creator-first broader trace and 5/4/3/4 versus a memoizer-centered lower-anchor placement. Root reconciliation selected weakMapMemoize as the clearest representative teaching path, included the verified API documentation, applied the borderline rule, and fixed 4/4/2/4, Level 4, comparative rank 1, and retention."
+      }
+    },
+    {
+      "repository": "colinhacks/zod",
+      "language": "TypeScript",
+      "prior_level": 3,
+      "pinned_commit": "571c8e8a3d73b4305f4abfdd6977773cc12f2bf5",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A schema validates unknown runtime input and produces a typed output; object schemas define fields, optionality, unknown-key policy, and nested schemas."
+        ],
+        "evidence": "Schema parsing is common application infrastructure and documented locally; the difficulty comes from transferable static-runtime agreement, generated and interpreted execution, recursion, error construction, compatibility, security, and performance rather than external subject matter."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Classic and core responsibilities are explicit, object parsing contains both readable interpreted and generated paths, and extensive focused tests cover inference, optional and default keys, catchalls, JIT and jitless parity, async children, recursive identity, symbol keys, key order, prototype-pollution defense, and errors.",
+      "learning_path": {
+        "goal": "Understand how a Zod object schema keeps inferred input and output types aligned with interpreted, generated, asynchronous, and recursive runtime parsing.",
+        "start_path": "packages/zod/src/v4/classic/schemas.ts",
+        "supporting_files": [
+          "packages/zod/src/v4/core/schemas.ts",
+          "packages/zod/src/v4/core/memoizer.ts",
+          "packages/zod/src/v4/classic/tests/object.test.ts",
+          "packages/zod/src/v4/classic/tests/cyclic-data.test.ts"
+        ],
+        "trace": "Begin at the public object and ZodObject builders and their inferred shape transformations, follow the core input/output mapped types into normalized object parsing, catchall and issue handling, the generated fast path and interpreted fallback, then follow recursive allocation and back-edge handling; correlate type, JIT and jitless, async, cycle, symbol, optionality, key-order, and __proto__ tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "conditional mapped input and output inference with key remapping",
+            "variance-aware schema and fluent-builder generics",
+            "constructor metaprogramming and generated object parsers"
+          ],
+          "reason": "Multiple advanced type-system and metaprogramming mechanisms interact pervasively to keep the public schema and runtime parser aligned."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "interpreted and generated sync and async execution",
+            "recursive identity memoization and back-edge state",
+            "optional, default, catchall, symbol, and issue aggregation semantics",
+            "fallback and failure behavior across nested schemas"
+          ],
+          "reason": "Several advanced execution, recursion, state, and error concerns interact pervasively, making nonlocal reasoning unavoidable."
+        },
+        "design_span": {
+          "signals": [
+            "classic fluent API and core schema boundary",
+            "interpreted and generated execution modes",
+            "memoizer, nested schema, and error-extension points"
+          ],
+          "reason": "Many modules, execution modes, and extension points contribute to object parsing, but the selected library path is not a multi-runtime platform."
+        },
+        "constraint_burden": {
+          "signals": [
+            "compile-time and runtime shape agreement",
+            "JIT, jitless, sync, async, and recursion parity",
+            "prototype-pollution and symbol-key safety",
+            "identity, key order, issue, compatibility, and performance guarantees"
+          ],
+          "reason": "Several system-wide type, security, compatibility, correctness, and performance guarantees interact so that a local parser change can fail elsewhere in the path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 rounds to Level 5; three dimensions score 5, satisfying Level 5 eligibility, and Zod ranks first of three qualified TypeScript Level 5 paths.",
+      "reconsider": "Reconsider if object type-runtime alignment, generated or interpreted parsing, recursive memoization, security behavior, public source status, license, documentation, or focused object and cyclic-data tests materially change, or a stronger Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between a narrower string-check Level 4 path and the object parser's broader Level 5 placement. Root reconciliation chose object parsing because it most clearly represents Zod's educational value; its type/runtime, generated/interpreted, recursive, async, security, and compatibility burdens recur in the exact source and tests, resolving 5/5/4/5, Level 5, rank 1, retained."
+      }
+    },
+    {
+      "repository": "react-hook-form/react-hook-form",
+      "language": "TypeScript",
+      "prior_level": 3,
+      "pinned_commit": "145441c2f2c7e32c00da943f02666bcbadce2ea9",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Submitting a web form validates registered fields, calls either a success or error callback, updates observable form state, and may focus the first invalid field."
+        ],
+        "evidence": "Browser form submission and validation are familiar and documented locally; the path teaches transferable typed callbacks, asynchronous validation, state transitions, subscription delivery, error recovery, and lifecycle handling."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The form controller delegates field validation and observable delivery to named helpers, public form types describe the callback contract, and the focused handleSubmit suite covers valid and invalid submissions, resolvers, disabled fields, thrown callbacks, submit counts and flags, error focus, events, and unmounted controls.",
+      "learning_path": {
+        "goal": "Understand how React Hook Form validates and submits registered values while preserving callback types, observable form state, errors, focus, and asynchronous failure behavior.",
+        "start_path": "src/logic/createFormControl.ts",
+        "supporting_files": [
+          "src/logic/validateField.ts",
+          "src/utils/createSubject.ts",
+          "src/types/form.ts",
+          "src/__tests__/useForm/handleSubmit.test.tsx"
+        ],
+        "trace": "Enter createFormControl at handleSubmit, follow event prevention, value cloning, resolver or built-in field validation, disabled-field removal, success or error callback selection, focus, caught callback errors, and final submit-state publication; connect validateField, the subject implementation, public handler types, and each focused submission test."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic field-value and submit-handler contracts",
+            "typed resolver and validation results",
+            "higher-order callback composition"
+          ],
+          "reason": "Generics and nontrivial form-state modeling materially shape handleSubmit, but the selected behavior does not require the library's separate expert recursive path-type machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous resolver or per-field validation",
+            "success, invalid, and thrown-callback state transitions",
+            "observable updates, focus, and unmount-sensitive behavior"
+          ],
+          "reason": "Async validation, event propagation, recovery, and cross-cutting form-state invariants recur throughout a submission."
+        },
+        "design_span": {
+          "signals": [
+            "form controller and field validator boundary",
+            "subject-based state delivery",
+            "public form types and React-facing tests"
+          ],
+          "reason": "Several meaningful implementation and public-interface boundaries contribute directly while remaining locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "value, error, disabled-field, and resolver compatibility",
+            "submit-count and success-state consistency",
+            "callback failure, focus, event, and lifecycle guarantees"
+          ],
+          "reason": "Multiple strict API, state, reliability, and browser-lifecycle guarantees interact across submission."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4, but React Hook Form ranks fifth of five qualified TypeScript Level 4 paths.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this submission path above a retained entry, or handleSubmit, validation, observable-state, public-type, license, documentation, or focused-test contracts materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed over a broad register-and-recursive-field-path trace and its 5/4/4/4 placement. Root reconciliation selected handleSubmit as the clearest representative production behavior, excluded advanced types that do not recur in that trace, and resolved 3/4/3/4, Level 4, comparative rank 5, and capacity removal."
+      }
+    },
+    {
+      "repository": "trpc/trpc",
+      "language": "TypeScript",
+      "prior_level": 4,
+      "pinned_commit": "6a70335e02fa1a8bc68e8d065b85687b0d7ffdea",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A tRPC router maps nested procedure names to validated query, mutation, or subscription handlers and can create a typed in-process caller without generated client code."
+        ],
+        "evidence": "Router and middleware concepts are standard and locally documented; the difficulty comes from transferable type-runtime agreement, fluent generic builders, recursive proxies, lazy module loading, concurrency, context transformation, and error propagation."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Procedure building, router construction, proxy dispatch, lazy loading, and errors have explicit internal contracts; runtime and compile-time tests cover nested callers, input and output inference, context mismatches, middleware, subscriptions, error handlers, reserved names, duplicate flattened paths, and parallel lazy loads.",
+      "learning_path": {
+        "goal": "Understand how a fluent procedure builder becomes a recursively typed router caller whose proxy, lazy loading, middleware, context, and runtime dispatch agree without code generation.",
+        "start_path": "packages/server/src/unstable-core-do-not-import/procedureBuilder.ts",
+        "supporting_files": [
+          "packages/server/src/unstable-core-do-not-import/router.ts",
+          "packages/server/src/unstable-core-do-not-import/createProxy.ts",
+          "packages/server/src/unstable-core-do-not-import/router.test.ts",
+          "packages/tests/server/createCaller.test.ts"
+        ],
+        "trace": "Follow chained input, output, middleware, and resolver types into the built procedure, then follow recursive router decoration and flattening, once-only lazy loaders, path-capturing proxy calls, context creation, procedure lookup, middleware execution, and error callbacks; verify inference, nested calls, lazy concurrency, reserved names, collisions, middleware, subscriptions, and errors in the two exact tests. The proposed packages/server/test/router.test.ts path is nonexistent at this pin and is replaced by the verified in-source router.test.ts."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "recursive mapped router and conditional procedure types",
+            "fluent generic context and input transformations",
+            "proxy-typed callable surfaces and subscription output inference"
+          ],
+          "reason": "Multiple advanced generic, conditional, recursive, and proxy-typing mechanisms interact pervasively to create the caller API."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive proxy dispatch and async context creation",
+            "once-only nested lazy loading under parallel calls",
+            "middleware, validation, subscription, and error paths"
+          ],
+          "reason": "Concurrency, asynchronous routing, middleware state, and error propagation require advanced nonlocal reasoning, but the bounded caller path excludes distributed transports."
+        },
+        "design_span": {
+          "signals": [
+            "procedure-builder, router, and proxy layers",
+            "parser, middleware, context, lazy-loader, and error extension points",
+            "query, mutation, and subscription execution modes"
+          ],
+          "reason": "Many modules, extension points, and execution modes contribute to the caller path without reaching multi-runtime platform scale."
+        },
+        "constraint_burden": {
+          "signals": [
+            "compile-time and runtime input, output, and context agreement",
+            "Promise-like proxy and reserved-name safety",
+            "flattened-path uniqueness and parallel lazy-load consistency",
+            "middleware, subscription, abort, and error compatibility"
+          ],
+          "reason": "Several system-wide type, API, concurrency, and compatibility guarantees interact so a locally plausible router or proxy change can break callers elsewhere in the path."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/4/4/5 sums to 18, whose half-up mean calculates to Level 5; two dimensions score 5, satisfying Level 5 eligibility, and tRPC ranks second of three qualified TypeScript Level 5 paths.",
+      "reconsider": "Reconsider if the builder-to-caller type/runtime agreement, lazy-load concurrency, proxy behavior, public source status, license, documentation, or exact router and caller tests materially change, or a stronger Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed on caller support breadth and whether the recurring proxy, lazy-load, collision, and static-runtime guarantees reached Constraint 5. Root reconciliation selected the complete builder-router-proxy trace, substituted the verified in-source test for the nonexistent proposed path, and resolved 5/4/4/5, Level 5, rank 2, retained."
+      }
+    },
+    {
+      "repository": "nestjs/nest",
+      "language": "TypeScript",
+      "prior_level": 4,
+      "pinned_commit": "19ad8bf452bbbe159caa990d6344f8122eb607eb",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A dependency-injection container constructs providers from constructor and property dependencies, with scopes determining when instances may be shared."
+        ],
+        "evidence": "Dependency injection needs only a short prerequisite paragraph; the path teaches transferable reflection-driven construction, asynchronous graph resolution, cycle detection, context-scoped identity, concurrency, lifecycle cleanup, and failure recovery."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Injector, wrapper, context, and settlement responsibilities are explicitly named and separated, and focused tests cover constructor and property injection, pending and resolved instances, cycles, scopes, transient instances, context lookup, snapshots, optional dependencies, factories, and failure cleanup.",
+      "learning_path": {
+        "goal": "Understand how Nest resolves one provider through an asynchronous dependency graph while preserving cycle detection, scope and context identity, transient behavior, and failure settlement.",
+        "start_path": "packages/core/injector/injector.ts",
+        "supporting_files": [
+          "packages/core/injector/settlement-signal.ts",
+          "packages/core/injector/instance-wrapper.ts",
+          "packages/core/test/injector/injector.spec.ts"
+        ],
+        "trace": "Follow loadInstance as it obtains the context-specific host, joins or rejects pending work, installs a settlement signal, resolves constructor and property dependencies, instantiates and applies properties, and completes or clears failed state; follow InstanceWrapper's scoped and transient storage and correlate cycle, concurrent, pending, error, scope, context, snapshot, and injection tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "reflection metadata and generic injection tokens",
+            "decorator-driven constructor and property discovery",
+            "scope and context-indexed wrapper abstractions"
+          ],
+          "reason": "Advanced reflection, metadata, and generic container machinery recur, but the selected path does not require multiple expert TypeScript mechanisms pervasively enough for score 5."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous dependency-graph settlement",
+            "pending joins and circular-dependency detection",
+            "scope, context, and transient instance state",
+            "partial construction, cleanup, and failure propagation"
+          ],
+          "reason": "Several advanced concurrency, graph, lifecycle, identity, and recovery concerns interact pervasively during resolution."
+        },
+        "design_span": {
+          "signals": [
+            "injector, wrapper, module, and context boundaries",
+            "settlement, factory, constructor, and property extension points",
+            "singleton, request, and transient execution modes"
+          ],
+          "reason": "Many modules, extension points, and execution modes contribute directly to provider resolution."
+        },
+        "constraint_burden": {
+          "signals": [
+            "cycle and concurrent-settlement safety",
+            "scope, context, transient, and snapshot identity",
+            "optional, factory, constructor, and property compatibility",
+            "partial-instance cleanup and retryable failure state"
+          ],
+          "reason": "Several system-wide correctness, concurrency, lifecycle, and compatibility guarantees interact so local resolution changes can leak or corrupt instances elsewhere in the graph."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/5/4/5 sums to 18, whose half-up mean calculates to Level 5, with two dimensions scoring 5; Nest ranks third behind Zod and tRPC for the two available TypeScript Level 5 places.",
+      "reconsider": "Reconsider if a TypeScript Level 5 place opens, a fresh comparison ranks this injector path above a retained entry, or dependency settlement, scope and context identity, wrapper behavior, public status, license, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between 4/4/4/4 Level 4 and higher recurring behavior and constraint anchors. Root reconciliation found asynchronous graph settlement, concurrency, cycles, scoped identity, transients, and failure cleanup throughout the representative injector trace, resolving 4/5/4/5, Level 5, comparative rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "microsoft/vscode",
+      "language": "TypeScript",
+      "prior_level": 5,
+      "pinned_commit": "6834b15c38351f2187f4f4478d3d406923265fd1",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A piece-tree text buffer stores document spans in a balanced tree so insertions and deletions avoid repeatedly copying the whole document."
+        ],
+        "evidence": "A short piece-table and balanced-tree explanation supplies the needed context; the hard work is transferable mutable-data-structure invariants, batch editing, coordinate mapping, snapshotting, Unicode and line-ending correctness, and resource-bounded performance."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The buffer facade, piece-tree implementation, and red-black balancing code have explicit responsibilities and invariants; extensive direct tests compare edits against ordinary strings, assert tree metadata, exercise CRLF boundaries and random sequences, preserve snapshots, and cover large-operation and search regressions.",
+      "learning_path": {
+        "goal": "Understand how VS Code applies a batch of text edits while preserving piece-tree balance and metadata, positions, line endings, reverse edits, snapshots, and memory bounds.",
+        "start_path": "src/vs/editor/common/model/pieceTreeTextBuffer/pieceTreeTextBuffer.ts",
+        "supporting_files": [
+          "src/vs/editor/common/model/pieceTreeTextBuffer/pieceTreeBase.ts",
+          "src/vs/editor/common/model/pieceTreeTextBuffer/rbTreeBase.ts",
+          "src/vs/editor/test/common/model/pieceTreeTextBuffer/pieceTreeTextBuffer.test.ts"
+        ],
+        "trace": "Follow applyEdits through text and EOL normalization, overlap checks, operation reduction, inverse-range construction and descending mutation; follow inserts and deletes into PieceTreeBase and red-black balancing and metadata updates, then correlate direct, randomized, CRLF, position, snapshot, search, and large-edit tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "typed edit and buffer interfaces",
+            "class-based tree and disposable composition",
+            "nontrivial operation and change modeling"
+          ],
+          "reason": "Interfaces, classes, and nontrivial types materially organize the algorithm, but advanced TypeScript machinery does not drive it."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered batch edits and inverse-operation construction",
+            "red-black mutation with cached aggregate metadata",
+            "CRLF boundary repair, coordinate mapping, and snapshots",
+            "large-edit reduction and randomized state transitions"
+          ],
+          "reason": "Several advanced mutable-state, data-structure, event, and performance concerns interact pervasively and nonlocally."
+        },
+        "design_span": {
+          "signals": [
+            "edit-buffer facade",
+            "piece-tree and red-black implementation layers",
+            "position, line-ending, snapshot, and search interfaces"
+          ],
+          "reason": "The path crosses several meaningful boundaries, but they remain inside one locally understandable editor-buffer component rather than the whole platform."
+        },
+        "constraint_burden": {
+          "signals": [
+            "tree-balance and aggregate-metadata correctness",
+            "offset-position, CRLF, Unicode, and line-count agreement",
+            "overlap, reverse-edit, and immutable-snapshot guarantees",
+            "large-batch memory and interactive performance bounds"
+          ],
+          "reason": "Several system-wide editor-buffer correctness and performance guarantees interact so local tree or edit changes can fail elsewhere in the selected path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/5 sums to 16, whose mean calculates to Level 4; despite two dimensions scoring 5, the rounded mean is not 5. VS Code ranks third behind Reselect and Angular for the two available TypeScript Level 4 places.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, a fresh comparison ranks this piece-tree path above a retained entry, or edit, tree, line-ending, snapshot, performance, public-source, license, documentation, or focused-test guarantees materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between a TextModel-spanning 3/5/5/5 Level 5 path and a bounded piece-tree component. Root reconciliation excluded downstream editor subsystems not required to understand the edit algorithm, retained the recurring expert behavior and constraints, and resolved 3/5/3/5, Level 4, comparative rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "angular/angular",
+      "language": "TypeScript",
+      "prior_level": 5,
+      "pinned_commit": "34817da7354f2a4e55f277a991d4345a4ca8a91d",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A reactive signal is a value-producing node; computed signals record the producers read during a computation and update when those dependencies change."
+        ],
+        "evidence": "Reactive dependency graphs need only a short explanation; the selected path teaches transferable callable APIs, dynamic graph maintenance, push and pull invalidation, caching, cycle and error handling, equality isolation, performance, and lifecycle discipline."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Public wrappers and primitive graph responsibilities are explicit and heavily commented, and focused tests cover lazy and chained computation, dynamic dependencies, cycle detection, error caching and recovery, equality behavior, dirty notification, forbidden writes, debug metadata, and producer creation hooks.",
+      "learning_path": {
+        "goal": "Understand how Angular's public signal and computed APIs maintain a dynamic dependency graph with lazy recomputation, precise invalidation, equality, cycle, and error semantics.",
+        "start_path": "packages/core/src/render3/reactivity/signal.ts",
+        "supporting_files": [
+          "packages/core/src/render3/reactivity/computed.ts",
+          "packages/core/primitives/signals/src/signal.ts",
+          "packages/core/primitives/signals/src/computed.ts",
+          "packages/core/primitives/signals/src/graph.ts",
+          "packages/core/test/signals/computed_spec.ts"
+        ],
+        "trace": "Follow the public callable WritableSignal wrapper into primitive get and set operations, then follow producer access, epoch and version tracking, dynamic bidirectional links, dirty notification and producer polling; follow computed recomputation through active-consumer restoration, cycle and error sentinels, and untracked equality, then correlate the focused computed tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "branded versions and unique-symbol interfaces",
+            "generic callable objects carrying hidden reactive nodes",
+            "prototype-based node specialization and sentinel modeling"
+          ],
+          "reason": "Advanced type-system and implicit callable-object machinery recur throughout the public-to-primitive trace without reaching pervasive expert-language score 5."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "dynamic producer-consumer graph rebuilding",
+            "push invalidation and pull polling with epochs and versions",
+            "lazy recomputation, cycle detection, and cached errors",
+            "notification-phase, equality, and active-consumer state"
+          ],
+          "reason": "Several advanced graph, state-machine, scheduling-like, recovery, and lifecycle concerns interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "public signal and computed wrappers",
+            "primitive signal, computed, and graph layers",
+            "equality, watch, and developer-hook interfaces"
+          ],
+          "reason": "The trace crosses several meaningful layers and interfaces while remaining a bounded reactive runtime rather than the Angular platform."
+        },
+        "constraint_burden": {
+          "signals": [
+            "dynamic dependency and stale-edge correctness",
+            "no-read notification and no-write computed guardrails",
+            "cycle, cached-error, equality, and recovery semantics",
+            "garbage-collection, epoch-skip, and recomputation performance"
+          ],
+          "reason": "Several system-wide reactive correctness, safety, lifecycle, and performance guarantees interact so a local graph change can fail elsewhere in the selected path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/5/3/5 sums to 17, whose mean of 4.25 rounds to Level 4; despite two dimensions scoring 5, the rounded mean is not 5. Angular ranks second of five qualified TypeScript Level 4 paths.",
+      "reconsider": "Reconsider if signal graph, invalidation, equality, cycle, error, public-wrapper, public-source, license, documentation, or focused computed tests materially change, or a stronger TypeScript Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between an application-tick platform span scored 3/5/5/5 and the bounded signal graph. Root reconciliation chose the signal graph as Angular's clearest representative educational path, retained only burdens that recur there, and resolved 4/5/3/5, Level 4, comparative rank 2, and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 35,
-      "remove": 15
+      "retain": 41,
+      "remove": 19
     },
     "by_language": {
       "JavaScript": {
@@ -3849,33 +4608,52 @@
           "4": 3,
           "5": 1
         }
+      },
+      "TypeScript": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 1,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 1,
+          "4": 5,
+          "5": 3
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 10,
-        "retain": 10,
+        "reviewed": 12,
+        "retain": 12,
         "remove": 0
       },
       "2": {
-        "reviewed": 10,
-        "retain": 8,
-        "remove": 2
+        "reviewed": 12,
+        "retain": 9,
+        "remove": 3
       },
       "3": {
-        "reviewed": 10,
-        "retain": 6,
-        "remove": 4
+        "reviewed": 12,
+        "retain": 7,
+        "remove": 5
       },
       "4": {
-        "reviewed": 10,
-        "retain": 3,
-        "remove": 7
+        "reviewed": 12,
+        "retain": 4,
+        "remove": 8
       },
       "5": {
-        "reviewed": 10,
-        "retain": 8,
-        "remove": 2
+        "reviewed": 12,
+        "retain": 9,
+        "remove": 3
       }
     },
     "by_new_level": {
@@ -3885,28 +4663,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 9,
-        "retain": 9,
+        "scored": 10,
+        "retain": 10,
         "remove": 0
       },
       "3": {
-        "scored": 15,
-        "retain": 10,
+        "scored": 16,
+        "retain": 11,
         "remove": 5
       },
       "4": {
-        "scored": 19,
-        "retain": 10,
-        "remove": 9
+        "scored": 24,
+        "retain": 12,
+        "remove": 12
       },
       "5": {
-        "scored": 6,
-        "retain": 6,
-        "remove": 0
+        "scored": 9,
+        "retain": 8,
+        "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 14,
+      "qualified_alternate_over_capacity": 18,
       "coding_relevance_domain_gate": 1
     }
   }
