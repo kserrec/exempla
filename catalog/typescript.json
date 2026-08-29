@@ -3,6 +3,126 @@
   "language_slug": "typescript",
   "repositories": [
     {
+      "slug": "tiny-invariant",
+      "repository": "alexreardon/tiny-invariant",
+      "url": "https://github.com/alexreardon/tiny-invariant",
+      "primary_language": "TypeScript",
+      "language_evidence": "The complete invariant runtime, assertion-function signature, build input, and direct runtime, type-narrowing, and bundle-behavior tests are first-party TypeScript.",
+      "description": "A zero-dependency assertion utility that narrows TypeScript types, evaluates failure messages lazily, and omits message logic from production builds.",
+      "real_world_evidence": "npm published version 1.3.3 without a deprecation notice, and the public registry reported 86,411,460 downloads for 2026-08-22 through 2026-08-28.",
+      "why_study": "One focused function shows how a runtime assertion, a compile-time narrowing contract, lazy error construction, environment-specific bundling, and byte budgets can agree in shipped TypeScript.",
+      "learn": [
+        "Use `src/tiny-invariant.ts` to study assertion-function signatures, truthy and falsy control flow, lazy callback evaluation, environment-specific error behavior, declaration generation, dead-code elimination, and focused runtime, type, bundle, and size verification."
+      ],
+      "prerequisites": [
+        "Before reading `src/tiny-invariant.ts`, be familiar with TypeScript unions, callbacks, truthy and falsy values, exceptions, assertion functions, environment-variable replacement during bundling, and dead-code elimination."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An invariant is a condition the program requires to be true; TypeScript assertion functions also tell the compiler which condition is known after a successful return.",
+          "The build replaces `process.env.NODE_ENV` with a constant so production-only optimization can remove this library's development message branch."
+        ],
+        "reason": "The selected path is domain-neutral and teaches transferable API contracts, type narrowing, lazy work, error handling, environment-specific builds, testing, and size discipline."
+      },
+      "learning_path": {
+        "goal": "Understand how tiny-invariant keeps runtime truthiness checks, TypeScript narrowing, lazy messages, and production bundle behavior aligned.",
+        "start_here": {
+          "path": "src/tiny-invariant.ts",
+          "reason": "The single production source contains the truthy return, assertion signature, lazy message resolution, and distinct development and production error paths."
+        },
+        "supporting_files": [
+          "test/throw-behaviour.spec.ts",
+          "test/message-behaviour.spec.ts",
+          "test/type-narrowing.spec.ts",
+          "test/bundle-behaviour.spec.ts",
+          "rollup.config.mjs",
+          "package.json",
+          "README.md"
+        ],
+        "trace": "Enter invariant with an unknown value; follow truthy input to the immediate return or falsy input to the production prefix-only error or development lazy-message branch, then close the runtime, compiler-narrowing, generated-bundle, declaration, and configured byte-budget contracts with the four focused suites, Rollup configuration, and package scripts."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "an assertion-function return type that narrows the caller's condition",
+            "a string-or-callback message union",
+            "TypeScript source shared by runtime and declaration builds"
+          ],
+          "reason": "The assertion signature materially changes caller types and is verified directly, so substantial TypeScript abstraction shapes the path even though the runtime body is short."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one synchronous truthy or falsy branch",
+            "stateless local control flow",
+            "lazy message evaluation only on failure"
+          ],
+          "reason": "The complete runtime is local and synchronous, with an immediate success return and a small environment-dependent failure branch."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one production function",
+            "direct runtime, type, and bundle tests"
+          ],
+          "reason": "One focused implementation unit and its direct build and test artifacts contain the whole selected behavior."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "runtime and compile-time narrowing agreement",
+            "lazy development messages and prefix-only production errors",
+            "multiple module formats, declaration output, dead-code elimination, and configured byte budgets"
+          ],
+          "reason": "Several material API, type, compatibility, build, and size guarantees constrain changes even though the implementation is small."
+        },
+        "placement": "The 3/1/1/3 profile sums to 8, so the published formula yields Level 2; the advanced assertion signature and production constraints do not make the local synchronous behavior structurally advanced."
+      },
+      "quality": {
+        "source_quality": "The source states the assertion contract, isolates production behavior, documents lazy message evaluation, and keeps every runtime branch visible in one function.",
+        "architecture": "One TypeScript source feeds runtime and declaration builds, while focused suites separate runtime, messages, type narrowing, and generated-bundle behavior.",
+        "naming_and_idiom": "invariant, condition, message, isProduction, prefix, and provided describe the contract directly, and `asserts condition` is the idiomatic TypeScript narrowing mechanism.",
+        "tests": "Four suites and ten tests cover truthy and falsy values, default, eager and lazy messages, non-evaluation on success, custom-type narrowing, and development-versus-production bundle output; the complete local verification also passed TypeScript checking, all builds, and every configured size limit.",
+        "documentation": "The README explains assertions, lazy messages, production behavior, type narrowing, build formats, and bundler requirements; one early example retains the stale prefix `Invariant violation`, while later documentation, source, and tests consistently use `Invariant failed`.",
+        "traceability": "Every source branch maps directly to a runtime or message test, the assertion signature maps to compile-time narrowing assertions, and the production branch maps to generated-code inspection.",
+        "maintainability": "One implementation, explicit build inputs, declaration generation, direct type tests, and byte gates make changes small and observable.",
+        "educational_value": "The path shows that a tiny production utility can coordinate runtime behavior, static types, bundling, compatibility, and performance constraints without hiding the mechanism."
+      },
+      "inspection": {
+        "commit": "b5587cf4ba45e257bce49053c3345b6614324252",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex",
+          "independent Codex reviewer"
+        ],
+        "files": [
+          "src/tiny-invariant.ts",
+          "test/throw-behaviour.spec.ts",
+          "test/message-behaviour.spec.ts",
+          "test/type-narrowing.spec.ts",
+          "test/bundle-behaviour.spec.ts",
+          "rollup.config.mjs",
+          "package.json",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "TypeScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "mitt",
       "repository": "developit/mitt",
       "url": "https://github.com/developit/mitt",

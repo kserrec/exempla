@@ -1,6 +1,6 @@
 # TypeScript
 
-6 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -9,6 +9,72 @@
 No qualified repository has been published at this level. Standards are not lowered to fill a slot.
 
 ## Level 2
+
+### [alexreardon/tiny-invariant](https://github.com/alexreardon/tiny-invariant)
+
+**Language 3 / Behavior 1 / Design 1 / Constraints 3 → Level 2**
+
+A zero-dependency assertion utility that narrows TypeScript types, evaluates failure messages lazily, and omits message logic from production builds.
+
+**Real-world evidence:** npm published version 1.3.3 without a deprecation notice, and the public registry reported 86,411,460 downloads for 2026-08-22 through 2026-08-28.
+
+**Language evidence:** The complete invariant runtime, assertion-function signature, build input, and direct runtime, type-narrowing, and bundle-behavior tests are first-party TypeScript.
+
+**Why study it:** One focused function shows how a runtime assertion, a compile-time narrowing contract, lazy error construction, environment-specific bundling, and byte budgets can agree in shipped TypeScript.
+
+**What you can learn:**
+
+- Use `src/tiny-invariant.ts` to study assertion-function signatures, truthy and falsy control flow, lazy callback evaluation, environment-specific error behavior, declaration generation, dead-code elimination, and focused runtime, type, bundle, and size verification.
+
+**Prerequisites:**
+
+- Before reading `src/tiny-invariant.ts`, be familiar with TypeScript unions, callbacks, truthy and falsy values, exceptions, assertion functions, environment-variable replacement during bundling, and dead-code elimination.
+
+**Coding relevance:**
+
+The selected path is domain-neutral and teaches transferable API contracts, type narrowing, lazy work, error handling, environment-specific builds, testing, and size discipline.
+
+Required domain context:
+
+- An invariant is a condition the program requires to be true; TypeScript assertion functions also tell the compiler which condition is known after a successful return.
+- The build replaces `process.env.NODE_ENV` with a constant so production-only optimization can remove this library's development message branch.
+
+**Learning path:**
+
+- **Goal:** Understand how tiny-invariant keeps runtime truthiness checks, TypeScript narrowing, lazy messages, and production bundle behavior aligned.
+- **Start here:** [`src/tiny-invariant.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/src/tiny-invariant.ts) — The single production source contains the truthy return, assertion signature, lazy message resolution, and distinct development and production error paths.
+- **Then read:**
+  - [`test/throw-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/throw-behaviour.spec.ts)
+  - [`test/message-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/message-behaviour.spec.ts)
+  - [`test/type-narrowing.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/type-narrowing.spec.ts)
+  - [`test/bundle-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/bundle-behaviour.spec.ts)
+  - [`rollup.config.mjs`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/rollup.config.mjs)
+  - [`package.json`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/package.json)
+  - [`README.md`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/README.md)
+- **Trace:** Enter invariant with an unknown value; follow truthy input to the immediate return or falsy input to the production prefix-only error or development lazy-message branch, then close the runtime, compiler-narrowing, generated-bundle, declaration, and configured byte-budget contracts with the four focused suites, Rollup configuration, and package scripts.
+
+**Why this level:**
+
+- **Language technique 3:** The assertion signature materially changes caller types and is verified directly, so substantial TypeScript abstraction shapes the path even though the runtime body is short.
+- **Behavioral reasoning 1:** The complete runtime is local and synchronous, with an immediate success return and a small environment-dependent failure branch.
+- **Design span 1:** One focused implementation unit and its direct build and test artifacts contain the whole selected behavior.
+- **Constraint burden 3:** Several material API, type, compatibility, build, and size guarantees constrain changes even though the implementation is small.
+- **Placement:** The 3/1/1/3 profile sums to 8, so the published formula yields Level 2; the advanced assertion signature and production constraints do not make the local synchronous behavior structurally advanced.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The source states the assertion contract, isolates production behavior, documents lazy message evaluation, and keeps every runtime branch visible in one function.
+- **Architecture:** One TypeScript source feeds runtime and declaration builds, while focused suites separate runtime, messages, type narrowing, and generated-bundle behavior.
+- **Naming and idiom:** invariant, condition, message, isProduction, prefix, and provided describe the contract directly, and `asserts condition` is the idiomatic TypeScript narrowing mechanism.
+- **Tests:** Four suites and ten tests cover truthy and falsy values, default, eager and lazy messages, non-evaluation on success, custom-type narrowing, and development-versus-production bundle output; the complete local verification also passed TypeScript checking, all builds, and every configured size limit.
+- **Documentation:** The README explains assertions, lazy messages, production behavior, type narrowing, build formats, and bundler requirements; one early example retains the stale prefix `Invariant violation`, while later documentation, source, and tests consistently use `Invariant failed`.
+- **Traceability:** Every source branch maps directly to a runtime or message test, the assertion signature maps to compile-time narrowing assertions, and the production branch maps to generated-code inspection.
+- **Maintainability:** One implementation, explicit build inputs, declaration generation, direct type tests, and byte gates make changes small and observable.
+- **Educational value:** The path shows that a tiny production utility can coordinate runtime behavior, static types, bundling, compatibility, and performance constraints without hiding the mechanism.
+
+**Inspection record:** commit `b5587cf4ba45e257bce49053c3345b6614324252`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/tiny-invariant.ts`, `test/throw-behaviour.spec.ts`, `test/message-behaviour.spec.ts`, `test/type-narrowing.spec.ts`, `test/bundle-behaviour.spec.ts`, `rollup.config.mjs`, `package.json`, `README.md`, `LICENSE`. GitHub Linguist label: TypeScript.
+
+**License:** MIT ([evidence 1](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/LICENSE))
 
 ### [developit/mitt](https://github.com/developit/mitt)
 

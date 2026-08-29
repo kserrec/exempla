@@ -936,6 +936,38 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject as a qualified capacity alternate: both gates pass and 2/1/2/2 sums to 7, whose mean of 1.75 rounds half up to Level 2; GuardClauses retains a stronger type-flow and defensive-API path while serilog-sinks-console preserves a more behaviorally distinct output pipeline, so the two-entry cap excludes Humanizer. The scores were locked before capacity was inspected. Fixed-length truncation operates on UTF-16 code units, so no Unicode grapheme-safety claim is made; selected tests omit null ITruncator, zero or negative length, and grapheme boundaries. Tests were inspected but not executed because the .NET SDK is unavailable in the review environment.",
       "reconsider": "Reconsider if a C# Level 2 place opens, the two-entry cap changes, a retained path weakens on re-audit, or tests add explicit null-strategy, zero and negative length, and Unicode grapheme-boundary coverage; rerank it at its calculated Level rather than lowering it into Level 1."
+    },
+    {
+      "repository": "unjs/ofetch",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "source correctness, tests, traceability, maintainability, and educational value",
+      "evidence": "Reject at the quality gate: at the exact v2-alpha pin, withQuery('/movie#frag', {id: 123}) returns '/movie#frag?id=123' and withQuery('/movie?lang=en#frag', {id: 123}) returns '/movie?lang=en%23frag&id=123', corrupting fragment placement. A focused custom-fetch probe also showed a default retry after timeout begins attempt two with signal.aborted already true because recursive options spread the prior combined signal. The full lint and 28-test coverage command passed, but it omits both interactions, timeout tests force retry: 0, and one test calls jsonplaceholder.typicode.com live; README still attributes URL handling to ufo although this pin uses src/utils.url.ts. The hard failure precedes publication of diagnostic scores or capacity ranking.",
+      "reconsider": "Reconsider only at a stable TypeScript pin that preserves URL fragments while adding or replacing query parameters, gives every timeout retry a live signal and fresh timeout budget, adds focused regression tests for both interactions, removes the live-network test dependency, and makes the README match the actual URL implementation; it must then pass a fresh quality review and honest capacity ranking."
+    },
+    {
+      "repository": "sindresorhus/p-queue",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 3/5/3/5 sums to 16, whose mean is Level 4; Angular's bounded reactive graph and Reselect's typed memoization retain more complementary advanced TypeScript paths, so the two-entry cap excludes p-queue. The scores were locked before capacity was inspected. This is an in-process start scheduler, not a durable or distributed queue; rate limits constrain starts, abort or timeout does not inherently stop running user work, clear can leave discarded-task promises unsettled, priority does not order completion, custom-queue removal is best effort, and real-clock tests retain some timing fragility.",
+      "reconsider": "Reconsider if a TypeScript Level 4 place opens, the two-entry cap changes, a retained Level 4 path weakens on re-audit, or comparative review shows the task-admission, rate-window, cancellation, cleanup, and priority path now provides stronger and sufficiently distinct learning value."
+    },
+    {
+      "repository": "sindresorhus/p-retry",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "meaningful first-party implementation and behavioral tests in the cataloged language",
+      "evidence": "Reject at the TypeScript language-eligibility gate: package exports index.js as the runtime, the complete validation, backoff, time-budget, abort, callback, accounting, and wrapping algorithm is JavaScript, and all behavioral tests are in test.js. TypeScript appears only in index.d.ts and index.test-d.ts, so no meaningful first-party TypeScript implementation-to-behavioral-test path exists. The hard failure precedes quality ranking, diagnostic scores, or capacity comparison.",
+      "reconsider": "Reconsider only at a stable pin where the retry implementation and its direct behavioral tests are substantive first-party TypeScript rather than declarations and type assertions, or re-audit it as a JavaScript candidate without implying a TypeScript runtime."
+    },
+    {
+      "repository": "sindresorhus/yocto-queue",
+      "language": "TypeScript",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "meaningful first-party implementation and behavioral tests in the cataloged language",
+      "evidence": "Reject at the TypeScript language-eligibility gate: package exports index.js as the runtime, all linked-list queue behavior, iteration, and draining are implemented in index.js, and every behavioral test is in test.js. TypeScript consists only of index.d.ts and one dequeue assertion in index.test-d.ts, so no meaningful first-party TypeScript implementation-to-behavioral-test path exists. The hard failure precedes quality ranking, diagnostic scores, or capacity comparison.",
+      "reconsider": "Reconsider only at a stable pin where the queue implementation and its direct behavioral tests are substantive first-party TypeScript rather than declarations and one type assertion, or re-audit it as a JavaScript candidate without implying a TypeScript runtime."
     }
   ]
 }

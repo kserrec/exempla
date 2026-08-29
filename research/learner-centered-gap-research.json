@@ -719,13 +719,293 @@
         "5": 0
       },
       "conclusion": "Four independent channels and two exact-pin deep inspections found one qualified Level 2 capacity alternate and one expert compiler path. Roslyn fills C#'s final Level 5 place, Humanizer remains a durable Level 2 alternate, and two honest Level 1 gaps remain because neither path was moved downward."
+    },
+    {
+      "order": 6,
+      "language_slug": "typescript",
+      "language": "TypeScript",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "developit/mitt",
+          "level": 2
+        },
+        {
+          "repository": "reduxjs/redux",
+          "level": 3
+        },
+        {
+          "repository": "angular/angular",
+          "level": 4
+        },
+        {
+          "repository": "reduxjs/reselect",
+          "level": 4
+        },
+        {
+          "repository": "colinhacks/zod",
+          "level": 5
+        },
+        {
+          "repository": "trpc/trpc",
+          "level": 5
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 1,
+        "4": 0,
+        "5": 0
+      },
+      "discovery_channels": [
+        {
+          "id": "npm-registry",
+          "channel": "npm package registry and usage evidence",
+          "sources": [
+            "https://www.npmjs.com/package/tiny-invariant",
+            "https://www.npmjs.com/package/ofetch",
+            "https://www.npmjs.com/package/p-queue",
+            "https://www.npmjs.com/package/p-retry",
+            "https://www.npmjs.com/package/yocto-queue",
+            "https://api.npmjs.org/downloads/point/2026-08-22:2026-08-28/tiny-invariant"
+          ],
+          "evidence": "The public registry surfaced installable packages with built-in TypeScript claims and supplied current publication, deprecation, license, repository, and dated usage leads without treating downloads as admission evidence."
+        },
+        {
+          "id": "github-typescript-source-search",
+          "channel": "GitHub TypeScript source, size, maintenance, and public-status search",
+          "sources": [
+            "https://api.github.com/search/repositories?q=language%3ATypeScript+archived%3Afalse+stars%3A%3E100+size%3A%3C5000&sort=updated&order=desc&per_page=20",
+            "https://github.com/alexreardon/tiny-invariant",
+            "https://github.com/unjs/ofetch",
+            "https://github.com/sindresorhus/p-queue",
+            "https://github.com/sindresorhus/p-retry",
+            "https://github.com/sindresorhus/yocto-queue"
+          ],
+          "evidence": "A constrained public-source search deliberately sampled current small and medium repositories, then exact repository metadata and pinned trees established actual implementation language, maintenance state, source, tests, documentation, and license evidence."
+        },
+        {
+          "id": "curated-promise-ecosystem",
+          "channel": "curated promise and Node.js library lists",
+          "sources": [
+            "https://github.com/sindresorhus/promise-fun",
+            "https://github.com/sindresorhus/awesome-nodejs",
+            "https://github.com/topics/promise"
+          ],
+          "evidence": "Promise-focused curation independently surfaced queue, retry, concurrency, and smaller utility leads for comparison, including p-queue and p-retry, before any score or catalog-capacity check."
+        },
+        {
+          "id": "maintainer-library-review",
+          "channel": "maintainer and organization library portfolios",
+          "sources": [
+            "https://github.com/unjs",
+            "https://github.com/sindresorhus?tab=repositories&type=source&language=typescript",
+            "https://github.com/alexreardon?tab=repositories&type=source"
+          ],
+          "evidence": "Reviewing maintainers' smaller first-party libraries supplied ofetch, tiny-invariant, yocto-queue, and adjacent candidates and helped distinguish substantive TypeScript runtimes from JavaScript packages that merely ship declarations."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "alexreardon/tiny-invariant",
+          "pinned_commit": "b5587cf4ba45e257bce49053c3345b6614324252",
+          "discovered_via": [
+            "npm-registry",
+            "github-typescript-source-search",
+            "maintainer-library-review"
+          ],
+          "inspection_files": [
+            "src/tiny-invariant.ts",
+            "test/throw-behaviour.spec.ts",
+            "test/message-behaviour.spec.ts",
+            "test/type-narrowing.spec.ts",
+            "test/bundle-behaviour.spec.ts",
+            "rollup.config.mjs",
+            "package.json",
+            "README.md",
+            "LICENSE"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "An invariant and compiler narrowing need only a short local explanation; the complete selected path teaches transferable assertion APIs, type refinement, lazy work, errors, environment-specific builds, testing, compatibility, and size discipline.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional source, one coherent implementation and build boundary, idiomatic assertion naming, direct runtime, type, and generated-bundle tests, adequate documentation, complete branch-to-test traceability, explicit build and size guards, and strong teaching value support all eight quality findings; the README's one stale early error-prefix example is disclosed rather than repeated as fact.",
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 1,
+            "design_span": 1,
+            "constraint_burden": 3
+          },
+          "calculated_level": 2,
+          "decision_evidence": "The scores were written before capacity was checked. The 3/1/1/3 profile sums to 8, whose mean is Level 2; both gates pass and the one open TypeScript Level 2 place accepts tiny-invariant. Four suites and all ten tests, TypeScript checking, all builds, and every configured size limit passed locally. The bundle test proves removal of this library's internal development-only message logic after NODE_ENV replacement, not removal of caller message expressions; README line 22 retains the stale prefix `Invariant violation`, while later documentation, source, and tests use `Invariant failed`.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and TypeScript source-to-runtime, type, and bundle path, both gates and all eight findings, the 3/1/1/3 Level 2 result, the open slot, MIT evidence, four passing suites and ten tests, and the caller-expression, configured-size, and stale-prefix claim boundaries."
+          }
+        },
+        {
+          "repository": "unjs/ofetch",
+          "pinned_commit": "1dbc37fd1ceab832fc7c90cad81b1091c95ba563",
+          "discovered_via": [
+            "npm-registry",
+            "github-typescript-source-search",
+            "maintainer-library-review"
+          ],
+          "inspection_files": [
+            "src/index.ts",
+            "src/base.ts",
+            "src/fetch.ts",
+            "src/utils.ts",
+            "src/utils.url.ts",
+            "src/error.ts",
+            "src/types.ts",
+            "test/index.test.ts",
+            "README.md",
+            "package.json",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Fetch request lifecycles need only standard HTTP and Web API context; the path primarily teaches transferable generic APIs, option normalization, asynchronous hooks, retries, cancellation, response parsing, error design, and cross-runtime compatibility.",
+          "quality_status": "fail",
+          "quality_evidence": "Architecture, naming, broad documentation, and many direct tests are strong, but source correctness, boundary tests, traceability, maintainability, and exemplar value fail because URL fragments are corrupted when query parameters are added and timeout retries inherit an already-aborted signal; the proposed path also had to expand to the omitted local URL helper, and current tests miss both defects.",
+          "decision_evidence": "Reject at the quality gate: at the exact v2-alpha pin, withQuery('/movie#frag', {id: 123}) returns '/movie#frag?id=123' and withQuery('/movie?lang=en#frag', {id: 123}) returns '/movie?lang=en%23frag&id=123', corrupting fragment placement. A focused custom-fetch probe also showed a default retry after timeout begins attempt two with signal.aborted already true because recursive options spread the prior combined signal. The full lint and 28-test coverage command passed, but it omits both interactions, timeout tests force retry: 0, and one test calls jsonplaceholder.typicode.com live; README still attributes URL handling to ufo although this pin uses src/utils.url.ts. The hard failure precedes publication of diagnostic scores or capacity ranking.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently reproduced both exact-pin defects, identified the missing URL-helper path and regression cases, confirmed the v2-alpha and stale-ufo documentation limits, verified TypeScript and MIT evidence, and agreed that the quality failure leaves the candidate unscored and outside capacity ranking."
+          }
+        },
+        {
+          "repository": "sindresorhus/p-queue",
+          "pinned_commit": "180ab9e25cd10b6f548767d7176076b50d25e188",
+          "discovered_via": [
+            "npm-registry",
+            "github-typescript-source-search",
+            "curated-promise-ecosystem",
+            "maintainer-library-review"
+          ],
+          "inspection_files": [
+            "source/index.ts",
+            "source/priority-queue.ts",
+            "source/lower-bound.ts",
+            "source/queue.ts",
+            "source/options.ts",
+            "test/basic.ts",
+            "test/advanced.ts",
+            "test/rate-limit.ts",
+            "test/validation.ts",
+            "test/priority-queue.ts",
+            "test/strict.ts",
+            "readme.md",
+            "package.json",
+            "license"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "An in-process promise queue needs only a short task, concurrency, priority, and rate-window primer; the path teaches transferable typed interfaces, scheduling state, timers, cancellation, cleanup, ordering, backpressure, and race testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional invariant-rich source, coherent queue and timeout boundaries, precise TypeScript names, extensive timing, race, abort, ordering, and cleanup tests, comprehensive documentation, direct API-to-test traceability, explicit helper decomposition, and exceptional asynchronous-systems teaching value support all eight quality findings.",
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 5,
+            "design_span": 3,
+            "constraint_burden": 5
+          },
+          "calculated_level": 4,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/5/3/5 sums to 16, whose mean is Level 4; Angular's bounded reactive graph and Reselect's typed memoization retain more complementary advanced TypeScript paths, so the two-entry cap excludes p-queue. The scores were locked before capacity was inspected. This is an in-process start scheduler, not a durable or distributed queue; rate limits constrain starts, abort or timeout does not inherently stop running user work, clear can leave discarded-task promises unsettled, priority does not order completion, custom-queue removal is best effort, and real-clock tests retain some timing fragility.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the task-through-admission, priority, rate-window, timeout, abort, cleanup, event, and next-task path, both gates and all eight findings, the 3/5/3/5 Level 4 result, full capacity, MIT and TypeScript evidence, and every stated in-process, start-rate, running-work, clear, completion-order, custom-queue, and clock-test limitation."
+          }
+        },
+        {
+          "repository": "sindresorhus/p-retry",
+          "pinned_commit": "35681f6c70f8ca2bdcb9542281147679184269fa",
+          "discovered_via": [
+            "npm-registry",
+            "github-typescript-source-search",
+            "curated-promise-ecosystem",
+            "maintainer-library-review"
+          ],
+          "inspection_files": [
+            "index.js",
+            "test.js",
+            "index.d.ts",
+            "index.test-d.ts",
+            "readme.md",
+            "package.json",
+            "license"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "fail",
+          "coding_relevance_evidence": "Retry behavior is transferable, but the selected production behavior is implemented and behaviorally tested in JavaScript, so it is not a real representative TypeScript learning path under the cataloged-language requirement.",
+          "quality_status": "fail",
+          "quality_evidence": "The underlying JavaScript package has readable source, tests, documentation, and MIT evidence, but TypeScript traceability and exemplar value fail: TypeScript is limited to declarations and tsd assertions that neither implement nor behaviorally exercise retry execution.",
+          "decision_evidence": "Reject at the TypeScript language-eligibility gate: package exports index.js as the runtime, the complete validation, backoff, time-budget, abort, callback, accounting, and wrapping algorithm is JavaScript, and all behavioral tests are in test.js. TypeScript appears only in index.d.ts and index.test-d.ts, so no meaningful first-party TypeScript implementation-to-behavioral-test path exists. The hard failure precedes quality ranking, diagnostic scores, or capacity comparison.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact exports, JavaScript runtime and behavioral suite, declaration-only TypeScript files, MIT license, and absence of a representative TypeScript production trace at the exact pin."
+          }
+        },
+        {
+          "repository": "sindresorhus/yocto-queue",
+          "pinned_commit": "b07eac099753833b29d06c614149904445739776",
+          "discovered_via": [
+            "npm-registry",
+            "github-typescript-source-search",
+            "maintainer-library-review"
+          ],
+          "inspection_files": [
+            "index.js",
+            "test.js",
+            "index.d.ts",
+            "index.test-d.ts",
+            "readme.md",
+            "package.json",
+            "license"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "fail",
+          "coding_relevance_evidence": "Queue implementation is transferable, but the linked-list production behavior and its direct tests are JavaScript, so it is not a real representative TypeScript learning path under the cataloged-language requirement.",
+          "quality_status": "fail",
+          "quality_evidence": "The underlying JavaScript package is focused, readable, documented, tested, and MIT-licensed, but TypeScript traceability and exemplar value fail because TypeScript consists only of one declaration surface and a small type assertion rather than implementation and behavioral tests.",
+          "decision_evidence": "Reject at the TypeScript language-eligibility gate: package exports index.js as the runtime, all linked-list queue behavior, iteration, and draining are implemented in index.js, and every behavioral test is in test.js. TypeScript consists only of index.d.ts and one dequeue assertion in index.test-d.ts, so no meaningful first-party TypeScript implementation-to-behavioral-test path exists. The hard failure precedes quality ranking, diagnostic scores, or capacity comparison.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact exports, JavaScript linked-list runtime and behavioral suite, declaration-only TypeScript files, MIT license, and absence of a representative TypeScript production trace at the exact pin."
+          }
+        }
+      ],
+      "accepted": [
+        "alexreardon/tiny-invariant"
+      ],
+      "rejected": [
+        "unjs/ofetch",
+        "sindresorhus/p-queue",
+        "sindresorhus/p-retry",
+        "sindresorhus/yocto-queue"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0
+      },
+      "conclusion": "Four independent discovery channels and five exact-pin inspections found one qualified Level 2 path, one quality-gate rejection, one qualified Level 4 capacity alternate, and two packages without TypeScript runtime paths. tiny-invariant fills the sole Level 2 place; both Level 1 places and the Level 3 place remain honest because no candidate was moved downward and ofetch's open-slot fit could not override its quality failure."
     }
   ],
   "summary": {
-    "languages_completed": 5,
-    "accepted_new_total": 5,
-    "rejected_new_total": 5,
-    "current_entry_total": 138,
-    "remaining_gap_total": 62
+    "languages_completed": 6,
+    "accepted_new_total": 6,
+    "rejected_new_total": 9,
+    "current_entry_total": 139,
+    "remaining_gap_total": 61
   }
 }
