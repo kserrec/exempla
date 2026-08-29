@@ -10,7 +10,7 @@ path through production implementation and tests. The catalog currently has
 **148 qualified repositories across 20 languages**. Its **52 open slots are
 honest research gaps** after the learner-centered re-review and the completed
 JavaScript, Python, Java, PHP, C#, TypeScript, C++, and Ruby replacement-
-research passes through Scala; no standard is lowered to preserve an
+research passes through PowerShell; no standard is lowered to preserve an
 arbitrary count.
 
 ## Browse the catalog

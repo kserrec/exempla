@@ -1080,6 +1080,22 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but scopt and retry already fill the two Scala Level 3 places with more complementary parser-combinator and effectful retry-policy paths. Java is unavailable locally, so the Mill suite could not execute; source and direct tests were inspected. Output callbacks run concurrently and must be thread safe; call aggregates stdout and stderr chunks but cross-stream order reflects arrival; timeout termination depends on JVM and platform behavior; shutdown hooks, process trees, pipe failure, inherited streams, environment propagation, and binary compatibility constrain changes; and the path excludes operating-system process implementation.",
       "reconsider": "Reconsider if a Scala Level 3 place opens, the two-entry cap changes, or comparative review finds the typed subprocess, concurrent-pumper, pipeline, timeout, and cleanup path stronger and sufficiently distinct; retain its calculated Level 3 and all platform, lifecycle, ordering, and scope boundaries."
+    },
+    {
+      "repository": "EvotecIT/PSWriteColor",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "direct test quality",
+      "evidence": "Reject at the repository-quality gate: the exact pinned repository has substantive Public/Write-Color.ps1 implementation and examples but no automated tests. The published function combines host output, console geometry, color-array branching, date formatting, newline control, file encoding, append behavior, and retry termination; examples demonstrate calls but do not assert outcomes or prevent regressions. The PowerShell runtime is unavailable locally, but that does not cause the rejection: the required direct tests are nonexistent in the repository. The hard failure precedes numerical scoring and the open Level 5 place was not consulted.",
+      "reconsider": "Reconsider at a stable pin only after direct automated tests assert console segmentation and colors, background validation, centering, timestamps, newline modes, no-console behavior, file encoding and append semantics, failure retries, and termination; then rerun all eight findings before scoring."
+    },
+    {
+      "repository": "PowerShell/SecretManagement",
+      "language": "PowerShell",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "meaningful first-party PowerShell implementation and maintained project",
+      "evidence": "Reject at the eligibility and repository-quality gates: GitHub reports the repository archived, Microsoft Learn and README.md say active development has ended, and the substantive production runtime is C# under src/code rather than PowerShell. The PowerShell files are manifests, build and deployment scripts, extension examples, and a Pester integration harness around the binary module; they do not make the runtime a meaningful first-party PowerShell implementation. The hard failures precede numerical scoring and the open Level 5 place was not consulted.",
+      "reconsider": "Reconsider for PowerShell only if an actively maintained successor contains a substantive first-party PowerShell runtime path with direct tests; otherwise evaluate the current binary runtime as a C# candidate if its archived status is independently resolved."
     }
   ]
 }
