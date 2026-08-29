@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 60,
+  "reviewed_entry_total": 70,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -4506,12 +4506,767 @@
         "status": "disagree_resolved",
         "notes": "The reviews disagreed between an application-tick platform span scored 3/5/5/5 and the bounded signal graph. Root reconciliation chose the signal graph as Angular's clearest representative educational path, retained only burdens that recur there, and resolved 4/5/3/5, Level 4, comparative rank 2, and retention."
       }
+    },
+    {
+      "repository": "kainjow/Mustache",
+      "language": "C++",
+      "prior_level": 1,
+      "pinned_commit": "3f654942a70c46a775070d7a09ca7acfa3e205b7",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Mustache template contains variables, escaped or unescaped substitutions, sections that repeat or conditionally render, inverted sections, and partial templates."
+        ],
+        "evidence": "The small documented template vocabulary is sufficient context; the path teaches transferable recursive parsing, variant-like data modeling, context lookup, callback rendering, escaping, error reporting, and compatibility testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The single-header implementation separates tokens, data, parsing, context lookup, escaping, and rendering responsibilities, and the focused suite covers variables, sections, lists, lambdas, partials, whitespace, delimiters, escaping, malformed input, and specification examples.",
+      "learning_path": {
+        "goal": "Understand how a header-only C++ Mustache engine parses a template and renders variables and nested sections against a context stack while preserving escaping and template compatibility.",
+        "start_path": "mustache.hpp",
+        "supporting_files": [
+          "tests/tests.cpp"
+        ],
+        "trace": "Follow template construction into token parsing, delimiter and section handling, then follow render through stacked context lookup, scalar, list, object and lambda data cases, escaped or raw output, partials, and errors; correlate each branch with the direct rendering and malformed-template tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 2,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic string and stream support",
+            "variant-like recursive template data",
+            "callable lambdas and higher-order rendering"
+          ],
+          "reason": "Templates, recursive data modeling, and callable composition materially shape the path without requiring expert C++ machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "localized token-parser state",
+            "stacked context lookup and section branching",
+            "explicit parse and render errors"
+          ],
+          "reason": "Meaningful state and branches remain within a direct synchronous parse-and-render lifecycle."
+        },
+        "design_span": {
+          "signals": [
+            "parser and renderer boundaries",
+            "data, context, escaping, and partial helpers"
+          ],
+          "reason": "A few clear responsibilities inside one header and one test suite contain the behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "Mustache delimiter, whitespace, section, and partial compatibility",
+            "HTML escaping and raw-output correctness",
+            "generic character and stream behavior"
+          ],
+          "reason": "Several material compatibility, portability, and correctness guarantees influence ordinary parser and renderer changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/2/2/3 sums to 10, whose mean of 2.50 rounds upward to Level 3; Mustache ranks first of three qualified C++ Level 3 paths.",
+      "reconsider": "Reconsider if template parsing, context lookup, escaping, public source status, license, documentation, or focused render and error tests materially change, or a stronger C++ Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether the compact single-header implementation's parser, renderer, and compatibility burden justified the upper neighboring anchors. Root reconciliation scored only the complete representative parse-and-render trace, applied the lower-anchor rule, and fixed 3/2/2/3, Level 3, comparative rank 1, and retention."
+      }
+    },
+    {
+      "repository": "agauniyal/rang",
+      "language": "C++",
+      "prior_level": 1,
+      "pinned_commit": "56419fe3348a475c8dd83852d907794cec0ec798",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Terminal styling writes color or style control sequences only when the configured control mode and output stream's terminal capabilities allow it."
+        ],
+        "evidence": "The terminal-style concept is familiar and self-contained; the path teaches transferable stream adaptation, platform detection, scoped configuration, enum APIs, fallback behavior, portability, and behavioral testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The header exposes small type-safe style and mode APIs, isolates platform terminal detection, and provides focused tests for enumeration output, control modes, stream behavior, support detection, and invalid or disabled cases; the catalog's colorTest program is an example rather than the contract suite.",
+      "learning_path": {
+        "goal": "Understand how rang adapts type-safe color and style values to an output stream while honoring control mode, terminal detection, and cross-platform fallback.",
+        "start_path": "include/rang.hpp",
+        "supporting_files": [
+          "test/test.cpp"
+        ],
+        "trace": "Follow style, foreground, background, control and color enums into the stream insertion path, then follow automatic, force and off modes through terminal and color-support detection and the Windows or ANSI output branches; close the behavior with test/test.cpp. The catalog's test/colorTest.cpp only demonstrates colors interactively and is not the closing contract test."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "scoped enums and stream insertion",
+            "small generic enum-to-code helpers",
+            "conventional platform-conditional functions"
+          ],
+          "reason": "The path uses common professional C++ stream and enum idioms without recurring advanced machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "automatic, forced, and disabled control modes",
+            "terminal and color-support branches",
+            "localized stream-specific state"
+          ],
+          "reason": "Several meaningful branches and a small configuration lifecycle remain easy to trace in one header."
+        },
+        "design_span": {
+          "signals": [
+            "one header-only styling component",
+            "one direct contract test"
+          ],
+          "reason": "The complete behavior is one focused unit."
+        },
+        "constraint_burden": {
+          "signals": [
+            "ANSI and Windows terminal portability",
+            "TTY, redirection, and color-support behavior",
+            "stable no-output fallback and stream contracts"
+          ],
+          "reason": "Several material portability and compatibility guarantees constrain an otherwise small implementation."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean calculates to Level 2; rang ranks first and is the only qualified C++ Level 2 path.",
+      "reconsider": "Reconsider if control-mode, terminal-detection, stream, platform, public-source, license, documentation, or focused-test behavior materially changes, or a clearer C++ Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over the catalog's demonstration file and the weight of rang's portability burden. Root reconciliation replaced colorTest.cpp as evidence with the verified behavioral test, kept the one-header representative path, and resolved 2/2/1/3, Level 2, rank 1, retained."
+      }
+    },
+    {
+      "repository": "gabime/spdlog",
+      "language": "C++",
+      "prior_level": 2,
+      "pinned_commit": "f5f173a1a57d0e2e0115f2ed71ee7ea316516853",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An asynchronous logger queues prepared log messages for a background worker; its overflow policy either blocks producers or discards an older message when the bounded queue is full."
+        ],
+        "evidence": "Logging and bounded queues need only short explanations; the path teaches transferable producer-consumer design, ownership transfer, backpressure, worker lifecycles, synchronization, failure handling, and concurrency testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Async logger, thread pool, and blocking queue responsibilities are explicit, overflow and flush operations are named, documentation covers the asynchronous contract, and focused suites test blocking and overrun policies, queue capacity, ordering, flush, shutdown, exceptions, multiple workers, and concurrent producers and consumers.",
+      "learning_path": {
+        "goal": "Understand how spdlog hands a log message to a bounded asynchronous queue and delivers it on worker threads while preserving overflow, ordering, flush, ownership, and shutdown contracts.",
+        "start_path": "include/spdlog/async_logger-inl.h",
+        "supporting_files": [
+          "include/spdlog/async_logger.h",
+          "include/spdlog/details/thread_pool-inl.h",
+          "include/spdlog/details/mpmc_blocking_q.h",
+          "tests/test_async.cpp",
+          "tests/test_mpmc_q.cpp"
+        ],
+        "trace": "Follow async_logger::sink_it_ and flush_ as they lock the thread-pool lifetime and post work, then follow thread_pool queue insertion, overflow selection, worker dequeue, backend sink or flush dispatch, and termination; correlate asynchronous logger and direct multi-producer/multi-consumer queue tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic bounded queue and message types",
+            "shared and weak ownership across logger and pool",
+            "callback and policy composition"
+          ],
+          "reason": "Generics and ownership-aware abstractions materially organize the path without expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "multi-producer and multi-consumer synchronization",
+            "blocking and overrun overflow policies",
+            "worker scheduling, flush, termination, and exception paths"
+          ],
+          "reason": "Concurrency, queue state, scheduling, resource ownership, and shutdown invariants recur and must be reasoned about together."
+        },
+        "design_span": {
+          "signals": [
+            "async logger and thread-pool boundary",
+            "blocking queue and backend sink interface",
+            "logger and queue test layers"
+          ],
+          "reason": "The trace crosses several meaningful concurrency and logging boundaries whose responsibilities remain locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "bounded memory and overflow guarantees",
+            "message ordering, ownership, and exactly-once backend delivery",
+            "flush, shutdown, exception, and performance behavior"
+          ],
+          "reason": "Multiple strict concurrency, resource, reliability, and performance guarantees interact across the asynchronous handoff."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/3/4 sums to 14, whose mean of 3.50 rounds upward to Level 4; spdlog ranks first of five qualified C++ Level 4 paths.",
+      "reconsider": "Reconsider if async handoff, overflow, queue, worker, flush, shutdown, public-source, license, documentation, or concurrency tests materially change, or a stronger C++ Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether to begin at the general logger or the asynchronous behavior and on the queue evidence required. Root reconciliation chose async_logger as the representative entry, included the verified thread-pool, bounded-queue, and direct queue tests, and fixed 3/4/3/4, Level 4, comparative rank 1, retained."
+      }
+    },
+    {
+      "repository": "CLIUtils/CLI11",
+      "language": "C++",
+      "prior_level": 2,
+      "pinned_commit": "c1cfe00d2f3d862aecfe6e69ec810414d5f4c906",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A command-line parser assigns tokens to options and subcommands, converts values, validates relationships, and invokes callbacks or reports structured errors."
+        ],
+        "evidence": "Command-line concepts are familiar and documented locally; the selected path teaches transferable parser state, declarative APIs, type conversion, callbacks, validation, modular design, and error handling rather than a specialized command grammar."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "App, Option, implementation, and type-conversion responsibilities are deliberately separated in the header-only design, documentation covers the parsing model, and AppTest exercises parsing order, subcommands, callbacks, requirements, exclusions, fallthrough, remaining arguments, errors, and repeated parsing.",
+      "learning_path": {
+        "goal": "Understand how CLI11 maps command-line tokens into typed options and subcommands while preserving validation, callback, fallthrough, remaining-argument, and error contracts.",
+        "start_path": "include/CLI/App.hpp",
+        "supporting_files": [
+          "include/CLI/impl/App_inl.hpp",
+          "include/CLI/Option.hpp",
+          "include/CLI/impl/Option_inl.hpp",
+          "include/CLI/TypeTools.hpp",
+          "tests/AppTest.cpp"
+        ],
+        "trace": "Start with App's option and subcommand model, follow parse through token classification, option matching, value collection and conversion, subcommand and remaining-token handling, requirement and exclusion validation, callback ordering, and structured errors; connect Option and TypeTools behavior to the focused application tests."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "generic typed option conversion",
+            "callback and validator composition",
+            "traits and overloads for container and scalar inputs"
+          ],
+          "reason": "Generics, traits, overloads, and higher-order composition materially shape the declarative parser API."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "token-consumption and parse state",
+            "nested subcommands and fallthrough",
+            "validation, callback ordering, and error transitions"
+          ],
+          "reason": "State transitions, recursion, callbacks, and errors materially affect a parse without requiring advanced concurrency or resource reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "App, Option, and TypeTools boundaries",
+            "parsing, conversion, validation, and callback layers",
+            "subcommand extension structure"
+          ],
+          "reason": "The trace crosses several meaningful library boundaries whose responsibilities remain locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable option and subcommand API behavior",
+            "conversion, arity, requirement, and exclusion guarantees",
+            "callback order, remaining tokens, and error compatibility"
+          ],
+          "reason": "Several material API, compatibility, and correctness guarantees influence normal parser changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/3 sums to 12, whose mean calculates to Level 3; CLI11 ranks second of three qualified C++ Level 3 paths.",
+      "reconsider": "Reconsider if option or subcommand parsing, conversion, validation, callback, public-source, license, documentation, or AppTest contracts materially change, or a stronger C++ Level 3 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on the parser's necessary option and type-conversion support breadth and neighboring design and constraint anchors. Root reconciliation kept only the files needed for the representative token-to-callback trace and resolved 3/3/3/3, Level 3, comparative rank 2, retained."
+      }
+    },
+    {
+      "repository": "fmtlib/fmt",
+      "language": "C++",
+      "prior_level": 3,
+      "pinned_commit": "e76a9520a3c339d2cb6a1510db43a05ea9bd8ae6",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A format string combines replacement fields and format specifications with typed arguments to produce text; constant format strings may be checked during compilation."
+        ],
+        "evidence": "The documented formatting syntax is short and subordinate; the path teaches transferable compile-time programming, generic APIs, parsing, type erasure, diagnostics, static-runtime agreement, compatibility, and performance."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Public formatting, core argument storage, parser, formatter customization, and compile-time checking have explicit contracts; runtime tests cover specifications and output while the compile-error CMake suite verifies rejected format strings and diagnostics at the compilation boundary.",
+      "learning_path": {
+        "goal": "Understand how fmt's public format API checks and parses a typed format string, stores heterogeneous arguments, dispatches formatter specializations, and keeps compile-time rejection aligned with runtime formatting.",
+        "start_path": "include/fmt/format.h",
+        "supporting_files": [
+          "include/fmt/base.h",
+          "test/format-test.cc",
+          "test/compile-error-test/CMakeLists.txt"
+        ],
+        "trace": "Begin at public format and format_string entry types, follow compile-time or runtime format parsing and argument indexing into type-erased argument storage and formatter specialization dispatch, then verify output, specification, custom type, error, and compile-failure contracts in the runtime and compile-error tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "variadic templates and heterogeneous argument packs",
+            "constexpr format parsing and compile-time diagnostics",
+            "type erasure, traits, overload selection, and formatter specialization"
+          ],
+          "reason": "Multiple advanced template, constexpr, customization, and type-erasure mechanisms interact pervasively and require expert C++ fluency."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "format-specification parser state",
+            "argument indexing and formatter dispatch",
+            "runtime and compilation error paths"
+          ],
+          "reason": "Parsing, dispatch, and error state are nontrivial, but the bounded synchronous formatting path lacks recurring advanced concurrency or lifecycle behavior."
+        },
+        "design_span": {
+          "signals": [
+            "public API, core argument, parser, and formatter boundaries",
+            "compile-time and runtime execution modes",
+            "custom formatter extension point"
+          ],
+          "reason": "Several meaningful layers and execution modes contribute while remaining one cohesive formatting library path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "compile-time and runtime grammar agreement",
+            "type-safe argument and customization compatibility",
+            "diagnostic, locale, Unicode, and output correctness",
+            "binary size, compilation cost, and runtime performance"
+          ],
+          "reason": "Several system-wide correctness, compatibility, diagnostic, portability, and performance guarantees interact across the public formatting contract."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 5/3/3/5 sums to 16, whose mean calculates to Level 4; fmt ranks third behind spdlog and Catch2 for the two available C++ Level 4 places.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, a fresh comparison ranks this formatting path above a retained entry, or compile-time parsing, argument storage, formatter, diagnostics, public status, license, documentation, or tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether formatting's expert language and constraint burdens should broaden the behavioral or design scores and on its collision rank. Root reconciliation bounded the trace to public format, core storage, runtime tests, and compile-error contracts, applied the lower anchors, and fixed 5/3/3/5, Level 4, comparative rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "catchorg/Catch2",
+      "language": "C++",
+      "prior_level": 3,
+      "pinned_commit": "317ac1ed4c0bb6e6b91eafc817e05c488feffcb3",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An assertion framework evaluates a user's expression once and reports both the original expression and decomposed operand values when it fails."
+        ],
+        "evidence": "Assertion semantics are familiar and locally documented; the path teaches transferable macro API design, expression templates, operator overloading, single-evaluation discipline, exception capture, diagnostic construction, and regression testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Public macros, internal expansion, expression decomposition, and assertion handling have explicit boundaries, and introspective plus usage tests cover evaluated values, unary and binary expressions, exceptions, messages, negation, short forms, operator behavior, and failure reporting.",
+      "learning_path": {
+        "goal": "Understand how a Catch2 assertion macro captures one C++ expression, decomposes its operands without double evaluation, and reports a faithful result through the assertion handler.",
+        "start_path": "src/catch2/catch_test_macros.hpp",
+        "supporting_files": [
+          "src/catch2/internal/catch_test_macro_impl.hpp",
+          "src/catch2/internal/catch_decomposer.hpp",
+          "tests/SelfTest/IntrospectiveTests/AssertionHandler.tests.cpp",
+          "tests/SelfTest/UsageTests/Decomposition.tests.cpp"
+        ],
+        "trace": "Follow a public REQUIRE or CHECK macro through the internal assertion expansion and handler lifetime, then follow Decomposer's overloaded <= into unary or binary expression objects, result evaluation and reconstructed operand output; correlate handler state, exception, single-evaluation, operator, negation, and diagnostic tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "layered variadic preprocessor macros",
+            "expression templates and operator-overload capture",
+            "template traits, forwarding, and stringification machinery"
+          ],
+          "reason": "Multiple advanced macro, template, overload, and value-category mechanisms interact pervasively and require expert C++ command."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "single expression evaluation with deferred reporting",
+            "unary, binary, negated, exception, and fatal branches",
+            "assertion-handler lifecycle and diagnostic propagation"
+          ],
+          "reason": "Evaluation state, exceptions, control-flow outcomes, and reporting invariants recur across macro and handler boundaries."
+        },
+        "design_span": {
+          "signals": [
+            "public macro and internal expansion boundary",
+            "decomposer expression objects and assertion handler",
+            "introspective and user-facing test layers"
+          ],
+          "reason": "The trace crosses several meaningful interfaces while remaining one assertion subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "exactly-once evaluation and preserved operand values",
+            "operator precedence and overload compatibility",
+            "exception, fatal assertion, message, and diagnostic guarantees",
+            "compiler and user-type portability"
+          ],
+          "reason": "Multiple strict semantic, compatibility, diagnostic, and portability constraints interact throughout assertion decomposition."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 5/4/3/4 sums to 16, whose mean calculates to Level 4; Catch2 ranks second of five qualified C++ Level 4 paths.",
+      "reconsider": "Reconsider if assertion macro expansion, expression decomposition, single-evaluation, diagnostics, public-source, license, documentation, or focused tests materially change, or a stronger C++ Level 4 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between test registration and assertion decomposition as the representative path and on the resulting score profile. Root reconciliation selected decomposition because it best exposes Catch2's teachable C++ machinery, then resolved 5/4/3/4, Level 4, comparative rank 2, and retention."
+      }
+    },
+    {
+      "repository": "facebook/folly",
+      "language": "C++",
+      "prior_level": 4,
+      "pinned_commit": "011e8761a42b20085ce3937e73b5b7aaf482d499",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Future represents a value that may arrive later, a Promise completes it, and an Executor chooses where registered continuations run."
+        ],
+        "evidence": "Future, Promise, and Executor concepts are standard concurrency abstractions documented locally; the path's difficulty comes from transferable template API design, shared-state synchronization, scheduling, ownership, cancellation, exception propagation, and race safety."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Future, Promise, shared Core, and Executor responsibilities are explicit and heavily documented, and the focused future suite covers values and exceptions, continuation forms, executor handoff, ordering, broken promises, interruption, collection, moves, races, and lifecycle behavior.",
+      "learning_path": {
+        "goal": "Understand how Folly connects a Promise and Future through synchronized shared state and schedules exactly-once continuations on an Executor across success, exception, cancellation, and race paths.",
+        "start_path": "folly/futures/Future.h",
+        "supporting_files": [
+          "folly/futures/Future-inl.h",
+          "folly/futures/Promise.h",
+          "folly/futures/detail/Core.h",
+          "folly/Executor.h",
+          "folly/futures/test/FutureTest.cpp"
+        ],
+        "trace": "Begin with Future's continuation and executor-facing API, follow then-style composition into callback installation on the shared Core, then follow Promise fulfillment, state synchronization, executor scheduling, result or exception transfer, interruption, ownership release, and broken-promise behavior; correlate the focused lifecycle, scheduling, exception, move, and race tests."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "variadic and conditional continuation result types",
+            "perfect forwarding, traits, and callable adaptation",
+            "type-erased executor and callback storage",
+            "ref-qualified Future and SemiFuture state transitions"
+          ],
+          "reason": "Multiple advanced template, value-category, type-erasure, and overload mechanisms interact pervasively throughout the API and implementation."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent shared-state fulfillment and callback installation",
+            "executor scheduling and continuation chaining",
+            "value, exception, interruption, and broken-promise transitions",
+            "ownership, destruction, and race-sensitive lifecycles"
+          ],
+          "reason": "Several advanced concurrency, scheduling, recovery, and resource-lifetime concerns interact pervasively and require nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "Future and Promise public abstractions",
+            "shared Core synchronization layer",
+            "Executor and continuation extension points",
+            "multiple continuation and result modes"
+          ],
+          "reason": "Many modules, extension points, and execution modes contribute to the future path without requiring the rest of the Folly platform."
+        },
+        "constraint_burden": {
+          "signals": [
+            "exactly-once completion and continuation execution",
+            "memory ordering, race, ownership, and destruction safety",
+            "executor, exception, interruption, and cancellation compatibility",
+            "deadlock, recursion, allocation, and latency constraints"
+          ],
+          "reason": "Several system-wide correctness, safety, compatibility, reliability, and performance guarantees interact across the shared asynchronous state."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/4/5 sums to 19, whose mean of 4.75 rounds to Level 5; three dimensions score 5, satisfying Level 5 eligibility. Folly ranks first and is the only qualified C++ Level 5 path.",
+      "reconsider": "Reconsider if Future, Promise, Core, Executor, continuation, race, cancellation, public-source, license, documentation, or focused-test contracts materially change, or a stronger C++ Level 5 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on how broadly to follow Folly's executor ecosystem and on neighboring design anchors. Root reconciliation bounded the trace to Future, Promise, their shared Core, the Executor contract, and direct tests; the recurring expert language, concurrency, and safety burdens resolve 5/5/4/5, Level 5, rank 1, retained."
+      }
+    },
+    {
+      "repository": "protocolbuffers/protobuf",
+      "language": "C++",
+      "prior_level": 4,
+      "pinned_commit": "5b1c20741838b8359193b97895cb0ff35b4ecf79",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A .proto file declares messages, fields, enums, services, options, and imports using a small documented token grammar."
+        ],
+        "evidence": "The short .proto grammar is available in repository documentation and remains subordinate to transferable recursive-descent parsing, tokenizer integration, recovery, diagnostics, source locations, compatibility, and parser testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Tokenizer and parser responsibilities are explicit, grammar functions and source-location recording are named, and the direct parser suite covers declarations, options, maps, groups, editions, malformed tokens, recovery, diagnostics, comments, locations, and compatibility cases.",
+      "learning_path": {
+        "goal": "Understand how Protobuf's C++ compiler parses tokenized .proto declarations into descriptors while recovering from syntax errors and preserving precise diagnostics and source locations.",
+        "start_path": "src/google/protobuf/compiler/parser.cc",
+        "supporting_files": [
+          "src/google/protobuf/io/tokenizer.cc",
+          "src/google/protobuf/compiler/parser_unittest.cc"
+        ],
+        "trace": "Follow Parser entry methods as they consume Tokenizer output and recursively dispatch file, message, field, enum, service and option productions, then follow error reporting, synchronization and skipping, location recording and unfinished-declaration recovery; correlate valid grammar, malformed input, diagnostic, recovery, and source-location tests in parser_unittest."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "conventional classes and recursive parser functions",
+            "ordinary collections, enums, and callbacks",
+            "explicit tokenizer and descriptor interfaces"
+          ],
+          "reason": "The path uses clear professional C++ idioms; its difficulty does not come from advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "recursive-descent parser state",
+            "lookahead, token consumption, and branch selection",
+            "error recovery and source-location accumulation"
+          ],
+          "reason": "State transitions, recursion, recovery, and diagnostic accumulation materially affect the parse."
+        },
+        "design_span": {
+          "signals": [
+            "tokenizer-parser boundary",
+            "grammar-production and descriptor-building layers",
+            "diagnostic and source-location interfaces"
+          ],
+          "reason": "Several meaningful compiler-front-end boundaries contribute directly and remain locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "long-lived .proto grammar and edition compatibility",
+            "recovery without cascading or lost diagnostics",
+            "precise source locations and comments",
+            "descriptor-shape and import or option correctness"
+          ],
+          "reason": "Multiple strict compatibility, diagnostic, recovery, and correctness guarantees recur across parsing."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/3/3/4 sums to 12, whose mean calculates to Level 3, but Protobuf ranks third behind Mustache and CLI11 for the two available C++ Level 3 places.",
+      "reconsider": "Reconsider if a C++ Level 3 place opens, a fresh comparison ranks this parser path above a retained entry, or grammar, recovery, location, tokenizer, public-source, license, documentation, or parser-test contracts materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between Arena internals and the .proto parser and over the indirect descriptor test. Root reconciliation selected parsing as the clearer representative programming lesson, confirmed the grammar remains subordinate to coding, replaced descriptor_unittest with the verified direct parser_unittest, and resolved 2/3/3/4, Level 3, rank 3, capacity removal."
+      }
+    },
+    {
+      "repository": "opencv/opencv",
+      "language": "C++",
+      "prior_level": 5,
+      "pinned_commit": "397e70d0447d7d5a5ada6dfe3302ee78856eae6b",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "cv::Mat is a multidimensional dense array whose header records dimensions, element type, strides, data pointers, allocator, and shared ownership."
+        ],
+        "evidence": "Matrix shape, channels, and strides fit in a short prerequisite paragraph; the path's real difficulty is transferable low-level ownership, allocation, overflow safety, layout, copying, views, ABI, portability, and performance rather than computer-vision mathematics."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Public header, inline accessors, matrix implementation, allocator, and tests expose explicit responsibilities; focused suites cover construction, allocation, headers, copies, submatrices, strides, continuity, reference counts, custom allocators, alignment, overflow, release, and failures.",
+      "learning_path": {
+        "goal": "Understand how cv::Mat constructs and shares a strided array buffer while preserving header invariants, allocator ownership, reference counts, views, overflow safety, and portable performance.",
+        "start_path": "modules/core/include/opencv2/core/mat.hpp",
+        "supporting_files": [
+          "modules/core/include/opencv2/core/mat.inl.hpp",
+          "modules/core/src/matrix.cpp",
+          "modules/core/src/alloc.cpp",
+          "modules/core/test/test_mat.cpp",
+          "modules/core/test/test_allocator.cpp"
+        ],
+        "trace": "Start with Mat's public header, constructors, dimensions, steps and ownership contract, follow inline access and matrix.cpp construction, create, copy, submatrix, addref and release paths into allocator allocation and deallocation, then correlate layout, reference-count, custom allocator, overflow, alignment, view, continuity and failure tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "pointer arithmetic and typed element access",
+            "templates, overloads, atomics, and custom allocators",
+            "manual storage and header manipulation"
+          ],
+          "reason": "Advanced low-level and generic C++ machinery recurs throughout storage and access behavior."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "reference-counted allocation and release",
+            "copy, move, view, and submatrix ownership transitions",
+            "strided layout, continuity, reshape, and failure paths"
+          ],
+          "reason": "Ownership, mutable headers, resource lifecycles, layout state, and recovery require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "public header and inline-access boundary",
+            "matrix implementation and allocator layer",
+            "matrix and allocator test interfaces"
+          ],
+          "reason": "Several meaningful core boundaries contribute while remaining one matrix-storage component."
+        },
+        "constraint_burden": {
+          "signals": [
+            "reference-count and allocator ownership safety",
+            "stride, continuity, dimensions, channels, and overflow correctness",
+            "ABI, alignment, custom allocator, and platform compatibility",
+            "allocation, copy, view, and access performance"
+          ],
+          "reason": "Several system-wide safety, layout, compatibility, portability, and performance guarantees interact across cv::Mat."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and the published calibration anchor fixes cv::Mat at 4/4/3/5, summing to 16 and calculating to Level 4. OpenCV ranks fifth of five qualified C++ Level 4 paths.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, the published calibration changes, a fresh comparison ranks this path above a retained entry, or Mat ownership, allocator, layout, public-source, license, documentation, or focused tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on path breadth and collision rank, and the catalog's color.cpp mixed an unrelated image-processing behavior into matrix storage. Root reconciliation follows the published cv::Mat calibration anchor exactly, replaces color.cpp with public headers, allocator implementation, and direct allocator tests, and resolves 4/4/3/5, Level 4, rank 5, capacity removal."
+      }
+    },
+    {
+      "repository": "llvm/llvm-project",
+      "language": "C++",
+      "prior_level": 5,
+      "pinned_commit": "6d890e71354accdc496fdd9ef4f1fce8b366c7c4",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "SmallVector is a vector-like container that stores a chosen number of elements inline and grows into heap storage only when that capacity is exceeded."
+        ],
+        "evidence": "Inline storage and vector semantics need only a short explanation; the selected path is domain-neutral and teaches transferable manual lifetimes, storage layout, growth, move and copy dispatch, aliasing, exception safety, ABI discipline, and performance engineering rather than compiler theory. GitHub labels the monorepo's primary language as LLVM, while the pinned llvm/CMakeLists.txt and this substantive first-party header, implementation, tests, and manual establish C++ eligibility."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SmallVector's public template, non-template growth implementation, programming manual, and extensive direct tests make storage and API contracts traceable; tests cover inline and heap transitions, construction and destruction, copying, moving, ranges, self-reference, over-aligned types, capacity, growth, exceptions, and nontrivial element types.",
+      "learning_path": {
+        "goal": "Understand how LLVM's SmallVector provides vector semantics over inline and heap storage while preserving manual object lifetimes, aliasing safety, move and copy behavior, layout, and performance.",
+        "start_path": "llvm/include/llvm/ADT/SmallVector.h",
+        "supporting_files": [
+          "llvm/lib/Support/SmallVector.cpp",
+          "llvm/unittests/ADT/SmallVectorTest.cpp",
+          "llvm/docs/ProgrammersManual.md"
+        ],
+        "trace": "Start with SmallVectorBase, inline storage and typed SmallVector templates, follow reserve and grow into the non-template allocation implementation, then follow placement construction, destruction, move, copy, range insertion, self-reference handling and return to inline-or-heap invariants; correlate the direct unit tests and the pinned programming-manual contract."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "placement construction and explicit destruction",
+            "template trait dispatch for trivial and nontrivial types",
+            "perfect forwarding, iterator categories, and overload control",
+            "manual alignment, casts, and raw inline storage"
+          ],
+          "reason": "Multiple advanced template, lifetime, overload, and low-level storage mechanisms interact pervasively and require expert C++ fluency."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "inline-to-heap growth state transitions",
+            "move, copy, insertion, erasure, and destruction lifecycles",
+            "self-reference, overlapping ranges, and allocation-failure paths"
+          ],
+          "reason": "Resource ownership, manual lifetimes, aliasing, transitions, and recovery require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "header template and non-template growth implementation",
+            "one vector-like container abstraction"
+          ],
+          "reason": "A few clear files and one focused component contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "vector API and iterator compatibility",
+            "object lifetime, aliasing, alignment, and exception safety",
+            "inline layout, overflow, ABI, and allocator correctness",
+            "allocation avoidance, code size, and growth performance"
+          ],
+          "reason": "Several system-wide safety, compatibility, ABI, resource, and performance guarantees interact so a plausible local container change can fail elsewhere in the path."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 5/4/2/5 sums to 16, whose mean calculates to Level 4; LLVM SmallVector ranks fourth behind spdlog, Catch2, and fmt for the two available C++ Level 4 places.",
+      "reconsider": "Reconsider if a C++ Level 4 place opens, a fresh comparison ranks SmallVector above a retained entry, or its layout, lifetime, growth, aliasing, public-source, license, documentation, or direct tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between LLVM BasicBlock and SmallVector and over whether the monorepo metadata label blocked C++ eligibility. Root reconciliation chose domain-neutral SmallVector, confirmed pinned CMake and substantive first-party C++ evidence despite GitHub's LLVM label, applied the focused-component design anchor, and resolved 5/4/2/5, Level 4, rank 4, capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 41,
-      "remove": 19
+      "retain": 47,
+      "remove": 23
     },
     "by_language": {
       "JavaScript": {
@@ -4627,33 +5382,52 @@
           "4": 5,
           "5": 3
         }
+      },
+      "C++": {
+        "reviewed": 10,
+        "retain": 6,
+        "remove": 4,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 3,
+          "4": 5,
+          "5": 1
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 12,
-        "retain": 12,
+        "reviewed": 14,
+        "retain": 14,
         "remove": 0
       },
       "2": {
-        "reviewed": 12,
-        "retain": 9,
+        "reviewed": 14,
+        "retain": 11,
         "remove": 3
       },
       "3": {
-        "reviewed": 12,
-        "retain": 7,
-        "remove": 5
+        "reviewed": 14,
+        "retain": 8,
+        "remove": 6
       },
       "4": {
-        "reviewed": 12,
-        "retain": 4,
-        "remove": 8
+        "reviewed": 14,
+        "retain": 5,
+        "remove": 9
       },
       "5": {
-        "reviewed": 12,
+        "reviewed": 14,
         "retain": 9,
-        "remove": 3
+        "remove": 5
       }
     },
     "by_new_level": {
@@ -4663,28 +5437,28 @@
         "remove": 0
       },
       "2": {
-        "scored": 10,
-        "retain": 10,
+        "scored": 11,
+        "retain": 11,
         "remove": 0
       },
       "3": {
-        "scored": 16,
-        "retain": 11,
-        "remove": 5
+        "scored": 19,
+        "retain": 13,
+        "remove": 6
       },
       "4": {
-        "scored": 24,
-        "retain": 12,
-        "remove": 12
+        "scored": 29,
+        "retain": 14,
+        "remove": 15
       },
       "5": {
-        "scored": 9,
-        "retain": 8,
+        "scored": 10,
+        "retain": 9,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 18,
+      "qualified_alternate_over_capacity": 22,
       "coding_relevance_domain_gate": 1
     }
   }

@@ -392,7 +392,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **13.4 PHP**
 - [x] **13.5 C#**
 - [x] **13.6 TypeScript**
-- [ ] **13.7 C++**
+- [x] **13.7 C++**
 - [ ] **13.8 Ruby**
 - [ ] **13.9 C**
 - [ ] **13.10 Swift**
