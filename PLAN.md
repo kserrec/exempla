@@ -403,7 +403,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **13.15 Scala**
 - [x] **13.16 PowerShell**
 - [x] **13.17 Dart**
-- [ ] **13.18 Objective-C**
+- [x] **13.18 Objective-C**
 - [ ] **13.19 Rust**
 - [ ] **13.20 Lua**
 - **Artifact:** `research/learner-centered-rebuild.json`.

@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 170,
+  "reviewed_entry_total": 180,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -12769,12 +12769,761 @@
         "status": "agree",
         "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded Widget.canUpdate-to-updateChild-and-updateChildren reconciliation trace and direct framework tests, 3/4/3/5 scores, Level 4 rank 3, and capacity removal."
       }
+    },
+    {
+      "repository": "shinyfrog/TextBundle",
+      "language": "Objective-C",
+      "prior_level": 1,
+      "pinned_commit": "eb0e2c75afec3817cf6817548179fe679ba565ee",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A TextBundle is a directory package whose info.json names a text file and optional assets for interchange between writing applications."
+        ],
+        "evidence": "That short format primer is subordinate to transferable file-format engineering: Foundation object modeling, directory-package validation, JSON metadata projection, filename and Uniform Type Identifier mapping, attachment ownership, collision handling, errors, and round-trip tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "TextBundleWrapper keeps required-member validation, metadata extraction, text-type selection, asset copying and deduplication, package construction, and NSError paths visible in short methods over Foundation values; names mirror the on-disk format; fixtures cover text-only and attachment packages, missing members, invalid input, creation, writing, and collisions, while the known write-to-new-URL assertion weakness is explicit and does not erase the remaining behavioral evidence; the README orients the format; the read-to-write trace is complete; and the exact public pin, MIT license, compact source, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a compact Objective-C model validates, reads, mutates, and writes a directory-based document package without losing metadata or assets.",
+        "start_path": "TextBundle/TextBundleWrapper.m",
+        "supporting_files": [
+          "TextBundle/TextBundleWrapper.h",
+          "TextBundleTests/TextBundleTests.m",
+          "TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with initialization and readFromURL, follow NSFileWrapper validation into info.json decoding, text filename and type selection, metadata properties, and optional assets, then reverse the flow through fileWrapper, textFilenameForType, asset collision handling, and writeToURL before closing the format and error cases in TextBundleTests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C properties and nullable NSError conventions",
+            "NSFileWrapper directory-package composition",
+            "block-based collection traversal over Foundation values"
+          ],
+          "reason": "Several ordinary Objective-C and Foundation idioms shape the path, without advanced runtime or language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "read and write transformations between a package tree and object state",
+            "explicit missing-member, malformed-metadata, and asset-collision branches",
+            "localized filename and type selection"
+          ],
+          "reason": "The behavior has several cases but remains synchronous and locally traceable in one class."
+        },
+        "design_span": {
+          "signals": [
+            "one cohesive document wrapper",
+            "one local filesystem and JSON boundary",
+            "one fixture-driven suite"
+          ],
+          "reason": "One unit contains nearly the complete design."
+        },
+        "constraint_burden": {
+          "signals": [
+            "required package members and metadata keys must remain valid",
+            "text type, filenames, assets, and errors must round-trip consistently",
+            "filesystem replacement and asset collision behavior must avoid silent loss"
+          ],
+          "reason": "Several format, persistence, and data-preservation guarantees constrain otherwise ordinary changes."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean is Level 2; TextBundle ranks second of two qualified Objective-C Level 2 paths.",
+      "reconsider": "Reconsider if package validation, metadata or asset preservation, error behavior, fixture coverage, MIT licensing, maintenance status, or comparative Objective-C Level 2 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded read-and-write package trace, 2/2/1/3 scores, Level 2 rank 2, and retention; the known incomplete persistence assertion remains disclosed rather than overstated."
+      }
+    },
+    {
+      "repository": "mirego/MCUIViewLayout",
+      "language": "Objective-C",
+      "prior_level": 1,
+      "pinned_commit": "987cb7ee525f03aeae81db7e3ad639080e23bc46",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "UIKit represents a view's position and size with CGRect values in superview and sibling coordinate systems."
+        ],
+        "evidence": "That short user-interface geometry primer is subordinate to transferable lessons in category design, bitmask options, pure calculations before mutation, coordinate translation, composition of fitting and positioning operations, display-scale rounding, compatibility facades, and exhaustive boundary tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "MCUIViewLayoutPosition and UIView calculation categories keep every CGRect, margin, sibling, superview, combined-fit, and display-scale decision explicit; the public mutation category delegates to pure calculation methods and the deprecated facade isolates compatibility; names state layout intent; nine focused XCTest files cover base dimensions, all parent alignments, sibling relationships, fitting, combinations, missing parents, unequal margins, and scale rounding; the README supplies diagrams and examples; the option-to-rectangle trace is complete; and the exact public pin, BSD-3-Clause license, compact source, and enumerated cases satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a small Objective-C category library turns composable layout options into exact, scale-aware view frames.",
+        "start_path": "Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m",
+        "supporting_files": [
+          "Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m",
+          "Sources/MCUIViewLayoutObjC/UIView+MCLayout.m",
+          "MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m",
+          "README.md",
+          "LICENSE.md"
+        ],
+        "trace": "Start with the pure mc_getRect calculation entry points, follow superview and sibling coordinate selection, combined fitting options, margins, and delegation into MCUIViewLayoutPosition's scale-rounded arithmetic, then see UIView+MCLayout apply the calculated frame and close representative CGRect contracts in the direct calculation suite."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C categories over UIKit classes",
+            "NS_OPTIONS bitmask composition",
+            "C struct arithmetic with UIEdgeInsets and CGRect"
+          ],
+          "reason": "Several ordinary Objective-C and UIKit idioms materially shape the API without advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "parent-relative and sibling-relative coordinate cases",
+            "composed fit, center, edge, and margin branches",
+            "localized display-scale rounding"
+          ],
+          "reason": "Several explicit geometric cases recur, but all reasoning stays synchronous and local."
+        },
+        "design_span": {
+          "signals": [
+            "one geometry helper",
+            "one calculation category and thin mutation category",
+            "focused geometry suites"
+          ],
+          "reason": "One small cohesive library contains the design."
+        },
+        "constraint_burden": {
+          "signals": [
+            "coordinate-system and margin semantics must remain exact",
+            "combined options must compose without contradictory axes",
+            "display-scale rounding and compatibility behavior must avoid visible layout drift"
+          ],
+          "reason": "Several precision, composition, and compatibility guarantees constrain ordinary changes."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, whose mean is Level 2; MCUIViewLayout ranks first of two qualified Objective-C Level 2 paths.",
+      "reconsider": "Reconsider if geometry, coordinate, margin, rounding, compatibility, test, BSD-3-Clause licensing, maintenance, or comparative Objective-C Level 2 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the pure-calculation-to-frame-mutation path, 2/2/1/3 scores, Level 2 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "pinterest/PINOperation",
+      "language": "Objective-C",
+      "prior_level": 2,
+      "pinned_commit": "a74f978733bdaf982758bfa23d70a189f4b4c1b6",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An operation queue schedules blocks for serial or bounded-concurrent execution and may expose priorities, cancellation, and groups."
+        ],
+        "evidence": "That familiar concurrency vocabulary is subordinate to transferable scheduler engineering: recursive mutex ownership, priority ordering, serial and concurrent lanes, semaphore-based dynamic limits, dispatch-group accounting, cancellation races, work coalescing, completion fan-out, reference lifetime, nested work, and asynchronous contract tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "PINOperationQueue makes lock boundaries, priority membership, dispatch-group accounting, serial and concurrent dispatch, semaphore-limit changes, cancellation results, coalesced data, completion ownership, and weak references explicit; PINOperationGroup isolates batch lifecycle; names expose scheduler semantics; direct suites cover execution and release, nested waiting without deadlock, concurrency limits including one, priority, cancellation, changes, coalescing, groups, and runtime limit changes; the README orients the API; the schedule-to-completion trace is complete; and the exact public pin, Apache-2.0 license, narrow surface, and synchronization-focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how an Objective-C operation queue preserves priority, cancellation, coalescing, completion, and bounded-concurrency invariants across serial and concurrent work.",
+        "start_path": "Source/PINOperationQueue.m",
+        "supporting_files": [
+          "Source/PINOperationQueue.h",
+          "Source/PINOperationGroup.m",
+          "Tests/PINOperationQueueTests.m",
+          "Tests/PINOperationGroupTests.m",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with scheduleOperation and reference allocation, follow recursive-lock protection into priority sets and identifier-based coalescing, then trace dispatch-group entry, serial or semaphore-bounded concurrent execution, cancellation and completion fan-out, runtime limit changes, group completion, and nested waiting before closing each invariant in the queue and group suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C blocks and protocol-typed operation references",
+            "Grand Central Dispatch queues, groups, and semaphores",
+            "pthread recursive mutexes and weak reference maps"
+          ],
+          "reason": "Substantial Objective-C and platform concurrency mechanisms materially shape the scheduler without expert runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "priority-ordered serial and concurrent lanes",
+            "coalesced work and completion fan-out under cancellation races",
+            "dynamic semaphore limits, nested work, waits, and group completion"
+          ],
+          "reason": "Advanced nonlocal scheduling, ownership, and event-order reasoning recurs across asynchronous callbacks."
+        },
+        "design_span": {
+          "signals": [
+            "one reusable queue",
+            "one operation record and reference boundary",
+            "one group abstraction with direct suites"
+          ],
+          "reason": "A few clear units contain the complete design."
+        },
+        "constraint_burden": {
+          "signals": [
+            "group enter and leave, reference lifetime, and completion counts must balance exactly",
+            "priority, cancellation, coalescing, and bounded concurrency must remain race-safe",
+            "nested waits and runtime limit changes must not deadlock or oversubscribe"
+          ],
+          "reason": "Multiple strict concurrency, lifecycle, ordering, and liveness guarantees interact."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/4/2/4 sums to 13, whose mean of 3.25 rounds to Level 3; PINOperation ranks first of three qualified Objective-C Level 3 paths.",
+      "reconsider": "Reconsider if scheduling, concurrency-limit, priority, cancellation, coalescing, group, liveness, test, Apache-2.0 licensing, or comparative Objective-C Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded queue-and-group trace, 3/4/2/4 scores, Level 3 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "SBJson/SBJson",
+      "language": "Objective-C",
+      "prior_level": 2,
+      "pinned_commit": "93e4ca5c274488fb745429977308d85929c5f13a",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "JSON's grammar distinguishes objects, arrays, strings, numbers, booleans, and null; streaming input may split any token across chunks."
+        ],
+        "evidence": "That short grammar primer is subordinate to transferable parser engineering: retained byte chunks, strict UTF-8 and surrogate validation, incremental lexical states, token lifetimes, nested structural state stacks, depth limits, partial-input status, callback delivery, error offsets, and conformance tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SBJson5StreamTokeniser keeps consumed offsets, retained partial buffers, byte availability, lexical states, UTF-8 legality, escapes, numbers, booleans and null explicit; SBJson5StreamParser gives each structural state a named transition and maintains the nesting stack and depth limit; focused tokeniser, stream, main, JSONChecker, and Unicode corpora exercise chunk boundaries, malformed syntax and encodings, multiple roots, root-array unwrapping, values, completion, depth, and error locations; the README documents streaming modes; the byte-to-callback trace is complete; and the exact public pin, BSD-3-Clause license, separated states, bounded buffers, and conformance coverage satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how a streaming Objective-C JSON parser preserves lexical and structural state when tokens and nested values cross arbitrary input-chunk boundaries.",
+        "start_path": "Classes/SBJson5StreamTokeniser.m",
+        "supporting_files": [
+          "Classes/SBJson5StreamParser.m",
+          "Tests/JsonStreamTokeniserTest.m",
+          "Tests/StreamSuite.m",
+          "Tests/MainSuite.m",
+          "TestData/jsonchecker/README",
+          "TestData/kuhn/utf8.in",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with getToken's retained byte range and lexical-state dispatch, follow partial strings, escapes, UTF-8, numbers, keywords, whitespace, and errors into SBJson5StreamParser's named object and array states, state stack, depth checks, Foundation value assembly, callback delivery, waiting and complete statuses, then close chunk-boundary, malformed-input, Unicode, nesting, and completion behavior in the tokeniser and stream suites."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C class hierarchy for parser states",
+            "C byte pointers, explicit lengths, and UTF-8 bit validation",
+            "block callbacks and Foundation value construction"
+          ],
+          "reason": "Advanced Objective-C and low-level byte techniques recur across tokenization and structural parsing."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "lexical state persists across arbitrary chunk boundaries",
+            "nested structural state stack with multiple-root and unwrap modes",
+            "partial, complete, error, callback, and depth behavior"
+          ],
+          "reason": "Advanced nonlocal state-machine and incremental-input reasoning recurs throughout the trace."
+        },
+        "design_span": {
+          "signals": [
+            "incremental tokeniser",
+            "structural parser and Foundation assembly boundary",
+            "callback adapters and several conformance suites"
+          ],
+          "reason": "Several meaningful parsing layers cooperate while remaining locally understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "JSON grammar and token boundaries must remain exact for every chunk split",
+            "UTF-8, escapes, surrogate pairs, numeric conversion, offsets, and errors must agree",
+            "depth, multiple-root, completion, callback, memory, and compatibility guarantees interact"
+          ],
+          "reason": "Multiple strict syntax, encoding, incremental-state, safety, and compatibility guarantees recur."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4; SBJson's tokenizer-to-stream-parser path ranks second of two retained Objective-C Level 4 paths. The writer is deliberately outside this bounded learning path.",
+      "reconsider": "Reconsider if lexical or structural state, chunk, encoding, grammar, depth, error, callback, conformance-test, BSD-3-Clause licensing, or comparative Objective-C Level 4 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded tokenizer-to-stream-parser path without the writer, 4/4/3/4 scores, Level 4 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "openid/AppAuth-iOS",
+      "language": "Objective-C",
+      "prior_level": 3,
+      "pinned_commit": "a972daac82d449d58ab119e91c68153e29ddac33",
+      "decision": "remove",
+      "removal_reason": "coding_relevance_domain_gate",
+      "coding_relevance": {
+        "status": "fail",
+        "domain_context": [
+          "AppAuth implements native-application OAuth 2.0 and OpenID Connect across discovery, authorization, PKCE, redirects, token exchange and refresh, state persistence, registration, logout, and device flow.",
+          "Correct behavior depends on protocol grant and response types, issuer and redirect validation, nonce and state, PKCE transformations, token freshness, ID-token claims, browser-agent constraints, provider extensions, and security guidance."
+        ],
+        "evidence": "OIDAuthState and OIDAuthorizationService expose superficially transferable asynchronous state and request modeling, but understanding why transitions, parameters, validations, persistence, refresh coalescing, and errors are correct repeatedly requires OAuth 2.0, OpenID Connect, PKCE, native browser authorization, token, issuer, and provider semantics. Specialist identity-protocol knowledge explains the representative path's difficulty better than programming technique, and a detached model or callback helper would not honestly represent the SDK."
+      },
+      "quality_status": "not_evaluated",
+      "learning_path": {
+        "goal": "Evaluate the representative AppAuth path from native authorization request and browser handoff through redirect validation, token exchange, persisted authorization state, and refresh.",
+        "start_path": "Sources/AppAuthCore/OIDAuthState.m",
+        "supporting_files": [
+          "Sources/AppAuthCore/OIDAuthorizationService.m",
+          "Sources/AppAuthCore/OIDAuthorizationRequest.m",
+          "UnitTests/OIDAuthStateTests.m",
+          "DESIGN.md",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with OIDAuthState's authorization and token response continuity, follow OIDAuthorizationRequest and OIDAuthorizationService through PKCE, browser handoff, redirect and state checks, token exchange, secure coding, freshness, pending refresh actions, errors, and provider extensions, then compare persistence and refresh behavior with OIDAuthStateTests; the recurring protocol dependencies are the domain-gate evidence."
+      },
+      "evidence": "Remove: the mandatory coding-relevance/domain gate fails, so repository quality is not evaluated and no dimension scores or learning level are assigned.",
+      "reconsider": "Reconsider only if a future review identifies a substantial, production-representative central AppAuth path whose purpose and correctness can be learned from repository documentation plus short prerequisites without specialist OAuth 2.0, OpenID Connect, PKCE, token, identity-provider, browser-agent, or native-application security semantics.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The independent review initially treated the explicit request models and asynchronous authorization-state machinery as sufficient for scoring. Root resolved the disagreement under the hard domain gate: protocol parameters, grant and response semantics, issuer and redirect checks, PKCE, token freshness, ID-token claims, browser constraints, and provider behavior repeatedly determine correctness, so the representative path remains unscored and removed."
+      }
+    },
+    {
+      "repository": "SDWebImage/SDWebImage",
+      "language": "Objective-C",
+      "prior_level": 3,
+      "pinned_commit": "c3ad5e1a9bf55c9b76d4c362430b5fcded96c502",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An image-loading framework resolves a URL through cache and network sources, decodes image bytes, and returns a platform image to a caller."
+        ],
+        "evidence": "That short media primer is subordinate to transferable systems lessons in asynchronous operation ownership, request deduplication, cancellation, callback queues, layered caches, loader and coder protocols, progressive results, transformations, key identity, memory pressure, persistence policy, error propagation, and race-focused integration tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SDWebImageManager makes source, cache type, context, operation token, cancellation, callback queue, decode, transform, store, and error decisions explicit while composing cache and loader protocols; SDWebImageDownloaderOperation owns transport and SDImageCache owns memory and disk policy; names define the pipeline; direct manager, downloader, and cache suites exercise duplicate URLs, custom components, cancellation races, progress, failures, decoding, transformations, expiry, memory pressure, and storage; the README and wiki orient options and extension points; the URL-to-result trace is complete; and the exact public pin, MIT license, mature protocol boundaries, and broad regression coverage satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how SDWebImage coordinates cache lookup, network loading, decoding, transformation, storage, cancellation, and callback delivery for one image request.",
+        "start_path": "SDWebImage/Core/SDWebImageManager.m",
+        "supporting_files": [
+          "SDWebImage/Core/SDWebImageDownloaderOperation.m",
+          "SDWebImage/Core/SDImageCache.m",
+          "Tests/Tests/SDWebImageManagerTests.m",
+          "Tests/Tests/SDWebImageDownloaderTests.m",
+          "Tests/Tests/SDImageCacheTests.m",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with loadImageWithURL and its combined operation, follow option and context normalization into cache-key lookup, original and transformed cache queries, loader dispatch, progressive and final decode results, cancellation and error branches, transformation, memory and disk storage, and callback-queue completion; then close deduplication, cancellation, cache, network, custom-component, and transformation contracts in the direct suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C blocks, protocols, categories, and operation tokens",
+            "Grand Central Dispatch and URLSession integration",
+            "typed option bitmasks and context dictionaries across platform image APIs"
+          ],
+          "reason": "Substantial Objective-C framework techniques recur, without expert runtime or metaprogramming machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "asynchronous cache-query, download, decode, transform, store, and callback chain",
+            "deduplicated requests with per-caller progress, cancellation, and completion",
+            "progressive and final results, fallback sources, failures, and memory or disk policy"
+          ],
+          "reason": "Advanced nonlocal lifecycle, race, and event-order reasoning recurs across asynchronous boundaries."
+        },
+        "design_span": {
+          "signals": [
+            "manager orchestration and public operation boundary",
+            "cache, loader, downloader-operation, coder, transformer, and callback boundaries",
+            "platform image and persistent filesystem boundaries with direct suites"
+          ],
+          "reason": "Several major subsystems and external boundaries cooperate in one representative request path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "cache-key identity, source and store policy, decoded and transformed variants, and callback queues must agree",
+            "deduplication, cancellation, progressive results, retry, failure, and operation ownership must remain race-safe",
+            "memory pressure, disk expiry, image-format behavior, platform differences, performance, API compatibility, and UI reuse constrain changes"
+          ],
+          "reason": "Several system-wide correctness, resource, concurrency, compatibility, and performance guarantees interact, meeting the expert change-discipline anchor."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; the expert constraint score also enforces at least Level 4, and SDWebImage ranks first of two retained Objective-C Level 4 paths.",
+      "reconsider": "Reconsider if cache identity or policy, loader, cancellation, deduplication, decode, transform, callback, platform, performance, test, MIT licensing, or comparative Objective-C Level 4 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, the bounded manager-to-cache-and-loader request path, 3/4/4/5 scores, Level 4 rank 1, and retention."
+      }
+    },
+    {
+      "repository": "sparkle-project/Sparkle",
+      "language": "Objective-C",
+      "prior_level": 4,
+      "pinned_commit": "164f2fd30f7b6feb60596246322648a784dd308c",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A Sparkle appcast is an update feed whose items carry application versions, operating-system bounds, channels, rollout information, and optional delta relationships."
+        ],
+        "evidence": "That short updater-feed primer is subordinate to transferable selection engineering: immutable item modeling, layered filtering, injectable comparators and delegate policy, version ordering, skipped updates, channels, phased rollout timing, primary and secondary candidates, fallback explanations, and deterministic tests. The security and installation pipeline is deliberately outside this bounded path."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SUAppcastDriver separates macOS and channel filtering, system and autoupdate requirements, skipped versions, phased rollout, delegate overrides, best-item selection, secondary delta choice, and no-update explanation; SPUAppcastItemStateResolver and SUStandardVersionComparator isolate item and ordering policy; names use feed vocabulary; SUAppcastTest and SUVersionComparisonTest exercise parsing, filtering, ordering, versions, channels, rollouts, bounds, and edge cases; public docs orient feeds and update selection; the loaded-feed-to-candidate trace is complete; and the exact public pin, compound MIT/BSD-2-Clause/Zlib license, explicit policy boundaries, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how Sparkle filters an appcast and selects the best applicable update while preserving version, channel, skipped-update, system-bound, and phased-rollout policy.",
+        "start_path": "Sparkle/SUAppcastDriver.m",
+        "supporting_files": [
+          "Sparkle/SUAppcast.m",
+          "Sparkle/SUAppcastItem.m",
+          "Sparkle/SPUAppcastItemStateResolver.m",
+          "Sparkle/SUStandardVersionComparator.m",
+          "Tests/SUAppcastTest.swift",
+          "Tests/SUVersionComparisonTest.m",
+          "README.markdown",
+          "LICENSE"
+        ],
+        "trace": "Start where a loaded appcast is filtered for macOS and allowed channels, follow system and minimum-autoupdate requirements, skipped versions, phased-rollout groups and dates, state resolution, injected or standard version comparison, delegate candidate overrides, primary and secondary selection, and no-update diagnostics, then close parsing, filtering, and version-order behavior in the appcast and comparator suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C models, protocols, predicates, and nullable policy values",
+            "delegate-injected version comparison and candidate selection",
+            "Foundation dates, sets, arrays, and key-value feed parsing"
+          ],
+          "reason": "Substantial Objective-C framework abstractions shape the path without advanced runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "layered deterministic filter and ranking pipeline",
+            "primary, secondary, fallback, skipped, and phased candidate cases",
+            "localized item-state and version-comparator interactions"
+          ],
+          "reason": "Multi-stage policy and state reasoning recurs, while remaining synchronous and inspectable."
+        },
+        "design_span": {
+          "signals": [
+            "appcast and item models",
+            "selection driver, state resolver, comparator, and delegate policy boundaries",
+            "feed and version contract suites"
+          ],
+          "reason": "Several meaningful updater-selection layers cooperate in a bounded path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "version order, operating-system bounds, channels, and minimum autoupdate rules must compose exactly",
+            "skipped updates, critical items, phased rollout dates, primary and delta candidates must not contradict policy",
+            "delegate extensions, historical version formats, public updater behavior, determinism, and compatibility must remain stable"
+          ],
+          "reason": "Multiple strict selection, version, rollout, extension, and compatibility guarantees recur."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3; Sparkle's appcast-selection path ranks second of three qualified Objective-C Level 3 paths. Cryptographic validation and installation are deliberately outside this bounded path.",
+      "reconsider": "Reconsider if appcast parsing, version ordering, system or channel filtering, skipped or phased policy, candidate selection, tests, compound licensing, or comparative Objective-C Level 3 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog's security-wide path with bounded appcast selection and version policy, 3/3/3/4 scores, Level 3 rank 2, and retention."
+      }
+    },
+    {
+      "repository": "kstenerud/KSCrash",
+      "language": "Objective-C",
+      "prior_level": 4,
+      "pinned_commit": "8649e0727ef4506f3cf910453eb0f2481321e8ab",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A crash report is a structured value that can be transformed, combined, encoded, compressed, or delivered after the application restarts."
+        ],
+        "evidence": "That short reporting primer is subordinate to transferable pipeline design: a small asynchronous filter protocol, serial composition, parallel fan-out and keyed recombination, early-error propagation, subset and concatenate adapters, JSON conversion, compression, presets, completion ownership, and direct lifecycle tests. The crash-time monitor and unwinder internals are deliberately outside this path."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "KSCrashReportFilter defines one completion-based transformation contract; KSCrashReportFilterBasic keeps passthrough, serial pipeline, parallel combine, concatenate, subset, and type-adapter behavior explicit, while JSON filters and KSCrashFilterSets show concrete composition; names communicate flow roles; direct filter and JSON suites cover order, fan-out, recombination, errors, early termination, ownership, data conversion, empty inputs, and release behavior; headers and README orient reporting; the report-array-to-result trace is complete; and the exact public pin, MIT license, modular source, and focused tests satisfy all eight quality dimensions for this bounded path.",
+      "learning_path": {
+        "goal": "Understand how KSCrash composes asynchronous report filters into serial and parallel pipelines with deterministic result ordering and error propagation.",
+        "start_path": "Sources/KSCrashFilters/KSCrashReportFilterBasic.m",
+        "supporting_files": [
+          "Sources/KSCrashRecording/include/KSCrashReportFilter.h",
+          "Sources/KSCrashFilters/KSCrashReportFilterSets.m",
+          "Sources/KSCrashFilters/KSCrashReportFilterJSON.m",
+          "Tests/KSCrashFiltersTests/KSCrashReportFilter_Tests.m",
+          "Tests/KSCrashFiltersTests/KSCrashReportFilterJSON_Tests.m",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with the filterReports completion contract, follow KSCrashReportFilterPipeline through sequential outputs and early failure, then KSCrashReportFilterCombine through parallel callbacks, key alignment, per-report recombination, and error completion; continue through concatenate, subset, data and string adapters, JSON filters, and preset filter sets before closing order, failure, empty-input, ownership, conversion, and release behavior in the direct suites."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C protocols and completion blocks",
+            "weak recursive callback ownership",
+            "typed report wrappers and composable filter objects"
+          ],
+          "reason": "Substantial Objective-C callback and protocol techniques materially shape the path without expert runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "serial recursive completion chain with early failure",
+            "parallel fan-out, completion counting, and keyed recombination",
+            "order, empty-input, conversion, and ownership cases"
+          ],
+          "reason": "Nonlocal callback and aggregation reasoning recurs but remains bounded to a small reporting pipeline."
+        },
+        "design_span": {
+          "signals": [
+            "one filter protocol",
+            "basic combinators and concrete format adapters",
+            "direct filter suites"
+          ],
+          "reason": "A few clear units contain the representative design."
+        },
+        "constraint_burden": {
+          "signals": [
+            "serial order and parallel result-to-key alignment must remain deterministic",
+            "each completion and error path must fire exactly once without retaining the pipeline",
+            "empty inputs, mismatched results, type conversion, and preset composition need stable behavior"
+          ],
+          "reason": "Several lifecycle, ordering, error, and compatibility guarantees constrain changes."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove only for capacity: both gates pass and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3; KSCrash's report-filter pipeline ranks third behind PINOperation and Sparkle among three qualified Objective-C Level 3 paths, so the two-entry cap excludes it.",
+      "reconsider": "Reconsider if an Objective-C Level 3 slot opens, the two-entry cap changes, or filter composition, ordering, errors, lifecycle tests, MIT licensing, or comparative educational clarity improves enough to outrank the retained paths.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The primary review initially centered KSCrash's crash-time monitor system, whose specialist platform constraints obscured a scoreable path. The independent reviewer identified the production report-filter subsystem as a representative programming-led replacement with direct lifecycle tests. Root accepted that path under the best-honest-path rule, resolving both gates to pass, 3/3/2/3, Level 3 rank 3, and capacity removal."
+      }
+    },
+    {
+      "repository": "gnachman/iTerm2",
+      "language": "Objective-C",
+      "prior_level": 5,
+      "pinned_commit": "095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "State restoration serializes an application's object graph so windows and sessions can be reconstructed after relaunch; iTerm2 persists graph records in SQLite."
+        ],
+        "evidence": "That short application primer is subordinate to transferable expert engineering in cyclic graph encoding, stable identity and generations, delta detection, append-only transactional records, relational graph transformation, asynchronous database ownership, integrity assertions, rollback, recovery after failed saves, deep copying, garbage collection, encryption boundaries, compatibility, and real recovery tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "iTermGraphEncoder makes scalar versus child-graph encoding, identity, generation, append-only rollback, conditional fields, encryption selection, and record construction explicit; iTermGraphDeltaEncoder and iTermGraphDatabase make previous-revision comparison, transactional writes, row identifiers, root publication, loading, integrity checks, garbage collection, bounded recovery, and deep-copy isolation visible; names preserve graph and restoration vocabulary; modern database, delta, recovery, and restoration suites exercise persistence, changes, cycles, failures, repair, identities, and round trips; project guides orient invariants; the application-state-to-restored-graph trace is complete; and the exact public pin, GPL-2.0-or-later terms in COPYING, maintained production path, and regression coverage satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how iTerm2 encodes a restorable object graph, persists only graph changes transactionally in SQLite, and recovers a consistent baseline after save or database failure.",
+        "start_path": "sources/StateRestoration/iTermGraphDatabase.m",
+        "supporting_files": [
+          "sources/StateRestoration/iTermGraphEncoder.m",
+          "sources/StateRestoration/iTermGraphDeltaEncoder.m",
+          "sources/StateRestoration/iTermEncoderGraphRecord.m",
+          "sources/StateRestoration/iTermGraphTableTransformer.m",
+          "sources/StateRestoration/iTermRestorableStateSQLite.m",
+          "ModernTests/iTermGraphDatabaseTests.swift",
+          "ModernTests/iTermGraphDeltaEncoderTests.swift",
+          "ModernTests/iTermGraphDatabaseRecoveryTests.m",
+          "README.md",
+          "COPYING"
+        ],
+        "trace": "Start with graph-database initialization and load, follow state encoding into scalar and child records, stable identifiers and generations, delta comparison against the prior revision, table transformation and one SQLite transaction, row-id publication and garbage collection; then force a failed save through bounded recovery, fresh full encoding, deep-copy isolation and integrity assertions before closing persistence, delta, corruption, rollback, and recovery behavior in the modern suites."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Objective-C graph-encodable protocols, blocks, categories, and typed records",
+            "Objective-C and Swift interoperability around SQLite and restoration models",
+            "custom coder adaptation, cyclic-object handling, deep copy, and asynchronous thread confinement"
+          ],
+          "reason": "Advanced Objective-C and interoperability techniques recur across encoding, persistence, and recovery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "cyclic graph identity, generations, prior revision, and delta propagation",
+            "transactional save, root publication, garbage collection, load, and asynchronous ownership",
+            "failed-save recovery, deep-copy isolation, row-id repair, retries, and integrity assertions"
+          ],
+          "reason": "Expert nonlocal graph, persistence, lifecycle, failure, and recovery reasoning is pervasive."
+        },
+        "design_span": {
+          "signals": [
+            "application restoration and graph-encoding boundary",
+            "delta encoder, record model, relational transformer, SQLite wrapper, and database coordinator",
+            "threading, encryption, filesystem, and modern recovery-test boundaries"
+          ],
+          "reason": "Several major subsystems and external boundaries cooperate in one bounded state-restoration slice."
+        },
+        "constraint_burden": {
+          "signals": [
+            "object identity, cycles, generations, row IDs, graph reachability, and previous revisions must remain coherent",
+            "transactions, publication, rollback, garbage collection, failed-save recovery, and retries must never expose a corrupt baseline",
+            "application compatibility, encryption, SQLite durability, asynchronous ordering, performance, and restoration fidelity interact"
+          ],
+          "reason": "Several system-wide integrity, durability, failure-recovery, security, compatibility, and performance guarantees interact."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 4/5/4/5 sums to 18, whose mean of 4.5 rounds half up to Level 5; behavioral reasoning and constraint burden both score 5, satisfying the Level 5 guard, and iTerm2 ranks first of two qualified Objective-C Level 5 paths.",
+      "reconsider": "Reconsider if graph identity, delta, transaction, row-id, recovery, restoration, test, GPL-2.0-or-later licensing, maintenance, or comparative Objective-C Level 5 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog's terminal-wide path with the bounded state-restoration graph database, 4/5/4/5 scores, Level 5 rank 1, GPL-2.0-or-later evidence in COPYING, and retention."
+      }
+    },
+    {
+      "repository": "gnustep/libs-base",
+      "language": "Objective-C",
+      "prior_level": 5,
+      "pinned_commit": "795e88205b20cf372296af5b4d727aa68718fb6a",
+      "decision": "retain",
+      "removal_reason": null,
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A notification center registers observers by optional notification name and object and synchronously dispatches matching notifications; nil names or objects act as wildcards."
+        ],
+        "evidence": "That short framework primer is subordinate to transferable expert library engineering in Objective-C runtime dispatch, weak observer identity, selector and block APIs, wildcard indexing, custom allocation, striped and recursive locking, snapshotting before callbacks, reentrant add and remove, deallocation races, queued delivery, exception safety, compatibility, and concurrency tests."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "NSNotificationCenter makes wildcard, name, object, receiver, selector, and block registrations explicit; custom observation allocation and hash tables keep hot-path ownership visible; striped locks, recursive bookkeeping, snapshots and deferred release protect reentrant posting and removal; public method names mirror Foundation contracts; basic, general, and dynamic tests cover construction, equality, selectors, blocks, wildcard combinations, duplicate registrations, removal scopes, mutation while posting, nested posts, lifetime, threading, and compatibility; headers and README orient semantics; the registration-to-callback trace is complete; and the exact public pin, LGPL-2.0-or-later source plus GPL-2.0-only test evidence in COPYING.LIB and COPYING, mature implementation, and focused tests satisfy all eight quality dimensions.",
+      "learning_path": {
+        "goal": "Understand how GNUstep implements a reentrant, thread-safe Foundation-compatible notification center with exact wildcard, observer-lifetime, selector, and block-delivery semantics.",
+        "start_path": "Source/NSNotificationCenter.m",
+        "supporting_files": [
+          "Source/NSNotification.m",
+          "Headers/Foundation/NSNotification.h",
+          "Tests/base/NSNotification/basic.m",
+          "Tests/base/NSNotification/general.m",
+          "Tests/base/NSNotification/dynamic.m",
+          "README.md",
+          "COPYING.LIB",
+          "COPYING"
+        ],
+        "trace": "Start with the observation record and notification tables, follow addObserver into wildcard, name, object, receiver and selector indexes under recursive and striped locks, then trace postNotification through matching-list snapshots, unlock-before-callback delivery, selector or queued block invocation, reentrant mutation, exception and cleanup paths; finish with scoped and total removal, observer lifetime, nested posting, wildcard, mutation, and threading contracts in the three focused suites."
+      },
+      "new_scores": {
+        "language_technique": 5,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "manual Objective-C runtime selector dispatch and weak observer identity",
+            "custom observation arenas, C structs, intrusive lists, hash tables, and cached classes",
+            "blocks, NSOperation queue delivery, pthread-backed recursive and striped synchronization"
+          ],
+          "reason": "Multiple expert Objective-C runtime, ownership, data-structure, callback, and synchronization mechanisms interact pervasively."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "wildcard, name, object, observer, selector, and block matching across several indexes",
+            "snapshot, unlock, callback, reentrant add or remove, nested post, and deferred-release lifecycle",
+            "concurrent registration, removal, posting, observer deallocation, exceptions, and queued delivery"
+          ],
+          "reason": "Expert nonlocal identity, matching, event-order, reentrancy, ownership, and concurrency reasoning is pervasive."
+        },
+        "design_span": {
+          "signals": [
+            "public Foundation-compatible notification and center APIs",
+            "internal tables, observation allocator, locks, selector and block delivery",
+            "focused compatibility and concurrency suites"
+          ],
+          "reason": "Several meaningful runtime-library units cooperate, while the path remains one bounded Foundation subsystem."
+        },
+        "constraint_burden": {
+          "signals": [
+            "wildcard matching, duplicate registration, scoped removal, callback order, and Foundation compatibility must remain exact",
+            "reentrant mutation, nested posting, observer deallocation, exceptions, queue delivery, and concurrent access must never corrupt tables or message dead observers",
+            "ownership modes, runtime variants, historical API behavior, hot-path performance, portability, and binary compatibility interact"
+          ],
+          "reason": "Several system-wide correctness, lifetime, concurrency, reentrancy, compatibility, portability, and performance guarantees interact."
+        }
+      },
+      "new_level": 5,
+      "evidence": "Retain: both gates pass and 5/5/3/5 sums to 18, whose mean of 4.5 rounds half up to Level 5; three dimensions score 5, satisfying the Level 5 guard, and GNUstep Base's notification center ranks second of two qualified Objective-C Level 5 paths.",
+      "reconsider": "Reconsider if observer identity, wildcard matching, callback order, reentrancy, lifetime, concurrency, compatibility, tests, compound LGPL-2.0-or-later and GPL-2.0-only evidence, or comparative Objective-C Level 5 clarity materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "agree",
+        "notes": "Independent exact-pin inspection confirmed both gate passes, replacement of the catalog's framework-wide path with the bounded notification-center implementation and three direct suites, 5/5/3/5 scores, Level 5 rank 2, LGPL-2.0-or-later source plus GPL-2.0-only test licensing, and retention."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 113,
-      "remove": 57
+      "retain": 121,
+      "remove": 59
     },
     "by_language": {
       "JavaScript": {
@@ -13099,32 +13848,51 @@
           "4": 5,
           "5": 0
         }
+      },
+      "Objective-C": {
+        "reviewed": 10,
+        "retain": 8,
+        "remove": 2,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 2,
+          "3": 3,
+          "4": 2,
+          "5": 2
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 34,
-        "retain": 32,
+        "reviewed": 36,
+        "retain": 34,
         "remove": 2
       },
       "2": {
-        "reviewed": 34,
-        "retain": 26,
+        "reviewed": 36,
+        "retain": 28,
         "remove": 8
       },
       "3": {
-        "reviewed": 34,
-        "retain": 22,
-        "remove": 12
+        "reviewed": 36,
+        "retain": 27,
+        "remove": 9
       },
       "4": {
-        "reviewed": 34,
-        "retain": 16,
-        "remove": 18
+        "reviewed": 36,
+        "retain": 17,
+        "remove": 19
       },
       "5": {
-        "reviewed": 34,
-        "retain": 17,
+        "reviewed": 36,
+        "retain": 19,
         "remove": 17
       }
     },
@@ -13135,29 +13903,29 @@
         "remove": 0
       },
       "2": {
-        "scored": 29,
-        "retain": 28,
+        "scored": 31,
+        "retain": 30,
         "remove": 1
       },
       "3": {
-        "scored": 46,
-        "retain": 32,
-        "remove": 14
+        "scored": 49,
+        "retain": 34,
+        "remove": 15
       },
       "4": {
-        "scored": 67,
-        "retain": 34,
+        "scored": 69,
+        "retain": 36,
         "remove": 33
       },
       "5": {
-        "scored": 20,
-        "retain": 19,
+        "scored": 22,
+        "retain": 21,
         "remove": 1
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 49,
-      "coding_relevance_domain_gate": 7,
+      "qualified_alternate_over_capacity": 50,
+      "coding_relevance_domain_gate": 8,
       "repository_quality_gate": 1
     }
   }
