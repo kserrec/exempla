@@ -225,7 +225,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 5.18 — Objective-C
 
-- [ ] Same objective, work, completion criteria, and dependencies as Step 5.1.
+- [x] Same objective, work, completion criteria, and dependencies as Step 5.1.
 - **Artifacts:** `catalog/objective-c.json`, `languages/objective-c/README.md`,
   rejection records.
 
