@@ -6,7 +6,7 @@
   "source_catalog_commit": "40e9e8853ce62eff571900f4fc6d096af619ab45",
   "current_language_total": 20,
   "current_entry_total": 200,
-  "reviewed_entry_total": 70,
+  "reviewed_entry_total": 80,
   "decisions": [
     {
       "repository": "sindresorhus/p-limit",
@@ -5261,12 +5261,797 @@
         "status": "disagree_resolved",
         "notes": "The reviews disagreed between LLVM BasicBlock and SmallVector and over whether the monorepo metadata label blocked C++ eligibility. Root reconciliation chose domain-neutral SmallVector, confirmed pinned CMake and substantive first-party C++ evidence despite GitHub's LLVM label, applied the focused-component design anchor, and resolved 5/4/2/5, Level 4, rank 4, capacity removal."
       }
+    },
+    {
+      "repository": "ruby/tempfile",
+      "language": "Ruby",
+      "prior_level": 1,
+      "pinned_commit": "344da5e29e3215691209223249ebd64e66dff6b8",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A temporary file must be created without a name race, opened with restrictive permissions, and removed after its owner finishes using it."
+        ],
+        "evidence": "Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The compact implementation names creation and cleanup responsibilities directly, documents explicit versus automatic cleanup, and has focused tests for block success and failure, restrictive permissions, path traversal, anonymous files, unlink behavior, platform differences, and finalizer fallback; the main Tempfile.create trace remains readable from public API through ensure cleanup to a direct test.",
+      "learning_path": {
+        "goal": "Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block.",
+        "start_path": "lib/tempfile.rb",
+        "supporting_files": [
+          "test/test_tempfile.rb"
+        ],
+        "trace": "Start at Tempfile.create, follow Dir::Tmpname.create into restrictive File.open, then follow the yielded File through the ensure branch that closes and unlinks it; close with block, traversal, anonymous-file, permission, and cleanup tests. Compare FinalizerManager only as the fallback used by the older object lifecycle, not as machinery required by the main block-and-ensure trace."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "block-scoped resource ownership",
+            "keyword forwarding and conventional exception cleanup",
+            "ordinary class and file composition"
+          ],
+          "reason": "The selected path uses common professional Ruby block, object, and ensure idioms; finalizer machinery is a fallback comparison rather than recurring main-path evidence."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "create, yield, close, and unlink lifecycle",
+            "cleanup after normal return or exception",
+            "anonymous and platform-specific fallback branches"
+          ],
+          "reason": "A real resource lifecycle and its failure cleanup materially shape the trace without creating expert nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "one public temporary-file component",
+            "standard-library name-generation and File boundaries",
+            "one direct behavioral test suite"
+          ],
+          "reason": "A few clear collaborators contain the complete behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "race-resistant name creation and restrictive permissions",
+            "exception-safe close and unlink guarantees",
+            "Windows, POSIX, and anonymous-file differences",
+            "stable public cleanup semantics"
+          ],
+          "reason": "Security, resource cleanup, compatibility, and cross-platform guarantees interact throughout temporary-file creation."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 2/3/2/4 sums to 11, whose 2.75 mean rounds to Level 3; Tempfile ranks first among five qualified Ruby Level 3 paths because its production lifecycle is compact, concrete, and closed by direct edge-case tests.",
+      "reconsider": "Reconsider if Tempfile.create, secure creation, block cleanup, platform behavior, public-source status, dual license, documentation, or focused tests materially change, or a clearer Ruby Level 3 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over whether delegation and finalizer machinery should broaden or inflate the selected lifecycle. Root reconciliation fixes the representative path at Tempfile.create, treats FinalizerManager only as fallback comparison, applies the lower language and behavior anchors, and resolves 2/3/2/4, Level 3, rank 1, retained."
+      }
+    },
+    {
+      "repository": "ruby/pathname",
+      "language": "Ruby",
+      "prior_level": 1,
+      "pinned_commit": "f0217bbd486b2f7d5c7de1ff3951c7422d42c761",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning."
+        ],
+        "evidence": "Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The immutable Pathname implementation separates aggressive and conservative normalization into small named methods, documents their filesystem-free contract, and closes it with an exhaustive assertion matrix covering empty, relative, rooted, dot, dot-dot, trailing-separator, drive, and UNC cases; the corrected implementation path is direct and maintainable.",
+      "learning_path": {
+        "goal": "Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.",
+        "start_path": "lib/pathname_builtin.rb",
+        "supporting_files": [
+          "lib/pathname.rb",
+          "test/pathname/test_pathname.rb"
+        ],
+        "trace": "Start at Pathname#cleanpath in lib/pathname_builtin.rb, branch into cleanpath_aggressive or cleanpath_conservative, follow component-stack, prefix, root, and separator handling, then close the behavior with the aggressive and conservative defassert matrices. Read lib/pathname.rb only for loading and the small additional APIs; the catalog's original loader was not the promised normalization implementation."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 2,
+        "design_span": 1,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "immutable value-object methods",
+            "component iteration and regular-expression helpers",
+            "conventional private helper composition"
+          ],
+          "reason": "The path uses common professional Ruby collection, object, and helper idioms without recurring metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "aggressive and conservative branches",
+            "localized component-stack state",
+            "root and trailing-separator edge paths"
+          ],
+          "reason": "Meaningful branches and local mutable state remain easy to trace in one normalization routine."
+        },
+        "design_span": {
+          "signals": [
+            "one lexical normalization component",
+            "one direct assertion matrix"
+          ],
+          "reason": "The behavior stays within a few methods in one focused implementation unit."
+        },
+        "constraint_burden": {
+          "signals": [
+            "relative and absolute root preservation",
+            "symbolic-link-safe conservative semantics",
+            "Unix, drive-letter, and UNC portability",
+            "stable lexical output contracts"
+          ],
+          "reason": "Several material compatibility and portability guarantees shape otherwise local normalization."
+        }
+      },
+      "new_level": 2,
+      "evidence": "Retain: both gates pass and 2/2/1/3 sums to 8, calculating to Level 2; Pathname ranks first and is the only qualified Ruby Level 2 path.",
+      "reconsider": "Reconsider if cleanpath semantics, platform support, symbolic-link preservation, public-source status, dual license, documentation, or the exhaustive test matrix materially changes, or a clearer Ruby Level 2 path appears.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over whether platform and symbolic-link cases lifted the path above a focused Level 2 unit, and the catalog started at a loader rather than the implementation. Root reconciliation moves the start to lib/pathname_builtin.rb, preserves lib/pathname.rb as context, applies the lower focused-unit anchor, and resolves 2/2/1/3, Level 2, rank 1, retained."
+      }
+    },
+    {
+      "repository": "redis/redis-rb",
+      "language": "Ruby",
+      "prior_level": 2,
+      "pinned_commit": "55a1cd8d120dd80d47a8db634ec90429dead8adc",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Redis pipelining batches commands so their ordered replies arrive after the block, and MULTI groups a transaction inside that batch."
+        ],
+        "evidence": "Pipelining and ordered replies need only a short explanation; the selected path teaches transferable deferred values, callback-based result delivery, error translation, batch ordering, nested API design, synchronization, and contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The facade, pipeline wrapper, Future and MultiFuture objects, and client error boundary are small and explicitly named, while the dedicated pipeline tests cover result order, early access, transformations, nested blocks, MULTI, command errors, disabled exception raising, and interruption; the external redis-client transport is a disclosed boundary rather than hidden evidence.",
+      "learning_path": {
+        "goal": "Understand how redis-rb exposes pipelined commands as deferred Future values and maps ordered raw replies back through transformations and nested MULTI results.",
+        "start_path": "lib/redis.rb",
+        "supporting_files": [
+          "lib/redis/pipeline.rb",
+          "lib/redis/client.rb",
+          "test/redis/pipelining_commands_test.rb"
+        ],
+        "trace": "Start at Redis#pipelined, follow synchronization into the redis-client raw pipeline boundary, then follow PipelinedConnection#send_command as it registers callbacks and Future objects, MultiConnection and MultiFuture as they group transaction replies, and Client#pipelined as it translates errors; close with the dedicated pipelining command tests. The catalog's client_test.rb did not close this selected behavior."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 2,
+        "constraint_burden": 3
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Future implemented over BasicObject",
+            "block and callback result transformations",
+            "specialized pipeline and transaction connection objects"
+          ],
+          "reason": "A nontrivial deferred-value abstraction and higher-order callbacks materially shape the Ruby path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "future not-ready and delivered states",
+            "ordered batch reply assignment",
+            "nested transaction and error-result paths"
+          ],
+          "reason": "Deferred results, transformations, nested batching, and errors require nontrivial but bounded state reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "Redis facade and synchronization boundary",
+            "pipeline, future, and client error modules",
+            "external redis-client transport abstraction"
+          ],
+          "reason": "A few clear modules contain redis-rb's wrapper behavior, while the actual batching transport remains external and limits first-party span."
+        },
+        "constraint_burden": {
+          "signals": [
+            "reply-order and transformation contracts",
+            "early-access and nested-MULTI errors",
+            "exception translation and interruption safety",
+            "RESP and redis-client compatibility boundary"
+          ],
+          "reason": "Several material reliability and compatibility guarantees constrain the wrapper without becoming system-wide expert discipline."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/2/3 sums to 11, whose 2.75 mean rounds to Level 3; redis-rb ranks fourth behind Tempfile, Jekyll, and Chatwoot SafeFetch for two Ruby Level 3 places.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks this path above a retained entry, the transport becomes first-party and inspectable, or pipeline, Future, error, public-source, license, documentation, or dedicated tests materially change.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed on whether the path crossed several first-party boundaries and carried interacting strict constraints. Root reconciliation treats redis-client's raw batching transport as an external abstraction, replaces client_test.rb with the dedicated pipeline suite, applies design 2 and constraints 3, and resolves 3/3/2/3, Level 3, rank 4, capacity removal."
+      }
+    },
+    {
+      "repository": "ruby/net-http",
+      "language": "Ruby",
+      "prior_level": 2,
+      "pinned_commit": "23e859e92e10e43cad520fcacac3fd43640dba7b",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "An HTTP client sends a framed request over a connection, parses or streams the response, may reuse the connection, and retries only requests whose semantics permit replay."
+        ],
+        "evidence": "Basic HTTP requests, responses, connection reuse, and idempotent replay are short, familiar context; the path teaches transferable resource lifecycles, streaming, recovery, timeout and error handling, protocol abstraction, and compatibility testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "The request session, generic request writer, response reader, and transport lifecycle have recognizable responsibilities and extensive API documentation; focused tests expose request framing, streaming, chunking, connection reuse, server closes, successful and exhausted retries, response-body state, and cleanup, giving a complete if protocol-dense trace.",
+      "learning_path": {
+        "goal": "Understand how Net::HTTP sends one request, streams or consumes its response, decides whether a failed exchange is replayable, and reuses or closes the connection safely.",
+        "start_path": "lib/net/http.rb",
+        "supporting_files": [
+          "lib/net/http/generic_request.rb",
+          "lib/net/http/response.rb",
+          "test/net/http/test_http.rb",
+          "test/net/http/test_httpresponse.rb"
+        ],
+        "trace": "Start at Net::HTTP#request, follow session startup into transport_request and begin_transport, cross GenericRequest#exec to write the request, follow response parsing and read_body streaming, then return through end_transport, retry, connection reuse, or close; close with request, keep-alive, server-close, retry, chunked-stream, and response-state tests."
+      },
+      "new_scores": {
+        "language_technique": 2,
+        "behavioral_reasoning": 4,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "ordinary class collaboration and exceptions",
+            "block-based response streaming",
+            "conventional request and response inheritance"
+          ],
+          "reason": "The advanced difficulty comes from the network lifecycle, not recurring advanced Ruby machinery."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "connection open, reuse, and close state",
+            "streamed response ownership and cleanup",
+            "idempotent retry and exhausted-recovery paths",
+            "timeout and server-disconnect propagation"
+          ],
+          "reason": "Resource ownership, recovery, streaming, and nonlocal connection state recur across the request."
+        },
+        "design_span": {
+          "signals": [
+            "HTTP session and connection layer",
+            "generic request serialization boundary",
+            "response parsing and streaming boundary",
+            "direct lifecycle and response tests"
+          ],
+          "reason": "Several meaningful layers collaborate while remaining a locally understandable HTTP client path."
+        },
+        "constraint_burden": {
+          "signals": [
+            "HTTP framing and response-state compatibility",
+            "safe replay and idempotency rules",
+            "timeouts, TLS, proxy, and connection reuse",
+            "stream cleanup and cross-platform socket behavior"
+          ],
+          "reason": "Multiple protocol, compatibility, resource, and recovery guarantees interact throughout the lifecycle."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 2/4/3/4 sums to 13, whose 3.25 mean calculates to Level 3; Net::HTTP ranks fifth of five qualified Ruby Level 3 paths because its excellent lifecycle is the most protocol-dense and least bounded to navigate.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks this path above a retained entry, or request, retry, streaming, connection, public-source, dual-license, documentation, or direct-test behavior materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews agreed that ordinary Ruby mechanics coexist with advanced request-lifecycle reasoning but differed on its comparative Level 3 rank and closing tests. Root reconciliation adds test_httpresponse.rb, keeps the lower language anchor, and resolves 2/4/3/4, Level 3, rank 5, capacity removal."
+      }
+    },
+    {
+      "repository": "sidekiq/sidekiq",
+      "language": "Ruby",
+      "prior_level": 3,
+      "pinned_commit": "1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A background worker fetches a job, may execute it at least once, records failure for retry, acknowledges completed work, and must preserve in-progress work during shutdown."
+        ],
+        "evidence": "Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Processor, retry, middleware, and manager responsibilities are explicit and documented in the internals guide; direct tests cover fetch and execution exceptions, middleware before and after failures, skip behavior, acknowledgement, original argument preservation, retry delegation, shutdown deadlines, quieting, and work recovery, making the production lifecycle traceable despite its nonlocal guarantees.",
+      "learning_path": {
+        "goal": "Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.",
+        "start_path": "lib/sidekiq/processor.rb",
+        "supporting_files": [
+          "lib/sidekiq/job_retry.rb",
+          "lib/sidekiq/middleware/chain.rb",
+          "lib/sidekiq/manager.rb",
+          "test/processor_test.rb",
+          "test/manager_test.rb",
+          "docs/internals.md"
+        ],
+        "trace": "Start at Processor#process_one and the fetched unit of work, follow dispatch through global and local JobRetry wrappers, the server middleware chain, worker resolution and execution, then follow the completed flag into acknowledgement or preservation; use Manager shutdown to see deadlines and in-flight ownership, and close with processor and manager tests plus the internals contract."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "middleware block composition",
+            "dynamic worker class resolution and framework conventions",
+            "exception wrapper and configuration abstractions"
+          ],
+          "reason": "Substantial Ruby framework idioms shape the path, but advanced reflection or multiple expert language mechanisms do not recur enough for 4."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "concurrent processor and fetched-work ownership",
+            "global and local retry recovery",
+            "middleware and worker failure timing",
+            "acknowledgement versus preservation",
+            "quiet and forced-shutdown coordination"
+          ],
+          "reason": "Threaded execution, retry scheduling, failure recovery, job ownership, and shutdown interact pervasively, making expert nonlocal reasoning unavoidable."
+        },
+        "design_span": {
+          "signals": [
+            "processor and fetch boundary",
+            "retry and dead-job lifecycle",
+            "middleware extension chain",
+            "manager shutdown coordination",
+            "Redis-backed job state and observability"
+          ],
+          "reason": "Many modules, extension points, and cross-cutting execution policies contribute to one job lifecycle."
+        },
+        "constraint_burden": {
+          "signals": [
+            "at-least-once delivery and no-loss shutdown",
+            "duplicate-tolerant acknowledgement semantics",
+            "retry payload, original arguments, and scheduling compatibility",
+            "thread safety, deadlines, middleware, and error reporting"
+          ],
+          "reason": "Several system-wide reliability, compatibility, concurrency, and recovery guarantees interact so a local change can lose or duplicate work."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 3/5/4/5 sums to 17, whose 4.25 mean calculates to Level 4; the mean does not meet the Level 5 rule. Sidekiq ranks first among four qualified Ruby Level 4 paths because its advanced lifecycle is direct, representative, documented, and closed by focused tests.",
+      "reconsider": "Reconsider if processing, retry, middleware, acknowledgement, shutdown, Redis compatibility, public-source status, LGPL license, internals documentation, or direct tests materially change, or a clearer Ruby Level 4 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over whether Sidekiq's dynamic framework idioms merited language 4 or the interacting expert burdens made the path Level 5. Root reconciliation applies the lower language anchor 3, confirms behavior and constraints 5 from concurrency, retry, acknowledgement and shutdown, and resolves 3/5/4/5, Level 4, rank 1, retained."
+      }
+    },
+    {
+      "repository": "jekyll/jekyll",
+      "language": "Ruby",
+      "prior_level": 3,
+      "pinned_commit": "74d751339d3e534aa51d5d7b0640e9bd743509e4",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A static-site document may pass through a template engine, one or more markup converters, nested layouts, hooks, and an incremental-build dependency tracker before being written."
+        ],
+        "evidence": "Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Renderer methods expose each transformation phase directly, Convertible supplies a clear public bridge, and Regenerator records incremental dependencies; document, generated-site, and site tests observe template data, converter output, layouts, destinations, hooks, and generated files, while the README and code comments orient the learner. No test/test_renderer.rb exists at the pin, so only verified integration tests close the path.",
+      "learning_path": {
+        "goal": "Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.",
+        "start_path": "lib/jekyll/renderer.rb",
+        "supporting_files": [
+          "lib/jekyll/convertible.rb",
+          "lib/jekyll/regenerator.rb",
+          "test/test_document.rb",
+          "test/test_generated_site.rb",
+          "test/test_site.rb"
+        ],
+        "trace": "Start at Renderer#run, follow payload preparation and pre-render hooks into render_document, then follow optional Liquid rendering, ordered converter reduction, post-convert hooks, nested layout rendering with cycle detection, and Regenerator dependency recording; connect Convertible#do_layout to the public document lifecycle and close with document, generated-site, and site integration tests. The catalog's Site#process start was a broader composition root, and there is no pinned test/test_renderer.rb."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "converter strategy and reduction pipeline",
+            "hook and plugin framework idioms",
+            "Liquid payload and document abstractions"
+          ],
+          "reason": "Framework callbacks, plugin strategies, and higher-order composition materially shape the Ruby path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "ordered mutable render phases",
+            "hook and converter error propagation",
+            "nested layout state and cycle detection",
+            "incremental dependency updates"
+          ],
+          "reason": "A nontrivial staged lifecycle with hooks, mutable output, cycles, and incremental state remains locally traceable."
+        },
+        "design_span": {
+          "signals": [
+            "document and Convertible boundary",
+            "Renderer pipeline",
+            "Liquid and converter plugins",
+            "layout and Regenerator boundaries"
+          ],
+          "reason": "The path crosses several meaningful interfaces whose responsibilities remain clear."
+        },
+        "constraint_burden": {
+          "signals": [
+            "template and converter plugin compatibility",
+            "strict Liquid options and error reporting",
+            "layout-cycle and data-merging correctness",
+            "output extension and incremental rebuild consistency"
+          ],
+          "reason": "Multiple compatibility, correctness, cycle, and incremental-build guarantees interact across the renderer."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Retain: both gates pass and 3/3/3/4 sums to 13, whose 3.25 mean calculates to Level 3; Jekyll ranks second behind Tempfile among five qualified Ruby Level 3 paths because its phases and observable output form a clear representative framework trace.",
+      "reconsider": "Reconsider if rendering, converters, hooks, layouts, incremental dependencies, public-source status, MIT license, documentation, or closing integration tests materially change, or a clearer Ruby Level 3 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over whether Site#process was the representative start and whether a dedicated renderer test existed. Root reconciliation selects the bounded Renderer path, adds Convertible and Regenerator plus verified integration tests, records that test/test_renderer.rb is absent at the pin, and resolves 3/3/3/4, Level 3, rank 2, retained."
+      }
+    },
+    {
+      "repository": "rubocop/rubocop",
+      "language": "Ruby",
+      "prior_level": 4,
+      "pinned_commit": "8b85bafb041debc1f3a955663a99fa384a9d24f6",
+      "decision": "retain",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A lint cop receives callbacks while an abstract syntax tree is visited, reports source-range offenses, and may propose edits that must be combined and repeatedly applied until stable."
+        ],
+        "evidence": "AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Runner, Team, Commissioner, Base, and Corrector expose recognizable orchestration, dispatch, extension, and edit responsibilities; direct specs cover offenses, cop errors, callback lifecycles, overlapping corrections, conflicting cops, infinite correction cycles, caching, formatter behavior, syntax failures, and autocorrect output, while project documentation explains purpose and configuration.",
+      "learning_path": {
+        "goal": "Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.",
+        "start_path": "lib/rubocop/runner.rb",
+        "supporting_files": [
+          "lib/rubocop/cop/team.rb",
+          "lib/rubocop/cop/commissioner.rb",
+          "lib/rubocop/cop/base.rb",
+          "lib/rubocop/cop/corrector.rb",
+          "spec/rubocop/runner_spec.rb",
+          "spec/rubocop/cop/team_spec.rb"
+        ],
+        "trace": "Start at Runner#process_file and file_offenses, follow the correction loop into Team#investigate, Commissioner-generated node callbacks, Base offense registration, and Corrector edits, then return through Team's corrector collation and conflict handling to Runner's convergence or infinite-loop result; close with Runner and Team specs."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 4,
+        "design_span": 4,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "runtime class_eval generation of AST callback methods",
+            "reflection and callback discovery",
+            "cop DSL and plugin framework conventions",
+            "dynamic dispatch over node and restriction maps"
+          ],
+          "reason": "Generated callbacks, reflection, metaprogramming, and framework DSL behavior recur materially, meeting the advanced anchor without multiple pervasive expert mechanisms for 5."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "AST event propagation through many cops",
+            "repeated autocorrection to a fixed point",
+            "overlap, conflict, and cycle handling",
+            "cop error isolation and cache paths"
+          ],
+          "reason": "Event dispatch, correction state, convergence, caching, and failure isolation require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "signals": [
+            "Runner orchestration and reporting",
+            "Team cop coordination",
+            "Commissioner visitor dispatch",
+            "Base extension lifecycle and Corrector edits",
+            "configuration, cache, and formatter policies"
+          ],
+          "reason": "Many modules, extension points, and cross-cutting policies contribute to inspection and correction."
+        },
+        "constraint_burden": {
+          "signals": [
+            "exact source ranges, encodings, and syntax preservation",
+            "overlapping-edit and semantic-correction safety",
+            "termination and infinite-cycle detection",
+            "configuration, plugin, target-Ruby, cache, and formatter compatibility"
+          ],
+          "reason": "Several system-wide source-safety, convergence, compatibility, and cache guarantees interact so a local correction change can fail elsewhere."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Retain: both gates pass and 4/4/4/5 sums to 17, whose 4.25 mean calculates to Level 4; RuboCop ranks second behind Sidekiq among four qualified Ruby Level 4 paths because its advanced Ruby machinery is representative, self-contained, and directly tested.",
+      "reconsider": "Reconsider if Runner, Team, callback generation, correction collation, convergence, public-source status, MIT license, documentation, or direct specs materially change, or a clearer Ruby Level 4 path displaces it.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews differed over whether Commissioner callback generation and the cop DSL constituted expert language depth 5. Root reconciliation finds advanced metaprogramming recurring but not multiple expert mechanisms pervasively interacting, keeps language 4, and resolves 4/4/4/5, Level 4, rank 2, retained."
+      }
+    },
+    {
+      "repository": "rails/rails",
+      "language": "Ruby",
+      "prior_level": 4,
+      "pinned_commit": "0ca2c2c4cfbe7f0a709bca0589d2d74c1853ef27",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "Rails components register named initialization blocks with before, after, and group constraints; an application combines inherited component initializers, topologically orders them, and runs each selected block once."
+        ],
+        "evidence": "Application startup and dependency-ordered hooks are short, general framework context; the selected path teaches transferable initialization DSL design, dependency graphs, runtime binding, inheritance composition, extension ordering, idempotence, grouping, and focused framework testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "Initializable separates one initializer, its dependency collection, class-level registration, runtime binding, and execution; the focused initializable tests expose inheritance, before and after order, dependencies loaded out of order, duplicates, groups, arguments, required blocks, and run-once semantics, while the application source and initialization guide connect the bounded component to real Rails boot.",
+      "learning_path": {
+        "goal": "Understand how Rails declares, combines, orders, binds, groups, and runs framework initializers exactly once during application startup.",
+        "start_path": "railties/lib/rails/initializable.rb",
+        "supporting_files": [
+          "railties/lib/rails/application.rb",
+          "railties/test/initializable_test.rb",
+          "guides/source/initialization.md"
+        ],
+        "trace": "Start with the initializer class DSL and Initializer#run, follow Collection as before and after constraints become a TSort graph, then follow ancestor initializers_chain, runtime bind, group selection, and run_initializers' run-once guard; connect Rails::Application#initialize! and the initialization guide, and close with direct ordering, inheritance, grouping, duplicate, argument, and idempotence tests."
+      },
+      "new_scores": {
+        "language_technique": 4,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "class-level initializer DSL",
+            "instance_exec runtime binding",
+            "ancestor-chain composition and dynamic delegation",
+            "TSort protocol integration"
+          ],
+          "reason": "Metaprogramming, runtime context binding, inheritance introspection, and protocol-driven ordering recur in important initialization behavior."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "dependency-ordered execution",
+            "before, after, and group branches",
+            "inherited initializer composition",
+            "run-once mutable lifecycle"
+          ],
+          "reason": "Ordering, grouping, inheritance, and idempotent state create nontrivial behavior without concurrency or expert recovery."
+        },
+        "design_span": {
+          "signals": [
+            "initializer registration and binding",
+            "dependency collection and topological sorting",
+            "Railtie, Engine, and Application composition boundary",
+            "direct tests and boot guide"
+          ],
+          "reason": "The trace crosses several framework boundaries whose local responsibilities remain understandable."
+        },
+        "constraint_burden": {
+          "signals": [
+            "stable before and after partial ordering",
+            "inheritance, duplicates, late-loaded dependency, and group semantics",
+            "single execution per application instance",
+            "framework and plugin initialization compatibility"
+          ],
+          "reason": "Ordering, extension, inheritance, grouping, and idempotence guarantees interact across framework startup."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 4/3/3/4 sums to 14, whose exact 3.5 mean rounds to Level 4; Rails initialization ranks third behind Sidekiq and RuboCop for two Ruby Level 4 places.",
+      "reconsider": "Reconsider if a Ruby Level 4 place opens, a fresh comparison ranks initialization above a retained entry, or initializer DSL, ordering, binding, grouping, public-source, MIT-license, guide, or focused-test behavior materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between an asynchronous Active Record Relation trace and framework initialization, and therefore on the dimension evidence. Root reconciliation chooses the clearer representative Initializable path, drops the incoherent catalog pairing with Relation, and resolves 4/3/3/4, Level 4, rank 3, capacity removal."
+      }
+    },
+    {
+      "repository": "discourse/discourse",
+      "language": "Ruby",
+      "prior_level": 5,
+      "pinned_commit": "58f18d48d66d5ab9bfbfb35cde4c0ef932aea5b9",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A distributed mutex uses Redis server time and an expiring ownership value so competing processes serialize a critical section and only the current lease holder can unlock it."
+        ],
+        "evidence": "A lease, atomic Redis script, and critical section need only a short explanation; the selected path is domain-neutral and teaches transferable cross-process synchronization, local reentrancy semantics, exponential backoff, timeout and tamper detection, exception-safe release, read-only failure, script caching, namespacing, and concurrency testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "DistributedMutex keeps acquisition, critical-section ownership, release, warning, and backoff logic explicit; DiscourseRedis isolates namespacing, read-only handling, and cached script evaluation, while direct specs exercise ten competing objects, deterministic concurrency scenarios, expiration cleanup, configured validity, non-reentrancy, read-only Redis, namespace behavior, and EVALSHA fallback. LockStep supplies a concrete production consumer.",
+      "learning_path": {
+        "goal": "Understand how Discourse serializes one critical section across processes with an expiring Redis lease, safe ownership-checked unlock, backoff, and read-only recovery.",
+        "start_path": "lib/distributed_mutex.rb",
+        "supporting_files": [
+          "lib/discourse_redis.rb",
+          "spec/lib/distributed_mutex_spec.rb",
+          "spec/lib/discourse_redis_spec.rb",
+          "lib/service/base/lock_step.rb"
+        ],
+        "trace": "Start at DistributedMutex.synchronize, follow the local Mutex into get_lock, then follow the atomic Redis lease acquisition script, exponential backoff and read-only exit; trace the ensure branch through server-time overrun or tamper warnings and ownership-checked unlock, then inspect DiscourseRedis namespace and EvalHelper EVALSHA fallback and LockStep's production use. Close with direct contention, expiry, reentrancy, read-only, namespacing, and script-cache specs."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 5,
+        "design_span": 3,
+        "constraint_burden": 5
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "block-scoped synchronization API",
+            "wrapper and adapter abstractions",
+            "dynamic Redis command forwarding",
+            "cached script helper composition"
+          ],
+          "reason": "Substantial Ruby abstractions shape the path, but the short Lua atomic sections are implementation context and do not count as Ruby language depth."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "local-thread and cross-process contention",
+            "lease acquisition, expiry, and owner-checked release",
+            "exponential backoff and read-only failure",
+            "exception-safe critical-section cleanup",
+            "overrun and tamper detection"
+          ],
+          "reason": "Concurrency, distributed coordination, scheduling, time-bounded ownership, failure, and cleanup interact pervasively."
+        },
+        "design_span": {
+          "signals": [
+            "distributed mutex component",
+            "namespaced Redis and script-evaluation boundary",
+            "service LockStep consumer",
+            "direct synchronization and Redis specs"
+          ],
+          "reason": "Several meaningful boundaries contain the path without requiring the wider forum application architecture."
+        },
+        "constraint_burden": {
+          "signals": [
+            "mutual exclusion across threads and processes",
+            "atomic lease acquisition and ownership-checked release",
+            "expiration, server-time, backoff, and failure correctness",
+            "read-only, multisite namespace, and Redis script-cache compatibility"
+          ],
+          "reason": "Several system-wide concurrency, safety, liveness, timing, and compatibility guarantees interact so a plausible local change can violate mutual exclusion."
+        }
+      },
+      "new_level": 4,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/5/3/5 sums to 16, calculating to Level 4; Discourse DistributedMutex ranks fourth behind Sidekiq, RuboCop, and Rails initialization for two Ruby Level 4 places.",
+      "reconsider": "Reconsider if a Ruby Level 4 place opens, a fresh comparison ranks this path above a retained entry, or lease, backoff, release, read-only, Redis namespace, public-source, GPL-license, documentation, or concurrency-test behavior materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between Post creation and DistributedMutex and over a resulting Level 5 versus Level 4 placement. Root reconciliation finds the original Post path dominated by forum business policy, selects the bounded domain-neutral mutex, excludes the short Lua scripts from Ruby language inflation, applies design 3, and resolves 3/5/3/5, Level 4, rank 4, capacity removal."
+      }
+    },
+    {
+      "repository": "chatwoot/chatwoot",
+      "language": "Ruby",
+      "prior_level": 5,
+      "pinned_commit": "7f029b65eb787a1b68167338a63151beedd33a25",
+      "decision": "remove",
+      "removal_reason": "qualified_alternate_over_capacity",
+      "coding_relevance": {
+        "status": "pass",
+        "domain_context": [
+          "A server-side fetch of a user-controlled URL must prevent requests to unsafe networks, revalidate redirects, strip credentials across origins, bound time and bytes, allow only expected media types, and clean up streamed temporary storage."
+        ],
+        "evidence": "Server-side request forgery, URL origin, redirects, and streaming limits can be explained briefly; the path teaches transferable input validation, secure network boundaries, adapter design, streaming resource ownership, redirect state, header hygiene, size and timeout enforcement, exception translation, and security-focused testing."
+      },
+      "quality_status": "pass",
+      "quality_evidence": "SafeFetch separates public API and errors, normalized request options, streaming, and optional private-network transport into named components; the direct spec covers valid streaming, deterministic cleanup, invalid schemes, private and metadata addresses, DNS rebinding, redirect behavior, cross-origin credential stripping, CRLF rejection, content types, size limits, methods, timeouts, and error mapping, while Webhooks::Trigger demonstrates a production consumer. The selected non-enterprise paths are MIT Expat, but enterprise/ has a separate license.",
+      "learning_path": {
+        "goal": "Understand how Chatwoot safely streams a remote media response while enforcing SSRF, redirect, credential, content-type, byte, timeout, and temporary-file boundaries.",
+        "start_path": "lib/safe_fetch.rb",
+        "supporting_files": [
+          "lib/safe_fetch/request_options.rb",
+          "lib/safe_fetch/fetcher.rb",
+          "lib/safe_fetch/private_network_request.rb",
+          "spec/lib/safe_fetch_spec.rb",
+          "lib/webhooks/trigger.rb"
+        ],
+        "trace": "Start at SafeFetch.fetch and its error translation, follow RequestOptions URL, method, header, credential, content-type, timeout, and byte normalization into Fetcher; trace the default ssrf_filter request or PrivateNetworkRequest's resolve, redirect, origin, sensitive-header, CRLF, and pinned-IP handling, then stream successful chunks into a Tempfile with a hard byte limit and ensure cleanup. Close with the direct SafeFetch spec and Webhooks::Trigger as a production POST consumer."
+      },
+      "new_scores": {
+        "language_technique": 3,
+        "behavioral_reasoning": 3,
+        "design_span": 3,
+        "constraint_burden": 4
+      },
+      "score_evidence": {
+        "language_technique": {
+          "signals": [
+            "Data result object and typed error hierarchy",
+            "block-scoped Tempfile ownership",
+            "request-option and transport strategy objects",
+            "framework configuration and consumer idioms"
+          ],
+          "reason": "Nontrivial object modeling, higher-order resource scope, and framework abstractions materially shape the Ruby path."
+        },
+        "behavioral_reasoning": {
+          "signals": [
+            "redirect and origin transitions",
+            "streaming byte-count and cleanup lifecycle",
+            "public versus allowed-private transport branch",
+            "validation and translated failure paths"
+          ],
+          "reason": "Redirect state, streamed resources, bounded data, and errors create nontrivial behavior, but the higher nonlocal anchor does not recur beyond this bounded request."
+        },
+        "design_span": {
+          "signals": [
+            "SafeFetch facade and error API",
+            "request normalization boundary",
+            "streaming fetcher and private-network adapter",
+            "direct spec and webhook consumer"
+          ],
+          "reason": "Several clear components and one production integration contain the selected fetch behavior."
+        },
+        "constraint_burden": {
+          "signals": [
+            "SSRF, private-address, metadata-address, and DNS-rebinding protection",
+            "redirect revalidation and cross-origin sensitive-header stripping",
+            "scheme, method, CRLF, content-type, timeout, and byte limits",
+            "streaming Tempfile cleanup and stable error contracts"
+          ],
+          "reason": "Multiple strict security, resource, compatibility, and cleanup guarantees interact throughout every fetch."
+        }
+      },
+      "new_level": 3,
+      "evidence": "Remove as a qualified alternate: both gates pass and 3/3/3/4 sums to 13, whose 3.25 mean calculates to Level 3; Chatwoot SafeFetch ranks third behind Tempfile and Jekyll for two Ruby Level 3 places.",
+      "reconsider": "Reconsider if a Ruby Level 3 place opens, a fresh comparison ranks SafeFetch above a retained entry, or SSRF, redirect, streaming, credential, limit, public-source, selected-path license, documentation, or direct-test behavior materially changes.",
+      "second_review": {
+        "reviewer": "independent Codex reviewer",
+        "status": "disagree_resolved",
+        "notes": "The reviews disagreed between the Conversation callback lifecycle and SafeFetch and therefore on Level 4 versus Level 3. Root reconciliation finds the original Conversation path dominated by customer-support policy, chooses the bounded security-oriented SafeFetch trace, applies lower behavior 3, discloses that selected paths are MIT while enterprise/ is separately licensed, and resolves 3/3/3/4, Level 3, rank 3, capacity removal."
+      }
     }
   ],
   "summary": {
     "decisions": {
-      "retain": 47,
-      "remove": 23
+      "retain": 52,
+      "remove": 28
     },
     "by_language": {
       "JavaScript": {
@@ -5401,33 +6186,52 @@
           "4": 5,
           "5": 1
         }
+      },
+      "Ruby": {
+        "reviewed": 10,
+        "retain": 5,
+        "remove": 5,
+        "retained_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "all_scored_by_new_level": {
+          "1": 0,
+          "2": 1,
+          "3": 5,
+          "4": 4,
+          "5": 0
+        }
       }
     },
     "by_prior_level": {
       "1": {
-        "reviewed": 14,
-        "retain": 14,
+        "reviewed": 16,
+        "retain": 16,
         "remove": 0
       },
       "2": {
-        "reviewed": 14,
+        "reviewed": 16,
         "retain": 11,
-        "remove": 3
+        "remove": 5
       },
       "3": {
-        "reviewed": 14,
-        "retain": 8,
+        "reviewed": 16,
+        "retain": 10,
         "remove": 6
       },
       "4": {
-        "reviewed": 14,
-        "retain": 5,
-        "remove": 9
+        "reviewed": 16,
+        "retain": 6,
+        "remove": 10
       },
       "5": {
-        "reviewed": 14,
+        "reviewed": 16,
         "retain": 9,
-        "remove": 5
+        "remove": 7
       }
     },
     "by_new_level": {
@@ -5437,19 +6241,19 @@
         "remove": 0
       },
       "2": {
-        "scored": 11,
-        "retain": 11,
+        "scored": 12,
+        "retain": 12,
         "remove": 0
       },
       "3": {
-        "scored": 19,
-        "retain": 13,
-        "remove": 6
+        "scored": 24,
+        "retain": 15,
+        "remove": 9
       },
       "4": {
-        "scored": 29,
-        "retain": 14,
-        "remove": 15
+        "scored": 33,
+        "retain": 16,
+        "remove": 17
       },
       "5": {
         "scored": 10,
@@ -5458,7 +6262,7 @@
       }
     },
     "removal_reasons": {
-      "qualified_alternate_over_capacity": 22,
+      "qualified_alternate_over_capacity": 27,
       "coding_relevance_domain_gate": 1
     }
   }
