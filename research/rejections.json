@@ -144,6 +144,14 @@
       "failed_requirement": "target SDC level",
       "evidence": "The inspected production targets contain 52,016 meaningful lines and implement several performance-sensitive generic data structures with custom storage, indexing, copy-on-write, hashing, and algorithmic invariants; S4/D4/C3 supports SDC 4 rather than the open SDC 3 slot.",
       "reconsider": "Eligible as an additional Swift SDC 4 project in a larger catalog, especially for a data-structures learning path."
+    },
+    {
+      "repository": "cockroachdb/cockroach",
+      "language": "Go",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "open-source license",
+      "evidence": "The pinned default-branch revision is governed by the CockroachDB Software License, which restricts operation without a license key and therefore does not satisfy the project's open-source eligibility requirement.",
+      "reconsider": "Reconsider only if the relevant current source is released under an open-source license; older differently licensed history is not a substitute for the maintained default branch."
     }
   ]
 }
