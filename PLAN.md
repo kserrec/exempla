@@ -441,7 +441,7 @@ Replacement research does not begin until all 200 decisions are recorded.
 - [x] **15.2 Python**
 - [x] **15.3 Java**
 - [x] **15.4 PHP**
-- [ ] **15.5 C#**
+- [x] **15.5 C#**
 - [ ] **15.6 TypeScript**
 - [ ] **15.7 C++**
 - [ ] **15.8 Ruby**

@@ -7,10 +7,10 @@ Learn transferable programming skills from exemplary real-world source code.
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through production implementation and tests. The catalog currently has
-**137 qualified repositories across 20 languages**. Its **63 open slots are
+**138 qualified repositories across 20 languages**. Its **62 open slots are
 honest research gaps** after the learner-centered re-review and the completed
-JavaScript, Python, Java, and PHP replacement-research passes; no standard is
-lowered to preserve an arbitrary count.
+JavaScript, Python, Java, PHP, and C# replacement-research passes; no standard
+is lowered to preserve an arbitrary count.
 
 ## Browse the catalog
 

@@ -928,6 +928,14 @@
       "failed_requirement": "maximum two repositories per language and calculated level",
       "evidence": "Reject as a qualified capacity alternate: both gates pass and 3/4/4/5 sums to 16, whose mean is Level 4; Symfony retains the more directly tested overlapping HTTP lifecycle path and Monolog preserves stronger domain diversity, so the two-entry cap excludes Laravel. The scores were locked before capacity was inspected. KernelTest does not directly exercise handle or sendRequestThroughRouter, and routing tests do not directly assert the general bound ExceptionHandler.",
       "reconsider": "Reconsider if a PHP Level 4 place opens, the two-entry cap changes, a retained path weakens on re-audit, or direct end-to-end tests materially strengthen the selected Kernel-to-Pipeline-to-Router and exception-handler trace."
+    },
+    {
+      "repository": "Humanizr/Humanizer",
+      "language": "C#",
+      "inspected_at": "2026-08-29",
+      "failed_requirement": "maximum two repositories per language and calculated level",
+      "evidence": "Reject as a qualified capacity alternate: both gates pass and 2/1/2/2 sums to 7, whose mean of 1.75 rounds half up to Level 2; GuardClauses retains a stronger type-flow and defensive-API path while serilog-sinks-console preserves a more behaviorally distinct output pipeline, so the two-entry cap excludes Humanizer. The scores were locked before capacity was inspected. Fixed-length truncation operates on UTF-16 code units, so no Unicode grapheme-safety claim is made; selected tests omit null ITruncator, zero or negative length, and grapheme boundaries. Tests were inspected but not executed because the .NET SDK is unavailable in the review environment.",
+      "reconsider": "Reconsider if a C# Level 2 place opens, the two-entry cap changes, a retained path weakens on re-audit, or tests add explicit null-strategy, zero and negative length, and Unicode grapheme-boundary coverage; rerank it at its calculated Level rather than lowering it into Level 1."
     }
   ]
 }

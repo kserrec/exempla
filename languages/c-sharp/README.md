@@ -1,6 +1,6 @@
 # C#
 
-7 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified repositories. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -391,6 +391,78 @@ Required domain context:
 **License:** MIT ([evidence 1](https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/LICENSE.txt))
 
 ## Level 5
+
+### [dotnet/roslyn](https://github.com/dotnet/roslyn)
+
+**Language 5 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+The open-source C# and Visual Basic compiler platform that exposes syntax, semantic, diagnostic, compilation, and emit APIs used by the .NET toolchain.
+
+**Real-world evidence:** Roslyn supplies the production C# and Visual Basic compilers and code-analysis APIs shipped through the .NET SDK, Visual Studio, and Microsoft.CodeAnalysis packages.
+
+**Language evidence:** The selected public compilation API, C# compiler pipeline, lowering, IL generation, emitter model, and focused compiler tests are implemented in first-party C#; GitHub also reports C# as the repository's primary language.
+
+**Why study it:** The compilation-to-emit path shows how a platform-scale C# system turns immutable syntax, references, and options into diagnostics or deterministic PE and PDB output while coordinating binding, flow analysis, concurrent method compilation, lowering, IL generation, metadata, compatibility, and cleanup.
+
+**What you can learn:**
+
+- Use `src/Compilers/Core/Portable/Compilation/Compilation.cs` to study the following transferable techniques and behaviors: Public stream and option validation, immutable compilation snapshots, staged diagnostics, module-builder specialization, concurrent symbol traversal, binding and flow analysis, lowering and instrumentation, IL generation, entry-point selection, deterministic PE and PDB serialization, cancellation, pooled resources, and compatibility-preserving APIs.
+
+**Prerequisites:**
+
+- Before reading `src/Compilers/Core/Portable/Compilation/Compilation.cs`, be familiar with the following concepts: Advanced C# generics, inheritance and visitor patterns, immutable collections, tasks and thread safety, cancellation tokens, disposable and pooled resources, compiler parse/declaration/bind/lower/emit phases, symbols and syntax trees, and the basic roles of IL, PE assemblies, metadata, and PDB debug information.
+
+**Coding relevance:**
+
+The compiler vocabulary fits in a bounded primer and is documented by the project; the selected path primarily teaches transferable immutable modeling, staged pipelines, concurrency, diagnostics, transformation passes, serialization, deterministic builds, compatibility, and resource discipline.
+
+Required domain context:
+
+- A compiler parses source into syntax, declares and binds symbols, analyzes and lowers method bodies, generates intermediate-language instructions, and serializes an assembly plus optional debug information.
+
+**Learning path:**
+
+- **Goal:** Understand how Roslyn validates an emit request and turns one immutable CSharpCompilation into either stable diagnostics or deterministic PE and PDB output.
+- **Start here:** [`src/Compilers/Core/Portable/Compilation/Compilation.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/Core/Portable/Compilation/Compilation.cs) — Compilation.cs owns the public Emit boundary, validates streams and options, creates the language-specific module builder, invokes compilation, generates resources and documentation, gates serialization on diagnostics, and returns EmitResult.
+- **Then read:**
+  - [`src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs)
+  - [`src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs)
+  - [`src/Compilers/CSharp/Portable/Lowering/LocalRewriter/LocalRewriter.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Lowering/LocalRewriter/LocalRewriter.cs)
+  - [`src/Compilers/CSharp/Portable/CodeGen/CodeGenerator.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/CodeGen/CodeGenerator.cs)
+  - [`src/Compilers/CSharp/Portable/Emitter/Model/PEModuleBuilder.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Emitter/Model/PEModuleBuilder.cs)
+  - [`src/Compilers/Core/Portable/Emit/CommonPEModuleBuilder.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/Core/Portable/Emit/CommonPEModuleBuilder.cs)
+  - [`src/Compilers/Core/Portable/PEWriter/PeWriter.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/Core/Portable/PEWriter/PeWriter.cs)
+  - [`src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs)
+  - [`src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs)
+  - [`src/Compilers/CSharp/Test/Emit/Emit/DeterministicTests.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Test/Emit/Emit/DeterministicTests.cs)
+  - [`src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs)
+  - [`src/Compilers/CSharp/Test/Emit2/PDB/CSharpDeterministicBuildCompilationTests.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Test/Emit2/PDB/CSharpDeterministicBuildCompilationTests.cs)
+  - [`docs/wiki/Roslyn-Overview.md`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/docs/wiki/Roslyn-Overview.md)
+  - [`docs/compilers/README.md`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/docs/compilers/README.md)
+- **Trace:** Follow Compilation.Emit through stream and option checks into CheckOptionsAndCreateModuleBuilder, then into CSharpCompilation.CreateModuleBuilder and CompileMethods; trace parse and declaration diagnostics into MethodCompiler's concurrent symbol traversal, binding, flow analysis, LocalRewriter transformations, CodeGenerator IL construction, async entry-point synthesis, and PEModuleBuilder metadata; follow stored method bodies and entry point through CommonPEModuleBuilder into PeWriter and return to Compilation.SerializeToPeStream for deterministic PE and optional PDB output, then correlate staged errors, entry-point rules, executed async Main, emitted artifacts, platform changes, and repeatable PE, MVID, and supported PDB data in the selected tests.
+
+**Why this level:**
+
+- **Language technique 5:** Several advanced C# mechanisms interact pervasively: recursive generic and visitor hierarchies, language-specific adapters, synthesized symbols, nullable and pattern-based modeling, task concurrency, pooled ownership, immutable snapshots, and low-level metadata and IL builders.
+- **Behavioral reasoning 5:** Concurrency, staged transformation state, diagnostics, synthesized code, failure containment, cancellation, and resource lifecycles interact pervasively and require expert nonlocal reasoning.
+- **Design span 5:** The representative behavior coordinates several major compiler and runtime-format subsystems through shared abstractions and language-specific implementations.
+- **Constraint burden 5:** Language semantics, emitted-runtime correctness, stable diagnostics, concurrency, determinism, compatibility, performance, resources, and platform-specific output guarantees constrain changes across the entire path.
+- **Placement:** The four scores 5/5/5/5 sum to 20; their arithmetic mean is 5.00. Four expert dimensions satisfy the Level 5 guardrail, so the published result is Level 5.
+
+**Quality-gate evidence:**
+
+- **Source quality:** The emit boundary, diagnostic stages, fork-join strategy, per-method failure isolation, lowering handoff, serialization gates, and cleanup are explicit and carry unusually detailed invariant comments.
+- **Architecture:** Common Compilation orchestrates the lifecycle, CSharpCompilation specializes language diagnostics and module creation, MethodCompiler binds and lowers symbols, LocalRewriter transforms bound trees, CodeGenerator produces IL, and PEModuleBuilder exposes metadata to the serializer.
+- **Naming and idiom:** Compilation, Emit, CreateModuleBuilder, CompileMethods, MethodCompiler, BindMethodBody, FlowAnalysisPass, LowerBodyOrInitializer, CodeGenerator, PEModuleBuilder, diagnostics, and EmitResult preserve compiler-stage vocabulary.
+- **Tests:** CompilationEmitTests directly checks staged errors and emitted stream behavior, EntryPointTests exercises executable entry-point selection and diagnostics, CodeGenAsyncMainTests executes async entry points and verifies synthesized forwarding IL, DeterministicTests compares module identifiers and emitted bytes, and the deterministic-build PDB suite checks embedded PDB options and reference metadata. Coverage of the complete platform is intentionally distributed across many suites.
+- **Documentation:** The repository overview, compiler support guide, and source documentation explain the public compiler pipeline, immutable compilation model, diagnostics, emit semantics, compatibility overloads, concurrency invariants, platform support, and major representation boundaries.
+- **Traceability:** A public Emit call can be followed through option validation, language-specific module construction, diagnostics, method compilation, lowering, IL and metadata production, PE and PDB serialization, EmitResult, and end-to-end assertions.
+- **Maintainability:** Stable phase boundaries, immutable public models, deterministic tests, per-method diagnostic bags, cancellation checks, pooled-resource cleanup, compatibility annotations, and explicit finish hooks make cross-cutting changes reviewable despite the platform scale.
+- **Educational value:** The path is a rare production example of a complete compiler backend and public platform API in which concurrency, transformation passes, diagnostics, compatibility, deterministic output, and failure discipline remain observable.
+
+**Inspection record:** commit `8323a94cb432bbffad016d4f6d7e04ee0f8419f2`, reviewed 2026-08-29 by Codex, independent Codex reviewer. Files sampled: `src/Compilers/Core/Portable/Compilation/Compilation.cs`, `src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs`, `src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs`, `src/Compilers/CSharp/Portable/Lowering/LocalRewriter/LocalRewriter.cs`, `src/Compilers/CSharp/Portable/CodeGen/CodeGenerator.cs`, `src/Compilers/CSharp/Portable/Emitter/Model/PEModuleBuilder.cs`, `src/Compilers/Core/Portable/Emit/CommonPEModuleBuilder.cs`, `src/Compilers/Core/Portable/PEWriter/PeWriter.cs`, `src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs`, `src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs`, `src/Compilers/CSharp/Test/Emit/Emit/DeterministicTests.cs`, `src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs`, `src/Compilers/CSharp/Test/Emit2/PDB/CSharpDeterministicBuildCompilationTests.cs`, `docs/wiki/Roslyn-Overview.md`, `docs/compilers/README.md`, `README.md`, `License.txt`. GitHub Linguist label: C#.
+
+**License:** MIT ([evidence 1](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/License.txt))
 
 ### [dotnet/runtime](https://github.com/dotnet/runtime)
 

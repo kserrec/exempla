@@ -533,13 +533,199 @@
         "5": 2
       },
       "conclusion": "Four independent channels and two exact-pin deep inspections found one qualified Level 2 Option path and one qualified Level 4 framework alternate. php-option fills PHP's final Level 2 place; Laravel remains a durable capacity alternate, and four Level 1 and Level 5 gaps remain because neither candidate was mis-leveled to fill them."
+    },
+    {
+      "order": 5,
+      "language_slug": "c-sharp",
+      "language": "C#",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "ardalis/GuardClauses",
+          "level": 2
+        },
+        {
+          "repository": "serilog/serilog-sinks-console",
+          "level": 2
+        },
+        {
+          "repository": "FluentValidation/FluentValidation",
+          "level": 3
+        },
+        {
+          "repository": "serilog/serilog",
+          "level": 3
+        },
+        {
+          "repository": "DapperLib/Dapper",
+          "level": 4
+        },
+        {
+          "repository": "dotnet/aspnetcore",
+          "level": 4
+        },
+        {
+          "repository": "dotnet/runtime",
+          "level": 5
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
+      "discovery_channels": [
+        {
+          "id": "nuget-package-registry",
+          "channel": "official .NET package registry",
+          "sources": [
+            "https://www.nuget.org/packages/Humanizer",
+            "https://www.nuget.org/packages/Microsoft.CodeAnalysis.CSharp"
+          ],
+          "evidence": "NuGet established Humanizer and Microsoft.CodeAnalysis.CSharp as current distributable production packages and supplied package identity, framework, release, ownership, and license leads without using download counts as qualification."
+        },
+        {
+          "id": "dotnet-foundation-catalog",
+          "channel": "independent .NET Foundation project catalog",
+          "sources": [
+            "https://dotnetfoundation.org/projects/current-projects"
+          ],
+          "evidence": "The foundation's current-project catalog provided an ecosystem-level discovery route for governed open-source .NET projects, including Humanizer, independent of package search and source inspection."
+        },
+        {
+          "id": "github-public-source",
+          "channel": "GitHub public source, language, maintenance, and organization review",
+          "sources": [
+            "https://github.com/Humanizr/Humanizer",
+            "https://github.com/dotnet/roslyn",
+            "https://github.com/dotnet"
+          ],
+          "evidence": "Public source and current GitHub metadata confirmed both repositories, first-party C# classification, maintenance status, exact candidate revisions, and the implementation and test paths used for pin-level inspection."
+        },
+        {
+          "id": "official-project-documentation",
+          "channel": "maintainer-authored API and compiler architecture documentation",
+          "sources": [
+            "https://humanizr.net/docs/api/Humanizer.TruncateExtensions.html",
+            "https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/compiler-api-model",
+            "https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/docs/wiki/Roslyn-Overview.md"
+          ],
+          "evidence": "Maintainer documentation supplied Humanizer's public truncation contract and Roslyn's parse, declaration, bind, and emit model used to bound domain context and distinguish public behavior from source-level judgments."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "Humanizr/Humanizer",
+          "pinned_commit": "ffc2b77c0f30d2fb176875841424379319d0ae9b",
+          "discovered_via": [
+            "nuget-package-registry",
+            "dotnet-foundation-catalog",
+            "github-public-source",
+            "official-project-documentation"
+          ],
+          "inspection_files": [
+            "src/Humanizer/TruncateExtensions.cs",
+            "src/Humanizer/Truncation/ITruncator.cs",
+            "src/Humanizer/Truncation/FixedLengthTruncator.cs",
+            "src/Humanizer/Truncation/Truncator.cs",
+            "src/Humanizer/TruncateFrom.cs",
+            "tests/Humanizer.Tests/TruncatorTests.cs",
+            "website/docs/api/Humanizer.TruncateExtensions.md",
+            "readme.md",
+            "Directory.Build.props",
+            "src/Humanizer/Humanizer.csproj",
+            "license.txt",
+            "THIRD-PARTY-NOTICES.txt"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Fixed-length string truncation needs no specialist context; the selected path teaches transferable extension methods, nullable-flow contracts, overload delegation, strategy interfaces, slicing, validation, direction symmetry, and boundary testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Direct source, a cohesive extension-strategy boundary, precise names, extensive table-driven boundary tests, generated API documentation, one-step traceability, localized implementations, and clear beginner-facing value support all eight quality findings.",
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 1,
+            "design_span": 2,
+            "constraint_burden": 2
+          },
+          "calculated_level": 2,
+          "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 2/1/2/2 sums to 7, whose mean of 1.75 rounds half up to Level 2; GuardClauses retains a stronger type-flow and defensive-API path while serilog-sinks-console preserves a more behaviorally distinct output pipeline, so the two-entry cap excludes Humanizer. The scores were locked before capacity was inspected. Fixed-length truncation operates on UTF-16 code units, so no Unicode grapheme-safety claim is made; selected tests omit null ITruncator, zero or negative length, and grapheme boundaries. Tests were inspected but not executed because the .NET SDK is unavailable in the review environment.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact truncation path, both gates and all eight findings, the 2/1/2/2 Level 2 result, direct left/right and delimiter tests, scoped MIT and package-level multi-license evidence, full-slot comparison, UTF-16 and omitted-boundary limits, and the absence of a lower placement merely to fill Level 1."
+          }
+        },
+        {
+          "repository": "dotnet/roslyn",
+          "pinned_commit": "8323a94cb432bbffad016d4f6d7e04ee0f8419f2",
+          "discovered_via": [
+            "nuget-package-registry",
+            "github-public-source",
+            "official-project-documentation"
+          ],
+          "inspection_files": [
+            "src/Compilers/Core/Portable/Compilation/Compilation.cs",
+            "src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs",
+            "src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs",
+            "src/Compilers/CSharp/Portable/Lowering/LocalRewriter/LocalRewriter.cs",
+            "src/Compilers/CSharp/Portable/CodeGen/CodeGenerator.cs",
+            "src/Compilers/CSharp/Portable/Emitter/Model/PEModuleBuilder.cs",
+            "src/Compilers/Core/Portable/Emit/CommonPEModuleBuilder.cs",
+            "src/Compilers/Core/Portable/PEWriter/PeWriter.cs",
+            "src/Compilers/CSharp/Test/Emit/Emit/CompilationEmitTests.cs",
+            "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+            "src/Compilers/CSharp/Test/Emit/Emit/DeterministicTests.cs",
+            "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncMainTests.cs",
+            "src/Compilers/CSharp/Test/Emit2/PDB/CSharpDeterministicBuildCompilationTests.cs",
+            "docs/wiki/Roslyn-Overview.md",
+            "docs/compilers/README.md",
+            "README.md",
+            "License.txt"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Parse, declaration, bind, lower, IL, PE, and PDB terms need a bounded compiler primer; the selected behavior primarily teaches transferable immutable modeling, staged architecture, concurrency, diagnostics, transformation passes, deterministic serialization, compatibility, and resource discipline.",
+          "quality_status": "pass",
+          "quality_evidence": "Invariant-rich source, explicit compiler-stage ownership, exact naming, end-to-end emit and determinism tests, official architecture documentation, a complete public-call-to-artifact trace, compatibility and cleanup safeguards, and exceptional platform-scale teaching value support all eight quality findings.",
+          "scores": {
+            "language_technique": 5,
+            "behavioral_reasoning": 5,
+            "design_span": 5,
+            "constraint_burden": 5
+          },
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 5/5/5/5 profile sums to 20, whose mean is Level 5, with four expert dimensions satisfying the guardrail; both gates pass and the one open C# Level 5 place accepts Roslyn. The path does not claim coverage of parser internals, analyzers, workspaces, Visual Basic, command-line compiler servers, Edit and Continue, every signing, resource, or metadata-only branch, or concurrency schedule guarantees; no single test instruments every internal handoff, and DeterministicTests explicitly skips one native-PDB byte-comparison case, so no universal every-format determinism claim is made. Tests were inspected but not executed because the .NET SDK is unavailable in the review environment.",
+          "second_review": {
+            "reviewer": "independent Codex reviewer",
+            "status": "agree",
+            "notes": "The reviewer independently verified the exact pin and representative compilation-to-emit trace, both gates and all eight findings, the 5/5/5/5 profile and Level 5 guardrail, C# and MIT evidence, direct emit, async-entry-point, PE, MVID, and deterministic-PDB tests, distributed closure, and the explicitly excluded subsystems, emit branches, schedules, and native-PDB claim."
+          }
+        }
+      ],
+      "accepted": [
+        "dotnet/roslyn"
+      ],
+      "rejected": [
+        "Humanizr/Humanizer"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "conclusion": "Four independent channels and two exact-pin deep inspections found one qualified Level 2 capacity alternate and one expert compiler path. Roslyn fills C#'s final Level 5 place, Humanizer remains a durable Level 2 alternate, and two honest Level 1 gaps remain because neither path was moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 4,
-    "accepted_new_total": 4,
-    "rejected_new_total": 4,
-    "current_entry_total": 137,
-    "remaining_gap_total": 63
+    "languages_completed": 5,
+    "accepted_new_total": 5,
+    "rejected_new_total": 5,
+    "current_entry_total": 138,
+    "remaining_gap_total": 62
   }
 }
