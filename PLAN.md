@@ -279,7 +279,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 7.1 — Document contribution and maintenance workflows
 
-- [ ] **Objective:** Let another developer safely own and extend Exempla.
+- [x] **Objective:** Let another developer safely own and extend Exempla.
 - **Work:** Document setup, validation, generation, candidate review, refreshes,
   scoring disputes, rejected-candidate records, language additions, and the
   no-lowered-standards rule.
