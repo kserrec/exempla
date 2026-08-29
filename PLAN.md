@@ -292,7 +292,7 @@ Standards are never lowered to fill a slot: a documented gap is preferable.
 
 ### Step 8.1 — Publish the repository
 
-- [ ] **Objective:** Release the verified initial catalog as a public GitHub
+- [x] **Objective:** Release the verified initial catalog as a public GitHub
   repository.
 - **Work:** Confirm tests and clean Git state, create `kserrec/exempla` publicly,
   push `main`, add a concise description and topics, then verify the public URL.
