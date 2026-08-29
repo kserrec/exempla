@@ -232,6 +232,22 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The inspected 4,359-line production module is a qualified dependency handler with topological ordering, semantic version ranges, extensible dependency scripts, downloads, package managers, credentials, and a broad Pester suite; Scoop provides the stronger package-lifecycle path in the two SDC 3 slots while ImportExcel adds a distinct document-automation domain.",
       "reconsider": "Eligible as an additional PowerShell SDC 3 entry, especially for a dependency-graph or extensible command-dispatch path."
+    },
+    {
+      "repository": "dart-archive/clock",
+      "language": "Dart",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "active maintenance",
+      "evidence": "The former dart-lang/clock repository now redirects to dart-archive/clock, and GitHub reports the current repository as archived. Its source remains readable, but an archived snapshot cannot satisfy the maintained-project requirement for the initial catalog.",
+      "reconsider": "Reconsider only if active maintenance resumes in a current repository with releases and tests tied to an inspectable revision."
+    },
+    {
+      "repository": "flutterchina/cookie_jar",
+      "language": "Dart",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "correctness and security-sensitive cookie policy",
+      "evidence": "At commit 62607c1e82c1697b8fcec5839ab9ea075aad6b15, DefaultCookieJar._check returns `cookie.cookie.secure && scheme == 'https' || !_isExpired(cookie)`. Under Dart operator precedence, an unexpired Secure cookie is therefore returned for an HTTP request, and an expired Secure cookie is returned for HTTPS. The repository tests contain no Secure-cookie case to catch either behavior.",
+      "reconsider": "Reconsider after the predicate enforces both Secure transport and expiration independently and regression tests cover secure HTTP rejection, secure HTTPS acceptance, and expired secure cookies."
     }
   ]
 }
