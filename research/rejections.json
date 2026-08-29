@@ -200,6 +200,22 @@
       "failed_requirement": "initial-corpus comparative educational value",
       "evidence": "The 5,698-line production core is a qualified SDC 3 study of persistent vectors, bitmap-indexed hash tries, structural sharing, ownership-aware builders, and contract and stress tests; Clikt and Moshi provide broader domain variety for the initial two SDC 3 slots.",
       "reconsider": "Eligible for a future data-structures path or any expansion beyond two Kotlin repositories per level."
+    },
+    {
+      "repository": "typelevel/unique",
+      "language": "Scala",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "traceable first-party learning path",
+      "evidence": "The pinned core contains only 11 production Scala lines and delegates the substantive uniqueness behavior to Cats Effect's Sync and Unique abstractions; its tests demonstrate the wrapper but leave too little first-party mechanism to trace for the initial catalog.",
+      "reconsider": "Reconsider if the project gains substantive first-party behavior, or for a narrowly focused ecosystem-composition appendix rather than a repository study path."
+    },
+    {
+      "repository": "spray/spray-json",
+      "language": "Scala",
+      "inspected_at": "2026-08-28",
+      "failed_requirement": "initial-corpus comparative educational value",
+      "evidence": "The inspected revision is a qualified compact JSON AST, parser, printer, and format library of 1,037 production Scala lines, but requests-scala and scopt provide more domain variety in the two SDC 2 slots while uPickle and circe already supply deeper serialization paths.",
+      "reconsider": "Eligible as an additional Scala SDC 2 entry, especially for a parser-focused or serialization progression."
     }
   ]
 }

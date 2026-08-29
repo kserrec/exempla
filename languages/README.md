@@ -2,7 +2,7 @@
 
 Choose a language, then browse from SDC 1 (most approachable) through SDC 5 (most demanding).
 
-The catalog currently contains **140 repositories across 20 languages**.
+The catalog currently contains **150 repositories across 20 languages**.
 
 | Language | Entries | SDC 1 | SDC 2 | SDC 3 | SDC 4 | SDC 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -20,7 +20,7 @@ The catalog currently contains **140 repositories across 20 languages**.
 | [R](r/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [Shell](shell/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [Kotlin](kotlin/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
-| [Scala](scala/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
+| [Scala](scala/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
 | [PowerShell](powershell/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
 | [Dart](dart/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
 | [Objective-C](objective-c/README.md) | 0 | 0 | 0 | 0 | 0 | 0 |
