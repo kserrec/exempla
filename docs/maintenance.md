@@ -23,6 +23,9 @@ without turning judgment into an automated popularity ranking.
 - `research/lower-level-expansion.json` preserves the exact pre-expansion
   baseline; `research/lower-level-expansion-audit.json` is the active
   lower-level policy and research reconciliation record.
+- `research/learner-usability-audit.json` records the launch-polish baseline,
+  exact lower-level source ranges, simulated learner journeys, progression
+  checks, narrow-width review, and after-state findings.
 - `research/rejections.json` is append-only rejection and alternate evidence.
 - `research/audit.json` is the historical v1 Size / Difficulty / Complexity
   audit and is not the active consistency record.
@@ -61,7 +64,8 @@ Commit canonical input and generated output together.
 
 1. Establish the exact catalog file, `(repository, path_slug)` identity,
    `source_kind`, `purpose_evidence`, pin,
-   learning path, prerequisites, concepts developed, four scores, quality
+   learning path, low-level `quick_start` and exact initial range,
+   prerequisites, concepts developed, four scores, quality
    findings, inspection files, language evidence, and license URLs.
 2. Verify that the pinned repository, commit, every path, and every license
    target remain public. A default-branch move alone does not invalidate them.
@@ -74,9 +78,10 @@ Commit canonical input and generated output together.
    rubric Level. If that result is 1 or 2, record central and incidental
    concepts, apply all five accessibility tests, and publish the greater of the
    rubric Level and the accessibility floor. Repository size remains irrelevant.
-7. Update the commit, date, named review passes, inspected files, path, domain
-   context, prerequisites, concepts developed, learner prose, scores, metadata,
-   and license URLs as one evidence unit.
+7. Update the commit, date, named review passes, inspected files, path, exact
+   low-level range, `quick_start`, domain context, prerequisites, concepts
+   developed, learner prose, scores, metadata, and license URLs as one evidence
+   unit.
 8. Regenerate, verify, and compare the diff with the intended boundary.
 
 If the refresh no longer qualifies, remove the entry and append the reason. An

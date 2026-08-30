@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "swift-log is the official production logging API package for the Swift server ecosystem, with Logger.Level forming part of its public logging contract.",
       "why_study": "Study how a finite enum becomes a total order through one explicit mapping, one comparison operator, and an exhaustive table-driven test.",
+      "quick_start": "Read lines 1277–1302 of `Logger.swift`, then compare them with `LoggingTest.swift`.",
       "learn": [
         "Map each enum case to one stable comparison value.",
         "Implement Comparable by comparing those mapped values.",
@@ -36,7 +37,9 @@
         "goal": "Understand how swift-log defines and verifies one unambiguous order across all Logger.Level values.",
         "start_here": {
           "path": "Sources/Logging/Logger.swift",
-          "reason": "Logger.Level, naturalIntegralValue, and the complete less-than implementation appear together in this file."
+          "line_start": 1277,
+          "line_end": 1302,
+          "reason": "The range contains the complete severity mapping and less-than operation; the seven enum cases are a short follow-up immediately above it."
         },
         "supporting_files": [
           "Tests/LoggingTests/LoggingTest.swift",
@@ -146,6 +149,7 @@
       "source_kind": "production",
       "purpose_evidence": "swift-log is the official production logging API package for the Swift server ecosystem, and MultiplexLogHandler is its documented public adapter for combining real logging backends.",
       "why_study": "Trace a small protocol-based adapter that computes an effective threshold, filters each destination independently, and fans out one materialized event without duplicating message work.",
+      "quick_start": "Read lines 145–153 of `MultiplexLogHandler.swift`, then compare them with `LoggingTest.swift`.",
       "learn": [
         "Compose several protocol-conforming handlers behind one adapter.",
         "Preserve each destination's log-level threshold during fan-out.",
@@ -171,7 +175,9 @@
         "goal": "Understand how MultiplexLogHandler forwards one materialized event to every backend whose own threshold accepts it.",
         "start_here": {
           "path": "Sources/Logging/Handlers/MultiplexLogHandler.swift",
-          "reason": "Initialization, the effective threshold, and the complete per-handler routing loop are visible together in this adapter."
+          "line_start": 145,
+          "line_end": 153,
+          "reason": "The range contains the complete destination-local routing loop; effective-threshold initialization is a short follow-up earlier in the same adapter."
         },
         "supporting_files": [
           "Sources/Logging/LogHandler.swift",

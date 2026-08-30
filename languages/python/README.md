@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [more-itertools/more-itertools](https://github.com/more-itertools/more-itertools)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A production iterator utility that returns the first available item, uses an explicit fallback for an empty input, or raises when no fallback was supplied.
+
+**Just start:** Read lines 252–276 of `more.py`, then compare them with `test_more.py`.
+
+**Start with: 25 lines of source.** [Open `more_itertools/more.py`, lines 252–276.](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py#L252-L276)
 
 **Why study it:** Read one short production function that handles a successful loop, an empty input with a fallback, and an empty input that must report an error.
 
@@ -29,22 +35,31 @@ A production iterator utility that returns the first available item, uses an exp
 - Representing an omitted optional argument with a private marker.
 - Making empty-input behavior explicit through either a fallback or an exception.
 
-**What you can learn:**
-
-- Return immediately when the loop sees the first item.
-- Distinguish an omitted default from a caller-supplied default value.
-- Connect each empty-input outcome to a focused test.
-
 **Learning path:**
 
 - **Goal:** Understand how more-itertools first selects one item while making both forms of empty-input behavior explicit.
-- **Start here:** [`more_itertools/more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py) — The first function contains the complete loop, omitted-default check, error, and fallback return.
+- **Start here:** [`more_itertools/more.py`, lines 252–276](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py#L252-L276) — The first function contains the complete loop, omitted-default check, error, and fallback return.
 - **Then read:**
   - [`tests/test_more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/tests/test_more.py)
   - [`README.rst`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/README.rst)
 - **Trace:** Enter first with an iterable and optional default, return the first loop item if one exists, otherwise compare the default with the private marker, raise or return the fallback, then match those paths to the four FirstTests cases.
 
 **Why this level:**
+
+**Level 1:** All central ideas are in the novice Python baseline, and the private marker needs only one local sentence before every test result is predictable.
+
+**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Return immediately when the loop sees the first item.
+- Distinguish an omitted default from a caller-supplied default value.
+- Connect each empty-input outcome to a focused test.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
 
 - **Language technique 1:** The behavior uses a direct loop, returns, a default argument, an identity check, and one ordinary exception.
 - **Behavioral reasoning 1:** All outcomes are synchronous, local, and visible in one short control-flow sequence.
@@ -54,11 +69,6 @@ A production iterator utility that returns the first available item, uses an exp
   - **Central concepts:** looping over an iterable; early return; fallback or exception on empty input
   - **Incidental concepts:** a private object used to mean that no default was supplied
 - **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** more-itertools is a maintained installable Python package whose README publishes first among its application-facing iterable selection tools.
 
@@ -89,11 +99,13 @@ No specialist domain context is required.
 
 ### [more-itertools/more-itertools](https://github.com/more-itertools/more-itertools)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A production iterator utility that yields fixed-size lists lazily and can reject a short final group in strict mode.
+
+**Just start:** Read lines 214–249 of `more.py`, then compare them with `test_more.py`.
+
+**Start with: 36 lines of source.** [Open `more_itertools/more.py`, lines 214–249.](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py#L214-L249)
 
 **Why study it:** Follow a compact professional iterator from input validation through lazy grouping, then compare ordinary and strict edge cases in focused tests.
 
@@ -108,22 +120,31 @@ A production iterator utility that yields fixed-size lists lazily and can reject
 - Using an empty-list sentinel to end iteration.
 - Layering optional validation around an existing iterator.
 
-**What you can learn:**
-
-- Build successive lists from any iterable without consuming the complete input first.
-- Use a sentinel-driven iterator to stop when no next group remains.
-- Add an optional strict contract that rejects a short final group.
-
 **Learning path:**
 
 - **Goal:** Understand how more-itertools chunked lazily groups an iterable and enforces optional exact divisibility.
-- **Start here:** [`more_itertools/more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py) — The chunked function contains size validation, the sentinel iterator, and the strict wrapper generator together.
+- **Start here:** [`more_itertools/more.py`, lines 214–249](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py#L214-L249) — The chunked function contains size validation, the sentinel iterator, and the strict wrapper generator together.
 - **Then read:**
   - [`tests/test_more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/tests/test_more.py)
   - [`README.rst`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/README.rst)
 - **Trace:** Validate n, repeatedly call take through partial until an empty list stops the iterator, return it directly in ordinary mode or pass each group through the nested strict validator, then match even, short, negative, None, and strict cases in ChunkedTests.
 
 **Why this level:**
+
+**Level 2:** A short primer on iterators, partial, and sentinels is enough to predict every tested group and error without a separate course.
+
+**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Build successive lists from any iterable without consuming the complete input first.
+- Use a sentinel-driven iterator to stop when no next group remains.
+- Add an optional strict contract that rejects a short final group.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Iterators, partial, and a small generator are common professional Python idioms central to the implementation.
 - **Behavioral reasoning 2:** Several local branches and deferred results matter, but the complete lifecycle remains within one function.
@@ -133,11 +154,6 @@ A production iterator utility that yields fixed-size lists lazily and can reject
   - **Central concepts:** lazy iteration; partial application; optional strict validation
   - **Incidental concepts:** an empty list used as the iterator sentinel
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** more-itertools is a maintained installable Python package whose README documents chunked as one of its application-facing iterator recipes.
 
@@ -165,6 +181,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [pallets/click](https://github.com/pallets/click)
 
@@ -197,7 +215,7 @@ A composable command-line toolkit that maps decorators and command objects onto 
 **Learning path:**
 
 - **Goal:** Understand how a decorated Python callback becomes a command, parses arguments into parameters, invokes inside a managed context, and produces a result or usage error.
-- **Start here:** [`src/click/decorators.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/decorators.py) — decorators.py is where user functions and parameter declarations become Command objects, so it establishes the public contract before the trace enters parsing and invocation internals.
+- **Start here:** [`click/decorators.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/decorators.py) — decorators.py is where user functions and parameter declarations become Command objects, so it establishes the public contract before the trace enters parsing and invocation internals.
 - **Then read:**
   - [`src/click/core.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/core.py)
   - [`src/click/parser.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/parser.py)
@@ -273,7 +291,7 @@ A synchronous HTTP client that turns URLs, headers, authentication, cookies, red
 **Learning path:**
 
 - **Goal:** Understand how requests.get becomes a prepared request, passes through a persistent Session and adapter, follows redirects safely, and returns or closes a streamed response.
-- **Start here:** [`src/requests/api.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/api.py) — api.py contains the familiar request and verb helpers and immediately exposes their temporary-Session lifetime, making it the clearest entrance to the selected public-API-to-transport trace.
+- **Start here:** [`requests/api.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/api.py) — api.py contains the familiar request and verb helpers and immediately exposes their temporary-Session lifetime, making it the clearest entrance to the selected public-API-to-transport trace.
 - **Then read:**
   - [`src/requests/sessions.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/sessions.py)
   - [`src/requests/models.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/models.py)
@@ -321,6 +339,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [pallets/flask](https://github.com/pallets/flask)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -352,7 +372,7 @@ A web application framework that composes routing, request contexts, templating,
 **Learning path:**
 
 - **Goal:** Understand one complete Flask request from WSGI entry through context binding, routing, hooks, dispatch, error handling, response finalization, and teardown.
-- **Start here:** [`src/flask/app.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/app.py) — src/flask/app.py owns Flask.wsgi_app and full_dispatch_request, which coordinate the selected lifecycle before delegating context storage to ctx.py and globals.py.
+- **Start here:** [`flask/app.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/app.py) — src/flask/app.py owns Flask.wsgi_app and full_dispatch_request, which coordinate the selected lifecycle before delegating context storage to ctx.py and globals.py.
 - **Then read:**
   - [`src/flask/ctx.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/ctx.py)
   - [`src/flask/globals.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/globals.py)
@@ -428,7 +448,7 @@ An extensible testing framework that discovers tests, resolves fixtures, rewrite
 **Learning path:**
 
 - **Goal:** Understand how pytest converts command-line paths into a deterministic collection tree of Python test items while honoring plugin hooks, imports, parametrization, duplicates, and collection failures.
-- **Start here:** [`src/_pytest/main.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/main.py) — src/_pytest/main.py contains Session.perform_collect and recursive item generation, providing the session-level entrance before src/_pytest/python.py handles Python-specific discovery.
+- **Start here:** [`_pytest/main.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/main.py) — src/_pytest/main.py contains Session.perform_collect and recursive item generation, providing the session-level entrance before src/_pytest/python.py handles Python-specific discovery.
 - **Then read:**
   - [`src/_pytest/python.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/python.py)
   - [`testing/test_collection.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/testing/test_collection.py)
@@ -474,6 +494,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [apache/airflow](https://github.com/apache/airflow)
 
 **Language 3 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -505,7 +527,7 @@ A workflow-orchestration platform that defines directed task graphs and schedule
 **Learning path:**
 
 - **Goal:** Understand how Airflow turns persisted due DAGs into queued executor work while preventing duplicate scheduling, enforcing capacity and priority, and recovering tasks from failed schedulers.
-- **Start here:** [`airflow-core/src/airflow/jobs/scheduler_job_runner.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/jobs/scheduler_job_runner.py) — airflow-core/src/airflow/jobs/scheduler_job_runner.py coordinates due-DAG processing, executable-task selection, atomic queueing, executor submission, event reconciliation, and orphan adoption.
+- **Start here:** [`jobs/scheduler_job_runner.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/jobs/scheduler_job_runner.py) — airflow-core/src/airflow/jobs/scheduler_job_runner.py coordinates due-DAG processing, executable-task selection, atomic queueing, executor submission, event reconciliation, and orphan adoption.
 - **Then read:**
   - [`airflow-core/src/airflow/models/dag.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/models/dag.py)
   - [`airflow-core/src/airflow/models/pool.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/models/pool.py)

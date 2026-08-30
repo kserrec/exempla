@@ -110,6 +110,7 @@
         "source_kind": {"enum": ["production", "educational-exemplar"]},
         "purpose_evidence": {"$ref": "#/$defs/nonEmptyString"},
         "why_study": {"$ref": "#/$defs/nonEmptyString"},
+        "quick_start": {"$ref": "#/$defs/nonEmptyString"},
         "learn": {"$ref": "#/$defs/stringList"},
         "prerequisites": {"$ref": "#/$defs/stringList"},
         "concepts_developed": {"$ref": "#/$defs/stringList"},
@@ -135,6 +136,8 @@
               "required": ["path", "reason"],
               "properties": {
                 "path": {"$ref": "#/$defs/safePath"},
+                "line_start": {"type": "integer", "minimum": 1},
+                "line_end": {"type": "integer", "minimum": 1},
                 "reason": {"$ref": "#/$defs/nonEmptyString"}
               }
             },
@@ -221,6 +224,29 @@
             "properties": {
               "learning_level": {
                 "properties": {"level": {"enum": [1, 2]}}
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "learning_level": {
+                "properties": {"level": {"enum": [1, 2]}},
+                "required": ["level"]
+              }
+            },
+            "required": ["learning_level"]
+          },
+          "then": {
+            "required": ["quick_start"],
+            "properties": {
+              "learning_path": {
+                "properties": {
+                  "start_here": {
+                    "required": ["path", "line_start", "line_end", "reason"]
+                  }
+                }
               }
             }
           }

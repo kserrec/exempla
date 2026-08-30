@@ -11,6 +11,10 @@ path; `concepts_developed` records what studying the path teaches.
 `source_kind` distinguishes `production` from `educational-exemplar`, and
 `purpose_evidence` records the corresponding non-teaching or instructional
 purpose. Educational exemplars may publish only at Levels 1 and 2.
+Every Level 1 and Level 2 path also requires `quick_start` plus positive
+`learning_path.start_here.line_start` and `line_end` values in increasing
+order. Generated links use those values as stable line anchors at the pinned
+commit; Levels 3–5 may omit them.
 
 Do not edit Markdown under `../languages/` directly; regenerate it with:
 

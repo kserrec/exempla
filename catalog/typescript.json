@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "The utility ships in the Code - OSS source tree and is called by the production menu service when it removes a menu item without requiring stable order.",
       "why_study": "See a short, named performance tradeoff expressed with ordinary indexing, assignment, a branch, and pop, then verified through successive removals.",
+      "quick_start": "Read lines 50–60 of `arrays.ts`, then compare them with `arrays.test.ts`.",
       "learn": [
         "Replace an interior item with the array's last item when order is not part of the contract.",
         "Handle removal of the last item without an unnecessary assignment.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Visual Studio Code removes one array item quickly when preserving order is unnecessary.",
         "start_here": {
           "path": "src/vs/base/common/arrays.ts",
+          "line_start": 50,
+          "line_end": 60,
           "reason": "removeFastWithoutKeepingOrder contains the complete branch, replacement, and pop sequence."
         },
         "supporting_files": [
@@ -147,6 +150,7 @@
       "source_kind": "production",
       "purpose_evidence": "The utility ships in the Code - OSS source tree and its key callback is used by the production application entry point to deduplicate path arguments case-insensitively on Windows and macOS.",
       "why_study": "See how a generic callback, one Set, and a stateful filter preserve stable order while supporting both direct values and caller-defined equality keys.",
+      "quick_start": "Read lines 397–412 of `arrays.ts`, then compare them with `arrays.test.ts`.",
       "learn": [
         "Track keys already observed while filtering an array in one pass.",
         "Preserve the first value for each key without sorting or mutating the input.",
@@ -170,6 +174,8 @@
         "goal": "Understand how Code - OSS distinct keeps only the first value for each derived key while preserving input order.",
         "start_here": {
           "path": "src/vs/base/common/arrays.ts",
+          "line_start": 397,
+          "line_end": 412,
           "reason": "The distinct function contains the complete Set, key callback, duplicate branch, and stable filter result."
         },
         "supporting_files": [

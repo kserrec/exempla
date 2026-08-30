@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [r-lib/scales](https://github.com/r-lib/scales)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 The production scales package replaces negative and positive infinity with the two ends of a supplied range while preserving finite values and missing values.
+
+**Just start:** Read lines 313–320 of `bounds.R`, then compare them with `test-bounds.R`.
+
+**Start with: 8 lines of source.** [Open `R/bounds.R`, lines 313–320.](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R#L313-L320)
 
 **Why study it:** Read a small vectorized R function whose two logical selections correspond exactly to two assignments and one mixed-input test.
 
@@ -29,16 +35,10 @@ The production scales package replaces negative and positive infinity with the t
 - Treating negative and positive infinity as two distinct boundary cases.
 - Preserving unrelated and missing values during vectorized mutation.
 
-**What you can learn:**
-
-- Select vector positions by comparing values with negative or positive infinity.
-- Replace the two selected groups with the corresponding range endpoints.
-- Verify that ordinary finite values and NA remain unchanged.
-
 **Learning path:**
 
 - **Goal:** Understand how scales replaces only infinite values with explicit lower and upper limits.
-- **Start here:** [`R/bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R) — The documentation and complete oob_squish_infinite implementation appear together in this file.
+- **Start here:** [`R/bounds.R`, lines 313–320](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R#L313-L320) — The documentation and complete oob_squish_infinite implementation appear together in this file.
 - **Then read:**
   - [`tests/testthat/test-bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/tests/testthat/test-bounds.R)
   - [`man/oob.Rd`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/man/oob.Rd)
@@ -49,6 +49,21 @@ The production scales package replaces negative and positive infinity with the t
 
 **Why this level:**
 
+**Level 1:** All selected behavior is standard novice vector manipulation; force needs one local sentence and can be ignored when predicting the outputs.
+
+**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Select vector positions by comparing values with negative or positive infinity.
+- Replace the two selected groups with the corresponding range endpoints.
+- Verify that ordinary finite values and NA remain unchanged.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
 - **Language technique 1:** The path uses standard novice R vector selection and replacement with a default argument.
 - **Behavioral reasoning 1:** Two visible masks fully determine the local synchronous result.
 - **Design span 1:** One source function and one focused test expectation contain the complete contract.
@@ -57,11 +72,6 @@ The production scales package replaces negative and positive infinity with the t
   - **Central concepts:** vectors; logical comparisons; indexed replacement; infinite and missing values
   - **Incidental concepts:** eagerly evaluating range with force
 - **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** scales is a maintained R package for mapping data to perceptual properties, and its documented out-of-bounds functions are installed public APIs.
 
@@ -92,11 +102,13 @@ No specialist domain context is required.
 
 ### [r-lib/scales](https://github.com/r-lib/scales)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A public scales transformation that maps numeric vectors into a requested output range, preserves missing values, and gives constant inputs the output midpoint.
+
+**Just start:** Read lines 17–34 of `bounds.R`, then compare them with `test-bounds.R`.
+
+**Start with: 18 lines of source.** [Open `R/bounds.R`, lines 17–34.](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R#L17-L34)
 
 **Why study it:** Follow a compact S3 generic into one numeric method that combines vector arithmetic with explicit missing-value and zero-range behavior.
 
@@ -115,16 +127,10 @@ A public scales transformation that maps numeric vectors into a requested output
 - Expressing an interval transformation through vectorized arithmetic.
 - Defining stable missing-value and zero-width-range outcomes.
 
-**What you can learn:**
-
-- Dispatch a public operation to a type-specific S3 method.
-- Map every numeric value from one interval into another with vectorized arithmetic.
-- Protect constant and missing inputs with an explicit midpoint branch.
-
 **Learning path:**
 
 - **Goal:** Understand how scales rescale maps numeric vectors between intervals while preserving NA and defining constant-input output.
-- **Start here:** [`R/bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R) — The generic and numeric method show dispatch, default input range, the zero-range branch, and the complete transformation formula together.
+- **Start here:** [`R/bounds.R`, lines 17–34](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R#L17-L34) — The generic and numeric method show dispatch, default input range, the zero-range branch, and the complete transformation formula together.
 - **Then read:**
   - [`tests/testthat/test-bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/tests/testthat/test-bounds.R)
   - [`man/rescale.Rd`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/man/rescale.Rd)
@@ -132,6 +138,21 @@ A public scales transformation that maps numeric vectors into a requested output
 - **Trace:** Call rescale, dispatch through UseMethod to rescale.numeric, derive the finite input range, return output midpoints for a zero-width input or output while preserving NA, otherwise apply the interval formula, then match ordinary mixed-sign, missing, and constant-input expectations in test-bounds.R.
 
 **Why this level:**
+
+**Level 2:** A short S3 and interval-formula primer makes the numeric examples and edge cases predictable; no separate statistics or graphics course is required.
+
+**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Dispatch a public operation to a type-specific S3 method.
+- Map every numeric value from one interval into another with vectorized arithmetic.
+- Protect constant and missing inputs with an explicit midpoint branch.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** S3 dispatch and vectorized transformations are common professional R idioms central to the public API.
 - **Behavioral reasoning 2:** Several input classes of outcome matter, but the complete numeric behavior stays in one short method.
@@ -141,11 +162,6 @@ A public scales transformation that maps numeric vectors into a requested output
   - **Central concepts:** S3 generic dispatch; linear interval rescaling; zero-range and missing-value policy
   - **Incidental concepts:** other Date, time, integer64, and AsIs methods outside the selected numeric trace
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** scales is a maintained R package for mapping data to perceptual properties, and rescale is a documented installed API used by plotting and data applications.
 
@@ -173,6 +189,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [r-lib/withr](https://github.com/r-lib/withr)
 
@@ -334,6 +352,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 4 — Advanced
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [r-lib/testthat](https://github.com/r-lib/testthat)
 
@@ -499,6 +519,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [nimble-dev/nimble](https://github.com/nimble-dev/nimble)
 
 **Language 5 / Behavior 4 / Design 5 / Constraints 5 → Level 5**
@@ -534,7 +556,7 @@ A programmable hierarchical-modeling system that compiles BUGS-style models and 
 **Learning path:**
 
 - **Goal:** Understand how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface.
-- **Start here:** [`packages/nimble/R/nimbleFunction_core.R`](https://github.com/nimble-dev/nimble/blob/0181166733112cdaaf4edf7d7b0817a8f03cbdac/packages/nimble/R/nimbleFunction_core.R) — Begin with `packages/nimble/R/nimbleFunction_core.R` because it exposes how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface.
+- **Start here:** [`R/nimbleFunction_core.R`](https://github.com/nimble-dev/nimble/blob/0181166733112cdaaf4edf7d7b0817a8f03cbdac/packages/nimble/R/nimbleFunction_core.R) — Begin with `packages/nimble/R/nimbleFunction_core.R` because it exposes how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface.
 - **Then read:**
   - [`packages/nimble/R/nimbleProject.R`](https://github.com/nimble-dev/nimble/blob/0181166733112cdaaf4edf7d7b0817a8f03cbdac/packages/nimble/R/nimbleProject.R)
   - [`packages/nimble/R/nimbleFunction_compile.R`](https://github.com/nimble-dev/nimble/blob/0181166733112cdaaf4edf7d7b0817a8f03cbdac/packages/nimble/R/nimbleFunction_compile.R)
@@ -616,7 +638,7 @@ The R language implementation, runtime, garbage collector, standard and recommen
 **Learning path:**
 
 - **Goal:** Understand how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics.
-- **Start here:** [`src/library/compiler/noweb/compiler.nw`](https://github.com/wch/r-source/blob/780021752eb83a71e2198019acf069ba8741103b/src/library/compiler/noweb/compiler.nw) — Begin with `src/library/compiler/noweb/compiler.nw` because it exposes how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics.
+- **Start here:** [`noweb/compiler.nw`](https://github.com/wch/r-source/blob/780021752eb83a71e2198019acf069ba8741103b/src/library/compiler/noweb/compiler.nw) — Begin with `src/library/compiler/noweb/compiler.nw` because it exposes how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics.
 - **Then read:**
   - [`src/library/compiler/R/cmp.R`](https://github.com/wch/r-source/blob/780021752eb83a71e2198019acf069ba8741103b/src/library/compiler/R/cmp.R)
   - [`src/library/compiler/man/compile.Rd`](https://github.com/wch/r-source/blob/780021752eb83a71e2198019acf069ba8741103b/src/library/compiler/man/compile.Rd)

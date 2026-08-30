@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [apple/swift-log](https://github.com/apple/swift-log)
 
-**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 The production Swift logging API gives its seven named log levels a small explicit integral order and tests every pairwise comparison.
+
+**Just start:** Read lines 1277–1302 of `Logger.swift`, then compare them with `LoggingTest.swift`.
+
+**Start with: 26 lines of source.** [Open `Logging/Logger.swift`, lines 1277–1302.](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Logger.swift#L1277-L1302)
 
 **Why study it:** Study how a finite enum becomes a total order through one explicit mapping, one comparison operator, and an exhaustive table-driven test.
 
@@ -29,16 +35,10 @@ The production Swift logging API gives its seven named log levels a small explic
 - Separating a public enum from its private comparison representation.
 - Testing every pair in a small finite domain.
 
-**What you can learn:**
-
-- Map each enum case to one stable comparison value.
-- Implement Comparable by comparing those mapped values.
-- Use every ordered pair of cases to verify a complete ordering contract.
-
 **Learning path:**
 
 - **Goal:** Understand how swift-log defines and verifies one unambiguous order across all Logger.Level values.
-- **Start here:** [`Sources/Logging/Logger.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Logger.swift) — Logger.Level, naturalIntegralValue, and the complete less-than implementation appear together in this file.
+- **Start here:** [`Logging/Logger.swift`, lines 1277–1302](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Logger.swift#L1277-L1302) — The range contains the complete severity mapping and less-than operation; the seven enum cases are a short follow-up immediately above it.
 - **Then read:**
   - [`Tests/LoggingTests/LoggingTest.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Tests/LoggingTests/LoggingTest.swift)
   - [`Sources/Logging/Docs.docc/Reference/Logger-Level.md`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Docs.docc/Reference/Logger-Level.md)
@@ -49,6 +49,21 @@ The production Swift logging API gives its seven named log levels a small explic
 
 **Why this level:**
 
+**Level 1:** The complete behavior is a fixed switch plus one comparison; Comparable needs one local sentence and does not add nonlocal reasoning.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Map each enum case to one stable comparison value.
+- Implement Comparable by comparing those mapped values.
+- Use every ordered pair of cases to verify a complete ordering contract.
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
 - **Language technique 2:** The path adds one standard protocol conformance to an enum through an explicit switch and a short operator implementation.
 - **Behavioral reasoning 1:** Each input is one of seven visible cases and every result follows from comparing two local integers.
 - **Design span 1:** One source file and one table-driven test contain the complete selected contract.
@@ -57,11 +72,6 @@ The production Swift logging API gives its seven named log levels a small explic
   - **Central concepts:** enum cases; switch mapping; less-than comparison; table-driven tests
   - **Incidental concepts:** Comparable protocol conformance
 - **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** swift-log is the official production logging API package for the Swift server ecosystem, with Logger.Level forming part of its public logging contract.
 
@@ -92,11 +102,13 @@ No specialist domain context is required.
 
 ### [apple/swift-log](https://github.com/apple/swift-log)
 
-**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A production log-handler adapter that sends one already-created event to multiple backends while respecting each backend's own severity threshold.
+
+**Just start:** Read lines 145–153 of `MultiplexLogHandler.swift`, then compare them with `LoggingTest.swift`.
+
+**Start with: 9 lines of source.** [Open `Handlers/MultiplexLogHandler.swift`, lines 145–153.](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Handlers/MultiplexLogHandler.swift#L145-L153)
 
 **Why study it:** Trace a small protocol-based adapter that computes an effective threshold, filters each destination independently, and fans out one materialized event without duplicating message work.
 
@@ -115,16 +127,10 @@ A production log-handler adapter that sends one already-created event to multipl
 - Filtering one event against independent destination thresholds.
 - Separating message creation from repeated backend delivery.
 
-**What you can learn:**
-
-- Compose several protocol-conforming handlers behind one adapter.
-- Preserve each destination's log-level threshold during fan-out.
-- Evaluate a log message once even when multiple backends receive the event.
-
 **Learning path:**
 
 - **Goal:** Understand how MultiplexLogHandler forwards one materialized event to every backend whose own threshold accepts it.
-- **Start here:** [`Sources/Logging/Handlers/MultiplexLogHandler.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Handlers/MultiplexLogHandler.swift) — Initialization, the effective threshold, and the complete per-handler routing loop are visible together in this adapter.
+- **Start here:** [`Handlers/MultiplexLogHandler.swift`, lines 145–153](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Handlers/MultiplexLogHandler.swift#L145-L153) — The range contains the complete destination-local routing loop; effective-threshold initialization is a short follow-up earlier in the same adapter.
 - **Then read:**
   - [`Sources/Logging/LogHandler.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/LogHandler.swift)
   - [`Tests/LoggingTests/LoggingTest.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Tests/LoggingTests/LoggingTest.swift)
@@ -134,6 +140,21 @@ A production log-handler adapter that sends one already-created event to multipl
 
 **Why this level:**
 
+**Level 2:** A short primer on protocol values and severity thresholds makes all routing tests predictable; no concurrency, framework lifecycle, or backend internals are required.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Compose several protocol-conforming handlers behind one adapter.
+- Preserve each destination's log-level threshold during fan-out.
+- Evaluate a log message once even when multiple backends receive the event.
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+
 - **Language technique 2:** Protocols, arrays of conforming values, closures, and a small adapter struct are common professional Swift idioms.
 - **Behavioral reasoning 2:** Several destinations may take different branches, but routing stays synchronous and local to one loop.
 - **Design span 2:** The path crosses a few explicit boundaries from Logger through the adapter to two test backends.
@@ -142,11 +163,6 @@ A production log-handler adapter that sends one already-created event to multipl
   - **Central concepts:** protocol-based adapters; severity thresholds; filtered fan-out to several handlers
   - **Incidental concepts:** metadata behavior outside the selected routing trace
 - **Placement:** The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** swift-log is the official production logging API package for the Swift server ecosystem, and MultiplexLogHandler is its documented public adapter for combining real logging backends.
 
@@ -174,6 +190,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [pointfreeco/swift-tagged](https://github.com/pointfreeco/swift-tagged)
 
@@ -210,7 +228,7 @@ A tiny generic wrapper that gives otherwise identical raw values distinct compil
 **Learning path:**
 
 - **Goal:** Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.
-- **Start here:** [`Sources/Tagged/Tagged.swift`](https://github.com/pointfreeco/swift-tagged/blob/6a8517578035408b6c14ccba00ee990a1435515c/Sources/Tagged/Tagged.swift) — Begin with `Sources/Tagged/Tagged.swift` because it exposes how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.
+- **Start here:** [`Tagged/Tagged.swift`](https://github.com/pointfreeco/swift-tagged/blob/6a8517578035408b6c14ccba00ee990a1435515c/Sources/Tagged/Tagged.swift) — Begin with `Sources/Tagged/Tagged.swift` because it exposes how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.
 - **Then read:**
   - [`Tests/TaggedTests/TaggedTests.swift`](https://github.com/pointfreeco/swift-tagged/blob/6a8517578035408b6c14ccba00ee990a1435515c/Tests/TaggedTests/TaggedTests.swift)
 - **Trace:** Start with Tagged's Tag and RawValue parameters and single rawValue field, then follow mapping and dynamic-member lookup into the recurring conditional conformances; close with tests that show which operations are forwarded, encoded, compared, or deliberately coerced.
@@ -288,7 +306,7 @@ A server-side Swift web framework built on SwiftNIO with routing, middleware, co
 **Learning path:**
 
 - **Goal:** Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.
-- **Start here:** [`Sources/Vapor/Middleware/Middleware.swift`](https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/Sources/Vapor/Middleware/Middleware.swift) — Begin with `Sources/Vapor/Middleware/Middleware.swift` because it exposes how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.
+- **Start here:** [`Middleware/Middleware.swift`](https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/Sources/Vapor/Middleware/Middleware.swift) — Begin with `Sources/Vapor/Middleware/Middleware.swift` because it exposes how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.
 - **Then read:**
   - [`Sources/Vapor/Middleware/MiddlewareConfiguration.swift`](https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/Sources/Vapor/Middleware/MiddlewareConfiguration.swift)
   - [`Sources/Vapor/Middleware/Application+Middleware.swift`](https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/Sources/Vapor/Middleware/Application%2BMiddleware.swift)
@@ -336,6 +354,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [Alamofire/Alamofire](https://github.com/Alamofire/Alamofire)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
@@ -371,7 +391,7 @@ An HTTP networking library for Apple platforms built over URLSession with fluent
 **Learning path:**
 
 - **Goal:** Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.
-- **Start here:** [`Source/Core/Request.swift`](https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/Source/Core/Request.swift) — Begin with `Source/Core/Request.swift` because it exposes how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.
+- **Start here:** [`Core/Request.swift`](https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/Source/Core/Request.swift) — Begin with `Source/Core/Request.swift` because it exposes how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.
 - **Then read:**
   - [`Source/Core/Session.swift`](https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/Source/Core/Session.swift)
   - [`Source/Core/RequestTaskMap.swift`](https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/Source/Core/RequestTaskMap.swift)
@@ -453,7 +473,7 @@ A configurable Swift style and static-analysis tool with hundreds of rules, auto
 **Learning path:**
 
 - **Goal:** Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.
-- **Start here:** [`Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift`](https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift) — Begin with `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` because it exposes how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.
+- **Start here:** [`Style/SortedImportsRule.swift`](https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift) — Begin with `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` because it exposes how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.
 - **Then read:**
   - [`Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRuleExamples.swift`](https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRuleExamples.swift)
   - [`Source/SwiftLintBuiltInRules/Rules/RuleConfigurations/SortedImportsConfiguration.swift`](https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/Source/SwiftLintBuiltInRules/Rules/RuleConfigurations/SortedImportsConfiguration.swift)
@@ -504,6 +524,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [apple/swift-nio](https://github.com/apple/swift-nio)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -539,7 +561,7 @@ A cross-platform high-performance event-driven networking framework for building
 **Learning path:**
 
 - **Goal:** Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.
-- **Start here:** [`Sources/NIOCore/EventLoopFuture.swift`](https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/Sources/NIOCore/EventLoopFuture.swift) — Begin with `Sources/NIOCore/EventLoopFuture.swift` because it exposes how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.
+- **Start here:** [`NIOCore/EventLoopFuture.swift`](https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/Sources/NIOCore/EventLoopFuture.swift) — Begin with `Sources/NIOCore/EventLoopFuture.swift` because it exposes how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.
 - **Then read:**
   - [`Sources/NIOCore/EventLoop.swift`](https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/Sources/NIOCore/EventLoop.swift)
   - [`Tests/NIOPosixTests/EventLoopFutureTest.swift`](https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/Tests/NIOPosixTests/EventLoopFutureTest.swift)
@@ -619,7 +641,7 @@ Swift's source-accurate syntax-tree libraries, parser tooling, refactoring suppo
 **Learning path:**
 
 - **Goal:** Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics.
-- **Start here:** [`Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift) — Begin with the public SyntaxProtocol.expand facade and MacroApplication rewriter because they expose registration, discovery, role dispatch, recursive traversal, insertion, and failure handling in one path.
+- **Start here:** [`SwiftSyntaxMacroExpansion/MacroSystem.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift) — Begin with the public SyntaxProtocol.expand facade and MacroApplication rewriter because they expose registration, discovery, role dispatch, recursive traversal, insertion, and failure handling in one path.
 - **Then read:**
   - [`Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift)
   - [`Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift`](https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift)

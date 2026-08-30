@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "scales is a maintained R package for mapping data to perceptual properties, and its documented out-of-bounds functions are installed public APIs.",
       "why_study": "Read a small vectorized R function whose two logical selections correspond exactly to two assignments and one mixed-input test.",
+      "quick_start": "Read lines 313–320 of `bounds.R`, then compare them with `test-bounds.R`.",
       "learn": [
         "Select vector positions by comparing values with negative or positive infinity.",
         "Replace the two selected groups with the corresponding range endpoints.",
@@ -36,6 +37,8 @@
         "goal": "Understand how scales replaces only infinite values with explicit lower and upper limits.",
         "start_here": {
           "path": "R/bounds.R",
+          "line_start": 313,
+          "line_end": 320,
           "reason": "The documentation and complete oob_squish_infinite implementation appear together in this file."
         },
         "supporting_files": [
@@ -147,6 +150,7 @@
       "source_kind": "production",
       "purpose_evidence": "scales is a maintained R package for mapping data to perceptual properties, and rescale is a documented installed API used by plotting and data applications.",
       "why_study": "Follow a compact S3 generic into one numeric method that combines vector arithmetic with explicit missing-value and zero-range behavior.",
+      "quick_start": "Read lines 17–34 of `bounds.R`, then compare them with `test-bounds.R`.",
       "learn": [
         "Dispatch a public operation to a type-specific S3 method.",
         "Map every numeric value from one interval into another with vectorized arithmetic.",
@@ -172,6 +176,8 @@
         "goal": "Understand how scales rescale maps numeric vectors between intervals while preserving NA and defining constant-input output.",
         "start_here": {
           "path": "R/bounds.R",
+          "line_start": 17,
+          "line_end": 34,
           "reason": "The generic and numeric method show dispatch, default input range, the zero-range branch, and the complete transformation formula together."
         },
         "supporting_files": [

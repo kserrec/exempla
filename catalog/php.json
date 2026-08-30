@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.",
       "why_study": "Trace one exact success-or-failure branch, see why false and zero remain valid, and use focused tests to confirm the returned value and error message.",
+      "quick_start": "Read lines 827–837 of `Assert.php`, then compare them with `AssertTest.php`.",
       "learn": [
         "Trace the direct null check and the unchanged success return.",
         "Compare null with valid falsy inputs such as false and zero.",
@@ -36,7 +37,9 @@
         "goal": "Understand how `Assert::notNull()` rejects exactly null, preserves other falsy values, resolves diagnostics lazily, and communicates the narrowed return type.",
         "start_here": {
           "path": "src/Assert.php",
-          "reason": "Read the `notNull()` method and the nearby `resolveMessage()` and `reportInvalidArgument()` helpers; together they contain the complete production behavior."
+          "line_start": 827,
+          "line_end": 837,
+          "reason": "The `notNull()` range contains the complete public branch and return; its two named error helpers are later follow-up reads in the same pinned file."
         },
         "supporting_files": [
           "tests/AssertTest.php",
@@ -143,6 +146,7 @@
       "source_kind": "educational-exemplar",
       "purpose_evidence": "The README says the complete Composer library serves substantially as small generator examples while remaining practically useful; it documents the public API and ships direct PHPUnit coverage.",
       "why_study": "See how one small generator turns a familiar eager map into a lazy, key-preserving pipeline with a direct test from range to array.",
+      "quick_start": "Read lines 82–86 of `iter.php`, then compare them with `iterTest.php`.",
       "learn": [
         "Apply a callback to each value only when the returned iterator is consumed.",
         "Preserve input keys while yielding transformed values.",
@@ -166,7 +170,9 @@
         "goal": "Understand how iter map lazily transforms each iterable value, preserves keys, and produces the expected result when consumed.",
         "start_here": {
           "path": "src/iter.php",
-          "reason": "The map generator and nearby toArray consumer contain the complete deferred transformation and materialization behavior."
+          "line_start": 82,
+          "line_end": 86,
+          "reason": "The range contains the complete lazy map generator; the later `toArray` consumer is a follow-up read in the same pinned file."
         },
         "supporting_files": [
           "test/iterTest.php",
@@ -272,6 +278,7 @@
       "source_kind": "production",
       "purpose_evidence": "The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.",
       "why_study": "See how factories create present, absent, and delayed results, then follow one delayed callback until its successful result is stored for reuse.",
+      "quick_start": "Read lines 35–147 of `Option.php`, then compare them with `OptionTest.php`.",
       "learn": [
         "Trace factory inputs into Some, None, or LazyOption.",
         "Follow the first lazy resolution and later reuse of its result.",
@@ -297,6 +304,8 @@
         "goal": "Understand how php-option turns eager values, callables, and existing Option objects into a consistent eager or lazy Option while preserving strict absence and resolution behavior.",
         "start_here": {
           "path": "src/PhpOption/Option.php",
+          "line_start": 35,
+          "line_end": 147,
           "reason": "Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations."
         },
         "supporting_files": [

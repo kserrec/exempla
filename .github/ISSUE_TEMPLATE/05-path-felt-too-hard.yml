@@ -1,0 +1,72 @@
+name: This path felt harder than its Level
+description: Tell us where a learning path stopped feeling understandable.
+title: "[Learner difficulty]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Your experience is evidence. You do not need to understand Exempla's
+        scoring method or prove that a Level is wrong. Tell us where the path
+        stopped helping so we can review its range, prerequisites, and guidance.
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      placeholder: Python
+    validations:
+      required: true
+  - type: input
+    id: path
+    attributes:
+      label: Repository and path
+      description: Link to the Exempla entry if convenient, or name the repository and path.
+      placeholder: more-itertools/more-itertools — first
+    validations:
+      required: true
+  - type: textarea
+    id: experience
+    attributes:
+      label: Your programming experience
+      description: Roughly describe what you had learned or built before trying this path.
+      placeholder: I finished one Python tutorial and have written small scripts.
+    validations:
+      required: true
+  - type: textarea
+    id: lost
+    attributes:
+      label: Where did you get lost?
+      description: Name the first line, idea, test, or transition that stopped making sense.
+    validations:
+      required: true
+  - type: textarea
+    id: terminology
+    attributes:
+      label: Unclear terminology
+      description: List any words or phrases the entry used without preparing you for them. Leave blank if terminology was not the problem.
+  - type: dropdown
+    id: range-size
+    attributes:
+      label: How did the initial source range feel?
+      options:
+        - Manageable
+        - A little large
+        - Much too large
+        - The size was not the problem
+    validations:
+      required: true
+  - type: dropdown
+    id: prerequisites
+    attributes:
+      label: Did the prerequisites prepare you?
+      options:
+        - Yes
+        - Partly
+        - No
+        - I did not read them
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: What would have helped?
+      description: A smaller range, plainer explanation, different test order, or any other change is useful feedback.

@@ -2,36 +2,38 @@
 
 Choose a language, then browse from Level 1 — First real code through Level 5 — Expert.
 
+**You are not expected to understand the whole repository.** Each entry gives you one small, reviewed path through it, beginning with exact source lines and focused tests.
+
 **Production software** is built primarily for real users or systems. **Educational exemplars** are complete software artifacts intentionally chosen for teaching clarity and are allowed only at Levels 1 and 2.
 
 Exempla deliberately allows high-quality educational software at Levels 1 and 2 because production code often assumes professional concepts before a novice has learned them. Difficulty and novice-accessibility standards do not change, every entry discloses its source type, and Level 3 begins the production-only part of the ladder.
 
 If you can write small programs in the language, Level 1 is designed as your first comfortable source-reading step. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.
 
-The catalog currently contains **158 qualified learning paths across 20 languages**. Empty cells are honest research gaps.
+The catalog currently contains **158 qualified learning paths across 20 languages**. Zero counts are honest research gaps.
 
-| Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| [JavaScript](javascript/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
-| [Python](python/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Java](java/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [PHP](php/README.md) | 7 | 1 | 2 | 2 | 2 | 0 |
-| [C#](c-sharp/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
-| [TypeScript](typescript/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [C++](cpp/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Ruby](ruby/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
-| [C](c/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Swift](swift/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Go](go/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
-| [R](r/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Shell](shell/README.md) | 6 | 1 | 1 | 2 | 2 | 0 |
-| [Kotlin](kotlin/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Scala](scala/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [PowerShell](powershell/README.md) | 5 | 0 | 0 | 2 | 2 | 1 |
-| [Dart](dart/README.md) | 8 | 1 | 2 | 2 | 2 | 1 |
-| [Objective-C](objective-c/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [Rust](rust/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Lua](lua/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
+## Choose a language
+
+- **[JavaScript](javascript/README.md):** 10 paths — Level 1: 2 · Level 2: 2 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Python](python/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Java](java/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[PHP](php/README.md):** 7 paths — Level 1: 1 · Level 2: 2 · Level 3: 2 · Level 4: 2 · Level 5: 0
+- **[C#](c-sharp/README.md):** 10 paths — Level 1: 1 · Level 2: 3 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[TypeScript](typescript/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[C++](cpp/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Ruby](ruby/README.md):** 10 paths — Level 1: 1 · Level 2: 3 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[C](c/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Swift](swift/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Go](go/README.md):** 10 paths — Level 1: 1 · Level 2: 3 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[R](r/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Shell](shell/README.md):** 6 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 0
+- **[Kotlin](kotlin/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Scala](scala/README.md):** 6 paths — Level 1: 0 · Level 2: 0 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[PowerShell](powershell/README.md):** 5 paths — Level 1: 0 · Level 2: 0 · Level 3: 2 · Level 4: 2 · Level 5: 1
+- **[Dart](dart/README.md):** 8 paths — Level 1: 1 · Level 2: 2 · Level 3: 2 · Level 4: 2 · Level 5: 1
+- **[Objective-C](objective-c/README.md):** 6 paths — Level 1: 0 · Level 2: 0 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Rust](rust/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
+- **[Lua](lua/README.md):** 8 paths — Level 1: 1 · Level 2: 1 · Level 3: 2 · Level 4: 2 · Level 5: 2
 
 Read [how learning levels work](../docs/learning-levels.md), the [coding-relevance and quality gates](../docs/qualification.md), or the [language selection rationale](../docs/language-selection.md).
 

@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "Guava publishes production core libraries for Java, and Ints.constrainToRange is a documented non-Beta public API maintained for JRE and Android users.",
       "why_study": "See how a tiny public method validates its range and composes minimum and maximum operations, then compare every boundary with direct tests.",
+      "quick_start": "Read lines 275–286 of `Ints.java`, then compare them with `IntsTest.java`.",
       "learn": [
         "Validate that an inclusive numeric range is ordered.",
         "Compose max and min to keep a value between two bounds.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Guava constrains any int to a valid inclusive range and makes reversed bounds an explicit error.",
         "start_here": {
           "path": "guava/src/com/google/common/primitives/Ints.java",
+          "line_start": 275,
+          "line_end": 286,
           "reason": "The Javadoc, validation, and complete numeric transformation are adjacent in one public method."
         },
         "supporting_files": [
@@ -140,6 +143,7 @@
       "source_kind": "educational-exemplar",
       "purpose_evidence": "The JUnit team documents junit-jupiter-starter-gradle as its bare-minimum complete setup for Java tests on JUnit Jupiter with Gradle, and CI builds the example projects.",
       "why_study": "See how a finished small Java project turns examples and a table of inputs into repeatable tests with descriptive failure messages.",
+      "quick_start": "Read lines 13–18 of `Calculator.java`, then compare them with `CalculatorTests.java`.",
       "learn": [
         "Separate the class being checked from its test class and test-only dependencies.",
         "Compare one ordinary test with a parameterized test driven by CSV rows.",
@@ -163,6 +167,8 @@
         "goal": "Understand how JUnit's complete Gradle starter discovers and runs ordinary and parameterized tests against a small Java class.",
         "start_here": {
           "path": "junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java",
+          "line_start": 13,
+          "line_end": 18,
           "reason": "The single public add behavior provides the exact contract that every selected test exercises."
         },
         "supporting_files": [

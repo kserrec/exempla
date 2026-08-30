@@ -4,17 +4,21 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+No Level 1 path is currently published for this language. Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
 ## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [Badgerati/Pode](https://github.com/Badgerati/Pode)
 
@@ -47,7 +51,7 @@ A cross-platform PowerShell application-server framework with its own asynchrono
 **Learning path:**
 
 - **Goal:** Understand how a PowerShell web framework turns declarative method, path, handler, middleware, and endpoint inputs into a normalized route registry and retrieves the correct match.
-- **Start here:** [`src/Public/Routes.ps1`](https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/src/Public/Routes.ps1) — The reviewed trace begins in public Routes.ps1 because Add-PodeRoute defines and validates the user-facing route before private helpers normalize and index it.
+- **Start here:** [`Public/Routes.ps1`](https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/src/Public/Routes.ps1) — The reviewed trace begins in public Routes.ps1 because Add-PodeRoute defines and validates the user-facing route before private helpers normalize and index it.
 - **Then read:**
   - [`src/Private/Routes.ps1`](https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/src/Private/Routes.ps1)
   - [`tests/unit/Routes.Tests.ps1`](https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/tests/unit/Routes.Tests.ps1)
@@ -175,6 +179,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [nightroman/Invoke-Build](https://github.com/nightroman/Invoke-Build)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -286,7 +292,7 @@ A PowerShell build module that compiles source folders into versioned modules, r
 **Learning path:**
 
 - **Goal:** Understand how PowerShell's parser and AST can drive a source-to-source generator that merges scriptblocks without corrupting syntax or execution structure.
-- **Start here:** [`Source/Public/Merge-ScriptBlock.ps1`](https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/Source/Public/Merge-ScriptBlock.ps1) — The reviewed trace begins in Merge-ScriptBlock.ps1 because its visitor decides which syntax nodes become the generated merged scriptblock.
+- **Start here:** [`Public/Merge-ScriptBlock.ps1`](https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/Source/Public/Merge-ScriptBlock.ps1) — The reviewed trace begins in Merge-ScriptBlock.ps1 because its visitor decides which syntax nodes become the generated merged scriptblock.
 - **Then read:**
   - [`Source/Private/ConvertToAst.ps1`](https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/Source/Private/ConvertToAst.ps1)
   - [`Source/Classes/10. TextReplacement.ps1`](https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/Source/Classes/10.%20TextReplacement.ps1)
@@ -368,7 +374,7 @@ PowerShell's test and mock framework, with a discovery and execution runtime, as
 **Learning path:**
 
 - **Goal:** Understand how Pester turns Describe and It scriptblocks into a discovered test tree and then executes that tree with correct scopes, hooks, errors, timing, filtering, and results.
-- **Start here:** [`src/functions/Describe.ps1`](https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/src/functions/Describe.ps1) — The reviewed trace begins in Describe.ps1 because Describe establishes the outer DSL contract and registers blocks that the runtime later discovers and executes.
+- **Start here:** [`functions/Describe.ps1`](https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/src/functions/Describe.ps1) — The reviewed trace begins in Describe.ps1 because Describe establishes the outer DSL contract and registers blocks that the runtime later discovers and executes.
 - **Then read:**
   - [`src/functions/It.ps1`](https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/src/functions/It.ps1)
   - [`src/Pester.Runtime.ps1`](https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/src/Pester.Runtime.ps1)

@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "The log crate is the maintained Rust logging facade used by libraries and applications, and Level is a central public API type.",
       "why_study": "Follow a three-line production method from an enum value through numeric conversion and optional reconstruction to a clear boundary fallback.",
+      "quick_start": "Read lines 592–611 of `src/lib.rs`, then jump to `test_level_up` later in the same file.",
       "learn": [
         "Advance through an enum whose cases have a stable numeric representation.",
         "Use an optional conversion result to recognize the end of the enum.",
@@ -36,7 +37,9 @@
         "goal": "Understand how log::Level moves one step through a finite enum without exceeding its final case.",
         "start_here": {
           "path": "src/lib.rs",
-          "reason": "Level, from_usize, increment_severity, its documentation example, and test_level_up all appear in this file."
+          "line_start": 592,
+          "line_end": 611,
+          "reason": "This range contains the complete increment contract, examples, and two-line implementation; enum conversion and the direct unit test are follow-up reads in the same pinned file."
         },
         "supporting_files": [
           "README.md",
@@ -145,6 +148,7 @@
       "source_kind": "production",
       "purpose_evidence": "The log crate is the maintained Rust logging facade used by libraries and applications, and LevelFilter parsing is part of its public configuration-facing API.",
       "why_study": "Follow a standard trait implementation from input text through a finite case-insensitive lookup to either a typed enum or a small explicit error.",
+      "quick_start": "Read lines 643–704 of `src/lib.rs`, then jump to `test_levelfilter_from_str` later in the same file.",
       "learn": [
         "Implement a standard parsing trait for a public enum.",
         "Map a finite set of case-insensitive names to typed values without allocating normalized strings.",
@@ -170,6 +174,8 @@
         "goal": "Understand how log parses case-insensitive LevelFilter names into typed values and rejects unknown strings.",
         "start_here": {
           "path": "src/lib.rs",
+          "line_start": 643,
+          "line_end": 704,
           "reason": "The public enum, FromStr loop, index-to-enum mapping, error type, and direct unit table are all in this file."
         },
         "supporting_files": [

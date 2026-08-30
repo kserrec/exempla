@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository packages and releases abbrev as an installable Ruby default gem with a documented public API and direct regression tests.",
       "why_study": "Trace a small production algorithm whose hashes make both successful prefixes and collisions visible, then predict the exact abbreviation table.",
+      "quick_start": "Read lines 74–107 of `abbrev.rb`, then compare them with `test_abbrev.rb`.",
       "learn": [
         "Generate progressively shorter prefixes for each input word.",
         "Use one hash to count sightings and another to retain only unambiguous results.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Abbrev turns words into a hash of every unambiguous prefix without losing full-word lookups.",
         "start_here": {
           "path": "lib/abbrev.rb",
+          "line_start": 74,
+          "line_end": 107,
           "reason": "The abbrev method contains the complete prefix loop, collision count, deletion rule, and final full-word pass."
         },
         "supporting_files": [
@@ -142,6 +145,7 @@
       "source_kind": "educational-exemplar",
       "purpose_evidence": "Sinatra presents this finished four-line application as the first runnable example in its primary README and maintains an executable ReadmeTest that asserts the example's exact result.",
       "why_study": "Read a whole web application small enough to hold in memory while learning how a route block becomes an externally checked response.",
+      "quick_start": "Read lines 6–30 of `README.md`, then compare them with `readme_test.rb`.",
       "learn": [
         "Declare an HTTP method and path with Sinatra's route syntax.",
         "Return a response body from the route's Ruby block.",
@@ -167,6 +171,8 @@
         "goal": "Understand how Sinatra's complete minimal application maps GET / to Hello world and verifies that documentation example in code.",
         "start_here": {
           "path": "README.md",
+          "line_start": 6,
+          "line_end": 30,
           "reason": "The opening example contains the complete application and immediately explains how to install, run, and view it."
         },
         "supporting_files": [
@@ -270,6 +276,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository packages and releases observer as an installable Ruby default gem implementing the application-facing Observable API.",
       "why_study": "Follow a compact publish-and-subscribe lifecycle from registration through change gating, callback dispatch, reset, and removal.",
+      "quick_start": "Read lines 138–229 of `observer.rb`, then compare them with `test_observer.rb`.",
       "learn": [
         "Register objects and the callback method each should receive.",
         "Gate notifications behind an explicit changed state and reset that state afterward.",
@@ -293,6 +300,8 @@
         "goal": "Understand how Ruby Observable registers subscribers, gates events on changed state, dispatches arguments, and removes subscriptions.",
         "start_here": {
           "path": "lib/observer.rb",
+          "line_start": 138,
+          "line_end": 229,
           "reason": "The Observable module contains registration, removal, state, count, and notification behavior in one readable unit."
         },
         "supporting_files": [
@@ -401,6 +410,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.",
       "why_study": "Follow path components through a small stack that removes dots, handles parent steps, preserves roots, and offers a conservative mode for symbolic links.",
+      "quick_start": "Read lines 395–500 of `pathname_builtin.rb`, then compare them with `test_pathname.rb`.",
       "learn": [
         "Trace ordinary, dot, parent, rooted, and trailing-separator examples.",
         "Compare aggressive and conservative cleanup modes.",
@@ -426,6 +436,8 @@
         "goal": "Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.",
         "start_here": {
           "path": "lib/pathname_builtin.rb",
+          "line_start": 395,
+          "line_end": 500,
           "reason": "Begin with `lib/pathname_builtin.rb` because it exposes how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety."
         },
         "supporting_files": [

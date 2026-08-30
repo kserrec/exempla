@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [microsoft/vscode](https://github.com/microsoft/vscode)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A production Visual Studio Code array utility removes an indexed item in constant time by moving the final item into its place before popping the array.
+
+**Just start:** Read lines 50–60 of `arrays.ts`, then compare them with `arrays.test.ts`.
+
+**Start with: 11 lines of source.** [Open `common/arrays.ts`, lines 50–60.](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts#L50-L60)
 
 **Why study it:** See a short, named performance tradeoff expressed with ordinary indexing, assignment, a branch, and pop, then verified through successive removals.
 
@@ -29,16 +35,10 @@ A production Visual Studio Code array utility removes an indexed item in constan
 - Using the last array item to fill an interior gap.
 - Making a mutation contract explicit in a function name and tests.
 
-**What you can learn:**
-
-- Replace an interior item with the array's last item when order is not part of the contract.
-- Handle removal of the last item without an unnecessary assignment.
-- Read tests that make the intentional order change visible.
-
 **Learning path:**
 
 - **Goal:** Understand how Visual Studio Code removes one array item quickly when preserving order is unnecessary.
-- **Start here:** [`src/vs/base/common/arrays.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts) — removeFastWithoutKeepingOrder contains the complete branch, replacement, and pop sequence.
+- **Start here:** [`common/arrays.ts`, lines 50–60](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts#L50-L60) — removeFastWithoutKeepingOrder contains the complete branch, replacement, and pop sequence.
 - **Then read:**
   - [`src/vs/base/test/common/arrays.test.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/test/common/arrays.test.ts)
   - [`src/vs/platform/actions/common/menuService.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/platform/actions/common/menuService.ts)
@@ -49,6 +49,21 @@ A production Visual Studio Code array utility removes an indexed item in constan
 
 **Why this level:**
 
+**Level 1:** Every central operation belongs to the novice TypeScript baseline, and the generic parameter only says that the array may contain any one element type.
+
+**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Replace an interior item with the array's last item when order is not part of the contract.
+- Handle removal of the last item without an unnecessary assignment.
+- Read tests that make the intentional order change visible.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
 - **Language technique 1:** The implementation uses beginner TypeScript array operations and one generic type parameter that simply preserves the element type.
 - **Behavioral reasoning 1:** The complete behavior is one local branch followed by one pop, with no callbacks or hidden state.
 - **Design span 1:** One implementation and one direct unit test define the contract; the caller only confirms its real production use.
@@ -57,11 +72,6 @@ A production Visual Studio Code array utility removes an indexed item in constan
   - **Central concepts:** array indexing; conditional assignment; removing the final array item
   - **Incidental concepts:** one unconstrained generic type parameter
 - **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The utility ships in the Code - OSS source tree and is called by the production menu service when it removes a menu item without requiring stable order.
 
@@ -92,11 +102,13 @@ No specialist domain context is required.
 
 ### [microsoft/vscode](https://github.com/microsoft/vscode)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A Code - OSS array utility that removes later duplicates while preserving the first value and allowing callers to derive their own equality key.
+
+**Just start:** Read lines 397–412 of `arrays.ts`, then compare them with `arrays.test.ts`.
+
+**Start with: 16 lines of source.** [Open `common/arrays.ts`, lines 397–412.](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts#L397-L412)
 
 **Why study it:** See how a generic callback, one Set, and a stateful filter preserve stable order while supporting both direct values and caller-defined equality keys.
 
@@ -111,16 +123,10 @@ A Code - OSS array utility that removes later duplicates while preserving the fi
 - Injecting equality policy through a key-selection callback.
 - Keeping state inside a filtering closure while returning a new array.
 
-**What you can learn:**
-
-- Track keys already observed while filtering an array in one pass.
-- Preserve the first value for each key without sorting or mutating the input.
-- Use a key callback to separate stored values from their equality policy.
-
 **Learning path:**
 
 - **Goal:** Understand how Code - OSS distinct keeps only the first value for each derived key while preserving input order.
-- **Start here:** [`src/vs/base/common/arrays.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts) — The distinct function contains the complete Set, key callback, duplicate branch, and stable filter result.
+- **Start here:** [`common/arrays.ts`, lines 397–412](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts#L397-L412) — The distinct function contains the complete Set, key callback, duplicate branch, and stable filter result.
 - **Then read:**
   - [`src/vs/base/test/common/arrays.test.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/test/common/arrays.test.ts)
   - [`src/vs/code/electron-main/main.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/code/electron-main/main.ts)
@@ -128,6 +134,21 @@ A Code - OSS array utility that removes later duplicates while preserving the fi
 - **Trace:** Enter distinct with an array and optional key function, derive each key inside filter, reject it if the Set already contains it, otherwise add it and keep the element, then match the five direct unit cases and the application entry-point caller that derives lowercase path keys on case-insensitive platforms.
 
 **Why this level:**
+
+**Level 2:** A short primer on Set membership and key-selection callbacks makes every unit result predictable; no framework or settings-sync background is needed.
+
+**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Track keys already observed while filtering an array in one pass.
+- Preserve the first value for each key without sorting or mutating the input.
+- Use a key callback to separate stored values from their equality policy.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Generics, callbacks, Set, and closure state are common professional TypeScript idioms central to the selected behavior.
 - **Behavioral reasoning 2:** The Set changes across elements and determines each branch, but the full sequence remains local and easy to trace.
@@ -137,11 +158,6 @@ A Code - OSS array utility that removes later duplicates while preserving the fi
   - **Central concepts:** stable deduplication; a Set of previously seen keys; callback-defined identity
   - **Incidental concepts:** the production caller's platform-specific path normalization
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The utility ships in the Code - OSS source tree and its key callback is used by the production application entry point to deduplicate path arguments case-insensitively on Windows and macOS.
 
@@ -169,6 +185,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [developit/mitt](https://github.com/developit/mitt)
 
@@ -213,9 +231,6 @@ A tiny typed event emitter that supports named events, wildcard listeners, and i
 - **Behavioral reasoning 2:** Meaningful mutation and ordering branches remain localized inside three short operations.
 - **Design span 1:** The complete behavior is one focused source unit with direct tests.
 - **Constraint burden 2:** A small public API and routine production safeguards must remain consistent, but no system-wide guarantee is involved.
-- **Novice accessibility floor 3:** Mapped generic relationships and the event-dispatch lifecycle interact throughout the public API, so a novice needs more than one short professional-concept primer.
-  - **Central concepts:** generic event-map type relationships; named and wildcard callback dispatch; listener snapshots while subscriptions mutate
-  - **Incidental concepts:** Map-backed handler storage; overloaded emit syntax
 - **Placement:** The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 3 produces published Level 3.
 
 **License:** MIT ([evidence 1](https://github.com/developit/mitt/blob/6b41670516ed8e8b738612f60491995470aa63b3/LICENSE))
@@ -327,6 +342,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [angular/angular](https://github.com/angular/angular)
 
 **Language 4 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
@@ -358,7 +375,7 @@ A web application framework with a compiler, rendering and reactivity engine, de
 **Learning path:**
 
 - **Goal:** Understand how Angular's public signal and computed APIs maintain a dynamic dependency graph with lazy recomputation, precise invalidation, equality, cycle, and error semantics.
-- **Start here:** [`packages/core/src/render3/reactivity/signal.ts`](https://github.com/angular/angular/blob/34817da7354f2a4e55f277a991d4345a4ca8a91d/packages/core/src/render3/reactivity/signal.ts) — packages/core/src/render3/reactivity/signal.ts defines the public callable WritableSignal wrapper that leads directly into primitive signal, computed, and graph operations.
+- **Start here:** [`reactivity/signal.ts`](https://github.com/angular/angular/blob/34817da7354f2a4e55f277a991d4345a4ca8a91d/packages/core/src/render3/reactivity/signal.ts) — packages/core/src/render3/reactivity/signal.ts defines the public callable WritableSignal wrapper that leads directly into primitive signal, computed, and graph operations.
 - **Then read:**
   - [`packages/core/src/render3/reactivity/computed.ts`](https://github.com/angular/angular/blob/34817da7354f2a4e55f277a991d4345a4ca8a91d/packages/core/src/render3/reactivity/computed.ts)
   - [`packages/core/primitives/signals/src/signal.ts`](https://github.com/angular/angular/blob/34817da7354f2a4e55f277a991d4345a4ca8a91d/packages/core/primitives/signals/src/signal.ts)
@@ -484,6 +501,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [colinhacks/zod](https://github.com/colinhacks/zod)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -515,7 +534,7 @@ A schema validation library that parses untrusted values and infers static TypeS
 **Learning path:**
 
 - **Goal:** Understand how a Zod object schema keeps inferred input and output types aligned with interpreted, generated, asynchronous, and recursive runtime parsing.
-- **Start here:** [`packages/zod/src/v4/classic/schemas.ts`](https://github.com/colinhacks/zod/blob/571c8e8a3d73b4305f4abfdd6977773cc12f2bf5/packages/zod/src/v4/classic/schemas.ts) — packages/zod/src/v4/classic/schemas.ts defines the learner-facing object builder and ZodObject type transformations before the trace enters core parsing and memoization machinery.
+- **Start here:** [`classic/schemas.ts`](https://github.com/colinhacks/zod/blob/571c8e8a3d73b4305f4abfdd6977773cc12f2bf5/packages/zod/src/v4/classic/schemas.ts) — packages/zod/src/v4/classic/schemas.ts defines the learner-facing object builder and ZodObject type transformations before the trace enters core parsing and memoization machinery.
 - **Then read:**
   - [`packages/zod/src/v4/core/schemas.ts`](https://github.com/colinhacks/zod/blob/571c8e8a3d73b4305f4abfdd6977773cc12f2bf5/packages/zod/src/v4/core/schemas.ts)
   - [`packages/zod/src/v4/core/memoizer.ts`](https://github.com/colinhacks/zod/blob/571c8e8a3d73b4305f4abfdd6977773cc12f2bf5/packages/zod/src/v4/core/memoizer.ts)
@@ -592,7 +611,7 @@ An end-to-end typesafe RPC framework that infers client calls from server router
 **Learning path:**
 
 - **Goal:** Understand how a fluent procedure builder becomes a recursively typed router caller whose proxy, lazy loading, middleware, context, and runtime dispatch agree without code generation.
-- **Start here:** [`packages/server/src/unstable-core-do-not-import/procedureBuilder.ts`](https://github.com/trpc/trpc/blob/6a70335e02fa1a8bc68e8d065b85687b0d7ffdea/packages/server/src/unstable-core-do-not-import/procedureBuilder.ts) — procedureBuilder.ts defines how input, output, context, middleware, and resolver types accumulate into a runnable procedure before router and proxy layers expose it as a caller.
+- **Start here:** [`unstable-core-do-not-import/procedureBuilder.ts`](https://github.com/trpc/trpc/blob/6a70335e02fa1a8bc68e8d065b85687b0d7ffdea/packages/server/src/unstable-core-do-not-import/procedureBuilder.ts) — procedureBuilder.ts defines how input, output, context, middleware, and resolver types accumulate into a runnable procedure before router and proxy layers expose it as a caller.
 - **Then read:**
   - [`packages/server/src/unstable-core-do-not-import/router.ts`](https://github.com/trpc/trpc/blob/6a70335e02fa1a8bc68e8d065b85687b0d7ffdea/packages/server/src/unstable-core-do-not-import/router.ts)
   - [`packages/server/src/unstable-core-do-not-import/createProxy.ts`](https://github.com/trpc/trpc/blob/6a70335e02fa1a8bc68e8d065b85687b0d7ffdea/packages/server/src/unstable-core-do-not-import/createProxy.ts)

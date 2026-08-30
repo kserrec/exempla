@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [google/guava](https://github.com/google/guava)
 
-**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A stable Guava integer utility that returns the nearest value inside inclusive bounds and rejects a lower bound greater than the upper bound.
+
+**Just start:** Read lines 275–286 of `Ints.java`, then compare them with `IntsTest.java`.
+
+**Start with: 12 lines of source.** [Open `primitives/Ints.java`, lines 275–286.](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava/src/com/google/common/primitives/Ints.java#L275-L286)
 
 **Why study it:** See how a tiny public method validates its range and composes minimum and maximum operations, then compare every boundary with direct tests.
 
@@ -29,22 +35,31 @@ A stable Guava integer utility that returns the nearest value inside inclusive b
 - Expressing inclusive clamping through two standard operations.
 - Using boundary-focused assertions to define a stable utility API.
 
-**What you can learn:**
-
-- Validate that an inclusive numeric range is ordered.
-- Compose max and min to keep a value between two bounds.
-- Test values inside, below, above, equal to a bound, and against a collapsed range.
-
 **Learning path:**
 
 - **Goal:** Understand how Guava constrains any int to a valid inclusive range and makes reversed bounds an explicit error.
-- **Start here:** [`guava/src/com/google/common/primitives/Ints.java`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava/src/com/google/common/primitives/Ints.java) — The Javadoc, validation, and complete numeric transformation are adjacent in one public method.
+- **Start here:** [`primitives/Ints.java`, lines 275–286](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava/src/com/google/common/primitives/Ints.java#L275-L286) — The Javadoc, validation, and complete numeric transformation are adjacent in one public method.
 - **Then read:**
   - [`guava-tests/test/com/google/common/primitives/IntsTest.java`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava-tests/test/com/google/common/primitives/IntsTest.java)
   - [`README.md`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/README.md)
 - **Trace:** Enter constrainToRange, reject min greater than max, raise the value to min, lower it to max, return the result, and match inside, exact-bound, below, negative-range, collapsed-range, and invalid-range cases in testConstrainToRange.
 
 **Why this level:**
+
+**Level 1:** Every central concept is introductory Java, and the precondition helper needs only one local explanation before every assertion is predictable.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Validate that an inclusive numeric range is ordered.
+- Compose max and min to keep a value between two bounds.
+- Test values inside, below, above, equal to a bound, and against a collapsed range.
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 1:** The implementation uses direct Java methods, integer values, one precondition, and familiar standard-library calls.
 - **Behavioral reasoning 2:** One validation path and three local numeric outcomes remain easy to trace.
@@ -54,11 +69,6 @@ A stable Guava integer utility that returns the nearest value inside inclusive b
   - **Central concepts:** input validation; inclusive numeric bounds; minimum and maximum composition
   - **Incidental concepts:** Guava's checkArgument helper for throwing IllegalArgumentException
 - **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Guava publishes production core libraries for Java, and Ints.constrainToRange is a documented non-Beta public API maintained for JRE and Android users.
 
@@ -89,11 +99,13 @@ No specialist domain context is required.
 
 ### [junit-team/junit-examples](https://github.com/junit-team/junit-examples)
 
-**Language 3 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
-
 **Source:** Educational exemplar
 
 JUnit's complete Gradle starter pairs a tiny Java class with one example test and one table-driven parameterized test.
+
+**Just start:** Read lines 13–18 of `Calculator.java`, then compare them with `CalculatorTests.java`.
+
+**Start with: 6 lines of source.** [Open `project/Calculator.java`, lines 13–18.](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java#L13-L18)
 
 **Why study it:** See how a finished small Java project turns examples and a table of inputs into repeatable tests with descriptive failure messages.
 
@@ -110,16 +122,10 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - Expressing one behavior with both example-based and table-driven tests.
 - Configuring a build tool to discover tests through the JUnit Platform.
 
-**What you can learn:**
-
-- Separate the class being checked from its test class and test-only dependencies.
-- Compare one ordinary test with a parameterized test driven by CSV rows.
-- Connect Gradle's JUnit Platform configuration to the annotations that discover and run tests.
-
 **Learning path:**
 
 - **Goal:** Understand how JUnit's complete Gradle starter discovers and runs ordinary and parameterized tests against a small Java class.
-- **Start here:** [`junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java) — The single public add behavior provides the exact contract that every selected test exercises.
+- **Start here:** [`project/Calculator.java`, lines 13–18](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java#L13-L18) — The single public add behavior provides the exact contract that every selected test exercises.
 - **Then read:**
   - [`junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java)
   - [`junit-jupiter-starter-gradle/build.gradle`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/build.gradle)
@@ -127,6 +133,21 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - **Trace:** Read Calculator.add, follow the ordinary @Test assertion, then follow each @CsvSource row into the parameterized add method and expected result; finish at build.gradle where JUnit dependencies and useJUnitPlatform make those annotated methods executable.
 
 **Why this level:**
+
+**Level 2:** A short primer on annotations, parameter rows, and source sets makes every execution predictable; no framework lifecycle beyond test discovery is required.
+
+**License:** EPL-2.0 ([evidence 1](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/LICENSE.md))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Separate the class being checked from its test class and test-only dependencies.
+- Compare one ordinary test with a parameterized test driven by CSV rows.
+- Connect Gradle's JUnit Platform configuration to the annotations that discover and run tests.
+
+**Language 3 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
 
 - **Language technique 3:** Annotations materially drive discovery and data injection, while the surrounding Java remains deliberately basic.
 - **Behavioral reasoning 1:** Each test has direct inputs, one method call, and an exact expected value with no mutable lifecycle.
@@ -136,11 +157,6 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
   - **Central concepts:** test discovery annotations; parameterized test data; main and test source separation
   - **Incidental concepts:** Gradle's Groovy configuration syntax; a lazy assertion-message lambda
 - **Placement:** The four scores 3/1/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** EPL-2.0 ([evidence 1](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/LICENSE.md))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The JUnit team documents junit-jupiter-starter-gradle as its bare-minimum complete setup for Java tests on JUnit Jupiter with Gradle, and CI builds the example projects.
 
@@ -168,6 +184,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [java-diff-utils/java-diff-utils](https://github.com/java-diff-utils/java-diff-utils)
 
@@ -200,7 +218,7 @@ A library for computing sequence differences, applying and restoring patches, pa
 **Learning path:**
 
 - **Goal:** Understand how java-diff-utils validates and applies an existing generic patch, detects conflicts, and reverses the same delta sequence.
-- **Start here:** [`java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java`](https://github.com/java-diff-utils/java-diff-utils/blob/5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc/java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java) — Patch.java owns delta ordering, applyTo, restore, conflict handling, and the public reversible-transformation contract, allowing learners to study application without first learning a diff-generation algorithm.
+- **Start here:** [`patch/Patch.java`](https://github.com/java-diff-utils/java-diff-utils/blob/5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc/java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java) — Patch.java owns delta ordering, applyTo, restore, conflict handling, and the public reversible-transformation contract, allowing learners to study application without first learning a diff-generation algorithm.
 - **Then read:**
   - [`java-diff-utils/src/main/java/com/github/difflib/patch/AbstractDelta.java`](https://github.com/java-diff-utils/java-diff-utils/blob/5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc/java-diff-utils/src/main/java/com/github/difflib/patch/AbstractDelta.java)
   - [`java-diff-utils/src/main/java/com/github/difflib/patch/Chunk.java`](https://github.com/java-diff-utils/java-diff-utils/blob/5e2e5b981533964aaeb19e2ba56d0f53dbd8b2dc/java-diff-utils/src/main/java/com/github/difflib/patch/Chunk.java)
@@ -280,7 +298,7 @@ An HTML parser and manipulation library with DOM traversal, CSS selectors, fetch
 **Learning path:**
 
 - **Goal:** Understand how jsoup cleans untrusted HTML by parsing a body fragment, copying only safelisted DOM nodes and attributes, normalizing URLs, and enforcing security policy without mutating the input.
-- **Start here:** [`src/main/java/org/jsoup/Jsoup.java`](https://github.com/jhy/jsoup/blob/7860d088e044236e288c1f88a743b68b2a0edece/src/main/java/org/jsoup/Jsoup.java) — Jsoup.java contains the public clean overloads that define the learner-visible security promise and lead directly into Cleaner and Safelist, avoiding the rejected specification-heavy tree-builder path.
+- **Start here:** [`jsoup/Jsoup.java`](https://github.com/jhy/jsoup/blob/7860d088e044236e288c1f88a743b68b2a0edece/src/main/java/org/jsoup/Jsoup.java) — Jsoup.java contains the public clean overloads that define the learner-visible security promise and lead directly into Cleaner and Safelist, avoiding the rejected specification-heavy tree-builder path.
 - **Then read:**
   - [`src/main/java/org/jsoup/safety/Cleaner.java`](https://github.com/jhy/jsoup/blob/7860d088e044236e288c1f88a743b68b2a0edece/src/main/java/org/jsoup/safety/Cleaner.java)
   - [`src/main/java/org/jsoup/safety/Safelist.java`](https://github.com/jhy/jsoup/blob/7860d088e044236e288c1f88a743b68b2a0edece/src/main/java/org/jsoup/safety/Safelist.java)
@@ -328,6 +346,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [google/gson](https://github.com/google/gson)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -359,7 +379,7 @@ A JSON serialization library that maps Java object graphs and generic types thro
 **Learning path:**
 
 - **Goal:** Understand how Gson resolves and caches a type adapter, breaks recursive construction cycles, falls back to reflective field or record binding, and uses the result for JSON conversion.
-- **Start here:** [`gson/src/main/java/com/google/gson/Gson.java`](https://github.com/google/gson/blob/b3f4ca20087f9066de4c340522ff84e0558e1ad1/gson/src/main/java/com/google/gson/Gson.java) — gson/src/main/java/com/google/gson/Gson.java owns getAdapter and the read and write facade, so it exposes cache lookup, recursive construction, ordered factory selection, and adapter use.
+- **Start here:** [`gson/Gson.java`](https://github.com/google/gson/blob/b3f4ca20087f9066de4c340522ff84e0558e1ad1/gson/src/main/java/com/google/gson/Gson.java) — gson/src/main/java/com/google/gson/Gson.java owns getAdapter and the read and write facade, so it exposes cache lookup, recursive construction, ordered factory selection, and adapter use.
 - **Then read:**
   - [`gson/src/main/java/com/google/gson/TypeAdapterFactory.java`](https://github.com/google/gson/blob/b3f4ca20087f9066de4c340522ff84e0558e1ad1/gson/src/main/java/com/google/gson/TypeAdapterFactory.java)
   - [`gson/src/main/java/com/google/gson/reflect/TypeToken.java`](https://github.com/google/gson/blob/b3f4ca20087f9066de4c340522ff84e0558e1ad1/gson/src/main/java/com/google/gson/reflect/TypeToken.java)
@@ -438,7 +458,7 @@ The fourth-generation JUnit testing framework, including reflective discovery, r
 **Learning path:**
 
 - **Goal:** Understand how JUnit 4 discovers and executes one annotated test method through its composable statement lifecycle and reports the result safely.
-- **Start here:** [`src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java`](https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java) — BlockJUnit4ClassRunner.java connects reflective test-method discovery to methodBlock, where invocation, expected-exception, timeout, fixture, and rule Statements are assembled.
+- **Start here:** [`runners/BlockJUnit4ClassRunner.java`](https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java) — BlockJUnit4ClassRunner.java connects reflective test-method discovery to methodBlock, where invocation, expected-exception, timeout, fixture, and rule Statements are assembled.
 - **Then read:**
   - [`src/main/java/org/junit/runners/ParentRunner.java`](https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/src/main/java/org/junit/runners/ParentRunner.java)
   - [`src/main/java/org/junit/runners/model/Statement.java`](https://github.com/junit-team/junit4/blob/890f3c972647de378f25e7271d8fbbd9d3456b79/src/main/java/org/junit/runners/model/Statement.java)
@@ -490,6 +510,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [jenkinsci/jenkins](https://github.com/jenkinsci/jenkins)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -521,7 +543,7 @@ The Jenkins automation server core, including its persistent task queue, extensi
 **Learning path:**
 
 - **Goal:** Understand how Jenkins accepts a task, moves it through waiting, blocked, buildable, and pending states, assigns its work to eligible executors, runs it, and resolves completion or recovery paths.
-- **Start here:** [`core/src/main/java/hudson/model/Queue.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/Queue.java) — Queue.schedule2 and Queue.maintain define the central state transitions, extension vetoes, executor offers, placement call, pending handoff, persistence, and lost-executor recovery that organize the complete trace.
+- **Start here:** [`model/Queue.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/Queue.java) — Queue.schedule2 and Queue.maintain define the central state transitions, extension vetoes, executor offers, placement call, pending handoff, persistence, and lost-executor recovery that organize the complete trace.
 - **Then read:**
   - [`core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java)
   - [`core/src/main/java/hudson/model/queue/MappingWorksheet.java`](https://github.com/jenkinsci/jenkins/blob/982bc91d866ed90aa135b87a2cb4ac1e68c2412e/core/src/main/java/hudson/model/queue/MappingWorksheet.java)
@@ -603,7 +625,7 @@ A comprehensive application framework spanning dependency injection, AOP, transa
 **Learning path:**
 
 - **Goal:** Understand how Spring registers a bean definition, resolves generic and qualified dependencies, constructs and post-processes one singleton, handles circular or concurrent creation, and completes initialization.
-- **Start here:** [`spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java`](https://github.com/spring-projects/spring-framework/blob/1b56f58999046051d76a653922c3ab72b4db9cf7/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java) — DefaultListableBeanFactory.java owns bean-definition registration and dependency selection, providing the entrance to constructor resolution, creation callbacks, and singleton-registry coordination.
+- **Start here:** [`support/DefaultListableBeanFactory.java`](https://github.com/spring-projects/spring-framework/blob/1b56f58999046051d76a653922c3ab72b4db9cf7/spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java) — DefaultListableBeanFactory.java owns bean-definition registration and dependency selection, providing the entrance to constructor resolution, creation callbacks, and singleton-registry coordination.
 - **Then read:**
   - [`spring-beans/src/main/java/org/springframework/beans/factory/config/DependencyDescriptor.java`](https://github.com/spring-projects/spring-framework/blob/1b56f58999046051d76a653922c3ab72b4db9cf7/spring-beans/src/main/java/org/springframework/beans/factory/config/DependencyDescriptor.java)
   - [`spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java`](https://github.com/spring-projects/spring-framework/blob/1b56f58999046051d76a653922c3ab72b4db9cf7/spring-beans/src/main/java/org/springframework/beans/factory/support/AbstractAutowireCapableBeanFactory.java)

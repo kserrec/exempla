@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [golang/go](https://github.com/golang/go)
 
-**Language 1 / Behavior 1 / Design 2 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 Go's standard strings.Cut function splits text around the first separator and returns an explicit found result for the missing case.
+
+**Just start:** Read lines 1293–1298 of `strings.go`, then compare them with `strings_test.go`.
+
+**Start with: 6 lines of source.** [Open `strings/strings.go`, lines 1293–1298.](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings.go#L1293-L1298)
 
 **Why study it:** Follow one standard-library string operation from its public entry through a direct branch, then check beginning, middle, end, empty, and missing separators in table tests.
 
@@ -29,16 +35,10 @@ Go's standard strings.Cut function splits text around the first separator and re
 - Using string slices before and after a located boundary.
 - Defining exact empty and missing cases with a compact test table.
 
-**What you can learn:**
-
-- Find the first occurrence of a separator and slice around it.
-- Return several named results so callers can distinguish an empty piece from a missing separator.
-- Use a table to cover separator positions and empty-string boundaries.
-
 **Learning path:**
 
 - **Goal:** Understand how Go's strings.Cut returns the text around the first separator without confusing an empty result with a separator that was not found.
-- **Start here:** [`src/strings/strings.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings.go) — The public documentation and entry point establish the exact three-result contract.
+- **Start here:** [`strings/strings.go`, lines 1293–1298](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings.go#L1293-L1298) — The public documentation and entry point establish the exact three-result contract.
 - **Then read:**
   - [`src/internal/stringslite/strings.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/internal/stringslite/strings.go)
   - [`src/strings/strings_test.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings_test.go)
@@ -48,6 +48,21 @@ Go's standard strings.Cut function splits text around the first separator and re
 
 **Why this level:**
 
+**Level 1:** All central operations are introductory Go, and the internal sharing boundary needs only one sentence before every test row is predictable.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Find the first occurrence of a separator and slice around it.
+- Return several named results so callers can distinguish an empty piece from a missing separator.
+- Use a table to cover separator positions and empty-string boundaries.
+
+**Language 1 / Behavior 1 / Design 2 / Constraints 1 → Level 1**
+
 - **Language technique 1:** The implementation uses introductory Go string, branch, package, and multiple-return syntax.
 - **Behavioral reasoning 1:** One index result selects between two local deterministic returns.
 - **Design span 2:** Two clear standard-library modules share the implementation while keeping the selected trace short.
@@ -56,11 +71,6 @@ Go's standard strings.Cut function splits text around the first separator and re
   - **Central concepts:** finding a substring; string slicing; multiple return values
   - **Incidental concepts:** the public package reuses a small internal implementation
 - **Placement:** The four scores 1/1/2/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** golang/go is the official implementation of the Go language and standard library, where strings.Cut is a stable application-facing API.
 
@@ -89,13 +99,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [dustin/go-humanize](https://github.com/dustin/go-humanize)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+### [dustin/go-humanize](https://github.com/dustin/go-humanize)
 
 **Source:** Production software
 
 A production Go formatter that writes any signed 64-bit integer with comma-separated three-digit groups.
+
+**Just start:** Read lines 11–58 of `comma.go`, then compare them with `comma_test.go`.
+
+**Start with: 48 lines of source.** [Open `comma.go`, lines 11–58.](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma.go#L11-L58)
 
 **Why study it:** Trace a visible number-to-string algorithm while learning how production code handles signs, exact buffer sizing, and the one integer that cannot be negated.
 
@@ -110,16 +124,10 @@ A production Go formatter that writes any signed 64-bit integer with comma-separ
 - Handling a numeric boundary before the ordinary algorithm.
 - Combining example tables with a property-based fuzz check.
 
-**What you can learn:**
-
-- Count decimal digits and allocate exactly enough output space for digits, separators, and a sign.
-- Fill a byte slice from right to left while inserting every third separator.
-- Protect the minimum signed integer boundary and verify general formatting properties with fuzz tests.
-
 **Learning path:**
 
 - **Goal:** Understand how go-humanize Comma formats every int64 exactly and how examples plus a fuzz property defend the contract.
-- **Start here:** [`comma.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma.go) — The Comma function contains the fast path, minimum-integer guard, digit count, allocation, sign handling, and backward fill.
+- **Start here:** [`comma.go`, lines 11–58](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma.go#L11-L58) — The Comma function contains the fast path, minimum-integer guard, digit count, allocation, sign handling, and backward fill.
 - **Then read:**
   - [`comma_test.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma_test.go)
   - [`comma_fuzz_test.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma_fuzz_test.go)
@@ -127,6 +135,21 @@ A production Go formatter that writes any signed 64-bit integer with comma-separ
 - **Trace:** Take an int64 through the small-number shortcut or minimum-value guard, count digits and separators, make the exact byte slice, write digits and commas from right to left, restore a negative sign, then compare table boundaries and the fuzz invariant that removing commas reproduces strconv.FormatInt.
 
 **Why this level:**
+
+**Level 2:** A short primer on the int64 minimum and backward filling makes representative outputs predictable; the fast path can be explained as one local optimization.
+
+**License:** MIT ([evidence 1](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Count decimal digits and allocate exactly enough output space for digits, separators, and a sign.
+- Fill a byte slice from right to left while inserting every third separator.
+- Protect the minimum signed integer boundary and verify general formatting properties with fuzz tests.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 - **Language technique 2:** Manual byte formatting and a local bitwise optimization are common professional techniques beyond the simplest string conversion.
 - **Behavioral reasoning 2:** Several local states and boundary branches matter, but every step is synchronous and directly traceable.
@@ -136,11 +159,6 @@ A production Go formatter that writes any signed 64-bit integer with comma-separ
   - **Central concepts:** backward buffer construction; three-digit grouping; signed integer boundary handling
   - **Incidental concepts:** the bitwise fast-path expression
 - **Placement:** The four scores 2/2/1/3 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** go-humanize is a maintained importable Go module whose README documents application-facing number, size, time, and text formatting functions.
 
@@ -169,11 +187,13 @@ No specialist domain context is required.
 
 ### [mitchellh/go-wordwrap](https://github.com/mitchellh/go-wordwrap)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A small production Go package that wraps text at whitespace while preserving explicit newlines, long words, and nonbreaking spaces.
+
+**Just start:** Read lines 10–83 of `wordwrap.go`, then compare them with `wordwrap_test.go`.
+
+**Start with: 74 lines of source.** [Open `wordwrap.go`, lines 10–83.](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap.go#L10-L83)
 
 **Why study it:** Follow a practical stateful string transformation through pending spaces, words, explicit line breaks, and Unicode characters with a thorough table of examples.
 
@@ -188,22 +208,31 @@ A small production Go package that wraps text at whitespace while preserving exp
 - Maintaining local counters alongside word and space buffers.
 - Separating explicit line breaks from automatic wrapping decisions.
 
-**What you can learn:**
-
-- Accumulate a pending word and whitespace separately until a wrapping decision is possible.
-- Distinguish breakable whitespace from explicit newlines and nonbreaking spaces.
-- Use boundary examples to define trailing-space, long-word, and multi-byte behavior.
-
 **Learning path:**
 
 - **Goal:** Understand how WrapString inserts line breaks only at breakable whitespace while preserving the package's explicit text contracts.
-- **Start here:** [`wordwrap.go`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap.go) — The sole function contains the pending word, whitespace, width counters, newline cases, and final buffer flush.
+- **Start here:** [`wordwrap.go`, lines 10–83](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap.go#L10-L83) — The sole function contains the pending word, whitespace, width counters, newline cases, and final buffer flush.
 - **Then read:**
   - [`wordwrap_test.go`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap_test.go)
   - [`README.md`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/README.md)
 - **Trace:** Scan each rune into a word or space buffer, flush completed pieces when whitespace or an explicit newline resolves them, insert an automatic newline when the next word would exceed the limit, finish the remaining buffers, and compare each boundary with the table test.
 
 **Why this level:**
+
+**Level 2:** A short primer on buffers, runes, and pending spaces is enough to simulate each test; no text-layout theory or parser grammar is required.
+
+**License:** MIT ([evidence 1](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/LICENSE.md))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Accumulate a pending word and whitespace separately until a wrapping decision is possible.
+- Distinguish breakable whitespace from explicit newlines and nonbreaking spaces.
+- Use boundary examples to define trailing-space, long-word, and multi-byte behavior.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Rune-aware scanning and incremental buffers are common professional Go techniques central to the function.
 - **Behavioral reasoning 2:** Several local states interact, but they move forward through the input in one synchronous pass.
@@ -213,11 +242,6 @@ A small production Go package that wraps text at whitespace while preserving exp
   - **Central concepts:** incremental text buffering; pending whitespace; line-width state
   - **Incidental concepts:** Unicode rune representation; the nonbreaking-space code point
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/LICENSE.md))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository documents go-wordwrap as an importable package for formatting command-line output and exposes a stable WrapString API under an MIT license.
 
@@ -246,11 +270,13 @@ No specialist domain context is required.
 
 ### [tidwall/match](https://github.com/tidwall/match)
 
-**Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
 **Source:** Production software
 
 A small Go matcher that checks text against ordinary characters, question marks, and stars.
+
+**Just start:** Read lines 85–173 of `match.go`, then compare them with `match_test.go`.
+
+**Start with: 89 lines of source.** [Open `match.go`, lines 85–173.](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match.go#L85-L173)
 
 **Why study it:** Follow a compact loop through literal matches, one-character matches, star backtracking, and the boundary where either the text or pattern ends.
 
@@ -269,21 +295,30 @@ A small Go matcher that checks text against ordinary characters, question marks,
 - Trying literal, one-byte, and star cases in a clear order.
 - Backtracking to the most recent star when a later match fails.
 
+**Learning path:**
+
+- **Goal:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
+- **Start here:** [`match.go`, lines 85–173](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match.go#L85-L173) — Begin with `match.go` because it exposes how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
+- **Then read:**
+  - [`match_test.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match_test.go)
+- **Trace:** Start with the main pattern and string scan, follow literal and question-mark consumption into the star branch and recursive or iterative suffix search, then compare the case-insensitive path; close with table tests and randomized TestRandomInput, which is randomized coverage rather than a Go Fuzz target.
+
+**Why this level:**
+
+**Level 2:** The entire pattern language is three locally defined forms, so a short primer is sufficient even though star backtracking stretches beyond first-production-code reasoning.
+
+**License:** MIT ([evidence 1](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
 **What you can learn:**
 
 - Trace representative literal, question-mark, and star patterns by hand.
 - See how one saved star position supports bounded backtracking.
 - Use boundary-focused tests to understand empty and exhausted inputs.
 
-**Learning path:**
-
-- **Goal:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
-- **Start here:** [`match.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match.go) — Begin with `match.go` because it exposes how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
-- **Then read:**
-  - [`match_test.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match_test.go)
-- **Trace:** Start with the main pattern and string scan, follow literal and question-mark consumption into the star branch and recursive or iterative suffix search, then compare the case-insensitive path; close with table tests and randomized TestRandomInput, which is randomized coverage rather than a Go Fuzz target.
-
-**Why this level:**
+**Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 - **Language technique 1:** The implementation relies on basic Go mechanics with no recurring intermediate language technique.
 - **Behavioral reasoning 2:** A few related matcher states recur within one compact algorithm.
@@ -293,11 +328,6 @@ A small Go matcher that checks text against ordinary characters, question marks,
   - **Central concepts:** literal and wildcard matching; star backtracking; input and pattern exhaustion
   - **Incidental concepts:** byte-oriented scanning; optional case folding
 - **Placement:** The four structural scores 1/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.
 
@@ -325,6 +355,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [gin-gonic/gin](https://github.com/gin-gonic/gin)
 
@@ -489,6 +521,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [caddyserver/caddy](https://github.com/caddyserver/caddy)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
@@ -604,7 +638,7 @@ A distributed container orchestration platform with declarative APIs, scheduling
 **Learning path:**
 
 - **Goal:** Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
-- **Start here:** [`staging/src/k8s.io/client-go/util/workqueue/queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/queue.go) — Begin with `staging/src/k8s.io/client-go/util/workqueue/queue.go` because it exposes how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
+- **Start here:** [`workqueue/queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/queue.go) — Begin with `staging/src/k8s.io/client-go/util/workqueue/queue.go` because it exposes how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
 - **Then read:**
   - [`staging/src/k8s.io/client-go/util/workqueue/doc.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/doc.go)
   - [`staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go)
@@ -656,6 +690,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [golang/go](https://github.com/golang/go)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -691,7 +727,7 @@ The Go programming language implementation, including its compiler, runtime, sta
 **Learning path:**
 
 - **Goal:** Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
-- **Start here:** [`src/runtime/chan.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/chan.go) — Begin with `src/runtime/chan.go` because it exposes how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
+- **Start here:** [`runtime/chan.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/chan.go) — Begin with `src/runtime/chan.go` because it exposes how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
 - **Then read:**
   - [`src/runtime/select.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/select.go)
   - [`src/runtime/runtime2.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/runtime2.go)

@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "dart-lang/core actively maintains and publishes package:collection for application use; its README documents the package's collection utilities and public API.",
       "why_study": "Read one compact collection getter that advances an iterator exactly once and makes the empty-input result explicit.",
+      "quick_start": "Read lines 379–384 of `iterable_extensions.dart`, then compare them with `extensions_test.dart`.",
       "learn": [
         "Create an iterator for an arbitrary iterable.",
         "Return its current value only after the first advance succeeds.",
@@ -36,6 +37,8 @@
         "goal": "Understand how package:collection firstOrNull returns one iterable value without failing on empty input.",
         "start_here": {
           "path": "pkgs/collection/lib/src/iterable_extensions.dart",
+          "line_start": 379,
+          "line_end": 384,
           "reason": "The firstOrNull getter contains the complete iterator creation, one advance, successful return, and null fallback."
         },
         "supporting_files": [
@@ -139,6 +142,7 @@
       "source_kind": "production",
       "purpose_evidence": "dart-lang/core actively maintains and publishes package:collection for application use; its package README documents collection utilities and links the public package and API.",
       "why_study": "Read one compact callback-driven collection transformation and verify how empty input, repeated keys, and input order determine the result.",
+      "quick_start": "Read lines 58–69 of `functions.dart`, then compare them with `functions_test.dart`.",
       "learn": [
         "Compute one grouping key for each input element.",
         "Create a list only when a key first appears, then append later matching elements.",
@@ -162,6 +166,8 @@
         "goal": "Understand how package:collection groupBy maps each iterable element to a key and accumulates ordered lists under those keys.",
         "start_here": {
           "path": "pkgs/collection/lib/src/functions.dart",
+          "line_start": 58,
+          "line_end": 69,
           "reason": "The groupBy function contains the entire loop, callback invocation, first-list creation, append, and return."
         },
         "supporting_files": [
@@ -267,6 +273,7 @@
       "source_kind": "production",
       "purpose_evidence": "Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.",
       "why_study": "See how one file gives form inputs explicit value, interaction, error, and validation state, then combines several inputs into a whole-form answer.",
+      "quick_start": "Read lines 66–200 of `formz.dart`, then compare them with `formz_test.dart`.",
       "learn": [
         "Trace how pure and dirty inputs expose validation and display errors.",
         "See how an optional mixin caches one validation result.",
@@ -292,6 +299,8 @@
         "goal": "Understand how a small Dart model makes input interaction state, typed validation, cached errors, and aggregate form validity explicit.",
         "start_here": {
           "path": "lib/formz.dart",
+          "line_start": 66,
+          "line_end": 200,
           "reason": "The sole production file contains the entire model from submission status and typed inputs through cached errors and aggregate FormzMixin queries, with no framework layer to cross."
         },
         "supporting_files": [

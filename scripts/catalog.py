@@ -75,7 +75,7 @@ REPOSITORY_FIELDS = (
     "license",
     "github",
 )
-OPTIONAL_REPOSITORY_FIELDS = ("novice_accessibility",)
+OPTIONAL_REPOSITORY_FIELDS = ("novice_accessibility", "quick_start")
 LEGACY_REPOSITORY_FIELDS = tuple(
     "real_world_evidence" if field == "purpose_evidence" else field
     for field in REPOSITORY_FIELDS
@@ -307,6 +307,9 @@ def validate_repository(
             )
     for field in (purpose_field, "why_study"):
         require_text(item.get(field), f"{prefix}.{field}", errors, 20)
+    quick_start = item.get("quick_start")
+    if quick_start is not None:
+        require_text(quick_start, f"{prefix}.quick_start", errors, 20)
     require_text_list(item.get("learn"), f"{prefix}.learn", errors)
     prerequisites = require_text_list(
         item.get("prerequisites"), f"{prefix}.prerequisites", errors
@@ -347,13 +350,34 @@ def validate_repository(
     start_here = require_object(
         learning_path.get("start_here"), f"{prefix}.learning_path.start_here", errors
     )
-    require_exact_keys(start_here, ("path", "reason"), f"{prefix}.learning_path.start_here", errors)
+    require_exact_keys(
+        start_here,
+        ("path", "reason"),
+        f"{prefix}.learning_path.start_here",
+        errors,
+        optional=("line_start", "line_end"),
+    )
     start_path = require_text(
         start_here.get("path"), f"{prefix}.learning_path.start_here.path", errors
     )
     require_text(
         start_here.get("reason"), f"{prefix}.learning_path.start_here.reason", errors, 20
     )
+    line_start = start_here.get("line_start")
+    line_end = start_here.get("line_end")
+    for field, value in (("line_start", line_start), ("line_end", line_end)):
+        if value is not None and (type(value) is not int or value < 1):
+            errors.append(
+                f"{prefix}.learning_path.start_here.{field}: expected positive integer"
+            )
+    if (
+        type(line_start) is int
+        and type(line_end) is int
+        and line_end < line_start
+    ):
+        errors.append(
+            f"{prefix}.learning_path.start_here.line_end: must be greater than or equal to line_start"
+        )
     if start_path and not is_safe_relative_path(start_path):
         errors.append(
             f"{prefix}.learning_path.start_here.path: expected canonical safe non-dotenv relative path"
@@ -385,6 +409,17 @@ def validate_repository(
         errors,
     )
     level = require_score(learning_level.get("level"), f"{prefix}.learning_level.level", errors)
+    if level is not None and level <= 2:
+        if "quick_start" not in item:
+            errors.append(f"{prefix}.quick_start: required at Level {level}")
+        if "line_start" not in start_here:
+            errors.append(
+                f"{prefix}.learning_path.start_here.line_start: required at Level {level}"
+            )
+        if "line_end" not in start_here:
+            errors.append(
+                f"{prefix}.learning_path.start_here.line_end: required at Level {level}"
+            )
     scores: dict[str, int | None] = {}
     for dimension in DIMENSION_FIELDS:
         judgment = require_object(
@@ -2456,11 +2491,25 @@ def markdown_escape(value: str) -> str:
     return value.replace("|", "\\|").replace("\n", " ")
 
 
-def path_url(entry: dict[str, Any], path: str) -> str:
-    return (
+def path_url(
+    entry: dict[str, Any],
+    path: str,
+    line_start: int | None = None,
+    line_end: int | None = None,
+) -> str:
+    url = (
         f"{entry['url']}/blob/{entry['inspection']['commit']}/"
         + quote(path, safe="/")
     )
+    if line_start is not None and line_end is not None:
+        url += f"#L{line_start}-L{line_end}"
+    return url
+
+
+def short_path_label(path: str) -> str:
+    """Keep source-link text useful on narrow screens without hiding its target."""
+    parts = PurePosixPath(path).parts
+    return "/".join(parts[-2:]) if len(parts) > 1 else path
 
 
 def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, Any]]) -> str:
@@ -2470,25 +2519,26 @@ def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, 
         "",
         "Choose a language, then browse from Level 1 — First real code through Level 5 — Expert.",
         "",
+        "**You are not expected to understand the whole repository.** Each entry gives you one small, reviewed path through it, beginning with exact source lines and focused tests.",
+        "",
         "**Production software** is built primarily for real users or systems. **Educational exemplars** are complete software artifacts intentionally chosen for teaching clarity and are allowed only at Levels 1 and 2.",
         "",
         "Exempla deliberately allows high-quality educational software at Levels 1 and 2 because production code often assumes professional concepts before a novice has learned them. Difficulty and novice-accessibility standards do not change, every entry discloses its source type, and Level 3 begins the production-only part of the ladder.",
         "",
         "If you can write small programs in the language, Level 1 is designed as your first comfortable source-reading step. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.",
         "",
-        f"The catalog currently contains **{total} qualified learning paths across {len(languages)} languages**. Empty cells are honest research gaps.",
+        f"The catalog currently contains **{total} qualified learning paths across {len(languages)} languages**. Zero counts are honest research gaps.",
         "",
-        "| Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |",
-        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "## Choose a language",
+        "",
     ]
     for language in languages:
         repositories = catalogs[language["slug"]]["repositories"]
         counts = Counter(entry["learning_level"]["level"] for entry in repositories)
         lines.append(
-            f"| [{markdown_escape(language['name'])}]({language['slug']}/README.md) | "
-            + f"{len(repositories)} | "
-            + " | ".join(str(counts[level]) for level in range(1, 6))
-            + " |"
+            f"- **[{markdown_escape(language['name'])}]({language['slug']}/README.md):** "
+            + f"{len(repositories)} paths — "
+            + " · ".join(f"Level {level}: {counts[level]}" for level in range(1, 6))
         )
     lines.extend(
         [
@@ -2504,7 +2554,9 @@ def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, 
     return "\n".join(lines)
 
 
-def render_repository(entry: dict[str, Any]) -> list[str]:
+def render_repository(
+    entry: dict[str, Any], *, recommended_first_path: bool = False
+) -> list[str]:
     level = entry["learning_level"]
     language = level["language_technique"]
     behavior = level["behavioral_reasoning"]
@@ -2514,18 +2566,43 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
     start = learning_path["start_here"]
     inspection = entry["inspection"]
     context = entry["coding_relevance"]["domain_context"]
+    low_level = level["level"] <= 2
+    line_start = start.get("line_start")
+    line_end = start.get("line_end")
+    start_url = path_url(entry, start["path"], line_start, line_end)
+    start_name = short_path_label(start["path"])
     lines = [
         f"### [{entry['repository']}]({entry['url']})",
         "",
-        f"**Language {language['score']} / Behavior {behavior['score']} / Design {design['score']} / Constraints {constraints['score']} → Level {level['level']}**",
-        "",
-        f"**Source:** {SOURCE_KIND_LABELS[entry['source_kind']]}",
-        "",
-        entry["description"],
-        "",
-        f"**Why study it:** {entry['why_study']}",
-        "",
     ]
+    if recommended_first_path:
+        lines.extend(["**Recommended first path**", ""])
+    if not low_level:
+        lines.extend(
+            [
+                f"**Language {language['score']} / Behavior {behavior['score']} / Design {design['score']} / Constraints {constraints['score']} → Level {level['level']}**",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            f"**Source:** {SOURCE_KIND_LABELS[entry['source_kind']]}",
+            "",
+            entry["description"],
+            "",
+        ]
+    )
+    if low_level:
+        source_line_count = line_end - line_start + 1
+        lines.extend(
+            [
+                f"**Just start:** {entry['quick_start']}",
+                "",
+                f"**Start with: {source_line_count} lines of source.** [Open `{start_name}`, lines {line_start}–{line_end}.]({start_url})",
+                "",
+            ]
+        )
+    lines.extend([f"**Why study it:** {entry['why_study']}", ""])
     if entry["source_kind"] == "educational-exemplar":
         lines.extend(
             [
@@ -2541,44 +2618,51 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
     lines.extend(f"- {item}" for item in entry["prerequisites"])
     lines.extend(["", "**Concepts this path develops:**", ""])
     lines.extend(f"- {item}" for item in entry["concepts_developed"])
-    lines.extend(["", "**What you can learn:**", ""])
-    lines.extend(f"- {item}" for item in entry["learn"])
+    if not low_level:
+        lines.extend(["", "**What you can learn:**", ""])
+        lines.extend(f"- {item}" for item in entry["learn"])
+    start_label = f"`{start_name}`"
+    if line_start is not None and line_end is not None:
+        start_label += f", lines {line_start}–{line_end}"
     lines.extend(
         [
             "",
             "**Learning path:**",
             "",
             f"- **Goal:** {learning_path['goal']}",
-            f"- **Start here:** [`{start['path']}`]({path_url(entry, start['path'])}) — {start['reason']}",
+            f"- **Start here:** [{start_label}]({start_url}) — {start['reason']}",
             "- **Then read:**",
         ]
     )
     for file_path in learning_path["supporting_files"]:
         lines.append(f"  - [`{file_path}`]({path_url(entry, file_path)})")
-    lines.extend(
-        [
-            f"- **Trace:** {learning_path['trace']}",
-            "",
-            "**Why this level:**",
-            "",
-            f"- **Language technique {language['score']}:** {language['reason']}",
-            f"- **Behavioral reasoning {behavior['score']}:** {behavior['reason']}",
-            f"- **Design span {design['score']}:** {design['reason']}",
-            f"- **Constraint burden {constraints['score']}:** {constraints['reason']}",
-        ]
-    )
+    lines.extend([f"- **Trace:** {learning_path['trace']}", ""])
     accessibility = entry.get("novice_accessibility")
-    if accessibility:
-        central = "; ".join(accessibility["central_concepts"]) or "None recorded."
-        incidental = "; ".join(accessibility["incidental_concepts"]) or "None recorded."
+    if low_level:
+        concise_level_reason = (
+            accessibility["reason"] if accessibility else level["placement"]
+        )
         lines.extend(
             [
-                f"- **Novice accessibility floor {accessibility['floor']}:** {accessibility['reason']}",
-                f"  - **Central concepts:** {central}",
-                f"  - **Incidental concepts:** {incidental}",
+                "**Why this level:**",
+                "",
+                f"**Level {level['level']}:** {concise_level_reason}",
+                "",
             ]
         )
-    lines.extend([f"- **Placement:** {level['placement']}", ""])
+    else:
+        lines.extend(
+            [
+                "**Why this level:**",
+                "",
+                f"- **Language technique {language['score']}:** {language['reason']}",
+                f"- **Behavioral reasoning {behavior['score']}:** {behavior['reason']}",
+                f"- **Design span {design['score']}:** {design['reason']}",
+                f"- **Constraint burden {constraints['score']}:** {constraints['reason']}",
+                f"- **Placement:** {level['placement']}",
+                "",
+            ]
+        )
     evidence_links = ", ".join(
         f"[evidence {index}]({url})"
         for index, url in enumerate(entry["license"]["urls"], start=1)
@@ -2588,8 +2672,41 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
             f"**License:** {entry['license']['spdx']} ({evidence_links})",
             "",
             "<details>",
-            "<summary>Quality and review evidence</summary>",
+            (
+                "<summary>Detailed Level, learning, quality, and review evidence</summary>"
+                if low_level
+                else "<summary>Quality and review evidence</summary>"
+            ),
             "",
+        ]
+    )
+    if low_level:
+        lines.extend(["**What you can learn:**", ""])
+        lines.extend(f"- {item}" for item in entry["learn"])
+        lines.extend(
+            [
+                "",
+                f"**Language {language['score']} / Behavior {behavior['score']} / Design {design['score']} / Constraints {constraints['score']} → Level {level['level']}**",
+                "",
+                f"- **Language technique {language['score']}:** {language['reason']}",
+                f"- **Behavioral reasoning {behavior['score']}:** {behavior['reason']}",
+                f"- **Design span {design['score']}:** {design['reason']}",
+                f"- **Constraint burden {constraints['score']}:** {constraints['reason']}",
+            ]
+        )
+        if accessibility:
+            central = "; ".join(accessibility["central_concepts"]) or "None recorded."
+            incidental = "; ".join(accessibility["incidental_concepts"]) or "None recorded."
+            lines.extend(
+                [
+                    f"- **Novice accessibility floor {accessibility['floor']}:** {accessibility['reason']}",
+                    f"  - **Central concepts:** {central}",
+                    f"  - **Incidental concepts:** {incidental}",
+                ]
+            )
+        lines.extend([f"- **Placement:** {level['placement']}", ""])
+    lines.extend(
+        [
             f"**Purpose evidence:** {entry['purpose_evidence']}",
             "",
             f"**Language evidence:** {entry['language_evidence']}",
@@ -2645,6 +2762,8 @@ def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
         "",
         "**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.",
         "",
+        "**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.",
+        "",
         "[← All languages](../README.md)",
         "",
     ]
@@ -2653,8 +2772,8 @@ def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
         entries = [entry for entry in repositories if entry["learning_level"]["level"] == level]
         if not entries:
             empty_message = (
-                "No qualified learning path has been published at this level. "
-                "An empty Level 1 means Exempla has not yet found a path gentle "
+                "No Level 1 path is currently published for this language. "
+                "Exempla has not yet found a path gentle "
                 "enough to publish here; learners are not being told to jump to "
                 "Level 2."
                 if level == 1
@@ -2662,8 +2781,17 @@ def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
             )
             lines.extend([empty_message, ""])
         else:
-            for entry in entries:
-                lines.extend(render_repository(entry))
+            if len(entries) > 1:
+                lines.extend(
+                    ["_Ordered from gentler to more demanding within this Level._", ""]
+                )
+            for entry_index, entry in enumerate(entries):
+                lines.extend(
+                    render_repository(
+                        entry,
+                        recommended_first_path=(level == 1 and entry_index == 0),
+                    )
+                )
     lines.extend(
         [
             f"_Generated from `catalog/{language['slug']}.json`; do not edit by hand._",

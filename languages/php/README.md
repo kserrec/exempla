@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [webmozarts/assert](https://github.com/webmozarts/assert)
 
-**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A small PHP guard that rejects only null and returns every accepted value unchanged.
+
+**Just start:** Read lines 827–837 of `Assert.php`, then compare them with `AssertTest.php`.
+
+**Start with: 11 lines of source.** [Open `src/Assert.php`, lines 827–837.](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/src/Assert.php#L827-L837)
 
 **Why study it:** Trace one exact success-or-failure branch, see why false and zero remain valid, and use focused tests to confirm the returned value and error message.
 
@@ -29,22 +35,31 @@ A small PHP guard that rejects only null and returns every accepted value unchan
 - Returning an accepted input unchanged.
 - Building an error message only on the failure branch.
 
-**What you can learn:**
-
-- Trace the direct null check and the unchanged success return.
-- Compare null with valid falsy inputs such as false and zero.
-- Read focused tests for default, custom, and lazy failure messages.
-
 **Learning path:**
 
 - **Goal:** Understand how `Assert::notNull()` rejects exactly null, preserves other falsy values, resolves diagnostics lazily, and communicates the narrowed return type.
-- **Start here:** [`src/Assert.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/src/Assert.php) — Read the `notNull()` method and the nearby `resolveMessage()` and `reportInvalidArgument()` helpers; together they contain the complete production behavior.
+- **Start here:** [`src/Assert.php`, lines 827–837](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/src/Assert.php#L827-L837) — The `notNull()` range contains the complete public branch and return; its two named error helpers are later follow-up reads in the same pinned file.
 - **Then read:**
   - [`tests/AssertTest.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/tests/AssertTest.php)
   - [`README.md`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/README.md)
 - **Trace:** Start at `notNull()` with a mixed value; follow the strict `null === $value` branch to lazy message resolution and the exception helper, or follow the success branch to the unchanged return value. Close the trace in the shared tests for false, zero, null, return identity, custom messages, and one-time lazy-message evaluation, then confirm the public contract in the README.
 
 **Why this level:**
+
+**Level 1:** The runtime lesson is one precise novice-readable guard; the lazy message and tool-facing annotations can be explained locally without changing the trace.
+
+**License:** MIT ([evidence 1](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace the direct null check and the unchanged success return.
+- Compare null with valid falsy inputs such as false and zero.
+- Read focused tests for default, custom, and lazy failure messages.
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 2:** The runtime body uses basic PHP; a small, locally stated static-analysis convention adds one common professional technique without recurring advanced machinery.
 - **Behavioral reasoning 1:** The entire runtime trace is local, synchronous, and directly observable.
@@ -54,11 +69,6 @@ A small PHP guard that rejects only null and returns every accepted value unchan
   - **Central concepts:** strict null checking; returning accepted input unchanged; throwing an exception on failure
   - **Incidental concepts:** lazy error-message callback; static-analysis narrowing annotations
 - **Placement:** The four structural scores 2/1/1/1 produce rubric Level 1 under the documented formula and guardrails. Novice accessibility floor 1 produces published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.
 
@@ -87,13 +97,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [nikic/iter](https://github.com/nikic/iter)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+### [nikic/iter](https://github.com/nikic/iter)
 
 **Source:** Educational exemplar
 
 A deliberately readable PHP iterator library whose map function transforms values lazily while preserving their keys.
+
+**Just start:** Read lines 82–86 of `iter.php`, then compare them with `iterTest.php`.
+
+**Start with: 5 lines of source.** [Open `src/iter.php`, lines 82–86.](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/src/iter.php#L82-L86)
 
 **Why study it:** See how one small generator turns a familiar eager map into a lazy, key-preserving pipeline with a direct test from range to array.
 
@@ -110,22 +124,31 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - Preserving collection keys across value mapping.
 - Testing deferred behavior by consuming the result at an explicit boundary.
 
-**What you can learn:**
-
-- Apply a callback to each value only when the returned iterator is consumed.
-- Preserve input keys while yielding transformed values.
-- Turn the lazy result into an array in a focused behavior test.
-
 **Learning path:**
 
 - **Goal:** Understand how iter map lazily transforms each iterable value, preserves keys, and produces the expected result when consumed.
-- **Start here:** [`src/iter.php`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/src/iter.php) — The map generator and nearby toArray consumer contain the complete deferred transformation and materialization behavior.
+- **Start here:** [`src/iter.php`, lines 82–86](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/src/iter.php#L82-L86) — The range contains the complete lazy map generator; the later `toArray` consumer is a follow-up read in the same pinned file.
 - **Then read:**
   - [`test/iterTest.php`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/test/iterTest.php)
   - [`README.md`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/README.md)
 - **Trace:** Pass a range and multiplication callback into map, let foreach request each key and value, yield the original key with the transformed value, consume the iterator through toArray, and compare the six exact results in testMap.
 
 **Why this level:**
+
+**Level 2:** One short generator primer is enough to follow each yield and predict the consumed array; the static-analysis annotations do not affect runtime behavior.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Apply a callback to each value only when the returned iterator is consumed.
+- Preserve input keys while yielding transformed values.
+- Turn the lazy result into an array in a focused behavior test.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Generators, callbacks, and iterator types are common professional PHP idioms central to the selected path.
 - **Behavioral reasoning 2:** Consumption controls when work occurs, but the state follows one local foreach sequence with no nonlocal lifecycle.
@@ -135,11 +158,6 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
   - **Central concepts:** generator-based lazy iteration; callback mapping; key preservation
   - **Incidental concepts:** PHPDoc template annotations
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The README says the complete Composer library serves substantially as small generator examples while remaining practically useful; it documents the public API and ships direct PHPUnit coverage.
 
@@ -168,11 +186,13 @@ No specialist domain context is required.
 
 ### [schmittjoh/php-option](https://github.com/schmittjoh/php-option)
 
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
 **Source:** Production software
 
 A small PHP API that represents either a present value or no value, with optional lazy creation.
+
+**Just start:** Read lines 35–147 of `Option.php`, then compare them with `OptionTest.php`.
+
+**Start with: 113 lines of source.** [Open `PhpOption/Option.php`, lines 35–147.](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Option.php#L35-L147)
 
 **Why study it:** See how factories create present, absent, and delayed results, then follow one delayed callback until its successful result is stored for reuse.
 
@@ -191,16 +211,10 @@ A small PHP API that represents either a present value or no value, with optiona
 - Delaying work until a value is requested.
 - Remembering a successful delayed result for later calls.
 
-**What you can learn:**
-
-- Trace factory inputs into Some, None, or LazyOption.
-- Follow the first lazy resolution and later reuse of its result.
-- Use focused tests to compare sentinels, identity, success, and invalid callbacks.
-
 **Learning path:**
 
 - **Goal:** Understand how php-option turns eager values, callables, and existing Option objects into a consistent eager or lazy Option while preserving strict absence and resolution behavior.
-- **Start here:** [`src/PhpOption/Option.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Option.php) — Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations.
+- **Start here:** [`PhpOption/Option.php`, lines 35–147](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Option.php#L35-L147) — Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations.
 - **Then read:**
   - [`src/PhpOption/LazyOption.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/LazyOption.php)
   - [`src/PhpOption/Some.php`](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/src/PhpOption/Some.php)
@@ -211,6 +225,21 @@ A small PHP API that represents either a present value or no value, with optiona
 
 **Why this level:**
 
+**Level 2:** The Option model and lazy resolution are common professional abstractions that fit one short, cohesive primer and remain synchronous and locally traceable.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace factory inputs into Some, None, or LazyOption.
+- Follow the first lazy resolution and later reuse of its result.
+- Use focused tests to compare sentinels, identity, success, and invalid callbacks.
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
+
 - **Language technique 2:** Conventional inheritance, callbacks, closure capture, and documented generic relationships materially shape the API without advanced runtime language machinery.
 - **Behavioral reasoning 2:** Meaningful branching and lazy state require care but remain synchronous and localized in two small classes.
 - **Design span 2:** A few cohesive types contain the complete normalization and resolution behavior.
@@ -219,11 +248,6 @@ A small PHP API that represents either a present value or no value, with optiona
   - **Central concepts:** present-versus-absent Option model; lazy callback resolution; successful-result memoization
   - **Incidental concepts:** PHPDoc generic annotations; strict configurable sentinel
 - **Placement:** The four structural scores 2/2/2/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.
 
@@ -251,6 +275,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [nikic/FastRoute](https://github.com/nikic/FastRoute)
 
@@ -283,7 +309,7 @@ A fast HTTP request router that compiles static and variable routes into compact
 **Learning path:**
 
 - **Goal:** Understand how FastRoute turns a route declaration into compiled static or regular-expression dispatch data and returns the correct dispatch result for an HTTP method and URI.
-- **Start here:** [`src/RouteParser/Std.php`](https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/src/RouteParser/Std.php) — src/RouteParser/Std.php defines the route grammar and expands optional suffixes before declarations enter collection, compiled data generation, and dispatch.
+- **Start here:** [`RouteParser/Std.php`](https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/src/RouteParser/Std.php) — src/RouteParser/Std.php defines the route grammar and expands optional suffixes before declarations enter collection, compiled data generation, and dispatch.
 - **Then read:**
   - [`src/RouteCollector.php`](https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/src/RouteCollector.php)
   - [`src/DataGenerator/RegexBasedAbstract.php`](https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/src/DataGenerator/RegexBasedAbstract.php)
@@ -364,7 +390,7 @@ A defensive-programming library providing typed assertions for method inputs, ou
 **Learning path:**
 
 - **Goal:** Understand how Webmozart Assert reflects over its base assertions and generates type-preserving nullOr, all, and allNullOr runtime variants.
-- **Start here:** [`bin/src/MixinGenerator.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/bin/src/MixinGenerator.php) — MixinGenerator.php contains the hand-written reflection and transformation rules that produce nullOr, all, and allNullOr methods, so it is the source of truth rather than the deliberately repetitive generated trait.
+- **Start here:** [`src/MixinGenerator.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/bin/src/MixinGenerator.php) — MixinGenerator.php contains the hand-written reflection and transformation rules that produce nullOr, all, and allNullOr methods, so it is the source of truth rather than the deliberately repetitive generated trait.
 - **Then read:**
   - [`bin/generate.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/bin/generate.php)
   - [`src/Assert.php`](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/src/Assert.php)
@@ -412,6 +438,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [Seldaek/monolog](https://github.com/Seldaek/monolog)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -443,7 +471,7 @@ A logging library that routes structured records through processors, formatters,
 **Learning path:**
 
 - **Goal:** Understand how Monolog creates and processes one log record, propagates it through bubbling handlers, contains processor or handler failures, and detects recursive logging independently in each Fiber.
-- **Start here:** [`src/Monolog/Logger.php`](https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/src/Monolog/Logger.php) — src/Monolog/Logger.php owns addRecord, where level normalization, recursion depth, record construction, lazy processors, handler bubbling, exception handling, and cleanup meet.
+- **Start here:** [`Monolog/Logger.php`](https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/src/Monolog/Logger.php) — src/Monolog/Logger.php owns addRecord, where level normalization, recursion depth, record construction, lazy processors, handler bubbling, exception handling, and cleanup meet.
 - **Then read:**
   - [`src/Monolog/LogRecord.php`](https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/src/Monolog/LogRecord.php)
   - [`src/Monolog/Handler/HandlerInterface.php`](https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/src/Monolog/Handler/HandlerInterface.php)
@@ -521,7 +549,7 @@ A component framework spanning dependency injection, HTTP kernels, console tools
 **Learning path:**
 
 - **Goal:** Understand how Symfony HttpKernel transforms one Request into a Response through resolver and event extension points while preserving nested-request context and recovering from exceptions.
-- **Start here:** [`src/Symfony/Component/HttpKernel/HttpKernel.php`](https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/src/Symfony/Component/HttpKernel/HttpKernel.php) — src/Symfony/Component/HttpKernel/HttpKernel.php owns handle and handleRaw, which expose every selected request, controller, view, response, exception, finish, and terminate transition.
+- **Start here:** [`HttpKernel/HttpKernel.php`](https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/src/Symfony/Component/HttpKernel/HttpKernel.php) — src/Symfony/Component/HttpKernel/HttpKernel.php owns handle and handleRaw, which expose every selected request, controller, view, response, exception, finish, and terminate transition.
 - **Then read:**
   - [`src/Symfony/Component/HttpKernel/HttpKernelInterface.php`](https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/src/Symfony/Component/HttpKernel/HttpKernelInterface.php)
   - [`src/Symfony/Component/HttpKernel/Controller/ControllerResolver.php`](https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/src/Symfony/Component/HttpKernel/Controller/ControllerResolver.php)

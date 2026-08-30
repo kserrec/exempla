@@ -1,0 +1,1661 @@
+{
+  "schema_version": 1,
+  "audit": "learner-usability-and-launch-polish",
+  "audited_at": "2026-08-30",
+  "scope": {
+    "levels": [1, 2],
+    "non_goals": [
+      "change the ranking algorithm or novice-accessibility calculation",
+      "re-curate accepted paths or research broad replacements",
+      "change the 3/3/2/2/2 capacity map",
+      "create a website, database, or new runtime dependency",
+      "re-audit Levels 3 through 5 beyond a progression sample"
+    ]
+  },
+  "personas": {
+    "new_programmer": {
+      "label": "Persona A — New programmer",
+      "experience": "Completed one introductory tutorial, wrote small exercises, knows basic syntax, and has never read a large open-source repository.",
+      "primary_needs": [
+        "an obvious first action",
+        "a small exact source range",
+        "plain prerequisites",
+        "reassurance that the whole repository is out of scope"
+      ]
+    },
+    "early_independent_programmer": {
+      "label": "Persona B — Early independent programmer",
+      "experience": "Built a few small projects and understands modules and basic tests.",
+      "primary_needs": [
+        "bounded implementation and test traces",
+        "gradual professional vocabulary",
+        "clear same-Level ordering"
+      ]
+    },
+    "intermediate_programmer": {
+      "label": "Persona C — Intermediate programmer",
+      "experience": "Comfortable in the language and mainly uses Levels 3 through 5.",
+      "primary_needs": [
+        "orientation and path boundaries",
+        "transparent Level rationale without beginner hand-holding"
+      ]
+    }
+  },
+  "before": {
+    "commit": "6fb45943e5aee043aea05904c7b3c0e2d56c37eb",
+    "readme_opening": {
+      "tagline": "Learn transferable programming skills from exemplary source code.",
+      "first_action": "Choose a language and a learner Level from 1 through 5, then follow one concrete path through implementation and verification.",
+      "finding": "Counts, capacity, gaps, and source-policy explanation appear before a concrete low-friction start instruction or reassurance that the whole repository is out of scope."
+    },
+    "github_repository_description": "Learn transferable programming skills from exemplary real-world source paths, organized by language and learner level.",
+    "generated_language_page_structure": [
+      "repository title",
+      "four-score summary and published Level",
+      "source type",
+      "description",
+      "why study it",
+      "optional educational-source explanation",
+      "optional short context",
+      "prerequisites",
+      "concepts developed",
+      "what the learner can learn",
+      "learning path with an unbounded file-top Start here link",
+      "full visible Level evidence",
+      "license",
+      "collapsed quality and review evidence"
+    ],
+    "start_here_rendering": {
+      "format": "A pinned GitHub blob link to the top of learning_path.start_here.path followed by its reason.",
+      "exact_line_anchor": false,
+      "initial_source_size_visible": false,
+      "quick_start_visible": false,
+      "recommended_first_path_visible": false,
+      "same_level_ordering_explained": false
+    },
+    "catalog_counts": {
+      "total_paths": 158,
+      "level_1_paths": 18,
+      "level_2_paths": 26,
+      "low_level_paths": 44
+    },
+    "low_level_start_files": {
+      "measurement": "Line counts were read from every start_here.path at its pinned inspection commit; duplicate files count once per learning path because each produces a separate learner first click.",
+      "paths_without_exact_source_range": 44,
+      "paths_over_300_lines": {
+        "total": 23,
+        "level_1": 14,
+        "level_2": 9
+      },
+      "paths_over_1000_lines": {
+        "total": 14,
+        "level_1": 9,
+        "level_2": 5
+      },
+      "representative_large_first_clicks": [
+        {
+          "repository": "more-itertools/more-itertools",
+          "path": "more_itertools/more.py",
+          "lines": 5564,
+          "used_by": ["Level 1 first", "Level 2 chunked"]
+        },
+        {
+          "repository": "sinatra/sinatra",
+          "path": "README.md",
+          "lines": 2952,
+          "used_by": ["Level 2 hello world"]
+        },
+        {
+          "repository": "webmozarts/assert",
+          "path": "src/Assert.php",
+          "lines": 2620,
+          "used_by": ["Level 1 notNull"]
+        },
+        {
+          "repository": "rust-lang/log",
+          "path": "src/lib.rs",
+          "lines": 2045,
+          "used_by": ["Level 1 increment_severity", "Level 2 LevelFilter parsing"]
+        },
+        {
+          "repository": "dotnet/runtime",
+          "path": "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+          "lines": 1752,
+          "used_by": ["Level 1 integer Clamp"]
+        }
+      ]
+    },
+    "learner_journey_findings": {
+      "next_action_obvious": "minor-friction",
+      "source_scope_obvious": "blocker",
+      "source_amount_visible": "blocker",
+      "large_file_intimidation": "material-friction",
+      "prerequisite_visibility": "pass",
+      "test_direction": "minor-friction",
+      "likely_continuation": "material-friction",
+      "summary": "The catalog selects bounded behaviors and tests, but its first source link does not expose that boundary. A novice can reasonably infer that the entire linked file or repository is assigned reading."
+    },
+    "verification": {
+      "unit_tests": {
+        "command": "python3 -m unittest discover -s tests -v",
+        "result": "pass",
+        "tests_run": 45
+      },
+      "catalog_validation": {
+        "command": "python3 scripts/catalog.py validate",
+        "result": "pass"
+      },
+      "generated_output_check": {
+        "command": "python3 scripts/catalog.py check-generated",
+        "result": "pass"
+      }
+    }
+  },
+  "after": {
+    "implementation_basis": {
+      "method": "Structured persona simulation against the generated Markdown, canonical catalog records, and source inspected at each pinned commit.",
+      "disclosure": "This is an AI-assisted walkthrough audit, not an observed human usability study.",
+      "personas_emphasized": [
+        "new_programmer",
+        "early_independent_programmer"
+      ],
+      "corpus_and_scoring_changed": false
+    },
+    "exact_source_ranges": {
+      "level_1": {
+        "covered_paths": 18,
+        "total_paths": 18,
+        "target_maximum_lines": 80,
+        "paths_above_target": 0
+      },
+      "level_2": {
+        "covered_paths": 26,
+        "total_paths": 26,
+        "target_maximum_lines": 150,
+        "paths_above_target": 1
+      },
+      "all_low_level_paths": {
+        "covered_paths": 44,
+        "total_paths": 44,
+        "quick_start_present": 44,
+        "pinned_line_anchor_rendered": 44,
+        "initial_source_size_rendered": 44
+      },
+      "oversized_range_exceptions": [
+        {
+          "language_slug": "c",
+          "repository": "benhoyt/inih",
+          "path_slug": "inih",
+          "path": "ini.c",
+          "line_start": 98,
+          "line_end": 270,
+          "source_lines": 173,
+          "soft_limit": 150,
+          "result": "minor-friction",
+          "reason": "The range is one coherent ini_parse_stream function. Shortening it would hide setup, line classification, callback handling, cleanup, or the final error result needed to understand the parser contract."
+        }
+      ]
+    },
+    "learner_facing_presentation": {
+      "low_level_order": [
+        "title",
+        "source type",
+        "one-sentence description",
+        "Just start",
+        "bounded initial source size",
+        "why study it",
+        "prerequisites",
+        "concepts developed",
+        "learning path",
+        "concise why this level",
+        "license"
+      ],
+      "detailed_quality_and_review_evidence": "collapsed",
+      "repeated_visible_research_prose": "removed from the default Level 1 and Level 2 view without deleting canonical evidence",
+      "words_before_learning_path_start_link": {
+        "level_1_observed_range": [
+          111,
+          149
+        ],
+        "level_2_observed_range": [
+          113,
+          162
+        ],
+        "finding": "The exact code action now appears earlier than the approximate soft budget because early access to code is the intended usability improvement; no entry exceeds the budget."
+      },
+      "whole_repository_reassurance": "Rendered in the root README, language index, and each generated language page."
+    },
+    "level_1_journey_simulations": {
+      "persona": "new_programmer",
+      "route": [
+        "README",
+        "language index",
+        "language page",
+        "first Level 1 path",
+        "Start here",
+        "relevant tests"
+      ],
+      "languages_simulated": 17,
+      "journeys": [
+        {
+          "language_slug": "javascript",
+          "language": "JavaScript",
+          "first_level_1_path": "slash",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "index.js",
+            "whole_file_lines": 9,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "minor-friction"
+          },
+          "after_first_click": {
+            "path": "index.js",
+            "line_start": 1,
+            "line_end": 9,
+            "source_lines": 9,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A tiny JavaScript function that changes Windows backslashes to forward slashes except for one protected path form.",
+          "focused_test_paths": [
+            "test.js"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "python",
+          "language": "Python",
+          "first_level_1_path": "more-itertools-first",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "more_itertools/more.py",
+            "whole_file_lines": 5564,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "more_itertools/more.py",
+            "line_start": 252,
+            "line_end": 276,
+            "source_lines": 25,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A production iterator utility that returns the first available item, uses an explicit fallback for an empty input, or raises when no fallback was supplied.",
+          "focused_test_paths": [
+            "tests/test_more.py"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "java",
+          "language": "Java",
+          "first_level_1_path": "guava-ints-constrain-to-range",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "guava/src/com/google/common/primitives/Ints.java",
+            "whole_file_lines": 844,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "guava/src/com/google/common/primitives/Ints.java",
+            "line_start": 275,
+            "line_end": 286,
+            "source_lines": 12,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A stable Guava integer utility that returns the nearest value inside inclusive bounds and rejects a lower bound greater than the upper bound.",
+          "focused_test_paths": [
+            "guava-tests/test/com/google/common/primitives/IntsTest.java"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "php",
+          "language": "PHP",
+          "first_level_1_path": "webmozart-assert-not-null",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/Assert.php",
+            "whole_file_lines": 2620,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/Assert.php",
+            "line_start": 827,
+            "line_end": 837,
+            "source_lines": 11,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A small PHP guard that rejects only null and returns every accepted value unchanged.",
+          "focused_test_paths": [
+            "tests/AssertTest.php"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "c-sharp",
+          "language": "C#",
+          "first_level_1_path": "dotnet-math-clamp-int",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+            "whole_file_lines": 1752,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+            "line_start": 616,
+            "line_end": 634,
+            "source_lines": 19,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "The .NET integer Clamp overload returns the nearest inclusive bound, preserves in-range values, and rejects a minimum greater than the maximum.",
+          "focused_test_paths": [
+            "src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "cpp",
+          "language": "C++",
+          "first_level_1_path": "abseil-ascii-islower",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "absl/strings/ascii.h",
+            "whole_file_lines": 288,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "minor-friction"
+          },
+          "after_first_click": {
+            "path": "absl/strings/ascii.h",
+            "line_start": 167,
+            "line_end": 172,
+            "source_lines": 6,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "Abseil's production ASCII classifier returns true exactly for byte values from lowercase a through lowercase z, independent of the process locale.",
+          "focused_test_paths": [
+            "absl/strings/ascii_test.cc"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "ruby",
+          "language": "Ruby",
+          "first_level_1_path": "abbrev",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "lib/abbrev.rb",
+            "whole_file_lines": 133,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "minor-friction"
+          },
+          "after_first_click": {
+            "path": "lib/abbrev.rb",
+            "line_start": 74,
+            "line_end": 107,
+            "source_lines": 34,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A Ruby default gem that builds all unambiguous word prefixes and removes a prefix as soon as a collision appears.",
+          "focused_test_paths": [
+            "test/test_abbrev.rb"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "c",
+          "language": "C",
+          "first_level_1_path": "cglm-clamp",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "include/cglm/util.h",
+            "whole_file_lines": 375,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "include/cglm/util.h",
+            "line_start": 184,
+            "line_end": 193,
+            "source_lines": 10,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "The production cglm math library clamps one floating-point value by composing its inline maximum and minimum functions.",
+          "focused_test_paths": [
+            "test/src/test_clamp.c"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "go",
+          "language": "Go",
+          "first_level_1_path": "go-strings-cut",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/strings/strings.go",
+            "whole_file_lines": 1325,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/strings/strings.go",
+            "line_start": 1293,
+            "line_end": 1298,
+            "source_lines": 6,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "Go's standard strings.Cut function splits text around the first separator and returns an explicit found result for the missing case.",
+          "focused_test_paths": [
+            "src/strings/strings_test.go",
+            "src/strings/example_test.go"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "dart",
+          "language": "Dart",
+          "first_level_1_path": "collection-first-or-null",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "pkgs/collection/lib/src/iterable_extensions.dart",
+            "whole_file_lines": 1361,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "pkgs/collection/lib/src/iterable_extensions.dart",
+            "line_start": 379,
+            "line_end": 384,
+            "source_lines": 6,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "Dart's production collection package returns the first iterable value when one exists and null when the iterable is empty.",
+          "focused_test_paths": [
+            "pkgs/collection/test/extensions_test.dart",
+            "pkgs/collection/pubspec.yaml"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "lua",
+          "language": "Lua",
+          "first_level_1_path": "lume-clamp",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "lume.lua",
+            "whole_file_lines": 780,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "lume.lua",
+            "line_start": 82,
+            "line_end": 84,
+            "source_lines": 3,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "Lume's production utility library keeps a number inside a caller-supplied minimum and maximum.",
+          "focused_test_paths": [
+            "test/test.lua"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "typescript",
+          "language": "TypeScript",
+          "first_level_1_path": "vscode-remove-fast-without-order",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/vs/base/common/arrays.ts",
+            "whole_file_lines": 949,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/vs/base/common/arrays.ts",
+            "line_start": 50,
+            "line_end": 60,
+            "source_lines": 11,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A production Visual Studio Code array utility removes an indexed item in constant time by moving the final item into its place before popping the array.",
+          "focused_test_paths": [
+            "src/vs/base/test/common/arrays.test.ts"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "swift",
+          "language": "Swift",
+          "first_level_1_path": "swift-log-level-ordering",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "Sources/Logging/Logger.swift",
+            "whole_file_lines": 1543,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "Sources/Logging/Logger.swift",
+            "line_start": 1277,
+            "line_end": 1302,
+            "source_lines": 26,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "The production Swift logging API gives its seven named log levels a small explicit integral order and tests every pairwise comparison.",
+          "focused_test_paths": [
+            "Tests/LoggingTests/LoggingTest.swift"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "r",
+          "language": "R",
+          "first_level_1_path": "scales-squish-infinite",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "R/bounds.R",
+            "whole_file_lines": 431,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "R/bounds.R",
+            "line_start": 313,
+            "line_end": 320,
+            "source_lines": 8,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "The production scales package replaces negative and positive infinity with the two ends of a supplied range while preserving finite values and missing values.",
+          "focused_test_paths": [
+            "tests/testthat/test-bounds.R"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "shell",
+          "language": "Shell",
+          "first_level_1_path": "bats-file-assert-file-exists",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/file.bash",
+            "whole_file_lines": 1097,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/file.bash",
+            "line_start": 52,
+            "line_end": 74,
+            "source_lines": 23,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "A production Bats helper checks whether a path names a regular file and emits a focused diagnostic only on failure.",
+          "focused_test_paths": [
+            "test/51-assert-10-assert_file_exists.bats"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "kotlin",
+          "language": "Kotlin",
+          "first_level_1_path": "kotlin-substring-after",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "libraries/stdlib/src/kotlin/text/Strings.kt",
+            "whole_file_lines": 1668,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "libraries/stdlib/src/kotlin/text/Strings.kt",
+            "line_start": 464,
+            "line_end": 470,
+            "source_lines": 7,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+          "predicted_behavior_basis": "Kotlin's production standard library returns the text after the first string delimiter, the original string when it is missing, or a caller-supplied fallback.",
+          "focused_test_paths": [
+            "libraries/stdlib/test/text/StringTest.kt"
+          ],
+          "overall": "pass"
+        },
+        {
+          "language_slug": "rust",
+          "language": "Rust",
+          "first_level_1_path": "rust-log-increment-severity",
+          "stage_results": {
+            "readme": "pass",
+            "language_index": "pass",
+            "language_page": "pass",
+            "first_level_1_path": "pass",
+            "start_here_exact_lines": "pass",
+            "relevant_tests": "pass"
+          },
+          "before_first_click": {
+            "path": "src/lib.rs",
+            "whole_file_lines": 2045,
+            "exact_range_visible": false,
+            "source_scope": "blocker",
+            "file_intimidation": "material-friction"
+          },
+          "after_first_click": {
+            "path": "src/lib.rs",
+            "line_start": 592,
+            "line_end": 611,
+            "source_lines": 20,
+            "pinned_anchor_lands_on_reviewed_lines": "pass",
+            "whole_repository_is_out_of_scope": "pass"
+          },
+          "learner_checks": {
+            "next_action_obvious": "pass",
+            "wording_not_intimidating": "pass",
+            "source_amount_known": "pass",
+            "prerequisites_are_novice_level": "pass",
+            "can_predict_behavior_before_opening": "pass",
+            "can_predict_representative_test_outcomes": "pass",
+            "likely_to_continue": "pass"
+          },
+      "predicted_behavior_basis": "The production Rust logging facade advances a Level to the next enum value and keeps Trace unchanged at the upper boundary.",
+      "focused_test_paths": [
+        "src/lib.rs (test_level_up)"
+      ],
+      "overall": "pass"
+        }
+      ],
+      "outcomes": {
+        "pass": 17,
+        "minor_friction": 0,
+        "material_friction": 0,
+        "blocker": 0
+      },
+      "before_after_summary": {
+        "source_ambiguity": {
+          "before": "blocker",
+          "after": "pass"
+        },
+        "scrolling_before_code": {
+          "before": "material-friction",
+          "after": "pass"
+        },
+        "first_action_clarity": {
+          "before": "minor-friction",
+          "after": "pass"
+        },
+        "huge_file_intimidation": {
+          "before": "material-friction",
+          "after": "pass"
+        },
+        "prerequisite_clarity": {
+          "before": "pass",
+          "after": "pass"
+        },
+        "ability_to_predict_tests": {
+          "before": "minor-friction",
+          "after": "pass"
+        }
+      }
+    },
+    "level_1_to_2_simulations": {
+      "languages_checked": 17,
+      "comparisons": [
+        {
+          "language_slug": "javascript",
+          "gentlest_level_1": {
+            "slug": "slash",
+            "source_lines": 9
+          },
+          "hardest_level_1": {
+            "slug": "array-union",
+            "source_lines": 3
+          },
+          "gentlest_level_2": {
+            "slug": "express-hello-world",
+            "source_lines": 15
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Declaring a route with a request-handler callback.",
+          "rationale": "The ladder moves from one lexical string replacement to a collection composition, then from one explicit framework route to closure-backed wrapper state.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "python",
+          "gentlest_level_1": {
+            "slug": "more-itertools-first",
+            "source_lines": 25
+          },
+          "hardest_level_1": {
+            "slug": "more-itertools-first",
+            "source_lines": 25
+          },
+          "gentlest_level_2": {
+            "slug": "more-itertools-chunked",
+            "source_lines": 36
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Turning repeated bounded reads into a lazy iterator of lists.",
+          "rationale": "A direct loop with explicit empty-input outcomes leads to lazy chunk production and its local strict branch before framework-oriented paths.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "java",
+          "gentlest_level_1": {
+            "slug": "guava-ints-constrain-to-range",
+            "source_lines": 12
+          },
+          "hardest_level_1": {
+            "slug": "guava-ints-constrain-to-range",
+            "source_lines": 12
+          },
+          "gentlest_level_2": {
+            "slug": "junit-jupiter-starter-gradle",
+            "source_lines": 6
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Organizing production and test source into explicit project roles.",
+          "rationale": "A direct numeric utility introduces validation and exact boundary assertions before the starter adds annotations, data-driven verification, and project boundaries.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "php",
+          "gentlest_level_1": {
+            "slug": "webmozart-assert-not-null",
+            "source_lines": 11
+          },
+          "hardest_level_1": {
+            "slug": "webmozart-assert-not-null",
+            "source_lines": 11
+          },
+          "gentlest_level_2": {
+            "slug": "iter-map",
+            "source_lines": 5
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Expressing a lazy transformation with yield.",
+          "rationale": "A direct guard leads to one lazy callback transformation, then to an object-based optional-value abstraction with more branches and composition.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "c-sharp",
+          "gentlest_level_1": {
+            "slug": "dotnet-math-clamp-int",
+            "source_lines": 19
+          },
+          "hardest_level_1": {
+            "slug": "dotnet-math-clamp-int",
+            "source_lines": 19
+          },
+          "gentlest_level_2": {
+            "slug": "dotnet-prime-service-tests",
+            "source_lines": 19
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Partitioning test data around a public contract's meaningful cases.",
+          "rationale": "One direct numeric contract and its boundary table lead to a complete elementary test project, a focused generic guard, and a richer text transformation.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "cpp",
+          "gentlest_level_1": {
+            "slug": "abseil-ascii-islower",
+            "source_lines": 6
+          },
+          "hardest_level_1": {
+            "slug": "abseil-ascii-islower",
+            "source_lines": 6
+          },
+          "gentlest_level_2": {
+            "slug": "gsl",
+            "source_lines": 41
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Owning cleanup with an object's lifetime.",
+          "rationale": "One locale-independent byte predicate and exhaustive finite test lead to a lifetime-bound cleanup abstraction before production parsing and rendering systems.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "ruby",
+          "gentlest_level_1": {
+            "slug": "abbrev",
+            "source_lines": 34
+          },
+          "hardest_level_1": {
+            "slug": "abbrev",
+            "source_lines": 34
+          },
+          "gentlest_level_2": {
+            "slug": "sinatra-hello-world",
+            "source_lines": 25
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Using a small domain-specific language to register application behavior.",
+          "rationale": "A local collection algorithm leads to one route callback, then subscriber state, then path parsing and normalization with broader edge cases.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "c",
+          "gentlest_level_1": {
+            "slug": "cglm-clamp",
+            "source_lines": 10
+          },
+          "hardest_level_1": {
+            "slug": "cglm-clamp",
+            "source_lines": 10
+          },
+          "gentlest_level_2": {
+            "slug": "inih",
+            "source_lines": 173
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass-with-documented-range-exception",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Classifying one cleaned input line into a small grammar.",
+          "rationale": "One composed scalar bounds operation leads to a line-oriented callback parser and then to owned recursive syntax trees.",
+          "overall": "pass-with-documented-range-exception"
+        },
+        {
+          "language_slug": "go",
+          "gentlest_level_1": {
+            "slug": "go-strings-cut",
+            "source_lines": 6
+          },
+          "hardest_level_1": {
+            "slug": "go-strings-cut",
+            "source_lines": 6
+          },
+          "gentlest_level_2": {
+            "slug": "go-humanize-comma",
+            "source_lines": 48
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Building formatted output backward into a pre-sized buffer.",
+          "rationale": "One direct string split leads to a numeric buffer algorithm, richer text-scanning state, and then a compact wildcard matcher with more branching and recursive cases.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "dart",
+          "gentlest_level_1": {
+            "slug": "collection-first-or-null",
+            "source_lines": 6
+          },
+          "hardest_level_1": {
+            "slug": "collection-first-or-null",
+            "source_lines": 6
+          },
+          "gentlest_level_2": {
+            "slug": "collection-group-by",
+            "source_lines": 12
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Building grouped collections with create-on-first-use map entries.",
+          "rationale": "One iterator probe leads to generic callback accumulation and then typed validation state and interaction status across a small model abstraction.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "lua",
+          "gentlest_level_1": {
+            "slug": "lume-clamp",
+            "source_lines": 3
+          },
+          "hardest_level_1": {
+            "slug": "lume-clamp",
+            "source_lines": 3
+          },
+          "gentlest_level_2": {
+            "slug": "say",
+            "source_lines": 65
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Storing values under a namespace and key.",
+          "rationale": "One local numeric bounds expression leads to namespaced message storage and fallback before metatable-based object systems and bounded caches.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "typescript",
+          "gentlest_level_1": {
+            "slug": "vscode-remove-fast-without-order",
+            "source_lines": 11
+          },
+          "hardest_level_1": {
+            "slug": "vscode-remove-fast-without-order",
+            "source_lines": 11
+          },
+          "gentlest_level_2": {
+            "slug": "vscode-distinct",
+            "source_lines": 16
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Stable deduplication with a set of previously seen keys.",
+          "rationale": "One local array mutation and explicit performance tradeoff lead to stable deduplication with a key callback and remembered Set state before event and state-management abstractions.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "swift",
+          "gentlest_level_1": {
+            "slug": "swift-log-level-ordering",
+            "source_lines": 26
+          },
+          "hardest_level_1": {
+            "slug": "swift-log-level-ordering",
+            "source_lines": 26
+          },
+          "gentlest_level_2": {
+            "slug": "swift-log-multiplex-routing",
+            "source_lines": 9
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Fan-out through a protocol-based adapter.",
+          "rationale": "A finite enum mapping and exhaustive ordering test lead to a protocol-based fan-out adapter with independent thresholds before generic tagging and web-framework paths.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "r",
+          "gentlest_level_1": {
+            "slug": "scales-squish-infinite",
+            "source_lines": 8
+          },
+          "hardest_level_1": {
+            "slug": "scales-squish-infinite",
+            "source_lines": 8
+          },
+          "gentlest_level_2": {
+            "slug": "scales-rescale-numeric",
+            "source_lines": 18
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Separating a public S3 generic from its numeric implementation.",
+          "rationale": "Two local vector masks and assignments lead to S3 dispatch, interval transformation, and explicit degenerate-input policy before scoped environment changes and plotting architecture.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "shell",
+          "gentlest_level_1": {
+            "slug": "bats-file-assert-file-exists",
+            "source_lines": 23
+          },
+          "hardest_level_1": {
+            "slug": "bats-file-assert-file-exists",
+            "source_lines": 23
+          },
+          "gentlest_level_2": {
+            "slug": "bats-assert-success-status",
+            "source_lines": 47
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Asserting success from a captured process exit status.",
+          "rationale": "One file predicate and focused failure path lead to a captured status-zero contract and structured stdout and stderr diagnostic pipelines before deployment and version-management systems.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "kotlin",
+          "gentlest_level_1": {
+            "slug": "kotlin-substring-after",
+            "source_lines": 7
+          },
+          "hardest_level_1": {
+            "slug": "kotlin-substring-after",
+            "source_lines": 7
+          },
+          "gentlest_level_2": {
+            "slug": "multiplatform-settings-map",
+            "source_lines": 114
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Building an in-memory implementation behind a production interface.",
+          "rationale": "One string search, branch, and slice lead to an interface-backed mutable test double with typed defaults and shared state before command parsing and logging abstractions.",
+          "overall": "pass"
+        },
+        {
+          "language_slug": "rust",
+          "gentlest_level_1": {
+            "slug": "rust-log-increment-severity",
+            "source_lines": 20
+          },
+          "hardest_level_1": {
+            "slug": "rust-log-increment-severity",
+            "source_lines": 20
+          },
+          "gentlest_level_2": {
+            "slug": "rust-log-level-filter-parse",
+            "source_lines": 62
+          },
+          "checks": {
+            "level_2_is_one_step_above_novice": "pass",
+            "no_level_1_is_clearly_harder": "pass",
+            "terminology_increases_gradually": "pass",
+            "source_ranges_manageable": "pass",
+            "useful_professional_idea_not_cliff": "pass"
+          },
+          "professional_idea_introduced": "Implementing Rust's standard string-parsing protocol.",
+          "rationale": "One adjacent enum transition and boundary fallback lead to standard trait parsing, case-insensitive lookup, and explicit Result errors before version grammar and case-conversion algorithms.",
+          "overall": "pass"
+        }
+      ],
+      "outcomes": {
+        "pass": 16,
+        "pass_with_documented_range_exception": 1,
+        "cliff": 0
+      }
+    },
+    "level_2_to_3_sample": {
+      "required_minimum_languages": 10,
+      "languages_checked": 17,
+      "comparisons": [
+        {
+          "language_slug": "javascript",
+          "hardest_level_2": "onetime",
+          "gentlest_level_3": "nanoid",
+          "jump": "reasonable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "onetime introduces state, callbacks, edge cases, and a narrow public contract before nanoid adds randomness, encoding, distribution guarantees, and environment concerns."
+        },
+        {
+          "language_slug": "python",
+          "hardest_level_2": "more-itertools-chunked",
+          "gentlest_level_3": "click",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "chunked prepares learners for callbacks, lazy behavior, and contracts before Click adds decorators, command parsing, context, and error presentation."
+        },
+        {
+          "language_slug": "java",
+          "hardest_level_2": "junit-jupiter-starter-gradle",
+          "gentlest_level_3": "java-diff-utils",
+          "jump": "reasonable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "The JUnit path provides testing and generic project orientation before java-diff-utils introduces generic patch operations, mutation, validation, and several interacting cases."
+        },
+        {
+          "language_slug": "php",
+          "hardest_level_2": "php-option",
+          "gentlest_level_3": "fastroute",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "php-option establishes callbacks, variants, and explicit value absence before FastRoute adds route grammar, compilation, regular expressions, and dispatch state."
+        },
+        {
+          "language_slug": "c-sharp",
+          "hardest_level_2": "humanizer",
+          "gentlest_level_3": "fluentvalidation",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "Humanizer's extension methods, options, and boundary cases prepare the learner for FluentValidation's typed rule expressions, rule components, and asynchronous validation flow."
+        },
+        {
+          "language_slug": "cpp",
+          "hardest_level_2": "gsl",
+          "gentlest_level_3": "cli11",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "final_action introduces templates, move and lifetime behavior, and cleanup guarantees before CLI11 adds command grammar, typed conversion, subcommands, and parser errors."
+        },
+        {
+          "language_slug": "ruby",
+          "hardest_level_2": "pathname",
+          "gentlest_level_3": "jekyll",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "Pathname introduces object APIs, lexical normalization, roots, and platform-shaped cases before Jekyll adds pipeline stages, hooks, rendering, and site-wide state."
+        },
+        {
+          "language_slug": "c",
+          "hardest_level_2": "inih",
+          "gentlest_level_3": "tomlc17",
+          "jump": "reasonable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "inih introduces buffers, callbacks, parsing branches, and errors before tomlc17 adds bounded scanning, ownership, tagged values, recursive structures, and format constraints."
+        },
+        {
+          "language_slug": "go",
+          "hardest_level_2": "match",
+          "gentlest_level_3": "gin",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "match provides byte scanning, wildcard state, and backtracking-like reasoning before Gin introduces request context, routing trees, middleware, and framework lifecycle."
+        },
+        {
+          "language_slug": "dart",
+          "hardest_level_2": "formz",
+          "gentlest_level_3": "dart-sdk",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "formz introduces generics, state, validation, equality, and composition before Future.wait adds asynchronous coordination, ordering, cleanup, and first-error guarantees."
+        },
+        {
+          "language_slug": "lua",
+          "hardest_level_2": "say",
+          "gentlest_level_3": "middleclass",
+          "jump": "reasonable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "say introduces tables, namespaces, fallback, formatting, and local state before middleclass adds metatables, inheritance, mixins, propagation, and dynamic method rules."
+        },
+        {
+          "language_slug": "typescript",
+          "hardest_level_2": "vscode-distinct",
+          "gentlest_level_3": "mitt",
+          "jump": "reasonable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "distinct introduces generics, callbacks, closure state, and stable collection contracts before mitt adds generic event maps, subscriptions, wildcard dispatch, and mutation during delivery."
+        },
+        {
+          "language_slug": "swift",
+          "hardest_level_2": "swift-log-multiplex-routing",
+          "gentlest_level_3": "tagged",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "MultiplexLogHandler introduces protocol composition, adapter boundaries, and filtered fan-out before Tagged adds phantom generic distinctions and broader type-level API reasoning."
+        },
+        {
+          "language_slug": "r",
+          "hardest_level_2": "scales-rescale-numeric",
+          "gentlest_level_3": "withr",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "rescale introduces method dispatch, vector transformation contracts, and missing and zero-range behavior before withr adds dynamic scope, deferred cleanup, and process state."
+        },
+        {
+          "language_slug": "shell",
+          "hardest_level_2": "bats-assert-success-status",
+          "gentlest_level_3": "dokku",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "assert_success introduces captured exit-code contracts, grouped output, and shared formatting boundaries before Dokku adds process orchestration, plugins, containers, configuration, and deployment lifecycle."
+        },
+        {
+          "language_slug": "kotlin",
+          "hardest_level_2": "multiplatform-settings-map",
+          "gentlest_level_3": "clikt",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "MapSettings introduces interfaces, safe casts, mutable state, and reusable contract tests before Clikt adds delegated options, conversion, command context, and parser errors."
+        },
+        {
+          "language_slug": "rust",
+          "hardest_level_2": "rust-log-level-filter-parse",
+          "gentlest_level_3": "semver",
+          "jump": "large-but-explainable",
+          "harder_reason_is_understandable": "pass",
+          "rationale": "LevelFilter parsing introduces FromStr, Result, finite textual contracts, and invalid input before semver adds grammar, identifiers, precedence, parsing errors, and compatibility rules."
+        }
+      ],
+      "outcomes": {
+        "reasonable": 5,
+        "large_but_explainable": 12,
+        "cliff": 0
+      }
+    },
+    "navigation": {
+      "recommended_first_path": "The gentlest existing Level 1 path is visibly marked in all 17 populated languages.",
+      "same_level_ordering": "Every Level with multiple paths says it is ordered from gentler to more demanding.",
+      "empty_level_1_copy": "No Level 1 path is currently published for this language.",
+      "empty_level_1_languages": [
+        "scala",
+        "powershell",
+        "objective-c"
+      ],
+      "language_index_layout": "A wrapping list replaces the wide count table so language links and Level counts remain scannable at narrow widths."
+    },
+    "narrow_width_review": {
+      "method": "Structural narrow-width Markdown review; screenshots were unnecessary because the output is static Markdown.",
+      "pages_reviewed": [
+        "languages/README.md",
+        "languages/c-sharp/README.md",
+        "languages/javascript/README.md",
+        "languages/php/README.md",
+        "languages/swift/README.md",
+        "languages/scala/README.md"
+      ],
+      "checks": {
+        "giant_tables": "pass — the language index is a wrapping list and representative language pages contain no tables",
+        "excessive_heading_depth": "pass — representative pages use no heading deeper than Level 3",
+        "path_readability": "pass — source links use short trailing-path labels while preserving exact destinations",
+        "nested_lists": "pass",
+        "quick_start_visibility": "pass — Just start appears immediately after the description",
+        "details_placement": "pass — research evidence remains below the learner path in collapsed details",
+        "start_here_visibility": "pass — the exact line link appears before the detailed learning-path trace and again within it"
+      },
+      "overall": "pass"
+    },
+    "public_copy_and_feedback": {
+      "readme": "The opening now states what Exempla is, who Levels 1 and 5 are for, how to begin, and that the whole repository is out of scope before counts and audit detail.",
+      "github_repository_description": {
+        "before": "Learn transferable programming skills from exemplary real-world source paths, organized by language and learner level.",
+        "after": "Learn programming from exemplary source code, organized by language and learner level.",
+        "verified_on_github": true
+      },
+      "difficulty_feedback_template": {
+        "path": ".github/ISSUE_TEMPLATE/05-path-felt-too-hard.yml",
+        "title": "This path felt harder than its Level",
+        "asks_for": [
+          "language",
+          "repository or path",
+          "approximate programming experience",
+          "where the learner got lost",
+          "unfamiliar terminology",
+          "whether the initial source range felt too large",
+          "whether prerequisites prepared the learner"
+        ],
+        "formal_scoring_defense_required": false
+      }
+    },
+    "residual_findings": {
+      "minor_friction": [
+        "The C inih Level 2 path starts with 173 source lines, 23 above the soft target, because the indivisible parser function is the honest learning boundary."
+      ],
+      "material_friction": [],
+      "blockers": []
+    },
+    "verification": {
+      "generation": {
+        "command": "python3 scripts/catalog.py generate",
+        "result": "pass"
+      },
+      "unit_tests": {
+        "command": "python3 -m unittest discover -s tests -v",
+        "result": "pass",
+        "tests_run": 51
+      },
+      "catalog_validation": {
+        "command": "python3 scripts/catalog.py validate",
+        "result": "pass"
+      },
+      "generated_output_check": {
+        "command": "python3 scripts/catalog.py check-generated",
+        "result": "pass"
+      },
+      "whitespace_and_patch_check": {
+        "command": "git diff --check",
+        "result": "pass"
+      },
+      "github_actions": {
+        "result": "pending-publication",
+        "reason": "This work is not committed or pushed because this request did not authorize publication. The same commands used by the repository workflow pass locally; GitHub Actions can run after an explicit commit-and-push request."
+      }
+    }
+  }
+}

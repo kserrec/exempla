@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "more-itertools is a maintained installable Python package whose README publishes first among its application-facing iterable selection tools.",
       "why_study": "Read one short production function that handles a successful loop, an empty input with a fallback, and an empty input that must report an error.",
+      "quick_start": "Read lines 252–276 of `more.py`, then compare them with `test_more.py`.",
       "learn": [
         "Return immediately when the loop sees the first item.",
         "Distinguish an omitted default from a caller-supplied default value.",
@@ -36,6 +37,8 @@
         "goal": "Understand how more-itertools first selects one item while making both forms of empty-input behavior explicit.",
         "start_here": {
           "path": "more_itertools/more.py",
+          "line_start": 252,
+          "line_end": 276,
           "reason": "The first function contains the complete loop, omitted-default check, error, and fallback return."
         },
         "supporting_files": [
@@ -142,6 +145,7 @@
       "source_kind": "production",
       "purpose_evidence": "more-itertools is a maintained installable Python package whose README documents chunked as one of its application-facing iterator recipes.",
       "why_study": "Follow a compact professional iterator from input validation through lazy grouping, then compare ordinary and strict edge cases in focused tests.",
+      "quick_start": "Read lines 214–249 of `more.py`, then compare them with `test_more.py`.",
       "learn": [
         "Build successive lists from any iterable without consuming the complete input first.",
         "Use a sentinel-driven iterator to stop when no next group remains.",
@@ -165,6 +169,8 @@
         "goal": "Understand how more-itertools chunked lazily groups an iterable and enforces optional exact divisibility.",
         "start_here": {
           "path": "more_itertools/more.py",
+          "line_start": 214,
+          "line_end": 249,
           "reason": "The chunked function contains size validation, the sentinel iterator, and the strict wrapper generator together."
         },
         "supporting_files": [

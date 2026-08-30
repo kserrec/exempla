@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [recp/cglm](https://github.com/recp/cglm)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 The production cglm math library clamps one floating-point value by composing its inline maximum and minimum functions.
+
+**Just start:** Read lines 184–193 of `util.h`, then compare them with `test_clamp.c`.
+
+**Start with: 10 lines of source.** [Open `cglm/util.h`, lines 184–193.](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/include/cglm/util.h#L184-L193)
 
 **Why study it:** See a complete boundary operation expressed as one composition, then connect values below, within, and above the range to direct assertions.
 
@@ -29,16 +35,10 @@ The production cglm math library clamps one floating-point value by composing it
 - Keeping a small utility in a public header as an inline function.
 - Testing below-range, in-range, and above-range inputs.
 
-**What you can learn:**
-
-- Raise a value to the lower bound with a maximum operation.
-- Lower the intermediate value to the upper bound with a minimum operation.
-- Verify the three observable regions around a bounded interval.
-
 **Learning path:**
 
 - **Goal:** Understand how cglm keeps a scalar inside caller-supplied bounds and verifies each region of the input space.
-- **Start here:** [`include/cglm/util.h`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/include/cglm/util.h) — The public documentation, declaration, glm_min and glm_max helpers, and complete glm_clamp formula are together in this header.
+- **Start here:** [`cglm/util.h`, lines 184–193](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/include/cglm/util.h#L184-L193) — The range contains the clamp contract and complete formula; the named minimum and maximum helpers are short follow-up reads in the same file.
 - **Then read:**
   - [`test/src/test_clamp.c`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/test/src/test_clamp.c)
   - [`docs/source/util.rst`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/docs/source/util.rst)
@@ -48,6 +48,21 @@ The production cglm math library clamps one floating-point value by composing it
 
 **Why this level:**
 
+**Level 1:** The clamp formula and all test cases are novice C material; the inline macro needs only a local note and does not affect behavior.
+
+**License:** MIT ([evidence 1](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Raise a value to the lower bound with a maximum operation.
+- Lower the intermediate value to the upper bound with a minimum operation.
+- Verify the three observable regions around a bounded interval.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
 - **Language technique 1:** The complete implementation is ordinary C function composition over three float parameters.
 - **Behavioral reasoning 1:** The output follows from two local comparisons embodied by min and max.
 - **Design span 1:** One header and one focused test contain the complete selected behavior.
@@ -56,11 +71,6 @@ The production cglm math library clamps one floating-point value by composing it
   - **Central concepts:** float parameters and return values; minimum and maximum; nested function calls; boundary assertions
   - **Incidental concepts:** the CGLM_INLINE portability macro
 - **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** cglm is a maintained C mathematics library for graphics applications, and glm_clamp is a documented public utility used by other library operations.
 
@@ -91,11 +101,13 @@ No specialist domain context is required.
 
 ### [benhoyt/inih](https://github.com/benhoyt/inih)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
 **Source:** Production software
 
 A small C parser that reads an INI settings file line by line and reports each section, name, and value to a callback.
+
+**Just start:** Read lines 98–270 of `ini.c`, then compare them with `unittest.c`.
+
+**Start with: 173 lines of source.** [Open `ini.c`, lines 98–270.](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.c#L98-L270)
 
 **Why study it:** Follow one input line from whitespace cleanup through comment, section, key-value, continuation, or error handling, then see the parsed result cross one callback boundary.
 
@@ -114,17 +126,10 @@ A small C parser that reads an INI settings file line by line and reports each s
 - Sending parsed section, name, and value strings through a callback.
 - Keeping parsing policy configurable without changing the public trace.
 
-**What you can learn:**
-
-- Trace a line-oriented parser with direct branches for comments, sections, values, continuations, and malformed input.
-- See how a callback lets application code decide what parsed names and values mean.
-- Compare file, stream, and string readers that share the same parser.
-- Use baseline and configuration tests to understand bounded lines, optional allocation, and compile-time policy choices.
-
 **Learning path:**
 
 - **Goal:** Understand how a compact C parser reads INI text one line at a time and reports each result through a callback.
-- **Start here:** [`ini.c`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.c) — Begin at ini_parse_stream, where every input source joins the same line-classification and handler-callback loop.
+- **Start here:** [`ini.c`, lines 98–270](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.c#L98-L270) — Begin at ini_parse_stream, where every input source joins the same line-classification and handler-callback loop.
 - **Then read:**
   - [`ini.h`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.h)
   - [`README.md`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/README.md)
@@ -136,6 +141,22 @@ A small C parser that reads an INI settings file line by line and reports each s
 
 **Why this level:**
 
+**Level 2:** The full INI grammar and callback role fit a short primer, after which representative lines are predictable; configuration branches stretch the path but remain subordinate to one local loop.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace a line-oriented parser with direct branches for comments, sections, values, continuations, and malformed input.
+- See how a callback lets application code decide what parsed names and values mean.
+- Compare file, stream, and string readers that share the same parser.
+- Use baseline and configuration tests to understand bounded lines, optional allocation, and compile-time policy choices.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
 - **Language technique 2:** Common professional C callbacks, buffers, and preprocessor options materially shape the parser without advanced memory techniques.
 - **Behavioral reasoning 2:** Several related parser branches recur, but each line is handled synchronously in one loop.
 - **Design span 1:** The complete reader-to-handler lesson remains in one focused component and its tests.
@@ -144,11 +165,6 @@ A small C parser that reads an INI settings file line by line and reports each s
   - **Central concepts:** a trivial section-and-name-value grammar; line-oriented parsing; reporting parsed values through a callback
   - **Incidental concepts:** compile-time policy switches; optional stack or heap line storage; UTF-8 byte-order-mark compatibility
 - **Placement:** The four structural scores 2/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.
 
@@ -176,6 +192,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [cktan/tomlc17](https://github.com/cktan/tomlc17)
 
@@ -343,6 +361,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [git/git](https://github.com/git/git)
 
 **Language 4 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
@@ -507,6 +527,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 5 — Expert
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [curl/curl](https://github.com/curl/curl)
 

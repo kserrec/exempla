@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [dotnet/runtime](https://github.com/dotnet/runtime)
 
-**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 The .NET integer Clamp overload returns the nearest inclusive bound, preserves in-range values, and rejects a minimum greater than the maximum.
+
+**Just start:** Read lines 616–634 of the runtime `Math.cs`, then compare the clamp cases in the test `Math.cs`.
+
+**Start with: 19 lines of source.** [Open `System/Math.cs`, lines 616–634.](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Private.CoreLib/src/System/Math.cs#L616-L634)
 
 **Why study it:** Trace a familiar numeric operation through explicit validation and three direct returns, then compare signed boundary rows and the invalid-range test.
 
@@ -29,22 +35,31 @@ The .NET integer Clamp overload returns the nearest inclusive bound, preserves i
 - Expressing an inclusive clamp with three obvious outcomes.
 - Reusing table data across numeric overload tests.
 
-**What you can learn:**
-
-- Reject a numeric interval whose minimum exceeds its maximum.
-- Return the lower bound, upper bound, or original value with direct branches.
-- Use shared test data to cover negative, interior, boundary, and out-of-range integers.
-
 **Learning path:**
 
 - **Goal:** Understand how .NET Math.Clamp keeps an int inside inclusive bounds and reports a reversed interval.
-- **Start here:** [`src/libraries/System.Private.CoreLib/src/System/Math.cs`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Private.CoreLib/src/System/Math.cs) — The int overload contains the full validation and three-result control flow.
+- **Start here:** [`System/Math.cs`, lines 616–634](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Private.CoreLib/src/System/Math.cs#L616-L634) — The int overload contains the full validation and three-result control flow.
 - **Then read:**
   - [`src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs)
   - [`README.md`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/README.md)
 - **Trace:** Enter the int Clamp overload, call the shared exception helper when min exceeds max, otherwise return min for a low value, max for a high value, or the original value, then map those branches to Clamp_SignedInt_TestData, Clamp_Int, and the reversed-range fact.
 
 **Why this level:**
+
+**Level 1:** The control flow is entirely within the novice C# baseline; the attribute and shared throw helper can each be explained locally without another topic.
+
+**License:** MIT ([evidence 1](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/LICENSE.TXT))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Reject a numeric interval whose minimum exceeds its maximum.
+- Return the lower bound, upper bound, or original value with direct branches.
+- Use shared test data to cover negative, interior, boundary, and out-of-range integers.
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 1:** The selected overload uses only basic C# method, branch, integer, and exception-call syntax.
 - **Behavioral reasoning 2:** A few meaningful local branches cover the complete behavior without nonlocal state.
@@ -54,11 +69,6 @@ The .NET integer Clamp overload returns the nearest inclusive bound, preserves i
   - **Central concepts:** input validation; inclusive numeric bounds; direct conditional returns
   - **Incidental concepts:** an inlining attribute; a shared helper that throws the range exception
 - **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/LICENSE.TXT))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** dotnet/runtime is the production implementation of .NET, and Math.Clamp is a public standard-library API used by C# applications.
 
@@ -87,13 +97,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [dotnet/samples](https://github.com/dotnet/samples)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 3 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+### [dotnet/samples](https://github.com/dotnet/samples)
 
 **Source:** Educational exemplar
 
 Microsoft's completed unit-testing sample checks a small prime-number service with boundary, positive, and negative xUnit data sets.
+
+**Just start:** Read lines 5–23 of `PrimeService.cs`, then compare them with `PrimeService_IsPrimeShould.cs`.
+
+**Start with: 19 lines of source.** [Open `PrimeService/PrimeService.cs`, lines 5–23.](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs#L5-L23)
 
 **Why study it:** Follow one small class into organized boundary and representative data sets, seeing how test names and failure messages explain the intended contract.
 
@@ -114,16 +128,10 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - Keeping production and test dependencies in separate projects.
 - Writing diagnostic assertions that include the failing input.
 
-**What you can learn:**
-
-- Separate a library project from a project that tests its public behavior.
-- Use data rows to cover boundary values, representative successes, and representative failures.
-- Trace an early return and divisor loop into exact boolean assertions.
-
 **Learning path:**
 
 - **Goal:** Understand how a complete .NET sample organizes and runs data-driven tests for a small C# prime-checking service.
-- **Start here:** [`core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs) — The file contains the complete early-boundary and divisor-loop behavior checked by the sample.
+- **Start here:** [`PrimeService/PrimeService.cs`, lines 5–23](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs#L5-L23) — The file contains the complete early-boundary and divisor-loop behavior checked by the sample.
 - **Then read:**
   - [`core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs)
   - [`core/getting-started/unit-testing-using-dotnet-test/README.md`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/README.md)
@@ -131,6 +139,21 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - **Trace:** Start at IsPrime's less-than-two return, follow candidates through the divisor loop and success return, then group the InlineData rows into boundary, prime, and composite cases and connect their xUnit assertions to the configured test project.
 
 **Why this level:**
+
+**Level 2:** A short primer on theories, InlineData, and project references is sufficient; the elementary loop and every expected result remain directly predictable.
+
+**License:** CC-BY-4.0 ([evidence 1](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Separate a library project from a project that tests its public behavior.
+- Use data rows to cover boundary values, representative successes, and representative failures.
+- Trace an early return and divisor loop into exact boolean assertions.
+
+**Language 3 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
 
 - **Language technique 3:** Attributes materially control test discovery and input injection, while the implementation language remains basic C#.
 - **Behavioral reasoning 2:** A few local branches determine the result, and representative cases remain easy to simulate by hand.
@@ -140,11 +163,6 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
   - **Central concepts:** data-driven xUnit tests; test-case partitioning; library and test project separation
   - **Incidental concepts:** the square-root loop bound; MSBuild package references
 - **Placement:** The four scores 3/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** CC-BY-4.0 ([evidence 1](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The subproject README identifies this complete artifact as the sample for Microsoft's unit-testing tutorial, documents restore and test commands, and includes both implementation and configured test projects.
 
@@ -173,11 +191,13 @@ The learner-facing short context appears above.
 
 ### [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses)
 
-**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A small C# library that checks arguments and returns an accepted value so calling code can continue safely.
+
+**Just start:** Read lines 28–77 of `GuardAgainstNullExtensions.cs`, then compare them with `GuardAgainstNull.cs`.
+
+**Start with: 50 lines of source.** [Open `GuardClauses/GuardAgainstNullExtensions.cs`, lines 28–77.](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/src/GuardClauses/GuardAgainstNullExtensions.cs#L28-L77)
 
 **Why study it:** See how one null check becomes a reusable guard while compiler annotations make the successful non-null result available to later code.
 
@@ -192,22 +212,31 @@ A small C# library that checks arguments and returns an accepted value so callin
 - Returning the accepted value with a non-null compiler contract.
 - Preserving useful parameter names and predictable exceptions.
 
-**What you can learn:**
-
-- Trace reference-type and nullable-value inputs through the same two outcomes.
-- See how compiler-facing annotations match the runtime guard.
-- Use direct tests to compare default and custom exception behavior.
-
 **Learning path:**
 
 - **Goal:** Understand how GuardClauses rejects null arguments while returning a compiler-narrowed value and preserving the caller's argument name and exception contract.
-- **Start here:** [`src/GuardClauses/GuardAgainstNullExtensions.cs`](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/src/GuardClauses/GuardAgainstNullExtensions.cs) — src/GuardClauses/GuardAgainstNullExtensions.cs contains the reference- and value-type Null overloads and exposes every selected type-system and exception behavior directly.
+- **Start here:** [`GuardClauses/GuardAgainstNullExtensions.cs`, lines 28–77](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/src/GuardClauses/GuardAgainstNullExtensions.cs#L28-L77) — src/GuardClauses/GuardAgainstNullExtensions.cs contains the reference- and value-type Null overloads and exposes every selected type-system and exception behavior directly.
 - **Then read:**
   - [`src/GuardClauses/Guard.cs`](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/src/GuardClauses/Guard.cs)
   - [`test/GuardClauses.UnitTests/GuardAgainstNull.cs`](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/test/GuardClauses.UnitTests/GuardAgainstNull.cs)
 - **Trace:** Begin with the reference- and value-type Null extension overloads, follow their generic constraints, nullable annotations, CallerArgumentExpression parameter capture, and optional exception factory into ArgumentNullException, then correlate default and custom names, messages, factories, non-null returns, and nullable value narrowing in GuardAgainstNull tests.
 
 **Why this level:**
+
+**Level 2:** A short primer can explain the two compiler-facing attributes; after that, the null and accepted-value branches are direct and predictable.
+
+**License:** MIT ([evidence 1](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace reference-type and nullable-value inputs through the same two outcomes.
+- See how compiler-facing annotations match the runtime guard.
+- Use direct tests to compare default and custom exception behavior.
+
+**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 3:** Generics, constraints, compiler flow annotations, and caller-expression capture materially shape the small public API.
 - **Behavioral reasoning 2:** Validation and error behavior require care but remain synchronous and local to the guard call.
@@ -217,11 +246,6 @@ A small C# library that checks arguments and returns an accepted value so callin
   - **Central concepts:** reusable null guard; generic reference- and value-type overloads; compiler non-null flow narrowing
   - **Incidental concepts:** automatic caller-expression capture; optional custom exception factory
 - **Placement:** The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/ardalis/GuardClauses/blob/7d55fa5397d73c0fe4e86a2dcab0230d1db57870/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.
 
@@ -250,11 +274,13 @@ No specialist domain context is required.
 
 ### [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
 
-**Language 2 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A C# string helper that shortens long text to a requested length and can keep either the beginning or the end.
+
+**Just start:** Read lines 83–127 of `TruncateExtensions.cs`, then compare them with `TruncatorTests.cs`.
+
+**Start with: 45 lines of source.** [Open `Humanizer/TruncateExtensions.cs`, lines 83–127.](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/src/Humanizer/TruncateExtensions.cs#L83-L127)
 
 **Why study it:** Follow a familiar string operation through overloads, one strategy boundary, left-or-right slicing, an optional marker, and a table of concrete boundary cases.
 
@@ -273,17 +299,10 @@ A C# string helper that shortens long text to a requested length and can keep ei
 - Separating a public string helper from a replaceable truncation strategy.
 - Preserving a maximum result length while choosing the kept side and optional marker.
 
-**What you can learn:**
-
-- Trace simple extension-method overloads into one fixed-length truncation strategy.
-- Compare unchanged, right-truncated, and left-truncated strings with and without a marker.
-- See how nullable input and a compiler-facing non-null return annotation agree.
-- Use table-driven tests to identify the exact maximum-length contract and its documented UTF-16 code-unit limit.
-
 **Learning path:**
 
 - **Goal:** Understand how a C# helper shortens a string to a fixed maximum length from either side.
-- **Start here:** [`src/Humanizer/TruncateExtensions.cs`](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/src/Humanizer/TruncateExtensions.cs) — Begin with the public overloads and follow them into the one overload that validates the strategy and delegates the work.
+- **Start here:** [`Humanizer/TruncateExtensions.cs`, lines 83–127](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/src/Humanizer/TruncateExtensions.cs#L83-L127) — Begin with the public overloads and follow them into the one overload that validates the strategy and delegates the work.
 - **Then read:**
   - [`src/Humanizer/Truncation/ITruncator.cs`](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/src/Humanizer/Truncation/ITruncator.cs)
   - [`src/Humanizer/Truncation/FixedLengthTruncator.cs`](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/src/Humanizer/Truncation/FixedLengthTruncator.cs)
@@ -295,6 +314,22 @@ A C# string helper that shortens long text to a requested length and can keep ei
 
 **Why this level:**
 
+**Level 2:** One short strategy primer makes every selected branch predictable; the Unicode limitation is stated as a boundary rather than expanded into a separate text-processing lesson.
+
+**License:** MIT ([evidence 1](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/license.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace simple extension-method overloads into one fixed-length truncation strategy.
+- Compare unchanged, right-truncated, and left-truncated strings with and without a marker.
+- See how nullable input and a compiler-facing non-null return annotation agree.
+- Use table-driven tests to identify the exact maximum-length contract and its documented UTF-16 code-unit limit.
+
+**Language 2 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
+
 - **Language technique 2:** Several common professional C# techniques shape the small API, but each is conventional and locally visible.
 - **Behavioral reasoning 1:** Each call follows a short deterministic branch and has no lifecycle or hidden state.
 - **Design span 2:** A few cohesive types form the complete public-to-strategy path.
@@ -303,11 +338,6 @@ A C# string helper that shortens long text to a requested length and can keep ei
   - **Central concepts:** fixed-length string truncation; overload delegation to a strategy; left-versus-right slicing with an optional marker
   - **Incidental concepts:** nullable-flow annotation; UTF-16 code-unit rather than grapheme boundaries
 - **Placement:** The four structural scores 2/1/2/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/license.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.
 
@@ -335,6 +365,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [FluentValidation/FluentValidation](https://github.com/FluentValidation/FluentValidation)
 
@@ -367,7 +399,7 @@ A strongly typed validation framework that turns fluent expression-based rules i
 **Learning path:**
 
 - **Goal:** Understand how FluentValidation turns a typed RuleFor expression into an authored asynchronous property-rule pipeline with conditions, cascade behavior, dependent rules, cancellation, and failures.
-- **Start here:** [`src/FluentValidation/AbstractValidator.cs`](https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/src/FluentValidation/AbstractValidator.cs) — src/FluentValidation/AbstractValidator.cs contains RuleFor and ValidateInternalAsync, connecting typed rule declaration to selection, cancellation, class-level cascade, and rule execution.
+- **Start here:** [`FluentValidation/AbstractValidator.cs`](https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/src/FluentValidation/AbstractValidator.cs) — src/FluentValidation/AbstractValidator.cs contains RuleFor and ValidateInternalAsync, connecting typed rule declaration to selection, cancellation, class-level cascade, and rule execution.
 - **Then read:**
   - [`src/FluentValidation/Internal/PropertyRule.cs`](https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/src/FluentValidation/Internal/PropertyRule.cs)
   - [`src/FluentValidation/Internal/RuleBase.cs`](https://github.com/FluentValidation/FluentValidation/blob/daa00b795450881c233253488e3ddeb362f59f56/src/FluentValidation/Internal/RuleBase.cs)
@@ -447,7 +479,7 @@ A structured logging core that turns message templates and properties into immut
 **Learning path:**
 
 - **Goal:** Understand how Serilog parses and caches a message template, binds one structured event, enriches and filters it, emits it to sinks, and contains extension failures.
-- **Start here:** [`src/Serilog/Core/Logger.cs`](https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/src/Serilog/Core/Logger.cs) — src/Serilog/Core/Logger.cs owns Write, where level checks, message-template lookup, property binding, LogEvent creation, enrichment, filtering, and sink emission form one complete trace.
+- **Start here:** [`Core/Logger.cs`](https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/src/Serilog/Core/Logger.cs) — src/Serilog/Core/Logger.cs owns Write, where level checks, message-template lookup, property binding, LogEvent creation, enrichment, filtering, and sink emission form one complete trace.
 - **Then read:**
   - [`src/Serilog/LoggerConfiguration.cs`](https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/src/Serilog/LoggerConfiguration.cs)
   - [`src/Serilog/Core/Pipeline/MessageTemplateCache.cs`](https://github.com/serilog/serilog/blob/49b5339ce85385dc52d4d8e8f2b8308becf23506/src/Serilog/Core/Pipeline/MessageTemplateCache.cs)
@@ -496,6 +528,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 4 — Advanced
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [DapperLib/Dapper](https://github.com/DapperLib/Dapper)
 
@@ -605,7 +639,7 @@ The ASP.NET Core web platform, including HTTP servers, middleware, routing, host
 **Learning path:**
 
 - **Goal:** Understand how ASP.NET Core composes an ordered request-delegate pipeline and adapts conventional or factory-created middleware with dependency injection and reliable per-request release.
-- **Start here:** [`src/Http/Http/src/Builder/ApplicationBuilder.cs`](https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/src/Http/Http/src/Builder/ApplicationBuilder.cs) — ApplicationBuilder.cs contains Use and Build, which reveal how middleware factories are stored and folded around a terminal RequestDelegate before adaptation details are introduced.
+- **Start here:** [`Builder/ApplicationBuilder.cs`](https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/src/Http/Http/src/Builder/ApplicationBuilder.cs) — ApplicationBuilder.cs contains Use and Build, which reveal how middleware factories are stored and folded around a terminal RequestDelegate before adaptation details are introduced.
 - **Then read:**
   - [`src/Http/Http.Abstractions/src/IApplicationBuilder.cs`](https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/src/Http/Http.Abstractions/src/IApplicationBuilder.cs)
   - [`src/Http/Http.Abstractions/src/Extensions/UseMiddlewareExtensions.cs`](https://github.com/dotnet/aspnetcore/blob/8c1a406592b06b954acac509fa4725ca560b2e53/src/Http/Http.Abstractions/src/Extensions/UseMiddlewareExtensions.cs)
@@ -656,6 +690,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [dotnet/roslyn](https://github.com/dotnet/roslyn)
 
 **Language 5 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -687,7 +723,7 @@ The open-source C# and Visual Basic compiler platform that exposes syntax, seman
 **Learning path:**
 
 - **Goal:** Understand how Roslyn validates an emit request and turns one immutable CSharpCompilation into either stable diagnostics or deterministic PE and PDB output.
-- **Start here:** [`src/Compilers/Core/Portable/Compilation/Compilation.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/Core/Portable/Compilation/Compilation.cs) — Compilation.cs owns the public Emit boundary, validates streams and options, creates the language-specific module builder, invokes compilation, generates resources and documentation, gates serialization on diagnostics, and returns EmitResult.
+- **Start here:** [`Compilation/Compilation.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/Core/Portable/Compilation/Compilation.cs) — Compilation.cs owns the public Emit boundary, validates streams and options, creates the language-specific module builder, invokes compilation, generates resources and documentation, gates serialization on diagnostics, and returns EmitResult.
 - **Then read:**
   - [`src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Compilation/CSharpCompilation.cs)
   - [`src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs`](https://github.com/dotnet/roslyn/blob/8323a94cb432bbffad016d4f6d7e04ee0f8419f2/src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs)
@@ -770,7 +806,7 @@ The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type
 **Learning path:**
 
 - **Goal:** Understand how an awaited Task registers and eventually runs a continuation while preserving execution context, scheduler and synchronization-context policy, race safety, inlining rules, and asynchronous-continuation guarantees.
-- **Start here:** [`src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs`](https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs) — TaskAwaiter.cs contains OnCompletedInternal, the compiler-facing handoff that turns an await into Task continuation registration with explicit context and scheduling policy.
+- **Start here:** [`CompilerServices/TaskAwaiter.cs`](https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs) — TaskAwaiter.cs contains OnCompletedInternal, the compiler-facing handoff that turns an await into Task continuation registration with explicit context and scheduling policy.
 - **Then read:**
   - [`src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs`](https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/Task.cs)
   - [`src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/TaskContinuation.cs`](https://github.com/dotnet/runtime/blob/c4eee2b76e574b0dd6cfe3387220a905ba69aca6/src/libraries/System.Private.CoreLib/src/System/Threading/Tasks/TaskContinuation.cs)

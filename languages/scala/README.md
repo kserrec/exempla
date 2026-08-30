@@ -4,17 +4,21 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+No Level 1 path is currently published for this language. Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
 ## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [scopt/scopt](https://github.com/scopt/scopt)
 
@@ -47,7 +51,7 @@ A small cross-platform command-line option parser for Scala with functional and 
 **Learning path:**
 
 - **Goal:** Understand how scopt turns a typed declarative option DSL into token matching, configuration updates, validation, and separately interpreted effects.
-- **Start here:** [`shared/src/main/scala/scopt/OParser.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OParser.scala) — OParser builds the declarative option list and hands it to ORunner, providing the shortest path from user-facing DSL calls to token execution and parser effects.
+- **Start here:** [`scopt/OParser.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OParser.scala) — OParser builds the declarative option list and hands it to ORunner, providing the shortest path from user-facing DSL calls to token execution and parser effects.
 - **Then read:**
   - [`shared/src/main/scala/scopt/OptionDef.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OptionDef.scala)
   - [`shared/src/main/scala/scopt/ORunner.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/ORunner.scala)
@@ -127,7 +131,7 @@ A compact library of composable retry policies for Scala Futures, including imme
 **Learning path:**
 
 - **Goal:** Understand how a compact Scala library composes nonblocking retry policies around deferred Future work while preserving result, delay, and failure contracts.
-- **Start here:** [`retry/src/main/scala/Policy.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Policy.scala) — The reviewed trace begins in Policy.scala because it defines policy composition and the recursive decision point for every retry attempt.
+- **Start here:** [`scala/Policy.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Policy.scala) — The reviewed trace begins in Policy.scala because it defines policy composition and the recursive decision point for every retry attempt.
 - **Then read:**
   - [`retry/src/main/scala/Defaults.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Defaults.scala)
   - [`retry/src/main/scala/Jitter.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Jitter.scala)
@@ -178,6 +182,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [circe/circe](https://github.com/circe/circe)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
@@ -209,7 +215,7 @@ A modular functional JSON library for Scala with immutable values, typed codecs,
 **Learning path:**
 
 - **Goal:** Understand how Circe composes typed decoders over immutable JSON cursors while preserving navigation history and both fail-fast and accumulating error semantics.
-- **Start here:** [`modules/core/shared/src/main/scala/io/circe/Decoder.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/Decoder.scala) — The reviewed trace begins in Decoder.scala because it defines the typed entry points, instances, and fail-fast and accumulating application modes.
+- **Start here:** [`circe/Decoder.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/Decoder.scala) — The reviewed trace begins in Decoder.scala because it defines the typed entry points, instances, and fail-fast and accumulating application modes.
 - **Then read:**
   - [`modules/core/shared/src/main/scala/io/circe/ACursor.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/ACursor.scala)
   - [`modules/core/shared/src/main/scala/io/circe/HCursor.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/HCursor.scala)
@@ -288,7 +294,7 @@ A purely functional, streaming HTTP toolkit for Scala with protocol types, clien
 **Learning path:**
 
 - **Goal:** Understand how http4s models a client response as an effectful Resource so streaming body consumption, errors, transformation, and connection release remain safely scoped.
-- **Start here:** [`docs/docs/client.md`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/docs/docs/client.md) — The reviewed trace begins in the client guide because it establishes the response-ownership rule a learner must understand before reading Client.scala.
+- **Start here:** [`docs/client.md`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/docs/docs/client.md) — The reviewed trace begins in the client guide because it establishes the response-ownership rule a learner must understand before reading Client.scala.
 - **Then read:**
   - [`client/shared/src/main/scala/org/http4s/client/Client.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/client/shared/src/main/scala/org/http4s/client/Client.scala)
   - [`core/shared/src/main/scala/org/http4s/HttpApp.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/core/shared/src/main/scala/org/http4s/HttpApp.scala)
@@ -338,6 +344,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [typelevel/cats-effect](https://github.com/typelevel/cats-effect)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -369,7 +377,7 @@ Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cance
 **Learning path:**
 
 - **Goal:** Understand how Cats Effect interprets IO as a cancelable fiber and schedules it fairly on a work-stealing runtime while preserving asynchronous and finalization guarantees.
-- **Start here:** [`core/shared/src/main/scala/cats/effect/IOFiber.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IOFiber.scala) — The reviewed trace begins in IOFiber.scala because its interpreter run loop turns the public IO algebra into observable asynchronous, cancelable execution.
+- **Start here:** [`effect/IOFiber.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IOFiber.scala) — The reviewed trace begins in IOFiber.scala because its interpreter run loop turns the public IO algebra into observable asynchronous, cancelable execution.
 - **Then read:**
   - [`core/shared/src/main/scala/cats/effect/IO.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IO.scala)
   - [`core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala)
@@ -456,7 +464,7 @@ A compositional, effect-polymorphic streaming I/O library for Scala with resourc
 **Learning path:**
 
 - **Goal:** Understand how FS2 compiles a typed Pull program into an effect while opening and closing nested scopes, preserving resource finalizers, interruption, stack safety, and error semantics.
-- **Start here:** [`core/shared/src/main/scala/fs2/Compiler.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Compiler.scala) — Begin with Compiler and Target because they create the root scope, choose the effect capabilities available to interpretation, and connect public compilation to Pull's internal run loop.
+- **Start here:** [`fs2/Compiler.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Compiler.scala) — Begin with Compiler and Target because they create the root scope, choose the effect capabilities available to interpretation, and connect public compilation to Pull's internal run loop.
 - **Then read:**
   - [`core/shared/src/main/scala/fs2/Pull.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Pull.scala)
   - [`core/shared/src/main/scala/fs2/Stream.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Stream.scala)

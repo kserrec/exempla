@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [rust-lang/log](https://github.com/rust-lang/log)
 
-**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 The production Rust logging facade advances a Level to the next enum value and keeps Trace unchanged at the upper boundary.
+
+**Just start:** Read lines 592–611 of `src/lib.rs`, then jump to `test_level_up` later in the same file.
+
+**Start with: 20 lines of source.** [Open `src/lib.rs`, lines 592–611.](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs#L592-L611)
 
 **Why study it:** Follow a three-line production method from an enum value through numeric conversion and optional reconstruction to a clear boundary fallback.
 
@@ -29,16 +35,10 @@ The production Rust logging facade advances a Level to the next enum value and k
 - Expressing a boundary case as an Option fallback.
 - Testing both an ordinary transition and an upper-bound no-op.
 
-**What you can learn:**
-
-- Advance through an enum whose cases have a stable numeric representation.
-- Use an optional conversion result to recognize the end of the enum.
-- Keep the current boundary value when no next value exists.
-
 **Learning path:**
 
 - **Goal:** Understand how log::Level moves one step through a finite enum without exceeding its final case.
-- **Start here:** [`src/lib.rs`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs) — Level, from_usize, increment_severity, its documentation example, and test_level_up all appear in this file.
+- **Start here:** [`src/lib.rs`, lines 592–611](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs#L592-L611) — This range contains the complete increment contract, examples, and two-line implementation; enum conversion and the direct unit test are follow-up reads in the same pinned file.
 - **Then read:**
   - [`README.md`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/README.md)
   - [`Cargo.toml`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/Cargo.toml)
@@ -48,6 +48,21 @@ The production Rust logging facade advances a Level to the next enum value and k
 
 **Why this level:**
 
+**Level 1:** The transition and fallback are local novice concepts; the enum representation cast needs one sentence and introduces no broader unsafe or lifetime reasoning.
+
+**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Advance through an enum whose cases have a stable numeric representation.
+- Use an optional conversion result to recognize the end of the enum.
+- Keep the current boundary value when no next value exists.
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
 - **Language technique 2:** The method combines basic enum and Option operations with one locally explained representation cast.
 - **Behavioral reasoning 1:** The output depends only on the current enum case and one visible conversion result.
 - **Design span 1:** The method, conversion helper, examples, and tests are colocated in one source file.
@@ -56,11 +71,6 @@ The production Rust logging facade advances a Level to the next enum value and k
   - **Central concepts:** enum values; adding one; Option fallback; boundary tests
   - **Incidental concepts:** casting a represented enum to usize
 - **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The log crate is the maintained Rust logging facade used by libraries and applications, and Level is a central public API type.
 
@@ -91,11 +101,13 @@ No specialist domain context is required.
 
 ### [rust-lang/log](https://github.com/rust-lang/log)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A public logging-filter parser that accepts six case-insensitive names, including off, and returns one explicit error for every unknown value.
+
+**Just start:** Read lines 643–704 of `src/lib.rs`, then jump to `test_levelfilter_from_str` later in the same file.
+
+**Start with: 62 lines of source.** [Open `src/lib.rs`, lines 643–704.](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs#L643-L704)
 
 **Why study it:** Follow a standard trait implementation from input text through a finite case-insensitive lookup to either a typed enum or a small explicit error.
 
@@ -114,22 +126,31 @@ A public logging-filter parser that accepts six case-insensitive names, includin
 - Performing allocation-free case-insensitive lookup over finite enum names.
 - Keeping valid and invalid configuration outcomes explicit through Result.
 
-**What you can learn:**
-
-- Implement a standard parsing trait for a public enum.
-- Map a finite set of case-insensitive names to typed values without allocating normalized strings.
-- Express every unsupported input through the Result error branch and a table-driven test.
-
 **Learning path:**
 
 - **Goal:** Understand how log parses case-insensitive LevelFilter names into typed values and rejects unknown strings.
-- **Start here:** [`src/lib.rs`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs) — The public enum, FromStr loop, index-to-enum mapping, error type, and direct unit table are all in this file.
+- **Start here:** [`src/lib.rs`, lines 643–704](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs#L643-L704) — The public enum, FromStr loop, index-to-enum mapping, error type, and direct unit table are all in this file.
 - **Then read:**
   - [`README.md`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/README.md)
   - [`Cargo.toml`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/Cargo.toml)
 - **Trace:** Call parse on a string, enter LevelFilter::from_str, scan the six published names including OFF, compare each without ASCII case, convert the bounded matching index into an enum, otherwise return ParseLevelError, then match the thirteen lowercase, uppercase, and unknown rows in test_levelfilter_from_str.
 
 **Why this level:**
+
+**Level 2:** A short trait-and-Result primer makes every lookup and error row predictable; no grammar, macro, unsafe, or lifetime study is required.
+
+**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Implement a standard parsing trait for a public enum.
+- Map a finite set of case-insensitive names to typed values without allocating normalized strings.
+- Express every unsupported input through the Result error branch and a table-driven test.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** A standard trait, Result, iterator-like range traversal, and enum conversion are common professional Rust idioms.
 - **Behavioral reasoning 2:** The lookup has repeated comparison state and distinct success or error outcomes, but remains synchronous and local.
@@ -139,11 +160,6 @@ A public logging-filter parser that accepts six case-insensitive names, includin
   - **Central concepts:** standard FromStr parsing; case-insensitive finite lookup; Result-based invalid input
   - **Incidental concepts:** the safe unwrap after a bounded table index
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The log crate is the maintained Rust logging facade used by libraries and applications, and LevelFilter parsing is part of its public configuration-facing API.
 
@@ -171,6 +187,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [dtolnay/semver](https://github.com/dtolnay/semver)
 
@@ -334,6 +352,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [dtolnay/anyhow](https://github.com/dtolnay/anyhow)
 
 **Language 5 / Behavior 4 / Design 3 / Constraints 5 → Level 4**
@@ -447,7 +467,7 @@ A modular asynchronous web framework built around Tokio, Hyper, Tower services, 
 **Learning path:**
 
 - **Goal:** Understand how Axum's Json type consumes and validates an HTTP request body, produces precise typed rejections, and serializes a typed response with correct metadata.
-- **Start here:** [`axum/src/json.rs`](https://github.com/tokio-rs/axum/blob/8f6bb9cead28a3880fe2e448a41ffbfe2c7fe7d9/axum/src/json.rs) — The reviewed trace begins in axum/src/json.rs because Json's FromRequest and IntoResponse implementations contain the complete selected extraction-and-response lifecycle.
+- **Start here:** [`src/json.rs`](https://github.com/tokio-rs/axum/blob/8f6bb9cead28a3880fe2e448a41ffbfe2c7fe7d9/axum/src/json.rs) — The reviewed trace begins in axum/src/json.rs because Json's FromRequest and IntoResponse implementations contain the complete selected extraction-and-response lifecycle.
 - **Then read:**
   - [`axum/src/extract/rejection.rs`](https://github.com/tokio-rs/axum/blob/8f6bb9cead28a3880fe2e448a41ffbfe2c7fe7d9/axum/src/extract/rejection.rs)
   - [`axum-core/src/extract/mod.rs`](https://github.com/tokio-rs/axum/blob/8f6bb9cead28a3880fe2e448a41ffbfe2c7fe7d9/axum-core/src/extract/mod.rs)
@@ -497,6 +517,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [rust-lang/cargo](https://github.com/rust-lang/cargo)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -529,7 +551,7 @@ Rust's package manager and build orchestrator, covering manifests, workspaces, l
 **Learning path:**
 
 - **Goal:** Understand how Cargo schedules dependency-ordered compiler jobs under a shared jobserver limit while coordinating freshness, process output, diagnostics, artifacts, failures, and shutdown.
-- **Start here:** [`src/compiler/job_queue/mod.rs`](https://github.com/rust-lang/cargo/blob/e7167a4bac50fd878ce18530e901624d83be218e/src/compiler/job_queue/mod.rs) — The reviewed trace begins in compiler/job_queue/mod.rs because its architecture guide and JobQueue execution loop coordinate every selected graph, token, process, message, and shutdown stage.
+- **Start here:** [`job_queue/mod.rs`](https://github.com/rust-lang/cargo/blob/e7167a4bac50fd878ce18530e901624d83be218e/src/compiler/job_queue/mod.rs) — The reviewed trace begins in compiler/job_queue/mod.rs because its architecture guide and JobQueue execution loop coordinate every selected graph, token, process, message, and shutdown stage.
 - **Then read:**
   - [`src/util/dependency_queue.rs`](https://github.com/rust-lang/cargo/blob/e7167a4bac50fd878ce18530e901624d83be218e/src/util/dependency_queue.rs)
   - [`src/compiler/job_queue/job.rs`](https://github.com/rust-lang/cargo/blob/e7167a4bac50fd878ce18530e901624d83be218e/src/compiler/job_queue/job.rs)
@@ -611,7 +633,7 @@ An asynchronous runtime platform for Rust with multi-thread and current-thread s
 **Learning path:**
 
 - **Goal:** Understand how Tokio's bounded MPSC channel coordinates permits, lock-free message storage, receiver wakeups, cancellation, closure, and destruction safely across concurrent senders.
-- **Start here:** [`tokio/src/sync/mpsc/bounded.rs`](https://github.com/tokio-rs/tokio/blob/ea91b33ca57ff0581b38e735cc108f831bccbdaa/tokio/src/sync/mpsc/bounded.rs) — The reviewed trace begins in bounded.rs because it defines channel construction and the Sender, Receiver, and Permit contracts that the internal concurrent machinery must preserve.
+- **Start here:** [`mpsc/bounded.rs`](https://github.com/tokio-rs/tokio/blob/ea91b33ca57ff0581b38e735cc108f831bccbdaa/tokio/src/sync/mpsc/bounded.rs) — The reviewed trace begins in bounded.rs because it defines channel construction and the Sender, Receiver, and Permit contracts that the internal concurrent machinery must preserve.
 - **Then read:**
   - [`tokio/src/sync/mpsc/mod.rs`](https://github.com/tokio-rs/tokio/blob/ea91b33ca57ff0581b38e735cc108f831bccbdaa/tokio/src/sync/mpsc/mod.rs)
   - [`tokio/src/sync/mpsc/chan.rs`](https://github.com/tokio-rs/tokio/blob/ea91b33ca57ff0581b38e735cc108f831bccbdaa/tokio/src/sync/mpsc/chan.rs)

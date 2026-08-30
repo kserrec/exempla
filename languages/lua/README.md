@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [rxi/lume](https://github.com/rxi/lume)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 Lume's production utility library keeps a number inside a caller-supplied minimum and maximum.
+
+**Just start:** Read lines 82–84 of `lume.lua`, then compare them with `test.lua`.
+
+**Start with: 3 lines of source.** [Open `lume.lua`, lines 82–84.](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/lume.lua#L82-L84)
 
 **Why study it:** Read one transparent expression that returns the lower bound, upper bound, or original value, then verify ordinary, negative, and collapsed ranges.
 
@@ -29,22 +35,31 @@ Lume's production utility library keeps a number inside a caller-supplied minimu
 - Expressing three local outcomes with ordered comparisons.
 - Testing values below, inside, above, and at a collapsed range.
 
-**What you can learn:**
-
-- Compare the input with the lower bound first.
-- Compare with the upper bound only when the lower check did not select a result.
-- See why equal bounds always produce that one bound.
-
 **Learning path:**
 
 - **Goal:** Understand how lume.clamp returns the nearest inclusive bound or preserves an in-range number.
-- **Start here:** [`lume.lua`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/lume.lua) — The clamp function contains the complete lower, upper, and in-range decision in one readable expression.
+- **Start here:** [`lume.lua`, lines 82–84](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/lume.lua#L82-L84) — The clamp function contains the complete lower, upper, and in-range decision in one readable expression.
 - **Then read:**
   - [`test/test.lua`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/test/test.lua)
   - [`README.md`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/README.md)
 - **Trace:** Compare x with min, return min when it is lower, otherwise compare x with max and return max or x, then follow the seven direct rows covering inside, outside, negative, and equal-bound cases.
 
 **Why this level:**
+
+**Level 1:** The central lesson is ordinary conditional selection, and one sentence about Lua's expression idiom makes all seven outcomes predictable.
+
+**License:** MIT ([evidence 1](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Compare the input with the lower bound first.
+- Compare with the upper bound only when the lower check did not select a result.
+- See why equal bounds always produce that one bound.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 1:** The implementation uses introductory Lua function, comparison, and boolean-expression syntax.
 - **Behavioral reasoning 1:** The synchronous data flow is visible from left to right in one expression.
@@ -54,11 +69,6 @@ Lume's production utility library keeps a number inside a caller-supplied minimu
   - **Central concepts:** numeric comparisons; choosing the nearest bound
   - **Incidental concepts:** Lua's `and`/`or` selection idiom
 - **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Lume is a documented reusable Lua utility library for applications and games, distributed as one importable module with a direct test suite.
 
@@ -89,11 +99,13 @@ No specialist domain context is required.
 
 ### [lunarmodules/say](https://github.com/lunarmodules/say)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A small Lua module that stores named messages, falls back to another namespace, and inserts values into the selected text.
+
+**Just start:** Read lines 1–65 of `init.lua`, then compare them with `say_spec.lua`.
+
+**Start with: 65 lines of source.** [Open `say/init.lua`, lines 1–65.](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/src/say/init.lua#L1-L65)
 
 **Why study it:** Trace one in-memory registry from message storage through active-namespace lookup, fallback lookup, argument checking, and formatted output.
 
@@ -112,16 +124,10 @@ A small Lua module that stores named messages, falls back to another namespace, 
 - Trying the active namespace before a fallback namespace.
 - Using a small metatable to present a callable lookup API.
 
-**What you can learn:**
-
-- Trace message storage and lookup through one module-local registry.
-- Compare active, fallback, and missing-key results.
-- Use tests to understand substitution, nil values, and invalid argument types.
-
 **Learning path:**
 
 - **Goal:** Understand how a compact Lua module stores namespaced messages, falls back across namespaces, validates interpolation values, and exposes a callable lookup API.
-- **Start here:** [`src/say/init.lua`](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/src/say/init.lua) — The only production module contains the complete data model and lookup path, so it can be read end to end before its specification.
+- **Start here:** [`say/init.lua`, lines 1–65](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/src/say/init.lua#L1-L65) — The only production module contains the complete data model and lookup path, so it can be read end to end before its specification.
 - **Then read:**
   - [`spec/say_spec.lua`](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/spec/say_spec.lua)
   - [`README.md`](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/README.md)
@@ -129,6 +135,21 @@ A small Lua module that stores named messages, falls back to another namespace, 
 - **Trace:** Read set_namespace, set_fallback, and set to see registry mutation, then follow the __call metamethod through argument validation, active and fallback namespace lookup, string conversion, explicit or inferred argument count, and formatting; finish with __index registry access and the direct specification cases.
 
 **Why this level:**
+
+**Level 2:** One short metatable primer explains the API; registry state, fallback order, validation, and formatting then remain local and directly tested.
+
+**License:** MIT ([evidence 1](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace message storage and lookup through one module-local registry.
+- Compare active, fallback, and missing-key results.
+- Use tests to understand substitution, nil values, and invalid argument types.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Common professional Lua idioms shape the API without advanced metaprogramming.
 - **Behavioral reasoning 2:** Meaningful state and branching remain synchronous, local, and direct.
@@ -138,11 +159,6 @@ A small Lua module that stores named messages, falls back to another namespace, 
   - **Central concepts:** namespaced message lookup; fallback lookup and positional substitution; callable and indexable metatable behavior
   - **Incidental concepts:** table.unpack compatibility fallback; explicit table length for nil values
 - **Placement:** The four structural scores 2/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.
 
@@ -170,6 +186,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [kikito/middleclass](https://github.com/kikito/middleclass)
 
@@ -281,7 +299,7 @@ An in-process least-recently-used cache for OpenResty with expiry, stale reads, 
 **Learning path:**
 
 - **Goal:** Understand how an OpenResty Lua cache maintains bounded LRU order, expiration, flags, and constant-time lookup across its FFI-backed representations.
-- **Start here:** [`lib/resty/lrucache.lua`](https://github.com/openresty/lua-resty-lrucache/blob/ad373f457a091ffa85de984938f948bc1721d922/lib/resty/lrucache.lua) — The table-backed implementation presents the public API and recency invariants most directly before the equivalent pure-FFI representation.
+- **Start here:** [`resty/lrucache.lua`](https://github.com/openresty/lua-resty-lrucache/blob/ad373f457a091ffa85de984938f948bc1721d922/lib/resty/lrucache.lua) — The table-backed implementation presents the public API and recency invariants most directly before the equivalent pure-FFI representation.
 - **Then read:**
   - [`lib/resty/lrucache/pureffi.lua`](https://github.com/openresty/lua-resty-lrucache/blob/ad373f457a091ffa85de984938f948bc1721d922/lib/resty/lrucache/pureffi.lua)
   - [`t/001-sanity.t`](https://github.com/openresty/lua-resty-lrucache/blob/ad373f457a091ffa85de984938f948bc1721d922/t/001-sanity.t)
@@ -329,6 +347,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 4 — Advanced
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [lunarmodules/busted](https://github.com/lunarmodules/busted)
 
@@ -443,7 +463,7 @@ A static analyzer and command-line linter that reports globals, unused values, c
 **Learning path:**
 
 - **Goal:** Understand how Luacheck turns Lua source into scoped analysis facts and then emits and filters warnings without losing source locations or control-flow meaning.
-- **Start here:** [`src/luacheck/check.lua`](https://github.com/lunarmodules/luacheck/blob/2f764bdcabe8b7c19deadf0e9bb2adc19df1a4c5/src/luacheck/check.lua) — check.lua lists the exact parse-to-warning stage sequence and gives the selected lexer, parser, linearizer, resolver, detector, and filter modules a clear orchestration point.
+- **Start here:** [`luacheck/check.lua`](https://github.com/lunarmodules/luacheck/blob/2f764bdcabe8b7c19deadf0e9bb2adc19df1a4c5/src/luacheck/check.lua) — check.lua lists the exact parse-to-warning stage sequence and gives the selected lexer, parser, linearizer, resolver, detector, and filter modules a clear orchestration point.
 - **Then read:**
   - [`src/luacheck/lexer.lua`](https://github.com/lunarmodules/luacheck/blob/2f764bdcabe8b7c19deadf0e9bb2adc19df1a4c5/src/luacheck/lexer.lua)
   - [`src/luacheck/parser.lua`](https://github.com/lunarmodules/luacheck/blob/2f764bdcabe8b7c19deadf0e9bb2adc19df1a4c5/src/luacheck/parser.lua)
@@ -497,6 +517,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [apache/apisix](https://github.com/apache/apisix)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -531,7 +553,7 @@ A cloud-native API and AI gateway with dynamic routing, load balancing, policy p
 **Learning path:**
 
 - **Goal:** Understand how APISIX validates and distributes an API-driven standalone configuration across HTTP and stream workers while preserving version order, idempotence, hot routing, and safe behavior before the first update.
-- **Start here:** [`apisix/admin/standalone.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/admin/standalone.lua) — The reviewed trace begins in standalone.lua because its update handler owns request parsing, digest idempotence, full-resource version decisions, shared-memory publication, worker notification, and the cross-subsystem polling fallback.
+- **Start here:** [`admin/standalone.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/admin/standalone.lua) — The reviewed trace begins in standalone.lua because its update handler owns request parsing, digest idempotence, full-resource version decisions, shared-memory publication, worker notification, and the cross-subsystem polling fallback.
 - **Then read:**
   - [`apisix/admin/config_validate.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/admin/config_validate.lua)
   - [`apisix/core/config_yaml.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/core/config_yaml.lua)
@@ -616,7 +638,7 @@ A production API, AI, and MCP gateway supporting traffic routing, load balancing
 **Learning path:**
 
 - **Goal:** Understand how Kong durably broadcasts a cluster event and delivers it once to remote-node subscribers despite polling intervals, delays, pagination, worker concurrency, and failures.
-- **Start here:** [`kong/cluster_events/init.lua`](https://github.com/Kong/kong/blob/fa9c3b695af72668f135cb17bbb84a8b4dc511d2/kong/cluster_events/init.lua) — The reviewed trace begins in cluster_events/init.lua because it selects the strategy and owns broadcast, subscription, shared state, polling, delivery, error handling, and recurring scheduling.
+- **Start here:** [`cluster_events/init.lua`](https://github.com/Kong/kong/blob/fa9c3b695af72668f135cb17bbb84a8b4dc511d2/kong/cluster_events/init.lua) — The reviewed trace begins in cluster_events/init.lua because it selects the strategy and owns broadcast, subscription, shared state, polling, delivery, error handling, and recurring scheduling.
 - **Then read:**
   - [`kong/cluster_events/strategies/postgres.lua`](https://github.com/Kong/kong/blob/fa9c3b695af72668f135cb17bbb84a8b4dc511d2/kong/cluster_events/strategies/postgres.lua)
   - [`kong/cluster_events/strategies/off.lua`](https://github.com/Kong/kong/blob/fa9c3b695af72668f135cb17bbb84a8b4dc511d2/kong/cluster_events/strategies/off.lua)

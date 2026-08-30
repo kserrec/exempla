@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "Abseil is Google's maintained collection of production C++ libraries, and ascii_islower is a documented public string utility rather than a test-only helper.",
       "why_study": "Connect one readable range expression to an exhaustive 256-value test and a production promise that avoids locale-dependent surprises.",
+      "quick_start": "Read lines 167–172 of `ascii.h`, then compare them with `ascii_test.cc`.",
       "learn": [
         "Recognize a contiguous character range with two comparisons and logical AND.",
         "Use unsigned byte input to cover every possible byte value predictably.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Abseil classifies lowercase ASCII consistently for every possible byte.",
         "start_here": {
           "path": "absl/strings/ascii.h",
+          "line_start": 167,
+          "line_end": 172,
           "reason": "The public contract and complete constexpr ascii_islower implementation are adjacent in this header."
         },
         "supporting_files": [
@@ -144,6 +147,7 @@
       "source_kind": "production",
       "purpose_evidence": "The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.",
       "why_study": "Learn how one object owns a cleanup action, runs it during ordinary destruction, and transfers that responsibility safely when moved.",
+      "quick_start": "Read lines 135–175 of `util`, then compare them with `utils_tests.cpp`.",
       "learn": [
         "Follow construction, move construction, and destruction through one small utility.",
         "See how moving transfers cleanup responsibility.",
@@ -169,6 +173,8 @@
         "goal": "Understand how final_action stores a cleanup callable, invokes it once at scope exit, and transfers that responsibility safely through move construction.",
         "start_here": {
           "path": "include/gsl/util",
+          "line_start": 135,
+          "line_end": 175,
           "reason": "include/gsl/util contains the complete final_action class, its armed state, move-only ownership transfer, destructor, and finally factory."
         },
         "supporting_files": [

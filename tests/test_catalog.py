@@ -30,6 +30,7 @@ def valid_entry() -> dict:
         "source_kind": "production",
         "purpose_evidence": "Published releases are used as a command-line utility by real users.",
         "why_study": "The path demonstrates a complete request, validation, and transformation boundary.",
+        "quick_start": "Read lines 12–20 of src/tool.py, then compare the focused success and error tests.",
         "learn": ["Understand how a command request becomes a tested observable result."],
         "prerequisites": ["Basic Python functions, modules, collections, and exceptions."],
         "concepts_developed": [
@@ -44,6 +45,8 @@ def valid_entry() -> dict:
             "goal": "Understand how a command request is validated and transformed into its observable result.",
             "start_here": {
                 "path": "src/tool.py",
+                "line_start": 12,
+                "line_end": 20,
                 "reason": "This module connects the public command to the core transformation.",
             },
             "supporting_files": ["tests/test_tool.py"],
@@ -187,12 +190,18 @@ class RecordValidationTests(unittest.TestCase):
         self.assertIn("**Coding relevance:**", rendered)
         self.assertIn("**Concepts this path develops:**", rendered)
         self.assertIn("**Learning path:**", rendered)
+        self.assertIn("**Just start:**", rendered)
+        self.assertIn("#L12-L20", rendered)
+        self.assertIn("Start with: 9 lines of source", rendered)
         self.assertIn("**Short context:**", rendered)
         self.assertIn("**Novice accessibility floor 1:**", rendered)
         self.assertIn("**Central concepts:**", rendered)
         self.assertIn("**Incidental concepts:**", rendered)
         self.assertIn("<details>", rendered)
-        self.assertIn("<summary>Quality and review evidence</summary>", rendered)
+        self.assertIn(
+            "<summary>Detailed Level, learning, quality, and review evidence</summary>",
+            rendered,
+        )
         self.assertIn("tests/test_tool.py", rendered)
 
     def test_level_two_renders_an_understandable_accessibility_explanation(self) -> None:
@@ -458,6 +467,50 @@ class RecordValidationTests(unittest.TestCase):
                     target = target[part]
                 del target[path[-1]]
                 self.assertTrue(any("missing fields" in error for error in self.validate(entry)))
+
+    def test_low_levels_require_exact_start_ranges(self) -> None:
+        missing_quick_start = valid_entry()
+        del missing_quick_start["quick_start"]
+        self.assertTrue(
+            any("quick_start: required at Level 1" in error for error in self.validate(missing_quick_start))
+        )
+
+        missing_level_one = valid_entry()
+        del missing_level_one["learning_path"]["start_here"]["line_start"]
+        self.assertTrue(
+            any("line_start: required at Level 1" in error for error in self.validate(missing_level_one))
+        )
+
+        missing_level_two = valid_entry()
+        for dimension in catalog_tool.DIMENSION_FIELDS:
+            missing_level_two["learning_level"][dimension]["score"] = 2
+        missing_level_two["learning_level"]["level"] = 2
+        missing_level_two["novice_accessibility"]["floor"] = 2
+        del missing_level_two["learning_path"]["start_here"]["line_end"]
+        self.assertTrue(
+            any("line_end: required at Level 2" in error for error in self.validate(missing_level_two))
+        )
+
+    def test_start_range_order_is_validated(self) -> None:
+        entry = valid_entry()
+        entry["learning_path"]["start_here"]["line_start"] = 20
+        entry["learning_path"]["start_here"]["line_end"] = 12
+        self.assertTrue(
+            any("must be greater than or equal" in error for error in self.validate(entry))
+        )
+
+    def test_levels_three_through_five_do_not_require_ranges_or_quick_start(self) -> None:
+        for level in (3, 4, 5):
+            with self.subTest(level=level):
+                entry = valid_entry()
+                for dimension in catalog_tool.DIMENSION_FIELDS:
+                    entry["learning_level"][dimension]["score"] = level
+                entry["learning_level"]["level"] = level
+                del entry["novice_accessibility"]
+                del entry["quick_start"]
+                del entry["learning_path"]["start_here"]["line_start"]
+                del entry["learning_path"]["start_here"]["line_end"]
+                self.assertEqual(self.validate(entry), [])
 
     def test_learning_and_license_paths_must_be_inspected(self) -> None:
         learning = valid_entry()
@@ -860,6 +913,39 @@ class CatalogIntegrationTests(unittest.TestCase):
         index = root / "languages" / "README.md"
         index.write_text("stale\n", encoding="utf-8")
         self.assertIn("stale generated file: languages/README.md", catalog_tool.check_generated(root))
+
+    def test_language_navigation_marks_the_gentlest_first_path(self) -> None:
+        first = valid_entry()
+        second = valid_entry()
+        second["repository"] = "example/second-tool"
+        second["url"] = "https://github.com/example/second-tool"
+        second["slug"] = "second-tool"
+        second["path_slug"] = "second-path"
+        language = {"slug": "python", "name": "Python"}
+        rendered = catalog_tool.render_language(
+            language,
+            {"schema_version": 5, "repositories": [first, second]},
+        )
+        self.assertEqual(rendered.count("**Recommended first path**"), 1)
+        self.assertIn("Ordered from gentler to more demanding within this Level", rendered)
+        self.assertIn("You are not expected to understand the whole repository", rendered)
+
+    def test_empty_level_one_does_not_direct_novices_upward(self) -> None:
+        rendered = catalog_tool.render_language(
+            {"slug": "python", "name": "Python"},
+            {"schema_version": 5, "repositories": []},
+        )
+        self.assertIn("No Level 1 path is currently published for this language", rendered)
+        self.assertIn("not being told to jump to Level 2", rendered)
+
+    def test_language_index_uses_a_narrow_screen_friendly_list(self) -> None:
+        rendered = catalog_tool.render_index(
+            [{"slug": "python", "name": "Python"}],
+            {"python": {"repositories": [valid_entry()]}},
+        )
+        self.assertIn("## Choose a language", rendered)
+        self.assertIn("- **[Python](python/README.md):**", rendered)
+        self.assertNotIn("| Language |", rendered)
 
     def test_active_entries_use_current_schema_and_baseline_paths_stay_production(self) -> None:
         languages = json.loads((ROOT / "catalog" / "languages.json").read_text(encoding="utf-8"))["languages"]

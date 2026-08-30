@@ -30,6 +30,8 @@ Never hand-edit `languages/`; those pages are generated from `catalog/`.
   when recurring path evidence supports a different rubric anchor.
 - [Report a maintenance problem](https://github.com/kserrec/exempla/issues/new?template=04-maintenance-problem.yml)
   for validation, generation, navigation, or workflow defects.
+- [Tell us a path felt too hard](https://github.com/kserrec/exempla/issues/new?template=05-path-felt-too-hard.yml)
+  without needing to understand or defend the scoring method.
 
 An issue proposes review; it does not pre-approve a repository.
 
@@ -81,9 +83,12 @@ and generated navigation together.
 2. **Pin the revision.** Record a full 40-character commit before judging
    source. Do not use a floating branch as evidence.
 3. **Choose a representative path.** Assign a stable `path_slug`; name one real
-   behavior, its first source file, supporting implementation and tests, and
-   an entry-to-result trace. Separate prior knowledge in `prerequisites` from
-   the skills taught in `concepts_developed`.
+   behavior, its exact initial source range, a concise `quick_start`, supporting
+   implementation and tests, and an entry-to-result trace. Level 1 should begin
+   with about 80 lines or fewer and Level 2 with about 150 or fewer unless a
+   documented pedagogical exception keeps one coherent behavior together.
+   Separate prior knowledge in `prerequisites` from the skills taught in
+   `concepts_developed`.
 4. **Apply the coding-relevance gate.** Reject paths whose difficulty depends
    primarily on specialist mathematics, science, medicine, finance, law,
    regulation, cryptography, hardware, protocols, or comparable outside
@@ -177,6 +182,9 @@ lower anchor when a higher-level signal is isolated or outside the main trace.
   1 and 2.
 - Stable path slug, goal, start reason, supporting files, trace, prerequisites,
   concepts developed, and domain context describe the path actually scored.
+- Every Level 1 or 2 entry has an inspected exact initial source range and a
+  one- or two-sentence `quick_start` that gives a novice no more than two clear
+  first actions.
 - All four scores cite observed recurring signals and the formula is exact.
 - Every rubric-Level-1 or rubric-Level-2 path identifies central and incidental
   concepts, passes the five accessibility tests at its recorded floor, and

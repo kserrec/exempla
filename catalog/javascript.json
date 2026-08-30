@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.",
       "why_study": "See how one clear guard protects an exceptional input while the ordinary case performs a direct string transformation, with focused tests for both outcomes.",
+      "quick_start": "Read lines 1–9 of `index.js`, then compare them with `test.js`.",
       "learn": [
         "Read one production function from its guard through its returned string.",
         "Compare ordinary Windows-style paths with the protected extended-length form.",
@@ -37,6 +38,8 @@
         "goal": "Understand how a small JavaScript utility converts Windows separators lexically while preserving extended-length paths whose namespace syntax must remain untouched.",
         "start_here": {
           "path": "index.js",
+          "line_start": 1,
+          "line_end": 9,
           "reason": "The file contains the complete guard-and-transform behavior, so a learner can see the compatibility exception before the ordinary replacement."
         },
         "supporting_files": [
@@ -145,6 +148,7 @@
       "source_kind": "production",
       "purpose_evidence": "The package manifest publishes array-union 3.0.1 to npm with index.js as its exported runtime, while the README documents installation and application-facing use.",
       "why_study": "See how standard collection operations express a complete useful transformation, then use direct examples to verify both uniqueness and order.",
+      "quick_start": "Read lines 1–3 of `index.js`, then compare them with `test.js`.",
       "learn": [
         "Trace several input arrays through flattening, Set-based deduplication, and the returned array.",
         "Explain why the first occurrence of each value determines output order.",
@@ -168,6 +172,8 @@
         "goal": "Understand how array-union combines any number of arrays into one ordered array containing each value once.",
         "start_here": {
           "path": "index.js",
+          "line_start": 1,
+          "line_end": 3,
           "reason": "The exported one-line function contains the entire runtime transformation in execution order."
         },
         "supporting_files": [
@@ -274,6 +280,7 @@
       "source_kind": "educational-exemplar",
       "purpose_evidence": "Express maintains examples/hello-world as its documented simple request-handler example, exports the complete application for testing, and ships a direct acceptance suite for it.",
       "why_study": "Read a complete tiny web application from route declaration through response, startup boundary, and externally observed request tests.",
+      "quick_start": "Read lines 1–15 of `index.js`, then compare them with `hello-world.js`.",
       "learn": [
         "Connect an HTTP method and path to one JavaScript callback.",
         "Separate reusable application construction from starting a listening server.",
@@ -299,6 +306,8 @@
         "goal": "Understand how a complete minimal Express application serves Hello World at one route and remains directly acceptance-testable.",
         "start_here": {
           "path": "examples/hello-world/index.js",
+          "line_start": 1,
+          "line_end": 15,
           "reason": "This file contains the whole application, route callback, export boundary, and direct-run startup guard."
         },
         "supporting_files": [
@@ -404,6 +413,7 @@
       "source_kind": "production",
       "purpose_evidence": "The package manifest publishes onetime 8.0.0 to npm as an application-facing function wrapper and the README documents its stable runtime API.",
       "why_study": "Trace a small stateful closure through first call, repeated call, throwing first attempt, optional error behavior, and call-count inspection.",
+      "quick_start": "Read lines 3–41 of `index.js`, then compare them with `test.js`.",
       "learn": [
         "See how a closure retains a result and disables later execution after the first successful call.",
         "Explain why a first call that throws remains retryable.",
@@ -427,6 +437,8 @@
         "goal": "Understand how onetime executes a wrapped function once successfully, returns the cached value thereafter, and reports every call attempt.",
         "start_here": {
           "path": "index.js",
+          "line_start": 3,
+          "line_end": 41,
           "reason": "The file contains input validation, closure state, invocation, retry semantics, metadata storage, and the public callCount helper."
         },
         "supporting_files": [

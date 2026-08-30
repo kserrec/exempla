@@ -4,21 +4,26 @@
 
 Learn programming from real examples at your level.
 
-Exempla is a curated, GitHub-native catalog of public open-source software.
-Choose a language and a learner Level from 1 through 5 (novice to advanced), 
-then follow one concrete path through implementation and verification. 
+Pick a language, choose Level 1 through 5 (novice to advanced), and follow one
+small reviewed path through exact implementation lines and focused tests. Level
+1 is for someone who has completed an introductory tutorial and written small
+programs; Level 5 reaches expert production systems.
 
-The catalog currently has **158 qualified learning paths from 148 public repositories 
-across 20 languages**. Its **82 open slots are honest research gaps** under the expanded
+**[Choose a language and start here.](languages/README.md)** On its language
+page, begin with the entry marked **Recommended first path**.
+
+**You are not expected to understand the whole repository.** Each entry gives
+you one bounded behavior, exact starting lines, and the relevant tests. The rest
+of the codebase can wait.
+
+Exempla is a curated, GitHub-native catalog of public open-source software. It
+currently has
+**158 qualified learning paths from 148 public repositories across 20
+languages**. Its **82 open slots are honest research gaps** under the expanded
 3/3/2/2/2 capacity map, including 42 Level 1 gaps and 34 Level 2 gaps after the
 completed production and educational-exemplar research passes. Seventeen of 20
 languages now have at least one qualified path at each of Levels 1 and 2. No
 gate or score is lowered to preserve an arbitrary count.
-
-If you can write small programs in the language, **Level 1 — First real code**
-is designed to be your first comfortable step into serious source. An empty
-Level 1 does not mean you should simply jump to Level 2; it means Exempla has
-not yet found a path gentle enough to publish there.
 
 Levels 1 and 2 may include carefully selected educational exemplars. Real
 production code often assumes professional concepts before a novice has had a
@@ -30,19 +35,17 @@ source type. From Level 3 onward, every path is production software.
 
 ## Browse the catalog
 
-[Choose a language](languages/README.md). Each entry records:
+[Choose a language](languages/README.md). Every Level 1 and Level 2 entry puts
+the first action before the research detail:
 
 - whether the source is production software or an educational exemplar;
-- the real behavior the learner will understand;
-- the first source file to open, supporting implementation and test files, and
+- a concise **Just start** instruction;
+- the exact pinned source lines to open and their initial line count;
+- the bounded behavior, prerequisites, concepts developed, focused tests, and
   an entry-to-result trace;
-- prerequisites, concepts developed by the path, and any short domain context;
-- the coding-relevance and eight-part repository-quality evidence;
-- four path-centered scores and the resulting Level;
-- for structurally low-level paths, the central and incidental concepts plus a
-  novice-accessibility judgment;
-- the exact inspected commit and files; and
-- one or more pinned license-evidence links.
+- a concise Level explanation and license; and
+- collapsed scoring, coding-relevance, source-quality, inspection, and license
+  evidence for readers who want to audit the decision.
 
 Exempla links to upstream projects; it does not copy their source. Path and
 license links are pinned so the review stays reproducible when a default branch
@@ -76,9 +79,9 @@ real-world patterns**, **Level 3 — Intermediate production software**, **Level
 
 ## How to study an entry
 
-1. Read the goal, prerequisites, and short domain context.
-2. Open the pinned **Start here** file.
-3. Follow the published trace through its supporting implementation and tests.
+1. Follow **Just start** and open the exact pinned source lines.
+2. Predict what the bounded behavior will do before reading the focused tests.
+3. Use the goal, prerequisites, and trace only when you need orientation.
 4. Use the quality evidence as review questions: are responsibilities clear,
    failures explicit, and contracts protected?
 5. Move upward when the current Level feels navigable; Levels guide learning,
@@ -107,6 +110,9 @@ real-world patterns**, **Level 3 — Intermediate production software**, **Level
   reconciles the 125-path baseline, 27 accepted additions, all 20 language
   passes, educational qualification, serious rejections, progression, source-
   class leakage, and 82 remaining lower-level gaps.
+- [The learner-usability audit](research/learner-usability-audit.json) records
+  the pre-polish first-click baseline, every lower-level range, simulated novice
+  journeys, progression checks, narrow-width review, and after-state findings.
 - [Rejected candidates](research/rejections.json) are append-only.
 - [`research/audit.json`](research/audit.json) is the historical v1 corpus
   audit; it is no longer the active consistency record.

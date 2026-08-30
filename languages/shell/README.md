@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [bats-core/bats-file](https://github.com/bats-core/bats-file)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A production Bats helper checks whether a path names a regular file and emits a focused diagnostic only on failure.
+
+**Just start:** Read lines 52–74 of `file.bash`, then compare them with `51-assert-10-assert_file_exists.bats`.
+
+**Start with: 23 lines of source.** [Open `src/file.bash`, lines 52–74.](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/src/file.bash#L52-L74)
 
 **Why study it:** Follow one Bash file test through its success and failure outcomes, including the exact diagnostic that makes a failed test actionable.
 
@@ -33,22 +39,31 @@ A production Bats helper checks whether a path names a regular file and emits a 
 - Keeping the success path silent while making failure descriptive.
 - Verifying both exit status and diagnostic output.
 
-**What you can learn:**
-
-- Use Bash's regular-file test to distinguish a file from a directory or missing path.
-- Let a successful assertion return without producing output.
-- Send a labeled path diagnostic through shared formatting helpers when the assertion fails.
-
 **Learning path:**
 
 - **Goal:** Understand how bats-file assert_file_exists distinguishes a regular file from other paths and reports an exact failure.
-- **Start here:** [`src/file.bash`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/src/file.bash) — The public function contains the complete path capture, regular-file condition, optional display substitution, and failure pipeline.
+- **Start here:** [`src/file.bash`, lines 52–74](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/src/file.bash#L52-L74) — The public function contains the complete path capture, regular-file condition, optional display substitution, and failure pipeline.
 - **Then read:**
   - [`test/51-assert-10-assert_file_exists.bats`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/test/51-assert-10-assert_file_exists.bats)
   - [`README.md`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/README.md)
 - **Trace:** Capture the path, evaluate `[[ ! -f ]]`, return silently when it is a file, otherwise optionally shorten the displayed path and pipe its label through decoration into fail; then match status and all three output lines in the direct tests.
 
 **Why this level:**
+
+**Level 1:** The central branch is introductory Shell, and the cosmetic path substitution and formatter calls can each be explained locally without a separate topic.
+
+**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Use Bash's regular-file test to distinguish a file from a directory or missing path.
+- Let a successful assertion return without producing output.
+- Send a labeled path diagnostic through shared formatting helpers when the assertion fails.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
 
 - **Language technique 1:** Functions, variables, `[[ -f ]]`, parameter expansion, and pipelines are direct Shell techniques.
 - **Behavioral reasoning 1:** One synchronous file predicate determines whether the function stays silent or fails locally.
@@ -58,11 +73,6 @@ A production Bats helper checks whether a path names a regular file and emits a 
   - **Central concepts:** a Bash regular-file test; silent success and explicit failure; checking status and output
   - **Incidental concepts:** optional path text substitution; shared diagnostic formatting helpers
 - **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** bats-core publishes bats-file as a reusable filesystem assertion library for real Bats test suites, with documented installation, behavior, and releases.
 
@@ -93,11 +103,13 @@ The learner-facing short context appears above.
 
 ### [bats-core/bats-assert](https://github.com/bats-core/bats-assert)
 
-**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A reusable Bats assertion that accepts a successful command and turns any captured nonzero status into structured stdout and optional stderr diagnostics.
+
+**Just start:** Read lines 1–47 of `assert_success.bash`, then compare them with `assert_success.bats`.
+
+**Start with: 47 lines of source.** [Open `src/assert_success.bash`, lines 1–47.](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/src/assert_success.bash#L1-L47)
 
 **Why study it:** Trace how one Shell test helper interprets captured process state and pipes exact single- or multi-line stdout and stderr diagnostics into the assertion framework on failure.
 
@@ -112,16 +124,10 @@ A reusable Bats assertion that accepts a successful command and turns any captur
 - Reporting a failed command with structured diagnostics.
 - Formatting optional standard error and multi-line output without changing assertion status.
 
-**What you can learn:**
-
-- Treat zero and nonzero process statuses as an explicit test contract.
-- Preserve captured stdout and optional separated stderr when reporting a failure.
-- Compose grouped diagnostic output through formatter and failure functions.
-
 **Learning path:**
 
 - **Goal:** Understand how bats-assert accepts status zero and turns any captured nonzero status into exact stdout and stderr diagnostics.
-- **Start here:** [`src/assert_success.bash`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/src/assert_success.bash) — The function contains the captured-state checks, nonzero branch, stream formatting, and diagnostic pipeline together.
+- **Start here:** [`src/assert_success.bash`, lines 1–47](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/src/assert_success.bash#L1-L47) — The function contains the captured-state checks, nonzero branch, stream formatting, and diagnostic pipeline together.
 - **Then read:**
   - [`test/assert_success.bats`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/test/assert_success.bats)
   - [`test/test_helper.bash`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/test/test_helper.bash)
@@ -129,6 +135,21 @@ A reusable Bats assertion that accepts a successful command and turns any captur
 - **Trace:** Read Bats' captured output and status globals, return normally for status zero, otherwise format the numeric status, stdout, and optional separated stderr, pipe the group through batslib_decorate and fail, then match the four exact passing, failing, multi-line, and separate-stderr tests.
 
 **Why this level:**
+
+**Level 2:** A short primer on Bats' status and output globals plus grouped pipelines makes every branch predictable; no process lifecycle or portability study is required.
+
+**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Treat zero and nonzero process statuses as an explicit test contract.
+- Preserve captured stdout and optional separated stderr when reporting a failure.
+- Compose grouped diagnostic output through formatter and failure functions.
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Captured test state, arithmetic conditions, grouped output, and pipelines are common professional Shell testing idioms.
 - **Behavioral reasoning 2:** The result and diagnostic shape depend on captured process state, but all behavior remains local to one completed command.
@@ -138,11 +159,6 @@ A reusable Bats assertion that accepts a successful command and turns any captur
   - **Central concepts:** captured process exit status; captured stdout and optional stderr; structured diagnostic pipelines
   - **Incidental concepts:** shared bats-support width and decoration helpers
 - **Placement:** The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** bats-core publishes bats-assert as a released reusable assertion library for real Bats test suites, with installation, API documentation, and a direct test suite.
 
@@ -170,6 +186,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [dokku/dokku](https://github.com/dokku/dokku)
 
@@ -336,6 +354,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 4 — Advanced
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions)
 

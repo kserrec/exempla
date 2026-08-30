@@ -166,6 +166,32 @@ standards.
   pages, and the final 17-of-20 Level 2 coverage result; run the full supported
   verification gates.
 
+## Active learner usability and launch polish
+
+This phase implements `EXEMPLA_LEARNER_USABILITY_AND_LAUNCH_POLISH_SPEC.md`
+without changing the ranking algorithm, capacity, or accepted corpus.
+
+### Phase 16 — Make every lower-level first click bounded and obvious
+
+- [x] Step 1 — Record the clean-commit learner-facing baseline, public GitHub
+  description, lower-level source-file sizes, and pre-change verification in
+  `research/learner-usability-audit.json`.
+- [x] Step 2 — Extend schema, validation, rendering, and tests so every Level 1
+  and Level 2 path requires a concise `quick_start` and a valid exact initial
+  source range while Levels 3–5 remain compatible.
+- [x] Step 3 — Inspect all 44 populated Level 1 and Level 2 paths at their
+  pinned revisions; add accurate ranges and quick starts, with evidence-backed
+  exceptions for any initial range above the soft Level limit.
+- [x] Step 4 — Reorder low-level presentation, mark recommended first paths and
+  same-Level progression, improve README and index onboarding, add novice
+  difficulty feedback, review narrow-width readability, and correct the public
+  repository description.
+- [ ] Step 5 — Simulate every populated Level 1 journey, every available Level
+  1-to-2 transition, and at least ten Level 2-to-3 transitions; publish the
+  before/after audit, regenerate, and pass every required verification gate.
+  The simulations, audit, and all local workflow-equivalent gates pass; GitHub
+  Actions remains pending until an explicitly authorized commit and push.
+
 ## Completed learner-centered remediation
 
 - [x] Record the verified 150-path starting state and preserve all remediation

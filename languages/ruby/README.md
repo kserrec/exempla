@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [ruby/abbrev](https://github.com/ruby/abbrev)
 
-**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A Ruby default gem that builds all unambiguous word prefixes and removes a prefix as soon as a collision appears.
+
+**Just start:** Read lines 74–107 of `abbrev.rb`, then compare them with `test_abbrev.rb`.
+
+**Start with: 34 lines of source.** [Open `lib/abbrev.rb`, lines 74–107.](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/lib/abbrev.rb#L74-L107)
 
 **Why study it:** Trace a small production algorithm whose hashes make both successful prefixes and collisions visible, then predict the exact abbreviation table.
 
@@ -29,22 +35,31 @@ A Ruby default gem that builds all unambiguous word prefixes and removes a prefi
 - Deleting a previously valid result when a collision appears.
 - Building a deterministic lookup table from ordinary strings.
 
-**What you can learn:**
-
-- Generate progressively shorter prefixes for each input word.
-- Use one hash to count sightings and another to retain only unambiguous results.
-- Explain why full words remain valid even when their shorter prefixes collide.
-
 **Learning path:**
 
 - **Goal:** Understand how Abbrev turns words into a hash of every unambiguous prefix without losing full-word lookups.
-- **Start here:** [`lib/abbrev.rb`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/lib/abbrev.rb) — The abbrev method contains the complete prefix loop, collision count, deletion rule, and final full-word pass.
+- **Start here:** [`lib/abbrev.rb`, lines 74–107](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/lib/abbrev.rb#L74-L107) — The abbrev method contains the complete prefix loop, collision count, deletion rule, and final full-word pass.
 - **Then read:**
   - [`test/test_abbrev.rb`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/test/test_abbrev.rb)
   - [`README.md`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/README.md)
 - **Trace:** For each nonempty word, walk prefix lengths downward, increment seen, add the first occurrence, delete the second, and stop after later collisions; then restore each full word and compare the resulting hash with the direct summer, winter, win, ruby, and rules assertion.
 
 **Why this level:**
+
+**Level 1:** The central algorithm uses familiar loops, strings, hashes, and branches; the optional filter and delegation can be skipped without hiding the selected behavior.
+
+**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Generate progressively shorter prefixes for each input word.
+- Use one hash to count sightings and another to retain only unambiguous results.
+- Explain why full words remain valid even when their shorter prefixes collide.
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 1:** The selected unfiltered path uses basic Ruby collections, iteration, slicing, and branching.
 - **Behavioral reasoning 2:** A small amount of local mutable state distinguishes unique and colliding prefixes, but remains easy to simulate.
@@ -54,11 +69,6 @@ A Ruby default gem that builds all unambiguous word prefixes and removes a prefi
   - **Central concepts:** string prefixes; hash-based occurrence counts; collision removal
   - **Incidental concepts:** the optional regular-expression filter; the Array convenience extension
 - **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository packages and releases abbrev as an installable Ruby default gem with a documented public API and direct regression tests.
 
@@ -87,13 +97,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [sinatra/sinatra](https://github.com/sinatra/sinatra)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
+### [sinatra/sinatra](https://github.com/sinatra/sinatra)
 
 **Source:** Educational exemplar
 
 Sinatra's complete hello-world example declares one route with a Ruby block and verifies its response body in the README test suite.
+
+**Just start:** Read lines 6–30 of `README.md`, then compare them with `readme_test.rb`.
+
+**Start with: 25 lines of source.** [Open `README.md`, lines 6–30.](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/README.md#L6-L30)
 
 **Why study it:** Read a whole web application small enough to hold in memory while learning how a route block becomes an externally checked response.
 
@@ -114,22 +128,31 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - Connecting a request route to a returned body.
 - Testing documented examples as observable application behavior.
 
-**What you can learn:**
-
-- Declare an HTTP method and path with Sinatra's route syntax.
-- Return a response body from the route's Ruby block.
-- Execute the route in a test and assert the exact body a caller receives.
-
 **Learning path:**
 
 - **Goal:** Understand how Sinatra's complete minimal application maps GET / to Hello world and verifies that documentation example in code.
-- **Start here:** [`README.md`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/README.md) — The opening example contains the complete application and immediately explains how to install, run, and view it.
+- **Start here:** [`README.md`, lines 6–30](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/README.md#L6-L30) — The opening example contains the complete application and immediately explains how to install, run, and view it.
 - **Then read:**
   - [`test/readme_test.rb`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/test/readme_test.rb)
   - [`sinatra.gemspec`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/sinatra.gemspec)
 - **Trace:** Require Sinatra, register GET / with a block returning Hello world, then follow ReadmeTest as it constructs the same route, performs GET /, and checks the exact body.
 
 **Why this level:**
+
+**Level 2:** A short route-and-response primer makes the example and its test predictable; framework internals are not required for the selected behavior.
+
+**License:** MIT ([evidence 1](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Declare an HTTP method and path with Sinatra's route syntax.
+- Return a response body from the route's Ruby block.
+- Execute the route in a test and assert the exact body a caller receives.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
 
 - **Language technique 2:** Blocks and the route DSL are common professional Ruby idioms that remain direct in this example.
 - **Behavioral reasoning 2:** One framework dispatch step is central, but the matching route and result remain locally predictable.
@@ -139,11 +162,6 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
   - **Central concepts:** route declaration; request dispatch; response-body verification
   - **Incidental concepts:** Sinatra's internal routing implementation
 - **Placement:** The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Sinatra presents this finished four-line application as the first runnable example in its primary README and maintains an executable ReadmeTest that asserts the example's exact result.
 
@@ -172,11 +190,13 @@ The learner-facing short context appears above.
 
 ### [ruby/observer](https://github.com/ruby/observer)
 
-**Language 2 / Behavior 3 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 Ruby's Observer default gem stores subscribers and notifies their chosen methods only after the observable marks itself changed.
+
+**Just start:** Read lines 138–229 of `observer.rb`, then compare them with `test_observer.rb`.
+
+**Start with: 92 lines of source.** [Open `lib/observer.rb`, lines 138–229.](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/lib/observer.rb#L138-L229)
 
 **Why study it:** Follow a compact publish-and-subscribe lifecycle from registration through change gating, callback dispatch, reset, and removal.
 
@@ -191,22 +211,31 @@ Ruby's Observer default gem stores subscribers and notifies their chosen methods
 - Using explicit state to prevent accidental notifications.
 - Dispatching event arguments and updating subscriptions safely.
 
-**What you can learn:**
-
-- Register objects and the callback method each should receive.
-- Gate notifications behind an explicit changed state and reset that state afterward.
-- Use a behavior test to track which subscribers receive each event after additions and removals.
-
 **Learning path:**
 
 - **Goal:** Understand how Ruby Observable registers subscribers, gates events on changed state, dispatches arguments, and removes subscriptions.
-- **Start here:** [`lib/observer.rb`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/lib/observer.rb) — The Observable module contains registration, removal, state, count, and notification behavior in one readable unit.
+- **Start here:** [`lib/observer.rb`, lines 138–229](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/lib/observer.rb#L138-L229) — The Observable module contains registration, removal, state, count, and notification behavior in one readable unit.
 - **Then read:**
   - [`test/test_observer.rb`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/test/test_observer.rb)
   - [`README.md`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/README.md)
 - **Trace:** Add each watcher and callback to @observer_peers, call changed before notify_observers, dispatch the event arguments with __send__, reset @observer_state, then follow the direct test as watchers join, receive different event histories, and are removed.
 
 **Why this level:**
+
+**Level 2:** The README supplies a cohesive publish-and-subscribe primer, after which the direct test makes each state transition and event history predictable.
+
+**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/COPYING), [evidence 2](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/BSDL))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Register objects and the callback method each should receive.
+- Gate notifications behind an explicit changed state and reset that state afterward.
+- Use a behavior test to track which subscribers receive each event after additions and removals.
+
+**Language 2 / Behavior 3 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Mixins and callbacks are common professional Ruby patterns that materially shape the implementation.
 - **Behavioral reasoning 3:** Event delivery and subscription state are central, although the complete lifecycle remains compact and synchronous.
@@ -216,11 +245,6 @@ Ruby's Observer default gem stores subscribers and notifies their chosen methods
   - **Central concepts:** subscriber registration; callback dispatch; change-gated event state
   - **Incidental concepts:** __send__ as the dynamic callback operation
 - **Placement:** The four scores 2/3/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/COPYING), [evidence 2](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/BSDL))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository packages and releases observer as an installable Ruby default gem implementing the application-facing Observable API.
 
@@ -249,11 +273,13 @@ No specialist domain context is required.
 
 ### [ruby/pathname](https://github.com/ruby/pathname)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
 **Source:** Production software
 
 A Ruby path method that removes redundant path pieces without reading the filesystem.
+
+**Just start:** Read lines 395–500 of `pathname_builtin.rb`, then compare them with `test_pathname.rb`.
+
+**Start with: 106 lines of source.** [Open `lib/pathname_builtin.rb`, lines 395–500.](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/lib/pathname_builtin.rb#L395-L500)
 
 **Why study it:** Follow path components through a small stack that removes dots, handles parent steps, preserves roots, and offers a conservative mode for symbolic links.
 
@@ -272,22 +298,31 @@ A Ruby path method that removes redundant path pieces without reading the filesy
 - Using a stack to handle dot and parent pieces.
 - Preserving roots and choosing conservative behavior when needed.
 
-**What you can learn:**
-
-- Trace ordinary, dot, parent, rooted, and trailing-separator examples.
-- Compare aggressive and conservative cleanup modes.
-- Use the test matrix to understand platform and boundary cases.
-
 **Learning path:**
 
 - **Goal:** Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.
-- **Start here:** [`lib/pathname_builtin.rb`](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/lib/pathname_builtin.rb) — Begin with `lib/pathname_builtin.rb` because it exposes how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.
+- **Start here:** [`lib/pathname_builtin.rb`, lines 395–500](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/lib/pathname_builtin.rb#L395-L500) — Begin with `lib/pathname_builtin.rb` because it exposes how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.
 - **Then read:**
   - [`lib/pathname.rb`](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/lib/pathname.rb)
   - [`test/pathname/test_pathname.rb`](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/test/pathname/test_pathname.rb)
 - **Trace:** Start at Pathname#cleanpath in lib/pathname_builtin.rb, branch into cleanpath_aggressive or cleanpath_conservative, follow component-stack, prefix, root, and separator handling, then close the behavior with the aggressive and conservative defassert matrices. Read lib/pathname.rb only for loading and the small additional APIs; the catalog's original loader was not the promised normalization implementation.
 
 **Why this level:**
+
+**Level 2:** A short path-components primer makes the local normalization stack predictable; portability cases stretch the lesson but do not require a separate course.
+
+**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/COPYING), [evidence 2](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/BSDL))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace ordinary, dot, parent, rooted, and trailing-separator examples.
+- Compare aggressive and conservative cleanup modes.
+- Use the test matrix to understand platform and boundary cases.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 - **Language technique 2:** The path uses common professional Ruby collection, object, and helper idioms without recurring metaprogramming.
 - **Behavioral reasoning 2:** Meaningful branches and local mutable state remain easy to trace in one normalization routine.
@@ -297,11 +332,6 @@ A Ruby path method that removes redundant path pieces without reading the filesy
   - **Central concepts:** lexical path normalization; component-stack handling of dot and parent pieces; conservative symbolic-link behavior
   - **Incidental concepts:** regular-expression helpers; Windows drive and UNC cases
 - **Placement:** The four structural scores 2/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/COPYING), [evidence 2](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/BSDL))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.
 
@@ -329,6 +359,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [jekyll/jekyll](https://github.com/jekyll/jekyll)
 
@@ -365,7 +397,7 @@ A static-site generator that transforms Markdown, Liquid templates, data, assets
 **Learning path:**
 
 - **Goal:** Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.
-- **Start here:** [`lib/jekyll/renderer.rb`](https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/lib/jekyll/renderer.rb) — Begin with `lib/jekyll/renderer.rb` because it exposes how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.
+- **Start here:** [`jekyll/renderer.rb`](https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/lib/jekyll/renderer.rb) — Begin with `lib/jekyll/renderer.rb` because it exposes how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.
 - **Then read:**
   - [`lib/jekyll/convertible.rb`](https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/lib/jekyll/convertible.rb)
   - [`lib/jekyll/regenerator.rb`](https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/lib/jekyll/regenerator.rb)
@@ -492,6 +524,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [rubocop/rubocop](https://github.com/rubocop/rubocop)
 
 **Language 4 / Behavior 4 / Design 4 / Constraints 5 → Level 4**
@@ -527,7 +561,7 @@ A configurable Ruby static analyzer and formatter built around independently sel
 **Learning path:**
 
 - **Goal:** Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.
-- **Start here:** [`lib/rubocop/runner.rb`](https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/lib/rubocop/runner.rb) — Begin with `lib/rubocop/runner.rb` because it exposes how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.
+- **Start here:** [`rubocop/runner.rb`](https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/lib/rubocop/runner.rb) — Begin with `lib/rubocop/runner.rb` because it exposes how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.
 - **Then read:**
   - [`lib/rubocop/cop/team.rb`](https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/lib/rubocop/cop/team.rb)
   - [`lib/rubocop/cop/commissioner.rb`](https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/lib/rubocop/cop/commissioner.rb)
@@ -610,7 +644,7 @@ A multithreaded background-job processor for Ruby applications backed by Redis.
 **Learning path:**
 
 - **Goal:** Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.
-- **Start here:** [`lib/sidekiq/processor.rb`](https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/lib/sidekiq/processor.rb) — Begin with `lib/sidekiq/processor.rb` because it exposes how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.
+- **Start here:** [`sidekiq/processor.rb`](https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/lib/sidekiq/processor.rb) — Begin with `lib/sidekiq/processor.rb` because it exposes how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.
 - **Then read:**
   - [`lib/sidekiq/job_retry.rb`](https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/lib/sidekiq/job_retry.rb)
   - [`lib/sidekiq/middleware/chain.rb`](https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/lib/sidekiq/middleware/chain.rb)
@@ -660,6 +694,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [ruby-concurrency/concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -695,7 +731,7 @@ A production concurrency toolkit whose promise framework composes asynchronous t
 **Learning path:**
 
 - **Goal:** Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers.
-- **Start here:** [`lib/concurrent-ruby/concurrent/promises.rb`](https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/lib/concurrent-ruby/concurrent/promises.rb) — Begin with `lib/concurrent-ruby/concurrent/promises.rb` because it exposes the complete public factory, dependency, resolution, callback, and observation path.
+- **Start here:** [`concurrent/promises.rb`](https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/lib/concurrent-ruby/concurrent/promises.rb) — Begin with `lib/concurrent-ruby/concurrent/promises.rb` because it exposes the complete public factory, dependency, resolution, callback, and observation path.
 - **Then read:**
   - [`lib/concurrent-ruby/concurrent/configuration.rb`](https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/lib/concurrent-ruby/concurrent/configuration.rb)
   - [`lib/concurrent-ruby/concurrent/synchronization/object.rb`](https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/lib/concurrent-ruby/concurrent/synchronization/object.rb)
@@ -780,7 +816,7 @@ A composable fiber-based asynchronous I/O framework with structured task trees, 
 **Learning path:**
 
 - **Goal:** Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout.
-- **Start here:** [`lib/async/task.rb`](https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/lib/async/task.rb) — Begin with `lib/async/task.rb` because it exposes the task state machine, Fiber execution, child creation, result propagation, cancellation, and finish lifecycle.
+- **Start here:** [`async/task.rb`](https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/lib/async/task.rb) — Begin with `lib/async/task.rb` because it exposes the task state machine, Fiber execution, child creation, result propagation, cancellation, and finish lifecycle.
 - **Then read:**
   - [`lib/kernel/async.rb`](https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/lib/kernel/async.rb)
   - [`lib/async/reactor.rb`](https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/lib/async/reactor.rb)

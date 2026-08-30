@@ -29,6 +29,10 @@ This directory preserves decision evidence outside learner-facing pages.
   educational source policy, all 20 language research passes, accepted and
   rejected candidates, unresolved lower-level gaps, progression checks, and
   before/after totals.
+- `learner-usability-audit.json` records the learner first-click baseline,
+  pinned line-range review for every Level 1 and Level 2 path, simulated novice
+  journeys and progression, launch-copy changes, narrow-width review, and the
+  verified after state.
 - `rejections.json` is append-only: it contains discovery rejections, cutover
   removals, and later serious candidates that did not qualify.
 - `audit.json` is the historical v1 Size / Difficulty / Complexity corpus audit;

@@ -4,17 +4,25 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [sindresorhus/slash](https://github.com/sindresorhus/slash)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 A tiny JavaScript function that changes Windows backslashes to forward slashes except for one protected path form.
+
+**Just start:** Read lines 1–9 of `index.js`, then compare them with `test.js`.
+
+**Start with: 9 lines of source.** [Open `index.js`, lines 1–9.](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/index.js#L1-L9)
 
 **Why study it:** See how one clear guard protects an exceptional input while the ordinary case performs a direct string transformation, with focused tests for both outcomes.
 
@@ -32,22 +40,31 @@ A tiny JavaScript function that changes Windows backslashes to forward slashes e
 - Replacing path separators without changing other characters.
 - Using focused examples to define a small compatibility boundary.
 
-**What you can learn:**
-
-- Read one production function from its guard through its returned string.
-- Compare ordinary Windows-style paths with the protected extended-length form.
-- Use direct tests to check both the transformed and unchanged results.
-
 **Learning path:**
 
 - **Goal:** Understand how a small JavaScript utility converts Windows separators lexically while preserving extended-length paths whose namespace syntax must remain untouched.
-- **Start here:** [`index.js`](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/index.js) — The file contains the complete guard-and-transform behavior, so a learner can see the compatibility exception before the ordinary replacement.
+- **Start here:** [`index.js`, lines 1–9](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/index.js#L1-L9) — The file contains the complete guard-and-transform behavior, so a learner can see the compatibility exception before the ordinary replacement.
 - **Then read:**
   - [`test.js`](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/test.js)
   - [`readme.md`](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/readme.md)
 - **Trace:** Enter slash, detect the extended-length prefix and return that input unchanged; otherwise replace every backslash with a forward slash, then close mixed separators, a Windows drive path, Unicode content, and the protected prefix in test.js.
 
 **Why this level:**
+
+**Level 1:** All central behavior uses novice-baseline string operations and one branch; the pattern and protected Windows prefix each need only one local sentence.
+
+**License:** MIT ([evidence 1](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/license))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Read one production function from its guard through its returned string.
+- Compare ordinary Windows-style paths with the protected extended-length form.
+- Use direct tests to check both the transformed and unchanged results.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
 
 - **Language technique 1:** The complete path uses only a direct function, a string-prefix check, a local branch, and a basic replacement.
 - **Behavioral reasoning 1:** The function either preserves one protected input class or performs one deterministic lexical transformation.
@@ -57,11 +74,6 @@ A tiny JavaScript function that changes Windows backslashes to forward slashes e
   - **Central concepts:** direct branching; string-prefix checking; separator replacement
   - **Incidental concepts:** a regular-expression literal meaning every backslash; the Windows extended-length path prefix
 - **Placement:** The four structural scores 1/1/1/2 produce rubric Level 1 under the documented formula and guardrails. Novice accessibility floor 1 produces published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/sindresorhus/slash/blob/98b618f5a3bfcb5dd374b204868818845b87bb2f/license))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.
 
@@ -90,11 +102,13 @@ The learner-facing short context appears above.
 
 ### [sindresorhus/array-union](https://github.com/sindresorhus/array-union)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
-
 **Source:** Production software
 
 A one-function JavaScript package that combines arrays, removes repeated values, and preserves first-seen order.
+
+**Just start:** Read lines 1–3 of `index.js`, then compare them with `test.js`.
+
+**Start with: 3 lines of source.** [Open `index.js`, lines 1–3.](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/index.js#L1-L3)
 
 **Why study it:** See how standard collection operations express a complete useful transformation, then use direct examples to verify both uniqueness and order.
 
@@ -109,16 +123,10 @@ A one-function JavaScript package that combines arrays, removes repeated values,
 - Preserving first-seen order while removing repeated values.
 - Testing mixed and repeated inputs against exact output arrays.
 
-**What you can learn:**
-
-- Trace several input arrays through flattening, Set-based deduplication, and the returned array.
-- Explain why the first occurrence of each value determines output order.
-- Use focused tests to check duplicates within and across input arrays.
-
 **Learning path:**
 
 - **Goal:** Understand how array-union combines any number of arrays into one ordered array containing each value once.
-- **Start here:** [`index.js`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/index.js) — The exported one-line function contains the entire runtime transformation in execution order.
+- **Start here:** [`index.js`, lines 1–3](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/index.js#L1-L3) — The exported one-line function contains the entire runtime transformation in execution order.
 - **Then read:**
   - [`test.js`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/test.js)
   - [`readme.md`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/readme.md)
@@ -126,6 +134,21 @@ A one-function JavaScript package that combines arrays, removes repeated values,
 - **Trace:** Start with the rest-parameter arrays in index.js, flatten them, let Set retain the first occurrence of each value, spread the Set into the result, and compare that sequence with the three exact arrays in test.js.
 
 **Why this level:**
+
+**Level 1:** The learner can predict every example after two local sentences about Set uniqueness and insertion order; no separate topic is required.
+
+**License:** MIT ([evidence 1](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/license))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace several input arrays through flattening, Set-based deduplication, and the returned array.
+- Explain why the first occurrence of each value determines output order.
+- Use focused tests to check duplicates within and across input arrays.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 1:** The runtime uses one function and familiar collection operations without custom abstraction or hidden control flow.
 - **Behavioral reasoning 1:** Every input follows the same direct flatten, deduplicate, and return sequence.
@@ -135,11 +158,6 @@ A one-function JavaScript package that combines arrays, removes repeated values,
   - **Central concepts:** array flattening; duplicate removal; first-seen ordering
   - **Incidental concepts:** rest and spread syntax; Set insertion order
 - **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** MIT ([evidence 1](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/license))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The package manifest publishes array-union 3.0.1 to npm with index.js as its exported runtime, while the README documents installation and application-facing use.
 
@@ -168,13 +186,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [expressjs/express](https://github.com/expressjs/express)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
+### [expressjs/express](https://github.com/expressjs/express)
 
 **Source:** Educational exemplar
 
 Express's completed hello-world example maps one HTTP GET route to a response and verifies both success and missing-route behavior.
+
+**Just start:** Read lines 1–15 of `index.js`, then compare them with `hello-world.js`.
+
+**Start with: 15 lines of source.** [Open `hello-world/index.js`, lines 1–15.](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/hello-world/index.js#L1-L15)
 
 **Why study it:** Read a complete tiny web application from route declaration through response, startup boundary, and externally observed request tests.
 
@@ -195,22 +217,31 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
 - Exporting an application separately from its direct-run server startup.
 - Testing observable HTTP status and body behavior.
 
-**What you can learn:**
-
-- Connect an HTTP method and path to one JavaScript callback.
-- Separate reusable application construction from starting a listening server.
-- Verify the success route and framework-provided missing-route response from outside the app.
-
 **Learning path:**
 
 - **Goal:** Understand how a complete minimal Express application serves Hello World at one route and remains directly acceptance-testable.
-- **Start here:** [`examples/hello-world/index.js`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/hello-world/index.js) — This file contains the whole application, route callback, export boundary, and direct-run startup guard.
+- **Start here:** [`hello-world/index.js`, lines 1–15](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/hello-world/index.js#L1-L15) — This file contains the whole application, route callback, export boundary, and direct-run startup guard.
 - **Then read:**
   - [`test/acceptance/hello-world.js`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/test/acceptance/hello-world.js)
   - [`examples/README.md`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/README.md)
 - **Trace:** Construct and export the Express application, register GET / to send Hello World, start listening only when run directly, then follow the acceptance suite's GET / and GET /missing requests to their expected 200 body and 404 status.
 
 **Why this level:**
+
+**Level 2:** A short primer defines a route, request, response, and direct-run guard; the learner can then predict both acceptance tests without studying HTTP internals.
+
+**License:** MIT ([evidence 1](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Connect an HTTP method and path to one JavaScript callback.
+- Separate reusable application construction from starting a listening server.
+- Verify the success route and framework-provided missing-route response from outside the app.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
 
 - **Language technique 2:** Callbacks and the framework's route and request APIs are common professional JavaScript idioms that remain locally visible.
 - **Behavioral reasoning 2:** A small request lifecycle and one startup branch matter, but both remain explicit and easy to trace.
@@ -220,11 +251,6 @@ Levels 1–2 may use intentionally instructive software when it provides a gentl
   - **Central concepts:** HTTP route callback; application export and direct-run startup; external request testing
   - **Incidental concepts:** the framework's default 404 handling
 - **Placement:** The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Express maintains examples/hello-world as its documented simple request-handler example, exports the complete application for testing, and ships a direct acceptance suite for it.
 
@@ -253,11 +279,13 @@ The learner-facing short context appears above.
 
 ### [sindresorhus/onetime](https://github.com/sindresorhus/onetime)
 
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A JavaScript package that calls a wrapped function once, reuses its first successful result, and records every attempt.
+
+**Just start:** Read lines 3–41 of `index.js`, then compare them with `test.js`.
+
+**Start with: 39 lines of source.** [Open `index.js`, lines 3–41.](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/index.js#L3-L41)
 
 **Why study it:** Trace a small stateful closure through first call, repeated call, throwing first attempt, optional error behavior, and call-count inspection.
 
@@ -272,16 +300,10 @@ A JavaScript package that calls a wrapped function once, reuses its first succes
 - Preserving a caller's this value and arguments through a wrapper.
 - Keeping wrapper metadata in a private WeakMap.
 
-**What you can learn:**
-
-- See how a closure retains a result and disables later execution after the first successful call.
-- Explain why a first call that throws remains retryable.
-- Track wrapper call counts without exposing mutable fields on the wrapped function.
-
 **Learning path:**
 
 - **Goal:** Understand how onetime executes a wrapped function once successfully, returns the cached value thereafter, and reports every call attempt.
-- **Start here:** [`index.js`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/index.js) — The file contains input validation, closure state, invocation, retry semantics, metadata storage, and the public callCount helper.
+- **Start here:** [`index.js`, lines 3–41](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/index.js#L3-L41) — The file contains input validation, closure state, invocation, retry semantics, metadata storage, and the public callCount helper.
 - **Then read:**
   - [`test.js`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/test.js)
   - [`readme.md`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/readme.md)
@@ -289,6 +311,21 @@ A JavaScript package that calls a wrapped function once, reuses its first succes
 - **Trace:** Create a wrapper with returnValue, callCount, and the original function in closure state; on each call update WeakMap metadata, invoke and clear the original only after success, otherwise return the cached value or throw by option, then match those branches to the direct tests.
 
 **Why this level:**
+
+**Level 2:** One short primer on closures and wrappers makes the state transitions predictable; WeakMap and metadata copying can be treated as local supporting operations.
+
+**License:** MIT ([evidence 1](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/license))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- See how a closure retains a result and disables later execution after the first successful call.
+- Explain why a first call that throws remains retryable.
+- Track wrapper call counts without exposing mutable fields on the wrapped function.
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
 - **Language technique 2:** Callbacks, closures, function context, and WeakMap are common professional idioms that materially shape the wrapper.
 - **Behavioral reasoning 2:** A few explicit state branches matter, including the placement of the clear operation after a successful return.
@@ -298,11 +335,6 @@ A JavaScript package that calls a wrapped function once, reuses its first succes
   - **Central concepts:** closure-held state; function wrapping; first-success and retry behavior
   - **Incidental concepts:** WeakMap storage; copying function metadata through mimic-function
 - **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/license))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The package manifest publishes onetime 8.0.0 to npm as an application-facing function wrapper and the README documents its stable runtime API.
 
@@ -330,6 +362,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [ai/nanoid](https://github.com/ai/nanoid)
 
@@ -483,6 +517,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [eslint/eslint](https://github.com/eslint/eslint)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
@@ -514,7 +550,7 @@ A configurable static-analysis engine and CLI for identifying and automatically 
 **Learning path:**
 
 - **Goal:** Understand how ESLint parses one source file, creates isolated rule listeners, traverses the source, reports and suppresses diagnostics, and applies safe iterative fixes.
-- **Start here:** [`lib/eslint/eslint.js`](https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/lib/eslint/eslint.js) — ESLint.lintText is the learner-facing entry point that assembles configuration and result handling before delegating to the linter engine, so it exposes the selected end-to-end path without beginning inside an internal subsystem.
+- **Start here:** [`eslint/eslint.js`](https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/lib/eslint/eslint.js) — ESLint.lintText is the learner-facing entry point that assembles configuration and result handling before delegating to the linter engine, so it exposes the selected end-to-end path without beginning inside an internal subsystem.
 - **Then read:**
   - [`lib/eslint/eslint-helpers.js`](https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/lib/eslint/eslint-helpers.js)
   - [`lib/linter/linter.js`](https://github.com/eslint/eslint/blob/5634542be580750ffb1a5766470f9e9c72719696/lib/linter/linter.js)
@@ -591,7 +627,7 @@ An opinionated source-code formatter that parses many languages, builds a docume
 **Learning path:**
 
 - **Goal:** Understand how Prettier formats source through parsing, AST-to-document conversion, document printing, and cursor preservation.
-- **Start here:** [`src/main/core.js`](https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/src/main/core.js) — src/main/core.js coordinates parser selection, parseText, printAstToDoc, document rendering, line endings, and cursor relocation, so it exposes the complete selected formatting request.
+- **Start here:** [`main/core.js`](https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/src/main/core.js) — src/main/core.js coordinates parser selection, parseText, printAstToDoc, document rendering, line endings, and cursor relocation, so it exposes the complete selected formatting request.
 - **Then read:**
   - [`src/language-js/parse/babel.js`](https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/src/language-js/parse/babel.js)
   - [`src/main/ast-to-doc.js`](https://github.com/prettier/prettier/blob/0283c8848ecb541c7ea0601ff274799bce1b39e5/src/main/ast-to-doc.js)
@@ -642,6 +678,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [nodejs/node](https://github.com/nodejs/node)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -673,7 +711,7 @@ The Node.js runtime, standard library, module loaders, native bindings, event lo
 **Learning path:**
 
 - **Goal:** Understand how Node.js resolves, caches, loads, compiles, and returns a classic CommonJS module while handling built-ins, cycles, extensions, and failures.
-- **Start here:** [`lib/internal/modules/cjs/loader.js`](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/lib/internal/modules/cjs/loader.js) — lib/internal/modules/cjs/loader.js contains Module._load, Module._resolveFilename, Module.prototype._compile, wrapper execution, caches, and extension dispatch for the selected classic CommonJS trace.
+- **Start here:** [`cjs/loader.js`](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/lib/internal/modules/cjs/loader.js) — lib/internal/modules/cjs/loader.js contains Module._load, Module._resolveFilename, Module.prototype._compile, wrapper execution, caches, and extension dispatch for the selected classic CommonJS trace.
 - **Then read:**
   - [`doc/api/modules.md`](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/doc/api/modules.md)
   - [`test/sequential/test-module-loading.js`](https://github.com/nodejs/node/blob/4215cc35e25c44f9f4fea5a4541afc862db7ef0a/test/sequential/test-module-loading.js)
@@ -749,7 +787,7 @@ A component runtime and rendering platform spanning reconciliation, scheduling, 
 **Learning path:**
 
 - **Goal:** Understand how React schedules a state update by lane, performs interruptible work on the fiber root, and commits effects in the required order.
-- **Start here:** [`packages/react-reconciler/src/ReactFiberWorkLoop.js`](https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/packages/react-reconciler/src/ReactFiberWorkLoop.js) — ReactFiberWorkLoop.js coordinates scheduled root work, render phases, interruption, completion, and commits after an update enters through the reconciler and class update queue.
+- **Start here:** [`src/ReactFiberWorkLoop.js`](https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/packages/react-reconciler/src/ReactFiberWorkLoop.js) — ReactFiberWorkLoop.js coordinates scheduled root work, render phases, interruption, completion, and commits after an update enters through the reconciler and class update queue.
 - **Then read:**
   - [`packages/react-reconciler/src/ReactFiberReconciler.js`](https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/packages/react-reconciler/src/ReactFiberReconciler.js)
   - [`packages/react-reconciler/src/ReactFiberClassUpdateQueue.js`](https://github.com/react/react/blob/2dc7da790d6388b95b83198ca9b588b2ad5f5c0b/packages/react-reconciler/src/ReactFiberClassUpdateQueue.js)

@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "This official repository builds Kotlin and its shipped standard library; substringAfter is a documented public kotlin.text extension used by Kotlin programs across supported platforms.",
       "why_study": "Follow one familiar string operation through delimiter search, a missing-result branch, substring boundaries, defaults, and direct examples.",
+      "quick_start": "Read lines 464–470 of `Strings.kt`, then compare them with `StringTest.kt`.",
       "learn": [
         "Find the first occurrence of a delimiter string.",
         "Return a fallback when the search reports no match.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Kotlin's standard library defines the result after a delimiter, including both forms of missing-delimiter behavior.",
         "start_here": {
           "path": "libraries/stdlib/src/kotlin/text/Strings.kt",
+          "line_start": 464,
+          "line_end": 470,
           "reason": "The KDoc and complete string-delimiter overload of substringAfter appear together in this file."
         },
         "supporting_files": [
@@ -146,6 +149,7 @@
       "source_kind": "production",
       "purpose_evidence": "The README documents multiplatform-settings-test as a published dependency for testing real client code, with MapSettings as its application-facing in-memory implementation.",
       "why_study": "Follow one professional test double from a typed interface to map-backed writes, safe reads with explicit defaults, and two wrappers that intentionally share the same backing state.",
+      "quick_start": "Read lines 33–146 of `MapSettings.kt`, then compare them with `MapSettingsTest.kt`.",
       "learn": [
         "Implement a public interface with one in-memory map while preserving type-specific methods.",
         "Use safe casts to return either the stored type or the caller's explicit default.",
@@ -169,6 +173,8 @@
         "goal": "Understand how MapSettings provides typed reads and writes over one shared in-memory map without changing the public Settings contract.",
         "start_here": {
           "path": "multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt",
+          "line_start": 33,
+          "line_end": 146,
           "reason": "The class shows the backing map, constructors, type-specific write and read pairs, default behavior, and factory-managed shared maps together."
         },
         "supporting_files": [

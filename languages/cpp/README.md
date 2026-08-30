@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [abseil/abseil-cpp](https://github.com/abseil/abseil-cpp)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 Abseil's production ASCII classifier returns true exactly for byte values from lowercase a through lowercase z, independent of the process locale.
+
+**Just start:** Read lines 167–172 of `ascii.h`, then compare them with `ascii_test.cc`.
+
+**Start with: 6 lines of source.** [Open `strings/ascii.h`, lines 167–172.](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii.h#L167-L172)
 
 **Why study it:** Connect one readable range expression to an exhaustive 256-value test and a production promise that avoids locale-dependent surprises.
 
@@ -29,16 +35,10 @@ Abseil's production ASCII classifier returns true exactly for byte values from l
 - Representing a closed range with two comparisons.
 - Verifying every member of a finite byte domain.
 
-**What you can learn:**
-
-- Recognize a contiguous character range with two comparisons and logical AND.
-- Use unsigned byte input to cover every possible byte value predictably.
-- Exhaustively test a small finite input domain.
-
 **Learning path:**
 
 - **Goal:** Understand how Abseil classifies lowercase ASCII consistently for every possible byte.
-- **Start here:** [`absl/strings/ascii.h`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii.h) — The public contract and complete constexpr ascii_islower implementation are adjacent in this header.
+- **Start here:** [`strings/ascii.h`, lines 167–172](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii.h#L167-L172) — The public contract and complete constexpr ascii_islower implementation are adjacent in this header.
 - **Then read:**
   - [`absl/strings/ascii_test.cc`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii_test.cc)
   - [`README.md`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/README.md)
@@ -46,6 +46,21 @@ Abseil's production ASCII classifier returns true exactly for byte values from l
 - **Trace:** Pass an unsigned byte to ascii_islower, evaluate whether it is at least 'a' and at most 'z', then follow the test loop across all 256 values and its independent agreement check in the C locale.
 
 **Why this level:**
+
+**Level 1:** The predicate itself is novice C++; constexpr and the test casts each need only a short local explanation and do not alter the range reasoning.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Recognize a contiguous character range with two comparisons and logical AND.
+- Use unsigned byte input to cover every possible byte value predictably.
+- Exhaustively test a small finite input domain.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
 
 - **Language technique 1:** The implementation uses only a typed parameter, character literals, comparisons, and a boolean return expression.
 - **Behavioral reasoning 1:** One local closed-range condition fully determines the result.
@@ -55,11 +70,6 @@ Abseil's production ASCII classifier returns true exactly for byte values from l
   - **Central concepts:** boolean return values; character range comparisons; logical AND; looping across test inputs
   - **Incidental concepts:** constexpr; explicit unsigned-byte casts in the test
 - **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Abseil is Google's maintained collection of production C++ libraries, and ascii_islower is a documented public string utility rather than a test-only helper.
 
@@ -90,11 +100,13 @@ No specialist domain context is required.
 
 ### [microsoft/GSL](https://github.com/microsoft/GSL)
 
-**Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
 **Source:** Production software
 
 A small C++ scope guard that runs a cleanup function when control leaves a block.
+
+**Just start:** Read lines 135–175 of `util`, then compare them with `utils_tests.cpp`.
+
+**Start with: 41 lines of source.** [Open `gsl/util`, lines 135–175.](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/include/gsl/util#L135-L175)
 
 **Why study it:** Learn how one object owns a cleanup action, runs it during ordinary destruction, and transfers that responsibility safely when moved.
 
@@ -113,22 +125,31 @@ A small C++ scope guard that runs a cleanup function when control leaves a block
 - Making a moved-from guard inactive.
 - Testing that ordinary scope exit runs the cleanup once.
 
-**What you can learn:**
-
-- Follow construction, move construction, and destruction through one small utility.
-- See how moving transfers cleanup responsibility.
-- Use lifecycle tests to distinguish active and inactive guards.
-
 **Learning path:**
 
 - **Goal:** Understand how final_action stores a cleanup callable, invokes it once at scope exit, and transfers that responsibility safely through move construction.
-- **Start here:** [`include/gsl/util`](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/include/gsl/util) — include/gsl/util contains the complete final_action class, its armed state, move-only ownership transfer, destructor, and finally factory.
+- **Start here:** [`gsl/util`, lines 135–175](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/include/gsl/util#L135-L175) — include/gsl/util contains the complete final_action class, its armed state, move-only ownership transfer, destructor, and finally factory.
 - **Then read:**
   - [`tests/utils_tests.cpp`](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/tests/utils_tests.cpp)
   - [`docs/headers.md`](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/docs/headers.md)
 - **Trace:** Start at finally's decay and forwarding into final_action, follow callable storage and the invoke flag through construction, move construction with std::exchange, and noexcept destruction, then close the path with the lambda, moved-guard, lvalue, and function-pointer tests and the public header contract.
 
 **Why this level:**
+
+**Level 2:** One cohesive professional idea—an object owns cleanup until destruction or a move—can be taught in a short primer and then traced locally through direct tests.
+
+**License:** MIT ([evidence 1](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Follow construction, move construction, and destruction through one small utility.
+- See how moving transfers cleanup responsibility.
+- Use lifecycle tests to distinguish active and inactive guards.
+
+**Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 - **Language technique 3:** Templates, forwarding, type transformation, and move-only RAII materially shape the tiny public utility, but remain localized and conventional.
 - **Behavioral reasoning 2:** One small lifecycle and ownership transfer determine whether cleanup runs, with no asynchronous or distributed state.
@@ -138,11 +159,6 @@ A small C++ scope guard that runs a cleanup function when control leaves a block
   - **Central concepts:** scope-based cleanup (RAII); ownership transfer when a guard is moved; generic cleanup callables
   - **Incidental concepts:** std::exchange; noexcept spelling
 - **Placement:** The four structural scores 3/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.
 
@@ -170,6 +186,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [CLIUtils/CLI11](https://github.com/CLIUtils/CLI11)
 
@@ -202,7 +220,7 @@ A command-line parser supporting typed options, flags, subcommands, validation, 
 **Learning path:**
 
 - **Goal:** Understand how CLI11 maps command-line tokens into typed options and subcommands while preserving validation, callback, fallthrough, remaining-argument, and error contracts.
-- **Start here:** [`include/CLI/App.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/App.hpp) — include/CLI/App.hpp defines the application, option, and subcommand model and leads into App_inl.hpp for the selected token-consumption and validation lifecycle.
+- **Start here:** [`CLI/App.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/App.hpp) — include/CLI/App.hpp defines the application, option, and subcommand model and leads into App_inl.hpp for the selected token-consumption and validation lifecycle.
 - **Then read:**
   - [`include/CLI/impl/App_inl.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/impl/App_inl.hpp)
   - [`include/CLI/Option.hpp`](https://github.com/CLIUtils/CLI11/blob/c1cfe00d2f3d862aecfe6e69ec810414d5f4c906/include/CLI/Option.hpp)
@@ -325,6 +343,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [catchorg/Catch2](https://github.com/catchorg/Catch2)
 
 **Language 5 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -356,7 +376,7 @@ A C++ testing framework with expressive assertions, matchers, generators, test d
 **Learning path:**
 
 - **Goal:** Understand how a Catch2 assertion macro captures one C++ expression, decomposes its operands without double evaluation, and reports a faithful result through the assertion handler.
-- **Start here:** [`src/catch2/catch_test_macros.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/catch_test_macros.hpp) — src/catch2/catch_test_macros.hpp defines the public REQUIRE and CHECK families that lead into internal expansion, Decomposer expression capture, and AssertionHandler reporting.
+- **Start here:** [`catch2/catch_test_macros.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/catch_test_macros.hpp) — src/catch2/catch_test_macros.hpp defines the public REQUIRE and CHECK families that lead into internal expansion, Decomposer expression capture, and AssertionHandler reporting.
 - **Then read:**
   - [`src/catch2/internal/catch_test_macro_impl.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/internal/catch_test_macro_impl.hpp)
   - [`src/catch2/internal/catch_decomposer.hpp`](https://github.com/catchorg/Catch2/blob/317ac1ed4c0bb6e6b91eafc817e05c488feffcb3/src/catch2/internal/catch_decomposer.hpp)
@@ -433,7 +453,7 @@ A high-performance logging library with synchronous and asynchronous loggers, fo
 **Learning path:**
 
 - **Goal:** Understand how spdlog hands a log message to a bounded asynchronous queue and delivers it on worker threads while preserving overflow, ordering, flush, ownership, and shutdown contracts.
-- **Start here:** [`include/spdlog/async_logger-inl.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/async_logger-inl.h) — include/spdlog/async_logger-inl.h contains sink_it_ and flush_, where logger calls lock thread-pool lifetime and choose asynchronous post operations.
+- **Start here:** [`spdlog/async_logger-inl.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/async_logger-inl.h) — include/spdlog/async_logger-inl.h contains sink_it_ and flush_, where logger calls lock thread-pool lifetime and choose asynchronous post operations.
 - **Then read:**
   - [`include/spdlog/async_logger.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/async_logger.h)
   - [`include/spdlog/details/thread_pool-inl.h`](https://github.com/gabime/spdlog/blob/f5f173a1a57d0e2e0115f2ed71ee7ea316516853/include/spdlog/details/thread_pool-inl.h)
@@ -482,6 +502,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [boostorg/asio](https://github.com/boostorg/asio)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -514,7 +536,7 @@ Boost.Asio's portable asynchronous I/O library for networking, timers, executors
 **Learning path:**
 
 - **Goal:** Understand how async_compose turns a stateful implementation into a conforming asynchronous operation while preserving completion-token behavior, associated characteristics, work, cancellation, and the at-most-once result-delivery contract.
-- **Start here:** [`include/boost/asio/compose.hpp`](https://github.com/boostorg/asio/blob/a7dc25b4cb6c49a6946d86ea20664f1027203225/include/boost/asio/compose.hpp) — compose.hpp exposes async_compose, its completion signature and token contract, the supplied I/O executors, cancellation policy, and the handoff into composed and async_initiate.
+- **Start here:** [`asio/compose.hpp`](https://github.com/boostorg/asio/blob/a7dc25b4cb6c49a6946d86ea20664f1027203225/include/boost/asio/compose.hpp) — compose.hpp exposes async_compose, its completion signature and token contract, the supplied I/O executors, cancellation policy, and the handoff into composed and async_initiate.
 - **Then read:**
   - [`include/boost/asio/composed.hpp`](https://github.com/boostorg/asio/blob/a7dc25b4cb6c49a6946d86ea20664f1027203225/include/boost/asio/composed.hpp)
   - [`include/boost/asio/async_result.hpp`](https://github.com/boostorg/asio/blob/a7dc25b4cb6c49a6946d86ea20664f1027203225/include/boost/asio/async_result.hpp)
@@ -597,7 +619,7 @@ Meta's performance-oriented collection of C++20 components for concurrency, cont
 **Learning path:**
 
 - **Goal:** Understand how Folly connects a Promise and Future through synchronized shared state and schedules exactly-once continuations on an Executor across success, exception, cancellation, and race paths.
-- **Start here:** [`folly/futures/Future.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future.h) — folly/futures/Future.h defines the continuation and executor-facing public API that leads into Future-inl.h, Promise.h, and detail/Core.h for shared-state execution.
+- **Start here:** [`futures/Future.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future.h) — folly/futures/Future.h defines the continuation and executor-facing public API that leads into Future-inl.h, Promise.h, and detail/Core.h for shared-state execution.
 - **Then read:**
   - [`folly/futures/Future-inl.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Future-inl.h)
   - [`folly/futures/Promise.h`](https://github.com/facebook/folly/blob/011e8761a42b20085ce3937e73b5b7aaf482d499/folly/futures/Promise.h)

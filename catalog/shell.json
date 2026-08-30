@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "bats-core publishes bats-file as a reusable filesystem assertion library for real Bats test suites, with documented installation, behavior, and releases.",
       "why_study": "Follow one Bash file test through its success and failure outcomes, including the exact diagnostic that makes a failed test actionable.",
+      "quick_start": "Read lines 52–74 of `file.bash`, then compare them with `51-assert-10-assert_file_exists.bats`.",
       "learn": [
         "Use Bash's regular-file test to distinguish a file from a directory or missing path.",
         "Let a successful assertion return without producing output.",
@@ -38,6 +39,8 @@
         "goal": "Understand how bats-file assert_file_exists distinguishes a regular file from other paths and reports an exact failure.",
         "start_here": {
           "path": "src/file.bash",
+          "line_start": 52,
+          "line_end": 74,
           "reason": "The public function contains the complete path capture, regular-file condition, optional display substitution, and failure pipeline."
         },
         "supporting_files": [
@@ -142,6 +145,7 @@
       "source_kind": "production",
       "purpose_evidence": "bats-core publishes bats-assert as a released reusable assertion library for real Bats test suites, with installation, API documentation, and a direct test suite.",
       "why_study": "Trace how one Shell test helper interprets captured process state and pipes exact single- or multi-line stdout and stderr diagnostics into the assertion framework on failure.",
+      "quick_start": "Read lines 1–47 of `assert_success.bash`, then compare them with `assert_success.bats`.",
       "learn": [
         "Treat zero and nonzero process statuses as an explicit test contract.",
         "Preserve captured stdout and optional separated stderr when reporting a failure.",
@@ -165,6 +169,8 @@
         "goal": "Understand how bats-assert accepts status zero and turns any captured nonzero status into exact stdout and stderr diagnostics.",
         "start_here": {
           "path": "src/assert_success.bash",
+          "line_start": 1,
+          "line_end": 47,
           "reason": "The function contains the captured-state checks, nonzero branch, stream formatting, and diagnostic pipeline together."
         },
         "supporting_files": [

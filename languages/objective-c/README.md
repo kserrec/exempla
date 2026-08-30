@@ -4,17 +4,21 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+No Level 1 path is currently published for this language. Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
 ## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [pinterest/PINOperation](https://github.com/pinterest/PINOperation)
 
@@ -178,6 +182,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [SBJson/SBJson](https://github.com/SBJson/SBJson)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -290,7 +296,7 @@ An asynchronous image loading and caching framework for Apple platforms with cod
 **Learning path:**
 
 - **Goal:** Understand how SDWebImage coordinates cache lookup, network loading, decoding, transformation, storage, cancellation, and callback delivery for one image request.
-- **Start here:** [`SDWebImage/Core/SDWebImageManager.m`](https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/SDWebImage/Core/SDWebImageManager.m) — The reviewed trace begins in SDWebImageManager.m because loadImageWithURL creates the combined operation and coordinates every selected cache, loader, transform, and completion branch.
+- **Start here:** [`Core/SDWebImageManager.m`](https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/SDWebImage/Core/SDWebImageManager.m) — The reviewed trace begins in SDWebImageManager.m because loadImageWithURL creates the combined operation and coordinates every selected cache, loader, transform, and completion branch.
 - **Then read:**
   - [`SDWebImage/Core/SDWebImageDownloaderOperation.m`](https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/SDWebImage/Core/SDWebImageDownloaderOperation.m)
   - [`SDWebImage/Core/SDImageCache.m`](https://github.com/SDWebImage/SDWebImage/blob/c3ad5e1a9bf55c9b76d4c362430b5fcded96c502/SDWebImage/Core/SDImageCache.m)
@@ -341,6 +347,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [gnachman/iTerm2](https://github.com/gnachman/iTerm2)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
@@ -372,7 +380,7 @@ A full macOS terminal emulator with VT protocols, high-performance grids and ren
 **Learning path:**
 
 - **Goal:** Understand how iTerm2 encodes a restorable object graph, persists only graph changes transactionally in SQLite, and recovers a consistent baseline after save or database failure.
-- **Start here:** [`sources/StateRestoration/iTermGraphDatabase.m`](https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/sources/StateRestoration/iTermGraphDatabase.m) — The reviewed trace begins in iTermGraphDatabase.m because the database owns loading, transactional persistence, row publication, integrity, garbage collection, and recovery around encoded graph records.
+- **Start here:** [`StateRestoration/iTermGraphDatabase.m`](https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/sources/StateRestoration/iTermGraphDatabase.m) — The reviewed trace begins in iTermGraphDatabase.m because the database owns loading, transactional persistence, row publication, integrity, garbage collection, and recovery around encoded graph records.
 - **Then read:**
   - [`sources/StateRestoration/iTermGraphEncoder.m`](https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/sources/StateRestoration/iTermGraphEncoder.m)
   - [`sources/StateRestoration/iTermGraphDeltaEncoder.m`](https://github.com/gnachman/iTerm2/blob/095009a6793f8a8c7ea7f4b8fd7fb1f3f1f834a4/sources/StateRestoration/iTermGraphDeltaEncoder.m)

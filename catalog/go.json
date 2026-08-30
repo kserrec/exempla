@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "golang/go is the official implementation of the Go language and standard library, where strings.Cut is a stable application-facing API.",
       "why_study": "Follow one standard-library string operation from its public entry through a direct branch, then check beginning, middle, end, empty, and missing separators in table tests.",
+      "quick_start": "Read lines 1293–1298 of `strings.go`, then compare them with `strings_test.go`.",
       "learn": [
         "Find the first occurrence of a separator and slice around it.",
         "Return several named results so callers can distinguish an empty piece from a missing separator.",
@@ -36,6 +37,8 @@
         "goal": "Understand how Go's strings.Cut returns the text around the first separator without confusing an empty result with a separator that was not found.",
         "start_here": {
           "path": "src/strings/strings.go",
+          "line_start": 1293,
+          "line_end": 1298,
           "reason": "The public documentation and entry point establish the exact three-result contract."
         },
         "supporting_files": [
@@ -145,6 +148,7 @@
       "source_kind": "production",
       "purpose_evidence": "go-humanize is a maintained importable Go module whose README documents application-facing number, size, time, and text formatting functions.",
       "why_study": "Trace a visible number-to-string algorithm while learning how production code handles signs, exact buffer sizing, and the one integer that cannot be negated.",
+      "quick_start": "Read lines 11–58 of `comma.go`, then compare them with `comma_test.go`.",
       "learn": [
         "Count decimal digits and allocate exactly enough output space for digits, separators, and a sign.",
         "Fill a byte slice from right to left while inserting every third separator.",
@@ -168,6 +172,8 @@
         "goal": "Understand how go-humanize Comma formats every int64 exactly and how examples plus a fuzz property defend the contract.",
         "start_here": {
           "path": "comma.go",
+          "line_start": 11,
+          "line_end": 58,
           "reason": "The Comma function contains the fast path, minimum-integer guard, digit count, allocation, sign handling, and backward fill."
         },
         "supporting_files": [
@@ -276,6 +282,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository documents go-wordwrap as an importable package for formatting command-line output and exposes a stable WrapString API under an MIT license.",
       "why_study": "Follow a practical stateful string transformation through pending spaces, words, explicit line breaks, and Unicode characters with a thorough table of examples.",
+      "quick_start": "Read lines 10–83 of `wordwrap.go`, then compare them with `wordwrap_test.go`.",
       "learn": [
         "Accumulate a pending word and whitespace separately until a wrapping decision is possible.",
         "Distinguish breakable whitespace from explicit newlines and nonbreaking spaces.",
@@ -299,6 +306,8 @@
         "goal": "Understand how WrapString inserts line breaks only at breakable whitespace while preserving the package's explicit text contracts.",
         "start_here": {
           "path": "wordwrap.go",
+          "line_start": 10,
+          "line_end": 83,
           "reason": "The sole function contains the pending word, whitespace, width counters, newline cases, and final buffer flush."
         },
         "supporting_files": [
@@ -406,6 +415,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.",
       "why_study": "Follow a compact loop through literal matches, one-character matches, star backtracking, and the boundary where either the text or pattern ends.",
+      "quick_start": "Read lines 85–173 of `match.go`, then compare them with `match_test.go`.",
       "learn": [
         "Trace representative literal, question-mark, and star patterns by hand.",
         "See how one saved star position supports bounded backtracking.",
@@ -431,6 +441,8 @@
         "goal": "Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.",
         "start_here": {
           "path": "match.go",
+          "line_start": 85,
+          "line_end": 173,
           "reason": "Begin with `match.go` because it exposes how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding."
         },
         "supporting_files": [

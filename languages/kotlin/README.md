@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [JetBrains/kotlin](https://github.com/JetBrains/kotlin)
 
-**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 Kotlin's production standard library returns the text after the first string delimiter, the original string when it is missing, or a caller-supplied fallback.
+
+**Just start:** Read lines 464–470 of `Strings.kt`, then compare them with `StringTest.kt`.
+
+**Start with: 7 lines of source.** [Open `text/Strings.kt`, lines 464–470.](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/src/kotlin/text/Strings.kt#L464-L470)
 
 **Why study it:** Follow one familiar string operation through delimiter search, a missing-result branch, substring boundaries, defaults, and direct examples.
 
@@ -29,16 +35,10 @@ Kotlin's production standard library returns the text after the first string del
 - Making missing-delimiter behavior configurable through a default parameter.
 - Testing found, end-of-string, missing, and custom-fallback cases.
 
-**What you can learn:**
-
-- Find the first occurrence of a delimiter string.
-- Return a fallback when the search reports no match.
-- Start the result after the full delimiter and allow an empty suffix.
-
 **Learning path:**
 
 - **Goal:** Understand how Kotlin's standard library defines the result after a delimiter, including both forms of missing-delimiter behavior.
-- **Start here:** [`libraries/stdlib/src/kotlin/text/Strings.kt`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/src/kotlin/text/Strings.kt) — The KDoc and complete string-delimiter overload of substringAfter appear together in this file.
+- **Start here:** [`text/Strings.kt`, lines 464–470](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/src/kotlin/text/Strings.kt#L464-L470) — The KDoc and complete string-delimiter overload of substringAfter appear together in this file.
 - **Then read:**
   - [`libraries/stdlib/test/text/StringTest.kt`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/test/text/StringTest.kt)
   - [`ReadMe.md`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/ReadMe.md)
@@ -48,6 +48,21 @@ Kotlin's production standard library returns the text after the first string del
 
 **Why this level:**
 
+**Level 1:** All behavior uses novice string and branch operations; extension syntax needs one local sentence and introduces no extra state or architecture.
+
+**License:** Apache-2.0 AND LicenseRef-Third-Party-Notices ([evidence 1](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/README.md), [evidence 2](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Find the first occurrence of a delimiter string.
+- Return a fallback when the search reports no match.
+- Start the result after the full delimiter and allow an empty suffix.
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
 - **Language technique 1:** The implementation uses introductory Kotlin function, value, conditional, and string operations.
 - **Behavioral reasoning 1:** One local search result selects between a fallback and one substring calculation.
 - **Design span 1:** One source function and one direct test section contain the complete selected contract.
@@ -56,11 +71,6 @@ Kotlin's production standard library returns the text after the first string del
   - **Central concepts:** string search; if expression; default argument; substring boundaries
   - **Incidental concepts:** extension-function receiver syntax
 - **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** Apache-2.0 AND LicenseRef-Third-Party-Notices ([evidence 1](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/README.md), [evidence 2](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** This official repository builds Kotlin and its shipped standard library; substringAfter is a documented public kotlin.text extension used by Kotlin programs across supported platforms.
 
@@ -91,11 +101,13 @@ No specialist domain context is required.
 
 ### [russhwolf/multiplatform-settings](https://github.com/russhwolf/multiplatform-settings)
 
-**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A published in-memory Settings implementation that gives application tests the same typed key-value API as the library's platform-backed stores.
+
+**Just start:** Read lines 33–146 of `MapSettings.kt`, then compare them with `MapSettingsTest.kt`.
+
+**Start with: 114 lines of source.** [Open `settings/MapSettings.kt`, lines 33–146.](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt#L33-L146)
 
 **Why study it:** Follow one professional test double from a typed interface to map-backed writes, safe reads with explicit defaults, and two wrappers that intentionally share the same backing state.
 
@@ -110,16 +122,10 @@ A published in-memory Settings implementation that gives application tests the s
 - Preserving typed reads over an untyped backing map with safe casts and defaults.
 - Sharing or isolating mutable state through explicitly supplied map instances.
 
-**What you can learn:**
-
-- Implement a public interface with one in-memory map while preserving type-specific methods.
-- Use safe casts to return either the stored type or the caller's explicit default.
-- Verify shared backing state and isolated named stores through focused and reusable contract tests.
-
 **Learning path:**
 
 - **Goal:** Understand how MapSettings provides typed reads and writes over one shared in-memory map without changing the public Settings contract.
-- **Start here:** [`multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt) — The class shows the backing map, constructors, type-specific write and read pairs, default behavior, and factory-managed shared maps together.
+- **Start here:** [`settings/MapSettings.kt`, lines 33–146](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt#L33-L146) — The class shows the backing map, constructors, type-specific write and read pairs, default behavior, and factory-managed shared maps together.
 - **Then read:**
   - [`multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt)
   - [`multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt)
@@ -129,6 +135,21 @@ A published in-memory Settings implementation that gives application tests the s
 
 **Why this level:**
 
+**Level 2:** A short primer on interface implementations, safe casts, and shared map references makes every selected write and read predictable without separate platform or persistence study.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/LICENSE.txt))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Implement a public interface with one in-memory map while preserving type-specific methods.
+- Use safe casts to return either the stored type or the caller's explicit default.
+- Verify shared backing state and isolated named stores through focused and reusable contract tests.
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+
 - **Language technique 2:** Interfaces, constructor delegation, mutable maps, and safe casts are common professional Kotlin idioms central to the implementation.
 - **Behavioral reasoning 2:** Several state outcomes matter, but each write, read, clear, and shared-map effect remains local and directly observable.
 - **Design span 2:** The path crosses a small explicit boundary from the public contract to one implementation and its focused and reusable tests.
@@ -137,11 +158,6 @@ A published in-memory Settings implementation that gives application tests the s
   - **Central concepts:** implementing an interface; safe casts with explicit defaults; shared mutable backing state
   - **Incidental concepts:** the broader observable-listener API outside the selected storage trace
 - **Placement:** The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** The README documents multiplatform-settings-test as a published dependency for testing real client code, with MapSettings as its application-facing in-memory implementation.
 
@@ -169,6 +185,8 @@ No specialist domain context is required.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [ajalt/clikt](https://github.com/ajalt/clikt)
 
@@ -201,7 +219,7 @@ A multiplatform Kotlin framework for type-safe command-line applications with ne
 **Learning path:**
 
 - **Goal:** Understand how Clikt turns a delegated command DSL into recursively parsed, finalized, validated, and executable command invocations.
-- **Start here:** [`clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt`](https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt) — CommandLineParser names the tokenize, parse, eager-finalization, value-finalization, validation, and run stages and connects them to the selected command and option abstractions.
+- **Start here:** [`parsers/CommandLineParser.kt`](https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/CommandLineParser.kt) — CommandLineParser names the tokenize, parse, eager-finalization, value-finalization, validation, and run stages and connects them to the selected command and option abstractions.
 - **Then read:**
   - [`clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt`](https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parsers/ParserInternals.kt)
   - [`clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt`](https://github.com/ajalt/clikt/blob/fa2e48c54995a88d492f05568a64889d99994877/clikt/src/commonMain/kotlin/com/github/ajalt/clikt/parameters/options/Option.kt)
@@ -280,7 +298,7 @@ A lightweight Kotlin multiplatform logging facade with lazy messages and adapter
 **Learning path:**
 
 - **Goal:** Understand how a multiplatform Kotlin logging facade keeps messages lazy while preserving markers, payloads, causes, and the original source location through an SLF4J adapter.
-- **Start here:** [`src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt`](https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt) — The reviewed trace begins in KLogger.kt because it defines the level methods and lazy receiver-builder contract that every selected backend call implements.
+- **Start here:** [`kotlinlogging/KLogger.kt`](https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLogger.kt) — The reviewed trace begins in KLogger.kt because it defines the level methods and lazy receiver-builder contract that every selected backend call implements.
 - **Then read:**
   - [`src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLoggingEventBuilder.kt`](https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/src/commonMain/kotlin/io/github/oshai/kotlinlogging/KLoggingEventBuilder.kt)
   - [`src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt`](https://github.com/oshai/kotlin-logging/blob/0aaa57ccef9e1cc619de0d30bd65cc0a7271332d/src/commonMain/kotlin/io/github/oshai/kotlinlogging/KotlinLogging.kt)
@@ -330,6 +348,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [cashapp/turbine](https://github.com/cashapp/turbine)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
@@ -361,7 +381,7 @@ A small multiplatform testing library that turns Kotlin Flow emissions, completi
 **Learning path:**
 
 - **Goal:** Understand how Turbine turns concurrent Flow collection into an ordered, timeout-bounded assertion lifecycle with explicit cleanup and terminal events.
-- **Start here:** [`src/commonMain/kotlin/app/cash/turbine/flow.kt`](https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/src/commonMain/kotlin/app/cash/turbine/flow.kt) — The reviewed trace begins in flow.kt because Flow.test and testIn establish collection ownership and hand events to the assertion lifecycle.
+- **Start here:** [`turbine/flow.kt`](https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/src/commonMain/kotlin/app/cash/turbine/flow.kt) — The reviewed trace begins in flow.kt because Flow.test and testIn establish collection ownership and hand events to the assertion lifecycle.
 - **Then read:**
   - [`src/commonMain/kotlin/app/cash/turbine/Turbine.kt`](https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/src/commonMain/kotlin/app/cash/turbine/Turbine.kt)
   - [`src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt`](https://github.com/cashapp/turbine/blob/408104d0874678455ff997913bd3f698039f5c25/src/commonMain/kotlin/app/cash/turbine/ReceiveTurbine.kt)
@@ -443,7 +463,7 @@ A modern JSON library for Kotlin and Java with streaming I/O, composable adapter
 **Learning path:**
 
 - **Goal:** Understand how Moshi resolves, constructs, temporarily defers, and safely caches recursive adapters without exposing incomplete adapters to callers.
-- **Start here:** [`moshi/src/main/java/com/squareup/moshi/Moshi.kt`](https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/moshi/src/main/java/com/squareup/moshi/Moshi.kt) — The reviewed trace begins in Moshi.kt because Moshi.adapter owns the factory walk, recursive LookupChain, deferred adapter, and cache-publication behavior.
+- **Start here:** [`moshi/Moshi.kt`](https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/moshi/src/main/java/com/squareup/moshi/Moshi.kt) — The reviewed trace begins in Moshi.kt because Moshi.adapter owns the factory walk, recursive LookupChain, deferred adapter, and cache-publication behavior.
 - **Then read:**
   - [`moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt`](https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/moshi-kotlin/src/main/java/com/squareup/moshi/kotlin/reflect/KotlinJsonAdapterFactory.kt)
   - [`moshi/src/test/java/com/squareup/moshi/CircularAdaptersTest.java`](https://github.com/square/moshi/blob/889013ec2edb8d8034902662a1dc8c4f3b3f8111/moshi/src/test/java/com/squareup/moshi/CircularAdaptersTest.java)
@@ -493,6 +513,8 @@ The learner-facing short context appears above.
 
 ## Level 5 — Expert
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [JetBrains/kotlin](https://github.com/JetBrains/kotlin)
 
 **Language 5 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
@@ -524,7 +546,7 @@ The Kotlin programming language implementation, including its compiler frontends
 **Learning path:**
 
 - **Goal:** Understand how the Kotlin JVM command-line compiler coordinates configuration, frontend analysis, FIR-to-IR conversion, JVM backend generation, and safe artifact output as an explicit staged pipeline.
-- **Start here:** [`compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt`](https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt) — The reviewed trace begins in JvmCliPipeline.kt because it names and composes the exact frontend, FIR-to-IR, backend, and output phases selected for study.
+- **Start here:** [`jvm/JvmCliPipeline.kt`](https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmCliPipeline.kt) — The reviewed trace begins in JvmCliPipeline.kt because it names and composes the exact frontend, FIR-to-IR, backend, and output phases selected for study.
 - **Then read:**
   - [`compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt`](https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/jvm/K2JVMCompiler.kt)
   - [`compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFrontendPipelinePhase.kt`](https://github.com/JetBrains/kotlin/blob/893937b03bee8acd82c4c6201732d9e29cb3d932/compiler/cli/cli-jvm/src/org/jetbrains/kotlin/cli/pipeline/jvm/JvmFrontendPipelinePhase.kt)
@@ -609,7 +631,7 @@ Kotlin's official multiplatform library for structured concurrency, asynchronous
 **Learning path:**
 
 - **Goal:** Understand how kotlinx.coroutines implements a thread-safe Job lifecycle across activation, completion, cancellation, child waiting, handler invocation, and exception aggregation.
-- **Start here:** [`kotlinx-coroutines-core/common/src/JobSupport.kt`](https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/kotlinx-coroutines-core/common/src/JobSupport.kt) — The reviewed trace begins in JobSupport.kt because it contains the state representation and transition loops that implement the public Job contract.
+- **Start here:** [`src/JobSupport.kt`](https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/kotlinx-coroutines-core/common/src/JobSupport.kt) — The reviewed trace begins in JobSupport.kt because it contains the state representation and transition loops that implement the public Job contract.
 - **Then read:**
   - [`kotlinx-coroutines-core/common/src/Job.kt`](https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/kotlinx-coroutines-core/common/src/Job.kt)
   - [`kotlinx-coroutines-core/common/test/JobStatesTest.kt`](https://github.com/Kotlin/kotlinx.coroutines/blob/f63a04bacb8beeafcc9d49199b1e4bb08931b7eb/kotlinx-coroutines-core/common/test/JobStatesTest.kt)

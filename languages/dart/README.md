@@ -4,17 +4,23 @@
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
+**You are not expected to understand the whole repository.** Follow the exact starting lines and focused tests in one entry; everything else can wait.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 ### [dart-lang/core](https://github.com/dart-lang/core)
 
-**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+**Recommended first path**
 
 **Source:** Production software
 
 Dart's production collection package returns the first iterable value when one exists and null when the iterable is empty.
+
+**Just start:** Read lines 379–384 of `iterable_extensions.dart`, then compare them with `extensions_test.dart`.
+
+**Start with: 6 lines of source.** [Open `src/iterable_extensions.dart`, lines 379–384.](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/iterable_extensions.dart#L379-L384)
 
 **Why study it:** Read one compact collection getter that advances an iterator exactly once and makes the empty-input result explicit.
 
@@ -29,16 +35,10 @@ Dart's production collection package returns the first iterable value when one e
 - Checking iterator success before accessing its current value.
 - Representing empty input with a nullable result.
 
-**What you can learn:**
-
-- Create an iterator for an arbitrary iterable.
-- Return its current value only after the first advance succeeds.
-- Use null to represent an iterable with no first value.
-
 **Learning path:**
 
 - **Goal:** Understand how package:collection firstOrNull returns one iterable value without failing on empty input.
-- **Start here:** [`pkgs/collection/lib/src/iterable_extensions.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/iterable_extensions.dart) — The firstOrNull getter contains the complete iterator creation, one advance, successful return, and null fallback.
+- **Start here:** [`src/iterable_extensions.dart`, lines 379–384](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/iterable_extensions.dart#L379-L384) — The firstOrNull getter contains the complete iterator creation, one advance, successful return, and null fallback.
 - **Then read:**
   - [`pkgs/collection/test/extensions_test.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/test/extensions_test.dart)
   - [`pkgs/collection/README.md`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/README.md)
@@ -46,6 +46,21 @@ Dart's production collection package returns the first iterable value when one e
 - **Trace:** Create this.iterator, call moveNext once, return iterator.current on success or null otherwise, then match the empty, one-value, and several-value cases in the direct extension tests.
 
 **Why this level:**
+
+**Level 1:** The collection behavior and null result are introductory Dart; one sentence about extension syntax makes every direct test predictable.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Create an iterator for an arbitrary iterable.
+- Return its current value only after the first advance succeeds.
+- Use null to represent an iterable with no first value.
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
 - **Language technique 2:** An extension getter over a generic iterable is a common Dart collection idiom, while the implementation uses only one ordinary iterator.
 - **Behavioral reasoning 1:** One synchronous boolean result selects between two direct returns.
@@ -55,11 +70,6 @@ Dart's production collection package returns the first iterable value when one e
   - **Central concepts:** advancing an iterator once; returning a value or null for empty input
   - **Incidental concepts:** Dart extension-getter syntax
 - **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** dart-lang/core actively maintains and publishes package:collection for application use; its README documents the package's collection utilities and public API.
 
@@ -88,13 +98,17 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-### [dart-lang/core](https://github.com/dart-lang/core)
+_Ordered from gentler to more demanding within this Level._
 
-**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 2**
+### [dart-lang/core](https://github.com/dart-lang/core)
 
 **Source:** Production software
 
 Dart's production collection package groups iterable values into ordered lists under keys computed by a callback.
+
+**Just start:** Read lines 58–69 of `functions.dart`, then compare them with `functions_test.dart`.
+
+**Start with: 12 lines of source.** [Open `src/functions.dart`, lines 58–69.](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/functions.dart#L58-L69)
 
 **Why study it:** Read one compact callback-driven collection transformation and verify how empty input, repeated keys, and input order determine the result.
 
@@ -109,16 +123,10 @@ Dart's production collection package groups iterable values into ordered lists u
 - Separating a reusable grouping algorithm from caller-defined key selection.
 - Preserving stable order while accumulating values.
 
-**What you can learn:**
-
-- Compute one grouping key for each input element.
-- Create a list only when a key first appears, then append later matching elements.
-- Preserve the relative input order inside every group.
-
 **Learning path:**
 
 - **Goal:** Understand how package:collection groupBy maps each iterable element to a key and accumulates ordered lists under those keys.
-- **Start here:** [`pkgs/collection/lib/src/functions.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/functions.dart) — The groupBy function contains the entire loop, callback invocation, first-list creation, append, and return.
+- **Start here:** [`src/functions.dart`, lines 58–69](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/functions.dart#L58-L69) — The groupBy function contains the entire loop, callback invocation, first-list creation, append, and return.
 - **Then read:**
   - [`pkgs/collection/test/functions_test.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/test/functions_test.dart)
   - [`pkgs/collection/README.md`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/README.md)
@@ -126,6 +134,21 @@ Dart's production collection package groups iterable values into ordered lists u
 - **Trace:** Start with an empty typed map, call key for each string, create the missing list with ??=, append the element, return the map, and compare the empty and second-character grouping cases in the direct groupBy tests.
 
 **Why this level:**
+
+**Level 2:** A short callback and generics primer makes each result predictable; the null-aware expression is one local create-or-reuse operation.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Compute one grouping key for each input element.
+- Create a list only when a key first appears, then append later matching elements.
+- Preserve the relative input order inside every group.
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 2**
 
 - **Language technique 2:** Generic callbacks and create-on-first-use collection syntax are common professional Dart idioms central to the function.
 - **Behavioral reasoning 1:** The function is synchronous and each element follows the same direct key, list, and append sequence.
@@ -135,11 +158,6 @@ Dart's production collection package groups iterable values into ordered lists u
   - **Central concepts:** callback-derived keys; generic map and list types; create-on-first-use accumulation
   - **Incidental concepts:** null-aware assignment syntax
 - **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 2 raises the published result to Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** dart-lang/core actively maintains and publishes package:collection for application use; its package README documents collection utilities and links the public package and API.
 
@@ -168,11 +186,13 @@ No specialist domain context is required.
 
 ### [VeryGoodOpenSource/formz](https://github.com/VeryGoodOpenSource/formz)
 
-**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
 **Source:** Production software
 
 A small Dart model for form values, validation errors, untouched inputs, modified inputs, and submission state.
+
+**Just start:** Read lines 66–200 of `formz.dart`, then compare them with `formz_test.dart`.
+
+**Start with: 135 lines of source.** [Open `lib/formz.dart`, lines 66–200.](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/lib/formz.dart#L66-L200)
 
 **Why study it:** See how one file gives form inputs explicit value, interaction, error, and validation state, then combines several inputs into a whole-form answer.
 
@@ -191,16 +211,10 @@ A small Dart model for form values, validation errors, untouched inputs, modifie
 - Separating untouched input state from modified input state.
 - Combining local validation results into whole-form validity.
 
-**What you can learn:**
-
-- Trace how pure and dirty inputs expose validation and display errors.
-- See how an optional mixin caches one validation result.
-- Use focused tests to compare valid, invalid, untouched, and modified inputs.
-
 **Learning path:**
 
 - **Goal:** Understand how a small Dart model makes input interaction state, typed validation, cached errors, and aggregate form validity explicit.
-- **Start here:** [`lib/formz.dart`](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/lib/formz.dart) — The sole production file contains the entire model from submission status and typed inputs through cached errors and aggregate FormzMixin queries, with no framework layer to cross.
+- **Start here:** [`lib/formz.dart`, lines 66–200](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/lib/formz.dart#L66-L200) — The sole production file contains the entire model from submission status and typed inputs through cached errors and aggregate FormzMixin queries, with no framework layer to cross.
 - **Then read:**
   - [`test/formz_test.dart`](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/test/formz_test.dart)
   - [`test/helpers/name_input.dart`](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/test/helpers/name_input.dart)
@@ -210,6 +224,21 @@ A small Dart model for form values, validation errors, untouched inputs, modifie
 
 **Why this level:**
 
+**Level 2:** The form-state vocabulary and conventional Dart abstractions form one cohesive professional lesson that can be explained locally and traced in one file.
+
+**License:** MIT ([evidence 1](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/LICENSE))
+
+<details>
+<summary>Detailed Level, learning, quality, and review evidence</summary>
+
+**What you can learn:**
+
+- Trace how pure and dirty inputs expose validation and display errors.
+- See how an optional mixin caches one validation result.
+- Use focused tests to compare valid, invalid, untouched, and modified inputs.
+
+**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
 - **Language technique 3:** Generics and compositional language abstractions materially shape the model, reaching the substantial-abstraction anchor.
 - **Behavioral reasoning 2:** State and caching are meaningful but remain local and deterministic.
 - **Design span 1:** The full path stays inside one focused component.
@@ -218,11 +247,6 @@ A small Dart model for form values, validation errors, untouched inputs, modifie
   - **Central concepts:** typed form values and errors; untouched versus modified input state; local validation and cached results
   - **Incidental concepts:** enum convenience extensions; value equality
 - **Placement:** The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
 
 **Purpose evidence:** Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.
 
@@ -250,6 +274,8 @@ The learner-facing short context appears above.
 </details>
 
 ## Level 3 — Intermediate production software
+
+_Ordered from gentler to more demanding within this Level._
 
 ### [dart-lang/sdk](https://github.com/dart-lang/sdk)
 
@@ -282,7 +308,7 @@ The Dart language platform: common front end, analyzers and language server, int
 **Learning path:**
 
 - **Goal:** Understand how Future.wait preserves input order while coordinating concurrent completions, first-error policy, optional eager failure, and cleanup of successful values.
-- **Start here:** [`sdk/lib/async/future.dart`](https://github.com/dart-lang/sdk/blob/967bed205c83cba3ac05b0f8d084d11291e93ff1/sdk/lib/async/future.dart) — The reviewed trace begins in future.dart at Future.wait because the full ordering, error, cleanup, and completion policy is documented and implemented there.
+- **Start here:** [`async/future.dart`](https://github.com/dart-lang/sdk/blob/967bed205c83cba3ac05b0f8d084d11291e93ff1/sdk/lib/async/future.dart) — The reviewed trace begins in future.dart at Future.wait because the full ordering, error, cleanup, and completion policy is documented and implemented there.
 - **Then read:**
   - [`sdk/lib/async/future_impl.dart`](https://github.com/dart-lang/sdk/blob/967bed205c83cba3ac05b0f8d084d11291e93ff1/sdk/lib/async/future_impl.dart)
   - [`tests/lib/async/future_test.dart`](https://github.com/dart-lang/sdk/blob/967bed205c83cba3ac05b0f8d084d11291e93ff1/tests/lib/async/future_test.dart)
@@ -360,7 +386,7 @@ Dart's composable web-server middleware ecosystem, with immutable requests and r
 **Learning path:**
 
 - **Goal:** Understand how Shelf Router registers path patterns, narrows ordered candidates through a trie, extracts parameters, updates a request, applies middleware, and dispatches a handler.
-- **Start here:** [`pkgs/shelf_router/lib/src/router.dart`](https://github.com/dart-lang/shelf/blob/3dbf65bedad2f1d97c5bae227b68a4ed1551a320/pkgs/shelf_router/lib/src/router.dart) — The reviewed trace begins in shelf_router's router.dart because Router.add parses and registers the patterns later resolved and dispatched by the same subsystem.
+- **Start here:** [`src/router.dart`](https://github.com/dart-lang/shelf/blob/3dbf65bedad2f1d97c5bae227b68a4ed1551a320/pkgs/shelf_router/lib/src/router.dart) — The reviewed trace begins in shelf_router's router.dart because Router.add parses and registers the patterns later resolved and dispatched by the same subsystem.
 - **Then read:**
   - [`pkgs/shelf_router/lib/src/trie.dart`](https://github.com/dart-lang/shelf/blob/3dbf65bedad2f1d97c5bae227b68a4ed1551a320/pkgs/shelf_router/lib/src/trie.dart)
   - [`pkgs/shelf_router/lib/src/router_entry.dart`](https://github.com/dart-lang/shelf/blob/3dbf65bedad2f1d97c5bae227b68a4ed1551a320/pkgs/shelf_router/lib/src/router_entry.dart)
@@ -411,6 +437,8 @@ The learner-facing short context appears above.
 
 ## Level 4 — Advanced
 
+_Ordered from gentler to more demanding within this Level._
+
 ### [felangel/mocktail](https://github.com/felangel/mocktail)
 
 **Language 4 / Behavior 4 / Design 2 / Constraints 4 → Level 4**
@@ -442,7 +470,7 @@ A null-safe Dart mocking library that intercepts invocations at runtime and supp
 **Learning path:**
 
 - **Goal:** Understand how a null-safe Dart mocking library intercepts a call, reconstructs its matchers, selects a stubbed response, records history, and verifies the invocation.
-- **Start here:** [`packages/mocktail/lib/src/mocktail.dart`](https://github.com/felangel/mocktail/blob/d6a96e15b9203d33af61083e02e8c40ac07192d6/packages/mocktail/lib/src/mocktail.dart) — The reviewed trace begins in mocktail.dart because Mock.noSuchMethod owns the mode switch between stubbing, verification, until-called observation, and ordinary calls.
+- **Start here:** [`src/mocktail.dart`](https://github.com/felangel/mocktail/blob/d6a96e15b9203d33af61083e02e8c40ac07192d6/packages/mocktail/lib/src/mocktail.dart) — The reviewed trace begins in mocktail.dart because Mock.noSuchMethod owns the mode switch between stubbing, verification, until-called observation, and ordinary calls.
 - **Then read:**
   - [`packages/mocktail/lib/src/_register_matcher.dart`](https://github.com/felangel/mocktail/blob/d6a96e15b9203d33af61083e02e8c40ac07192d6/packages/mocktail/lib/src/_register_matcher.dart)
   - [`packages/mocktail/lib/src/_invocation_matcher.dart`](https://github.com/felangel/mocktail/blob/d6a96e15b9203d33af61083e02e8c40ac07192d6/packages/mocktail/lib/src/_invocation_matcher.dart)
@@ -520,7 +548,7 @@ A source generator and annotation suite that derives typed Dart JSON codecs, val
 **Learning path:**
 
 - **Goal:** Understand how json_serializable generates fromJson and toJson callback parameters for a generic annotated class and threads those callbacks through nested fields.
-- **Start here:** [`json_serializable/lib/src/generator_helper.dart`](https://github.com/google/json_serializable.dart/blob/9ccf5da684914cc332b60d5e030f9288aa29ac62/json_serializable/lib/src/generator_helper.dart) — The reviewed trace begins in generator_helper.dart because GeneratorHelper validates the annotated class and assembles the generated members that the direction-specific helpers produce.
+- **Start here:** [`src/generator_helper.dart`](https://github.com/google/json_serializable.dart/blob/9ccf5da684914cc332b60d5e030f9288aa29ac62/json_serializable/lib/src/generator_helper.dart) — The reviewed trace begins in generator_helper.dart because GeneratorHelper validates the annotated class and assembles the generated members that the direction-specific helpers produce.
 - **Then read:**
   - [`json_serializable/lib/src/decode_helper.dart`](https://github.com/google/json_serializable.dart/blob/9ccf5da684914cc332b60d5e030f9288aa29ac62/json_serializable/lib/src/decode_helper.dart)
   - [`json_serializable/lib/src/encoder_helper.dart`](https://github.com/google/json_serializable.dart/blob/9ccf5da684914cc332b60d5e030f9288aa29ac62/json_serializable/lib/src/encoder_helper.dart)
@@ -607,7 +635,7 @@ Dart's modular code-generation toolkit and build runner, including incremental p
 **Learning path:**
 
 - **Goal:** Understand how build_runner plans and executes a compatible incremental build while preserving dependency, output, concurrency, failure, and resource-lifecycle guarantees.
-- **Start here:** [`build_runner/lib/src/build_plan/build_plan.dart`](https://github.com/dart-lang/build/blob/c25d2e1e41e463bcdd9282146c0cd4c9dfadc909/build_runner/lib/src/build_plan/build_plan.dart) — Begin with BuildPlan.load because it finds present and previous assets, chooses clean or compatible incremental planning, compares persisted digests, classifies source and output changes, and computes the BuildStepPlan consumed by execution.
+- **Start here:** [`build_plan/build_plan.dart`](https://github.com/dart-lang/build/blob/c25d2e1e41e463bcdd9282146c0cd4c9dfadc909/build_runner/lib/src/build_plan/build_plan.dart) — Begin with BuildPlan.load because it finds present and previous assets, chooses clean or compatible incremental planning, compares persisted digests, classifies source and output changes, and computes the BuildStepPlan consumed by execution.
 - **Then read:**
   - [`build_runner/lib/src/build_plan/build_step_plan.dart`](https://github.com/dart-lang/build/blob/c25d2e1e41e463bcdd9282146c0cd4c9dfadc909/build_runner/lib/src/build_plan/build_step_plan.dart)
   - [`build_runner/lib/src/build_plan/previous_build.dart`](https://github.com/dart-lang/build/blob/c25d2e1e41e463bcdd9282146c0cd4c9dfadc909/build_runner/lib/src/build_plan/previous_build.dart)

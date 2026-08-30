@@ -13,6 +13,7 @@
       "source_kind": "production",
       "purpose_evidence": "dotnet/runtime is the production implementation of .NET, and Math.Clamp is a public standard-library API used by C# applications.",
       "why_study": "Trace a familiar numeric operation through explicit validation and three direct returns, then compare signed boundary rows and the invalid-range test.",
+      "quick_start": "Read lines 616–634 of the runtime `Math.cs`, then compare the clamp cases in the test `Math.cs`.",
       "learn": [
         "Reject a numeric interval whose minimum exceeds its maximum.",
         "Return the lower bound, upper bound, or original value with direct branches.",
@@ -36,6 +37,8 @@
         "goal": "Understand how .NET Math.Clamp keeps an int inside inclusive bounds and reports a reversed interval.",
         "start_here": {
           "path": "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+          "line_start": 616,
+          "line_end": 634,
           "reason": "The int overload contains the full validation and three-result control flow."
         },
         "supporting_files": [
@@ -141,6 +144,7 @@
       "source_kind": "educational-exemplar",
       "purpose_evidence": "The subproject README identifies this complete artifact as the sample for Microsoft's unit-testing tutorial, documents restore and test commands, and includes both implementation and configured test projects.",
       "why_study": "Follow one small class into organized boundary and representative data sets, seeing how test names and failure messages explain the intended contract.",
+      "quick_start": "Read lines 5–23 of `PrimeService.cs`, then compare them with `PrimeService_IsPrimeShould.cs`.",
       "learn": [
         "Separate a library project from a project that tests its public behavior.",
         "Use data rows to cover boundary values, representative successes, and representative failures.",
@@ -166,6 +170,8 @@
         "goal": "Understand how a complete .NET sample organizes and runs data-driven tests for a small C# prime-checking service.",
         "start_here": {
           "path": "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs",
+          "line_start": 5,
+          "line_end": 23,
           "reason": "The file contains the complete early-boundary and divisor-loop behavior checked by the sample."
         },
         "supporting_files": [
@@ -276,6 +282,7 @@
       "source_kind": "production",
       "purpose_evidence": "The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.",
       "why_study": "See how one null check becomes a reusable guard while compiler annotations make the successful non-null result available to later code.",
+      "quick_start": "Read lines 28–77 of `GuardAgainstNullExtensions.cs`, then compare them with `GuardAgainstNull.cs`.",
       "learn": [
         "Trace reference-type and nullable-value inputs through the same two outcomes.",
         "See how compiler-facing annotations match the runtime guard.",
@@ -299,6 +306,8 @@
         "goal": "Understand how GuardClauses rejects null arguments while returning a compiler-narrowed value and preserving the caller's argument name and exception contract.",
         "start_here": {
           "path": "src/GuardClauses/GuardAgainstNullExtensions.cs",
+          "line_start": 28,
+          "line_end": 77,
           "reason": "src/GuardClauses/GuardAgainstNullExtensions.cs contains the reference- and value-type Null overloads and exposes every selected type-system and exception behavior directly."
         },
         "supporting_files": [
@@ -404,6 +413,7 @@
       "source_kind": "production",
       "purpose_evidence": "Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.",
       "why_study": "Follow a familiar string operation through overloads, one strategy boundary, left-or-right slicing, an optional marker, and a table of concrete boundary cases.",
+      "quick_start": "Read lines 83–127 of `TruncateExtensions.cs`, then compare them with `TruncatorTests.cs`.",
       "learn": [
         "Trace simple extension-method overloads into one fixed-length truncation strategy.",
         "Compare unchanged, right-truncated, and left-truncated strings with and without a marker.",
@@ -430,6 +440,8 @@
         "goal": "Understand how a C# helper shortens a string to a fixed maximum length from either side.",
         "start_here": {
           "path": "src/Humanizer/TruncateExtensions.cs",
+          "line_start": 83,
+          "line_end": 127,
           "reason": "Begin with the public overloads and follow them into the one overload that validates the strategy and delegates the work."
         },
         "supporting_files": [
