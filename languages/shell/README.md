@@ -1,6 +1,6 @@
 # Shell
 
-5 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -91,7 +91,83 @@ The learner-facing short context appears above.
 
 ## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [bats-core/bats-assert](https://github.com/bats-core/bats-assert)
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A reusable Bats assertion that accepts a successful command and turns any captured nonzero status into structured stdout and optional stderr diagnostics.
+
+**Why study it:** Trace how one Shell test helper interprets captured process state and pipes exact single- or multi-line stdout and stderr diagnostics into the assertion framework on failure.
+
+**Prerequisites:**
+
+- The global novice Shell baseline: functions, conditionals, positional arguments, variables, pipelines, and Bats tests.
+- Bats run stores a command's exit code in status and its captured standard output in output; zero means success and nonzero means failure.
+
+**Concepts this path develops:**
+
+- Asserting success from a captured process exit status.
+- Reporting a failed command with structured diagnostics.
+- Formatting optional standard error and multi-line output without changing assertion status.
+
+**What you can learn:**
+
+- Treat zero and nonzero process statuses as an explicit test contract.
+- Preserve captured stdout and optional separated stderr when reporting a failure.
+- Compose grouped diagnostic output through formatter and failure functions.
+
+**Learning path:**
+
+- **Goal:** Understand how bats-assert accepts status zero and turns any captured nonzero status into exact stdout and stderr diagnostics.
+- **Start here:** [`src/assert_success.bash`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/src/assert_success.bash) — The function contains the captured-state checks, nonzero branch, stream formatting, and diagnostic pipeline together.
+- **Then read:**
+  - [`test/assert_success.bats`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/test/assert_success.bats)
+  - [`test/test_helper.bash`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/test/test_helper.bash)
+  - [`README.md`](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/README.md)
+- **Trace:** Read Bats' captured output and status globals, return normally for status zero, otherwise format the numeric status, stdout, and optional separated stderr, pipe the group through batslib_decorate and fail, then match the four exact passing, failing, multi-line, and separate-stderr tests.
+
+**Why this level:**
+
+- **Language technique 2:** Captured test state, arithmetic conditions, grouped output, and pipelines are common professional Shell testing idioms.
+- **Behavioral reasoning 2:** The result and diagnostic shape depend on captured process state, but all behavior remains local to one completed command.
+- **Design span 2:** The behavior crosses a few explicit boundaries from captured command state through formatting to the assertion failure.
+- **Constraint burden 2:** Routine testing guarantees shape each branch without process orchestration, portability machinery, or framework lifecycle.
+- **Novice accessibility floor 2:** A short primer on Bats' status and output globals plus grouped pipelines makes every branch predictable; no process lifecycle or portability study is required.
+  - **Central concepts:** captured process exit status; captured stdout and optional stderr; structured diagnostic pipelines
+  - **Incidental concepts:** shared bats-support width and decoration helpers
+- **Placement:** The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** bats-core publishes bats-assert as a released reusable assertion library for real Bats test suites, with installation, API documentation, and a direct test suite.
+
+**Language evidence:** The public assert_success function, its shared formatting calls, and all focused Bats cases are first-party Bash; GitHub labels the repository Shell.
+
+**Coding relevance:**
+
+Exit-code contracts, captured streams, diagnostic composition, and direct behavior tests are transferable Shell and test-engineering practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** One explicit condition and one labeled diagnostic group expose the complete assertion contract without eval or hidden control flow.
+- **Architecture:** The assertion decides outcomes, bats-support formats details, and focused tests compare complete emitted diagnostics.
+- **Naming and idiom:** status, output, stderr, assert_success, and batslib formatting calls use established Bats vocabulary.
+- **Tests:** Four direct tests cover status-zero success, nonzero failure details, multi-line stdout, and separately captured stderr.
+- **Documentation:** The source header and README agree on status-zero success, nonzero failure, and the complete emitted diagnostic.
+- **Traceability:** The success return, failure condition, stream formatting, and every emitted line map to an exact Bats expectation.
+- **Maintainability:** The narrow function and golden diagnostic assertions make contract or wording changes immediately visible.
+- **Educational value:** The path turns basic exit codes and captured streams into a complete professional assertion with precise failure evidence.
+
+**Inspection record:** commit `697471b7a89d3ab38571f38c6c7c4b460d1f5e35`, inspected 2026-08-30. Review passes: Codex Level 2 language-breadth investigation; Codex pinned-source verification. Files inspected: `src/assert_success.bash`, `test/assert_success.bats`, `test/test_helper.bash`, `README.md`, `LICENSE`. GitHub Linguist label: Shell.
+
+</details>
 
 ## Level 3 — Intermediate production software
 

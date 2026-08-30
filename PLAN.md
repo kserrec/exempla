@@ -9,11 +9,11 @@ are historical.
 - The canonical schema is version 5.
 - The preserved pre-expansion baseline contains 125 qualified learning paths
   from 124 public repositories across 20 languages.
-- The completed expansion catalog plus the follow-up Level 1 breadth batches
-  contains 152 paths from 146 repositories: 147 production paths and 5
-  educational exemplars. The 240-path 3/3/2/2/2 grid has 88 honest open slots,
-  including 42 Level 1 and 40 Level 2 gaps. Seventeen of 20 languages have at
-  least one qualified Level 1 path.
+- The completed expansion catalog plus the follow-up Level 1 and Level 2 breadth
+  batches contains 158 paths from 148 repositories: 153 production paths and 5
+  educational exemplars. The 240-path 3/3/2/2/2 grid has 82 honest open slots,
+  including 42 Level 1 and 34 Level 2 gaps. Seventeen of 20 languages have at
+  least one qualified path at each of Levels 1 and 2.
   Ordinary validation accepts those gaps; `--complete` is reserved for a
   genuinely full grid.
 - Every accepted path declares `source_kind` and `purpose_evidence`. Production
@@ -139,6 +139,31 @@ or verification standards.
   remaining language has evidence-backed stopping evidence.
 - [x] Step 4 — Reconcile the active audit, literal counts, progression order,
   generated pages, and the final Level 1 coverage result; run the full supported
+  verification gates.
+
+## Completed Level 2 language-breadth target
+
+The verified starting state was 11 of 20 languages with at least one qualified
+Level 2 path. Completion required at least 17 of 20 without lowering source
+qualification, scoring, novice accessibility, evidence, or verification
+standards.
+
+### Phase 15 — Reach at least 85% Level 2 language coverage
+
+- [x] Research TypeScript, Swift, and R at pinned revisions; integrate every
+  genuinely qualified Level 2 path and preserve materially distinct paths when
+  a repository already supplies Level 1.
+- [x] Research Shell, Kotlin, and Rust at pinned revisions; integrate every
+  genuinely qualified Level 2 path and record serious failures, including the
+  rejected bats-file size assertion whose promised diagnostic was neither
+  implemented nor directly tested and bats-assert's rejected `assert_failure`
+  path whose source header inverted its implementation's return contract.
+- [x] If fewer than 17 languages are covered, research Objective-C, PowerShell,
+  and Scala as the fallback pool until the threshold is met or every remaining
+  language has evidence-backed stopping evidence. The six primary languages all
+  qualified, so this fallback was not needed.
+- [x] Reconcile the active audit, literal counts, progression order, generated
+  pages, and the final 17-of-20 Level 2 coverage result; run the full supported
   verification gates.
 
 ## Completed learner-centered remediation

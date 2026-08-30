@@ -8,7 +8,7 @@ Exempla deliberately allows high-quality educational software at Levels 1 and 2 
 
 If you can write small programs in the language, Level 1 is designed as your first comfortable source-reading step. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.
 
-The catalog currently contains **152 qualified learning paths across 20 languages**. Empty cells are honest research gaps.
+The catalog currently contains **158 qualified learning paths across 20 languages**. Empty cells are honest research gaps.
 
 | Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -17,20 +17,20 @@ The catalog currently contains **152 qualified learning paths across 20 language
 | [Java](java/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [PHP](php/README.md) | 7 | 1 | 2 | 2 | 2 | 0 |
 | [C#](c-sharp/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
-| [TypeScript](typescript/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
+| [TypeScript](typescript/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [C++](cpp/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [Ruby](ruby/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
 | [C](c/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
-| [Swift](swift/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
+| [Swift](swift/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [Go](go/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
-| [R](r/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
-| [Shell](shell/README.md) | 5 | 1 | 0 | 2 | 2 | 0 |
-| [Kotlin](kotlin/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
+| [R](r/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
+| [Shell](shell/README.md) | 6 | 1 | 1 | 2 | 2 | 0 |
+| [Kotlin](kotlin/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [Scala](scala/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [PowerShell](powershell/README.md) | 5 | 0 | 0 | 2 | 2 | 1 |
 | [Dart](dart/README.md) | 8 | 1 | 2 | 2 | 2 | 1 |
 | [Objective-C](objective-c/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [Rust](rust/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
+| [Rust](rust/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 | [Lua](lua/README.md) | 8 | 1 | 1 | 2 | 2 | 2 |
 
 Read [how learning levels work](../docs/learning-levels.md), the [coding-relevance and quality gates](../docs/qualification.md), or the [language selection rationale](../docs/language-selection.md).

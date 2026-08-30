@@ -1360,6 +1360,22 @@
       "failed_requirement": "direct test quality and implementation-to-test traceability",
       "evidence": "At commit 9f3cadf1e618f125bd9b282c7759f8cb26ce17fc, Clamp is a readable production C utility, but the pinned first-party tree provides no direct automated assertion or deterministic golden verification for its below-range, in-range, and above-range behavior. Examples that merely use the library do not establish the selected function's contract.",
       "reconsider": "Reconsider after pinned first-party tests directly verify Clamp's lower-bound, interior, upper-bound, and boundary-equality behavior."
+    },
+    {
+      "repository": "bats-core/bats-file",
+      "language": "Shell",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "documentation accuracy and direct diagnostic verification",
+      "evidence": "At commit 6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599, assert_file_size_equals documentation promises that a failure displays both the path and expected byte count. The implementation passes only the path into its diagnostic formatter and never includes expectedsize, while the focused mismatch and path-substitution tests assert status without asserting the promised diagnostic content.",
+      "reconsider": "Reconsider after the pinned implementation and documentation agree and direct first-party tests verify the complete mismatch diagnostic, including the expected and actual byte counts."
+    },
+    {
+      "repository": "bats-core/bats-assert",
+      "language": "Shell",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "documentation accuracy in the selected source path",
+      "evidence": "At commit 697471b7a89d3ab38571f38c6c7c4b460d1f5e35, assert_failure's source header says the function returns zero when the captured command succeeded or when an expected nonzero status differs. That is the exact inverse of the implementation, README contract, and seven direct tests, which return success only for an actual nonzero status that satisfies any requested exact-status condition.",
+      "reconsider": "Reconsider assert_failure after the source header is corrected and the selected source, public README contract, implementation, and direct tests all state the same return behavior at one stable revision."
     }
   ]
 }

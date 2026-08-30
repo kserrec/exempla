@@ -135,6 +135,140 @@
       }
     },
     {
+      "slug": "rust-log-level-filter-parse",
+      "path_slug": "level-filter-parses-six-case-insensitive-names-and-rejects-every-unknown-string",
+      "repository": "rust-lang/log",
+      "url": "https://github.com/rust-lang/log",
+      "primary_language": "Rust",
+      "language_evidence": "LevelFilter, its FromStr implementation, ParseLevelError, and the direct table-driven unit test are first-party Rust; GitHub labels the repository Rust.",
+      "description": "A public logging-filter parser that accepts six case-insensitive names, including off, and returns one explicit error for every unknown value.",
+      "source_kind": "production",
+      "purpose_evidence": "The log crate is the maintained Rust logging facade used by libraries and applications, and LevelFilter parsing is part of its public configuration-facing API.",
+      "why_study": "Follow a standard trait implementation from input text through a finite case-insensitive lookup to either a typed enum or a small explicit error.",
+      "learn": [
+        "Implement a standard parsing trait for a public enum.",
+        "Map a finite set of case-insensitive names to typed values without allocating normalized strings.",
+        "Express every unsupported input through the Result error branch and a table-driven test."
+      ],
+      "prerequisites": [
+        "The global novice Rust baseline: enums, loops, slices, functions, Option, Result, and unit tests.",
+        "FromStr is the standard trait used by string.parse(); Ok carries the parsed value and Err carries the documented parsing failure."
+      ],
+      "concepts_developed": [
+        "Implementing Rust's standard string-parsing protocol.",
+        "Performing allocation-free case-insensitive lookup over finite enum names.",
+        "Keeping valid and invalid configuration outcomes explicit through Result."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A log-level filter disables logging or admits messages at and above one named severity."
+        ],
+        "reason": "Standard trait integration, finite text parsing, explicit errors, and table-driven boundaries transfer to configuration and command-processing code."
+      },
+      "learning_path": {
+        "goal": "Understand how log parses case-insensitive LevelFilter names into typed values and rejects unknown strings.",
+        "start_here": {
+          "path": "src/lib.rs",
+          "reason": "The public enum, FromStr loop, index-to-enum mapping, error type, and direct unit table are all in this file."
+        },
+        "supporting_files": [
+          "README.md",
+          "Cargo.toml"
+        ],
+        "trace": "Call parse on a string, enter LevelFilter::from_str, scan the six published names including OFF, compare each without ASCII case, convert the bounded matching index into an enum, otherwise return ParseLevelError, then match the thirteen lowercase, uppercase, and unknown rows in test_levelfilter_from_str."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "FromStr trait implementation",
+            "Result return type",
+            "bounded enum conversion"
+          ],
+          "reason": "A standard trait, Result, iterator-like range traversal, and enum conversion are common professional Rust idioms."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "case-insensitive success",
+            "six finite values",
+            "unknown-input error"
+          ],
+          "reason": "The lookup has repeated comparison state and distinct success or error outcomes, but remains synchronous and local."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public enum",
+            "one trait implementation",
+            "one direct unit test"
+          ],
+          "reason": "The complete parsing contract is contained in one source unit and a table-driven test."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "public textual names",
+            "ASCII case tolerance",
+            "explicit invalid-input result"
+          ],
+          "reason": "Routine configuration-API compatibility and error guarantees shape the parser without grammar or lifetime complexity."
+        },
+        "placement": "The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The parser is a short bounded loop with one success return and one explicit error; the safe unwrap follows directly from the in-range index.",
+        "architecture": "The public enum owns its standard parser and error type, with no separate registry or configuration framework.",
+        "naming_and_idiom": "LevelFilter, FromStr, ParseLevelError, LOG_LEVEL_NAMES, and from_usize state the conversion roles precisely.",
+        "tests": "The focused upstream test covers all six lowercase names, all six uppercase names, and one unsupported value; the exact test passed at the pinned revision.",
+        "documentation": "Enum variants and the crate README define the filter purpose, while the standard trait exposes idiomatic string.parse() use.",
+        "traceability": "Every successful index and the final error branch map to one table row in test_levelfilter_from_str.",
+        "maintainability": "One shared name table and exhaustive finite test keep textual and enum changes reviewable.",
+        "educational_value": "The path introduces a real standard trait and explicit parse errors without parser theory, macros, or ownership internals."
+      },
+      "inspection": {
+        "commit": "8034743dd9d7f7583bd9a670271483d176130911",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 2 language-breadth investigation",
+          "Codex pinned-source verification"
+        ],
+        "files": [
+          "src/lib.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-MIT",
+          "LICENSE-APACHE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT OR Apache-2.0",
+        "urls": [
+          "https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT",
+          "https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE"
+        ]
+      },
+      "github": {
+        "primary_language": "Rust",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "standard FromStr parsing",
+          "case-insensitive finite lookup",
+          "Result-based invalid input"
+        ],
+        "incidental_concepts": [
+          "the safe unwrap after a bounded table index"
+        ],
+        "reason": "A short trait-and-Result primer makes every lookup and error row predictable; no grammar, macro, unsafe, or lifetime study is required."
+      }
+    },
+    {
       "slug": "semver",
       "path_slug": "semver-parses-cargo-style-version-and-requirement-strings-into-typed",
       "repository": "dtolnay/semver",

@@ -137,6 +137,138 @@
       }
     },
     {
+      "slug": "vscode-distinct",
+      "path_slug": "distinct-keeps-the-first-value-for-each-callback-derived-key-in-stable-input-order",
+      "repository": "microsoft/vscode",
+      "url": "https://github.com/microsoft/vscode",
+      "primary_language": "TypeScript",
+      "language_evidence": "The distinct utility, its direct unit cases, and the production command-line path caller are first-party TypeScript; GitHub labels the repository TypeScript.",
+      "description": "A Code - OSS array utility that removes later duplicates while preserving the first value and allowing callers to derive their own equality key.",
+      "source_kind": "production",
+      "purpose_evidence": "The utility ships in the Code - OSS source tree and its key callback is used by the production application entry point to deduplicate path arguments case-insensitively on Windows and macOS.",
+      "why_study": "See how a generic callback, one Set, and a stateful filter preserve stable order while supporting both direct values and caller-defined equality keys.",
+      "learn": [
+        "Track keys already observed while filtering an array in one pass.",
+        "Preserve the first value for each key without sorting or mutating the input.",
+        "Use a key callback to separate stored values from their equality policy."
+      ],
+      "prerequisites": [
+        "The global novice TypeScript baseline: arrays, functions, callbacks, Set, conditionals, imports, and unit tests.",
+        "A generic type parameter keeps input and output element types aligned; the key callback may return any value that Set can compare."
+      ],
+      "concepts_developed": [
+        "Stable deduplication with a set of previously seen keys.",
+        "Injecting equality policy through a key-selection callback.",
+        "Keeping state inside a filtering closure while returning a new array."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Stable deduplication, callback-defined identity, collection state, and focused edge-case tests are broadly transferable application techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how Code - OSS distinct keeps only the first value for each derived key while preserving input order.",
+        "start_here": {
+          "path": "src/vs/base/common/arrays.ts",
+          "reason": "The distinct function contains the complete Set, key callback, duplicate branch, and stable filter result."
+        },
+        "supporting_files": [
+          "src/vs/base/test/common/arrays.test.ts",
+          "src/vs/code/electron-main/main.ts",
+          "README.md"
+        ],
+        "trace": "Enter distinct with an array and optional key function, derive each key inside filter, reject it if the Set already contains it, otherwise add it and keep the element, then match the five direct unit cases and the application entry-point caller that derives lowercase path keys on case-insensitive platforms."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "generic collection function",
+            "optional key callback",
+            "stateful filter closure"
+          ],
+          "reason": "Generics, callbacks, Set, and closure state are common professional TypeScript idioms central to the selected behavior."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "first-seen state",
+            "keep-or-reject branch",
+            "stable output order"
+          ],
+          "reason": "The Set changes across elements and determines each branch, but the full sequence remains local and easy to trace."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one exported utility",
+            "one focused test block"
+          ],
+          "reason": "The complete contract is contained in one function and its direct tests; the production caller only demonstrates use."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "first-value retention",
+            "callback-defined identity",
+            "stable ordering"
+          ],
+          "reason": "Routine collection guarantees shape the implementation without cross-module lifecycle or compatibility burdens."
+        },
+        "placement": "The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The Set-and-filter implementation exposes the complete decision sequence in eleven direct lines without clever key coercion.",
+        "architecture": "A reusable base utility, focused unit block, and concrete application-entry-point caller have clear responsibilities.",
+        "naming_and_idiom": "distinct, keyFn, seen, key, and element communicate the stable deduplication roles using conventional TypeScript APIs.",
+        "tests": "Five direct cases cover already-distinct input, one duplicate, object-prototype-like strings, two alternating key names, and many repeated values.",
+        "documentation": "The source comment states duplicate removal and the optional equality key; the production caller makes the stable string use case concrete.",
+        "traceability": "Every Set lookup, insertion, and filter result maps directly to the ordered unit expectations.",
+        "maintainability": "A narrow generic signature and explicit first-seen state make changes to identity or ordering easy to bound.",
+        "educational_value": "The path turns familiar filtering into a complete production pattern for stable, policy-driven deduplication."
+      },
+      "inspection": {
+        "commit": "e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 2 language-breadth investigation",
+          "Codex pinned-source verification"
+        ],
+        "files": [
+          "src/vs/base/common/arrays.ts",
+          "src/vs/base/test/common/arrays.test.ts",
+          "src/vs/code/electron-main/main.ts",
+          "README.md",
+          "package.json",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "TypeScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "stable deduplication",
+          "a Set of previously seen keys",
+          "callback-defined identity"
+        ],
+        "incidental_concepts": [
+          "the production caller's platform-specific path normalization"
+        ],
+        "reason": "A short primer on Set membership and key-selection callbacks makes every unit result predictable; no framework or settings-sync background is needed."
+      }
+    },
+    {
       "slug": "mitt",
       "path_slug": "one-small-event-emitter-keeps-named-and-wildcard-subscriptions-type",
       "repository": "developit/mitt",

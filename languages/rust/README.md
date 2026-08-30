@@ -1,6 +1,6 @@
 # Rust
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -89,7 +89,86 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [rust-lang/log](https://github.com/rust-lang/log)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A public logging-filter parser that accepts six case-insensitive names, including off, and returns one explicit error for every unknown value.
+
+**Why study it:** Follow a standard trait implementation from input text through a finite case-insensitive lookup to either a typed enum or a small explicit error.
+
+**Short context:**
+
+- A log-level filter disables logging or admits messages at and above one named severity.
+
+**Prerequisites:**
+
+- The global novice Rust baseline: enums, loops, slices, functions, Option, Result, and unit tests.
+- FromStr is the standard trait used by string.parse(); Ok carries the parsed value and Err carries the documented parsing failure.
+
+**Concepts this path develops:**
+
+- Implementing Rust's standard string-parsing protocol.
+- Performing allocation-free case-insensitive lookup over finite enum names.
+- Keeping valid and invalid configuration outcomes explicit through Result.
+
+**What you can learn:**
+
+- Implement a standard parsing trait for a public enum.
+- Map a finite set of case-insensitive names to typed values without allocating normalized strings.
+- Express every unsupported input through the Result error branch and a table-driven test.
+
+**Learning path:**
+
+- **Goal:** Understand how log parses case-insensitive LevelFilter names into typed values and rejects unknown strings.
+- **Start here:** [`src/lib.rs`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs) — The public enum, FromStr loop, index-to-enum mapping, error type, and direct unit table are all in this file.
+- **Then read:**
+  - [`README.md`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/README.md)
+  - [`Cargo.toml`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/Cargo.toml)
+- **Trace:** Call parse on a string, enter LevelFilter::from_str, scan the six published names including OFF, compare each without ASCII case, convert the bounded matching index into an enum, otherwise return ParseLevelError, then match the thirteen lowercase, uppercase, and unknown rows in test_levelfilter_from_str.
+
+**Why this level:**
+
+- **Language technique 2:** A standard trait, Result, iterator-like range traversal, and enum conversion are common professional Rust idioms.
+- **Behavioral reasoning 2:** The lookup has repeated comparison state and distinct success or error outcomes, but remains synchronous and local.
+- **Design span 1:** The complete parsing contract is contained in one source unit and a table-driven test.
+- **Constraint burden 2:** Routine configuration-API compatibility and error guarantees shape the parser without grammar or lifetime complexity.
+- **Novice accessibility floor 2:** A short trait-and-Result primer makes every lookup and error row predictable; no grammar, macro, unsafe, or lifetime study is required.
+  - **Central concepts:** standard FromStr parsing; case-insensitive finite lookup; Result-based invalid input
+  - **Incidental concepts:** the safe unwrap after a bounded table index
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The log crate is the maintained Rust logging facade used by libraries and applications, and LevelFilter parsing is part of its public configuration-facing API.
+
+**Language evidence:** LevelFilter, its FromStr implementation, ParseLevelError, and the direct table-driven unit test are first-party Rust; GitHub labels the repository Rust.
+
+**Coding relevance:**
+
+Standard trait integration, finite text parsing, explicit errors, and table-driven boundaries transfer to configuration and command-processing code.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The parser is a short bounded loop with one success return and one explicit error; the safe unwrap follows directly from the in-range index.
+- **Architecture:** The public enum owns its standard parser and error type, with no separate registry or configuration framework.
+- **Naming and idiom:** LevelFilter, FromStr, ParseLevelError, LOG_LEVEL_NAMES, and from_usize state the conversion roles precisely.
+- **Tests:** The focused upstream test covers all six lowercase names, all six uppercase names, and one unsupported value; the exact test passed at the pinned revision.
+- **Documentation:** Enum variants and the crate README define the filter purpose, while the standard trait exposes idiomatic string.parse() use.
+- **Traceability:** Every successful index and the final error branch map to one table row in test_levelfilter_from_str.
+- **Maintainability:** One shared name table and exhaustive finite test keep textual and enum changes reviewable.
+- **Educational value:** The path introduces a real standard trait and explicit parse errors without parser theory, macros, or ownership internals.
+
+**Inspection record:** commit `8034743dd9d7f7583bd9a670271483d176130911`, inspected 2026-08-30. Review passes: Codex Level 2 language-breadth investigation; Codex pinned-source verification. Files inspected: `src/lib.rs`, `README.md`, `Cargo.toml`, `LICENSE-MIT`, `LICENSE-APACHE`. GitHub Linguist label: Rust.
+
+</details>
 
 ## Level 3 — Intermediate production software
 

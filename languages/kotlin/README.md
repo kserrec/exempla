@@ -1,6 +1,6 @@
 # Kotlin
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -89,7 +89,84 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [russhwolf/multiplatform-settings](https://github.com/russhwolf/multiplatform-settings)
+
+**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A published in-memory Settings implementation that gives application tests the same typed key-value API as the library's platform-backed stores.
+
+**Why study it:** Follow one professional test double from a typed interface to map-backed writes, safe reads with explicit defaults, and two wrappers that intentionally share the same backing state.
+
+**Prerequisites:**
+
+- The global novice Kotlin baseline: classes, interfaces, mutable maps, nullable values, functions, and unit tests.
+- A safe cast returns null when a value has the wrong type; the Elvis operator then selects the documented default.
+
+**Concepts this path develops:**
+
+- Building an in-memory implementation behind a production interface.
+- Preserving typed reads over an untyped backing map with safe casts and defaults.
+- Sharing or isolating mutable state through explicitly supplied map instances.
+
+**What you can learn:**
+
+- Implement a public interface with one in-memory map while preserving type-specific methods.
+- Use safe casts to return either the stored type or the caller's explicit default.
+- Verify shared backing state and isolated named stores through focused and reusable contract tests.
+
+**Learning path:**
+
+- **Goal:** Understand how MapSettings provides typed reads and writes over one shared in-memory map without changing the public Settings contract.
+- **Start here:** [`multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt) — The class shows the backing map, constructors, type-specific write and read pairs, default behavior, and factory-managed shared maps together.
+- **Then read:**
+  - [`multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt)
+  - [`multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt)
+  - [`tests/src/commonMain/kotlin/com/russhwolf/settings/BaseSettingsTest.kt`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/tests/src/commonMain/kotlin/com/russhwolf/settings/BaseSettingsTest.kt)
+  - [`README.md`](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/README.md)
+- **Trace:** Begin with Settings' typed contract, enter MapSettings.putString or another type-specific writer, store the value under its string key, read through the matching safe cast and default, then follow MapSettingsTest's shared-delegate cases and BaseSettingsTest's missing, boundary, removal, and clear cases.
+
+**Why this level:**
+
+- **Language technique 2:** Interfaces, constructor delegation, mutable maps, and safe casts are common professional Kotlin idioms central to the implementation.
+- **Behavioral reasoning 2:** Several state outcomes matter, but each write, read, clear, and shared-map effect remains local and directly observable.
+- **Design span 2:** The path crosses a small explicit boundary from the public contract to one implementation and its focused and reusable tests.
+- **Constraint burden 2:** Routine API and test-double guarantees shape every method without adding persistence, concurrency, or platform lifecycle.
+- **Novice accessibility floor 2:** A short primer on interface implementations, safe casts, and shared map references makes every selected write and read predictable without separate platform or persistence study.
+  - **Central concepts:** implementing an interface; safe casts with explicit defaults; shared mutable backing state
+  - **Incidental concepts:** the broader observable-listener API outside the selected storage trace
+- **Placement:** The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The README documents multiplatform-settings-test as a published dependency for testing real client code, with MapSettings as its application-facing in-memory implementation.
+
+**Language evidence:** MapSettings, the Settings contract, its focused tests, and the shared cross-platform contract suite are first-party Kotlin; GitHub labels the repository Kotlin.
+
+**Coding relevance:**
+
+Interface-backed test doubles, typed key-value contracts, explicit defaults, and shared-state tests transfer directly to ordinary application and library work.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation uses direct type-specific pairs and a single clearly named backing map; no generated or placeholder logic obscures the selected trace.
+- **Architecture:** The public Settings contract, in-memory MapSettings adapter, and shared contract tests have clear and proportionate responsibilities.
+- **Naming and idiom:** delegate, defaultValue, putString, getString, and Factory communicate roles using ordinary Kotlin library conventions.
+- **Tests:** Four focused MapSettings tests prove constructors, shared delegates, named isolation, and cache replacement; the inherited contract suite covers every supported type, missing values, removal, and clearing.
+- **Documentation:** The README identifies the published test dependency, distinguishes its in-memory behavior from persistence, and demonstrates the common Settings API.
+- **Traceability:** Each selected write, safe read, default, and shared-map outcome maps to a direct MapSettingsTest or BaseSettingsTest assertion.
+- **Maintainability:** A stable interface and reusable contract suite keep the test implementation aligned with platform implementations.
+- **Educational value:** The path shows how to build and verify a useful test double without introducing platform APIs or framework lifecycle.
+
+**Inspection record:** commit `f95cdff42a78f44b5176b6aea9c61cedb7859811`, inspected 2026-08-30. Review passes: Codex Level 2 language-breadth investigation; Codex pinned-source verification. Files inspected: `multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt`, `multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt`, `multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt`, `tests/src/commonMain/kotlin/com/russhwolf/settings/BaseSettingsTest.kt`, `multiplatform-settings-test/build.gradle.kts`, `README.md`, `LICENSE.txt`. GitHub Linguist label: Kotlin.
+
+</details>
 
 ## Level 3 — Intermediate production software
 

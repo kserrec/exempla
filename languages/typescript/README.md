@@ -1,6 +1,6 @@
 # TypeScript
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -90,7 +90,83 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [microsoft/vscode](https://github.com/microsoft/vscode)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A Code - OSS array utility that removes later duplicates while preserving the first value and allowing callers to derive their own equality key.
+
+**Why study it:** See how a generic callback, one Set, and a stateful filter preserve stable order while supporting both direct values and caller-defined equality keys.
+
+**Prerequisites:**
+
+- The global novice TypeScript baseline: arrays, functions, callbacks, Set, conditionals, imports, and unit tests.
+- A generic type parameter keeps input and output element types aligned; the key callback may return any value that Set can compare.
+
+**Concepts this path develops:**
+
+- Stable deduplication with a set of previously seen keys.
+- Injecting equality policy through a key-selection callback.
+- Keeping state inside a filtering closure while returning a new array.
+
+**What you can learn:**
+
+- Track keys already observed while filtering an array in one pass.
+- Preserve the first value for each key without sorting or mutating the input.
+- Use a key callback to separate stored values from their equality policy.
+
+**Learning path:**
+
+- **Goal:** Understand how Code - OSS distinct keeps only the first value for each derived key while preserving input order.
+- **Start here:** [`src/vs/base/common/arrays.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts) — The distinct function contains the complete Set, key callback, duplicate branch, and stable filter result.
+- **Then read:**
+  - [`src/vs/base/test/common/arrays.test.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/test/common/arrays.test.ts)
+  - [`src/vs/code/electron-main/main.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/code/electron-main/main.ts)
+  - [`README.md`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/README.md)
+- **Trace:** Enter distinct with an array and optional key function, derive each key inside filter, reject it if the Set already contains it, otherwise add it and keep the element, then match the five direct unit cases and the application entry-point caller that derives lowercase path keys on case-insensitive platforms.
+
+**Why this level:**
+
+- **Language technique 2:** Generics, callbacks, Set, and closure state are common professional TypeScript idioms central to the selected behavior.
+- **Behavioral reasoning 2:** The Set changes across elements and determines each branch, but the full sequence remains local and easy to trace.
+- **Design span 1:** The complete contract is contained in one function and its direct tests; the production caller only demonstrates use.
+- **Constraint burden 2:** Routine collection guarantees shape the implementation without cross-module lifecycle or compatibility burdens.
+- **Novice accessibility floor 2:** A short primer on Set membership and key-selection callbacks makes every unit result predictable; no framework or settings-sync background is needed.
+  - **Central concepts:** stable deduplication; a Set of previously seen keys; callback-defined identity
+  - **Incidental concepts:** the production caller's platform-specific path normalization
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The utility ships in the Code - OSS source tree and its key callback is used by the production application entry point to deduplicate path arguments case-insensitively on Windows and macOS.
+
+**Language evidence:** The distinct utility, its direct unit cases, and the production command-line path caller are first-party TypeScript; GitHub labels the repository TypeScript.
+
+**Coding relevance:**
+
+Stable deduplication, callback-defined identity, collection state, and focused edge-case tests are broadly transferable application techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The Set-and-filter implementation exposes the complete decision sequence in eleven direct lines without clever key coercion.
+- **Architecture:** A reusable base utility, focused unit block, and concrete application-entry-point caller have clear responsibilities.
+- **Naming and idiom:** distinct, keyFn, seen, key, and element communicate the stable deduplication roles using conventional TypeScript APIs.
+- **Tests:** Five direct cases cover already-distinct input, one duplicate, object-prototype-like strings, two alternating key names, and many repeated values.
+- **Documentation:** The source comment states duplicate removal and the optional equality key; the production caller makes the stable string use case concrete.
+- **Traceability:** Every Set lookup, insertion, and filter result maps directly to the ordered unit expectations.
+- **Maintainability:** A narrow generic signature and explicit first-seen state make changes to identity or ordering easy to bound.
+- **Educational value:** The path turns familiar filtering into a complete production pattern for stable, policy-driven deduplication.
+
+**Inspection record:** commit `e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d`, inspected 2026-08-30. Review passes: Codex Level 2 language-breadth investigation; Codex pinned-source verification. Files inspected: `src/vs/base/common/arrays.ts`, `src/vs/base/test/common/arrays.test.ts`, `src/vs/code/electron-main/main.ts`, `README.md`, `package.json`, `LICENSE.txt`. GitHub Linguist label: TypeScript.
+
+</details>
 
 ## Level 3 — Intermediate production software
 

@@ -7,12 +7,12 @@ Learn transferable programming skills from exemplary source code.
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through implementation and verification. The catalog currently has
-**152 qualified learning paths from 146 public repositories across 20
-languages**. Its **88 open slots are honest research gaps** under the expanded
-3/3/2/2/2 capacity map, including 42 Level 1 gaps and 40 Level 2 gaps after the
+**158 qualified learning paths from 148 public repositories across 20
+languages**. Its **82 open slots are honest research gaps** under the expanded
+3/3/2/2/2 capacity map, including 42 Level 1 gaps and 34 Level 2 gaps after the
 completed production and educational-exemplar research passes. Seventeen of 20
-languages now have at least one qualified Level 1 path. No gate or score is
-lowered to preserve an arbitrary count.
+languages now have at least one qualified path at each of Levels 1 and 2. No
+gate or score is lowered to preserve an arbitrary count.
 
 If you can write small programs in the language, **Level 1 — First real code**
 is designed to be your first comfortable step into serious source. An empty

@@ -1,6 +1,6 @@
 # R
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -90,7 +90,87 @@ No specialist domain context is required.
 
 ## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [r-lib/scales](https://github.com/r-lib/scales)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A public scales transformation that maps numeric vectors into a requested output range, preserves missing values, and gives constant inputs the output midpoint.
+
+**Why study it:** Follow a compact S3 generic into one numeric method that combines vector arithmetic with explicit missing-value and zero-range behavior.
+
+**Short context:**
+
+- Rescaling changes numeric values from one minimum-and-maximum interval to another; no plotting theory is needed for the selected path.
+
+**Prerequisites:**
+
+- The global novice R baseline: vectors, functions, default arguments, indexing, missing values, and testthat expectations.
+- An S3 generic chooses a method from the input class; linear rescaling subtracts the input minimum, divides by input width, then applies the output width and minimum.
+
+**Concepts this path develops:**
+
+- Separating a public S3 generic from its numeric implementation.
+- Expressing an interval transformation through vectorized arithmetic.
+- Defining stable missing-value and zero-width-range outcomes.
+
+**What you can learn:**
+
+- Dispatch a public operation to a type-specific S3 method.
+- Map every numeric value from one interval into another with vectorized arithmetic.
+- Protect constant and missing inputs with an explicit midpoint branch.
+
+**Learning path:**
+
+- **Goal:** Understand how scales rescale maps numeric vectors between intervals while preserving NA and defining constant-input output.
+- **Start here:** [`R/bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R) — The generic and numeric method show dispatch, default input range, the zero-range branch, and the complete transformation formula together.
+- **Then read:**
+  - [`tests/testthat/test-bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/tests/testthat/test-bounds.R)
+  - [`man/rescale.Rd`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/man/rescale.Rd)
+  - [`README.md`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/README.md)
+- **Trace:** Call rescale, dispatch through UseMethod to rescale.numeric, derive the finite input range, return output midpoints for a zero-width input or output while preserving NA, otherwise apply the interval formula, then match ordinary mixed-sign, missing, and constant-input expectations in test-bounds.R.
+
+**Why this level:**
+
+- **Language technique 2:** S3 dispatch and vectorized transformations are common professional R idioms central to the public API.
+- **Behavioral reasoning 2:** Several input classes of outcome matter, but the complete numeric behavior stays in one short method.
+- **Design span 1:** The selected numeric contract is contained in a public generic-method pair and direct tests.
+- **Constraint burden 2:** Routine numerical API edge guarantees shape the method without requiring specialist mathematics or plotting architecture.
+- **Novice accessibility floor 2:** A short S3 and interval-formula primer makes the numeric examples and edge cases predictable; no separate statistics or graphics course is required.
+  - **Central concepts:** S3 generic dispatch; linear interval rescaling; zero-range and missing-value policy
+  - **Incidental concepts:** other Date, time, integer64, and AsIs methods outside the selected numeric trace
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** scales is a maintained R package for mapping data to perceptual properties, and rescale is a documented installed API used by plotting and data applications.
+
+**Language evidence:** The rescale generic, numeric method, package documentation, and direct testthat cases are first-party R; GitHub labels the repository R.
+
+**Coding relevance:**
+
+Type dispatch, vector transformations, degenerate-input policy, and direct boundary tests transfer to ordinary data and application code.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The method states its exceptional branch and transformation formula directly, with no hidden mutation or generated code.
+- **Architecture:** A small public generic delegates to type methods, while one focused test file specifies the shared behavior.
+- **Naming and idiom:** x, to, from, zero_range, and rescale.numeric match established R and interval vocabulary.
+- **Tests:** Direct numeric cases cover a mixed-sign vector, NA preservation, and constant inputs; adjacent cases verify additional type methods outside the selected numeric trace.
+- **Documentation:** Generated package documentation defines both ranges, gives runnable examples, and identifies every published method.
+- **Traceability:** The ordinary formula, zero-range return, and NA branch each map to explicit testthat expectations.
+- **Maintainability:** The generic-method split and concentrated boundary cases make type extensions and numerical changes easy to review.
+- **Educational value:** The path introduces idiomatic R dispatch through a familiar numeric transformation with concrete edge policy.
+
+**Inspection record:** commit `04fc3331af14da0d5ca1919f37c6c35d6fc512bb`, inspected 2026-08-30. Review passes: Codex Level 2 language-breadth investigation; Codex pinned-source verification. Files inspected: `R/bounds.R`, `tests/testthat/test-bounds.R`, `man/rescale.Rd`, `README.md`, `DESCRIPTION`, `LICENSE.md`. GitHub Linguist label: R.
+
+</details>
 
 ## Level 3 — Intermediate production software
 

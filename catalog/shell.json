@@ -132,6 +132,138 @@
       }
     },
     {
+      "slug": "bats-assert-success-status",
+      "path_slug": "assert-success-turns-one-captured-nonzero-status-into-structured-stdout-and-stderr-diagnostics",
+      "repository": "bats-core/bats-assert",
+      "url": "https://github.com/bats-core/bats-assert",
+      "primary_language": "Shell",
+      "language_evidence": "The public assert_success function, its shared formatting calls, and all focused Bats cases are first-party Bash; GitHub labels the repository Shell.",
+      "description": "A reusable Bats assertion that accepts a successful command and turns any captured nonzero status into structured stdout and optional stderr diagnostics.",
+      "source_kind": "production",
+      "purpose_evidence": "bats-core publishes bats-assert as a released reusable assertion library for real Bats test suites, with installation, API documentation, and a direct test suite.",
+      "why_study": "Trace how one Shell test helper interprets captured process state and pipes exact single- or multi-line stdout and stderr diagnostics into the assertion framework on failure.",
+      "learn": [
+        "Treat zero and nonzero process statuses as an explicit test contract.",
+        "Preserve captured stdout and optional separated stderr when reporting a failure.",
+        "Compose grouped diagnostic output through formatter and failure functions."
+      ],
+      "prerequisites": [
+        "The global novice Shell baseline: functions, conditionals, positional arguments, variables, pipelines, and Bats tests.",
+        "Bats run stores a command's exit code in status and its captured standard output in output; zero means success and nonzero means failure."
+      ],
+      "concepts_developed": [
+        "Asserting success from a captured process exit status.",
+        "Reporting a failed command with structured diagnostics.",
+        "Formatting optional standard error and multi-line output without changing assertion status."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Exit-code contracts, captured streams, diagnostic composition, and direct behavior tests are transferable Shell and test-engineering practices."
+      },
+      "learning_path": {
+        "goal": "Understand how bats-assert accepts status zero and turns any captured nonzero status into exact stdout and stderr diagnostics.",
+        "start_here": {
+          "path": "src/assert_success.bash",
+          "reason": "The function contains the captured-state checks, nonzero branch, stream formatting, and diagnostic pipeline together."
+        },
+        "supporting_files": [
+          "test/assert_success.bats",
+          "test/test_helper.bash",
+          "README.md"
+        ],
+        "trace": "Read Bats' captured output and status globals, return normally for status zero, otherwise format the numeric status, stdout, and optional separated stderr, pipe the group through batslib_decorate and fail, then match the four exact passing, failing, multi-line, and separate-stderr tests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "Bats captured globals",
+            "arithmetic status condition",
+            "brace-group diagnostic pipelines"
+          ],
+          "reason": "Captured test state, arithmetic conditions, grouped output, and pipelines are common professional Shell testing idioms."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "zero-status success",
+            "nonzero-status failure",
+            "optional stderr and multi-line output"
+          ],
+          "reason": "The result and diagnostic shape depend on captured process state, but all behavior remains local to one completed command."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "public assertion",
+            "shared formatting helpers",
+            "focused Bats verification"
+          ],
+          "reason": "The behavior crosses a few explicit boundaries from captured command state through formatting to the assertion failure."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "zero-versus-nonzero semantics",
+            "stable diagnostics",
+            "stdout and optional stderr preservation"
+          ],
+          "reason": "Routine testing guarantees shape each branch without process orchestration, portability machinery, or framework lifecycle."
+        },
+        "placement": "The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "One explicit condition and one labeled diagnostic group expose the complete assertion contract without eval or hidden control flow.",
+        "architecture": "The assertion decides outcomes, bats-support formats details, and focused tests compare complete emitted diagnostics.",
+        "naming_and_idiom": "status, output, stderr, assert_success, and batslib formatting calls use established Bats vocabulary.",
+        "tests": "Four direct tests cover status-zero success, nonzero failure details, multi-line stdout, and separately captured stderr.",
+        "documentation": "The source header and README agree on status-zero success, nonzero failure, and the complete emitted diagnostic.",
+        "traceability": "The success return, failure condition, stream formatting, and every emitted line map to an exact Bats expectation.",
+        "maintainability": "The narrow function and golden diagnostic assertions make contract or wording changes immediately visible.",
+        "educational_value": "The path turns basic exit codes and captured streams into a complete professional assertion with precise failure evidence."
+      },
+      "inspection": {
+        "commit": "697471b7a89d3ab38571f38c6c7c4b460d1f5e35",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 2 language-breadth investigation",
+          "Codex pinned-source verification"
+        ],
+        "files": [
+          "src/assert_success.bash",
+          "test/assert_success.bats",
+          "test/test_helper.bash",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "CC0-1.0",
+        "urls": [
+          "https://github.com/bats-core/bats-assert/blob/697471b7a89d3ab38571f38c6c7c4b460d1f5e35/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Shell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "captured process exit status",
+          "captured stdout and optional stderr",
+          "structured diagnostic pipelines"
+        ],
+        "incidental_concepts": [
+          "shared bats-support width and decoration helpers"
+        ],
+        "reason": "A short primer on Bats' status and output globals plus grouped pipelines makes every branch predictable; no process lifecycle or portability study is required."
+      }
+    },
+    {
       "slug": "dokku",
       "path_slug": "dokku-resolves-aliases-and-dispatches-a-command-through-enabled-plugin",
       "repository": "dokku/dokku",

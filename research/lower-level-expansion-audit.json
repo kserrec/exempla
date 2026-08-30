@@ -27,11 +27,11 @@
     "paths_by_level": {"1": 2, "2": 9, "3": 40, "4": 40, "5": 34}
   },
   "after": {
-    "accepted_paths": 152,
-    "paths_by_level": {"1": 18, "2": 20, "3": 40, "4": 40, "5": 34}
+    "accepted_paths": 158,
+    "paths_by_level": {"1": 18, "2": 26, "3": 40, "4": 40, "5": 34}
   },
   "additions": {
-    "production": 22,
+    "production": 28,
     "educational_exemplar": 5,
     "paths": [
       {
@@ -249,10 +249,58 @@
         "source_kind": "production",
         "level": 1,
         "pinned_commit": "b143655f3dca9afacf7ef5e10f40868cc7e28f43"
+      },
+      {
+        "language_slug": "typescript",
+        "repository": "microsoft/vscode",
+        "path_slug": "distinct-keeps-the-first-value-for-each-callback-derived-key-in-stable-input-order",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d"
+      },
+      {
+        "language_slug": "swift",
+        "repository": "apple/swift-log",
+        "path_slug": "multiplex-log-handler-forwards-one-event-only-to-handlers-whose-thresholds-admit-it",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95"
+      },
+      {
+        "language_slug": "r",
+        "repository": "r-lib/scales",
+        "path_slug": "rescale-maps-a-numeric-vector-between-two-ranges-while-preserving-missing-and-zero-range-results",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "04fc3331af14da0d5ca1919f37c6c35d6fc512bb"
+      },
+      {
+        "language_slug": "shell",
+        "repository": "bats-core/bats-assert",
+        "path_slug": "assert-success-turns-one-captured-nonzero-status-into-structured-stdout-and-stderr-diagnostics",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "697471b7a89d3ab38571f38c6c7c4b460d1f5e35"
+      },
+      {
+        "language_slug": "kotlin",
+        "repository": "russhwolf/multiplatform-settings",
+        "path_slug": "map-settings-stores-typed-values-in-one-shared-in-memory-map-and-returns-explicit-defaults",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "f95cdff42a78f44b5176b6aea9c61cedb7859811"
+      },
+      {
+        "language_slug": "rust",
+        "repository": "rust-lang/log",
+        "path_slug": "level-filter-parses-six-case-insensitive-names-and-rejects-every-unknown-string",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "8034743dd9d7f7583bd9a670271483d176130911"
       }
     ]
   },
-  "remaining_lower_level_gaps": {"1": 42, "2": 40, "total": 82},
+  "remaining_lower_level_gaps": {"1": 42, "2": 34, "total": 76},
   "language_passes": [
     {
       "language_slug": "javascript",
@@ -393,8 +441,8 @@
     {
       "language_slug": "typescript",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official TypeScript sample and starter searches",
@@ -410,9 +458,13 @@
         {"repository": "developit/mitt", "decision": "retained-higher", "evidence": "Wildcard subscriptions, generic event maps, mutation during dispatch, and type contracts preserve its Level 3 placement."},
         {"repository": "alexreardon/tiny-invariant", "decision": "rejected", "evidence": "The meaningful package contract includes build-time environment stripping and assertion typing rather than a complete lower-rung behavior."},
         {"repository": "unjs/ofetch", "decision": "rejected", "evidence": "Earlier direct review found source-correctness, test, traceability, maintainability, and educational-value failures."},
-        {"repository": "microsoft/vscode", "decision": "accepted", "evidence": "removeFastWithoutKeepingOrder is a complete production array mutation with a named performance tradeoff, direct focused tests, and a production caller at Level 1."}
+        {"repository": "microsoft/vscode", "decision": "accepted", "evidence": "removeFastWithoutKeepingOrder is a complete production array mutation with a named performance tradeoff, direct focused tests, and a production caller at Level 1."},
+        {"repository": "microsoft/vscode", "decision": "accepted", "evidence": "distinct is a materially separate stable-deduplication path with callback-defined identity, five direct tests, and a production application-entry-point caller that derives case-insensitive path keys at Level 2."}
       ],
-      "accepted_path_slugs": ["remove-fast-without-keeping-order-replaces-one-item-with-the-last-before-popping"],
+      "accepted_path_slugs": [
+        "remove-fast-without-keeping-order-replaces-one-item-with-the-last-before-popping",
+        "distinct-keeps-the-first-value-for-each-callback-derived-key-in-stable-input-order"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -502,8 +554,8 @@
     {
       "language_slug": "swift",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Apple sample repositories",
@@ -519,9 +571,13 @@
         {"repository": "JohnSundell/Files", "decision": "rejected", "evidence": "Filesystem semantics, throwing APIs, URL/path behavior, and platform constraints keep the meaningful path at Level 3."},
         {"repository": "apple/sample-backyard-birds", "decision": "rejected", "evidence": "SwiftUI state wrappers, SwiftData, observation, navigation, relationships, and application lifecycle interact beyond Level 2."},
         {"repository": "apple/swift-collections", "decision": "rejected", "evidence": "Generic collection invariants, storage design, performance contracts, and test breadth exceed the novice accessibility ceiling."},
-        {"repository": "apple/swift-log", "decision": "accepted", "evidence": "Logger.Level maps seven enum cases to one total order and verifies all 49 ordered pairs through a focused Level 1 path."}
+        {"repository": "apple/swift-log", "decision": "accepted", "evidence": "Logger.Level maps seven enum cases to one total order and verifies all 49 ordered pairs through a focused Level 1 path."},
+        {"repository": "apple/swift-log", "decision": "accepted", "evidence": "MultiplexLogHandler is a materially separate protocol-adapter path with accurate routing documentation, per-backend threshold filtering, fan-out, and direct single-materialization tests at Level 2. A conflicting metadata-priority paragraph elsewhere in the type is disclosed and excluded from this bounded routing path."}
       ],
-      "accepted_path_slugs": ["logger-level-maps-seven-severities-to-a-complete-tested-order"],
+      "accepted_path_slugs": [
+        "logger-level-maps-seven-severities-to-a-complete-tested-order",
+        "multiplex-log-handler-forwards-one-event-only-to-handlers-whose-thresholds-admit-it"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -557,8 +613,8 @@
     {
       "language_slug": "r",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official R teaching and package examples",
@@ -574,16 +630,20 @@
         {"repository": "r-lib/prettyunits", "decision": "rejected", "evidence": "Unit tables, significant figures, vectorization, missing values, formatting rules, and option behavior keep the production path at Level 3."},
         {"repository": "r-lib/pkgconfig", "decision": "rejected", "evidence": "Caller-frame lookup, namespaces, environments, and global fallback materially determine correctness and require Level 3."},
         {"repository": "r-lib/rematch2", "decision": "rejected", "evidence": "Regular-expression grammar, capture matrices, attributes, missing matches, and vector semantics exceed a short Level 2 primer."},
-        {"repository": "r-lib/scales", "decision": "accepted", "evidence": "oob_squish_infinite uses two direct logical masks and assignments, with one mixed-input expectation proving both replacements and preservation at Level 1."}
+        {"repository": "r-lib/scales", "decision": "accepted", "evidence": "oob_squish_infinite uses two direct logical masks and assignments, with one mixed-input expectation proving both replacements and preservation at Level 1."},
+        {"repository": "r-lib/scales", "decision": "accepted", "evidence": "rescale is a materially separate public transformation path combining S3 dispatch, interval mapping, and directly tested missing and zero-range behavior at Level 2."}
       ],
-      "accepted_path_slugs": ["oob-squish-infinite-replaces-only-negative-and-positive-infinity-with-range-limits"],
+      "accepted_path_slugs": [
+        "oob-squish-infinite-replaces-only-negative-and-positive-infinity-with-range-limits",
+        "rescale-maps-a-numeric-vector-between-two-ranges-while-preserving-missing-and-zero-range-results"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "shell",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official and respected Shell teaching repositories",
@@ -600,16 +660,22 @@
         {"repository": "bash-my-aws/bash-my-aws", "decision": "rejected", "evidence": "AWS services, CLI conventions, profiles, resources, JSON filters, and completion logic dominate the path."},
         {"repository": "bats-core/bats-core", "decision": "rejected", "evidence": "Process orchestration, temporary state, hook lifecycle, assertion status, and portability are central and remain Level 3."},
         {"repository": "fsaintjacques/semver-tool", "decision": "rejected", "evidence": "Semantic-version grammar, shell portability, parsing branches, comparison rules, and command behavior exceed Level 2."},
-        {"repository": "bats-core/bats-file", "decision": "accepted", "evidence": "assert_file_exists has one central file predicate, one focused failure path, direct success and failure tests, and only local reporting details at Level 1."}
+        {"repository": "bats-core/bats-file", "decision": "accepted", "evidence": "assert_file_exists has one central file predicate, one focused failure path, direct success and failure tests, and only local reporting details at Level 1."},
+        {"repository": "bats-core/bats-file", "decision": "rejected", "evidence": "assert_file_size_equals documentation promises the expected byte count in failure output, but the implementation omits it and direct tests do not check that promised diagnostic."},
+        {"repository": "bats-core/bats-assert", "decision": "rejected", "evidence": "assert_failure's source header states the inverse of the return contract implemented and directly tested, so the selected source path is not documentation-accurate."},
+        {"repository": "bats-core/bats-assert", "decision": "accepted", "evidence": "assert_success's source header, implementation, README contract, and four direct golden-diagnostic tests agree on status-zero success and structured nonzero failure at Level 2."}
       ],
-      "accepted_path_slugs": ["assert-file-exists-tests-one-path-and-emits-a-focused-failure-when-it-is-not-a-file"],
+      "accepted_path_slugs": [
+        "assert-file-exists-tests-one-path-and-emits-a-focused-failure-when-it-is-not-a-file",
+        "assert-success-turns-one-captured-nonzero-status-into-structured-stdout-and-stderr-diagnostics"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "kotlin",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Kotlin and Ktor examples",
@@ -625,9 +691,13 @@
         {"repository": "junit-team/junit-examples", "decision": "rejected", "evidence": "The Kotlin starter uses JVM assert for a public division-by-zero precondition, which may be disabled and is not exemplary practice."},
         {"repository": "ktorio/ktor-samples", "decision": "rejected", "evidence": "Even the smaller verified samples combine routing DSLs, test lifecycles, plugins, configuration, or serialization at Level 3."},
         {"repository": "JakeWharton/picnic", "decision": "rejected", "evidence": "Table DSL construction, layout measurement, rendering state, width constraints, and style composition exceed Level 2."},
-        {"repository": "JetBrains/kotlin", "decision": "accepted", "evidence": "The handwritten standard-library substringAfter function has one search, one branch, direct found and missing tests, and an honest Level 1 accessibility floor."}
+        {"repository": "JetBrains/kotlin", "decision": "accepted", "evidence": "The handwritten standard-library substringAfter function has one search, one branch, direct found and missing tests, and an honest Level 1 accessibility floor."},
+        {"repository": "russhwolf/multiplatform-settings", "decision": "accepted", "evidence": "The published MapSettings test implementation provides typed map-backed storage, explicit defaults, shared-state construction, and a reusable cross-platform contract suite at Level 2."}
       ],
-      "accepted_path_slugs": ["substring-after-returns-text-after-the-first-delimiter-or-an-explicit-fallback"],
+      "accepted_path_slugs": [
+        "substring-after-returns-text-after-the-first-delimiter-or-an-explicit-fallback",
+        "map-settings-stores-typed-values-in-one-shared-in-memory-map-and-returns-explicit-defaults"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -733,8 +803,8 @@
     {
       "language_slug": "rust",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 1, "2": 0},
-      "gaps_after": {"1": 2, "2": 3},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Rust books and project examples",
@@ -751,9 +821,13 @@
         {"repository": "rust-cli/book", "decision": "rejected", "evidence": "Macros, generic I/O, contextual errors, filesystem work, process execution, and predicates produce accessibility floor 3."},
         {"repository": "rust-lang/rustlings", "decision": "rejected", "evidence": "It is explicitly an exercise-and-solution collection, not a complete coherent software artifact."},
         {"repository": "rust-cli/anstyle", "decision": "rejected", "evidence": "Generic formatting traits, terminal capability, platform handling, and nested style state keep the meaningful path above Level 2."},
-        {"repository": "rust-lang/log", "decision": "accepted", "evidence": "Level.increment_severity performs one adjacent enum transition with an explicit upper-bound fallback, and its focused upstream test passed at Level 1."}
+        {"repository": "rust-lang/log", "decision": "accepted", "evidence": "Level.increment_severity performs one adjacent enum transition with an explicit upper-bound fallback, and its focused upstream test passed at Level 1."},
+        {"repository": "rust-lang/log", "decision": "accepted", "evidence": "LevelFilter FromStr is a materially separate trait-based parsing path with six case-insensitive values, explicit invalid input, and a passing focused upstream test at Level 2."}
       ],
-      "accepted_path_slugs": ["increment-severity-steps-to-the-next-log-level-and-stays-at-trace"],
+      "accepted_path_slugs": [
+        "increment-severity-steps-to-the-next-log-level-and-stays-at-trace",
+        "level-filter-parses-six-case-insensitive-names-and-rejects-every-unknown-string"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -1108,6 +1182,20 @@
       "failed_requirement": "direct test quality and implementation-to-test traceability",
       "decision_evidence": "Clamp has readable production source but no direct first-party automated or deterministic golden verification at the pinned revision.",
       "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "shell",
+      "repository": "bats-core/bats-file",
+      "failed_requirement": "documentation accuracy and direct diagnostic verification",
+      "decision_evidence": "assert_file_size_equals promises to display the expected byte count on failure, but the pinned implementation omits that value and the focused tests assert only status for the mismatch and path-substitution cases.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "shell",
+      "repository": "bats-core/bats-assert",
+      "failed_requirement": "documentation accuracy in the selected source path",
+      "decision_evidence": "assert_failure's source header states the exact inverse of the return contract implemented, documented in the README, and covered by seven direct tests.",
+      "full_record": "research/rejections.json"
     }
   ],
   "progression_checks": [
@@ -1213,55 +1301,55 @@
     {
       "language_slug": "typescript",
       "level_1_order": ["vscode-remove-fast-without-order"],
-      "level_2_order": [],
+      "level_2_order": ["vscode-distinct"],
       "level_3_order": ["mitt", "redux"],
-      "ordering_rationale": "One local array mutation and explicit performance tradeoff form the Level 1 ramp; the absent Level 2 bridge remains visible before event and state-management abstractions.",
-      "level_2_to_3": "The Level 2 gap remains explicit; the Level 1 path prepares array, mutation, and contract reasoning before mitt introduces generic event maps, subscriptions, wildcard dispatch, and mutation during delivery.",
+      "ordering_rationale": "One local array mutation and explicit performance tradeoff lead to stable deduplication with a key callback and remembered Set state before event and state-management abstractions.",
+      "level_2_to_3": "distinct introduces generics, callbacks, closure state, and stable collection contracts before mitt adds generic event maps, subscriptions, wildcard dispatch, and mutation during delivery.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "swift",
       "level_1_order": ["swift-log-level-ordering"],
-      "level_2_order": [],
+      "level_2_order": ["swift-log-multiplex-routing"],
       "level_3_order": ["tagged", "vapor"],
-      "ordering_rationale": "A finite enum mapping and exhaustive ordering test provide the Level 1 ramp; the absent Level 2 bridge remains visible before generic tagging and web-framework paths.",
-      "level_2_to_3": "The Level 2 gap remains explicit; Logger.Level establishes enums, protocol conformance, and table-driven tests before Tagged adds phantom generic distinctions and broader type-level API reasoning.",
+      "ordering_rationale": "A finite enum mapping and exhaustive ordering test lead to a protocol-based fan-out adapter with independent thresholds before generic tagging and web-framework paths.",
+      "level_2_to_3": "MultiplexLogHandler introduces protocol composition, adapter boundaries, and filtered fan-out before Tagged adds phantom generic distinctions and broader type-level API reasoning.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "r",
       "level_1_order": ["scales-squish-infinite"],
-      "level_2_order": [],
+      "level_2_order": ["scales-rescale-numeric"],
       "level_3_order": ["withr", "ggplot2"],
-      "ordering_rationale": "Two local vector masks and assignments provide the Level 1 ramp; the absent Level 2 bridge remains visible before scoped environment changes and plotting architecture.",
-      "level_2_to_3": "The Level 2 gap remains explicit; oob_squish_infinite establishes vector selection, replacement, and missing-value preservation before withr adds dynamic scope, deferred cleanup, and process state.",
+      "ordering_rationale": "Two local vector masks and assignments lead to S3 dispatch, interval transformation, and explicit degenerate-input policy before scoped environment changes and plotting architecture.",
+      "level_2_to_3": "rescale introduces method dispatch, vector transformation contracts, and missing and zero-range behavior before withr adds dynamic scope, deferred cleanup, and process state.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "shell",
       "level_1_order": ["bats-file-assert-file-exists"],
-      "level_2_order": [],
+      "level_2_order": ["bats-assert-success-status"],
       "level_3_order": ["dokku", "rbenv"],
-      "ordering_rationale": "One file predicate and focused failure path provide the Level 1 ramp; the absent Level 2 bridge remains visible before deployment and version-management systems.",
-      "level_2_to_3": "The Level 2 gap remains explicit; assert_file_exists introduces conditionals, paths, functions, and failure output before Dokku adds process orchestration, plugins, containers, configuration, and deployment lifecycle.",
+      "ordering_rationale": "One file predicate and focused failure path lead to a captured status-zero contract and structured stdout and stderr diagnostic pipelines before deployment and version-management systems.",
+      "level_2_to_3": "assert_success introduces captured exit-code contracts, grouped output, and shared formatting boundaries before Dokku adds process orchestration, plugins, containers, configuration, and deployment lifecycle.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "kotlin",
       "level_1_order": ["kotlin-substring-after"],
-      "level_2_order": [],
+      "level_2_order": ["multiplatform-settings-map"],
       "level_3_order": ["clikt", "kotlin-logging"],
-      "ordering_rationale": "One string search, branch, and slice provide the Level 1 ramp; the absent Level 2 bridge remains visible before command parsing and logging abstractions.",
-      "level_2_to_3": "The Level 2 gap remains explicit; substringAfter establishes extension syntax, defaults, sentinels, and edge-case tests before Clikt adds delegated options, conversion, command context, and parser errors.",
+      "ordering_rationale": "One string search, branch, and slice lead to an interface-backed mutable test double with typed defaults and shared state before command parsing and logging abstractions.",
+      "level_2_to_3": "MapSettings introduces interfaces, safe casts, mutable state, and reusable contract tests before Clikt adds delegated options, conversion, command context, and parser errors.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "rust",
       "level_1_order": ["rust-log-increment-severity"],
-      "level_2_order": [],
+      "level_2_order": ["rust-log-level-filter-parse"],
       "level_3_order": ["semver", "heck"],
-      "ordering_rationale": "One adjacent enum transition and boundary fallback provide the Level 1 ramp; the absent Level 2 bridge remains visible before version grammar and case-conversion algorithms.",
-      "level_2_to_3": "The Level 2 gap remains explicit; increment_severity establishes enums, Option fallback, and boundary tests before semver adds grammar, identifiers, precedence, parsing errors, and compatibility rules.",
+      "ordering_rationale": "One adjacent enum transition and boundary fallback lead to standard trait parsing, case-insensitive lookup, and explicit Result errors before version grammar and case-conversion algorithms.",
+      "level_2_to_3": "LevelFilter parsing introduces FromStr, Result, finite textual contracts, and invalid input before semver adds grammar, identifiers, precedence, parsing errors, and compatibility rules.",
       "result": "pass-with-explicit-gap"
     }
   ],
@@ -1323,17 +1411,19 @@
     {"repository": "recp/cglm", "method": "focused upstream test body", "result": "pass", "evidence": "The exact pinned test_clamp body compiled against the pinned headers and ran successfully, covering below-range, in-range, and above-range scalar inputs."},
     {"repository": "rxi/lume", "method": "complete upstream test suite", "result": "pass", "evidence": "The pinned Lua suite passed all 262 tests, including all seven direct clamp cases."},
     {"repository": "bats-core/bats-file", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact file predicate, focused failure pipeline, success case, directory failure, and path-substitution assertions were inspected; no Bats runtime was installed in the execution environment."},
-    {"repository": "apple/swift-log", "method": "source and exhaustive direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The seven-case mapping, Comparable implementation, and all-pairs ordering test were inspected; no Swift runtime was installed in the execution environment."},
-    {"repository": "microsoft/vscode", "method": "source, direct-test, and production-use inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact array mutation, three successive removal assertions, and menu-service caller were inspected; the isolated environment did not have Visual Studio Code's JavaScript dependency tree installed."},
-    {"repository": "rust-lang/log", "method": "focused upstream unit test", "result": "pass", "evidence": "cargo test test_level_up --lib passed one test at the pinned revision, verifying Info advances to Debug and Trace remains Trace."},
-    {"repository": "r-lib/scales", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The two logical assignments and exact seven-element expectation covering infinities, finite values, endpoints, and NA were inspected; no R runtime was installed in the execution environment."},
-    {"repository": "JetBrains/kotlin", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The handwritten substringAfter implementation and direct found, trailing, missing, and custom-fallback assertions were inspected; no Kotlin compiler or Java runtime was installed in the execution environment."}
+    {"repository": "apple/swift-log", "method": "source and exhaustive direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The seven-case Level ordering and all-pairs test plus MultiplexLogHandler's threshold loop, accurate routing sections, two-history routing cases, and single-materialization test were inspected. A conflicting metadata-priority paragraph elsewhere in the type was disclosed and excluded from the bounded path; no Swift runtime was installed in the execution environment."},
+    {"repository": "microsoft/vscode", "method": "source, direct-test, and production-use inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact array mutation and its menu-service caller plus distinct's Set-backed filter, five direct cases, and application-entry-point caller with a lowercase path key were inspected; the isolated environment did not have Visual Studio Code's JavaScript dependency tree installed."},
+    {"repository": "rust-lang/log", "method": "focused upstream unit tests", "result": "pass", "evidence": "cargo test test_level_up --lib and cargo test test_levelfilter_from_str --lib each passed one focused test at the shared pinned revision; the latter verified six lowercase names, six uppercase names, and unknown-input rejection."},
+    {"repository": "r-lib/scales", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The Level 1 infinity replacement plus rescale's S3 dispatch, numeric formula, zero-range branch, and direct mixed-sign, NA, and constant-input expectations were inspected; no R runtime was installed in the execution environment."},
+    {"repository": "JetBrains/kotlin", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The handwritten substringAfter implementation and direct found, trailing, missing, and custom-fallback assertions were inspected; no Kotlin compiler or Java runtime was installed in the execution environment."},
+    {"repository": "russhwolf/multiplatform-settings", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "MapSettings' typed map operations, safe defaults, shared-delegate constructors, four focused tests, and reusable cross-platform Settings contract suite were inspected; no Kotlin compiler or Java runtime was installed in the execution environment."},
+    {"repository": "bats-core/bats-assert", "method": "source, documentation, and exact direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "After assert_failure was rejected for an inverted source-header return contract, assert_success's status-zero branch, nonzero diagnostic pipeline, README contract, and four exact status, stdout, multi-line, and separated-stderr cases were inspected; no Bats runtime was installed in the execution environment."}
   ],
   "verification": {
     "generated_pages": {"command": "python3 scripts/catalog.py generate", "result": "pass"},
     "unit_tests": {"command": "python3 -m unittest discover -s tests -v", "result": "pass", "tests_run": 45},
     "catalog_validation": {"command": "python3 scripts/catalog.py validate", "result": "pass"},
     "generated_output_check": {"command": "python3 scripts/catalog.py check-generated", "result": "pass"},
-    "complete_validation": {"run": false, "reason": "The catalog has 88 honest open slots, including 82 lower-level gaps, so the specification forbids claiming a complete 240-path grid."}
+    "complete_validation": {"run": false, "reason": "The catalog has 82 honest open slots, including 76 lower-level gaps, so the specification forbids claiming a complete 240-path grid."}
   }
 }

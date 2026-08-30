@@ -136,6 +136,144 @@
       }
     },
     {
+      "slug": "swift-log-multiplex-routing",
+      "path_slug": "multiplex-log-handler-forwards-one-event-only-to-handlers-whose-thresholds-admit-it",
+      "repository": "apple/swift-log",
+      "url": "https://github.com/apple/swift-log",
+      "primary_language": "Swift",
+      "language_evidence": "MultiplexLogHandler, LogHandler, the test handlers, and the focused routing tests are first-party Swift; GitHub labels the repository Swift.",
+      "description": "A production log-handler adapter that sends one already-created event to multiple backends while respecting each backend's own severity threshold.",
+      "source_kind": "production",
+      "purpose_evidence": "swift-log is the official production logging API package for the Swift server ecosystem, and MultiplexLogHandler is its documented public adapter for combining real logging backends.",
+      "why_study": "Trace a small protocol-based adapter that computes an effective threshold, filters each destination independently, and fans out one materialized event without duplicating message work.",
+      "learn": [
+        "Compose several protocol-conforming handlers behind one adapter.",
+        "Preserve each destination's log-level threshold during fan-out.",
+        "Evaluate a log message once even when multiple backends receive the event."
+      ],
+      "prerequisites": [
+        "The global novice Swift baseline: structs, protocols, arrays, closures, enums, conditionals, and tests.",
+        "A log-level threshold admits messages at that severity or a more important one; a protocol existential stores values that may use different concrete handler types."
+      ],
+      "concepts_developed": [
+        "Fan-out through a protocol-based adapter.",
+        "Filtering one event against independent destination thresholds.",
+        "Separating message creation from repeated backend delivery."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A logging backend receives completed log events; severity thresholds decide which events it records."
+        ],
+        "reason": "Adapter composition, independent filtering, and avoiding duplicated work are transferable patterns far beyond logging."
+      },
+      "learning_path": {
+        "goal": "Understand how MultiplexLogHandler forwards one materialized event to every backend whose own threshold accepts it.",
+        "start_here": {
+          "path": "Sources/Logging/Handlers/MultiplexLogHandler.swift",
+          "reason": "Initialization, the effective threshold, and the complete per-handler routing loop are visible together in this adapter."
+        },
+        "supporting_files": [
+          "Sources/Logging/LogHandler.swift",
+          "Tests/LoggingTests/LoggingTest.swift",
+          "Tests/LoggingTests/TestLogger.swift",
+          "Sources/Logging/Docs.docc/Reference/MultiplexLogHandler.md"
+        ],
+        "trace": "Initialize the adapter with two LogHandler values, derive the most permissive effective level, enter log(event:), compare the event against each handler's threshold, forward to qualifying handlers, then follow tests for common routing, unequal thresholds, and single message and metadata materialization."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "protocol existentials",
+            "closure-based collection operations",
+            "struct adapter"
+          ],
+          "reason": "Protocols, arrays of conforming values, closures, and a small adapter struct are common professional Swift idioms."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "independent handler thresholds",
+            "filtered fan-out",
+            "single event materialization"
+          ],
+          "reason": "Several destinations may take different branches, but routing stays synchronous and local to one loop."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "LogHandler protocol boundary",
+            "multiplex adapter",
+            "recording test handlers"
+          ],
+          "reason": "The path crosses a few explicit boundaries from Logger through the adapter to two test backends."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "per-handler filtering",
+            "effective outer threshold",
+            "no repeated message work"
+          ],
+          "reason": "Routine logging API and performance safeguards shape the adapter without concurrency or backend lifecycle."
+        },
+        "placement": "The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The selected routing behavior is one documented initialization rule and one direct filtered loop.",
+        "architecture": "LogHandler defines the boundary, MultiplexLogHandler composes it, and recording handlers observe results without production coupling.",
+        "naming_and_idiom": "handlers, effectiveLogLevel, event, and MultiplexLogHandler state their adapter roles directly.",
+        "tests": "Focused tests prove two-handler delivery, unequal threshold outcomes across trace through warning, and exactly one message and metadata materialization.",
+        "documentation": "The selected effective-level and routing sections agree with the implementation and focused tests, and DocC indexes the routing API. A separate metadata-priority paragraph elsewhere in the same type conflicts with its metadata test and is not part of this routing path.",
+        "traceability": "Each initialization and routing decision maps directly to assertions against the two independent histories.",
+        "maintainability": "Protocol boundaries and destination-local threshold checks keep backend additions isolated.",
+        "educational_value": "The path introduces protocol composition and filtered fan-out without requiring asynchronous logging internals."
+      },
+      "inspection": {
+        "commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 2 language-breadth investigation",
+          "Codex pinned-source verification"
+        ],
+        "files": [
+          "Sources/Logging/Handlers/MultiplexLogHandler.swift",
+          "Sources/Logging/LogHandler.swift",
+          "Tests/LoggingTests/LoggingTest.swift",
+          "Tests/LoggingTests/TestLogger.swift",
+          "Sources/Logging/Docs.docc/Reference/MultiplexLogHandler.md",
+          "README.md",
+          "Package.swift",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "protocol-based adapters",
+          "severity thresholds",
+          "filtered fan-out to several handlers"
+        ],
+        "incidental_concepts": [
+          "metadata behavior outside the selected routing trace"
+        ],
+        "reason": "A short primer on protocol values and severity thresholds makes all routing tests predictable; no concurrency, framework lifecycle, or backend internals are required."
+      }
+    },
+    {
       "slug": "tagged",
       "path_slug": "tagged-value-identity",
       "repository": "pointfreeco/swift-tagged",

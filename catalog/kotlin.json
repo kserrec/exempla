@@ -136,6 +136,141 @@
       }
     },
     {
+      "slug": "multiplatform-settings-map",
+      "path_slug": "map-settings-stores-typed-values-in-one-shared-in-memory-map-and-returns-explicit-defaults",
+      "repository": "russhwolf/multiplatform-settings",
+      "url": "https://github.com/russhwolf/multiplatform-settings",
+      "primary_language": "Kotlin",
+      "language_evidence": "MapSettings, the Settings contract, its focused tests, and the shared cross-platform contract suite are first-party Kotlin; GitHub labels the repository Kotlin.",
+      "description": "A published in-memory Settings implementation that gives application tests the same typed key-value API as the library's platform-backed stores.",
+      "source_kind": "production",
+      "purpose_evidence": "The README documents multiplatform-settings-test as a published dependency for testing real client code, with MapSettings as its application-facing in-memory implementation.",
+      "why_study": "Follow one professional test double from a typed interface to map-backed writes, safe reads with explicit defaults, and two wrappers that intentionally share the same backing state.",
+      "learn": [
+        "Implement a public interface with one in-memory map while preserving type-specific methods.",
+        "Use safe casts to return either the stored type or the caller's explicit default.",
+        "Verify shared backing state and isolated named stores through focused and reusable contract tests."
+      ],
+      "prerequisites": [
+        "The global novice Kotlin baseline: classes, interfaces, mutable maps, nullable values, functions, and unit tests.",
+        "A safe cast returns null when a value has the wrong type; the Elvis operator then selects the documented default."
+      ],
+      "concepts_developed": [
+        "Building an in-memory implementation behind a production interface.",
+        "Preserving typed reads over an untyped backing map with safe casts and defaults.",
+        "Sharing or isolating mutable state through explicitly supplied map instances."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Interface-backed test doubles, typed key-value contracts, explicit defaults, and shared-state tests transfer directly to ordinary application and library work."
+      },
+      "learning_path": {
+        "goal": "Understand how MapSettings provides typed reads and writes over one shared in-memory map without changing the public Settings contract.",
+        "start_here": {
+          "path": "multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt",
+          "reason": "The class shows the backing map, constructors, type-specific write and read pairs, default behavior, and factory-managed shared maps together."
+        },
+        "supporting_files": [
+          "multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt",
+          "multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt",
+          "tests/src/commonMain/kotlin/com/russhwolf/settings/BaseSettingsTest.kt",
+          "README.md"
+        ],
+        "trace": "Begin with Settings' typed contract, enter MapSettings.putString or another type-specific writer, store the value under its string key, read through the matching safe cast and default, then follow MapSettingsTest's shared-delegate cases and BaseSettingsTest's missing, boundary, removal, and clear cases."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "interface implementation",
+            "secondary constructors",
+            "safe casts and default expressions"
+          ],
+          "reason": "Interfaces, constructor delegation, mutable maps, and safe casts are common professional Kotlin idioms central to the implementation."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "mutable key-value state",
+            "missing-value defaults",
+            "shared and isolated backing maps"
+          ],
+          "reason": "Several state outcomes matter, but each write, read, clear, and shared-map effect remains local and directly observable."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "public Settings interface",
+            "concrete test implementation",
+            "shared contract suite"
+          ],
+          "reason": "The path crosses a small explicit boundary from the public contract to one implementation and its focused and reusable tests."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "six supported value types",
+            "explicit missing-value behavior",
+            "contract parity with platform stores"
+          ],
+          "reason": "Routine API and test-double guarantees shape every method without adding persistence, concurrency, or platform lifecycle."
+        },
+        "placement": "The four scores 2/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The implementation uses direct type-specific pairs and a single clearly named backing map; no generated or placeholder logic obscures the selected trace.",
+        "architecture": "The public Settings contract, in-memory MapSettings adapter, and shared contract tests have clear and proportionate responsibilities.",
+        "naming_and_idiom": "delegate, defaultValue, putString, getString, and Factory communicate roles using ordinary Kotlin library conventions.",
+        "tests": "Four focused MapSettings tests prove constructors, shared delegates, named isolation, and cache replacement; the inherited contract suite covers every supported type, missing values, removal, and clearing.",
+        "documentation": "The README identifies the published test dependency, distinguishes its in-memory behavior from persistence, and demonstrates the common Settings API.",
+        "traceability": "Each selected write, safe read, default, and shared-map outcome maps to a direct MapSettingsTest or BaseSettingsTest assertion.",
+        "maintainability": "A stable interface and reusable contract suite keep the test implementation aligned with platform implementations.",
+        "educational_value": "The path shows how to build and verify a useful test double without introducing platform APIs or framework lifecycle."
+      },
+      "inspection": {
+        "commit": "f95cdff42a78f44b5176b6aea9c61cedb7859811",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 2 language-breadth investigation",
+          "Codex pinned-source verification"
+        ],
+        "files": [
+          "multiplatform-settings-test/src/commonMain/kotlin/com/russhwolf/settings/MapSettings.kt",
+          "multiplatform-settings/src/commonMain/kotlin/com/russhwolf/settings/Settings.kt",
+          "multiplatform-settings-test/src/commonTest/kotlin/com/russhwolf/settings/MapSettingsTest.kt",
+          "tests/src/commonMain/kotlin/com/russhwolf/settings/BaseSettingsTest.kt",
+          "multiplatform-settings-test/build.gradle.kts",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/russhwolf/multiplatform-settings/blob/f95cdff42a78f44b5176b6aea9c61cedb7859811/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "implementing an interface",
+          "safe casts with explicit defaults",
+          "shared mutable backing state"
+        ],
+        "incidental_concepts": [
+          "the broader observable-listener API outside the selected storage trace"
+        ],
+        "reason": "A short primer on interface implementations, safe casts, and shared map references makes every selected write and read predictable without separate platform or persistence study."
+      }
+    },
+    {
       "slug": "clikt",
       "path_slug": "clikt-turns-a-delegated-command-dsl-into-recursively-parsed-finalized",
       "repository": "ajalt/clikt",
