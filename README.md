@@ -2,13 +2,14 @@
 
 [![Validate catalog](https://github.com/kserrec/exempla/actions/workflows/validate.yml/badge.svg)](https://github.com/kserrec/exempla/actions/workflows/validate.yml)
 
-Learn transferable programming skills from exemplary source code.
+Learn programming from real examples at your level.
 
 Exempla is a curated, GitHub-native catalog of public open-source software.
-Choose a language and a learner Level from 1 through 5, then follow one concrete
-path through implementation and verification. The catalog currently has
-**158 qualified learning paths from 148 public repositories across 20
-languages**. Its **82 open slots are honest research gaps** under the expanded
+Choose a language and a learner Level from 1 through 5 (novice to advanced), 
+then follow one concrete path through implementation and verification. 
+
+The catalog currently has **158 qualified learning paths from 148 public repositories 
+across 20 languages**. Its **82 open slots are honest research gaps** under the expanded
 3/3/2/2/2 capacity map, including 42 Level 1 gaps and 34 Level 2 gaps after the
 completed production and educational-exemplar research passes. Seventeen of 20
 languages now have at least one qualified path at each of Levels 1 and 2. No
