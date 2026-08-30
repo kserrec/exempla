@@ -3,6 +3,134 @@
   "language_slug": "c-sharp",
   "repositories": [
     {
+      "slug": "dotnet-math-clamp-int",
+      "path_slug": "math-clamp-keeps-an-int-between-inclusive-bounds-and-rejects-a-reversed-range",
+      "repository": "dotnet/runtime",
+      "url": "https://github.com/dotnet/runtime",
+      "primary_language": "C#",
+      "language_evidence": "The System.Math implementation and its xUnit theory are first-party C# in the official .NET runtime repository; GitHub labels the repository C#.",
+      "description": "The .NET integer Clamp overload returns the nearest inclusive bound, preserves in-range values, and rejects a minimum greater than the maximum.",
+      "source_kind": "production",
+      "purpose_evidence": "dotnet/runtime is the production implementation of .NET, and Math.Clamp is a public standard-library API used by C# applications.",
+      "why_study": "Trace a familiar numeric operation through explicit validation and three direct returns, then compare signed boundary rows and the invalid-range test.",
+      "learn": [
+        "Reject a numeric interval whose minimum exceeds its maximum.",
+        "Return the lower bound, upper bound, or original value with direct branches.",
+        "Use shared test data to cover negative, interior, boundary, and out-of-range integers."
+      ],
+      "prerequisites": [
+        "The global novice C# baseline: static methods, integers, conditionals, exceptions, classes, and focused tests.",
+        "AggressiveInlining is only a runtime optimization hint; it does not change the method's visible behavior."
+      ],
+      "concepts_developed": [
+        "Checking a precondition before ordinary control flow.",
+        "Expressing an inclusive clamp with three obvious outcomes.",
+        "Reusing table data across numeric overload tests."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Precondition checks, numeric boundary handling, direct branches, and table-driven tests transfer to everyday application code."
+      },
+      "learning_path": {
+        "goal": "Understand how .NET Math.Clamp keeps an int inside inclusive bounds and reports a reversed interval.",
+        "start_here": {
+          "path": "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+          "reason": "The int overload contains the full validation and three-result control flow."
+        },
+        "supporting_files": [
+          "src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs",
+          "README.md"
+        ],
+        "trace": "Enter the int Clamp overload, call the shared exception helper when min exceeds max, otherwise return min for a low value, max for a high value, or the original value, then map those branches to Clamp_SignedInt_TestData, Clamp_Int, and the reversed-range fact."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one static method",
+            "ordinary integer comparisons",
+            "direct returns"
+          ],
+          "reason": "The selected overload uses only basic C# method, branch, integer, and exception-call syntax."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "invalid interval path",
+            "lower, upper, and unchanged outcomes"
+          ],
+          "reason": "A few meaningful local branches cover the complete behavior without nonlocal state."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public overload",
+            "one shared test-data method and direct theory"
+          ],
+          "reason": "The selected contract stays in one implementation file and one focused test area."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "inclusive bounds",
+            "minimum not greater than maximum"
+          ],
+          "reason": "A small local numeric contract and expected output dominate the path."
+        },
+        "placement": "The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation exposes validation and each result branch directly without arithmetic tricks or hidden state.",
+        "architecture": "The standard-library overload and shared numeric test table have a narrow, explicit relationship.",
+        "naming_and_idiom": "value, min, max, Clamp, and ThrowMinMaxException state both the ordinary contract and error plainly.",
+        "tests": "The signed table covers both bounds, an interior value, values below and above, while a separate fact verifies the reversed-range exception for int and other overloads.",
+        "documentation": "The public API is documented by .NET reference source comments and repository documentation, with parameter names matching the implementation.",
+        "traceability": "Every validation and return branch maps to a row or exception assertion in the direct Math tests.",
+        "maintainability": "Straight-line branches, shared error handling, and reusable boundary data make overload behavior easy to compare and change.",
+        "educational_value": "The path is a first serious C# reading that shows production clarity and exact boundary testing inside the runtime itself."
+      },
+      "inspection": {
+        "commit": "aa036afce592ad80e938a35bd376222fb232cba9",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex follow-up lower-level investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "src/libraries/System.Private.CoreLib/src/System/Math.cs",
+          "src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs",
+          "README.md",
+          "LICENSE.TXT"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/LICENSE.TXT"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "input validation",
+          "inclusive numeric bounds",
+          "direct conditional returns"
+        ],
+        "incidental_concepts": [
+          "an inlining attribute",
+          "a shared helper that throws the range exception"
+        ],
+        "reason": "The control flow is entirely within the novice C# baseline; the attribute and shared throw helper can each be explained locally without another topic."
+      }
+    },
+    {
       "slug": "dotnet-prime-service-tests",
       "path_slug": "the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases",
       "repository": "dotnet/samples",

@@ -1,6 +1,6 @@
 # Go
 
-9 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+10 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,84 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [golang/go](https://github.com/golang/go)
+
+**Language 1 / Behavior 1 / Design 2 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+Go's standard strings.Cut function splits text around the first separator and returns an explicit found result for the missing case.
+
+**Why study it:** Follow one standard-library string operation from its public entry through a direct branch, then check beginning, middle, end, empty, and missing separators in table tests.
+
+**Prerequisites:**
+
+- The global novice Go baseline: functions, strings, conditionals, packages, multiple return values, slices of strings, and focused tests.
+- Index returns the first separator position or -1; string slicing uses byte offsets and does not copy the underlying text.
+
+**Concepts this path develops:**
+
+- Splitting once without discarding whether a separator was present.
+- Using string slices before and after a located boundary.
+- Defining exact empty and missing cases with a compact test table.
+
+**What you can learn:**
+
+- Find the first occurrence of a separator and slice around it.
+- Return several named results so callers can distinguish an empty piece from a missing separator.
+- Use a table to cover separator positions and empty-string boundaries.
+
+**Learning path:**
+
+- **Goal:** Understand how Go's strings.Cut returns the text around the first separator without confusing an empty result with a separator that was not found.
+- **Start here:** [`src/strings/strings.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings.go) — The public documentation and entry point establish the exact three-result contract.
+- **Then read:**
+  - [`src/internal/stringslite/strings.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/internal/stringslite/strings.go)
+  - [`src/strings/strings_test.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/strings_test.go)
+  - [`src/strings/example_test.go`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/src/strings/example_test.go)
+  - [`README.md`](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/README.md)
+- **Trace:** Enter strings.Cut, follow the standard library's shared stringslite implementation, locate the first separator, return the two slices and true or the original string, empty suffix, and false, then compare all eight boundary rows and the four printed examples.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses introductory Go string, branch, package, and multiple-return syntax.
+- **Behavioral reasoning 1:** One index result selects between two local deterministic returns.
+- **Design span 2:** Two clear standard-library modules share the implementation while keeping the selected trace short.
+- **Constraint burden 1:** A small local contract and plainly observable outputs dominate the behavior.
+- **Novice accessibility floor 1:** All central operations are introductory Go, and the internal sharing boundary needs only one sentence before every test row is predictable.
+  - **Central concepts:** finding a substring; string slicing; multiple return values
+  - **Incidental concepts:** the public package reuses a small internal implementation
+- **Placement:** The four scores 1/1/2/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** golang/go is the official implementation of the Go language and standard library, where strings.Cut is a stable application-facing API.
+
+**Language evidence:** The public strings API, shared stringslite implementation, examples, and table tests are first-party Go in the official language repository.
+
+**Coding relevance:**
+
+One-time splitting, explicit success results, boundary slicing, and table tests are broadly reusable programming techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation states the successful slices and missing fallback directly, with no mutable state or duplicated search.
+- **Architecture:** The public facade and shared lightweight implementation have an explicit narrow boundary used inside the standard library.
+- **Naming and idiom:** Cut, before, after, found, separator, and Index follow standard Go string vocabulary.
+- **Tests:** Eight table rows cover separators at every position, the whole string, the empty separator, absent separators, and empty input; executable examples show the public results.
+- **Documentation:** The public comment defines the first-match rule, all return values, and the missing case, while examples print representative calls.
+- **Traceability:** Each internal return maps directly to table columns and a printed example.
+- **Maintainability:** A stable public contract, shared implementation, and exhaustive small boundary table make changes easy to review.
+- **Educational value:** The path is a gentle introduction to multiple returns and precise boundary behavior in production Go.
+
+**Inspection record:** commit `603439a1c6f2d37c7f02e246342847056ed04c21`, inspected 2026-08-30. Review passes: Codex follow-up lower-level investigation; Codex resumed-session source verification. Files inspected: `src/strings/strings.go`, `src/internal/stringslite/strings.go`, `src/strings/strings_test.go`, `src/strings/example_test.go`, `README.md`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

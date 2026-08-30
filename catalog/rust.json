@@ -3,6 +3,138 @@
   "language_slug": "rust",
   "repositories": [
     {
+      "slug": "rust-log-increment-severity",
+      "path_slug": "increment-severity-steps-to-the-next-log-level-and-stays-at-trace",
+      "repository": "rust-lang/log",
+      "url": "https://github.com/rust-lang/log",
+      "primary_language": "Rust",
+      "language_evidence": "Level, increment_severity, its examples, and its direct unit test are first-party Rust; GitHub labels the repository Rust.",
+      "description": "The production Rust logging facade advances a Level to the next enum value and keeps Trace unchanged at the upper boundary.",
+      "source_kind": "production",
+      "purpose_evidence": "The log crate is the maintained Rust logging facade used by libraries and applications, and Level is a central public API type.",
+      "why_study": "Follow a three-line production method from an enum value through numeric conversion and optional reconstruction to a clear boundary fallback.",
+      "learn": [
+        "Advance through an enum whose cases have a stable numeric representation.",
+        "Use an optional conversion result to recognize the end of the enum.",
+        "Keep the current boundary value when no next value exists."
+      ],
+      "prerequisites": [
+        "The global novice Rust baseline: enums, methods, references, casts, arithmetic, Option, unwrap_or, assertions, and focused tests.",
+        "Level's cases use consecutive numeric values, and from_usize returns None when a number is outside that case range."
+      ],
+      "concepts_developed": [
+        "Moving to an adjacent enum case through a stable representation.",
+        "Expressing a boundary case as an Option fallback.",
+        "Testing both an ordinary transition and an upper-bound no-op."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Enum transitions, optional conversion, boundary behavior, examples, and direct unit tests are broadly transferable implementation techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how log::Level moves one step through a finite enum without exceeding its final case.",
+        "start_here": {
+          "path": "src/lib.rs",
+          "reason": "Level, from_usize, increment_severity, its documentation example, and test_level_up all appear in this file."
+        },
+        "supporting_files": [
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-MIT",
+          "LICENSE-APACHE"
+        ],
+        "trace": "Start with Level's consecutive cases, cast the current value to usize, request current plus one through from_usize, keep the current value when conversion returns None, then compare Info and Trace with test_level_up and the documentation example."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "enum-to-integer cast",
+            "Option fallback",
+            "method on a public enum"
+          ],
+          "reason": "The method combines basic enum and Option operations with one locally explained representation cast."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one adjacent transition",
+            "one upper-bound fallback"
+          ],
+          "reason": "The output depends only on the current enum case and one visible conversion result."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one enum method",
+            "one direct unit test"
+          ],
+          "reason": "The method, conversion helper, examples, and tests are colocated in one source file."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "consecutive cases",
+            "stable boundary behavior"
+          ],
+          "reason": "The selected contract has one finite sequence and one explicit end condition."
+        },
+        "placement": "The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The public method states the transition and boundary behavior in three expressions without branching duplication.",
+        "architecture": "The behavior stays on Level beside its representation conversion and does not depend on logger state.",
+        "naming_and_idiom": "increment_severity and from_usize name the two operations, while unwrap_or expresses the boundary fallback idiomatically.",
+        "tests": "The focused test verifies Info advances to Debug and Trace remains Trace; the exact test passed in the pinned crate.",
+        "documentation": "Rustdoc explains the upper boundary and includes a runnable chain from Info through Debug to Trace.",
+        "traceability": "The normal test reaches Some from from_usize, while the Trace test reaches the unwrap_or fallback.",
+        "maintainability": "The method reuses the enum's central conversion helper instead of duplicating a case-by-case transition table.",
+        "educational_value": "The path gives a novice a compact, real use of Option that is easier to reason about than a larger logging flow."
+      },
+      "inspection": {
+        "commit": "8034743dd9d7f7583bd9a670271483d176130911",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "src/lib.rs",
+          "README.md",
+          "Cargo.toml",
+          "LICENSE-MIT",
+          "LICENSE-APACHE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT OR Apache-2.0",
+        "urls": [
+          "https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT",
+          "https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE"
+        ]
+      },
+      "github": {
+        "primary_language": "Rust",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "enum values",
+          "adding one",
+          "Option fallback",
+          "boundary tests"
+        ],
+        "incidental_concepts": [
+          "casting a represented enum to usize"
+        ],
+        "reason": "The transition and fallback are local novice concepts; the enum representation cast needs one sentence and introduces no broader unsafe or lifetime reasoning."
+      }
+    },
+    {
       "slug": "semver",
       "path_slug": "semver-parses-cargo-style-version-and-requirement-strings-into-typed",
       "repository": "dtolnay/semver",

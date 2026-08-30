@@ -3,6 +3,138 @@
   "language_slug": "c",
   "repositories": [
     {
+      "slug": "cglm-clamp",
+      "path_slug": "glm-clamp-composes-minimum-and-maximum-to-keep-a-float-inside-bounds",
+      "repository": "recp/cglm",
+      "url": "https://github.com/recp/cglm",
+      "primary_language": "C",
+      "language_evidence": "glm_clamp, glm_min, glm_max, the focused clamp test, and the public header documentation are first-party C; GitHub labels the repository C.",
+      "description": "The production cglm math library clamps one floating-point value by composing its inline maximum and minimum functions.",
+      "source_kind": "production",
+      "purpose_evidence": "cglm is a maintained C mathematics library for graphics applications, and glm_clamp is a documented public utility used by other library operations.",
+      "why_study": "See a complete boundary operation expressed as one composition, then connect values below, within, and above the range to direct assertions.",
+      "learn": [
+        "Raise a value to the lower bound with a maximum operation.",
+        "Lower the intermediate value to the upper bound with a minimum operation.",
+        "Verify the three observable regions around a bounded interval."
+      ],
+      "prerequisites": [
+        "The global novice C baseline: functions, parameters, return values, floating-point literals, header declarations, macros, includes, and assertions.",
+        "CGLM_INLINE is the library's portability spelling for an inline function; it does not change the clamp formula."
+      ],
+      "concepts_developed": [
+        "Composing minimum and maximum to enforce two bounds.",
+        "Keeping a small utility in a public header as an inline function.",
+        "Testing below-range, in-range, and above-range inputs."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Bounds enforcement, small function composition, public C headers, and boundary-partition tests are general programming techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how cglm keeps a scalar inside caller-supplied bounds and verifies each region of the input space.",
+        "start_here": {
+          "path": "include/cglm/util.h",
+          "reason": "The public documentation, declaration, glm_min and glm_max helpers, and complete glm_clamp formula are together in this header."
+        },
+        "supporting_files": [
+          "test/src/test_clamp.c",
+          "docs/source/util.rst",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Pass val, minVal, and maxVal into glm_clamp, follow glm_max as it enforces the lower bound, follow glm_min as it enforces the upper bound, then match the three scalar assertions to values above, below, and inside the interval."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one float-returning function",
+            "nested function calls",
+            "public inline header implementation"
+          ],
+          "reason": "The complete implementation is ordinary C function composition over three float parameters."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "lower-bound case",
+            "in-range case",
+            "upper-bound case"
+          ],
+          "reason": "The output follows from two local comparisons embodied by min and max."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public utility",
+            "one direct test body"
+          ],
+          "reason": "One header and one focused test contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "caller-supplied lower bound",
+            "caller-supplied upper bound"
+          ],
+          "reason": "The utility enforces one simple interval contract without state or external effects."
+        },
+        "placement": "The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation is the actual clamp formula, not a forwarding wrapper, and every operation is visible in one return statement.",
+        "architecture": "The scalar utility sits with the library's related public math helpers and is reused by higher operations.",
+        "naming_and_idiom": "val, minVal, maxVal, glm_min, glm_max, and glm_clamp make the data flow literal.",
+        "tests": "The upstream test directly covers a value above the interval, below it, and inside it; the exact pinned test body compiled and ran successfully in isolation.",
+        "documentation": "The header comment and utility reference name the operation and each parameter, while the README establishes the production library context.",
+        "traceability": "Each scalar assertion isolates one of the formula's three possible outcomes.",
+        "maintainability": "The implementation reuses the library's min and max semantics, so one formula remains the source of truth for clamping.",
+        "educational_value": "A novice can derive every result by hand and still encounter a real public C library function and test harness."
+      },
+      "inspection": {
+        "commit": "58d8c15a124c202188d0094705f778f6129a2612",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "include/cglm/util.h",
+          "test/src/test_clamp.c",
+          "docs/source/util.rst",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "float parameters and return values",
+          "minimum and maximum",
+          "nested function calls",
+          "boundary assertions"
+        ],
+        "incidental_concepts": [
+          "the CGLM_INLINE portability macro"
+        ],
+        "reason": "The clamp formula and all test cases are novice C material; the inline macro needs only a local note and does not affect behavior."
+      }
+    },
+    {
       "slug": "inih",
       "path_slug": "inih-reads-an-ini-file-line-by-line-and-reports-sections-and-values",
       "repository": "benhoyt/inih",

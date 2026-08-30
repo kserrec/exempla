@@ -1,6 +1,6 @@
 # Swift
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,85 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [apple/swift-log](https://github.com/apple/swift-log)
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+The production Swift logging API gives its seven named log levels a small explicit integral order and tests every pairwise comparison.
+
+**Why study it:** Study how a finite enum becomes a total order through one explicit mapping, one comparison operator, and an exhaustive table-driven test.
+
+**Prerequisites:**
+
+- The global novice Swift baseline: enum cases, functions, switch expressions, extensions, arrays, operators, and focused tests.
+- Comparable is Swift's standard protocol for values that define the less-than operator; this path uses only that one local requirement.
+
+**Concepts this path develops:**
+
+- Giving named states an explicit total order.
+- Separating a public enum from its private comparison representation.
+- Testing every pair in a small finite domain.
+
+**What you can learn:**
+
+- Map each enum case to one stable comparison value.
+- Implement Comparable by comparing those mapped values.
+- Use every ordered pair of cases to verify a complete ordering contract.
+
+**Learning path:**
+
+- **Goal:** Understand how swift-log defines and verifies one unambiguous order across all Logger.Level values.
+- **Start here:** [`Sources/Logging/Logger.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Logger.swift) — Logger.Level, naturalIntegralValue, and the complete less-than implementation appear together in this file.
+- **Then read:**
+  - [`Tests/LoggingTests/LoggingTest.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Tests/LoggingTests/LoggingTest.swift)
+  - [`Sources/Logging/Docs.docc/Reference/Logger-Level.md`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Sources/Logging/Docs.docc/Reference/Logger-Level.md)
+  - [`README.md`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/README.md)
+  - [`Package.swift`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/Package.swift)
+  - [`LICENSE.txt`](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt)
+- **Trace:** Read the seven Logger.Level cases, follow naturalIntegralValue's switch from trace through critical, compare two mapped values in the less-than operator, then use logLevelOrdering to check the expected result for every pair.
+
+**Why this level:**
+
+- **Language technique 2:** The path adds one standard protocol conformance to an enum through an explicit switch and a short operator implementation.
+- **Behavioral reasoning 1:** Each input is one of seven visible cases and every result follows from comparing two local integers.
+- **Design span 1:** One source file and one table-driven test contain the complete selected contract.
+- **Constraint burden 1:** The only constraint is that all seven cases retain one consistent order.
+- **Novice accessibility floor 1:** The complete behavior is a fixed switch plus one comparison; Comparable needs one local sentence and does not add nonlocal reasoning.
+  - **Central concepts:** enum cases; switch mapping; less-than comparison; table-driven tests
+  - **Incidental concepts:** Comparable protocol conformance
+- **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** swift-log is the official production logging API package for the Swift server ecosystem, with Logger.Level forming part of its public logging contract.
+
+**Language evidence:** Logger.Level, its Comparable conformance, the package manifest, and the focused ordering tests are first-party Swift; GitHub labels the repository Swift.
+
+**Coding relevance:**
+
+Enum ordering, protocol conformance, explicit mappings, and exhaustive finite-domain tests transfer directly to priority, severity, and lifecycle code.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The explicit switch makes every case-to-value decision visible and keeps the comparison operator free of special cases.
+- **Architecture:** The ordering stays beside Logger.Level and requires no separate subsystem or runtime state.
+- **Naming and idiom:** Level case names and naturalIntegralValue state their roles, while the Comparable extension follows ordinary Swift organization.
+- **Tests:** logLevelOrdering enumerates the seven cases and verifies the less-than result for all 49 ordered pairs.
+- **Documentation:** The package README and Logger.Level reference explain the logging API and the meaning of its public levels.
+- **Traceability:** Every comparison test reaches the same mapping property and one-line less-than operator.
+- **Maintainability:** Adding or reordering a case requires one explicit switch edit and is exposed by the exhaustive pairwise test.
+- **Educational value:** A novice can see a complete production ordering contract without first learning the rest of the logging backend.
+
+**Inspection record:** commit `47a917767fde0cd7f5b5dfdabbec733d2cb2dd95`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `Sources/Logging/Logger.swift`, `Tests/LoggingTests/LoggingTest.swift`, `Sources/Logging/Docs.docc/Reference/Logger-Level.md`, `README.md`, `Package.swift`, `LICENSE.txt`. GitHub Linguist label: Swift.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

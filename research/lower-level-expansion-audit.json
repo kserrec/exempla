@@ -27,11 +27,11 @@
     "paths_by_level": {"1": 2, "2": 9, "3": 40, "4": 40, "5": 34}
   },
   "after": {
-    "accepted_paths": 138,
-    "paths_by_level": {"1": 4, "2": 20, "3": 40, "4": 40, "5": 34}
+    "accepted_paths": 152,
+    "paths_by_level": {"1": 18, "2": 20, "3": 40, "4": 40, "5": 34}
   },
   "additions": {
-    "production": 8,
+    "production": 22,
     "educational_exemplar": 5,
     "paths": [
       {
@@ -61,10 +61,26 @@
       {
         "language_slug": "python",
         "repository": "more-itertools/more-itertools",
+        "path_slug": "first-returns-the-first-item-or-a-default-and-rejects-an-empty-iterable-without-one",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10"
+      },
+      {
+        "language_slug": "python",
+        "repository": "more-itertools/more-itertools",
         "path_slug": "chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract",
         "source_kind": "production",
         "level": 2,
         "pinned_commit": "2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10"
+      },
+      {
+        "language_slug": "java",
+        "repository": "google/guava",
+        "path_slug": "constrain-to-range-keeps-an-int-inside-inclusive-bounds-and-rejects-a-reversed-range",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "f516e7587dd92720f61a56a3a1c0998c62806788"
       },
       {
         "language_slug": "java",
@@ -81,6 +97,14 @@
         "source_kind": "educational-exemplar",
         "level": 2,
         "pinned_commit": "4e89b04c36af387d6cda164310737563eaa9e455"
+      },
+      {
+        "language_slug": "c-sharp",
+        "repository": "dotnet/runtime",
+        "path_slug": "math-clamp-keeps-an-int-between-inclusive-bounds-and-rejects-a-reversed-range",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "aa036afce592ad80e938a35bd376222fb232cba9"
       },
       {
         "language_slug": "c-sharp",
@@ -116,6 +140,14 @@
       },
       {
         "language_slug": "go",
+        "repository": "golang/go",
+        "path_slug": "strings-cut-splits-around-the-first-separator-and-reports-whether-it-was-found",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "603439a1c6f2d37c7f02e246342847056ed04c21"
+      },
+      {
+        "language_slug": "go",
         "repository": "dustin/go-humanize",
         "path_slug": "comma-formats-every-int64-with-three-digit-groups-and-exact-sign-handling",
         "source_kind": "production",
@@ -137,10 +169,90 @@
         "source_kind": "production",
         "level": 2,
         "pinned_commit": "b80e488556bd7d72386f7e358d0b4e4a44ce0423"
+      },
+      {
+        "language_slug": "dart",
+        "repository": "dart-lang/core",
+        "path_slug": "first-or-null-advances-an-iterator-once-and-returns-null-for-empty-input",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "b80e488556bd7d72386f7e358d0b4e4a44ce0423"
+      },
+      {
+        "language_slug": "cpp",
+        "repository": "abseil/abseil-cpp",
+        "path_slug": "ascii-islower-classifies-every-byte-with-one-locale-independent-range-check",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "2c004366e983c5be8334ac1ea3d4420e8fbcbea7"
+      },
+      {
+        "language_slug": "c",
+        "repository": "recp/cglm",
+        "path_slug": "glm-clamp-composes-minimum-and-maximum-to-keep-a-float-inside-bounds",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "58d8c15a124c202188d0094705f778f6129a2612"
+      },
+      {
+        "language_slug": "lua",
+        "repository": "rxi/lume",
+        "path_slug": "lume-clamp-keeps-a-number-between-two-bounds-with-one-local-expression",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "98847e7812cf28d3d64b289b03fad71dc704547d"
+      },
+      {
+        "language_slug": "shell",
+        "repository": "bats-core/bats-file",
+        "path_slug": "assert-file-exists-tests-one-path-and-emits-a-focused-failure-when-it-is-not-a-file",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599"
+      },
+      {
+        "language_slug": "swift",
+        "repository": "apple/swift-log",
+        "path_slug": "logger-level-maps-seven-severities-to-a-complete-tested-order",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95"
+      },
+      {
+        "language_slug": "typescript",
+        "repository": "microsoft/vscode",
+        "path_slug": "remove-fast-without-keeping-order-replaces-one-item-with-the-last-before-popping",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d"
+      },
+      {
+        "language_slug": "rust",
+        "repository": "rust-lang/log",
+        "path_slug": "increment-severity-steps-to-the-next-log-level-and-stays-at-trace",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "8034743dd9d7f7583bd9a670271483d176130911"
+      },
+      {
+        "language_slug": "r",
+        "repository": "r-lib/scales",
+        "path_slug": "oob-squish-infinite-replaces-only-negative-and-positive-infinity-with-range-limits",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "04fc3331af14da0d5ca1919f37c6c35d6fc512bb"
+      },
+      {
+        "language_slug": "kotlin",
+        "repository": "JetBrains/kotlin",
+        "path_slug": "substring-after-returns-text-after-the-first-delimiter-or-an-explicit-fallback",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "b143655f3dca9afacf7ef5e10f40868cc7e28f43"
       }
     ]
   },
-  "remaining_lower_level_gaps": {"1": 56, "2": 40, "total": 96},
+  "remaining_lower_level_gaps": {"1": 42, "2": 40, "total": 82},
   "language_passes": [
     {
       "language_slug": "javascript",
@@ -174,8 +286,8 @@
     {
       "language_slug": "python",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 1},
-      "gaps_after": {"1": 3, "2": 2},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Python packaging and framework examples",
@@ -188,18 +300,21 @@
       ],
       "educational_search": "Inspected PyPA's sample project and Flask's completed tutorial application in addition to official and community teaching searches.",
       "candidates": [
-        {"repository": "more-itertools/more-itertools", "decision": "accepted", "evidence": "chunked is a complete production iterator contract with seven direct tests and a credible Level 2 primer."},
+        {"repository": "more-itertools/more-itertools", "decision": "accepted", "evidence": "first is a direct production Level 1 loop with four focused tests, while chunked remains a distinct complete Level 2 iterator contract with seven direct tests."},
         {"repository": "pypa/sampleproject", "decision": "rejected", "evidence": "Its meaningful lesson is packaging; selecting the trivial add_one placeholder would be Level gaming."},
         {"repository": "pallets/flask", "decision": "rejected", "evidence": "The completed Flaskr tutorial requires interacting application, database, authentication, session, template, and fixture concepts, so its floor is 3."}
       ],
-      "accepted_path_slugs": ["chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract"],
+      "accepted_path_slugs": [
+        "first-returns-the-first-item-or-a-default-and-rejects-an-empty-iterable-without-one",
+        "chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "java",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 1},
-      "gaps_after": {"1": 3, "2": 2},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Java testing and framework examples",
@@ -212,11 +327,15 @@
       ],
       "educational_search": "Inspected the JUnit starter, Spring REST guide, and Open Liberty getting-started sample as complete official educational artifacts.",
       "candidates": [
+        {"repository": "google/guava", "decision": "accepted", "evidence": "Ints.constrainToRange is a stable production Level 1 utility whose documented validation and complete numeric transformation map to six direct assertions."},
         {"repository": "junit-team/junit-examples", "decision": "accepted", "evidence": "The Gradle starter is a complete configured project whose ordinary and parameterized tests directly verify one small class."},
         {"repository": "spring-guides/gs-rest-service", "decision": "rejected", "evidence": "Annotations, binding, Boot context, HTTP dispatch, JSON conversion, and shared state create accessibility floor 3."},
         {"repository": "OpenLiberty/sample-getting-started", "decision": "rejected", "evidence": "REST resources, server features, packaging, configuration, and functional-test lifecycle interact beyond Level 2."}
       ],
-      "accepted_path_slugs": ["the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test"],
+      "accepted_path_slugs": [
+        "constrain-to-range-keeps-an-int-inside-inclusive-bounds-and-rejects-a-reversed-range",
+        "the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -246,8 +365,8 @@
     {
       "language_slug": "c-sharp",
       "before": {"1": 0, "2": 2},
-      "after": {"1": 0, "2": 3},
-      "gaps_after": {"1": 3, "2": 0},
+      "after": {"1": 1, "2": 3},
+      "gaps_after": {"1": 2, "2": 0},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official dotnet samples and tutorials",
@@ -260,18 +379,22 @@
       ],
       "educational_search": "Inspected Microsoft's complete unit-testing tutorial sample and other official dotnet sample trees for coherent lower paths.",
       "candidates": [
+        {"repository": "dotnet/runtime", "decision": "accepted", "evidence": "The production Math.Clamp int overload is a direct Level 1 contract with explicit validation, three local outcomes, and focused boundary and exception tests."},
         {"repository": "dotnet/samples", "decision": "accepted", "evidence": "The complete PrimeService tutorial sample cleanly joins elementary implementation logic to eleven configured xUnit cases."},
         {"repository": "ardalis/Result", "decision": "rejected", "evidence": "Generic variants, status and validation models, conversions, mapping, and binding interact at accessibility floor 3."},
         {"repository": "serilog/serilog", "decision": "retained-higher", "evidence": "The accepted structured logging path remains a sound production Level 3 transition, not a lower-level candidate."}
       ],
-      "accepted_path_slugs": ["the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases"],
+      "accepted_path_slugs": [
+        "math-clamp-keeps-an-int-between-inclusive-bounds-and-rejects-a-reversed-range",
+        "the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "typescript",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official TypeScript sample and starter searches",
@@ -286,16 +409,17 @@
       "candidates": [
         {"repository": "developit/mitt", "decision": "retained-higher", "evidence": "Wildcard subscriptions, generic event maps, mutation during dispatch, and type contracts preserve its Level 3 placement."},
         {"repository": "alexreardon/tiny-invariant", "decision": "rejected", "evidence": "The meaningful package contract includes build-time environment stripping and assertion typing rather than a complete lower-rung behavior."},
-        {"repository": "unjs/ofetch", "decision": "rejected", "evidence": "Earlier direct review found source-correctness, test, traceability, maintainability, and educational-value failures."}
+        {"repository": "unjs/ofetch", "decision": "rejected", "evidence": "Earlier direct review found source-correctness, test, traceability, maintainability, and educational-value failures."},
+        {"repository": "microsoft/vscode", "decision": "accepted", "evidence": "removeFastWithoutKeepingOrder is a complete production array mutation with a named performance tradeoff, direct focused tests, and a production caller at Level 1."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["remove-fast-without-keeping-order-replaces-one-item-with-the-last-before-popping"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "cpp",
       "before": {"1": 0, "2": 1},
-      "after": {"1": 0, "2": 1},
-      "gaps_after": {"1": 3, "2": 2},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official and respected C-plus-plus example searches",
@@ -311,9 +435,11 @@
         {"repository": "microsoft/GSL", "decision": "retained-lower", "evidence": "The existing final_action path remains the gentlest complete tested Level 2 lifetime behavior."},
         {"repository": "agauniyal/rang", "decision": "rejected", "evidence": "Terminal capability branches, stream state, templates, platform handling, and formatting constraints exceed the lower-level ceiling."},
         {"repository": "jarro2783/cxxopts", "decision": "rejected", "evidence": "Template-heavy option types and command-line grammar preserve the prior higher calculated level."},
-        {"repository": "p-ranav/argparse", "decision": "rejected", "evidence": "Parser grammar, typed conversion, subcommands, and error contracts remain materially beyond Level 2."}
+        {"repository": "p-ranav/argparse", "decision": "rejected", "evidence": "Parser grammar, typed conversion, subcommands, and error contracts remain materially beyond Level 2."},
+        {"repository": "abseil/abseil-cpp", "decision": "accepted", "evidence": "ascii_islower is the actual public locale-independent predicate, with one closed-range expression and exhaustive verification over all 256 byte values at Level 1."},
+        {"repository": "microsoft/GSL", "decision": "rejected", "evidence": "narrow_cast is only a one-line static_cast forwarding template; isolating it would manufacture a Level 1 entry without substantive independent behavior."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["ascii-islower-classifies-every-byte-with-one-locale-independent-range-check"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -348,8 +474,8 @@
     {
       "language_slug": "c",
       "before": {"1": 0, "2": 1},
-      "after": {"1": 0, "2": 1},
-      "gaps_after": {"1": 3, "2": 2},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "small reference implementation searches",
@@ -366,16 +492,18 @@
         {"repository": "likle/cwalk", "decision": "rejected", "evidence": "Cross-platform path grammar, pointer slicing, normalization, and buffer contracts require at least Level 3."},
         {"repository": "zserge/jsmn", "decision": "rejected", "evidence": "Token state, recursive structure, JSON grammar, position tracking, and error rules exceed a Level 2 primer."},
         {"repository": "skeeto/optparse", "decision": "rejected", "evidence": "Option grammar, mutable parser state, raw pointers, argv permutation, and error signaling produce accessibility floor 3."},
-        {"repository": "rxi/vec", "decision": "rejected", "evidence": "Macro generics, allocation, capacity invariants, raw pointers, memmove, and lifetime rules produce accessibility floor 3."}
+        {"repository": "rxi/vec", "decision": "rejected", "evidence": "Macro generics, allocation, capacity invariants, raw pointers, memmove, and lifetime rules produce accessibility floor 3."},
+        {"repository": "recp/cglm", "decision": "accepted", "evidence": "glm_clamp is the public production formula itself, composes min and max, and has direct below-range, in-range, and above-range tests at Level 1."},
+        {"repository": "raysan5/raylib", "decision": "rejected", "evidence": "Clamp is readable production C but lacks direct first-party automated or deterministic golden verification at the pinned revision."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["glm-clamp-composes-minimum-and-maximum-to-keep-a-float-inside-bounds"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "swift",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Apple sample repositories",
@@ -390,16 +518,17 @@
       "candidates": [
         {"repository": "JohnSundell/Files", "decision": "rejected", "evidence": "Filesystem semantics, throwing APIs, URL/path behavior, and platform constraints keep the meaningful path at Level 3."},
         {"repository": "apple/sample-backyard-birds", "decision": "rejected", "evidence": "SwiftUI state wrappers, SwiftData, observation, navigation, relationships, and application lifecycle interact beyond Level 2."},
-        {"repository": "apple/swift-collections", "decision": "rejected", "evidence": "Generic collection invariants, storage design, performance contracts, and test breadth exceed the novice accessibility ceiling."}
+        {"repository": "apple/swift-collections", "decision": "rejected", "evidence": "Generic collection invariants, storage design, performance contracts, and test breadth exceed the novice accessibility ceiling."},
+        {"repository": "apple/swift-log", "decision": "accepted", "evidence": "Logger.Level maps seven enum cases to one total order and verifies all 49 ordered pairs through a focused Level 1 path."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["logger-level-maps-seven-severities-to-a-complete-tested-order"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "go",
       "before": {"1": 0, "2": 1},
-      "after": {"1": 0, "2": 3},
-      "gaps_after": {"1": 3, "2": 0},
+      "after": {"1": 1, "2": 3},
+      "gaps_after": {"1": 2, "2": 0},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Go example and tutorial searches",
@@ -412,12 +541,14 @@
       ],
       "educational_search": "Inspected complete example applications and small teaching projects as well as production formatting libraries with unusually direct tests.",
       "candidates": [
+        {"repository": "golang/go", "decision": "accepted", "evidence": "The production strings.Cut path is a Level 1 public contract with one local branch, eight boundary rows, and four executable examples."},
         {"repository": "dustin/go-humanize", "decision": "accepted", "evidence": "Comma is a complete formatter with boundary tables and a fuzz invariant, accessible with one numeric-buffer primer."},
         {"repository": "mitchellh/go-wordwrap", "decision": "accepted", "evidence": "WrapString is a focused Unicode-aware stateful transformation with exhaustive direct examples at Level 2."},
         {"repository": "tidwall/match", "decision": "retained-lower", "evidence": "The existing matcher remains the ladder's most demanding qualified Level 2 production path."},
         {"repository": "dustinkirkland/golang-petname", "decision": "rejected", "evidence": "Word-count behavior, weak tests, and secure-randomness documentation do not agree, so the source is not exemplary."}
       ],
       "accepted_path_slugs": [
+        "strings-cut-splits-around-the-first-separator-and-reports-whether-it-was-found",
         "comma-formats-every-int64-with-three-digit-groups-and-exact-sign-handling",
         "wrap-string-breaks-text-at-whitespace-while-preserving-explicit-lines-and-long-words"
       ],
@@ -426,8 +557,8 @@
     {
       "language_slug": "r",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official R teaching and package examples",
@@ -442,16 +573,17 @@
       "candidates": [
         {"repository": "r-lib/prettyunits", "decision": "rejected", "evidence": "Unit tables, significant figures, vectorization, missing values, formatting rules, and option behavior keep the production path at Level 3."},
         {"repository": "r-lib/pkgconfig", "decision": "rejected", "evidence": "Caller-frame lookup, namespaces, environments, and global fallback materially determine correctness and require Level 3."},
-        {"repository": "r-lib/rematch2", "decision": "rejected", "evidence": "Regular-expression grammar, capture matrices, attributes, missing matches, and vector semantics exceed a short Level 2 primer."}
+        {"repository": "r-lib/rematch2", "decision": "rejected", "evidence": "Regular-expression grammar, capture matrices, attributes, missing matches, and vector semantics exceed a short Level 2 primer."},
+        {"repository": "r-lib/scales", "decision": "accepted", "evidence": "oob_squish_infinite uses two direct logical masks and assignments, with one mixed-input expectation proving both replacements and preservation at Level 1."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["oob-squish-infinite-replaces-only-negative-and-positive-infinity-with-range-limits"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "shell",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official and respected Shell teaching repositories",
@@ -467,16 +599,17 @@
         {"repository": "kward/shunit2", "decision": "rejected", "evidence": "The framework exceeds Level 2 while isolated equality examples are too trivial and would constitute Level gaming."},
         {"repository": "bash-my-aws/bash-my-aws", "decision": "rejected", "evidence": "AWS services, CLI conventions, profiles, resources, JSON filters, and completion logic dominate the path."},
         {"repository": "bats-core/bats-core", "decision": "rejected", "evidence": "Process orchestration, temporary state, hook lifecycle, assertion status, and portability are central and remain Level 3."},
-        {"repository": "fsaintjacques/semver-tool", "decision": "rejected", "evidence": "Semantic-version grammar, shell portability, parsing branches, comparison rules, and command behavior exceed Level 2."}
+        {"repository": "fsaintjacques/semver-tool", "decision": "rejected", "evidence": "Semantic-version grammar, shell portability, parsing branches, comparison rules, and command behavior exceed Level 2."},
+        {"repository": "bats-core/bats-file", "decision": "accepted", "evidence": "assert_file_exists has one central file predicate, one focused failure path, direct success and failure tests, and only local reporting details at Level 1."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["assert-file-exists-tests-one-path-and-emits-a-focused-failure-when-it-is-not-a-file"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "kotlin",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Kotlin and Ktor examples",
@@ -491,9 +624,10 @@
       "candidates": [
         {"repository": "junit-team/junit-examples", "decision": "rejected", "evidence": "The Kotlin starter uses JVM assert for a public division-by-zero precondition, which may be disabled and is not exemplary practice."},
         {"repository": "ktorio/ktor-samples", "decision": "rejected", "evidence": "Even the smaller verified samples combine routing DSLs, test lifecycles, plugins, configuration, or serialization at Level 3."},
-        {"repository": "JakeWharton/picnic", "decision": "rejected", "evidence": "Table DSL construction, layout measurement, rendering state, width constraints, and style composition exceed Level 2."}
+        {"repository": "JakeWharton/picnic", "decision": "rejected", "evidence": "Table DSL construction, layout measurement, rendering state, width constraints, and style composition exceed Level 2."},
+        {"repository": "JetBrains/kotlin", "decision": "accepted", "evidence": "The handwritten standard-library substringAfter function has one search, one branch, direct found and missing tests, and an honest Level 1 accessibility floor."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["substring-after-returns-text-after-the-first-delimiter-or-an-explicit-fallback"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -547,8 +681,8 @@
     {
       "language_slug": "dart",
       "before": {"1": 0, "2": 1},
-      "after": {"1": 0, "2": 2},
-      "gaps_after": {"1": 3, "2": 1},
+      "after": {"1": 1, "2": 2},
+      "gaps_after": {"1": 2, "2": 1},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Dart examples and repositories",
@@ -563,9 +697,13 @@
       "candidates": [
         {"repository": "dart-lang/core", "decision": "accepted", "evidence": "package:collection groupBy is a complete production collection behavior with direct empty and ordered grouping tests at Level 2."},
         {"repository": "dart-lang/samples", "decision": "rejected", "evidence": "The repository is an aggregate of unrelated samples, and plausible CLI paths add parsing, networking, and asynchronous I/O."},
-        {"repository": "felangel/equatable", "decision": "rejected", "evidence": "Equality contracts, inheritance, generic props, hashing, stringification, and runtime configuration remain at least Level 3."}
+        {"repository": "felangel/equatable", "decision": "rejected", "evidence": "Equality contracts, inheritance, generic props, hashing, stringification, and runtime configuration remain at least Level 3."},
+        {"repository": "dart-lang/core", "decision": "accepted", "evidence": "Iterable.firstOrNull advances one iterator once, returns its current item or null, and has direct empty, one-item, and multi-item tests at Level 1."}
       ],
-      "accepted_path_slugs": ["group-by-builds-ordered-lists-under-callback-derived-map-keys"],
+      "accepted_path_slugs": [
+        "first-or-null-advances-an-iterator-once-and-returns-null-for-empty-input",
+        "group-by-builds-ordered-lists-under-callback-derived-map-keys"
+      ],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
@@ -595,8 +733,8 @@
     {
       "language_slug": "rust",
       "before": {"1": 0, "2": 0},
-      "after": {"1": 0, "2": 0},
-      "gaps_after": {"1": 3, "2": 3},
+      "after": {"1": 1, "2": 0},
+      "gaps_after": {"1": 2, "2": 3},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official Rust books and project examples",
@@ -612,16 +750,17 @@
         {"repository": "rust-lang/book", "decision": "rejected", "evidence": "Minigrep exists as evolving prose listings rather than one checked-in coherent runnable source tree."},
         {"repository": "rust-cli/book", "decision": "rejected", "evidence": "Macros, generic I/O, contextual errors, filesystem work, process execution, and predicates produce accessibility floor 3."},
         {"repository": "rust-lang/rustlings", "decision": "rejected", "evidence": "It is explicitly an exercise-and-solution collection, not a complete coherent software artifact."},
-        {"repository": "rust-cli/anstyle", "decision": "rejected", "evidence": "Generic formatting traits, terminal capability, platform handling, and nested style state keep the meaningful path above Level 2."}
+        {"repository": "rust-cli/anstyle", "decision": "rejected", "evidence": "Generic formatting traits, terminal capability, platform handling, and nested style state keep the meaningful path above Level 2."},
+        {"repository": "rust-lang/log", "decision": "accepted", "evidence": "Level.increment_severity performs one adjacent enum transition with an explicit upper-bound fallback, and its focused upstream test passed at Level 1."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["increment-severity-steps-to-the-next-log-level-and-stays-at-trace"],
       "gap_status": "unresolved after production and educational-exemplar research"
     },
     {
       "language_slug": "lua",
       "before": {"1": 0, "2": 1},
-      "after": {"1": 0, "2": 1},
-      "gaps_after": {"1": 3, "2": 2},
+      "after": {"1": 1, "2": 1},
+      "gaps_after": {"1": 2, "2": 2},
       "discovery_channels": [
         "existing catalog and historical research records",
         "official and respected Lua teaching searches",
@@ -637,9 +776,10 @@
         {"repository": "lunarmodules/say", "decision": "retained-lower", "evidence": "The existing namespaced message behavior remains the sole qualified Level 2 lower path."},
         {"repository": "rxi/classic", "decision": "rejected", "evidence": "The class module has no automated or golden verification for inheritance, mixins, identity, or invalid use."},
         {"repository": "kikito/love-tile-tutorial", "decision": "rejected", "evidence": "It lacks a clearly verified final artifact and requires framework lifecycle, graphics, input, collision, and map state."},
-        {"repository": "rxi/json.lua", "decision": "rejected", "evidence": "Recursive grammar dispatch, escapes, numbers, nested state, and precise parser errors require Level 3."}
+        {"repository": "rxi/json.lua", "decision": "rejected", "evidence": "Recursive grammar dispatch, escapes, numbers, nested state, and precise parser errors require Level 3."},
+        {"repository": "rxi/lume", "decision": "accepted", "evidence": "lume.clamp is the production bounds expression itself, has seven direct tests, and passed the complete 262-test upstream suite at Level 1."}
       ],
-      "accepted_path_slugs": [],
+      "accepted_path_slugs": ["lume-clamp-keeps-a-number-between-two-bounds-with-one-local-expression"],
       "gap_status": "unresolved after production and educational-exemplar research"
     }
   ],
@@ -954,6 +1094,20 @@
       "failed_requirement": "calculated lower-level accessibility",
       "decision_evidence": "Recursive grammar dispatch, escapes, numeric rules, position state, nested structures, and precise errors make the meaningful parser at least Level 3.",
       "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "cpp",
+      "repository": "microsoft/GSL",
+      "failed_requirement": "genuine learning value without Level gaming",
+      "decision_evidence": "narrow_cast is only a one-line static_cast forwarding template, so isolating it would manufacture a lower rung without substantive independent behavior.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "c",
+      "repository": "raysan5/raylib",
+      "failed_requirement": "direct test quality and implementation-to-test traceability",
+      "decision_evidence": "Clamp has readable production source but no direct first-party automated or deterministic golden verification at the pinned revision.",
+      "full_record": "research/rejections.json"
     }
   ],
   "progression_checks": [
@@ -968,19 +1122,19 @@
     },
     {
       "language_slug": "python",
-      "level_1_order": [],
+      "level_1_order": ["more-itertools-first"],
       "level_2_order": ["more-itertools-chunked"],
       "level_3_order": ["click", "requests"],
-      "ordering_rationale": "The available lower path introduces one iterator composition and its local strict branch without framework lifecycle.",
-      "level_2_to_3": "chunked prepares learners for callbacks, lazy behavior, and contracts before Click adds decorators, command parsing, context, and error presentation; the missing Level 1 ramp remains explicit.",
+      "ordering_rationale": "A direct loop with explicit empty-input outcomes leads to lazy chunk production and its local strict branch before framework-oriented paths.",
+      "level_2_to_3": "chunked prepares learners for callbacks, lazy behavior, and contracts before Click adds decorators, command parsing, context, and error presentation.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "java",
-      "level_1_order": [],
+      "level_1_order": ["guava-ints-constrain-to-range"],
       "level_2_order": ["junit-jupiter-starter-gradle"],
       "level_3_order": ["java-diff-utils", "jsoup"],
-      "ordering_rationale": "The starter introduces annotations, data-driven verification, and project boundaries around elementary behavior before multi-step production libraries.",
+      "ordering_rationale": "A direct numeric utility introduces validation and exact boundary assertions before the starter adds annotations, data-driven verification, and project boundaries.",
       "level_2_to_3": "The JUnit path provides testing and generic project orientation before java-diff-utils introduces generic patch operations, mutation, validation, and several interacting cases.",
       "result": "pass-with-explicit-gap"
     },
@@ -995,20 +1149,20 @@
     },
     {
       "language_slug": "c-sharp",
-      "level_1_order": [],
+      "level_1_order": ["dotnet-math-clamp-int"],
       "level_2_order": ["dotnet-prime-service-tests", "guardclauses", "humanizer"],
       "level_3_order": ["fluentvalidation", "serilog"],
-      "ordering_rationale": "A complete elementary test project leads to a focused generic guard and then a richer text transformation with options and edge contracts.",
+      "ordering_rationale": "One direct numeric contract and its boundary table lead to a complete elementary test project, a focused generic guard, and a richer text transformation.",
       "level_2_to_3": "Humanizer's extension methods, options, and boundary cases prepare the learner for FluentValidation's typed rule expressions, rule components, and asynchronous validation flow.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "cpp",
-      "level_1_order": [],
+      "level_1_order": ["abseil-ascii-islower"],
       "level_2_order": ["gsl"],
       "level_3_order": ["cli11", "mustache"],
-      "ordering_rationale": "The sole lower path focuses on one lifetime-bound cleanup abstraction before production parsing and rendering systems.",
-      "level_2_to_3": "final_action introduces templates, move/lifetime behavior, and guarantees before CLI11 adds command grammar, typed conversion, subcommands, and parser errors; the absent Level 1 ramp remains explicit.",
+      "ordering_rationale": "One locale-independent byte predicate and exhaustive finite test lead to a lifetime-bound cleanup abstraction before production parsing and rendering systems.",
+      "level_2_to_3": "final_action introduces templates, move and lifetime behavior, and cleanup guarantees before CLI11 adds command grammar, typed conversion, subcommands, and parser errors.",
       "result": "pass-with-explicit-gap"
     },
     {
@@ -1022,38 +1176,92 @@
     },
     {
       "language_slug": "c",
-      "level_1_order": [],
+      "level_1_order": ["cglm-clamp"],
       "level_2_order": ["inih"],
       "level_3_order": ["tomlc17", "cjson"],
-      "ordering_rationale": "The line-oriented callback parser is the smallest qualified complete C path and precedes owned recursive syntax trees.",
+      "ordering_rationale": "One composed scalar bounds operation leads to a line-oriented callback parser and then to owned recursive syntax trees.",
       "level_2_to_3": "inih introduces buffers, callbacks, parsing branches, and errors before tomlc17 adds bounded scanning, ownership, tagged values, recursive structures, and format constraints.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "go",
-      "level_1_order": [],
+      "level_1_order": ["go-strings-cut"],
       "level_2_order": ["go-humanize-comma", "go-wordwrap", "match"],
       "level_3_order": ["gin", "cron"],
-      "ordering_rationale": "A numeric buffer algorithm leads to richer text-scanning state and then a compact wildcard matcher with more branching and recursive cases.",
+      "ordering_rationale": "One direct string split leads to a numeric buffer algorithm, richer text-scanning state, and then a compact wildcard matcher with more branching and recursive cases.",
       "level_2_to_3": "match provides byte scanning, wildcard state, and backtracking-like reasoning before Gin introduces request context, routing trees, middleware, and framework lifecycle.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "dart",
-      "level_1_order": [],
+      "level_1_order": ["collection-first-or-null"],
       "level_2_order": ["collection-group-by", "formz"],
       "level_3_order": ["dart-sdk", "shelf"],
-      "ordering_rationale": "One generic callback accumulation precedes typed validation state and interaction status across a small model abstraction.",
+      "ordering_rationale": "One iterator probe leads to generic callback accumulation and then typed validation state and interaction status across a small model abstraction.",
       "level_2_to_3": "formz introduces generics, state, validation, equality, and composition before Future.wait adds asynchronous coordination, ordering, cleanup, and first-error guarantees.",
       "result": "pass-with-explicit-gap"
     },
     {
       "language_slug": "lua",
-      "level_1_order": [],
+      "level_1_order": ["lume-clamp"],
       "level_2_order": ["say"],
       "level_3_order": ["middleclass", "lua-resty-lrucache"],
-      "ordering_rationale": "The lower path focuses on namespaced message storage and fallback before metatable-based object systems and bounded caches.",
+      "ordering_rationale": "One local numeric bounds expression leads to namespaced message storage and fallback before metatable-based object systems and bounded caches.",
       "level_2_to_3": "say introduces tables, namespaces, fallback, formatting, and local state before middleclass adds metatables, inheritance, mixins, propagation, and dynamic method rules.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "typescript",
+      "level_1_order": ["vscode-remove-fast-without-order"],
+      "level_2_order": [],
+      "level_3_order": ["mitt", "redux"],
+      "ordering_rationale": "One local array mutation and explicit performance tradeoff form the Level 1 ramp; the absent Level 2 bridge remains visible before event and state-management abstractions.",
+      "level_2_to_3": "The Level 2 gap remains explicit; the Level 1 path prepares array, mutation, and contract reasoning before mitt introduces generic event maps, subscriptions, wildcard dispatch, and mutation during delivery.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "swift",
+      "level_1_order": ["swift-log-level-ordering"],
+      "level_2_order": [],
+      "level_3_order": ["tagged", "vapor"],
+      "ordering_rationale": "A finite enum mapping and exhaustive ordering test provide the Level 1 ramp; the absent Level 2 bridge remains visible before generic tagging and web-framework paths.",
+      "level_2_to_3": "The Level 2 gap remains explicit; Logger.Level establishes enums, protocol conformance, and table-driven tests before Tagged adds phantom generic distinctions and broader type-level API reasoning.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "r",
+      "level_1_order": ["scales-squish-infinite"],
+      "level_2_order": [],
+      "level_3_order": ["withr", "ggplot2"],
+      "ordering_rationale": "Two local vector masks and assignments provide the Level 1 ramp; the absent Level 2 bridge remains visible before scoped environment changes and plotting architecture.",
+      "level_2_to_3": "The Level 2 gap remains explicit; oob_squish_infinite establishes vector selection, replacement, and missing-value preservation before withr adds dynamic scope, deferred cleanup, and process state.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "shell",
+      "level_1_order": ["bats-file-assert-file-exists"],
+      "level_2_order": [],
+      "level_3_order": ["dokku", "rbenv"],
+      "ordering_rationale": "One file predicate and focused failure path provide the Level 1 ramp; the absent Level 2 bridge remains visible before deployment and version-management systems.",
+      "level_2_to_3": "The Level 2 gap remains explicit; assert_file_exists introduces conditionals, paths, functions, and failure output before Dokku adds process orchestration, plugins, containers, configuration, and deployment lifecycle.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "kotlin",
+      "level_1_order": ["kotlin-substring-after"],
+      "level_2_order": [],
+      "level_3_order": ["clikt", "kotlin-logging"],
+      "ordering_rationale": "One string search, branch, and slice provide the Level 1 ramp; the absent Level 2 bridge remains visible before command parsing and logging abstractions.",
+      "level_2_to_3": "The Level 2 gap remains explicit; substringAfter establishes extension syntax, defaults, sentinels, and edge-case tests before Clikt adds delegated options, conversion, command context, and parser errors.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "rust",
+      "level_1_order": ["rust-log-increment-severity"],
+      "level_2_order": [],
+      "level_3_order": ["semver", "heck"],
+      "ordering_rationale": "One adjacent enum transition and boundary fallback provide the Level 1 ramp; the absent Level 2 bridge remains visible before version grammar and case-conversion algorithms.",
+      "level_2_to_3": "The Level 2 gap remains explicit; increment_severity establishes enums, Option fallback, and boundary tests before semver adds grammar, identifiers, precedence, parsing errors, and compatibility rules.",
       "result": "pass-with-explicit-gap"
     }
   ],
@@ -1097,23 +1305,35 @@
   "candidate_verification": [
     {"repository": "sindresorhus/array-union", "method": "runtime probe", "result": "pass", "evidence": "The pinned implementation returned [1,2,3] for overlapping arrays, confirming uniqueness and first-seen order."},
     {"repository": "sindresorhus/onetime", "method": "source and direct-test inspection", "result": "pass", "evidence": "The wrapper implementation and AVA cases were inspected across first success, cached return, retry after throw, repeated-call error, call count, and preserved receiver behavior."},
-    {"repository": "more-itertools/more-itertools", "method": "focused upstream test class", "result": "pass", "evidence": "All seven ChunkedTests passed at the pinned revision."},
+    {"repository": "more-itertools/more-itertools", "method": "focused upstream test classes", "result": "pass", "evidence": "All seven ChunkedTests and all four FirstTests passed at the shared pinned revision."},
     {"repository": "ruby/abbrev", "method": "focused upstream tests", "result": "pass", "evidence": "Two tests and six assertions passed at the pinned revision."},
     {"repository": "ruby/observer", "method": "focused upstream tests", "result": "pass", "evidence": "One lifecycle test and eleven assertions passed at the pinned revision."},
     {"repository": "expressjs/express", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact application and acceptance assertions were inspected; the isolated checkout did not have the project's JavaScript dependency tree installed."},
     {"repository": "junit-team/junit-examples", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact Java source, Gradle configuration, and direct assertions were inspected; no Java runtime was installed in the execution environment."},
     {"repository": "nikic/iter", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact generator, consumer, and PHPUnit assertions were inspected; no PHP runtime was installed in the execution environment."},
     {"repository": "dotnet/samples", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact service, projects, and eleven xUnit cases were inspected; no dotnet runtime was installed in the execution environment."},
+    {"repository": "dotnet/runtime", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact int Clamp implementation, shared signed-boundary rows, focused theory, and reversed-range assertion were inspected; no dotnet runtime was installed in the execution environment."},
     {"repository": "sinatra/sinatra", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The canonical example and matching ReadmeTest were inspected; the isolated checkout lacked the Rack dependency required to execute Sinatra."},
     {"repository": "dustin/go-humanize", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The formatter, boundary table, and fuzz property were inspected; no Go runtime was installed in the execution environment."},
     {"repository": "mitchellh/go-wordwrap", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The complete scanner and direct boundary table were inspected; no Go runtime was installed in the execution environment."},
-    {"repository": "dart-lang/core", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The groupBy function, empty case, and exact ordered grouping assertion were inspected; no Dart runtime was installed in the execution environment."}
+    {"repository": "golang/go", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The public strings.Cut contract, shared implementation, eight-row boundary table, and four executable examples were inspected; no Go runtime was installed in the execution environment."},
+    {"repository": "google/guava", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The documented constrainToRange implementation and all six direct assertions were inspected; no Java runtime was installed in the execution environment."},
+    {"repository": "dart-lang/core", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The groupBy and firstOrNull implementations and their direct empty, ordered grouping, empty-iterator, one-item, and multi-item assertions were inspected; no Dart runtime was installed in the execution environment."},
+    {"repository": "abseil/abseil-cpp", "method": "source and exhaustive direct-test inspection", "result": "pass", "evidence": "The exact public ascii_islower expression and its checks across all 256 byte values, including independent C-locale agreement, were inspected at the pinned revision."},
+    {"repository": "recp/cglm", "method": "focused upstream test body", "result": "pass", "evidence": "The exact pinned test_clamp body compiled against the pinned headers and ran successfully, covering below-range, in-range, and above-range scalar inputs."},
+    {"repository": "rxi/lume", "method": "complete upstream test suite", "result": "pass", "evidence": "The pinned Lua suite passed all 262 tests, including all seven direct clamp cases."},
+    {"repository": "bats-core/bats-file", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact file predicate, focused failure pipeline, success case, directory failure, and path-substitution assertions were inspected; no Bats runtime was installed in the execution environment."},
+    {"repository": "apple/swift-log", "method": "source and exhaustive direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The seven-case mapping, Comparable implementation, and all-pairs ordering test were inspected; no Swift runtime was installed in the execution environment."},
+    {"repository": "microsoft/vscode", "method": "source, direct-test, and production-use inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact array mutation, three successive removal assertions, and menu-service caller were inspected; the isolated environment did not have Visual Studio Code's JavaScript dependency tree installed."},
+    {"repository": "rust-lang/log", "method": "focused upstream unit test", "result": "pass", "evidence": "cargo test test_level_up --lib passed one test at the pinned revision, verifying Info advances to Debug and Trace remains Trace."},
+    {"repository": "r-lib/scales", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The two logical assignments and exact seven-element expectation covering infinities, finite values, endpoints, and NA were inspected; no R runtime was installed in the execution environment."},
+    {"repository": "JetBrains/kotlin", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The handwritten substringAfter implementation and direct found, trailing, missing, and custom-fallback assertions were inspected; no Kotlin compiler or Java runtime was installed in the execution environment."}
   ],
   "verification": {
     "generated_pages": {"command": "python3 scripts/catalog.py generate", "result": "pass"},
     "unit_tests": {"command": "python3 -m unittest discover -s tests -v", "result": "pass", "tests_run": 45},
     "catalog_validation": {"command": "python3 scripts/catalog.py validate", "result": "pass"},
     "generated_output_check": {"command": "python3 scripts/catalog.py check-generated", "result": "pass"},
-    "complete_validation": {"run": false, "reason": "The catalog has 102 honest open slots, including 96 lower-level gaps, so the specification forbids claiming a complete 240-path grid."}
+    "complete_validation": {"run": false, "reason": "The catalog has 88 honest open slots, including 82 lower-level gaps, so the specification forbids claiming a complete 240-path grid."}
   }
 }

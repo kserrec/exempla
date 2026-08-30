@@ -1,6 +1,6 @@
 # TypeScript
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,85 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [microsoft/vscode](https://github.com/microsoft/vscode)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
+**Source:** Production software
+
+A production Visual Studio Code array utility removes an indexed item in constant time by moving the final item into its place before popping the array.
+
+**Why study it:** See a short, named performance tradeoff expressed with ordinary indexing, assignment, a branch, and pop, then verified through successive removals.
+
+**Prerequisites:**
+
+- The global novice TypeScript baseline: generic functions, arrays, indexing, assignment, conditionals, arithmetic, mutation, and focused tests.
+- The caller supplies a valid index and accepts that the remaining items may change order.
+
+**Concepts this path develops:**
+
+- Trading stable order for constant-time removal.
+- Using the last array item to fill an interior gap.
+- Making a mutation contract explicit in a function name and tests.
+
+**What you can learn:**
+
+- Replace an interior item with the array's last item when order is not part of the contract.
+- Handle removal of the last item without an unnecessary assignment.
+- Read tests that make the intentional order change visible.
+
+**Learning path:**
+
+- **Goal:** Understand how Visual Studio Code removes one array item quickly when preserving order is unnecessary.
+- **Start here:** [`src/vs/base/common/arrays.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/common/arrays.ts) — removeFastWithoutKeepingOrder contains the complete branch, replacement, and pop sequence.
+- **Then read:**
+  - [`src/vs/base/test/common/arrays.test.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/base/test/common/arrays.test.ts)
+  - [`src/vs/platform/actions/common/menuService.ts`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/src/vs/platform/actions/common/menuService.ts)
+  - [`README.md`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/README.md)
+  - [`package.json`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/package.json)
+  - [`LICENSE.txt`](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt)
+- **Trace:** Compute the last valid index, replace the requested slot only when it precedes that last item, pop the final slot, then follow the focused test through three removals and the menu service's production call.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses beginner TypeScript array operations and one generic type parameter that simply preserves the element type.
+- **Behavioral reasoning 1:** The complete behavior is one local branch followed by one pop, with no callbacks or hidden state.
+- **Design span 1:** One implementation and one direct unit test define the contract; the caller only confirms its real production use.
+- **Constraint burden 2:** The small production contract requires callers to accept reordered survivors in exchange for constant-time removal.
+- **Novice accessibility floor 1:** Every central operation belongs to the novice TypeScript baseline, and the generic parameter only says that the array may contain any one element type.
+  - **Central concepts:** array indexing; conditional assignment; removing the final array item
+  - **Incidental concepts:** one unconstrained generic type parameter
+- **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The utility ships in the Code - OSS source tree and is called by the production menu service when it removes a menu item without requiring stable order.
+
+**Language evidence:** The array utility, its focused unit test, and its production menu-service caller are first-party TypeScript; GitHub labels the repository TypeScript.
+
+**Coding relevance:**
+
+Array mutation, indexing, explicit performance tradeoffs, and contract-focused tests are broadly useful programming techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The four-line implementation exposes the complete optimization and contains no helper indirection.
+- **Architecture:** A general array primitive lives in the base utility module and is reused by the menu service.
+- **Naming and idiom:** removeFastWithoutKeepingOrder names both the operation and its central tradeoff before a caller reads the body.
+- **Tests:** The focused array test performs three successive indexed removals and asserts the reordered contents after each step.
+- **Documentation:** The repository README identifies the Code - OSS product source, while the function name and test make the local contract explicit.
+- **Traceability:** Each tested array state follows directly from either the replacement branch or the final pop.
+- **Maintainability:** The utility centralizes a subtle mutation so production callers do not reimplement it inconsistently.
+- **Educational value:** The path makes a real algorithmic tradeoff concrete using only novice array operations.
+
+**Inspection record:** commit `e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `src/vs/base/common/arrays.ts`, `src/vs/base/test/common/arrays.test.ts`, `src/vs/platform/actions/common/menuService.ts`, `README.md`, `package.json`, `LICENSE.txt`. GitHub Linguist label: TypeScript.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

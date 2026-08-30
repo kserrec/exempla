@@ -1,6 +1,6 @@
 # C
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,84 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [recp/cglm](https://github.com/recp/cglm)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+The production cglm math library clamps one floating-point value by composing its inline maximum and minimum functions.
+
+**Why study it:** See a complete boundary operation expressed as one composition, then connect values below, within, and above the range to direct assertions.
+
+**Prerequisites:**
+
+- The global novice C baseline: functions, parameters, return values, floating-point literals, header declarations, macros, includes, and assertions.
+- CGLM_INLINE is the library's portability spelling for an inline function; it does not change the clamp formula.
+
+**Concepts this path develops:**
+
+- Composing minimum and maximum to enforce two bounds.
+- Keeping a small utility in a public header as an inline function.
+- Testing below-range, in-range, and above-range inputs.
+
+**What you can learn:**
+
+- Raise a value to the lower bound with a maximum operation.
+- Lower the intermediate value to the upper bound with a minimum operation.
+- Verify the three observable regions around a bounded interval.
+
+**Learning path:**
+
+- **Goal:** Understand how cglm keeps a scalar inside caller-supplied bounds and verifies each region of the input space.
+- **Start here:** [`include/cglm/util.h`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/include/cglm/util.h) — The public documentation, declaration, glm_min and glm_max helpers, and complete glm_clamp formula are together in this header.
+- **Then read:**
+  - [`test/src/test_clamp.c`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/test/src/test_clamp.c)
+  - [`docs/source/util.rst`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/docs/source/util.rst)
+  - [`README.md`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/README.md)
+  - [`LICENSE`](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/LICENSE)
+- **Trace:** Pass val, minVal, and maxVal into glm_clamp, follow glm_max as it enforces the lower bound, follow glm_min as it enforces the upper bound, then match the three scalar assertions to values above, below, and inside the interval.
+
+**Why this level:**
+
+- **Language technique 1:** The complete implementation is ordinary C function composition over three float parameters.
+- **Behavioral reasoning 1:** The output follows from two local comparisons embodied by min and max.
+- **Design span 1:** One header and one focused test contain the complete selected behavior.
+- **Constraint burden 1:** The utility enforces one simple interval contract without state or external effects.
+- **Novice accessibility floor 1:** The clamp formula and all test cases are novice C material; the inline macro needs only a local note and does not affect behavior.
+  - **Central concepts:** float parameters and return values; minimum and maximum; nested function calls; boundary assertions
+  - **Incidental concepts:** the CGLM_INLINE portability macro
+- **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/recp/cglm/blob/58d8c15a124c202188d0094705f778f6129a2612/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** cglm is a maintained C mathematics library for graphics applications, and glm_clamp is a documented public utility used by other library operations.
+
+**Language evidence:** glm_clamp, glm_min, glm_max, the focused clamp test, and the public header documentation are first-party C; GitHub labels the repository C.
+
+**Coding relevance:**
+
+Bounds enforcement, small function composition, public C headers, and boundary-partition tests are general programming techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation is the actual clamp formula, not a forwarding wrapper, and every operation is visible in one return statement.
+- **Architecture:** The scalar utility sits with the library's related public math helpers and is reused by higher operations.
+- **Naming and idiom:** val, minVal, maxVal, glm_min, glm_max, and glm_clamp make the data flow literal.
+- **Tests:** The upstream test directly covers a value above the interval, below it, and inside it; the exact pinned test body compiled and ran successfully in isolation.
+- **Documentation:** The header comment and utility reference name the operation and each parameter, while the README establishes the production library context.
+- **Traceability:** Each scalar assertion isolates one of the formula's three possible outcomes.
+- **Maintainability:** The implementation reuses the library's min and max semantics, so one formula remains the source of truth for clamping.
+- **Educational value:** A novice can derive every result by hand and still encounter a real public C library function and test harness.
+
+**Inspection record:** commit `58d8c15a124c202188d0094705f778f6129a2612`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `include/cglm/util.h`, `test/src/test_clamp.c`, `docs/source/util.rst`, `README.md`, `LICENSE`. GitHub Linguist label: C.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

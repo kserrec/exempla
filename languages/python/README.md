@@ -1,6 +1,6 @@
 # Python
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,82 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [more-itertools/more-itertools](https://github.com/more-itertools/more-itertools)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
+**Source:** Production software
+
+A production iterator utility that returns the first available item, uses an explicit fallback for an empty input, or raises when no fallback was supplied.
+
+**Why study it:** Read one short production function that handles a successful loop, an empty input with a fallback, and an empty input that must report an error.
+
+**Prerequisites:**
+
+- The global novice Python baseline: functions, loops, iterables, default arguments, exceptions, imports, and focused tests.
+- The private marker means ‘the caller did not supply a default’; an identity check distinguishes that case from any real fallback value.
+
+**Concepts this path develops:**
+
+- Using an early return to select the first produced item.
+- Representing an omitted optional argument with a private marker.
+- Making empty-input behavior explicit through either a fallback or an exception.
+
+**What you can learn:**
+
+- Return immediately when the loop sees the first item.
+- Distinguish an omitted default from a caller-supplied default value.
+- Connect each empty-input outcome to a focused test.
+
+**Learning path:**
+
+- **Goal:** Understand how more-itertools first selects one item while making both forms of empty-input behavior explicit.
+- **Start here:** [`more_itertools/more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py) — The first function contains the complete loop, omitted-default check, error, and fallback return.
+- **Then read:**
+  - [`tests/test_more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/tests/test_more.py)
+  - [`README.rst`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/README.rst)
+- **Trace:** Enter first with an iterable and optional default, return the first loop item if one exists, otherwise compare the default with the private marker, raise or return the fallback, then match those paths to the four FirstTests cases.
+
+**Why this level:**
+
+- **Language technique 1:** The behavior uses a direct loop, returns, a default argument, an identity check, and one ordinary exception.
+- **Behavioral reasoning 1:** All outcomes are synchronous, local, and visible in one short control-flow sequence.
+- **Design span 1:** One implementation unit and four direct tests contain the complete selected contract.
+- **Constraint burden 2:** A small stable API distinguishes two empty-input policies, which is a routine local production safeguard.
+- **Novice accessibility floor 1:** All central ideas are in the novice Python baseline, and the private marker needs only one local sentence before every test result is predictable.
+  - **Central concepts:** looping over an iterable; early return; fallback or exception on empty input
+  - **Incidental concepts:** a private object used to mean that no default was supplied
+- **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** more-itertools is a maintained installable Python package whose README publishes first among its application-facing iterable selection tools.
+
+**Language evidence:** The exported first implementation, its docstring, and the focused FirstTests class are first-party Python; GitHub labels the repository Python.
+
+**Coding relevance:**
+
+Early returns, optional fallbacks, empty-input contracts, and direct edge-case tests are broadly transferable programming practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation exposes its complete decision sequence without helper indirection or duplicated branches.
+- **Architecture:** A narrow exported function and one focused test class are proportionate to the behavior.
+- **Naming and idiom:** first, iterable, default, item, and the private marker communicate their roles using ordinary Python conventions.
+- **Tests:** Four passing direct tests cover a generator with many items, one item, an empty input that raises, and an empty input with a fallback.
+- **Documentation:** The docstring gives successful and fallback examples, explains the error, and names the generator use case; the README indexes the public function.
+- **Traceability:** Each return or exception in first corresponds to a named FirstTests method.
+- **Maintainability:** The small signature, explicit marker, and direct edge cases make future contract changes easy to bound.
+- **Educational value:** The path turns a familiar loop into a complete production API with precise empty-input behavior.
+
+**Inspection record:** commit `2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10`, inspected 2026-08-30. Review passes: Codex follow-up lower-level investigation; Codex resumed-session source verification. Files inspected: `more_itertools/more.py`, `tests/test_more.py`, `README.rst`, `pyproject.toml`, `LICENSE`. GitHub Linguist label: Python.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

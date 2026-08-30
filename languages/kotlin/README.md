@@ -1,6 +1,6 @@
 # Kotlin
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,84 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [JetBrains/kotlin](https://github.com/JetBrains/kotlin)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+Kotlin's production standard library returns the text after the first string delimiter, the original string when it is missing, or a caller-supplied fallback.
+
+**Why study it:** Follow one familiar string operation through delimiter search, a missing-result branch, substring boundaries, defaults, and direct examples.
+
+**Prerequisites:**
+
+- The global novice Kotlin baseline: functions, extension functions, parameters, default arguments, val, conditionals, string indices, indexOf, substring, and focused assertions.
+- indexOf returns -1 when the delimiter is absent; a delimiter found at the end produces an empty suffix.
+
+**Concepts this path develops:**
+
+- Building a string helper from search and slicing primitives.
+- Making missing-delimiter behavior configurable through a default parameter.
+- Testing found, end-of-string, missing, and custom-fallback cases.
+
+**What you can learn:**
+
+- Find the first occurrence of a delimiter string.
+- Return a fallback when the search reports no match.
+- Start the result after the full delimiter and allow an empty suffix.
+
+**Learning path:**
+
+- **Goal:** Understand how Kotlin's standard library defines the result after a delimiter, including both forms of missing-delimiter behavior.
+- **Start here:** [`libraries/stdlib/src/kotlin/text/Strings.kt`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/src/kotlin/text/Strings.kt) — The KDoc and complete string-delimiter overload of substringAfter appear together in this file.
+- **Then read:**
+  - [`libraries/stdlib/test/text/StringTest.kt`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/libraries/stdlib/test/text/StringTest.kt)
+  - [`ReadMe.md`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/ReadMe.md)
+  - [`license/README.md`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/README.md)
+  - [`license/LICENSE.txt`](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/LICENSE.txt)
+- **Trace:** Call indexOf with the delimiter, return missingDelimiterValue when the result is -1, otherwise call substring from index plus delimiter length to the string length, then match the focused test's found, trailing, missing, and custom-fallback assertions.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses introductory Kotlin function, value, conditional, and string operations.
+- **Behavioral reasoning 1:** One local search result selects between a fallback and one substring calculation.
+- **Design span 1:** One source function and one direct test section contain the complete selected contract.
+- **Constraint burden 1:** The function has a small explicit string contract with locally tested edge cases.
+- **Novice accessibility floor 1:** All behavior uses novice string and branch operations; extension syntax needs one local sentence and introduces no extra state or architecture.
+  - **Central concepts:** string search; if expression; default argument; substring boundaries
+  - **Incidental concepts:** extension-function receiver syntax
+- **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** Apache-2.0 AND LicenseRef-Third-Party-Notices ([evidence 1](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/README.md), [evidence 2](https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** This official repository builds Kotlin and its shipped standard library; substringAfter is a documented public kotlin.text extension used by Kotlin programs across supported platforms.
+
+**Language evidence:** The standard-library substringAfter implementation, its KDoc, and its focused multiplatform tests are first-party Kotlin; GitHub labels the repository Kotlin.
+
+**Coding relevance:**
+
+String search, slicing, sentinel handling, default parameters, and edge-case tests transfer directly to everyday application code.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The handwritten standard-library function exposes its entire search, branch, and slice sequence in three statements.
+- **Architecture:** The extension composes existing string primitives and stays beside the related before, last, and delimiter overloads.
+- **Naming and idiom:** substringAfter, delimiter, and missingDelimiterValue state the operation and both outcomes using ordinary Kotlin conventions.
+- **Tests:** substringDelimited directly covers a string delimiter, a delimiter at the end, a missing delimiter with the default original-string result, and a custom fallback.
+- **Documentation:** The source KDoc defines first-occurrence, missing-delimiter, and fallback behavior, while the repository documentation establishes the official standard-library context.
+- **Traceability:** Found assertions follow the substring branch; the two missing assertions distinguish the default and caller-supplied fallback paths.
+- **Maintainability:** The implementation delegates search and slicing semantics to established string primitives while keeping policy in one branch.
+- **Educational value:** The path turns familiar string operations into a complete, precisely tested public API contract.
+
+**Inspection record:** commit `b143655f3dca9afacf7ef5e10f40868cc7e28f43`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `libraries/stdlib/src/kotlin/text/Strings.kt`, `libraries/stdlib/test/text/StringTest.kt`, `ReadMe.md`, `license/README.md`, `license/LICENSE.txt`. GitHub Linguist label: Kotlin.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

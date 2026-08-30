@@ -3,6 +3,139 @@
   "language_slug": "swift",
   "repositories": [
     {
+      "slug": "swift-log-level-ordering",
+      "path_slug": "logger-level-maps-seven-severities-to-a-complete-tested-order",
+      "repository": "apple/swift-log",
+      "url": "https://github.com/apple/swift-log",
+      "primary_language": "Swift",
+      "language_evidence": "Logger.Level, its Comparable conformance, the package manifest, and the focused ordering tests are first-party Swift; GitHub labels the repository Swift.",
+      "description": "The production Swift logging API gives its seven named log levels a small explicit integral order and tests every pairwise comparison.",
+      "source_kind": "production",
+      "purpose_evidence": "swift-log is the official production logging API package for the Swift server ecosystem, with Logger.Level forming part of its public logging contract.",
+      "why_study": "Study how a finite enum becomes a total order through one explicit mapping, one comparison operator, and an exhaustive table-driven test.",
+      "learn": [
+        "Map each enum case to one stable comparison value.",
+        "Implement Comparable by comparing those mapped values.",
+        "Use every ordered pair of cases to verify a complete ordering contract."
+      ],
+      "prerequisites": [
+        "The global novice Swift baseline: enum cases, functions, switch expressions, extensions, arrays, operators, and focused tests.",
+        "Comparable is Swift's standard protocol for values that define the less-than operator; this path uses only that one local requirement."
+      ],
+      "concepts_developed": [
+        "Giving named states an explicit total order.",
+        "Separating a public enum from its private comparison representation.",
+        "Testing every pair in a small finite domain."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Enum ordering, protocol conformance, explicit mappings, and exhaustive finite-domain tests transfer directly to priority, severity, and lifecycle code."
+      },
+      "learning_path": {
+        "goal": "Understand how swift-log defines and verifies one unambiguous order across all Logger.Level values.",
+        "start_here": {
+          "path": "Sources/Logging/Logger.swift",
+          "reason": "Logger.Level, naturalIntegralValue, and the complete less-than implementation appear together in this file."
+        },
+        "supporting_files": [
+          "Tests/LoggingTests/LoggingTest.swift",
+          "Sources/Logging/Docs.docc/Reference/Logger-Level.md",
+          "README.md",
+          "Package.swift",
+          "LICENSE.txt"
+        ],
+        "trace": "Read the seven Logger.Level cases, follow naturalIntegralValue's switch from trace through critical, compare two mapped values in the less-than operator, then use logLevelOrdering to check the expected result for every pair."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "enum extension",
+            "Comparable conformance",
+            "computed mapping property"
+          ],
+          "reason": "The path adds one standard protocol conformance to an enum through an explicit switch and a short operator implementation."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one fixed mapping",
+            "one direct comparison"
+          ],
+          "reason": "Each input is one of seven visible cases and every result follows from comparing two local integers."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one enum implementation",
+            "one focused test"
+          ],
+          "reason": "One source file and one table-driven test contain the complete selected contract."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "seven stable cases",
+            "total ordering"
+          ],
+          "reason": "The only constraint is that all seven cases retain one consistent order."
+        },
+        "placement": "The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The explicit switch makes every case-to-value decision visible and keeps the comparison operator free of special cases.",
+        "architecture": "The ordering stays beside Logger.Level and requires no separate subsystem or runtime state.",
+        "naming_and_idiom": "Level case names and naturalIntegralValue state their roles, while the Comparable extension follows ordinary Swift organization.",
+        "tests": "logLevelOrdering enumerates the seven cases and verifies the less-than result for all 49 ordered pairs.",
+        "documentation": "The package README and Logger.Level reference explain the logging API and the meaning of its public levels.",
+        "traceability": "Every comparison test reaches the same mapping property and one-line less-than operator.",
+        "maintainability": "Adding or reordering a case requires one explicit switch edit and is exposed by the exhaustive pairwise test.",
+        "educational_value": "A novice can see a complete production ordering contract without first learning the rest of the logging backend."
+      },
+      "inspection": {
+        "commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "Sources/Logging/Logger.swift",
+          "Tests/LoggingTests/LoggingTest.swift",
+          "Sources/Logging/Docs.docc/Reference/Logger-Level.md",
+          "README.md",
+          "Package.swift",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "enum cases",
+          "switch mapping",
+          "less-than comparison",
+          "table-driven tests"
+        ],
+        "incidental_concepts": [
+          "Comparable protocol conformance"
+        ],
+        "reason": "The complete behavior is a fixed switch plus one comparison; Comparable needs one local sentence and does not add nonlocal reasoning."
+      }
+    },
+    {
       "slug": "tagged",
       "path_slug": "tagged-value-identity",
       "repository": "pointfreeco/swift-tagged",

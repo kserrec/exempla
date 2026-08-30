@@ -1,6 +1,6 @@
 # Shell
 
-4 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+5 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,86 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [bats-core/bats-file](https://github.com/bats-core/bats-file)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
+**Source:** Production software
+
+A production Bats helper checks whether a path names a regular file and emits a focused diagnostic only on failure.
+
+**Why study it:** Follow one Bash file test through its success and failure outcomes, including the exact diagnostic that makes a failed test actionable.
+
+**Short context:**
+
+- A Bats assertion returns zero on success and nonzero on failure so the surrounding test can report it.
+
+**Prerequisites:**
+
+- The global novice Shell baseline: functions, variables, conditionals, file tests, pipelines, exit status, and focused tests.
+- Bats stores a command's exit status and output for assertions; bats-support turns key/value text into the three-line failure shown in the tests.
+
+**Concepts this path develops:**
+
+- Using `[[ -f path ]]` as the exact regular-file contract.
+- Keeping the success path silent while making failure descriptive.
+- Verifying both exit status and diagnostic output.
+
+**What you can learn:**
+
+- Use Bash's regular-file test to distinguish a file from a directory or missing path.
+- Let a successful assertion return without producing output.
+- Send a labeled path diagnostic through shared formatting helpers when the assertion fails.
+
+**Learning path:**
+
+- **Goal:** Understand how bats-file assert_file_exists distinguishes a regular file from other paths and reports an exact failure.
+- **Start here:** [`src/file.bash`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/src/file.bash) — The public function contains the complete path capture, regular-file condition, optional display substitution, and failure pipeline.
+- **Then read:**
+  - [`test/51-assert-10-assert_file_exists.bats`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/test/51-assert-10-assert_file_exists.bats)
+  - [`README.md`](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/README.md)
+- **Trace:** Capture the path, evaluate `[[ ! -f ]]`, return silently when it is a file, otherwise optionally shorten the displayed path and pipe its label through decoration into fail; then match status and all three output lines in the direct tests.
+
+**Why this level:**
+
+- **Language technique 1:** Functions, variables, `[[ -f ]]`, parameter expansion, and pipelines are direct Shell techniques.
+- **Behavioral reasoning 1:** One synchronous file predicate determines whether the function stays silent or fails locally.
+- **Design span 1:** The assertion delegates presentation to named helpers, while the full decision remains in one focused unit.
+- **Constraint burden 2:** A small stable assertion API preserves routine status and diagnostic guarantees.
+- **Novice accessibility floor 1:** The central branch is introductory Shell, and the cosmetic path substitution and formatter calls can each be explained locally without a separate topic.
+  - **Central concepts:** a Bash regular-file test; silent success and explicit failure; checking status and output
+  - **Incidental concepts:** optional path text substitution; shared diagnostic formatting helpers
+- **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** CC0-1.0 ([evidence 1](https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** bats-core publishes bats-file as a reusable filesystem assertion library for real Bats test suites, with documented installation, behavior, and releases.
+
+**Language evidence:** The public assertion, module loading, and direct Bats tests are first-party Bash; GitHub labels the repository Shell.
+
+**Coding relevance:**
+
+Filesystem predicates, explicit success and failure behavior, diagnostic pipelines, and boundary tests transfer directly to Shell automation.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The success condition and failure data are explicit, with presentation delegated to the library's shared formatting layer.
+- **Architecture:** One public assertion owns the predicate and reuses documented bats-support helpers for consistent diagnostics.
+- **Naming and idiom:** assert_file_exists, file, path, status, output, and fail describe the Shell test contract directly.
+- **Tests:** Five direct Bats cases verify silent success, exact failure status and output, plus prefix, suffix, and infix display substitutions.
+- **Documentation:** The README defines assertion status, stderr behavior, the public function, failure example, and optional path display control.
+- **Traceability:** The single condition maps directly to the success and failure tests, and the display expression maps to three focused substitution tests.
+- **Maintainability:** A narrow predicate, shared output helpers, and exact-output assertions bound future changes clearly.
+- **Educational value:** The path shows how a tiny production Shell assertion couples a basic predicate with useful failure evidence.
+
+**Inspection record:** commit `6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599`, inspected 2026-08-30. Review passes: Codex Level 1 language-breadth pass. Files inspected: `src/file.bash`, `test/51-assert-10-assert_file_exists.bats`, `README.md`, `LICENSE`. GitHub Linguist label: Shell.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

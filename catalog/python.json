@@ -3,6 +3,135 @@
   "language_slug": "python",
   "repositories": [
     {
+      "slug": "more-itertools-first",
+      "path_slug": "first-returns-the-first-item-or-a-default-and-rejects-an-empty-iterable-without-one",
+      "repository": "more-itertools/more-itertools",
+      "url": "https://github.com/more-itertools/more-itertools",
+      "primary_language": "Python",
+      "language_evidence": "The exported first implementation, its docstring, and the focused FirstTests class are first-party Python; GitHub labels the repository Python.",
+      "description": "A production iterator utility that returns the first available item, uses an explicit fallback for an empty input, or raises when no fallback was supplied.",
+      "source_kind": "production",
+      "purpose_evidence": "more-itertools is a maintained installable Python package whose README publishes first among its application-facing iterable selection tools.",
+      "why_study": "Read one short production function that handles a successful loop, an empty input with a fallback, and an empty input that must report an error.",
+      "learn": [
+        "Return immediately when the loop sees the first item.",
+        "Distinguish an omitted default from a caller-supplied default value.",
+        "Connect each empty-input outcome to a focused test."
+      ],
+      "prerequisites": [
+        "The global novice Python baseline: functions, loops, iterables, default arguments, exceptions, imports, and focused tests.",
+        "The private marker means ‘the caller did not supply a default’; an identity check distinguishes that case from any real fallback value."
+      ],
+      "concepts_developed": [
+        "Using an early return to select the first produced item.",
+        "Representing an omitted optional argument with a private marker.",
+        "Making empty-input behavior explicit through either a fallback or an exception."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Early returns, optional fallbacks, empty-input contracts, and direct edge-case tests are broadly transferable programming practices."
+      },
+      "learning_path": {
+        "goal": "Understand how more-itertools first selects one item while making both forms of empty-input behavior explicit.",
+        "start_here": {
+          "path": "more_itertools/more.py",
+          "reason": "The first function contains the complete loop, omitted-default check, error, and fallback return."
+        },
+        "supporting_files": [
+          "tests/test_more.py",
+          "README.rst"
+        ],
+        "trace": "Enter first with an iterable and optional default, return the first loop item if one exists, otherwise compare the default with the private marker, raise or return the fallback, then match those paths to the four FirstTests cases."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one direct function",
+            "ordinary loop and early return",
+            "one private default marker"
+          ],
+          "reason": "The behavior uses a direct loop, returns, a default argument, an identity check, and one ordinary exception."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "first-item success",
+            "two explicit empty-input outcomes"
+          ],
+          "reason": "All outcomes are synchronous, local, and visible in one short control-flow sequence."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public function",
+            "one focused test class"
+          ],
+          "reason": "One implementation unit and four direct tests contain the complete selected contract."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "arbitrary iterables",
+            "caller-supplied fallback",
+            "missing-fallback error"
+          ],
+          "reason": "A small stable API distinguishes two empty-input policies, which is a routine local production safeguard."
+        },
+        "placement": "The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation exposes its complete decision sequence without helper indirection or duplicated branches.",
+        "architecture": "A narrow exported function and one focused test class are proportionate to the behavior.",
+        "naming_and_idiom": "first, iterable, default, item, and the private marker communicate their roles using ordinary Python conventions.",
+        "tests": "Four passing direct tests cover a generator with many items, one item, an empty input that raises, and an empty input with a fallback.",
+        "documentation": "The docstring gives successful and fallback examples, explains the error, and names the generator use case; the README indexes the public function.",
+        "traceability": "Each return or exception in first corresponds to a named FirstTests method.",
+        "maintainability": "The small signature, explicit marker, and direct edge cases make future contract changes easy to bound.",
+        "educational_value": "The path turns a familiar loop into a complete production API with precise empty-input behavior."
+      },
+      "inspection": {
+        "commit": "2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex follow-up lower-level investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "more_itertools/more.py",
+          "tests/test_more.py",
+          "README.rst",
+          "pyproject.toml",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Python",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "looping over an iterable",
+          "early return",
+          "fallback or exception on empty input"
+        ],
+        "incidental_concepts": [
+          "a private object used to mean that no default was supplied"
+        ],
+        "reason": "All central ideas are in the novice Python baseline, and the private marker needs only one local sentence before every test result is predictable."
+      }
+    },
+    {
       "slug": "more-itertools-chunked",
       "path_slug": "chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract",
       "repository": "more-itertools/more-itertools",

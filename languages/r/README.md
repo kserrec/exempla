@@ -1,6 +1,6 @@
 # R
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,85 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [r-lib/scales](https://github.com/r-lib/scales)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+The production scales package replaces negative and positive infinity with the two ends of a supplied range while preserving finite values and missing values.
+
+**Why study it:** Read a small vectorized R function whose two logical selections correspond exactly to two assignments and one mixed-input test.
+
+**Prerequisites:**
+
+- The global novice R baseline: functions, default arguments, vectors, logical indexing, assignment, Inf, NA, and focused testthat expectations.
+- force(range) evaluates the supplied range before the two assignments; it does not alter the replacement rule.
+
+**Concepts this path develops:**
+
+- Using logical masks for targeted vector replacement.
+- Treating negative and positive infinity as two distinct boundary cases.
+- Preserving unrelated and missing values during vectorized mutation.
+
+**What you can learn:**
+
+- Select vector positions by comparing values with negative or positive infinity.
+- Replace the two selected groups with the corresponding range endpoints.
+- Verify that ordinary finite values and NA remain unchanged.
+
+**Learning path:**
+
+- **Goal:** Understand how scales replaces only infinite values with explicit lower and upper limits.
+- **Start here:** [`R/bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/R/bounds.R) — The documentation and complete oob_squish_infinite implementation appear together in this file.
+- **Then read:**
+  - [`tests/testthat/test-bounds.R`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/tests/testthat/test-bounds.R)
+  - [`man/oob.Rd`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/man/oob.Rd)
+  - [`README.md`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/README.md)
+  - [`DESCRIPTION`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/DESCRIPTION)
+  - [`LICENSE.md`](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md)
+- **Trace:** Evaluate range, select entries equal to -Inf and assign range[1], select entries equal to Inf and assign range[2], return x, then compare every element of the mixed test vector with its expected result.
+
+**Why this level:**
+
+- **Language technique 1:** The path uses standard novice R vector selection and replacement with a default argument.
+- **Behavioral reasoning 1:** Two visible masks fully determine the local synchronous result.
+- **Design span 1:** One source function and one focused test expectation contain the complete contract.
+- **Constraint burden 1:** The function has two explicit exceptional values and otherwise preserves its input vector.
+- **Novice accessibility floor 1:** All selected behavior is standard novice vector manipulation; force needs one local sentence and can be ignored when predicting the outputs.
+  - **Central concepts:** vectors; logical comparisons; indexed replacement; infinite and missing values
+  - **Incidental concepts:** eagerly evaluating range with force
+- **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** scales is a maintained R package for mapping data to perceptual properties, and its documented out-of-bounds functions are installed public APIs.
+
+**Language evidence:** oob_squish_infinite, its package documentation, and the direct testthat expectation are first-party R; GitHub labels the repository R.
+
+**Coding relevance:**
+
+Logical indexing, selective replacement, boundary values, and mixed-input tests are general R data-processing techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The two masks and assignments expose the complete behavior directly, without loops or helper indirection.
+- **Architecture:** The function lives with the package's related out-of-bounds policies and remains independently readable.
+- **Naming and idiom:** oob_squish_infinite and range communicate the policy, while logical indexing is idiomatic vectorized R.
+- **Tests:** One direct expectation covers -Inf, finite values below and above the range, an interior value, both endpoints, NA, and Inf.
+- **Documentation:** Roxygen source documentation and the generated oob manual page distinguish this function from the package's other out-of-bounds policies.
+- **Traceability:** The first and final expected elements exercise the two assignments; every middle element verifies preservation.
+- **Maintainability:** The two replacement rules are separate and symmetrical, making changes to either boundary easy to isolate.
+- **Educational value:** The path demonstrates useful production vectorization through a seven-element example a novice can predict by hand.
+
+**Inspection record:** commit `04fc3331af14da0d5ca1919f37c6c35d6fc512bb`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `R/bounds.R`, `tests/testthat/test-bounds.R`, `man/oob.Rd`, `README.md`, `DESCRIPTION`, `LICENSE.md`. GitHub Linguist label: R.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

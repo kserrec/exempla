@@ -1344,6 +1344,22 @@
       "failed_requirement": "calculated lower-level accessibility",
       "evidence": "At commit dbf4b2dd2eb7c23be2773c89eb059dadd6436f94, the production module is readable, licensed, and tested, but its meaningful behavior is a recursive JSON encoder and parser with grammar dispatch, escape handling, numeric rules, position state, nested structures, and precise errors. Parser theory and format constraints are central, requiring at least Level 3.",
       "reconsider": "Reconsider only for a production Level 3 place or after policy changes; do not isolate a trivial helper from the parser to manufacture a lower Level."
+    },
+    {
+      "repository": "microsoft/GSL",
+      "language": "C++",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "genuine learning value without Level gaming",
+      "evidence": "At commit 417ef685eafd626db765f0027b7fc5a0057e0770, narrow_cast is only a one-line template that forwards its input to static_cast<T>. Isolating that wrapper from GSL's meaningful lifetime, ownership, and contract utilities would manufacture a Level 1 entry without a substantive independent behavior to study.",
+      "reconsider": "Reconsider only a materially distinct non-wrapper C++ behavior with direct first-party tests, production relevance, and an honestly calculated Level 1 accessibility floor."
+    },
+    {
+      "repository": "raysan5/raylib",
+      "language": "C",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "direct test quality and implementation-to-test traceability",
+      "evidence": "At commit 9f3cadf1e618f125bd9b282c7759f8cb26ce17fc, Clamp is a readable production C utility, but the pinned first-party tree provides no direct automated assertion or deterministic golden verification for its below-range, in-range, and above-range behavior. Examples that merely use the library do not establish the selected function's contract.",
+      "reconsider": "Reconsider after pinned first-party tests directly verify Clamp's lower-bound, interior, upper-bound, and boundary-equality behavior."
     }
   ]
 }

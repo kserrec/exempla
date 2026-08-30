@@ -3,6 +3,140 @@
   "language_slug": "typescript",
   "repositories": [
     {
+      "slug": "vscode-remove-fast-without-order",
+      "path_slug": "remove-fast-without-keeping-order-replaces-one-item-with-the-last-before-popping",
+      "repository": "microsoft/vscode",
+      "url": "https://github.com/microsoft/vscode",
+      "primary_language": "TypeScript",
+      "language_evidence": "The array utility, its focused unit test, and its production menu-service caller are first-party TypeScript; GitHub labels the repository TypeScript.",
+      "description": "A production Visual Studio Code array utility removes an indexed item in constant time by moving the final item into its place before popping the array.",
+      "source_kind": "production",
+      "purpose_evidence": "The utility ships in the Code - OSS source tree and is called by the production menu service when it removes a menu item without requiring stable order.",
+      "why_study": "See a short, named performance tradeoff expressed with ordinary indexing, assignment, a branch, and pop, then verified through successive removals.",
+      "learn": [
+        "Replace an interior item with the array's last item when order is not part of the contract.",
+        "Handle removal of the last item without an unnecessary assignment.",
+        "Read tests that make the intentional order change visible."
+      ],
+      "prerequisites": [
+        "The global novice TypeScript baseline: generic functions, arrays, indexing, assignment, conditionals, arithmetic, mutation, and focused tests.",
+        "The caller supplies a valid index and accepts that the remaining items may change order."
+      ],
+      "concepts_developed": [
+        "Trading stable order for constant-time removal.",
+        "Using the last array item to fill an interior gap.",
+        "Making a mutation contract explicit in a function name and tests."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Array mutation, indexing, explicit performance tradeoffs, and contract-focused tests are broadly useful programming techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how Visual Studio Code removes one array item quickly when preserving order is unnecessary.",
+        "start_here": {
+          "path": "src/vs/base/common/arrays.ts",
+          "reason": "removeFastWithoutKeepingOrder contains the complete branch, replacement, and pop sequence."
+        },
+        "supporting_files": [
+          "src/vs/base/test/common/arrays.test.ts",
+          "src/vs/platform/actions/common/menuService.ts",
+          "README.md",
+          "package.json",
+          "LICENSE.txt"
+        ],
+        "trace": "Compute the last valid index, replace the requested slot only when it precedes that last item, pop the final slot, then follow the focused test through three removals and the menu service's production call."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one generic function",
+            "ordinary array indexing",
+            "assignment and pop"
+          ],
+          "reason": "The implementation uses beginner TypeScript array operations and one generic type parameter that simply preserves the element type."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "interior-index branch",
+            "last-index case"
+          ],
+          "reason": "The complete behavior is one local branch followed by one pop, with no callbacks or hidden state."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one utility function",
+            "one focused test",
+            "one production caller"
+          ],
+          "reason": "One implementation and one direct unit test define the contract; the caller only confirms its real production use."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "valid caller-supplied index",
+            "intentional order instability",
+            "constant-time removal goal"
+          ],
+          "reason": "The small production contract requires callers to accept reordered survivors in exchange for constant-time removal."
+        },
+        "placement": "The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The four-line implementation exposes the complete optimization and contains no helper indirection.",
+        "architecture": "A general array primitive lives in the base utility module and is reused by the menu service.",
+        "naming_and_idiom": "removeFastWithoutKeepingOrder names both the operation and its central tradeoff before a caller reads the body.",
+        "tests": "The focused array test performs three successive indexed removals and asserts the reordered contents after each step.",
+        "documentation": "The repository README identifies the Code - OSS product source, while the function name and test make the local contract explicit.",
+        "traceability": "Each tested array state follows directly from either the replacement branch or the final pop.",
+        "maintainability": "The utility centralizes a subtle mutation so production callers do not reimplement it inconsistently.",
+        "educational_value": "The path makes a real algorithmic tradeoff concrete using only novice array operations."
+      },
+      "inspection": {
+        "commit": "e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "src/vs/base/common/arrays.ts",
+          "src/vs/base/test/common/arrays.test.ts",
+          "src/vs/platform/actions/common/menuService.ts",
+          "README.md",
+          "package.json",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/microsoft/vscode/blob/e3ce07e8fe526cd0fdd39a4da95f376bf65cfa2d/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "TypeScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "array indexing",
+          "conditional assignment",
+          "removing the final array item"
+        ],
+        "incidental_concepts": [
+          "one unconstrained generic type parameter"
+        ],
+        "reason": "Every central operation belongs to the novice TypeScript baseline, and the generic parameter only says that the array may contain any one element type."
+      }
+    },
+    {
       "slug": "mitt",
       "path_slug": "one-small-event-emitter-keeps-named-and-wildcard-subscriptions-type",
       "repository": "developit/mitt",

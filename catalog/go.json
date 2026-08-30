@@ -3,6 +3,138 @@
   "language_slug": "go",
   "repositories": [
     {
+      "slug": "go-strings-cut",
+      "path_slug": "strings-cut-splits-around-the-first-separator-and-reports-whether-it-was-found",
+      "repository": "golang/go",
+      "url": "https://github.com/golang/go",
+      "primary_language": "Go",
+      "language_evidence": "The public strings API, shared stringslite implementation, examples, and table tests are first-party Go in the official language repository.",
+      "description": "Go's standard strings.Cut function splits text around the first separator and returns an explicit found result for the missing case.",
+      "source_kind": "production",
+      "purpose_evidence": "golang/go is the official implementation of the Go language and standard library, where strings.Cut is a stable application-facing API.",
+      "why_study": "Follow one standard-library string operation from its public entry through a direct branch, then check beginning, middle, end, empty, and missing separators in table tests.",
+      "learn": [
+        "Find the first occurrence of a separator and slice around it.",
+        "Return several named results so callers can distinguish an empty piece from a missing separator.",
+        "Use a table to cover separator positions and empty-string boundaries."
+      ],
+      "prerequisites": [
+        "The global novice Go baseline: functions, strings, conditionals, packages, multiple return values, slices of strings, and focused tests.",
+        "Index returns the first separator position or -1; string slicing uses byte offsets and does not copy the underlying text."
+      ],
+      "concepts_developed": [
+        "Splitting once without discarding whether a separator was present.",
+        "Using string slices before and after a located boundary.",
+        "Defining exact empty and missing cases with a compact test table."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "One-time splitting, explicit success results, boundary slicing, and table tests are broadly reusable programming techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how Go's strings.Cut returns the text around the first separator without confusing an empty result with a separator that was not found.",
+        "start_here": {
+          "path": "src/strings/strings.go",
+          "reason": "The public documentation and entry point establish the exact three-result contract."
+        },
+        "supporting_files": [
+          "src/internal/stringslite/strings.go",
+          "src/strings/strings_test.go",
+          "src/strings/example_test.go",
+          "README.md"
+        ],
+        "trace": "Enter strings.Cut, follow the standard library's shared stringslite implementation, locate the first separator, return the two slices and true or the original string, empty suffix, and false, then compare all eight boundary rows and the four printed examples."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "ordinary strings and slicing",
+            "one conditional",
+            "named multiple returns"
+          ],
+          "reason": "The implementation uses introductory Go string, branch, package, and multiple-return syntax."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "separator-found branch",
+            "missing-separator branch"
+          ],
+          "reason": "One index result selects between two local deterministic returns."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "public strings facade",
+            "shared internal stringslite implementation",
+            "direct examples and table tests"
+          ],
+          "reason": "Two clear standard-library modules share the implementation while keeping the selected trace short."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "first separator only",
+            "exact empty and missing results"
+          ],
+          "reason": "A small local contract and plainly observable outputs dominate the behavior."
+        },
+        "placement": "The four scores 1/1/2/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation states the successful slices and missing fallback directly, with no mutable state or duplicated search.",
+        "architecture": "The public facade and shared lightweight implementation have an explicit narrow boundary used inside the standard library.",
+        "naming_and_idiom": "Cut, before, after, found, separator, and Index follow standard Go string vocabulary.",
+        "tests": "Eight table rows cover separators at every position, the whole string, the empty separator, absent separators, and empty input; executable examples show the public results.",
+        "documentation": "The public comment defines the first-match rule, all return values, and the missing case, while examples print representative calls.",
+        "traceability": "Each internal return maps directly to table columns and a printed example.",
+        "maintainability": "A stable public contract, shared implementation, and exhaustive small boundary table make changes easy to review.",
+        "educational_value": "The path is a gentle introduction to multiple returns and precise boundary behavior in production Go."
+      },
+      "inspection": {
+        "commit": "603439a1c6f2d37c7f02e246342847056ed04c21",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex follow-up lower-level investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "src/strings/strings.go",
+          "src/internal/stringslite/strings.go",
+          "src/strings/strings_test.go",
+          "src/strings/example_test.go",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/golang/go/blob/603439a1c6f2d37c7f02e246342847056ed04c21/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Go",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "finding a substring",
+          "string slicing",
+          "multiple return values"
+        ],
+        "incidental_concepts": [
+          "the public package reuses a small internal implementation"
+        ],
+        "reason": "All central operations are introductory Go, and the internal sharing boundary needs only one sentence before every test row is predictable."
+      }
+    },
+    {
       "slug": "go-humanize-comma",
       "path_slug": "comma-formats-every-int64-with-three-digit-groups-and-exact-sign-handling",
       "repository": "dustin/go-humanize",

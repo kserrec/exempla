@@ -3,6 +3,139 @@
   "language_slug": "kotlin",
   "repositories": [
     {
+      "slug": "kotlin-substring-after",
+      "path_slug": "substring-after-returns-text-after-the-first-delimiter-or-an-explicit-fallback",
+      "repository": "JetBrains/kotlin",
+      "url": "https://github.com/JetBrains/kotlin",
+      "primary_language": "Kotlin",
+      "language_evidence": "The standard-library substringAfter implementation, its KDoc, and its focused multiplatform tests are first-party Kotlin; GitHub labels the repository Kotlin.",
+      "description": "Kotlin's production standard library returns the text after the first string delimiter, the original string when it is missing, or a caller-supplied fallback.",
+      "source_kind": "production",
+      "purpose_evidence": "This official repository builds Kotlin and its shipped standard library; substringAfter is a documented public kotlin.text extension used by Kotlin programs across supported platforms.",
+      "why_study": "Follow one familiar string operation through delimiter search, a missing-result branch, substring boundaries, defaults, and direct examples.",
+      "learn": [
+        "Find the first occurrence of a delimiter string.",
+        "Return a fallback when the search reports no match.",
+        "Start the result after the full delimiter and allow an empty suffix."
+      ],
+      "prerequisites": [
+        "The global novice Kotlin baseline: functions, extension functions, parameters, default arguments, val, conditionals, string indices, indexOf, substring, and focused assertions.",
+        "indexOf returns -1 when the delimiter is absent; a delimiter found at the end produces an empty suffix."
+      ],
+      "concepts_developed": [
+        "Building a string helper from search and slicing primitives.",
+        "Making missing-delimiter behavior configurable through a default parameter.",
+        "Testing found, end-of-string, missing, and custom-fallback cases."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "String search, slicing, sentinel handling, default parameters, and edge-case tests transfer directly to everyday application code."
+      },
+      "learning_path": {
+        "goal": "Understand how Kotlin's standard library defines the result after a delimiter, including both forms of missing-delimiter behavior.",
+        "start_here": {
+          "path": "libraries/stdlib/src/kotlin/text/Strings.kt",
+          "reason": "The KDoc and complete string-delimiter overload of substringAfter appear together in this file."
+        },
+        "supporting_files": [
+          "libraries/stdlib/test/text/StringTest.kt",
+          "ReadMe.md",
+          "license/README.md",
+          "license/LICENSE.txt"
+        ],
+        "trace": "Call indexOf with the delimiter, return missingDelimiterValue when the result is -1, otherwise call substring from index plus delimiter length to the string length, then match the focused test's found, trailing, missing, and custom-fallback assertions."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one string extension function",
+            "one default parameter",
+            "ordinary search and substring calls"
+          ],
+          "reason": "The implementation uses introductory Kotlin function, value, conditional, and string operations."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "delimiter-found branch",
+            "delimiter-missing branch"
+          ],
+          "reason": "One local search result selects between a fallback and one substring calculation."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one standard-library function",
+            "one focused test method"
+          ],
+          "reason": "One source function and one direct test section contain the complete selected contract."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "first matching delimiter",
+            "trailing delimiter",
+            "caller-selectable missing fallback"
+          ],
+          "reason": "The function has a small explicit string contract with locally tested edge cases."
+        },
+        "placement": "The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The handwritten standard-library function exposes its entire search, branch, and slice sequence in three statements.",
+        "architecture": "The extension composes existing string primitives and stays beside the related before, last, and delimiter overloads.",
+        "naming_and_idiom": "substringAfter, delimiter, and missingDelimiterValue state the operation and both outcomes using ordinary Kotlin conventions.",
+        "tests": "substringDelimited directly covers a string delimiter, a delimiter at the end, a missing delimiter with the default original-string result, and a custom fallback.",
+        "documentation": "The source KDoc defines first-occurrence, missing-delimiter, and fallback behavior, while the repository documentation establishes the official standard-library context.",
+        "traceability": "Found assertions follow the substring branch; the two missing assertions distinguish the default and caller-supplied fallback paths.",
+        "maintainability": "The implementation delegates search and slicing semantics to established string primitives while keeping policy in one branch.",
+        "educational_value": "The path turns familiar string operations into a complete, precisely tested public API contract."
+      },
+      "inspection": {
+        "commit": "b143655f3dca9afacf7ef5e10f40868cc7e28f43",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "libraries/stdlib/src/kotlin/text/Strings.kt",
+          "libraries/stdlib/test/text/StringTest.kt",
+          "ReadMe.md",
+          "license/README.md",
+          "license/LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0 AND LicenseRef-Third-Party-Notices",
+        "urls": [
+          "https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/README.md",
+          "https://github.com/JetBrains/kotlin/blob/b143655f3dca9afacf7ef5e10f40868cc7e28f43/license/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Kotlin",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "string search",
+          "if expression",
+          "default argument",
+          "substring boundaries"
+        ],
+        "incidental_concepts": [
+          "extension-function receiver syntax"
+        ],
+        "reason": "All behavior uses novice string and branch operations; extension syntax needs one local sentence and introduces no extra state or architecture."
+      }
+    },
+    {
       "slug": "clikt",
       "path_slug": "clikt-turns-a-delegated-command-dsl-into-recursively-parsed-finalized",
       "repository": "ajalt/clikt",

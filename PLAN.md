@@ -9,9 +9,11 @@ are historical.
 - The canonical schema is version 5.
 - The preserved pre-expansion baseline contains 125 qualified learning paths
   from 124 public repositories across 20 languages.
-- The completed expansion catalog contains 138 paths from 137 repositories:
-  133 production paths and 5 educational exemplars. The 240-path 3/3/2/2/2
-  grid has 102 honest open slots, including 56 Level 1 and 40 Level 2 gaps.
+- The completed expansion catalog plus the follow-up Level 1 breadth batches
+  contains 152 paths from 146 repositories: 147 production paths and 5
+  educational exemplars. The 240-path 3/3/2/2/2 grid has 88 honest open slots,
+  including 42 Level 1 and 40 Level 2 gaps. Seventeen of 20 languages have at
+  least one qualified Level 1 path.
   Ordinary validation accepts those gaps; `--complete` is reserved for a
   genuinely full grid.
 - Every accepted path declares `source_kind` and `purpose_evidence`. Production
@@ -116,6 +118,28 @@ are historical.
 - [x] Regenerate all learner pages; run unit tests, ordinary validation,
   generated-output checks, source-class leakage checks, and the final diff
   audit. Run `--complete` only if all 240 slots genuinely qualify.
+
+## Completed Level 1 language-breadth target
+
+This was intentionally an oversized research phase whose Steps were the
+single-pass execution units. The verified starting state is 7 of 20 languages
+with at least one qualified Level 1 path. Completion required at least 17 of 20
+without lowering source qualification, scoring, novice accessibility, evidence,
+or verification standards.
+
+### Phase 14 — Reach at least 85% Level 1 language coverage
+
+- [x] Step 1 — Research Dart, C++, Lua, Shell, and Swift at pinned revisions;
+  integrate every genuinely qualified Level 1 path and record serious failures.
+- [x] Step 2 — Research TypeScript, C, R, PowerShell, and Rust at pinned
+  revisions; integrate every genuinely qualified Level 1 path and record serious
+  failures.
+- [x] Step 3 — If fewer than 17 languages are covered, research Kotlin, Scala,
+  and Objective-C as the fallback pool until the threshold is met or every
+  remaining language has evidence-backed stopping evidence.
+- [x] Step 4 — Reconcile the active audit, literal counts, progression order,
+  generated pages, and the final Level 1 coverage result; run the full supported
+  verification gates.
 
 ## Completed learner-centered remediation
 

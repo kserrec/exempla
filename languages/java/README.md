@@ -1,6 +1,6 @@
 # Java
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,82 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [google/guava](https://github.com/google/guava)
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+A stable Guava integer utility that returns the nearest value inside inclusive bounds and rejects a lower bound greater than the upper bound.
+
+**Why study it:** See how a tiny public method validates its range and composes minimum and maximum operations, then compare every boundary with direct tests.
+
+**Prerequisites:**
+
+- The global novice Java baseline: static methods, integers, conditionals, exceptions, imports, and focused tests.
+- Math.max raises a value to the lower bound and Math.min lowers that result to the upper bound.
+
+**Concepts this path develops:**
+
+- Separating an invalid contract from ordinary result calculation.
+- Expressing inclusive clamping through two standard operations.
+- Using boundary-focused assertions to define a stable utility API.
+
+**What you can learn:**
+
+- Validate that an inclusive numeric range is ordered.
+- Compose max and min to keep a value between two bounds.
+- Test values inside, below, above, equal to a bound, and against a collapsed range.
+
+**Learning path:**
+
+- **Goal:** Understand how Guava constrains any int to a valid inclusive range and makes reversed bounds an explicit error.
+- **Start here:** [`guava/src/com/google/common/primitives/Ints.java`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava/src/com/google/common/primitives/Ints.java) — The Javadoc, validation, and complete numeric transformation are adjacent in one public method.
+- **Then read:**
+  - [`guava-tests/test/com/google/common/primitives/IntsTest.java`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/guava-tests/test/com/google/common/primitives/IntsTest.java)
+  - [`README.md`](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/README.md)
+- **Trace:** Enter constrainToRange, reject min greater than max, raise the value to min, lower it to max, return the result, and match inside, exact-bound, below, negative-range, collapsed-range, and invalid-range cases in testConstrainToRange.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses direct Java methods, integer values, one precondition, and familiar standard-library calls.
+- **Behavioral reasoning 2:** One validation path and three local numeric outcomes remain easy to trace.
+- **Design span 1:** The complete contract is contained in one implementation unit and its focused assertions.
+- **Constraint burden 1:** A small local numeric contract and exact output dominate the behavior.
+- **Novice accessibility floor 1:** Every central concept is introductory Java, and the precondition helper needs only one local explanation before every assertion is predictable.
+  - **Central concepts:** input validation; inclusive numeric bounds; minimum and maximum composition
+  - **Incidental concepts:** Guava's checkArgument helper for throwing IllegalArgumentException
+- **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/google/guava/blob/f516e7587dd92720f61a56a3a1c0998c62806788/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** Guava publishes production core libraries for Java, and Ints.constrainToRange is a documented non-Beta public API maintained for JRE and Android users.
+
+**Language evidence:** The public Ints method, Javadoc, and focused IntsTest method are first-party Java; GitHub labels the repository Java.
+
+**Coding relevance:**
+
+Input contracts, range clamping, standard-library composition, and boundary tests are broadly transferable implementation practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The method documents and validates its precondition before a single readable result expression.
+- **Architecture:** A focused primitive utility and its direct test method are proportionate to the contract.
+- **Naming and idiom:** value, min, max, constrainToRange, checkArgument, and Math.min/Math.max state the behavior directly.
+- **Tests:** Six direct assertions cover an interior value, exact lower bound, below range, negative range, equal bounds, and reversed bounds.
+- **Documentation:** The Javadoc defines all outcomes, parameter meanings, the thrown exception, API age, and the Java 21 standard-library counterpart.
+- **Traceability:** The validation and composed return each map directly to named assertions in testConstrainToRange.
+- **Maintainability:** A stable non-Beta API, explicit contract, and complete boundary matrix keep changes tightly bounded.
+- **Educational value:** The path shows that serious Java source can be compact while still documenting, validating, and testing its full contract.
+
+**Inspection record:** commit `f516e7587dd92720f61a56a3a1c0998c62806788`, inspected 2026-08-30. Review passes: Codex follow-up lower-level investigation; Codex resumed-session source verification. Files inspected: `guava/src/com/google/common/primitives/Ints.java`, `guava-tests/test/com/google/common/primitives/IntsTest.java`, `README.md`, `LICENSE`. GitHub Linguist label: Java.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

@@ -1,6 +1,6 @@
 # C#
 
-9 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+10 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,82 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [dotnet/runtime](https://github.com/dotnet/runtime)
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+The .NET integer Clamp overload returns the nearest inclusive bound, preserves in-range values, and rejects a minimum greater than the maximum.
+
+**Why study it:** Trace a familiar numeric operation through explicit validation and three direct returns, then compare signed boundary rows and the invalid-range test.
+
+**Prerequisites:**
+
+- The global novice C# baseline: static methods, integers, conditionals, exceptions, classes, and focused tests.
+- AggressiveInlining is only a runtime optimization hint; it does not change the method's visible behavior.
+
+**Concepts this path develops:**
+
+- Checking a precondition before ordinary control flow.
+- Expressing an inclusive clamp with three obvious outcomes.
+- Reusing table data across numeric overload tests.
+
+**What you can learn:**
+
+- Reject a numeric interval whose minimum exceeds its maximum.
+- Return the lower bound, upper bound, or original value with direct branches.
+- Use shared test data to cover negative, interior, boundary, and out-of-range integers.
+
+**Learning path:**
+
+- **Goal:** Understand how .NET Math.Clamp keeps an int inside inclusive bounds and reports a reversed interval.
+- **Start here:** [`src/libraries/System.Private.CoreLib/src/System/Math.cs`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Private.CoreLib/src/System/Math.cs) — The int overload contains the full validation and three-result control flow.
+- **Then read:**
+  - [`src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs)
+  - [`README.md`](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/README.md)
+- **Trace:** Enter the int Clamp overload, call the shared exception helper when min exceeds max, otherwise return min for a low value, max for a high value, or the original value, then map those branches to Clamp_SignedInt_TestData, Clamp_Int, and the reversed-range fact.
+
+**Why this level:**
+
+- **Language technique 1:** The selected overload uses only basic C# method, branch, integer, and exception-call syntax.
+- **Behavioral reasoning 2:** A few meaningful local branches cover the complete behavior without nonlocal state.
+- **Design span 1:** The selected contract stays in one implementation file and one focused test area.
+- **Constraint burden 1:** A small local numeric contract and expected output dominate the path.
+- **Novice accessibility floor 1:** The control flow is entirely within the novice C# baseline; the attribute and shared throw helper can each be explained locally without another topic.
+  - **Central concepts:** input validation; inclusive numeric bounds; direct conditional returns
+  - **Incidental concepts:** an inlining attribute; a shared helper that throws the range exception
+- **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/dotnet/runtime/blob/aa036afce592ad80e938a35bd376222fb232cba9/LICENSE.TXT))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** dotnet/runtime is the production implementation of .NET, and Math.Clamp is a public standard-library API used by C# applications.
+
+**Language evidence:** The System.Math implementation and its xUnit theory are first-party C# in the official .NET runtime repository; GitHub labels the repository C#.
+
+**Coding relevance:**
+
+Precondition checks, numeric boundary handling, direct branches, and table-driven tests transfer to everyday application code.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation exposes validation and each result branch directly without arithmetic tricks or hidden state.
+- **Architecture:** The standard-library overload and shared numeric test table have a narrow, explicit relationship.
+- **Naming and idiom:** value, min, max, Clamp, and ThrowMinMaxException state both the ordinary contract and error plainly.
+- **Tests:** The signed table covers both bounds, an interior value, values below and above, while a separate fact verifies the reversed-range exception for int and other overloads.
+- **Documentation:** The public API is documented by .NET reference source comments and repository documentation, with parameter names matching the implementation.
+- **Traceability:** Every validation and return branch maps to a row or exception assertion in the direct Math tests.
+- **Maintainability:** Straight-line branches, shared error handling, and reusable boundary data make overload behavior easy to compare and change.
+- **Educational value:** The path is a first serious C# reading that shows production clarity and exact boundary testing inside the runtime itself.
+
+**Inspection record:** commit `aa036afce592ad80e938a35bd376222fb232cba9`, inspected 2026-08-30. Review passes: Codex follow-up lower-level investigation; Codex resumed-session source verification. Files inspected: `src/libraries/System.Private.CoreLib/src/System/Math.cs`, `src/libraries/System.Runtime/tests/System.Runtime.Extensions.Tests/System/Math.cs`, `README.md`, `LICENSE.TXT`. GitHub Linguist label: C#.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

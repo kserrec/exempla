@@ -1,6 +1,6 @@
 # Dart
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,83 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [dart-lang/core](https://github.com/dart-lang/core)
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+Dart's production collection package returns the first iterable value when one exists and null when the iterable is empty.
+
+**Why study it:** Read one compact collection getter that advances an iterator exactly once and makes the empty-input result explicit.
+
+**Prerequisites:**
+
+- The global novice Dart baseline: functions, collections, basic generics, null safety, imports, and focused tests.
+- An iterator exposes moveNext to advance and current to read the value reached; an extension getter lets any iterable use the operation like a property.
+
+**Concepts this path develops:**
+
+- Reading only the first value from an arbitrary iterable.
+- Checking iterator success before accessing its current value.
+- Representing empty input with a nullable result.
+
+**What you can learn:**
+
+- Create an iterator for an arbitrary iterable.
+- Return its current value only after the first advance succeeds.
+- Use null to represent an iterable with no first value.
+
+**Learning path:**
+
+- **Goal:** Understand how package:collection firstOrNull returns one iterable value without failing on empty input.
+- **Start here:** [`pkgs/collection/lib/src/iterable_extensions.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/iterable_extensions.dart) — The firstOrNull getter contains the complete iterator creation, one advance, successful return, and null fallback.
+- **Then read:**
+  - [`pkgs/collection/test/extensions_test.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/test/extensions_test.dart)
+  - [`pkgs/collection/README.md`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/README.md)
+  - [`pkgs/collection/pubspec.yaml`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/pubspec.yaml)
+- **Trace:** Create this.iterator, call moveNext once, return iterator.current on success or null otherwise, then match the empty, one-value, and several-value cases in the direct extension tests.
+
+**Why this level:**
+
+- **Language technique 2:** An extension getter over a generic iterable is a common Dart collection idiom, while the implementation uses only one ordinary iterator.
+- **Behavioral reasoning 1:** One synchronous boolean result selects between two direct returns.
+- **Design span 1:** One implementation unit and its direct tests contain the complete behavior.
+- **Constraint burden 1:** A small local contract with three plainly observable cases dominates the path.
+- **Novice accessibility floor 1:** The collection behavior and null result are introductory Dart; one sentence about extension syntax makes every direct test predictable.
+  - **Central concepts:** advancing an iterator once; returning a value or null for empty input
+  - **Incidental concepts:** Dart extension-getter syntax
+- **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** dart-lang/core actively maintains and publishes package:collection for application use; its README documents the package's collection utilities and public API.
+
+**Language evidence:** The collection package's public extension getter, documentation, and direct tests are first-party Dart; GitHub labels the monorepository Dart.
+
+**Coding relevance:**
+
+Iterator advancement, guarded access, nullable absence, and empty-input tests are broadly transferable collection practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation states the one advance and both outcomes directly without duplicated traversal or helper indirection.
+- **Architecture:** A narrow extension getter lives with related iterable extensions and is exported by a maintained package.
+- **Naming and idiom:** firstOrNull, iterator, moveNext, and current use standard Dart collection vocabulary.
+- **Tests:** Direct tests prove null for empty input, the sole value for one item, and only the first value for several items.
+- **Documentation:** The getter comment states its exact value-or-null contract, and the package README explains the production collection library.
+- **Traceability:** Each of the getter's two returns maps directly to a named direct assertion.
+- **Maintainability:** The tiny stable API and focused boundary tests make a behavior change easy to identify.
+- **Educational value:** The path is a gentle production example of guarded iterator access and explicit absence.
+
+**Inspection record:** commit `b80e488556bd7d72386f7e358d0b4e4a44ce0423`, inspected 2026-08-30. Review passes: Codex Level 1 language-breadth pass. Files inspected: `pkgs/collection/lib/src/iterable_extensions.dart`, `pkgs/collection/test/extensions_test.dart`, `pkgs/collection/README.md`, `pkgs/collection/pubspec.yaml`, `pkgs/collection/LICENSE`. GitHub Linguist label: Dart.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

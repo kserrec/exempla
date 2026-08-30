@@ -1,6 +1,6 @@
 # Lua
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,82 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [rxi/lume](https://github.com/rxi/lume)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+Lume's production utility library keeps a number inside a caller-supplied minimum and maximum.
+
+**Why study it:** Read one transparent expression that returns the lower bound, upper bound, or original value, then verify ordinary, negative, and collapsed ranges.
+
+**Prerequisites:**
+
+- The global novice Lua baseline: functions, local values, comparisons, boolean operators, modules, and direct tests.
+- In Lua, `a and b or c` selects b when a is true and otherwise c; here every selected numeric value is truthy.
+
+**Concepts this path develops:**
+
+- Constraining one numeric value to inclusive bounds.
+- Expressing three local outcomes with ordered comparisons.
+- Testing values below, inside, above, and at a collapsed range.
+
+**What you can learn:**
+
+- Compare the input with the lower bound first.
+- Compare with the upper bound only when the lower check did not select a result.
+- See why equal bounds always produce that one bound.
+
+**Learning path:**
+
+- **Goal:** Understand how lume.clamp returns the nearest inclusive bound or preserves an in-range number.
+- **Start here:** [`lume.lua`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/lume.lua) — The clamp function contains the complete lower, upper, and in-range decision in one readable expression.
+- **Then read:**
+  - [`test/test.lua`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/test/test.lua)
+  - [`README.md`](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/README.md)
+- **Trace:** Compare x with min, return min when it is lower, otherwise compare x with max and return max or x, then follow the seven direct rows covering inside, outside, negative, and equal-bound cases.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses introductory Lua function, comparison, and boolean-expression syntax.
+- **Behavioral reasoning 1:** The synchronous data flow is visible from left to right in one expression.
+- **Design span 1:** The selected contract stays inside one function and seven nearby assertions.
+- **Constraint burden 1:** A small local numeric contract and expected outputs dominate the path.
+- **Novice accessibility floor 1:** The central lesson is ordinary conditional selection, and one sentence about Lua's expression idiom makes all seven outcomes predictable.
+  - **Central concepts:** numeric comparisons; choosing the nearest bound
+  - **Incidental concepts:** Lua's `and`/`or` selection idiom
+- **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** Lume is a documented reusable Lua utility library for applications and games, distributed as one importable module with a direct test suite.
+
+**Language evidence:** The complete utility library, clamp implementation, and direct test rows are first-party Lua; GitHub labels the repository Lua.
+
+**Coding relevance:**
+
+Boundary checks, ordered selection, and direct edge-case tests are broadly transferable programming practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The complete algorithm is a single named expression with no state, allocation, or hidden helper behavior.
+- **Architecture:** A focused utility function lives in the library's single documented module beside its direct tests.
+- **Naming and idiom:** clamp, x, min, and max state the contract directly using conventional Lua expression style.
+- **Tests:** Seven passing direct assertions cover in-range, both bounds, negative ranges, and equal bounds.
+- **Documentation:** The README presents Lume as a reusable utility library and documents clamp among its public functions.
+- **Traceability:** Every test result follows one of the expression's three visible outcomes.
+- **Maintainability:** The one-function contract and broad small boundary matrix make regressions easy to isolate.
+- **Educational value:** The path is a comfortable first production reading in Lua with complete behavior and verification.
+
+**Inspection record:** commit `98847e7812cf28d3d64b289b03fad71dc704547d`, inspected 2026-08-30. Review passes: Codex Level 1 language-breadth pass. Files inspected: `lume.lua`, `test/test.lua`, `README.md`, `LICENSE`. GitHub Linguist label: Lua.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

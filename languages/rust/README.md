@@ -1,6 +1,6 @@
 # Rust
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,84 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [rust-lang/log](https://github.com/rust-lang/log)
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+The production Rust logging facade advances a Level to the next enum value and keeps Trace unchanged at the upper boundary.
+
+**Why study it:** Follow a three-line production method from an enum value through numeric conversion and optional reconstruction to a clear boundary fallback.
+
+**Prerequisites:**
+
+- The global novice Rust baseline: enums, methods, references, casts, arithmetic, Option, unwrap_or, assertions, and focused tests.
+- Level's cases use consecutive numeric values, and from_usize returns None when a number is outside that case range.
+
+**Concepts this path develops:**
+
+- Moving to an adjacent enum case through a stable representation.
+- Expressing a boundary case as an Option fallback.
+- Testing both an ordinary transition and an upper-bound no-op.
+
+**What you can learn:**
+
+- Advance through an enum whose cases have a stable numeric representation.
+- Use an optional conversion result to recognize the end of the enum.
+- Keep the current boundary value when no next value exists.
+
+**Learning path:**
+
+- **Goal:** Understand how log::Level moves one step through a finite enum without exceeding its final case.
+- **Start here:** [`src/lib.rs`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/src/lib.rs) — Level, from_usize, increment_severity, its documentation example, and test_level_up all appear in this file.
+- **Then read:**
+  - [`README.md`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/README.md)
+  - [`Cargo.toml`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/Cargo.toml)
+  - [`LICENSE-MIT`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT)
+  - [`LICENSE-APACHE`](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE)
+- **Trace:** Start with Level's consecutive cases, cast the current value to usize, request current plus one through from_usize, keep the current value when conversion returns None, then compare Info and Trace with test_level_up and the documentation example.
+
+**Why this level:**
+
+- **Language technique 2:** The method combines basic enum and Option operations with one locally explained representation cast.
+- **Behavioral reasoning 1:** The output depends only on the current enum case and one visible conversion result.
+- **Design span 1:** The method, conversion helper, examples, and tests are colocated in one source file.
+- **Constraint burden 1:** The selected contract has one finite sequence and one explicit end condition.
+- **Novice accessibility floor 1:** The transition and fallback are local novice concepts; the enum representation cast needs one sentence and introduces no broader unsafe or lifetime reasoning.
+  - **Central concepts:** enum values; adding one; Option fallback; boundary tests
+  - **Incidental concepts:** casting a represented enum to usize
+- **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-MIT), [evidence 2](https://github.com/rust-lang/log/blob/8034743dd9d7f7583bd9a670271483d176130911/LICENSE-APACHE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The log crate is the maintained Rust logging facade used by libraries and applications, and Level is a central public API type.
+
+**Language evidence:** Level, increment_severity, its examples, and its direct unit test are first-party Rust; GitHub labels the repository Rust.
+
+**Coding relevance:**
+
+Enum transitions, optional conversion, boundary behavior, examples, and direct unit tests are broadly transferable implementation techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The public method states the transition and boundary behavior in three expressions without branching duplication.
+- **Architecture:** The behavior stays on Level beside its representation conversion and does not depend on logger state.
+- **Naming and idiom:** increment_severity and from_usize name the two operations, while unwrap_or expresses the boundary fallback idiomatically.
+- **Tests:** The focused test verifies Info advances to Debug and Trace remains Trace; the exact test passed in the pinned crate.
+- **Documentation:** Rustdoc explains the upper boundary and includes a runnable chain from Info through Debug to Trace.
+- **Traceability:** The normal test reaches Some from from_usize, while the Trace test reaches the unwrap_or fallback.
+- **Maintainability:** The method reuses the enum's central conversion helper instead of duplicating a case-by-case transition table.
+- **Educational value:** The path gives a novice a compact, real use of Option that is easier to reason about than a larger logging flow.
+
+**Inspection record:** commit `8034743dd9d7f7583bd9a670271483d176130911`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `src/lib.rs`, `README.md`, `Cargo.toml`, `LICENSE-MIT`, `LICENSE-APACHE`. GitHub Linguist label: Rust.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

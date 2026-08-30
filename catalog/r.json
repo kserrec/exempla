@@ -3,6 +3,140 @@
   "language_slug": "r",
   "repositories": [
     {
+      "slug": "scales-squish-infinite",
+      "path_slug": "oob-squish-infinite-replaces-only-negative-and-positive-infinity-with-range-limits",
+      "repository": "r-lib/scales",
+      "url": "https://github.com/r-lib/scales",
+      "primary_language": "R",
+      "language_evidence": "oob_squish_infinite, its package documentation, and the direct testthat expectation are first-party R; GitHub labels the repository R.",
+      "description": "The production scales package replaces negative and positive infinity with the two ends of a supplied range while preserving finite values and missing values.",
+      "source_kind": "production",
+      "purpose_evidence": "scales is a maintained R package for mapping data to perceptual properties, and its documented out-of-bounds functions are installed public APIs.",
+      "why_study": "Read a small vectorized R function whose two logical selections correspond exactly to two assignments and one mixed-input test.",
+      "learn": [
+        "Select vector positions by comparing values with negative or positive infinity.",
+        "Replace the two selected groups with the corresponding range endpoints.",
+        "Verify that ordinary finite values and NA remain unchanged."
+      ],
+      "prerequisites": [
+        "The global novice R baseline: functions, default arguments, vectors, logical indexing, assignment, Inf, NA, and focused testthat expectations.",
+        "force(range) evaluates the supplied range before the two assignments; it does not alter the replacement rule."
+      ],
+      "concepts_developed": [
+        "Using logical masks for targeted vector replacement.",
+        "Treating negative and positive infinity as two distinct boundary cases.",
+        "Preserving unrelated and missing values during vectorized mutation."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Logical indexing, selective replacement, boundary values, and mixed-input tests are general R data-processing techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how scales replaces only infinite values with explicit lower and upper limits.",
+        "start_here": {
+          "path": "R/bounds.R",
+          "reason": "The documentation and complete oob_squish_infinite implementation appear together in this file."
+        },
+        "supporting_files": [
+          "tests/testthat/test-bounds.R",
+          "man/oob.Rd",
+          "README.md",
+          "DESCRIPTION",
+          "LICENSE.md"
+        ],
+        "trace": "Evaluate range, select entries equal to -Inf and assign range[1], select entries equal to Inf and assign range[2], return x, then compare every element of the mixed test vector with its expected result."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one ordinary function",
+            "logical vector indexing",
+            "two indexed assignments"
+          ],
+          "reason": "The path uses standard novice R vector selection and replacement with a default argument."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "negative-infinity replacement",
+            "positive-infinity replacement",
+            "all other values preserved"
+          ],
+          "reason": "Two visible masks fully determine the local synchronous result."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one exported function",
+            "one direct mixed-input expectation"
+          ],
+          "reason": "One source function and one focused test expectation contain the complete contract."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "two supplied endpoints",
+            "NA preservation"
+          ],
+          "reason": "The function has two explicit exceptional values and otherwise preserves its input vector."
+        },
+        "placement": "The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The two masks and assignments expose the complete behavior directly, without loops or helper indirection.",
+        "architecture": "The function lives with the package's related out-of-bounds policies and remains independently readable.",
+        "naming_and_idiom": "oob_squish_infinite and range communicate the policy, while logical indexing is idiomatic vectorized R.",
+        "tests": "One direct expectation covers -Inf, finite values below and above the range, an interior value, both endpoints, NA, and Inf.",
+        "documentation": "Roxygen source documentation and the generated oob manual page distinguish this function from the package's other out-of-bounds policies.",
+        "traceability": "The first and final expected elements exercise the two assignments; every middle element verifies preservation.",
+        "maintainability": "The two replacement rules are separate and symmetrical, making changes to either boundary easy to isolate.",
+        "educational_value": "The path demonstrates useful production vectorization through a seven-element example a novice can predict by hand."
+      },
+      "inspection": {
+        "commit": "04fc3331af14da0d5ca1919f37c6c35d6fc512bb",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex 85% Level 1 investigation",
+          "Codex resumed-session source verification"
+        ],
+        "files": [
+          "R/bounds.R",
+          "tests/testthat/test-bounds.R",
+          "man/oob.Rd",
+          "README.md",
+          "DESCRIPTION",
+          "LICENSE.md"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/r-lib/scales/blob/04fc3331af14da0d5ca1919f37c6c35d6fc512bb/LICENSE.md"
+        ]
+      },
+      "github": {
+        "primary_language": "R",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "vectors",
+          "logical comparisons",
+          "indexed replacement",
+          "infinite and missing values"
+        ],
+        "incidental_concepts": [
+          "eagerly evaluating range with force"
+        ],
+        "reason": "All selected behavior is standard novice vector manipulation; force needs one local sentence and can be ignored when predicting the outputs."
+      }
+    },
+    {
       "slug": "withr",
       "path_slug": "withr-generates-scoped-wrappers-that-evaluate-code-under-temporary-state",
       "repository": "r-lib/withr",

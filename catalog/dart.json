@@ -3,6 +3,132 @@
   "language_slug": "dart",
   "repositories": [
     {
+      "slug": "collection-first-or-null",
+      "path_slug": "first-or-null-advances-an-iterator-once-and-returns-null-for-empty-input",
+      "repository": "dart-lang/core",
+      "url": "https://github.com/dart-lang/core",
+      "primary_language": "Dart",
+      "language_evidence": "The collection package's public extension getter, documentation, and direct tests are first-party Dart; GitHub labels the monorepository Dart.",
+      "description": "Dart's production collection package returns the first iterable value when one exists and null when the iterable is empty.",
+      "source_kind": "production",
+      "purpose_evidence": "dart-lang/core actively maintains and publishes package:collection for application use; its README documents the package's collection utilities and public API.",
+      "why_study": "Read one compact collection getter that advances an iterator exactly once and makes the empty-input result explicit.",
+      "learn": [
+        "Create an iterator for an arbitrary iterable.",
+        "Return its current value only after the first advance succeeds.",
+        "Use null to represent an iterable with no first value."
+      ],
+      "prerequisites": [
+        "The global novice Dart baseline: functions, collections, basic generics, null safety, imports, and focused tests.",
+        "An iterator exposes moveNext to advance and current to read the value reached; an extension getter lets any iterable use the operation like a property."
+      ],
+      "concepts_developed": [
+        "Reading only the first value from an arbitrary iterable.",
+        "Checking iterator success before accessing its current value.",
+        "Representing empty input with a nullable result."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Iterator advancement, guarded access, nullable absence, and empty-input tests are broadly transferable collection practices."
+      },
+      "learning_path": {
+        "goal": "Understand how package:collection firstOrNull returns one iterable value without failing on empty input.",
+        "start_here": {
+          "path": "pkgs/collection/lib/src/iterable_extensions.dart",
+          "reason": "The firstOrNull getter contains the complete iterator creation, one advance, successful return, and null fallback."
+        },
+        "supporting_files": [
+          "pkgs/collection/test/extensions_test.dart",
+          "pkgs/collection/README.md",
+          "pkgs/collection/pubspec.yaml"
+        ],
+        "trace": "Create this.iterator, call moveNext once, return iterator.current on success or null otherwise, then match the empty, one-value, and several-value cases in the direct extension tests."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "generic iterable extension getter",
+            "ordinary iterator and nullable result"
+          ],
+          "reason": "An extension getter over a generic iterable is a common Dart collection idiom, while the implementation uses only one ordinary iterator."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one iterator advance",
+            "value-or-null result"
+          ],
+          "reason": "One synchronous boolean result selects between two direct returns."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public getter",
+            "one focused test group"
+          ],
+          "reason": "One implementation unit and its direct tests contain the complete behavior."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "empty iterable",
+            "first value only"
+          ],
+          "reason": "A small local contract with three plainly observable cases dominates the path."
+        },
+        "placement": "The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation states the one advance and both outcomes directly without duplicated traversal or helper indirection.",
+        "architecture": "A narrow extension getter lives with related iterable extensions and is exported by a maintained package.",
+        "naming_and_idiom": "firstOrNull, iterator, moveNext, and current use standard Dart collection vocabulary.",
+        "tests": "Direct tests prove null for empty input, the sole value for one item, and only the first value for several items.",
+        "documentation": "The getter comment states its exact value-or-null contract, and the package README explains the production collection library.",
+        "traceability": "Each of the getter's two returns maps directly to a named direct assertion.",
+        "maintainability": "The tiny stable API and focused boundary tests make a behavior change easy to identify.",
+        "educational_value": "The path is a gentle production example of guarded iterator access and explicit absence."
+      },
+      "inspection": {
+        "commit": "b80e488556bd7d72386f7e358d0b4e4a44ce0423",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 1 language-breadth pass"
+        ],
+        "files": [
+          "pkgs/collection/lib/src/iterable_extensions.dart",
+          "pkgs/collection/test/extensions_test.dart",
+          "pkgs/collection/README.md",
+          "pkgs/collection/pubspec.yaml",
+          "pkgs/collection/LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Dart",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "advancing an iterator once",
+          "returning a value or null for empty input"
+        ],
+        "incidental_concepts": [
+          "Dart extension-getter syntax"
+        ],
+        "reason": "The collection behavior and null result are introductory Dart; one sentence about extension syntax makes every direct test predictable."
+      }
+    },
+    {
       "slug": "collection-group-by",
       "path_slug": "group-by-builds-ordered-lists-under-callback-derived-map-keys",
       "repository": "dart-lang/core",

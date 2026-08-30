@@ -7,11 +7,12 @@ Learn transferable programming skills from exemplary source code.
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through implementation and verification. The catalog currently has
-**138 qualified learning paths from 137 public repositories across 20
-languages**. Its **102 open slots are honest research gaps** under the expanded
-3/3/2/2/2 capacity map, including 56 Level 1 gaps and 40 Level 2 gaps after the
-completed production and educational-exemplar research pass. No gate or score
-is lowered to preserve an arbitrary count.
+**152 qualified learning paths from 146 public repositories across 20
+languages**. Its **88 open slots are honest research gaps** under the expanded
+3/3/2/2/2 capacity map, including 42 Level 1 gaps and 40 Level 2 gaps after the
+completed production and educational-exemplar research passes. Seventeen of 20
+languages now have at least one qualified Level 1 path. No gate or score is
+lowered to preserve an arbitrary count.
 
 If you can write small programs in the language, **Level 1 — First real code**
 is designed to be your first comfortable step into serious source. An empty
@@ -102,9 +103,9 @@ real-world patterns**, **Level 3 — Intermediate production software**, **Level
   tests, capacity alternates, conditional replacement passes, and progression
   sanity checks.
 - [The lower-level expansion audit](research/lower-level-expansion-audit.json)
-  reconciles the 125-path baseline, 13 accepted additions, all 20 language
+  reconciles the 125-path baseline, 27 accepted additions, all 20 language
   passes, educational qualification, serious rejections, progression, source-
-  class leakage, and 96 remaining lower-level gaps.
+  class leakage, and 82 remaining lower-level gaps.
 - [Rejected candidates](research/rejections.json) are append-only.
 - [`research/audit.json`](research/audit.json) is the historical v1 corpus
   audit; it is no longer the active consistency record.

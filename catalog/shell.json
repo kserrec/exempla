@@ -3,6 +3,135 @@
   "language_slug": "shell",
   "repositories": [
     {
+      "slug": "bats-file-assert-file-exists",
+      "path_slug": "assert-file-exists-tests-one-path-and-emits-a-focused-failure-when-it-is-not-a-file",
+      "repository": "bats-core/bats-file",
+      "url": "https://github.com/bats-core/bats-file",
+      "primary_language": "Shell",
+      "language_evidence": "The public assertion, module loading, and direct Bats tests are first-party Bash; GitHub labels the repository Shell.",
+      "description": "A production Bats helper checks whether a path names a regular file and emits a focused diagnostic only on failure.",
+      "source_kind": "production",
+      "purpose_evidence": "bats-core publishes bats-file as a reusable filesystem assertion library for real Bats test suites, with documented installation, behavior, and releases.",
+      "why_study": "Follow one Bash file test through its success and failure outcomes, including the exact diagnostic that makes a failed test actionable.",
+      "learn": [
+        "Use Bash's regular-file test to distinguish a file from a directory or missing path.",
+        "Let a successful assertion return without producing output.",
+        "Send a labeled path diagnostic through shared formatting helpers when the assertion fails."
+      ],
+      "prerequisites": [
+        "The global novice Shell baseline: functions, variables, conditionals, file tests, pipelines, exit status, and focused tests.",
+        "Bats stores a command's exit status and output for assertions; bats-support turns key/value text into the three-line failure shown in the tests."
+      ],
+      "concepts_developed": [
+        "Using `[[ -f path ]]` as the exact regular-file contract.",
+        "Keeping the success path silent while making failure descriptive.",
+        "Verifying both exit status and diagnostic output."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Bats assertion returns zero on success and nonzero on failure so the surrounding test can report it."
+        ],
+        "reason": "Filesystem predicates, explicit success and failure behavior, diagnostic pipelines, and boundary tests transfer directly to Shell automation."
+      },
+      "learning_path": {
+        "goal": "Understand how bats-file assert_file_exists distinguishes a regular file from other paths and reports an exact failure.",
+        "start_here": {
+          "path": "src/file.bash",
+          "reason": "The public function contains the complete path capture, regular-file condition, optional display substitution, and failure pipeline."
+        },
+        "supporting_files": [
+          "test/51-assert-10-assert_file_exists.bats",
+          "README.md"
+        ],
+        "trace": "Capture the path, evaluate `[[ ! -f ]]`, return silently when it is a file, otherwise optionally shorten the displayed path and pipe its label through decoration into fail; then match status and all three output lines in the direct tests."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "ordinary Bash function and local variables",
+            "regular-file test and diagnostic pipeline"
+          ],
+          "reason": "Functions, variables, `[[ -f ]]`, parameter expansion, and pipelines are direct Shell techniques."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one success-or-failure branch"
+          ],
+          "reason": "One synchronous file predicate determines whether the function stays silent or fails locally."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public assertion",
+            "shared presentation helpers",
+            "one focused Bats file"
+          ],
+          "reason": "The assertion delegates presentation to named helpers, while the full decision remains in one focused unit."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "regular file rather than any existing path",
+            "zero or one status and exact stderr shape",
+            "optional display-only path substitution"
+          ],
+          "reason": "A small stable assertion API preserves routine status and diagnostic guarantees."
+        },
+        "placement": "The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The success condition and failure data are explicit, with presentation delegated to the library's shared formatting layer.",
+        "architecture": "One public assertion owns the predicate and reuses documented bats-support helpers for consistent diagnostics.",
+        "naming_and_idiom": "assert_file_exists, file, path, status, output, and fail describe the Shell test contract directly.",
+        "tests": "Five direct Bats cases verify silent success, exact failure status and output, plus prefix, suffix, and infix display substitutions.",
+        "documentation": "The README defines assertion status, stderr behavior, the public function, failure example, and optional path display control.",
+        "traceability": "The single condition maps directly to the success and failure tests, and the display expression maps to three focused substitution tests.",
+        "maintainability": "A narrow predicate, shared output helpers, and exact-output assertions bound future changes clearly.",
+        "educational_value": "The path shows how a tiny production Shell assertion couples a basic predicate with useful failure evidence."
+      },
+      "inspection": {
+        "commit": "6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 1 language-breadth pass"
+        ],
+        "files": [
+          "src/file.bash",
+          "test/51-assert-10-assert_file_exists.bats",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "CC0-1.0",
+        "urls": [
+          "https://github.com/bats-core/bats-file/blob/6bee58bec7c2f4aed1a7425ccd4bdc42b4a84599/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Shell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "a Bash regular-file test",
+          "silent success and explicit failure",
+          "checking status and output"
+        ],
+        "incidental_concepts": [
+          "optional path text substitution",
+          "shared diagnostic formatting helpers"
+        ],
+        "reason": "The central branch is introductory Shell, and the cosmetic path substitution and formatter calls can each be explained locally without a separate topic."
+      }
+    },
+    {
       "slug": "dokku",
       "path_slug": "dokku-resolves-aliases-and-dispatches-a-command-through-enabled-plugin",
       "repository": "dokku/dokku",

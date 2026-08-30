@@ -1,6 +1,6 @@
 # C++
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 **Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
@@ -8,7 +8,83 @@
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [abseil/abseil-cpp](https://github.com/abseil/abseil-cpp)
+
+**Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
+**Source:** Production software
+
+Abseil's production ASCII classifier returns true exactly for byte values from lowercase a through lowercase z, independent of the process locale.
+
+**Why study it:** Connect one readable range expression to an exhaustive 256-value test and a production promise that avoids locale-dependent surprises.
+
+**Prerequisites:**
+
+- The global novice C++ baseline: functions, booleans, character literals, comparisons, logical operators, unsigned byte values, loops, casts, and assertions.
+- ASCII lowercase letters occupy the contiguous byte range from 'a' through 'z'.
+
+**Concepts this path develops:**
+
+- Implementing a locale-independent character predicate.
+- Representing a closed range with two comparisons.
+- Verifying every member of a finite byte domain.
+
+**What you can learn:**
+
+- Recognize a contiguous character range with two comparisons and logical AND.
+- Use unsigned byte input to cover every possible byte value predictably.
+- Exhaustively test a small finite input domain.
+
+**Learning path:**
+
+- **Goal:** Understand how Abseil classifies lowercase ASCII consistently for every possible byte.
+- **Start here:** [`absl/strings/ascii.h`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii.h) — The public contract and complete constexpr ascii_islower implementation are adjacent in this header.
+- **Then read:**
+  - [`absl/strings/ascii_test.cc`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/absl/strings/ascii_test.cc)
+  - [`README.md`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/README.md)
+  - [`LICENSE`](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/LICENSE)
+- **Trace:** Pass an unsigned byte to ascii_islower, evaluate whether it is at least 'a' and at most 'z', then follow the test loop across all 256 values and its independent agreement check in the C locale.
+
+**Why this level:**
+
+- **Language technique 1:** The implementation uses only a typed parameter, character literals, comparisons, and a boolean return expression.
+- **Behavioral reasoning 1:** One local closed-range condition fully determines the result.
+- **Design span 1:** One header expression and one focused test section contain the complete contract.
+- **Constraint burden 2:** The small production promise is stronger than a sample range check because it fixes behavior across the complete byte domain regardless of locale.
+- **Novice accessibility floor 1:** The predicate itself is novice C++; constexpr and the test casts each need only a short local explanation and do not alter the range reasoning.
+  - **Central concepts:** boolean return values; character range comparisons; logical AND; looping across test inputs
+  - **Incidental concepts:** constexpr; explicit unsigned-byte casts in the test
+- **Placement:** The four scores 1/1/1/2 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/abseil/abseil-cpp/blob/2c004366e983c5be8334ac1ea3d4420e8fbcbea7/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** Abseil is Google's maintained collection of production C++ libraries, and ascii_islower is a documented public string utility rather than a test-only helper.
+
+**Language evidence:** ascii_islower, its public header documentation, and its exhaustive focused tests are first-party C++; GitHub labels the repository C++.
+
+**Coding relevance:**
+
+Boolean predicates, range checks, byte handling, locale-independent contracts, and exhaustive small-domain tests are broadly useful coding practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The public function is the actual predicate implementation, not a forwarding wrapper, and its full truth condition is visible at once.
+- **Architecture:** The classifier is a self-contained primitive beside Abseil's related ASCII operations.
+- **Naming and idiom:** ascii_islower names both the character set and classification, while constexpr permits compile-time use without obscuring the expression.
+- **Tests:** The focused loop checks the exact expected result for all 256 byte values, and a separate loop compares it with the C-locale classifier.
+- **Documentation:** Header comments state the locale-independent contract and behavior above ASCII, while the README establishes the production library context.
+- **Traceability:** Every tested byte reaches the same two comparisons, and the range endpoints are literal in both implementation and expectation.
+- **Maintainability:** The finite exhaustive test will expose any widened, narrowed, or locale-dependent replacement of the predicate.
+- **Educational value:** A novice can understand the function immediately and still learn why production libraries specify byte and locale behavior precisely.
+
+**Inspection record:** commit `2c004366e983c5be8334ac1ea3d4420e8fbcbea7`, inspected 2026-08-30. Review passes: Codex 85% Level 1 investigation; Codex resumed-session source verification. Files inspected: `absl/strings/ascii.h`, `absl/strings/ascii_test.cc`, `README.md`, `LICENSE`. GitHub Linguist label: C++.
+
+</details>
 
 ## Level 2 — Guided real-world patterns
 

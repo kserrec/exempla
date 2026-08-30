@@ -3,6 +3,129 @@
   "language_slug": "lua",
   "repositories": [
     {
+      "slug": "lume-clamp",
+      "path_slug": "lume-clamp-keeps-a-number-between-two-bounds-with-one-local-expression",
+      "repository": "rxi/lume",
+      "url": "https://github.com/rxi/lume",
+      "primary_language": "Lua",
+      "language_evidence": "The complete utility library, clamp implementation, and direct test rows are first-party Lua; GitHub labels the repository Lua.",
+      "description": "Lume's production utility library keeps a number inside a caller-supplied minimum and maximum.",
+      "source_kind": "production",
+      "purpose_evidence": "Lume is a documented reusable Lua utility library for applications and games, distributed as one importable module with a direct test suite.",
+      "why_study": "Read one transparent expression that returns the lower bound, upper bound, or original value, then verify ordinary, negative, and collapsed ranges.",
+      "learn": [
+        "Compare the input with the lower bound first.",
+        "Compare with the upper bound only when the lower check did not select a result.",
+        "See why equal bounds always produce that one bound."
+      ],
+      "prerequisites": [
+        "The global novice Lua baseline: functions, local values, comparisons, boolean operators, modules, and direct tests.",
+        "In Lua, `a and b or c` selects b when a is true and otherwise c; here every selected numeric value is truthy."
+      ],
+      "concepts_developed": [
+        "Constraining one numeric value to inclusive bounds.",
+        "Expressing three local outcomes with ordered comparisons.",
+        "Testing values below, inside, above, and at a collapsed range."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Boundary checks, ordered selection, and direct edge-case tests are broadly transferable programming practices."
+      },
+      "learning_path": {
+        "goal": "Understand how lume.clamp returns the nearest inclusive bound or preserves an in-range number.",
+        "start_here": {
+          "path": "lume.lua",
+          "reason": "The clamp function contains the complete lower, upper, and in-range decision in one readable expression."
+        },
+        "supporting_files": [
+          "test/test.lua",
+          "README.md"
+        ],
+        "trace": "Compare x with min, return min when it is lower, otherwise compare x with max and return max or x, then follow the seven direct rows covering inside, outside, negative, and equal-bound cases."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one direct function",
+            "ordinary comparisons and boolean selection"
+          ],
+          "reason": "The implementation uses introductory Lua function, comparison, and boolean-expression syntax."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "three local numeric outcomes"
+          ],
+          "reason": "The synchronous data flow is visible from left to right in one expression."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one module function",
+            "one direct test group"
+          ],
+          "reason": "The selected contract stays inside one function and seven nearby assertions."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "inclusive lower and upper bounds",
+            "equal-bound case"
+          ],
+          "reason": "A small local numeric contract and expected outputs dominate the path."
+        },
+        "placement": "The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The complete algorithm is a single named expression with no state, allocation, or hidden helper behavior.",
+        "architecture": "A focused utility function lives in the library's single documented module beside its direct tests.",
+        "naming_and_idiom": "clamp, x, min, and max state the contract directly using conventional Lua expression style.",
+        "tests": "Seven passing direct assertions cover in-range, both bounds, negative ranges, and equal bounds.",
+        "documentation": "The README presents Lume as a reusable utility library and documents clamp among its public functions.",
+        "traceability": "Every test result follows one of the expression's three visible outcomes.",
+        "maintainability": "The one-function contract and broad small boundary matrix make regressions easy to isolate.",
+        "educational_value": "The path is a comfortable first production reading in Lua with complete behavior and verification."
+      },
+      "inspection": {
+        "commit": "98847e7812cf28d3d64b289b03fad71dc704547d",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex Level 1 language-breadth pass"
+        ],
+        "files": [
+          "lume.lua",
+          "test/test.lua",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/rxi/lume/blob/98847e7812cf28d3d64b289b03fad71dc704547d/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Lua",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "numeric comparisons",
+          "choosing the nearest bound"
+        ],
+        "incidental_concepts": [
+          "Lua's `and`/`or` selection idiom"
+        ],
+        "reason": "The central lesson is ordinary conditional selection, and one sentence about Lua's expression idiom makes all seven outcomes predictable."
+      }
+    },
+    {
       "slug": "say",
       "path_slug": "a-compact-lua-module-stores-namespaced-messages-falls-back-across",
       "repository": "lunarmodules/say",
