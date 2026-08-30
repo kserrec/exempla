@@ -1,127 +1,7 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "language_slug": "go",
   "repositories": [
-    {
-      "slug": "pflag",
-      "path_slug": "pflag-turns-command-line-tokens-into-typed-values-while-preserving",
-      "repository": "spf13/pflag",
-      "url": "https://github.com/spf13/pflag",
-      "primary_language": "Go",
-      "language_evidence": "GNU-style parsing, FlagSet state, typed values, normalization, deprecation, and compatibility behavior are implemented in Go.",
-      "description": "A drop-in Go flag package that adds POSIX/GNU-style long options, shorthand flags, and richer flag-set behavior.",
-      "real_world_evidence": "The repository publishes an importable command-line parsing module designed for Go applications and compatibility with the standard flag package.",
-      "why_study": "Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.",
-      "learn": [
-        "Study these transferable Go mechanisms in `flag.go`: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.",
-        "Trace these states and branches from `flag.go` through its selected supporting files: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.",
-        "Identify these architectural responsibilities in the path beginning at `flag.go`: FlagSet parser, Value extension point, and concrete string value and focused tests.",
-        "Study these change constraints for the path beginning at `flag.go`: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy."
-      ],
-      "prerequisites": [
-        "Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.",
-        "FlagSet.Parse converts command-line tokens into named flag values and positional arguments."
-      ],
-      "concepts_developed": [
-        "Interface-backed Value parsing.",
-        "Long, shorthand, positional, and terminator token states.",
-        "Shorthand and long syntax must agree on value consumption."
-      ],
-      "coding_relevance": {
-        "gate": "pass",
-        "domain_context": [
-          "FlagSet.Parse converts command-line tokens into named flag values and positional arguments."
-        ],
-        "reason": "Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests."
-      },
-      "learning_path": {
-        "goal": "Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.",
-        "start_here": {
-          "path": "flag.go",
-          "reason": "Begin with `flag.go` because it exposes how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees."
-        },
-        "supporting_files": [
-          "string.go",
-          "flag_test.go"
-        ],
-        "trace": "Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests."
-      },
-      "learning_level": {
-        "level": 2,
-        "language_technique": {
-          "score": 2,
-          "signals": [
-            "interface-backed Value parsing",
-            "maps, slices, and callbacks",
-            "table-driven tests"
-          ],
-          "reason": "Familiar intermediate Go interfaces and collection techniques recur across parsing."
-        },
-        "behavioral_reasoning": {
-          "score": 2,
-          "signals": [
-            "long, shorthand, positional, and terminator token states",
-            "attached and following values",
-            "success and configured error outcomes"
-          ],
-          "reason": "A few parser branches recur without a broader lifecycle."
-        },
-        "design_span": {
-          "score": 2,
-          "signals": [
-            "FlagSet parser",
-            "Value extension point",
-            "concrete string value and focused tests"
-          ],
-          "reason": "A small set of cohesive pieces covers token input through typed storage."
-        },
-        "constraint_burden": {
-          "score": 3,
-          "signals": [
-            "shorthand and long syntax must agree on value consumption",
-            "the terminator must preserve remaining positional arguments",
-            "unknown flags and conversion failures must honor configured policy"
-          ],
-          "reason": "Several material parser guarantees recur, but their interaction remains locally testable rather than strict enough for Constraint 4."
-        },
-        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
-      },
-      "quality": {
-        "source_quality": "flag.go documents the public parser and error policies, string.go supplies a simple concrete Value implementation, and flag_test.go broadly exercises long and shorthand flags, attached and separate values, terminators, unknown flags, normalization, repeated parse behavior, and errors.",
-        "architecture": "The audited architecture of the path beginning at `flag.go` has these boundaries: FlagSet parser, Value extension point, and concrete string value and focused tests.",
-        "naming_and_idiom": "`flag.go` and its supporting files use these characteristic Go mechanisms: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.",
-        "tests": "Direct tests in `flag_test.go` cover these states and branches in the selected path: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.",
-        "documentation": "`flag.go` and its selected supporting material document the contracts needed to understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.",
-        "traceability": "Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests.",
-        "maintainability": "Changes to the path beginning at `flag.go` are constrained by these audited guarantees: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy.",
-        "educational_value": "Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests."
-      },
-      "inspection": {
-        "commit": "4f8e9056816a26ecbac9fe26cde50968eb3626f8",
-        "inspected_at": "2026-08-29",
-        "reviewers": [
-          "Codex primary pass",
-          "independent Codex verification pass"
-        ],
-        "files": [
-          "flag.go",
-          "string.go",
-          "flag_test.go",
-          "LICENSE"
-        ]
-      },
-      "license": {
-        "spdx": "BSD-3-Clause",
-        "urls": [
-          "https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/LICENSE"
-        ]
-      },
-      "github": {
-        "primary_language": "Go",
-        "archived": false,
-        "metadata_checked_at": "2026-08-29"
-      }
-    },
     {
       "slug": "match",
       "path_slug": "a-compact-go-matcher-handles-literal-bytes-single-byte-wildcards",
@@ -129,23 +9,22 @@
       "url": "https://github.com/tidwall/match",
       "primary_language": "Go",
       "language_evidence": "The wildcard matcher, limit-aware traversal, Unicode handling, and public API are implemented in the root Go package.",
-      "description": "A compact wildcard-matching library with Unicode support and an optional complexity limit.",
+      "description": "A small Go matcher that checks text against ordinary characters, question marks, and stars.",
       "real_world_evidence": "The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.",
-      "why_study": "Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding. Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.",
+      "why_study": "Follow a compact loop through literal matches, one-character matches, star backtracking, and the boundary where either the text or pattern ends.",
       "learn": [
-        "Study these transferable Go mechanisms in `match.go`: plain byte slices and indexes, loops and local conditionals, and small helper functions.",
-        "Trace these states and branches from `match.go` through its selected supporting files: literal, question-mark, and star branches, empty and exhausted input states, and case-sensitive and insensitive modes.",
-        "Identify these architectural responsibilities in the path beginning at `match.go`: one matcher implementation and one direct test file.",
-        "Study these change constraints for the path beginning at `match.go`: stars may match zero or many bytes, pattern and input exhaustion must align, and case folding and arbitrary input must terminate consistently."
+        "Trace representative literal, question-mark, and star patterns by hand.",
+        "See how one saved star position supports bounded backtracking.",
+        "Use boundary-focused tests to understand empty and exhausted inputs."
       ],
       "prerequisites": [
-        "Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.",
-        "A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches."
+        "The global novice Go baseline: functions, byte slices, loops, conditionals, and table-driven tests.",
+        "In this path, a question mark matches one byte and a star matches zero or more bytes."
       ],
       "concepts_developed": [
-        "Plain byte slices and indexes.",
-        "Literal, question-mark, and star branches.",
-        "Stars may match zero or many bytes."
+        "Walking text and pattern indexes together.",
+        "Trying literal, one-byte, and star cases in a clear order.",
+        "Backtracking to the most recent star when a later match fails."
       ],
       "coding_relevance": {
         "gate": "pass",
@@ -202,7 +81,7 @@
           ],
           "reason": "Several material boundary and backtracking guarantees recur despite the tiny design span."
         },
-        "placement": "The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 1/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
       },
       "quality": {
         "source_quality": "match.go keeps the complete matcher and case-folding behavior in one compact implementation, while match_test.go covers literals, wildcards, empty strings, Unicode byte behavior, case-insensitive matching, adversarial patterns, and randomized TestRandomInput coverage.",
@@ -216,10 +95,11 @@
       },
       "inspection": {
         "commit": "afc69bce52e08c02e78156a7697bd808fc868ec5",
-        "inspected_at": "2026-08-29",
+        "inspected_at": "2026-08-30",
         "reviewers": [
           "Codex primary pass",
-          "independent Codex verification pass"
+          "independent Codex verification pass",
+          "Codex novice-accessibility audit"
         ],
         "files": [
           "match.go",
@@ -237,6 +117,19 @@
         "primary_language": "Go",
         "archived": false,
         "metadata_checked_at": "2026-08-29"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "literal and wildcard matching",
+          "star backtracking",
+          "input and pattern exhaustion"
+        ],
+        "incidental_concepts": [
+          "byte-oriented scanning",
+          "optional case folding"
+        ],
+        "reason": "The entire pattern language is three locally defined forms, so a short primer is sufficient even though star backtracking stretches beyond first-production-code reasoning."
       }
     },
     {

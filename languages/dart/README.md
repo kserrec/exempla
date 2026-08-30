@@ -1,110 +1,43 @@
 # Dart
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
-
-### [felangel/equatable](https://github.com/felangel/equatable)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A compact Dart package that gives immutable objects value equality and stable hashing from an explicit list of properties.
-
-**Why study it:** Its tiny public contract exposes the complete mechanics behind value objects: runtime-type checks, property traversal, nested collection equality, hash combination, and diagnostic string output.
-
-**Prerequisites:**
-
-- Dart classes, getters, operator overloading, generics, iterables, maps and sets, null safety, and basic unit testing.
-
-**Concepts this path develops:**
-
-- Operator overrides and mixin composition.
-- Recursive nested-value comparison.
-- Equality and hashCode must remain consistent.
-
-**What you can learn:**
-
-- Dart equality and hashCode contracts, immutable value objects, recursive iterable, map, and set comparison, mixins, global and local configuration, stringification, and focused unit tests.
-
-**Learning path:**
-
-- **Goal:** Understand how a Dart value object derives consistent equality, hashing, and diagnostic output from an explicit property list.
-- **Start here:** [`lib/src/equatable.dart`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/lib/src/equatable.dart) — The base class shows the whole user contract—props, equality, hashing, and stringification—while equatable_utils.dart supplies the recursive comparison and hash mechanics beneath it.
-- **Then read:**
-  - [`lib/src/equatable_utils.dart`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/lib/src/equatable_utils.dart)
-  - [`test/equatable_test.dart`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/test/equatable_test.dart)
-  - [`test/equatable_utils_test.dart`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/test/equatable_utils_test.dart)
-  - [`README.md`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/README.md)
-  - [`LICENSE`](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/LICENSE)
-- **Trace:** Start with Equatable.props, operator ==, hashCode, and stringify; follow the shared utilities through runtime-type checks, recursive iterable, map, and set comparison, order-sensitive and order-insensitive behavior, hash combination, and diagnostics; then close each contract in the two direct unit suites.
-
-**Why this level:**
-
-- **Language technique 2:** Common professional Dart idioms shape the path without advanced type or runtime machinery.
-- **Behavioral reasoning 2:** Meaningful branching and recursion remain synchronous, stateless, and easy to trace.
-- **Design span 1:** One focused component contains the complete behavior.
-- **Constraint burden 3:** Several material semantic and compatibility guarantees constrain otherwise local code.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** Equatable is distributed as a versioned pub.dev package and its README documents use in ordinary Dart and Flutter domain models.
-
-**Language evidence:** Value equality, recursive collection comparison, hashing, stringification, configuration, and the behavior tests are implemented in Dart under lib and test.
-
-**Coding relevance:**
-
-That short vocabulary is subordinate to transferable lessons in operator contracts, immutable data, recursive collection comparison, hashing, runtime-type checks, configuration, and focused unit testing.
-
-Required domain context:
-
-- A value object defines equality and hashing from the properties that constitute its value.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The implementation is small, null-safe, explicit about runtime type, and keeps equality and hashing over the same props representation.
-- **Architecture:** Equatable and EquatableMixin define the public contract; EquatableConfig controls default display behavior; utilities own recursive equality and hash combination.
-- **Naming and idiom:** props, stringify, equals, iterableEquals, mapEquals, setEquals, and mapPropsToHashCode make the value-object model discoverable.
-- **Tests:** Unit suites cover identity, runtime types, nulls, nested iterables, sets, maps, numbers, hashes, mixins, configuration, string output, and regressions.
-- **Documentation:** The README explains installation, props, nullable properties, mixins, stringification, immutability, and common usage patterns.
-- **Traceability:** A model's props can be followed directly through operator== or hashCode into one utility branch and an exact assertion.
-- **Maintainability:** The public surface is narrow, shared mechanics are centralized, and edge cases are represented in small targeted tests.
-- **Educational value:** It turns a language feature often treated as boilerplate into a complete, approachable study of behavioral contracts.
-
-**Inspection record:** commit `f98a58960545ba72b51d0eacf746af393a0c6b24`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `lib/src/equatable.dart`, `lib/src/equatable_utils.dart`, `test/equatable_test.dart`, `test/equatable_utils_test.dart`, `README.md`, `LICENSE`. GitHub Linguist label: Dart.
-
-</details>
+## Level 2 — Guided real-world code
 
 ### [VeryGoodOpenSource/formz](https://github.com/VeryGoodOpenSource/formz)
 
 **Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
-A minimal typed model for pure and modified form inputs, validation errors, aggregate validity, and submission state.
+A small Dart model for form values, validation errors, untouched inputs, modified inputs, and submission state.
 
-**Why study it:** One file demonstrates how a tiny generic domain model can make input value, interaction state, validation error, display policy, caching, equality, and whole-form queries explicit.
+**Why study it:** See how one file gives form inputs explicit value, interaction, error, and validation state, then combines several inputs into a whole-form answer.
+
+**Short context:**
+
+- A form input can distinguish an untouched value from a modified value and expose a typed validation error.
 
 **Prerequisites:**
 
-- Dart generics, abstract classes, mixins, enums and extensions, null safety, immutable objects, and basic form validation.
+- The global novice Dart baseline, including classes, simple generics, enums, null safety, and focused tests.
+- A pure input is untouched; a dirty input has been modified. A validator returns null for success or a typed error for failure.
 
 **Concepts this path develops:**
 
-- Generic value and error modeling.
-- Pure and dirty input state.
-- Pure and dirty transitions must preserve the value.
+- Modeling a value and its possible validation error with generic types.
+- Separating untouched input state from modified input state.
+- Combining local validation results into whole-form validity.
 
 **What you can learn:**
 
-- Generic abstract classes, sealed state through constructors, typed validation errors, pure versus dirty input state, lazy caching with mixins, aggregate predicates, enum extensions, immutability, equality, and unit tests.
+- Trace how pure and dirty inputs expose validation and display errors.
+- See how an optional mixin caches one validation result.
+- Use focused tests to compare valid, invalid, untouched, and modified inputs.
 
 **Learning path:**
 
@@ -123,7 +56,10 @@ A minimal typed model for pure and modified form inputs, validation errors, aggr
 - **Behavioral reasoning 2:** State and caching are meaningful but remain local and deterministic.
 - **Design span 1:** The full path stays inside one focused component.
 - **Constraint burden 2:** The path carries routine production safeguards and a small stable API rather than interacting strict constraints.
-- **Placement:** The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** The form-state vocabulary and conventional Dart abstractions form one cohesive professional lesson that can be explained locally and traced in one file.
+  - **Central concepts:** typed form values and errors; untouched versus modified input state; local validation and cached results
+  - **Incidental concepts:** enum convenience extensions; value equality
+- **Placement:** The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** MIT ([evidence 1](https://github.com/VeryGoodOpenSource/formz/blob/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969/LICENSE))
 
@@ -138,9 +74,7 @@ A minimal typed model for pure and modified form inputs, validation errors, aggr
 
 That familiar context is subordinate to transferable lessons in generic modeling, immutable state, validation, lazy memoization, aggregate predicates, enum extensions, value semantics, and direct unit tests.
 
-Required domain context:
-
-- A form input can distinguish an untouched value from a modified value and expose a typed validation error.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -153,11 +87,11 @@ Required domain context:
 - **Maintainability:** The domain has no hidden state, extensions are additive, the cache is isolated in a mixin, and the complete behavior suite is short enough to audit.
 - **Educational value:** It is a strong first example of using a few language abstractions to replace loosely coupled booleans and nullable strings with an explicit domain model.
 
-**Inspection record:** commit `57a4e1e7efb13eb1fea614158ccdd1fc52d4f969`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `lib/formz.dart`, `test/formz_test.dart`, `test/helpers/name_input.dart`, `README.md`, `LICENSE`. GitHub Linguist label: Dart.
+**Inspection record:** commit `57a4e1e7efb13eb1fea614158ccdd1fc52d4f969`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `lib/formz.dart`, `test/formz_test.dart`, `test/helpers/name_input.dart`, `README.md`, `LICENSE`. GitHub Linguist label: Dart.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [dart-lang/sdk](https://github.com/dart-lang/sdk)
 
@@ -166,6 +100,10 @@ Required domain context:
 The Dart language platform: common front end, analyzers and language server, intermediate representation, native and web compilers, virtual machine, JIT and AOT runtimes, garbage collector, core libraries, debugger services, command-line tools, and platform ports.
 
 **Why study it:** Future.wait is a bounded standard-library implementation that combines concurrency, input ordering, error policy, cleanup ownership, malformed protocol handling, and type soundness.
+
+**Short context:**
+
+- Future.wait combines several asynchronous results into one ordered result and defines how errors and successful values are handled.
 
 **Prerequisites:**
 
@@ -214,9 +152,7 @@ The Dart language platform: common front end, analyzers and language server, int
 
 The path is entirely transferable asynchronous-library engineering: completion ordering, shared state, eager and deferred error policy, cleanup ownership, error zones, protocol breaches, type soundness, and focused standard-library tests.
 
-Required domain context:
-
-- Future.wait combines several asynchronous results into one ordered result and defines how errors and successful values are handled.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -240,6 +176,10 @@ Required domain context:
 Dart's composable web-server middleware ecosystem, with immutable requests and responses, streaming bodies, pipelines, routing, static files, proxies, WebSockets, and HTTP compliance checks.
 
 **Why study it:** Shelf Router is a coherent Dart path from declarative route patterns through trie indexing, ordered matching, request updates, middleware, and handler dispatch.
+
+**Short context:**
+
+- An HTTP router associates a method and path pattern with a handler and exposes matched path parameters to the request.
 
 **Prerequisites:**
 
@@ -290,9 +230,7 @@ Dart's composable web-server middleware ecosystem, with immutable requests and r
 
 That short routing vocabulary is subordinate to transferable lessons in trie indexing, ordered matching, regular-expression parameters, immutable request updates, middleware composition, synchronous or asynchronous dispatch, and direct contract testing.
 
-Required domain context:
-
-- An HTTP router associates a method and path pattern with a handler and exposes matched path parameters to the request.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -309,7 +247,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [felangel/mocktail](https://github.com/felangel/mocktail)
 
@@ -318,6 +256,10 @@ Required domain context:
 A null-safe Dart mocking library that intercepts invocations at runtime and supports stubbing, argument matching, capture, verification, and asynchronous call observation without code generation.
 
 **Why study it:** Mocktail makes Dart's runtime mocking mechanics inspectable by connecting noSuchMethod interception to matcher reconstruction, fallback values, stubbing, call history, and verification.
+
+**Short context:**
+
+- A mocking library records method invocations, returns configured responses, and later verifies calls made by a test.
 
 **Prerequisites:**
 
@@ -366,9 +308,7 @@ A null-safe Dart mocking library that intercepts invocations at runtime and supp
 
 That standard testing vocabulary is subordinate to transferable lessons in runtime interception, generic fallback handling, matcher reconstruction, global recording modes, call history, asynchronous observation, diagnostics, and state reset.
 
-Required domain context:
-
-- A mocking library records method invocations, returns configured responses, and later verifies calls made by a test.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -392,6 +332,10 @@ Required domain context:
 A source generator and annotation suite that derives typed Dart JSON codecs, validation helpers, field metadata, enums, converters, generics, and JSON Schema from class declarations.
 
 **Why study it:** json_serializable's generic-factory path shows how analyzer metadata becomes generated callback parameters and nested conversion code with checked-in, executable evidence.
+
+**Short context:**
+
+- Generic JSON serialization supplies conversion callbacks for type parameters that cannot be inferred or instantiated directly at runtime.
 
 **Prerequisites:**
 
@@ -443,9 +387,7 @@ A source generator and annotation suite that derives typed Dart JSON codecs, val
 
 That short serialization context is subordinate to transferable lessons in analyzer-driven metadata inspection, generic API design, code generation, staged source construction, configuration, error reporting, and generated-contract testing.
 
-Required domain context:
-
-- Generic JSON serialization supplies conversion callbacks for type parameters that cannot be inferred or instantiated directly at runtime.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -462,7 +404,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [dart-lang/build](https://github.com/dart-lang/build)
 
@@ -471,6 +413,10 @@ Required domain context:
 Dart's modular code-generation toolkit and build runner, including incremental planning, dependency tracking, builder execution, and persistent build state.
 
 **Why study it:** Understand how build_runner turns sources and configured builder phases into an incremental execution plan, reuses compatible cached state, invalidates changed dependency paths, runs concurrent build actions, and persists the next build's state. The code-generation vocabulary needs only a short primer; the path teaches transferable graph planning, content-addressed change detection, lifecycle state, concurrency, failure recovery, caching, and adversarial testing.
+
+**Short context:**
+
+- A builder maps primary input assets to declared output assets in ordered phases; build_runner records input and output dependencies so later runs can skip unaffected work and rebuild invalidated paths.
 
 **Prerequisites:**
 
@@ -532,9 +478,7 @@ Dart's modular code-generation toolkit and build runner, including incremental p
 
 The code-generation vocabulary needs only a short primer; the path teaches transferable graph planning, content-addressed change detection, lifecycle state, concurrency, failure recovery, caching, and adversarial testing.
 
-Required domain context:
-
-- A builder maps primary input assets to declared output assets in ordered phases; build_runner records input and output dependencies so later runs can skip unaffected work and rebuild invalidated paths.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

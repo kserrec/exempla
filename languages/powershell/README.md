@@ -1,160 +1,18 @@
 # PowerShell
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+5 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [deadlydog/Invoke-MsBuild](https://github.com/deadlydog/Invoke-MsBuild)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A small PowerShell module that locates an installed MSBuild, runs a project or solution with structured options, manages logs, and reports a typed build result.
-
-**Why study it:** The selected discovery function shows how a PowerShell adapter searches versioned installation layouts, orders candidates, chooses an architecture, falls back to legacy locations, and makes absence explicit.
-
-**Prerequisites:**
-
-- Basic familiarity with PowerShell functions, scriptblocks, pipelines, arrays and hashtables, .NET objects, errors, and Pester tests.
-
-**Concepts this path develops:**
-
-- PowerShell functions over filesystem and .NET path APIs.
-- Ordered candidate probing.
-- Visual Studio generations use different directory layouts.
-
-**What you can learn:**
-
-- Use `Get-LatestMsBuildPath` in `Invoke-MsBuild.psm1` to study advanced functions, filesystem candidate discovery, version sorting, architecture selection, legacy fallback, explicit missing-tool behavior, and mocked installation-layout tests.
-
-**Learning path:**
-
-- **Goal:** Understand how a PowerShell adapter discovers a versioned external build executable across operating-system installation conventions and validates its fallback choices.
-- **Start here:** [`src/Invoke-MsBuild/Invoke-MsBuild.psm1`](https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/src/Invoke-MsBuild/Invoke-MsBuild.psm1) — Get-LatestMsBuildPath is the exact entry to the scored discovery behavior inside the module and connects directly to fake-installation tests for its ordering and fallback choices.
-- **Then read:**
-  - [`src/Tests/Invoke-MsBuild.Tests.ps1`](https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/src/Tests/Invoke-MsBuild.Tests.ps1)
-  - [`ReadMe.md`](https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/ReadMe.md)
-  - [`License.md`](https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/License.md)
-- **Trace:** Begin at Get-LatestMsBuildPath, follow conventional Visual Studio and MSBuild directory candidates through version sorting, architecture choice, legacy fallback, and missing-path behavior, then close those decisions in the fake-installation tests. The broader invocation, process, logging, cleanup, and result lifecycle is intentionally not claimed because the listed suite does not directly close it.
-
-**Why this level:**
-
-- **Language technique 2:** The path uses common professional PowerShell and .NET interoperation without recurring advanced language machinery.
-- **Behavioral reasoning 2:** The discovery decision tree is synchronous, bounded, and locally inspectable.
-- **Design span 1:** A single cohesive module contains the complete scored discovery behavior.
-- **Constraint burden 3:** Several platform and backward-compatibility contracts constrain an otherwise small adapter.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/License.md))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes the Invoke-MsBuild PowerShell module and documents use from build scripts, continuous-integration jobs, and ordinary PowerShell sessions.
-
-**Language evidence:** MSBuild discovery, argument construction, process execution, log lifecycle, result classification, and Pester tests are implemented in PowerShell under src/Invoke-MsBuild.
-
-**Coding relevance:**
-
-The short tool vocabulary is subordinate to transferable lessons in filesystem probing, version ordering, architecture selection, fallbacks, parameter validation, and isolating operating-system dependencies behind focused tests.
-
-Required domain context:
-
-- MSBuild discovery means locating the executable or developer command prompt across conventional Visual Studio installation generations and architectures.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The discovery path makes candidate roots, version ordering, architecture choice, legacy fallback, and missing-path outcomes visible in ordinary PowerShell control flow.
-- **Architecture:** The selected path is bounded to one executable-discovery responsibility in the production module and one Pester suite that supplies fake installation layouts.
-- **Naming and idiom:** Get-LatestMsBuildPath, VisualStudioVersion, MsBuildArchitecture, and the candidate path variables communicate the selected policy directly.
-- **Tests:** The selected Pester cases construct representative installation layouts and close version preference, architecture selection, legacy fallback, explicit paths, and not-found behavior.
-- **Documentation:** The README explains supported MSBuild and Visual Studio choices and the public parameters that lead into executable discovery.
-- **Traceability:** A requested or inferred tool version can be followed through candidate-directory construction, version sorting, architecture selection, fallback, and the matching mocked filesystem assertion.
-- **Maintainability:** Keeping discovery in a named function and testing filesystem conventions through mocks lets installation-policy changes remain separate from the unscored build-process lifecycle.
-- **Educational value:** This path teaches how to make environment-dependent executable discovery explicit, deterministic, and testable without claiming the broader process and logging behavior.
-
-**Inspection record:** commit `7fee8e141296ea6c337e433537d7061f52e24157`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/Invoke-MsBuild/Invoke-MsBuild.psm1`, `src/Tests/Invoke-MsBuild.Tests.ps1`, `ReadMe.md`, `License.md`. GitHub Linguist label: PowerShell.
-
-</details>
-
-### [lipkau/PSIni](https://github.com/lipkau/PSIni)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A compact PowerShell module that reads and writes INI files as ordered hashtables while preserving sections, comments, repeated keys, and encoding choices.
-
-**Why study it:** Import-Ini is a compact production parser whose path, literal-path, and string inputs converge on explicit section, comment, key-value, duplicate-key, and malformed-line policies.
-
-**Prerequisites:**
-
-- Basic familiarity with PowerShell functions, scriptblocks, pipelines, arrays and hashtables, .NET objects, errors, and Pester tests.
-
-**Concepts this path develops:**
-
-- Advanced-function parameter sets and pipeline input.
-- Current-section parser state.
-- Input order and case behavior must remain stable.
-
-**What you can learn:**
-
-- Use `PSIni/Public/Import-Ini.ps1` to study advanced functions, parameter sets, pipeline input, encoding selection, ordered case-insensitive dictionaries, line-oriented regular-expression parsing, duplicate-key policy, comment preservation, and direct Pester contracts.
-
-**Learning path:**
-
-- **Goal:** Understand how a compact PowerShell advanced function parses line-oriented configuration text into an ordered object model without losing its practical edge cases.
-- **Start here:** [`PSIni/Public/Import-Ini.ps1`](https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/PSIni/Public/Import-Ini.ps1) — Import-Ini contains the entire selected read path, from input and encoding choice through line classification to the ordered object returned by the focused unit suite.
-- **Then read:**
-  - [`Tests/Import-Ini.Unit.Tests.ps1`](https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/Tests/Import-Ini.Unit.Tests.ps1)
-  - [`README.md`](https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/README.md)
-  - [`LICENSE`](https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/LICENSE)
-- **Trace:** Start with Import-Ini's path, literal-path, and string parameter sets, follow each line through section, comment, and key-value matching into ordered case-insensitive dictionaries, observe how repeated values and the no-section sentinel are represented, then close malformed and compatibility behavior in the direct import suite. Export-Ini is intentionally outside this import-only scored trace.
-
-**Why this level:**
-
-- **Language technique 2:** Common professional PowerShell idioms materially shape the parser, but no advanced runtime or metaprogramming machinery recurs.
-- **Behavioral reasoning 2:** Behavior is a synchronous line transformation with only local parser state and explicit branches.
-- **Design span 1:** The complete scored behavior is contained in one cohesive implementation unit and its tests.
-- **Constraint burden 3:** Several parser and compatibility guarantees recur even though the control flow is compact.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** PSIni is maintained as a versioned PowerShell Gallery module, and its README documents command-line and pipeline use for application and system configuration files.
-
-**Language evidence:** INI parsing, ordered-hashtable construction, duplicate-key handling, comment preservation, serialization, encoding support, and the test suite are implemented in PowerShell under PSIni and Tests.
-
-**Coding relevance:**
-
-That small vocabulary is subordinate to transferable PowerShell lessons in advanced-function input, regular-expression classification, ordered object construction, localized parser state, duplicate handling, and encoding-aware file boundaries.
-
-Required domain context:
-
-- An INI document is line-oriented configuration text containing sections, comments, keys, values, and repeated-key policy.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Import-Ini keeps section, comment, key-value, duplicate, malformed-line, and encoding branches explicit while deliberately preserving input order.
-- **Architecture:** The selected path stays within one public advanced function and its direct Import-Ini unit suite, with path, literal-path, and string parameter sets converging on one parser.
-- **Naming and idiom:** Import-Ini, AllowDuplicateKeys, SkipComments, NoSection, and the ordered section tables make the parser's representation and edge-case policy discoverable.
-- **Tests:** The Import-Ini unit suite covers file and literal content, comments, blank lines, global keys, sections, duplicate keys, malformed input, parameter forms, and compatibility cases used by this trace.
-- **Documentation:** The README explains Import-Ini inputs, returned object shape, parsing switches, encodings, and examples needed to interpret the selected path.
-- **Traceability:** An input line can be followed through Import-Ini's section, comment, key-value, and malformed branches into a specific ordered-table assertion in the direct suite.
-- **Maintainability:** The narrow public read surface, explicit behavior flags, standard PowerShell representation, and nearby regression cases keep parser changes bounded.
-- **Educational value:** This path is an approachable example of a useful line-oriented parser with real input-policy decisions, without claiming the separate export implementation.
-
-**Inspection record:** commit `6895c42fdba461a1a171fe70e11d67c037bac1d0`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `PSIni/Public/Import-Ini.ps1`, `Tests/Import-Ini.Unit.Tests.ps1`, `README.md`, `LICENSE`. GitHub Linguist label: PowerShell.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [Badgerati/Pode](https://github.com/Badgerati/Pode)
 
@@ -163,6 +21,10 @@ Required domain context:
 A cross-platform PowerShell application-server framework with its own asynchronous HTTP, WebSocket, server-sent events, TCP, SMTP, file-watcher, and TLS runtime plus routing, middleware, authentication, sessions, OpenAPI, schedules, and serverless adapters.
 
 **Why study it:** Pode's routing subsystem is a compact PowerShell example of normalizing declarative inputs into a registry and retrieving the correct ordered match.
+
+**Short context:**
+
+- An HTTP route associates a method and normalized path pattern with a handler, middleware, endpoint, and optional access metadata.
 
 **Prerequisites:**
 
@@ -210,9 +72,7 @@ A cross-platform PowerShell application-server framework with its own asynchrono
 
 That short routing vocabulary is subordinate to transferable lessons in scriptblock composition, registry design, normalization, validation, duplicate policy, regex matching, metadata inheritance, concurrent collections, and direct behavior testing.
 
-Required domain context:
-
-- An HTTP route associates a method and normalized path pattern with a handler, middleware, endpoint, and optional access metadata.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -236,6 +96,10 @@ Required domain context:
 A PowerShell module for reading, writing, formatting, charting, and pivoting Excel workbooks without requiring Microsoft Excel.
 
 **Why study it:** ImportExcel provides a practical PowerShell adapter path in which workbook ownership, rectangular ranges, header policy, typed values, and deterministic cleanup are all visible.
+
+**Short context:**
+
+- An Excel workbook exposes worksheets, rectangular cell ranges, header rows, typed values, and an open or owned package resource.
 
 **Prerequisites:**
 
@@ -286,9 +150,7 @@ A PowerShell module for reading, writing, formatting, charting, and pivoting Exc
 
 That short spreadsheet vocabulary is subordinate to transferable lessons in pipeline adapters, typed .NET interoperation, input normalization, resource ownership, row-to-object mapping, validation, and deterministic cleanup.
 
-Required domain context:
-
-- An Excel workbook exposes worksheets, rectangular cell ranges, header rows, typed values, and an open or owned package resource.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -305,7 +167,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [nightroman/Invoke-Build](https://github.com/nightroman/Invoke-Build)
 
@@ -314,6 +176,10 @@ Required domain context:
 A compact build-automation engine for PowerShell with task graphs, incremental inputs and outputs, nested builds, checkpoints, hooks, structured results, and parallel build execution.
 
 **Why study it:** Invoke-Build's parallel coordinator is a bounded example of scheduling asynchronous PowerShell workers while preserving concurrency, output, timeout, and failure contracts.
+
+**Short context:**
+
+- A parallel build coordinator starts independent build scripts as workers while limiting concurrency and collecting their results.
 
 **Prerequisites:**
 
@@ -364,9 +230,7 @@ A compact build-automation engine for PowerShell with task graphs, incremental i
 
 That small build vocabulary is subordinate to transferable lessons in asynchronous PowerShell instances, bounded scheduling, coordinator state, timeout and cancellation, output capture, nested invocation, and aggregated failure reporting.
 
-Required domain context:
-
-- A parallel build coordinator starts independent build scripts as workers while limiting concurrency and collecting their results.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -390,6 +254,10 @@ Required domain context:
 A PowerShell build module that compiles source folders into versioned modules, rewrites manifests, preserves source mappings, applies syntax-tree generators, and prepares packages for publication.
 
 **Why study it:** ModuleBuilder shows how PowerShell's own parser and syntax tree can support a source-to-source transformation that remains syntactically valid and executable.
+
+**Short context:**
+
+- A module build generator rewrites PowerShell source blocks while preserving valid module structure and source meaning.
 
 **Prerequisites:**
 
@@ -440,9 +308,7 @@ A PowerShell build module that compiles source folders into versioned modules, r
 
 The compact module-build vocabulary is subordinate to transferable lessons in syntax trees, visitor dispatch, source extents, ordered text replacement, scriptblock generation, closure capture, reparsing, and transformation contracts.
 
-Required domain context:
-
-- A module build generator rewrites PowerShell source blocks while preserving valid module structure and source meaning.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -459,7 +325,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [pester/Pester](https://github.com/pester/Pester)
 
@@ -468,6 +334,10 @@ Required domain context:
 PowerShell's test and mock framework, with a discovery and execution runtime, assertions, scope-aware mocks, filtering, plugins, code coverage, parallel containers, and CI result formats.
 
 **Why study it:** Pester exposes an expert PowerShell framework lifecycle from Describe and It declarations through discovery, scoping, hooks, execution, errors, filtering, and results.
+
+**Short context:**
+
+- Describe and It declare nested test blocks whose discovery, filtering, setup, execution, result, and cleanup lifecycle is managed by the framework runtime.
 
 **Prerequisites:**
 
@@ -518,9 +388,7 @@ PowerShell's test and mock framework, with a discovery and execution runtime, as
 
 That familiar testing vocabulary is subordinate to transferable expert PowerShell lessons in scriptblock scope, session-state manipulation, dynamic test generation, tree construction, recursive lifecycle execution, plugin hooks, error capture, timing, filtering, and isolation.
 
-Required domain context:
-
-- Describe and It declare nested test blocks whose discovery, filtering, setup, execution, result, and cleanup lifecycle is managed by the framework runtime.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

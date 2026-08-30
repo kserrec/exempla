@@ -72,6 +72,12 @@ def valid_entry() -> dict:
             },
             "placement": "All four observed dimensions fit Level 1 and the formula returns that level.",
         },
+        "novice_accessibility": {
+            "floor": 1,
+            "central_concepts": ["Direct request validation and transformation."],
+            "incidental_concepts": ["The command adapter around the focused function."],
+            "reason": "All central ideas are in the novice baseline and the local adapter needs only a short explanation.",
+        },
         "quality": {
             "source_quality": "Functions are short, direct, and free of unexplained cleverness.",
             "architecture": "The command adapter and transformation have one clear boundary.",
@@ -124,6 +130,27 @@ class ScoreTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "integers from 1 through 5"):
                     catalog_tool.calculate_learning_level(*scores)
 
+    def test_required_accessibility_floor_examples(self) -> None:
+        cases = {
+            (1, 1): 1,
+            (1, 2): 2,
+            (1, 3): 3,
+            (2, 1): 2,
+            (2, 2): 2,
+            (2, 3): 3,
+        }
+        for inputs, expected in cases.items():
+            with self.subTest(inputs=inputs):
+                self.assertEqual(
+                    catalog_tool.calculate_published_level(*inputs), expected
+                )
+
+    def test_invalid_accessibility_floor_inputs_are_rejected(self) -> None:
+        for inputs in ((0, 1), (6, 1), (1, 0), (1, 4), (1, 1.5), (1, True)):
+            with self.subTest(inputs=inputs):
+                with self.assertRaises(ValueError):
+                    catalog_tool.calculate_published_level(*inputs)
+
 
 class RecordValidationTests(unittest.TestCase):
     language = {"slug": "python", "name": "Python"}
@@ -148,15 +175,39 @@ class RecordValidationTests(unittest.TestCase):
 
     def test_valid_record_passes_and_renders_learning_evidence(self) -> None:
         entry = valid_entry()
+        entry["coding_relevance"]["domain_context"] = [
+            "A command adapter turns user input into a request for the focused function."
+        ]
         self.assertEqual(self.validate(entry), [])
         rendered = "\n".join(catalog_tool.render_repository(entry))
         self.assertIn("Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1", rendered)
         self.assertIn("**Coding relevance:**", rendered)
         self.assertIn("**Concepts this path develops:**", rendered)
         self.assertIn("**Learning path:**", rendered)
+        self.assertIn("**Short context:**", rendered)
+        self.assertIn("**Novice accessibility floor 1:**", rendered)
+        self.assertIn("**Central concepts:**", rendered)
+        self.assertIn("**Incidental concepts:**", rendered)
         self.assertIn("<details>", rendered)
         self.assertIn("<summary>Quality and review evidence</summary>", rendered)
         self.assertIn("tests/test_tool.py", rendered)
+
+    def test_level_two_renders_an_understandable_accessibility_explanation(self) -> None:
+        entry = valid_entry()
+        for dimension in catalog_tool.DIMENSION_FIELDS:
+            entry["learning_level"][dimension]["score"] = 2
+        entry["learning_level"]["level"] = 2
+        entry["novice_accessibility"] = {
+            "floor": 2,
+            "central_concepts": ["A callback-based request boundary."],
+            "incidental_concepts": ["One dictionary comprehension."],
+            "reason": "The callback is a common professional concept and the entry primer is enough to trace it.",
+        }
+        self.assertEqual(self.validate(entry), [])
+        rendered = "\n".join(catalog_tool.render_repository(entry))
+        self.assertIn("**Novice accessibility floor 2:**", rendered)
+        self.assertIn("A callback-based request boundary.", rendered)
+        self.assertIn("One dictionary comprehension.", rendered)
 
     def test_missing_and_obsolete_fields_fail(self) -> None:
         missing = valid_entry()
@@ -268,6 +319,57 @@ class RecordValidationTests(unittest.TestCase):
         mismatch["learning_level"]["level"] = 3
         self.assertTrue(any("require Level 1, not 3" in error for error in self.validate(mismatch)))
 
+    def test_low_rubric_level_requires_accessibility_evidence(self) -> None:
+        entry = valid_entry()
+        del entry["novice_accessibility"]
+        self.assertTrue(
+            any(
+                "novice_accessibility: required when rubric Level is 1" in error
+                for error in self.validate(entry)
+            )
+        )
+
+    def test_structural_level_three_does_not_require_accessibility_evidence(self) -> None:
+        entry = valid_entry()
+        del entry["novice_accessibility"]
+        for dimension in catalog_tool.DIMENSION_FIELDS:
+            entry["learning_level"][dimension]["score"] = 3
+        entry["learning_level"]["level"] = 3
+        self.assertEqual(self.validate(entry), [])
+
+    def test_accessibility_floor_shape_and_range_are_enforced(self) -> None:
+        for floor in (0, 4, 1.5, True):
+            with self.subTest(floor=floor):
+                entry = valid_entry()
+                entry["novice_accessibility"]["floor"] = floor
+                self.assertTrue(
+                    any("expected integer from 1 through 3" in error for error in self.validate(entry))
+                )
+
+        missing = valid_entry()
+        del missing["novice_accessibility"]["reason"]
+        self.assertTrue(any("missing fields reason" in error for error in self.validate(missing)))
+
+        malformed = valid_entry()
+        malformed["novice_accessibility"]["central_concepts"] = "validation"
+        self.assertTrue(any("expected at least 0 text item" in error for error in self.validate(malformed)))
+
+    def test_published_level_must_equal_rubric_level_or_accessibility_floor(self) -> None:
+        promoted = valid_entry()
+        promoted["novice_accessibility"]["floor"] = 3
+        promoted["learning_level"]["level"] = 3
+        self.assertEqual(self.validate(promoted), [])
+
+        contradicted = valid_entry()
+        contradicted["novice_accessibility"]["floor"] = 3
+        self.assertTrue(
+            any(
+                "rubric Level 1 and accessibility floor 3 require Level 3, not 1"
+                in error
+                for error in self.validate(contradicted)
+            )
+        )
+
     def test_coding_relevance_gate_is_required_and_must_pass(self) -> None:
         missing = valid_entry()
         del missing["coding_relevance"]["gate"]
@@ -356,7 +458,7 @@ class RecordValidationTests(unittest.TestCase):
 
 
 class CatalogIntegrationTests(unittest.TestCase):
-    def make_root(self, *, empty: bool = False, schema_version: int = 3) -> Path:
+    def make_root(self, *, empty: bool = False, schema_version: int = 4) -> Path:
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
@@ -382,6 +484,7 @@ class CatalogIntegrationTests(unittest.TestCase):
             "learner-centered-rebuild.json",
             "learner-centered-gap-research.json",
             "learner-centered-remediation.json",
+            "novice-accessibility-audit.json",
             "rejections.json",
         ):
             (research / name).write_text(
@@ -466,10 +569,39 @@ class CatalogIntegrationTests(unittest.TestCase):
         )
         self.assertEqual(catalog_tool.validate_catalog(root), [])
 
-    def test_schema_version_two_is_rejected(self) -> None:
-        root = self.make_root(empty=True, schema_version=2)
+    def test_novice_audit_reconciles_levels_capacity_and_safe_source_paths(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        audit_path = root / "research" / "novice-accessibility-audit.json"
+        audit = json.loads(audit_path.read_text(encoding="utf-8"))
+
+        audit["records"][0]["final_level"] = 1
+        audit_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "must equal max(rubric level, floor)" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+        audit = json.loads(
+            (ROOT / "research" / "novice-accessibility-audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        audit["records"][0]["source_files_inspected"].append("config/.env.local")
+        audit_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "expected canonical safe non-dotenv relative path" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+    def test_schema_version_three_is_rejected(self) -> None:
+        root = self.make_root(empty=True, schema_version=3)
         errors = catalog_tool.validate_catalog(root)
-        self.assertTrue(any("schema_version: expected 3" in error for error in errors))
+        self.assertTrue(any("schema_version: expected 4" in error for error in errors))
 
     def test_incomplete_catalog_is_valid_but_not_complete(self) -> None:
         root = self.make_root(empty=True)
@@ -531,7 +663,7 @@ class CatalogIntegrationTests(unittest.TestCase):
         languages = json.loads((ROOT / "catalog" / "languages.json").read_text(encoding="utf-8"))["languages"]
         for language in languages:
             data = json.loads((ROOT / "catalog" / f"{language['slug']}.json").read_text(encoding="utf-8"))
-            self.assertEqual(data["schema_version"], 3)
+            self.assertEqual(data["schema_version"], 4)
             for entry in data["repositories"]:
                 self.assertNotIn("sdc", entry)
                 self.assertNotIn("start_here", entry)

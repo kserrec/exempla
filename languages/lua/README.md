@@ -4,33 +4,40 @@
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
+## Level 2 — Guided real-world code
 
 ### [lunarmodules/say](https://github.com/lunarmodules/say)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
 
-A tiny namespaced message store with fallback lookup, formatted substitution, and a callable retrieval interface.
+A small Lua module that stores named messages, falls back to another namespace, and inserts values into the selected text.
 
-**Why study it:** Fifty production lines expose a complete contract: nested key storage, locale-style fallback, argument validation, substitution, missing-key behavior, and a metatable call API.
+**Why study it:** Trace one in-memory registry from message storage through active-namespace lookup, fallback lookup, argument checking, and formatted output.
+
+**Short context:**
+
+- A namespaced message registry looks up a string in the active namespace, falls back to another namespace, and substitutes positional values.
 
 **Prerequisites:**
 
-- Basic Lua tables, functions, modules, strings, varargs, metatables, error handling, and unit-test assertions.
+- The global novice Lua baseline, including tables, functions, modules, strings, errors, and focused tests.
+- A metatable can make a table callable and define fallback indexing; this module uses one small example of each behavior.
 
 **Concepts this path develops:**
 
-- Ordinary module tables and closures.
-- Localized active and fallback namespace state.
-- Namespace and fallback selection must remain deterministic.
+- Storing values under a namespace and key.
+- Trying the active namespace before a fallback namespace.
+- Using a small metatable to present a callable lookup API.
 
 **What you can learn:**
 
-- Nested tables, dotted namespace traversal, metatable call syntax, fallback lookup, positional substitution, input validation, module state, and compact behavior tests.
+- Trace message storage and lookup through one module-local registry.
+- Compare active, fallback, and missing-key results.
+- Use tests to understand substitution, nil values, and invalid argument types.
 
 **Learning path:**
 
@@ -48,7 +55,10 @@ A tiny namespaced message store with fallback lookup, formatted substitution, an
 - **Behavioral reasoning 2:** Meaningful state and branching remain synchronous, local, and direct.
 - **Design span 1:** One focused unit contains the complete behavior.
 - **Constraint burden 2:** The path carries routine validation and small stable-API safeguards rather than several material guarantees.
-- **Placement:** The four scores 2/2/1/2 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** One short metatable primer explains the API; registry state, fallback order, validation, and formatting then remain local and directly tested.
+  - **Central concepts:** namespaced message lookup; fallback lookup and positional substitution; callable and indexable metatable behavior
+  - **Incidental concepts:** table.unpack compatibility fallback; explicit table length for nil values
+- **Placement:** The four structural scores 2/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** MIT ([evidence 1](https://github.com/lunarmodules/say/blob/fe1475fe2acaf844bd030c2ff998bc99ed8930ed/LICENSE))
 
@@ -63,9 +73,7 @@ A tiny namespaced message store with fallback lookup, formatted substitution, an
 
 That short localization vocabulary is subordinate to transferable lessons in table-backed state, metatable call and index behavior, validation, fallback lookup, deterministic formatting, compatibility, and focused specification tests.
 
-Required domain context:
-
-- A namespaced message registry looks up a string in the active namespace, falls back to another namespace, and substitutes positional values.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -78,11 +86,11 @@ Required domain context:
 - **Maintainability:** A tiny API, no runtime dependencies, explicit validation, and a focused specification keep every behavior locally reviewable.
 - **Educational value:** It is an unusually compact example of turning plain tables and metatables into a complete, useful library contract.
 
-**Inspection record:** commit `fe1475fe2acaf844bd030c2ff998bc99ed8930ed`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/say/init.lua`, `spec/say_spec.lua`, `README.md`, `LICENSE`. GitHub Linguist label: Lua.
+**Inspection record:** commit `fe1475fe2acaf844bd030c2ff998bc99ed8930ed`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `src/say/init.lua`, `spec/say_spec.lua`, `README.md`, `LICENSE`. GitHub Linguist label: Lua.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [kikito/middleclass](https://github.com/kikito/middleclass)
 
@@ -91,6 +99,10 @@ Required domain context:
 A compact object-oriented library providing classes, inheritance, instances, mixins, static members, and metamethod support.
 
 **Why study it:** It turns tables and metatables into a recognizable object model while keeping class construction, inheritance, allocation, mixins, and special metamethod handling visible in one file.
+
+**Short context:**
+
+- The library implements classes, instances, inheritance, static members, mixins, and metamethods on top of Lua tables and metatables.
 
 **Prerequisites:**
 
@@ -140,9 +152,7 @@ A compact object-oriented library providing classes, inheritance, instances, mix
 
 The path is entirely transferable language and library engineering: dynamic dispatch, method declaration and propagation, inheritance, allocation, mixin composition, weak subclass tracking, custom indexing, and behavioral self-tests.
 
-Required domain context:
-
-- The library implements classes, instances, inheritance, static members, mixins, and metamethods on top of Lua tables and metatables.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -166,6 +176,10 @@ Required domain context:
 An in-process least-recently-used cache for OpenResty with expiry, stale reads, user flags, bounded capacity, and table-backed or pure-FFI storage.
 
 **Why study it:** Two implementations preserve one contract while exposing hash lookup, a doubly linked recency queue, expiration semantics, stale recovery, FFI memory layouts, and capacity tradeoffs.
+
+**Short context:**
+
+- A bounded least-recently-used cache promotes reads, evicts the least recent entry at capacity, and can expire entries by time-to-live.
 
 **Prerequisites:**
 
@@ -214,9 +228,7 @@ An in-process least-recently-used cache for OpenResty with expiry, stale reads, 
 
 That standard data-structure context is subordinate to transferable lessons in LuaJIT FFI structs and pointers, intrusive queues, bidirectional key-node indexes, bounded allocation, eviction, expiration, flags, representation parity, and invariant-focused tests.
 
-Required domain context:
-
-- A bounded least-recently-used cache promotes reads, evicts the least recent entry at capacity, and can expire entries by time-to-live.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -233,7 +245,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [lunarmodules/busted](https://github.com/lunarmodules/busted)
 
@@ -242,6 +254,10 @@ Required domain context:
 A full testing framework with nested contexts, hooks, asynchronous completion, filtering, randomized execution, multiple source loaders, and pluggable reporters.
 
 **Why study it:** Busted's synchronous core shows how a dynamic Lua DSL becomes a nested block tree and executes with exact hooks, events, failures, pending state, and cleanup order.
+
+**Short context:**
+
+- A test framework registers nested describe and it blocks, runs setup and teardown hooks in defined order, and reports pass, fail, pending, and error results.
 
 **Prerequisites:**
 
@@ -294,9 +310,7 @@ A full testing framework with nested contexts, hooks, asynchronous completion, f
 
 That standard testing vocabulary is subordinate to transferable lessons in dynamic DSL construction, block trees, event publication, environment scoping, recursive synchronous execution, hook ordering, failure recovery, filtering, result state, and self-hosting tests.
 
-Required domain context:
-
-- A test framework registers nested describe and it blocks, runs setup and teardown hooks in defined order, and reports pass, fail, pending, and error results.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -320,6 +334,10 @@ Required domain context:
 A static analyzer and command-line linter that reports globals, unused values, control-flow mistakes, whitespace problems, complexity, and configuration-sensitive warnings.
 
 **Why study it:** The selected Luacheck path exposes a complete static-analysis trace from source tokens and syntax nodes through control-flow linearization, lexical-scope resolution, unused-local detection, and final warning filtering.
+
+**Short context:**
+
+- A static analyzer tokenizes and parses Lua source, resolves scopes and control flow, detects warnings, and filters them through configuration.
 
 **Prerequisites:**
 
@@ -373,9 +391,7 @@ A static analyzer and command-line linter that reports globals, unused values, c
 
 The path is transferable compiler and tooling engineering: lexing, parsing, intermediate representation, staged analysis, scope and data-flow state, warning construction, filtering, configuration, diagnostics, and direct stage tests.
 
-Required domain context:
-
-- A static analyzer tokenizes and parses Lua source, resolves scopes and control flow, detects warnings, and filters them through configuration.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -392,7 +408,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [apache/apisix](https://github.com/apache/apisix)
 
@@ -401,6 +417,11 @@ Required domain context:
 A cloud-native API and AI gateway with dynamic routing, load balancing, policy plugins, observability, standalone and distributed configuration modes, and HTTP, stream, and extensible runtime paths.
 
 **Why study it:** APISIX's API-driven standalone configuration path is an expert trace through validation, monotonic resource versions, shared memory, subsystem-specific events, per-worker polling, hot route rebuilds, and safe traffic handling before the first configuration arrives.
+
+**Short context:**
+
+- API-driven standalone mode accepts a complete gateway configuration through an Admin API, stores it in shared memory, and hot-updates each worker without restarting the gateway.
+- OpenResty's HTTP and stream subsystems use separate Lua virtual machines and event sockets, so stream workers poll shared state even when HTTP workers can receive an event directly.
 
 **Prerequisites:**
 
@@ -458,10 +479,7 @@ A cloud-native API and AI gateway with dynamic routing, load balancing, policy p
 
 That short gateway and worker-model primer is documented in the selected files. Transferable validation, versioned state replacement, idempotence, shared-memory publication, event and polling coordination, hot reload, availability during initialization, fault isolation, and integration testing explain the path's difficulty.
 
-Required domain context:
-
-- API-driven standalone mode accepts a complete gateway configuration through an Admin API, stores it in shared memory, and hot-updates each worker without restarting the gateway.
-- OpenResty's HTTP and stream subsystems use separate Lua virtual machines and event sockets, so stream workers poll shared state even when HTTP workers can receive an event directly.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -485,6 +503,10 @@ Required domain context:
 A production API, AI, and MCP gateway supporting traffic routing, load balancing, authentication, policy plugins, observability, databases or declarative operation, and hybrid control and data planes.
 
 **Why study it:** Kong's cluster-events subsystem is an expert Lua path through durable publication, polling, shared-memory cursors, deduplication, delayed delivery, callback isolation, and recovery across nodes and workers.
+
+**Short context:**
+
+- Cluster events propagate invalidation or coordination messages among Kong nodes by persisting events, polling them, deduplicating delivery, and invoking channel subscribers.
 
 **Prerequisites:**
 
@@ -536,9 +558,7 @@ A production API, AI, and MCP gateway supporting traffic routing, load balancing
 
 That short distributed-event context is subordinate to transferable expert engineering in database-backed pub/sub, shared-memory cursors and deduplication, timers, locks, delayed delivery, pagination, node identity, callback isolation, failure recovery, cross-worker coordination, and integration testing.
 
-Required domain context:
-
-- Cluster events propagate invalidation or coordination messages among Kong nodes by persisting events, polling them, deduplicating delivery, and invoking channel subscribers.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

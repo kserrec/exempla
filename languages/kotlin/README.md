@@ -1,91 +1,18 @@
 # Kotlin
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [JakeWharton/picnic](https://github.com/JakeWharton/picnic)
-
-**Language 3 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
-
-A compact Kotlin multiplatform library for building HTML-like tables and rendering them as aligned text.
-
-**Why study it:** Picnic is a compact example of a Kotlin receiver DSL that produces a real immutable model and carries it through measurement, layout, and observable multiline rendering.
-
-**Prerequisites:**
-
-- Readers should know Kotlin classes, interfaces, lambdas with receivers, immutable collections, and the basic idea that text-table cells must be measured and aligned.
-
-**Concepts this path develops:**
-
-- DSL-marked receiver lambdas.
-- Synchronous model construction.
-- Style precedence must reach the rendered cell.
-
-**What you can learn:**
-
-- Trace receiver-lambda builders into immutable table data, inherited styles, cell measurement, canvas coordinates, clipped drawing, and multiline text output.
-
-**Learning path:**
-
-- **Goal:** Understand how a Kotlin receiver DSL builds a styled table model that is measured, laid out, and drawn as multiline text.
-- **Start here:** [`picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt) — The reviewed trace begins in dsl.kt because its table and row receiver builders create the model consumed by the selected layout and rendering path.
-- **Then read:**
-  - [`picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt)
-  - [`picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt)
-  - [`picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt)
-  - [`picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt)
-  - [`README.md`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/README.md)
-  - [`LICENSE.txt`](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/LICENSE.txt)
-- **Trace:** Start with table and row receiver builders, follow their immutable model and inherited styles into simple cell measurement, table coordinate calculation, clipped drawing, and multiline output, then close with DslTest. Row and column span behavior is deliberately excluded from the scored core.
-
-**Why this level:**
-
-- **Language technique 3:** Receiver-based construction and delegation materially shape the path, establishing substantial abstraction without recurring advanced metaprogramming.
-- **Behavioral reasoning 2:** The selected observable has meaningful local state and branching, but excludes span behavior and does not require nonlocal lifecycle or state-machine reasoning.
-- **Design span 2:** A few clear modules in one process contain the complete behavior.
-- **Constraint burden 2:** Routine output, validation, and stable-API safeguards constrain the bounded transformation.
-- **Placement:** The four scores 3/2/2/2 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/JakeWharton/picnic/blob/bc8832efb604ecdd80abedc0648fdb3ca813d714/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes versioned Picnic artifacts and documents both a Kotlin DSL and Java/Kotlin builder API for application output.
-
-**Language evidence:** The table model, builder and Kotlin DSL, span-aware layout, border calculation, and text rendering are implemented in Kotlin under picnic/src/commonMain.
-
-**Coding relevance:**
-
-The short table-layout vocabulary is subordinate to transferable lessons in receiver DSLs, builder composition, immutable models, style resolution, measurement, layout, drawing, and observable text rendering.
-
-Required domain context:
-
-- A text table contains rows and cells whose content is measured, aligned, styled, and drawn into a character canvas.
-
-**Eight-part quality gate:**
-
-- **Source quality:** dsl.kt, model.kt, textLayout.kt, and textRender.kt keep building, data, measurement, and drawing responsibilities explicit and compact.
-- **Architecture:** Receiver builders produce immutable table data, layout code assigns dimensions and coordinates, and the renderer draws the resulting cells into text.
-- **Naming and idiom:** The table, row, cell, style, layout, and render names expose the pipeline while demonstrating idiomatic receiver lambdas and Kotlin model construction.
-- **Tests:** DslTest.kt closes the selected receiver-DSL-to-multiline-output behavior without using row or column spans to inflate the path.
-- **Documentation:** README.md supplies rendered examples and styling guidance that orient the implementation trace.
-- **Traceability:** A declaration in dsl.kt can be followed through model.kt and textLayout.kt into textRender.kt and then compared with DslTest.kt output assertions.
-- **Maintainability:** The small staged surface and direct output test make changes to the bounded non-span path easy to localize and verify.
-- **Educational value:** The path shows how a friendly Kotlin DSL can front a complete, inspectable transformation instead of hiding the underlying model and rendering work.
-
-**Inspection record:** commit `bc8832efb604ecdd80abedc0648fdb3ca813d714`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `picnic/src/commonMain/kotlin/com/jakewharton/picnic/dsl.kt`, `picnic/src/commonMain/kotlin/com/jakewharton/picnic/model.kt`, `picnic/src/commonMain/kotlin/com/jakewharton/picnic/textLayout.kt`, `picnic/src/commonMain/kotlin/com/jakewharton/picnic/textRender.kt`, `picnic/src/commonTest/kotlin/com/jakewharton/picnic/DslTest.kt`, `README.md`, `LICENSE.txt`. GitHub Linguist label: Kotlin.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [ajalt/clikt](https://github.com/ajalt/clikt)
 
@@ -94,6 +21,10 @@ Required domain context:
 A multiplatform Kotlin framework for type-safe command-line applications with nested commands, composable parameters, generated help, and shell completion.
 
 **Why study it:** Starting at CommandLineParser shows how a declarative Kotlin command model becomes normalized tokens, recursive invocations, finalized option values, validation results, and executable subcommands.
+
+**Short context:**
+
+- A command-line parser maps option and argument tokens into typed command invocations, including nested subcommands.
 
 **Prerequisites:**
 
@@ -143,9 +74,7 @@ A multiplatform Kotlin framework for type-safe command-line applications with ne
 
 The concise command-line vocabulary is subordinate to reusable lessons in delegated APIs, token-state machines, recursive parsing, extension boundaries, error aggregation, validation, and compatibility-oriented tests.
 
-Required domain context:
-
-- A command-line parser maps option and argument tokens into typed command invocations, including nested subcommands.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -169,6 +98,10 @@ Required domain context:
 A lightweight Kotlin multiplatform logging facade with lazy messages and adapters for platform logging systems.
 
 **Why study it:** kotlin-logging shows how a multiplatform facade can keep logging lazy while preserving markers, payloads, causes, and the original call site through an SLF4J adapter.
+
+**Short context:**
+
+- A logging facade checks a level, lazily creates an event, and forwards it to a platform backend while preserving the caller location.
 
 **Prerequisites:**
 
@@ -218,9 +151,7 @@ A lightweight Kotlin multiplatform logging facade with lazy messages and adapter
 
 Logging vocabulary is short and subordinate to transferable lessons in lazy APIs, receiver builders, common-to-platform adapters, compatibility facades, payload forwarding, and observability contracts.
 
-Required domain context:
-
-- A logging facade checks a level, lazily creates an event, and forwards it to a platform backend while preserving the caller location.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -237,7 +168,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [cashapp/turbine](https://github.com/cashapp/turbine)
 
@@ -246,6 +177,10 @@ Required domain context:
 A small multiplatform testing library that turns Kotlin Flow emissions, completion, and failures into explicit ordered assertions.
 
 **Why study it:** Turbine makes concurrent Flow testing concrete by turning collection into an ordered event protocol with timeouts, cancellation, cleanup, and preserved failures.
+
+**Short context:**
+
+- A Flow test observes emitted items, normal completion, and errors through a channel-backed assertion API.
 
 **Prerequisites:**
 
@@ -298,9 +233,7 @@ A small multiplatform testing library that turns Kotlin Flow emissions, completi
 
 Coroutine and Flow vocabulary is programming subject matter; the path directly teaches concurrent collection, structured cancellation, terminal events, timeouts, cleanup, exception causality, and race-sensitive testing.
 
-Required domain context:
-
-- A Flow test observes emitted items, normal completion, and errors through a channel-backed assertion API.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -324,6 +257,10 @@ Required domain context:
 A modern JSON library for Kotlin and Java with streaming I/O, composable adapters, reflection support, and generated adapters through Kotlin Symbol Processing.
 
 **Why study it:** Moshi's adapter lookup is a focused study of recursive factory resolution, cycle breaking, deferred publication, and safe cache updates.
+
+**Short context:**
+
+- Moshi maps JSON values to and from Kotlin and Java object models through composable adapters.
 
 **Prerequisites:**
 
@@ -373,9 +310,7 @@ A modern JSON library for Kotlin and Java with streaming I/O, composable adapter
 
 The short serialization vocabulary is subordinate to transferable programming lessons in generic factory lookup, recursive construction, cycle breaking, cache publication, reentrancy, reflection boundaries, and focused contract tests.
 
-Required domain context:
-
-- Moshi maps JSON values to and from Kotlin and Java object models through composable adapters.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -392,7 +327,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [JetBrains/kotlin](https://github.com/JetBrains/kotlin)
 
@@ -401,6 +336,10 @@ Required domain context:
 The Kotlin programming language implementation, including its compiler frontends, intermediate representations, backends, tooling, libraries, and multiplatform infrastructure.
 
 **Why study it:** Kotlin's JVM command-line compiler exposes an expert but unusually explicit staged path from configuration and frontend analysis through FIR, IR, backend code generation, and artifact output.
+
+**Short context:**
+
+- The selected JVM command-line compiler pipeline transforms Kotlin source through frontend analysis, FIR-to-IR conversion, backend code generation, and output writing.
 
 **Prerequisites:**
 
@@ -456,9 +395,7 @@ The Kotlin programming language implementation, including its compiler frontends
 
 Compiler construction is programming infrastructure rather than an external specialist domain, and the trace teaches transferable staged architecture, typed intermediate representations, diagnostics, extension coordination, code generation, lifecycle, and output-integrity reasoning.
 
-Required domain context:
-
-- The selected JVM command-line compiler pipeline transforms Kotlin source through frontend analysis, FIR-to-IR conversion, backend code generation, and output writing.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -482,6 +419,10 @@ Required domain context:
 Kotlin's official multiplatform library for structured concurrency, asynchronous streams, channels, scheduling, testing, debugging, and ecosystem integration.
 
 **Why study it:** The kotlinx.coroutines Job implementation is a concentrated example of a thread-safe lifecycle state machine with cancellation, child ownership, callbacks, and exception aggregation.
+
+**Short context:**
+
+- The selected Job path coordinates structured coroutine lifetimes, cancellation, completion, and parent-child relationships.
 
 **Prerequisites:**
 
@@ -532,9 +473,7 @@ Kotlin's official multiplatform library for structured concurrency, asynchronous
 
 Coroutine vocabulary is programming-language and concurrency infrastructure, and the trace teaches transferable state-machine, lock-free transition, lifecycle, callback, ownership, exception, and concurrency reasoning without relying on an external specialist domain.
 
-Required domain context:
-
-- The selected Job path coordinates structured coroutine lifetimes, cancellation, completion, and parent-child relationships.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

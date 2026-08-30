@@ -1,160 +1,18 @@
 # Python
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [dbader/schedule](https://github.com/dbader/schedule)
-
-**Language 2 / Behavior 3 / Design 1 / Constraints 3 → Level 2**
-
-An in-process job scheduler with a fluent API for running Python callables at human-readable intervals.
-
-**Why study it:** The fluent scheduling path shows how a compact Python library turns declarations into recurring mutable state while handling deadlines, cancellation, missed runs, time zones, and daylight-saving transitions.
-
-**Prerequisites:**
-
-- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
-
-**Concepts this path develops:**
-
-- Fluent object API and callable composition.
-- Recurring mutable schedule state.
-- Timezone and DST correctness.
-
-**What you can learn:**
-
-- Use `schedule/__init__.py` to study the following transferable techniques and behaviors: Fluent object APIs, callable jobs, due-time ordering, recurrence calculation, randomized intervals, deadlines, cancellation sentinels, rescheduling, time-zone conversion, and daylight-saving gaps and folds.
-
-**Learning path:**
-
-- **Goal:** Understand how a fluent schedule declaration becomes a due job, executes or cancels, and computes its following run across deadlines and daylight-saving transitions.
-- **Start here:** [`schedule/__init__.py`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/schedule/__init__.py) — schedule/__init__.py contains every, Job, Scheduler.run_pending, Job.run, and next-run calculation, keeping the complete production trace in one module.
-- **Then read:**
-  - [`test_schedule.py`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/test_schedule.py)
-  - [`docs/timezones.rst`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/docs/timezones.rst)
-- **Trace:** Follow every().at().do() as Job stores interval, unit, time, callable, and deadline; trace _schedule_next_run and _correct_utc_offset into Scheduler.run_pending, Job.run, CancelJob handling, and rescheduling; then correlate ordinary recurrence, random intervals, deadlines, time zones, DST gaps and folds, and cancellation tests.
-
-**Why this level:**
-
-- **Language technique 2:** The path uses familiar professional Python techniques to build a readable fluent API without substantial metaprogramming.
-- **Behavioral reasoning 3:** Time progression and repeated state transitions materially affect behavior, including nontrivial daylight-saving branches.
-- **Design span 1:** The complete production trace stays in schedule/__init__.py; tests and documentation explain contracts but do not add implementation boundaries.
-- **Constraint burden 3:** Several material time, compatibility, and cancellation guarantees constrain changes to otherwise compact code.
-- **Placement:** The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes a maintained scheduling package intended for recurring application jobs rather than an instructional toy.
-
-**Language evidence:** The scheduler, jobs, interval calculations, decorators, and public API live in the Python module schedule/__init__.py.
-
-**Coding relevance:**
-
-The README and time-zone guide supply the required scheduling context, while the selected path primarily teaches fluent APIs, mutable lifecycle state, datetime edge handling, cancellation, and deterministic testing.
-
-Required domain context:
-
-- An in-process scheduler stores the next local run time for recurring callables; daylight-saving transitions can make a requested wall-clock time nonexistent or repeated.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Scheduler and Job expose validation, due checks, execution, cancellation, and next-run calculation as explicit methods in one focused module.
-- **Architecture:** One scheduler-and-job component owns production behavior, while test_schedule.py and docs/timezones.rst explain its contracts and edge cases.
-- **Naming and idiom:** every, at, do, run_pending, should_run, next_run, cancel_after, CancelJob, and _schedule_next_run form a readable scheduling vocabulary.
-- **Tests:** test_schedule.py covers ordinary and random recurrence, deadlines, cancellation, missed-run policy, time zones, daylight-saving gaps and folds, and errors.
-- **Documentation:** docs/timezones.rst documents timezone-aware scheduling and the library's naive-local public behavior, including daylight-saving limitations relevant to the selected trace.
-- **Traceability:** A fluent every().at().do() declaration can be followed into stored Job state, next-run calculation, Scheduler.run_pending, Job.run, cancellation, and rescheduling assertions.
-- **Maintainability:** The one-module design and exhaustive time tests make recurrence policy visible while protecting compatibility at daylight-saving and deadline boundaries.
-- **Educational value:** The path demonstrates that a small fluent API can contain substantial temporal reasoning without requiring architectural scaffolding.
-
-**Inspection record:** commit `82a43db1b938d8fdf60103bd41f329e06c8d3651`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `schedule/__init__.py`, `test_schedule.py`, `docs/timezones.rst`, `LICENSE.txt`. GitHub Linguist label: Python.
-
-</details>
-
-### [pallets/itsdangerous](https://github.com/pallets/itsdangerous)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
-A compact library for signing and timestamping data so tampering can be detected without encrypting the payload.
-
-**Why study it:** The signer path is a compact security-boundary study of byte normalization, key derivation, constant-time verification, secret rotation, and informative failure payloads.
-
-**Prerequisites:**
-
-- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
-
-**Concepts this path develops:**
-
-- Algorithm strategy objects and class composition.
-- Localized sign and unsign branches.
-- Constant-time signature verification.
-
-**What you can learn:**
-
-- Use `src/itsdangerous/signer.py` to study the following transferable techniques and behaviors: Byte encoding, derived signing keys, algorithm strategy objects, constant-time comparison, rotated-secret fallback, signature framing, rejected-payload exceptions, and serializer integration.
-
-**Learning path:**
-
-- **Goal:** Understand how ItsDangerous signs and verifies a payload, rotates secrets, preserves the rejected payload on failure, and supplies that contract to serializers.
-- **Start here:** [`src/itsdangerous/signer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py) — src/itsdangerous/signer.py owns Signer.sign, verify_signature, and unsign, so it exposes both creation and verification before the trace reaches shared encoding, exceptions, and serializer construction.
-- **Then read:**
-  - [`src/itsdangerous/encoding.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/encoding.py)
-  - [`src/itsdangerous/exc.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/exc.py)
-  - [`src/itsdangerous/serializer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/serializer.py)
-  - [`tests/test_itsdangerous/test_signer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/tests/test_itsdangerous/test_signer.py)
-- **Trace:** Follow Signer.sign through byte conversion, key derivation, algorithm delegation, and signature joining; then follow verify_signature and unsign as they try rotated keys newest-first, use constant-time comparison, and raise BadSignature with the payload. Finish at Serializer.make_signer and the signer tests for mutation, malformed input, derivation modes, custom algorithms, and rotation.
-
-**Why this level:**
-
-- **Language technique 2:** The path relies on common professional object composition, iterables, class methods, and exception idioms without advanced Python machinery.
-- **Behavioral reasoning 2:** Several validation and fallback paths matter, but state and control flow remain synchronous, local, and easy to enumerate.
-- **Design span 2:** The behavior crosses a few small, explicit modules whose responsibilities remain locally understandable.
-- **Constraint burden 3:** Security boundaries, encoding rules, old-key acceptance, and stable exception payloads materially constrain ordinary changes.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/LICENSE.txt))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** Pallets publishes ItsDangerous as the signing layer used by Flask and other production Python applications.
-
-**Language evidence:** The signing, serialization, timestamp, encoding, and exception modules under src/itsdangerous are implemented in Python.
-
-**Coding relevance:**
-
-The repository documents this short trust model and delegates HMAC, digest, and constant-time comparison primitives to established library implementations; the selected path teaches transferable API composition, validation, compatibility, and error design rather than cryptographic theory.
-
-Required domain context:
-
-- A message authentication code lets a holder of a secret detect payload tampering; salts separate uses, and key rotation accepts old secrets while signing with the newest one.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Signing, byte conversion, key derivation, algorithm delegation, rotated-key verification, and failure construction are expressed as short named operations.
-- **Architecture:** Signer, encoding helpers, exception types, and Serializer.make_signer have narrow responsibilities across a small selected path.
-- **Naming and idiom:** Signer, derive_key, get_signature, verify_signature, unsign, BadSignature, payload, separator, and secret_keys state the security contract directly.
-- **Tests:** tests/test_itsdangerous/test_signer.py covers payload mutation, malformed signatures, derivation modes, custom algorithms, separators, rotated keys, and rejected payloads.
-- **Documentation:** The README and narrative signer documentation explain the signing boundary, key rotation, salts, algorithms, and serializer responsibilities used by this path.
-- **Traceability:** A payload can be followed through byte conversion, derived key and algorithm signing, separator framing, newest-first verification, BadSignature payload preservation, and serializer construction.
-- **Maintainability:** Separate encoding, algorithm, signer, exception, and serializer boundaries make security and backward-compatibility changes locally reviewable.
-- **Educational value:** The path teaches how a friendly signing API preserves security-sensitive comparison, rotation, encoding, and error contracts without a large framework.
-
-**Inspection record:** commit `672971d66a2ef9f85151e53283113f33d642dabd`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/itsdangerous/signer.py`, `src/itsdangerous/encoding.py`, `src/itsdangerous/exc.py`, `src/itsdangerous/serializer.py`, `tests/test_itsdangerous/test_signer.py`, `LICENSE.txt`. GitHub Linguist label: Python.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [pallets/click](https://github.com/pallets/click)
 
@@ -163,6 +21,10 @@ Required domain context:
 A composable command-line toolkit that maps decorators and command objects onto parsing, validation, help, invocation, and shell completion.
 
 **Why study it:** Starting with Click's decorators connects a polished declarative API to the command objects, parser state, managed contexts, callbacks, errors, and cleanup that implement it.
+
+**Short context:**
+
+- A command-line program converts argument tokens into typed parameters, invokes a callback within a context, and reports usage or errors to a terminal.
 
 **Prerequisites:**
 
@@ -209,9 +71,7 @@ A composable command-line toolkit that maps decorators and command objects onto 
 
 The README and familiar command-line conventions provide sufficient context; the path primarily teaches declarative API construction, parsing, context propagation, invocation, cleanup, and compatibility.
 
-Required domain context:
-
-- A command-line program converts argument tokens into typed parameters, invokes a callback within a context, and reports usage or errors to a terminal.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -235,6 +95,10 @@ Required domain context:
 A synchronous HTTP client that turns URLs, headers, authentication, cookies, redirects, and connection pools into a small Python API.
 
 **Why study it:** Beginning with requests.get and api.request shows how a deliberately small convenience API creates and cleans up a Session while preserving preparation, redirect, transport, streaming, and security policy.
+
+**Short context:**
+
+- An HTTP client prepares a request, sends it through a connection-pool adapter, and may follow redirects while preserving or removing method, body, cookies, and credentials according to HTTP and security rules.
 
 **Prerequisites:**
 
@@ -282,9 +146,7 @@ A synchronous HTTP client that turns URLs, headers, authentication, cookies, red
 
 Ordinary HTTP concepts and the repository documentation are sufficient; the difficult work is transferable API layering, state management, adapter design, resource cleanup, compatibility, and security policy.
 
-Required domain context:
-
-- An HTTP client prepares a request, sends it through a connection-pool adapter, and may follow redirects while preserving or removing method, body, cookies, and credentials according to HTTP and security rules.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -301,7 +163,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [pallets/flask](https://github.com/pallets/flask)
 
@@ -310,6 +172,10 @@ Required domain context:
 A web application framework that composes routing, request contexts, templating, sessions, error handling, and extensions over Werkzeug.
 
 **Why study it:** The Flask request path shows one complete WSGI lifecycle through scoped context binding, routing, hooks, view dispatch, error handling, response finalization, and guaranteed teardown.
+
+**Short context:**
+
+- WSGI presents one HTTP request as an environment and response callback; Flask binds application and request context to the active execution before routing and dispatch.
 
 **Prerequisites:**
 
@@ -356,9 +222,7 @@ A web application framework that composes routing, request contexts, templating,
 
 A short HTTP, WSGI, and context prerequisite is enough; the path's difficulty comes from transferable lifecycle staging, scoped state, hook ordering, exception handling, cleanup, and dependency boundaries.
 
-Required domain context:
-
-- WSGI presents one HTTP request as an environment and response callback; Flask binds application and request context to the active execution before routing and dispatch.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -382,6 +246,10 @@ Required domain context:
 An extensible testing framework that discovers tests, resolves fixtures, rewrites assertions, runs lifecycle hooks, and reports results.
 
 **Why study it:** The collection path shows how pytest converts command-line paths into a deterministic extensible tree while coordinating imports, plugin hooks, reflection, parametrization, duplicate policy, and failures.
+
+**Short context:**
+
+- Test collection turns command-line paths and Python objects into a tree of Collector and Item nodes while plugins may observe or replace stages through hooks.
 
 **Prerequisites:**
 
@@ -427,9 +295,7 @@ An extensible testing framework that discovers tests, resolves fixtures, rewrite
 
 The README and familiar testing/import concepts provide sufficient context; the path primarily teaches transferable plugin architecture, tree traversal, reflection, import handling, deterministic ordering, compatibility, and error reporting.
 
-Required domain context:
-
-- Test collection turns command-line paths and Python objects into a tree of Collector and Item nodes while plugins may observe or replace stages through hooks.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -446,7 +312,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [apache/airflow](https://github.com/apache/airflow)
 
@@ -455,6 +321,10 @@ Required domain context:
 A workflow-orchestration platform that defines directed task graphs and schedules, executes, retries, observes, and persists their runs.
 
 **Why study it:** The scheduler-job path exposes how Airflow converts persisted due workflows into queued executor work while enforcing transactional claims, capacity, priority, fairness, and crash recovery.
+
+**Short context:**
+
+- A DAG contains task instances and dependencies; scheduler processes persist runs, use database row locks to claim work, enforce pools and concurrency limits, and submit queued workloads to executors.
 
 **Prerequisites:**
 
@@ -504,9 +374,7 @@ A workflow-orchestration platform that defines directed task graphs and schedule
 
 The repository explains this general workflow-orchestration model, and no specialist data domain is needed; the hard parts are transferable distributed scheduling, durable state, transactional coordination, fairness, recovery, performance, and extension architecture.
 
-Required domain context:
-
-- A DAG contains task instances and dependencies; scheduler processes persist runs, use database row locks to claim work, enforce pools and concurrency limits, and submit queued workloads to executors.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -530,6 +398,10 @@ Required domain context:
 A home-automation runtime that coordinates devices, integrations, events, services, entity state, configuration, storage, and user automations.
 
 **Why study it:** The configuration-entry lifecycle is a bounded view of Home Assistant's hardest transferable engineering: asynchronous state transitions, migration, retries, locking, persistence, unload cleanup, and shutdown cancellation.
+
+**Short context:**
+
+- A Home Assistant config entry is a persisted instance of a device or service integration that must migrate, load, retry when temporarily unavailable, unload, and survive concurrent reload or shutdown.
 
 **Prerequisites:**
 
@@ -578,9 +450,7 @@ A home-automation runtime that coordinates devices, integrations, events, servic
 
 This generic plugin-lifecycle model is short and documented, and the selected path requires no device-protocol expertise; its difficulty is transferable async state-machine, locking, retry, migration, persistence, cleanup, and compatibility engineering.
 
-Required domain context:
-
-- A Home Assistant config entry is a persisted instance of a device or service integration that must migrate, load, retry when temporarily unavailable, unload, and survive concurrent reload or shutdown.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

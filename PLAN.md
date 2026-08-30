@@ -6,22 +6,89 @@ Complexity release plan is historical.
 
 ## Current state
 
-- The canonical schema is version 3.
-- The catalog contains 151 qualified learning paths from 150 public
+- The canonical schema is version 4.
+- The catalog contains 125 qualified learning paths from 124 public
   repositories across 20 languages.
-- The 200-path grid has 49 documented research gaps. Ordinary validation
+- The 200-path grid has 75 documented research gaps. Ordinary validation
   accepts honest gaps; `--complete` is reserved for a genuinely full grid.
 - A path is identified by `(repository, path_slug)`. One repository may supply
   at most two materially distinct paths and never two paths in the same
   language/Level bucket.
-- Levels come from four path-centered scores. A score of 4 forces at least
-  Level 3, a score of 5 forces at least Level 4, and Level 5 requires a rounded
-  mean of 5 with at least two scores of 5.
+- The rubric Level still comes from four path-centered scores and their existing
+  guardrails. Rubric Levels 1 and 2 also require a novice-accessibility floor;
+  the published Level is the greater of the rubric Level and that floor.
 - Prerequisites name prior knowledge; `concepts_developed` names what the path
   teaches.
-- The active corpus audit is
-  [`research/learner-centered-audit.json`](research/learner-centered-audit.json)
-  and currently ends `pass-with-documented-gaps`.
+- The active lower-rung audit is
+  [`research/novice-accessibility-audit.json`](research/novice-accessibility-audit.json).
+  It preserves all 38 starting low-level decisions, 28 qualified capacity
+  alternates, 20 conditional gap passes, two replacements, and six progression
+  sanity checks.
+
+## Active novice-accessibility remediation
+
+The novice-to-advanced progression review preserves the four path-centered
+scores and adds a separate accessibility floor for structurally low-level
+paths. The supplied specification describes eight phases and, despite calling
+them 20 required steps, enumerates 25 named steps; all 25 remain in scope.
+
+### Phase 1 — Define the novice learner precisely
+
+- [x] Step 1.1: Rewrite the learner baseline.
+- [x] Step 1.2: Give Levels 1 and 2 explicit pedagogical meanings.
+
+### Phase 2 — Add a novice-accessibility floor to the algorithm
+
+- [x] Step 2.1: Define central versus incidental concepts.
+- [x] Step 2.2: Define `novice_accessibility` for low structural levels.
+- [x] Step 2.3: Add five accessibility tests to candidate review.
+
+### Phase 3 — Calibrate the revised low-level algorithm
+
+- [x] Step 3.1: Recalibrate the required representative paths from pinned
+  implementation and test evidence.
+- [x] Step 3.2: Freeze the revised lower-level rules before the corpus audit.
+
+### Phase 4 — Implement schema, tooling, rendering, and tests
+
+- [x] Step 4.1: Implement machine-checkable accessibility-floor behavior.
+- [x] Step 4.2: Test the required formula cases and known failure modes.
+
+### Phase 5 — Audit all current Level 1 entries
+
+- [x] Step 5.1: Audit every current Level 1 path from pinned implementation
+  and tests, including all three required special reviews.
+
+### Phase 6 — Audit all current Level 2 entries
+
+- [x] Step 6.1: Audit JavaScript and Python.
+- [x] Step 6.2: Audit Java and PHP.
+- [x] Step 6.3: Audit C# and TypeScript.
+- [x] Step 6.4: Audit C++ and Ruby.
+- [x] Step 6.5: Audit C and Swift.
+- [x] Step 6.6: Audit Go and R.
+- [x] Step 6.7: Audit Shell and Kotlin.
+- [x] Step 6.8: Audit Scala and PowerShell.
+- [x] Step 6.9: Audit Dart and Objective-C.
+- [x] Step 6.10: Audit Rust and Lua.
+
+### Phase 7 — Reconcile movement and repair lower-level gaps
+
+- [x] Step 7.1: Reconcile Levels and capacity without scoring to fit slots.
+- [x] Run conditional replacement research only for newly open or clearly
+  sparse lower-level language buckets.
+
+### Phase 8 — Make the learner-facing experience explicitly gentle
+
+- [x] Step 8.1: Rewrite low-level presentation rules and affected entries.
+- [x] Step 8.2: Improve Level labels and onboarding text.
+- [x] Step 8.3: Publish the complete lower-level pedagogy audit.
+- [x] Step 8.4: Sanity-check at least five Level 1 → Level 2 → Level 3
+  progressions, including JavaScript and PHP.
+- [x] Run generation, tests, ordinary validation, generated-output checks, and
+  a final approved-boundary diff audit: 38 tests pass, catalog validation
+  passes, generated Markdown is current, and the diff remains within the
+  novice-progression specification.
 
 ## Completed learner-centered remediation
 

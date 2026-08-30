@@ -1,99 +1,30 @@
 # TypeScript
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [alexreardon/tiny-invariant](https://github.com/alexreardon/tiny-invariant)
-
-**Language 3 / Behavior 1 / Design 1 / Constraints 3 → Level 2**
-
-A zero-dependency assertion utility that narrows TypeScript types, evaluates failure messages lazily, and omits message logic from production builds.
-
-**Why study it:** One focused function shows how a runtime assertion, a compile-time narrowing contract, lazy error construction, environment-specific bundling, and byte budgets can agree in shipped TypeScript.
-
-**Prerequisites:**
-
-- TypeScript function signatures, unions and ordinary narrowing, callbacks, truthy and falsy values, exceptions, and the basic purpose of a JavaScript bundler.
-
-**Concepts this path develops:**
-
-- Assertion-function contracts that connect one runtime truthiness check to caller-side type narrowing.
-- Lazy diagnostic messages and distinct development and production error behavior.
-- Agreement among source behavior, declarations, dead-code elimination, bundle shape, and byte budgets.
-
-**What you can learn:**
-
-- Use `src/tiny-invariant.ts` to study assertion-function signatures, truthy and falsy control flow, lazy callback evaluation, environment-specific error behavior, declaration generation, dead-code elimination, and focused runtime, type, bundle, and size verification.
-
-**Learning path:**
-
-- **Goal:** Understand how tiny-invariant keeps runtime truthiness checks, TypeScript narrowing, lazy messages, and production bundle behavior aligned.
-- **Start here:** [`src/tiny-invariant.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/src/tiny-invariant.ts) — The single production source contains the truthy return, assertion signature, lazy message resolution, and distinct development and production error paths.
-- **Then read:**
-  - [`test/throw-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/throw-behaviour.spec.ts)
-  - [`test/message-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/message-behaviour.spec.ts)
-  - [`test/type-narrowing.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/type-narrowing.spec.ts)
-  - [`test/bundle-behaviour.spec.ts`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/test/bundle-behaviour.spec.ts)
-  - [`rollup.config.mjs`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/rollup.config.mjs)
-  - [`package.json`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/package.json)
-  - [`README.md`](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/README.md)
-- **Trace:** Enter invariant with an unknown value; follow truthy input to the immediate return or falsy input to the production prefix-only error or development lazy-message branch, then close the runtime, compiler-narrowing, generated-bundle, declaration, and configured byte-budget contracts with the four focused suites, Rollup configuration, and package scripts.
-
-**Why this level:**
-
-- **Language technique 3:** The assertion signature materially changes caller types and is verified directly, so substantial TypeScript abstraction shapes the path even though the runtime body is short.
-- **Behavioral reasoning 1:** The complete runtime is local and synchronous, with an immediate success return and a small environment-dependent failure branch.
-- **Design span 1:** One focused implementation unit and its direct build and test artifacts contain the whole selected behavior.
-- **Constraint burden 3:** Several material API, type, compatibility, build, and size guarantees constrain changes even though the implementation is small.
-- **Placement:** The 3/1/1/3 profile sums to 8, so the published formula yields Level 2; the advanced assertion signature and production constraints do not make the local synchronous behavior structurally advanced.
-
-**License:** MIT ([evidence 1](https://github.com/alexreardon/tiny-invariant/blob/b5587cf4ba45e257bce49053c3345b6614324252/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** npm published version 1.3.3 without a deprecation notice, and the public registry reported 86,411,460 downloads for 2026-08-22 through 2026-08-28.
-
-**Language evidence:** The complete invariant runtime, assertion-function signature, build input, and direct runtime, type-narrowing, and bundle-behavior tests are first-party TypeScript.
-
-**Coding relevance:**
-
-The selected path is domain-neutral and teaches transferable API contracts, type narrowing, lazy work, error handling, environment-specific builds, testing, and size discipline.
-
-Required domain context:
-
-- An invariant is a condition the program requires to be true; TypeScript assertion functions also tell the compiler which condition is known after a successful return.
-- The build replaces `process.env.NODE_ENV` with a constant so production-only optimization can remove this library's development message branch.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The source states the assertion contract, isolates production behavior, documents lazy message evaluation, and keeps every runtime branch visible in one function.
-- **Architecture:** One TypeScript source feeds runtime and declaration builds, while focused suites separate runtime, messages, type narrowing, and generated-bundle behavior.
-- **Naming and idiom:** invariant, condition, message, isProduction, prefix, and provided describe the contract directly, and `asserts condition` is the idiomatic TypeScript narrowing mechanism.
-- **Tests:** Four suites and ten tests cover truthy and falsy values, default, eager and lazy messages, non-evaluation on success, custom-type narrowing, and development-versus-production bundle output; the complete local verification also passed TypeScript checking, all builds, and every configured size limit.
-- **Documentation:** The README explains assertions, lazy messages, production behavior, type narrowing, build formats, and bundler requirements; one early example retains the stale prefix `Invariant violation`, while later documentation, source, and tests consistently use `Invariant failed`.
-- **Traceability:** Every source branch maps directly to a runtime or message test, the assertion signature maps to compile-time narrowing assertions, and the production branch maps to generated-code inspection.
-- **Maintainability:** One implementation, explicit build inputs, declaration generation, direct type tests, and byte gates make changes small and observable.
-- **Educational value:** The path shows that a tiny production utility can coordinate runtime behavior, static types, bundling, compatibility, and performance constraints without hiding the mechanism.
-
-**Inspection record:** commit `b5587cf4ba45e257bce49053c3345b6614324252`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/tiny-invariant.ts`, `test/throw-behaviour.spec.ts`, `test/message-behaviour.spec.ts`, `test/type-narrowing.spec.ts`, `test/bundle-behaviour.spec.ts`, `rollup.config.mjs`, `package.json`, `README.md`, `LICENSE`. GitHub Linguist label: TypeScript.
-
-</details>
+## Level 3 — Intermediate
 
 ### [developit/mitt](https://github.com/developit/mitt)
 
-**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 3**
 
 A tiny typed event emitter that supports named events, wildcard listeners, and injectable event maps.
 
 **Why study it:** The mitt path shows how one small TypeScript emitter keeps named and wildcard subscriptions type-safe while preserving dispatch order when handlers mutate the registry.
+
+**Short context:**
+
+- An event emitter stores callbacks by event name and invokes them when that event is emitted; a wildcard listener receives every event.
 
 **Prerequisites:**
 
@@ -124,7 +55,10 @@ A tiny typed event emitter that supports named events, wildcard listeners, and i
 - **Behavioral reasoning 2:** Meaningful mutation and ordering branches remain localized inside three short operations.
 - **Design span 1:** The complete behavior is one focused source unit with direct tests.
 - **Constraint burden 2:** A small public API and routine production safeguards must remain consistent, but no system-wide guarantee is involved.
-- **Placement:** The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 3:** Mapped generic relationships and the event-dispatch lifecycle interact throughout the public API, so a novice needs more than one short professional-concept primer.
+  - **Central concepts:** generic event-map type relationships; named and wildcard callback dispatch; listener snapshots while subscriptions mutate
+  - **Incidental concepts:** Map-backed handler storage; overloaded emit syntax
+- **Placement:** The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 3 produces published Level 3.
 
 **License:** MIT ([evidence 1](https://github.com/developit/mitt/blob/6b41670516ed8e8b738612f60491995470aa63b3/LICENSE))
 
@@ -139,9 +73,7 @@ A tiny typed event emitter that supports named events, wildcard listeners, and i
 
 The event model is familiar and self-contained; the selected path teaches transferable generic API modeling, callback registration, mutation-safe iteration, and dispatch ordering rather than external domain rules.
 
-Required domain context:
-
-- An event emitter stores callbacks by event name and invokes them when that event is emitted; a wildcard listener receives every event.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -154,11 +86,9 @@ Required domain context:
 - **Maintainability:** A single implementation, one registry representation, and paired runtime and compiler tests keep type and behavior contracts synchronized.
 - **Educational value:** The path demonstrates how meaningful generic API guarantees can coexist with a tiny transparent JavaScript runtime.
 
-**Inspection record:** commit `6b41670516ed8e8b738612f60491995470aa63b3`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/index.ts`, `test/index_test.ts`, `test/test-types-compilation.ts`, `LICENSE`. GitHub Linguist label: TypeScript.
+**Inspection record:** commit `6b41670516ed8e8b738612f60491995470aa63b3`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `src/index.ts`, `test/index_test.ts`, `test/test-types-compilation.ts`, `LICENSE`. GitHub Linguist label: TypeScript.
 
 </details>
-
-## Level 3
 
 ### [reduxjs/redux](https://github.com/reduxjs/redux)
 
@@ -167,6 +97,10 @@ Required domain context:
 A predictable state container built around pure reducers, immutable state transitions, action dispatch, subscriptions, and middleware.
 
 **Why study it:** The createStore path shows how Redux validates and reduces one action while preserving state identity, listener snapshots, nested dispatch behavior, reentrancy rules, and generic store contracts.
+
+**Short context:**
+
+- A Redux store gives actions to a reducer to compute the next state and notifies subscribers after each completed dispatch.
 
 **Prerequisites:**
 
@@ -214,9 +148,7 @@ A predictable state container built around pure reducers, immutable state transi
 
 Reducer and store concepts need only a short explanation; the path teaches generic API contracts, state transitions, reentrancy guards, listener snapshotting, validation, and error recovery that transfer to event-driven libraries.
 
-Required domain context:
-
-- A Redux store gives actions to a reducer to compute the next state and notifies subscribers after each completed dispatch.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -233,7 +165,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [angular/angular](https://github.com/angular/angular)
 
@@ -242,6 +174,10 @@ Required domain context:
 A web application framework with a compiler, rendering and reactivity engine, dependency injection, routing, forms, HTTP, hydration, testing, and developer tooling.
 
 **Why study it:** The signal path shows how Angular maintains a dynamic producer-consumer graph with lazy recomputation, precise invalidation, equality filtering, cycle detection, cached errors, and recovery.
+
+**Short context:**
+
+- A reactive signal is a value-producing node; computed signals record the producers read during a computation and update when those dependencies change.
 
 **Prerequisites:**
 
@@ -290,9 +226,7 @@ A web application framework with a compiler, rendering and reactivity engine, de
 
 Reactive dependency graphs need only a short explanation; the selected path teaches transferable callable APIs, dynamic graph maintenance, push and pull invalidation, caching, cycle and error handling, equality isolation, performance, and lifecycle discipline.
 
-Required domain context:
-
-- A reactive signal is a value-producing node; computed signals record the producers read during a computation and update when those dependencies change.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -316,6 +250,10 @@ Required domain context:
 A memoized selector library that derives values from application state while preserving stable results across unchanged inputs.
 
 **Why study it:** The weak-map memoizer path shows how Reselect caches arbitrary argument tuples across weak object and strong primitive branches, then composes that cache into a precisely typed selector.
+
+**Short context:**
+
+- A memoized selector derives a result from arguments and reuses the prior result when the relevant argument identities have not changed.
 
 **Prerequisites:**
 
@@ -363,9 +301,7 @@ A memoized selector library that derives values from application state while pre
 
 Memoization and reference equality need only a short explanation; the path teaches reusable cache topology, generic API design, equality policy, garbage-collection-aware structures, diagnostics, and performance tradeoffs.
 
-Required domain context:
-
-- A memoized selector derives a result from arguments and reuses the prior result when the relevant argument identities have not changed.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -382,7 +318,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [colinhacks/zod](https://github.com/colinhacks/zod)
 
@@ -391,6 +327,10 @@ Required domain context:
 A schema validation library that parses untrusted values and infers static TypeScript input and output types from runtime definitions.
 
 **Why study it:** The Zod object-schema path shows how one fluent public model keeps inferred input and output types aligned with interpreted, generated, asynchronous, and recursive runtime parsing.
+
+**Short context:**
+
+- A schema validates unknown runtime input and produces a typed output; object schemas define fields, optionality, unknown-key policy, and nested schemas.
 
 **Prerequisites:**
 
@@ -438,9 +378,7 @@ A schema validation library that parses untrusted values and infers static TypeS
 
 Schema parsing is common application infrastructure and documented locally; the difficulty comes from transferable static-runtime agreement, generated and interpreted execution, recursion, error construction, compatibility, security, and performance rather than external subject matter.
 
-Required domain context:
-
-- A schema validates unknown runtime input and produces a typed output; object schemas define fields, optionality, unknown-key policy, and nested schemas.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -464,6 +402,10 @@ Required domain context:
 An end-to-end typesafe RPC framework that infers client calls from server routers without a generated schema or code-generation step.
 
 **Why study it:** The procedure-builder path shows how tRPC turns fluent generic declarations into a recursively typed router caller whose proxy, lazy loading, middleware, context, and runtime lookup agree without code generation.
+
+**Short context:**
+
+- A tRPC router maps nested procedure names to validated query, mutation, or subscription handlers and can create a typed in-process caller without generated client code.
 
 **Prerequisites:**
 
@@ -511,9 +453,7 @@ An end-to-end typesafe RPC framework that infers client calls from server router
 
 Router and middleware concepts are standard and locally documented; the difficulty comes from transferable type-runtime agreement, fluent generic builders, recursive proxies, lazy module loading, concurrency, context transformation, and error propagation.
 
-Required domain context:
-
-- A tRPC router maps nested procedure names to validated query, mutation, or subscription handlers and can create a typed in-process caller without generated client code.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

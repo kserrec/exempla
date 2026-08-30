@@ -14,16 +14,46 @@
       "language": "JavaScript",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "mafintosh/pump", "level": 2},
-        {"repository": "sindresorhus/p-limit", "level": 2},
-        {"repository": "ai/nanoid", "level": 3},
-        {"repository": "jquery/jquery", "level": 3},
-        {"repository": "eslint/eslint", "level": 4},
-        {"repository": "prettier/prettier", "level": 4},
-        {"repository": "nodejs/node", "level": 5},
-        {"repository": "react/react", "level": 5}
+        {
+          "repository": "mafintosh/pump",
+          "level": 2
+        },
+        {
+          "repository": "sindresorhus/p-limit",
+          "level": 2
+        },
+        {
+          "repository": "ai/nanoid",
+          "level": 3
+        },
+        {
+          "repository": "jquery/jquery",
+          "level": 3
+        },
+        {
+          "repository": "eslint/eslint",
+          "level": 4
+        },
+        {
+          "repository": "prettier/prettier",
+          "level": 4
+        },
+        {
+          "repository": "nodejs/node",
+          "level": 5
+        },
+        {
+          "repository": "react/react",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "npm-registry",
@@ -68,14 +98,29 @@
         {
           "repository": "sindresorhus/escape-string-regexp",
           "pinned_commit": "cbc42403142c96923b482604e1f3d627b1956aff",
-          "discovered_via": ["npm-registry", "curated-node-list", "maintainer-small-libraries"],
-          "inspection_files": ["index.js", "test.js", "readme.md", "package.json", "license"],
+          "discovered_via": [
+            "npm-registry",
+            "curated-node-list",
+            "maintainer-small-libraries"
+          ],
+          "inspection_files": [
+            "index.js",
+            "test.js",
+            "readme.md",
+            "package.json",
+            "license"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "The selected input-contract, staged transformation, compatibility representation, tests, and explicit safety limits transfer to other small production APIs; regular-expression context is short and repository-explained.",
           "quality_status": "pass",
           "quality_evidence": "The one-function responsibility is readable, named directly, documented with its limit, covered for the complete metacharacter set and both stated hyphen compatibility cases, and traceable from input to exact output.",
-          "scores": {"language_technique": 1, "behavioral_reasoning": 1, "design_span": 1, "constraint_burden": 2},
+          "scores": {
+            "language_technique": 1,
+            "behavioral_reasoning": 1,
+            "design_span": 1,
+            "constraint_burden": 2
+          },
           "calculated_level": 1,
           "decision_evidence": "The scores were written before capacity was checked. The formula returns Level 1, both gates pass, and the candidate ranks first for the two open JavaScript Level 1 places because its staged representation choice and explicit safety boundary offer the stronger learning path.",
           "second_review": {
@@ -87,14 +132,29 @@
         {
           "repository": "sindresorhus/slash",
           "pinned_commit": "98b618f5a3bfcb5dd374b204868818845b87bb2f",
-          "discovered_via": ["npm-registry", "maintainer-small-libraries", "github-small-source-search"],
-          "inspection_files": ["index.js", "test.js", "readme.md", "package.json", "license"],
+          "discovered_via": [
+            "npm-registry",
+            "maintainer-small-libraries",
+            "github-small-source-search"
+          ],
+          "inspection_files": [
+            "index.js",
+            "test.js",
+            "readme.md",
+            "package.json",
+            "license"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "The selected guard, lexical transformation, protected exception, and boundary tests teach transferable compatibility engineering; the extended-length-path context is short and repository-explained.",
           "quality_status": "pass",
           "quality_evidence": "The one-component source and API are direct, the tests close normal, mixed, Unicode, and protected-prefix cases, and the README states the exact transformation without implying filesystem normalization.",
-          "scores": {"language_technique": 1, "behavioral_reasoning": 1, "design_span": 1, "constraint_burden": 2},
+          "scores": {
+            "language_technique": 1,
+            "behavioral_reasoning": 1,
+            "design_span": 1,
+            "constraint_burden": 2
+          },
           "calculated_level": 1,
           "decision_evidence": "The scores were written before capacity was checked. The formula returns Level 1, both gates pass, and the candidate ranks second for the two open JavaScript Level 1 places; its single portability exception is narrower than the first-ranked path but remains qualified.",
           "second_review": {
@@ -109,7 +169,13 @@
         "sindresorhus/slash"
       ],
       "rejected": [],
-      "gaps_after": {"1": 0, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_after": {
+        "1": 1,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 1 paths. JavaScript now has two accepted repositories at every level."
     },
     {
@@ -118,16 +184,46 @@
       "language": "Python",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "dbader/schedule", "level": 2},
-        {"repository": "pallets/itsdangerous", "level": 2},
-        {"repository": "pallets/click", "level": 3},
-        {"repository": "psf/requests", "level": 3},
-        {"repository": "pallets/flask", "level": 4},
-        {"repository": "pytest-dev/pytest", "level": 4},
-        {"repository": "apache/airflow", "level": 5},
-        {"repository": "home-assistant/core", "level": 5}
+        {
+          "repository": "dbader/schedule",
+          "level": 2
+        },
+        {
+          "repository": "pallets/itsdangerous",
+          "level": 2
+        },
+        {
+          "repository": "pallets/click",
+          "level": 3
+        },
+        {
+          "repository": "psf/requests",
+          "level": 3
+        },
+        {
+          "repository": "pallets/flask",
+          "level": 4
+        },
+        {
+          "repository": "pytest-dev/pytest",
+          "level": 4
+        },
+        {
+          "repository": "apache/airflow",
+          "level": 5
+        },
+        {
+          "repository": "home-assistant/core",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "pypi-registry",
@@ -173,7 +269,11 @@
         {
           "repository": "pallets/markupsafe",
           "pinned_commit": "b2e4d9c7687be25695fffbe93a37622302b24fb1",
-          "discovered_via": ["pypi-registry", "curated-python-lists", "maintainer-organizations"],
+          "discovered_via": [
+            "pypi-registry",
+            "curated-python-lists",
+            "maintainer-organizations"
+          ],
           "inspection_files": [
             "src/markupsafe/__init__.py",
             "src/markupsafe/_native.py",
@@ -189,7 +289,12 @@
           "coding_relevance_evidence": "The short distinction between untrusted text, escaped text, and explicitly trusted markup is repository-explained; the path primarily teaches transferable trust-boundary APIs, Python data-model hooks, safe-type propagation, formatting adaptation, fallback design, and compatibility engineering.",
           "quality_status": "pass",
           "quality_evidence": "The public trust boundary and both escape backends are focused, responsibilities are explicit, documentation closes the context, and direct tests cover five-character Unicode escaping, __html__ interoperation, safe addition, interpolation, formatting, return types, and Markup propagation.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 4
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/2/4 sums to 11, whose mean of 2.75 rounds half up to Level 3; Click and Requests retain stronger source-closed Python Level 3 paths, so the two-entry cap excludes MarkupSafe. The scores were locked before capacity was inspected.",
           "second_review": {
@@ -201,7 +306,11 @@
         {
           "repository": "tox-dev/platformdirs",
           "pinned_commit": "bd77b0dc378e5e12a1085db1ef9987d074e07880",
-          "discovered_via": ["pypi-registry", "github-small-source-search", "maintainer-organizations"],
+          "discovered_via": [
+            "pypi-registry",
+            "github-small-source-search",
+            "maintainer-organizations"
+          ],
           "inspection_files": [
             "src/platformdirs/__init__.py",
             "src/platformdirs/api.py",
@@ -221,7 +330,12 @@
           "coding_relevance_evidence": "Platform directory conventions require only a short primer; the selected path primarily teaches a stable facade over operating-system policy, environmental inputs, filesystem effects, native fallbacks, and cross-platform testing.",
           "quality_status": "pass",
           "quality_evidence": "The facade, abstract API, and platform implementations have coherent boundaries; direct shared, Unix, Windows, and macOS tests cover forwarding, environment precedence, platform outputs, lazy directory creation, deduplication, root policy, and resolver fallbacks.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 2,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject as a qualified capacity alternate: both gates pass and 3/2/3/4 sums to 12, whose mean is Level 3; Click and Requests retain stronger and less repetitive Python Level 3 learning paths, so the two-entry cap excludes platformdirs. The scores were locked before capacity was inspected.",
           "second_review": {
@@ -236,7 +350,13 @@
         "pallets/markupsafe",
         "tox-dev/platformdirs"
       ],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four independent discovery channels and two exact-pin deep inspections produced two qualified Level 3 paths, not Level 1 paths. Both Level 3 places already contain stronger retained entries, so Python keeps two honest Level 1 gaps without weakening scores or moving candidates."
     },
     {
@@ -245,15 +365,42 @@
       "language": "Java",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "FasterXML/jackson-annotations", "level": 2},
-        {"repository": "ralfstx/minimal-json", "level": 2},
-        {"repository": "java-diff-utils/java-diff-utils", "level": 3},
-        {"repository": "jhy/jsoup", "level": 3},
-        {"repository": "google/gson", "level": 4},
-        {"repository": "junit-team/junit4", "level": 4},
-        {"repository": "spring-projects/spring-framework", "level": 5}
+        {
+          "repository": "FasterXML/jackson-annotations",
+          "level": 2
+        },
+        {
+          "repository": "ralfstx/minimal-json",
+          "level": 2
+        },
+        {
+          "repository": "java-diff-utils/java-diff-utils",
+          "level": 3
+        },
+        {
+          "repository": "jhy/jsoup",
+          "level": 3
+        },
+        {
+          "repository": "google/gson",
+          "level": 4
+        },
+        {
+          "repository": "junit-team/junit4",
+          "level": 4
+        },
+        {
+          "repository": "spring-projects/spring-framework",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "discovery_channels": [
         {
           "id": "java-package-registries",
@@ -298,7 +445,11 @@
         {
           "repository": "stleary/JSON-java",
           "pinned_commit": "4f859fdf3b5669894c5ed8a305ee5cd5f1fe2b7a",
-          "discovered_via": ["java-package-registries", "curated-java-ecosystem", "github-public-source"],
+          "discovered_via": [
+            "java-package-registries",
+            "curated-java-ecosystem",
+            "github-public-source"
+          ],
           "inspection_files": [
             "src/main/java/org/json/JSONPointer.java",
             "src/main/java/org/json/JSONPointerException.java",
@@ -323,7 +474,12 @@
         {
           "repository": "jenkinsci/jenkins",
           "pinned_commit": "982bc91d866ed90aa135b87a2cb4ac1e68c2412e",
-          "discovered_via": ["java-package-registries", "curated-java-ecosystem", "github-public-source", "official-project-documentation"],
+          "discovered_via": [
+            "java-package-registries",
+            "curated-java-ecosystem",
+            "github-public-source",
+            "official-project-documentation"
+          ],
           "inspection_files": [
             "core/src/main/java/hudson/model/Queue.java",
             "core/src/main/java/hudson/model/queue/QueueTaskDispatcher.java",
@@ -345,7 +501,12 @@
           "coding_relevance_evidence": "Tasks, nodes, labels, and executors need only a short Jenkins primer; the representative core path teaches transferable state-machine scheduling, resource assignment, concurrency, extension policy, work handoff, persistence, and recovery.",
           "quality_status": "pass",
           "quality_evidence": "Intentional state and locking comments, coherent queue-policy-placement-handoff-execution boundaries, precise names, extensive Javadocs, enabled integration coverage, explicit recovery, and visible compatibility constraints support all eight quality findings despite a large central maintain method and distributed test closure.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 5,
+            "constraint_burden": 5
+          },
           "calculated_level": 5,
           "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5, with three expert dimensions satisfying the guardrail; both gates pass and the one open Java Level 5 place accepts Jenkins. Placement is described only as consistent-hash greedy, restored stages may be normalized by maintenance, and no exactly-once crash guarantee is claimed.",
           "second_review": {
@@ -361,7 +522,13 @@
       "rejected": [
         "stleary/JSON-java"
       ],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four independent channels and two exact-pin deep inspections found one quality-gate rejection and one qualified Level 5 scheduler path. Jenkins fills Java's final Level 5 place; two honest Level 1 gaps remain because neither candidate was moved downward and the defective JSON Pointer path was not admitted."
     },
     {
@@ -527,7 +694,7 @@
       ],
       "gaps_after": {
         "1": 1,
-        "2": 0,
+        "2": 1,
         "3": 0,
         "4": 0,
         "5": 2
@@ -993,8 +1160,8 @@
       ],
       "gaps_after": {
         "1": 2,
-        "2": 0,
-        "3": 1,
+        "2": 2,
+        "3": 0,
         "4": 0,
         "5": 0
       },
@@ -1260,7 +1427,7 @@
       ],
       "gaps_after": {
         "1": 2,
-        "2": 0,
+        "2": 1,
         "3": 0,
         "4": 0,
         "5": 0
@@ -1529,7 +1696,7 @@
       ],
       "gaps_after": {
         "1": 2,
-        "2": 0,
+        "2": 1,
         "3": 0,
         "4": 0,
         "5": 0
@@ -1542,15 +1709,42 @@
       "language": "C",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "likle/cwalk", "level": 2},
-        {"repository": "zserge/jsmn", "level": 2},
-        {"repository": "DaveGamble/cJSON", "level": 3},
-        {"repository": "git/git", "level": 4},
-        {"repository": "libcheck/check", "level": 4},
-        {"repository": "curl/curl", "level": 5},
-        {"repository": "libevent/libevent", "level": 5}
+        {
+          "repository": "likle/cwalk",
+          "level": 2
+        },
+        {
+          "repository": "zserge/jsmn",
+          "level": 2
+        },
+        {
+          "repository": "DaveGamble/cJSON",
+          "level": 3
+        },
+        {
+          "repository": "git/git",
+          "level": 4
+        },
+        {
+          "repository": "libcheck/check",
+          "level": 4
+        },
+        {
+          "repository": "curl/curl",
+          "level": 5
+        },
+        {
+          "repository": "libevent/libevent",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 1, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 1,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "c-package-registries",
@@ -1595,50 +1789,121 @@
         {
           "repository": "benhoyt/inih",
           "pinned_commit": "577ae2dee1f0d9c2d11c7f10375c1715f3d6940c",
-          "discovered_via": ["c-package-registries", "curated-c-libraries", "github-c-source"],
-          "inspection_files": ["ini.c", "ini.h", "README.md", "tests/unittest.c", "tests/unittest.sh", "tests/unittest_alloc.c", "tests/unittest_string.c", "LICENSE.txt"],
+          "discovered_via": [
+            "c-package-registries",
+            "curated-c-libraries",
+            "github-c-source"
+          ],
+          "inspection_files": [
+            "ini.c",
+            "ini.h",
+            "README.md",
+            "tests/unittest.c",
+            "tests/unittest.sh",
+            "tests/unittest_alloc.c",
+            "tests/unittest_string.c",
+            "LICENSE.txt"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "INI needs only a short section-and-key primer; the path teaches callbacks, line-oriented parsing, compile-time policies, bounded buffers, optional allocation, recovery, and direct baseline tests.",
           "quality_status": "pass",
           "quality_evidence": "The compact implementation, narrow stream and callback boundary, idiomatic configurable C API, direct malformed-input and allocation variants, extensive option documentation, complete stream-to-handler trace, explicit portability notes, and unusually strong small-library teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 2,
+            "design_span": 1,
+            "constraint_burden": 3
+          },
           "calculated_level": 2,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but cwalk and jsmn already fill the two C Level 2 places with more complementary path-navigation and zero-allocation tokenization lessons. The direct GCC matrix in tests/unittest.sh completed successfully. The parser intentionally delegates value interpretation to the callback, continuation lines are emitted as repeated callback values rather than concatenated, the default line limit is compile-time configured, and compile-time variants must be consistent across the build.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin, source and test paths, both gates, all eight findings, 2/2/1/3 Level 2 formula, full capacity, BSD-3-Clause license, successful GCC matrix, and every callback, continuation, line-limit, and compile-time boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the pin, source and test paths, both gates, all eight findings, 2/2/1/3 Level 2 formula, full capacity, BSD-3-Clause license, successful GCC matrix, and every callback, continuation, line-limit, and compile-time boundary."
+          }
         },
         {
           "repository": "cktan/tomlc99",
           "pinned_commit": "29076dfd095bbbbd50a3c1b2760d29f4b83e74ac",
-          "discovered_via": ["curated-c-libraries", "github-c-source", "toml-standard-ecosystem"],
-          "inspection_files": ["README.md", "toml.c", "toml.h", "unittest/t1.c", "LICENSE"],
+          "discovered_via": [
+            "curated-c-libraries",
+            "github-c-source",
+            "toml-standard-ecosystem"
+          ],
+          "inspection_files": [
+            "README.md",
+            "toml.c",
+            "toml.h",
+            "unittest/t1.c",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "A TOML parser can teach transferable scanner, recursive parsing, tree ownership, malformed-input handling, and cleanup with only a short format primer.",
           "quality_status": "fail",
           "quality_evidence": "The repository's own current README states that this library is obsolete and directs users to tomlc17; publishing the superseded implementation as the new exemplar would fail maintainability and educational-value findings when the maintained replacement is publicly inspectable.",
           "decision_evidence": "Reject at the repository-quality gate: the exact pinned README marks tomlc99 obsolete and names tomlc17 as its replacement. The implementation and tests exist and remain readable, but selecting the superseded parser for new study would teach an explicitly retired design while the maintainer's current replacement is available. The hard failure precedes numerical scoring or capacity comparison.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, the literal obsolete notice and replacement link in README.md, the existing C source, tests, and license, and agreed that maintainability and educational value fail before scoring."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, the literal obsolete notice and replacement link in README.md, the existing C source, tests, and license, and agreed that maintainability and educational value fail before scoring."
+          }
         },
         {
           "repository": "cktan/tomlc17",
           "pinned_commit": "64a063b8636a4b48d142f978270f5e53e605e240",
-          "discovered_via": ["github-c-source", "toml-standard-ecosystem"],
-          "inspection_files": ["src/tomlc17.c", "src/tomlc17.h", "README.md", "DESIGN.md", "API.md", "OPTIONS.md", "test/parser/parser.c", "test/parser/run.sh", "test/pool/test1.c", "test/merge/test1.c", "LICENSE"],
+          "discovered_via": [
+            "github-c-source",
+            "toml-standard-ecosystem"
+          ],
+          "inspection_files": [
+            "src/tomlc17.c",
+            "src/tomlc17.h",
+            "README.md",
+            "DESIGN.md",
+            "API.md",
+            "OPTIONS.md",
+            "test/parser/parser.c",
+            "test/parser/run.sh",
+            "test/pool/test1.c",
+            "test/merge/test1.c",
+            "LICENSE"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.",
           "quality_status": "pass",
           "quality_evidence": "Intentional scanner, parser, tree, and allocator code, documented internal boundaries, idiomatic explicit ownership, direct valid, invalid, allocator, merge, and lifetime tests, detailed API and design guides, full parse-to-cleanup traceability, centralized result ownership, and strong systems-teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 3,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 3,
           "decision_evidence": "The scores were written before capacity was checked. The 3/3/3/4 profile sums to 13, whose mean of 3.25 rounds to Level 3; both gates pass and the open C Level 3 place accepts tomlc17. Focused parser, pool, equivalence, and merge suites compiled with C17 warnings plus address and undefined-behavior sanitizers and all passed. The selected path excludes C++20 accessors and the external full toml-test installation; allocator configuration is global and unsynchronized, source spans are bounded by the caller buffer, individual pooled strings cannot be freed, and the format parser is not a general serialization framework.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and parse-to-scanner-to-tree-to-pool-to-cleanup path, both gates and all eight findings, 3/3/3/4 Level 3 result, open slot, first-party C and MIT evidence, passing sanitizer-backed focused suites, and the allocator, lifetime, pooling, C++, external-conformance, and scope boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and parse-to-scanner-to-tree-to-pool-to-cleanup path, both gates and all eight findings, 3/3/3/4 Level 3 result, open slot, first-party C and MIT evidence, passing sanitizer-backed focused suites, and the allocator, lifetime, pooling, C++, external-conformance, and scope boundaries."
+          }
         }
       ],
-      "accepted": ["cktan/tomlc17"],
-      "rejected": ["benhoyt/inih", "cktan/tomlc99"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "accepted": [
+        "cktan/tomlc17"
+      ],
+      "rejected": [
+        "benhoyt/inih",
+        "cktan/tomlc99"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and three exact-pin inspections produced one accepted Level 3 parser, one qualified Level 2 capacity alternate, and one hard quality rejection for the obsolete predecessor. tomlc17 fills the only score-supported open place; both Level 1 places remain honest because no candidate was simplified or moved downward."
     },
     {
@@ -1647,15 +1912,42 @@
       "language": "Swift",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "JohnSundell/Files", "level": 2},
-        {"repository": "pointfreeco/swift-tagged", "level": 2},
-        {"repository": "apple/swift-log", "level": 3},
-        {"repository": "vapor/vapor", "level": 3},
-        {"repository": "Alamofire/Alamofire", "level": 4},
-        {"repository": "realm/SwiftLint", "level": 4},
-        {"repository": "apple/swift-nio", "level": 5}
+        {
+          "repository": "JohnSundell/Files",
+          "level": 2
+        },
+        {
+          "repository": "pointfreeco/swift-tagged",
+          "level": 2
+        },
+        {
+          "repository": "apple/swift-log",
+          "level": 3
+        },
+        {
+          "repository": "vapor/vapor",
+          "level": 3
+        },
+        {
+          "repository": "Alamofire/Alamofire",
+          "level": 4
+        },
+        {
+          "repository": "realm/SwiftLint",
+          "level": 4
+        },
+        {
+          "repository": "apple/swift-nio",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "discovery_channels": [
         {
           "id": "swift-package-index",
@@ -1699,7 +1991,11 @@
         {
           "repository": "apple/swift-argument-parser",
           "pinned_commit": "e24941a11359a745b38f5e69fae358d6f0ad88d3",
-          "discovered_via": ["swift-package-index", "github-swift-source", "swift-production-consumers"],
+          "discovered_via": [
+            "swift-package-index",
+            "github-swift-source",
+            "swift-production-consumers"
+          ],
           "inspection_files": [
             "README.md",
             "Sources/ArgumentParser/Parsable Types/ParsableArguments.swift",
@@ -1718,15 +2014,29 @@
           "coding_relevance_evidence": "Command-line grammar needs little special context; the path teaches property wrappers, reflection, custom Decodable plumbing, typed conversion, token origins, subcommand state, validation, diagnostics, and compatibility-focused tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional parsing and decoding modules, clear public-to-token-to-decoder boundaries, idiomatic property-wrapper and protocol APIs, extensive split, validation, help, error, and command tests, complete DocC guides, direct parse-to-instance traceability, explicit source-stability policy, and strong Swift teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 3,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 4,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/3/4 sums to 14, whose mean of 3.50 rounds half up to Level 4. Both gates pass, but Alamofire and SwiftLint already fill the two Swift Level 4 places with more complementary request-lifecycle and source-analysis paths. The Swift toolchain is unavailable locally, so source and direct tests were inspected but not executed. The selected path does not include shell-completion generators or process exit behavior; Mirror and Decodable depend on correctly formed property wrappers; internal help wording is not source-stable; and ambiguous single-dash long names remain an explicitly discouraged compatibility feature.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and property-wrapper-to-Mirror-to-argument-set-to-token-parser-to-decoder-to-validation path, both gates and all eight findings, 4/3/3/4 Level 4 formula, full capacity, Swift and Apache evidence, unavailable toolchain, and the completion, exit, wrapper, wording, and ambiguity boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the pin and property-wrapper-to-Mirror-to-argument-set-to-token-parser-to-decoder-to-validation path, both gates and all eight findings, 4/3/3/4 Level 4 formula, full capacity, Swift and Apache evidence, unavailable toolchain, and the completion, exit, wrapper, wording, and ambiguity boundaries."
+          }
         },
         {
           "repository": "swiftlang/swift-syntax",
           "pinned_commit": "dfd70da7d018493ed39721e7312f707d3f59ed2c",
-          "discovered_via": ["swift-package-index", "swift-official-ecosystem", "github-swift-source", "swift-production-consumers"],
+          "discovered_via": [
+            "swift-package-index",
+            "swift-official-ecosystem",
+            "github-swift-source",
+            "swift-production-consumers"
+          ],
           "inspection_files": [
             "README.md",
             "Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift",
@@ -1745,15 +2055,34 @@
           "coding_relevance_evidence": "A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.",
           "quality_status": "pass",
           "quality_evidence": "Handwritten role, rewriter, context, formatting, and diagnostic code has explicit boundaries and naming; direct role, recursion, context, indentation, malformed-output, and diagnostic suites plus public comments and language guides make the source-accurate transformation path traceable, maintainable, and exceptionally instructive despite generated code elsewhere in the repository.",
-          "scores": {"language_technique": 5, "behavioral_reasoning": 5, "design_span": 4, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 5,
+            "behavioral_reasoning": 5,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
           "calculated_level": 5,
           "decision_evidence": "The scores were written before capacity was checked. The 5/5/4/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the two-score-of-5 guardrail; both gates pass and the open Swift Level 5 place accepts SwiftSyntax's handwritten macro-expansion subsystem. The Swift toolchain is unavailable locally, so the focused suites were inspected but not executed. The scope excludes generated syntax-node definitions, parser generation, compiler-plugin transport, semantic type checking, and arbitrary compiler internals; expansion works on syntax and may diagnose or format output but does not replace the compiler's semantic checks.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and expand-facade-to-registry-to-rewriter-to-role-dispatch-to-context-to-formatting-to-diagnostics path, handwritten Swift eligibility, both gates and all eight findings, 5/5/4/5 Level 5 result and guardrail, open slot, Apache evidence, unavailable toolchain, and every generated-code, parser, plugin, semantic, and compiler-scope boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and expand-facade-to-registry-to-rewriter-to-role-dispatch-to-context-to-formatting-to-diagnostics path, handwritten Swift eligibility, both gates and all eight findings, 5/5/4/5 Level 5 result and guardrail, open slot, Apache evidence, unavailable toolchain, and every generated-code, parser, plugin, semantic, and compiler-scope boundary."
+          }
         }
       ],
-      "accepted": ["swiftlang/swift-syntax"],
-      "rejected": ["apple/swift-argument-parser"],
-      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "accepted": [
+        "swiftlang/swift-syntax"
+      ],
+      "rejected": [
+        "apple/swift-argument-parser"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections found a qualified Level 4 command-parser alternate and a distinct Level 5 macro-expansion path. SwiftSyntax fills the original score-supported open place. The later score-floor remediation moved swift-tagged from Level 2 to Level 3 and retained swift-log as a qualified capacity alternate, leaving two Level 1 gaps and one Level 2 gap without moving any candidate downward."
     },
     {
@@ -1762,15 +2091,42 @@
       "language": "Go",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "spf13/pflag", "level": 2},
-        {"repository": "tidwall/match", "level": 2},
-        {"repository": "gin-gonic/gin", "level": 3},
-        {"repository": "robfig/cron", "level": 3},
-        {"repository": "caddyserver/caddy", "level": 4},
-        {"repository": "kubernetes/kubernetes", "level": 4},
-        {"repository": "golang/go", "level": 5}
+        {
+          "repository": "spf13/pflag",
+          "level": 2
+        },
+        {
+          "repository": "tidwall/match",
+          "level": 2
+        },
+        {
+          "repository": "gin-gonic/gin",
+          "level": 3
+        },
+        {
+          "repository": "robfig/cron",
+          "level": 3
+        },
+        {
+          "repository": "caddyserver/caddy",
+          "level": 4
+        },
+        {
+          "repository": "kubernetes/kubernetes",
+          "level": 4
+        },
+        {
+          "repository": "golang/go",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "discovery_channels": [
         {
           "id": "go-package-registry",
@@ -1814,37 +2170,94 @@
         {
           "repository": "google/uuid",
           "pinned_commit": "2d3c2a9cc518326daf99a383f07c4d3c44317e4d",
-          "discovered_via": ["go-package-registry", "curated-go-ecosystem", "github-go-source"],
-          "inspection_files": ["README.md", "uuid.go", "marshal.go", "version4.go", "uuid_test.go", "json_test.go", "LICENSE"],
+          "discovered_via": [
+            "go-package-registry",
+            "curated-go-ecosystem",
+            "github-go-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "uuid.go",
+            "marshal.go",
+            "version4.go",
+            "uuid_test.go",
+            "json_test.go",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "UUID text forms and bit fields need only a short primer; the path teaches fixed-size value types, parsing and validation, sentinel and typed errors, encoding interfaces, random input, optional pooling, synchronization, and table-driven edge tests.",
           "quality_status": "pass",
           "quality_evidence": "Compact intentional functions, one focused value-type boundary, idiomatic array and interface methods, direct malformed, round-trip, version, variant, marshal, pool, and concurrency tests, public API documentation, parse-to-encoding traceability, explicit permissive-versus-validating contracts, and strong small-package teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 2,
+            "design_span": 1,
+            "constraint_burden": 3
+          },
           "calculated_level": 2,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/1/3 sums to 8, whose mean is Level 2. Both gates pass, but pflag and match already fill the two Go Level 2 places with more complementary configuration and pattern-matching lessons. The Go toolchain is unavailable locally, so source and tests were inspected but not executed. Parse deliberately accepts several nonstandard forms and must not be used as validation; random pooling changes entropy-reader call behavior and is protected by a mutex; UUID generation is uniqueness-oriented identification rather than encryption, authentication, or authorization.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and text-to-fixed-array-to-encoding path, both gates and all eight findings, 2/2/1/3 Level 2 formula, full capacity, Go and BSD evidence, unavailable toolchain, and the permissive-parse, pool, random-source, and non-security boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the pin and text-to-fixed-array-to-encoding path, both gates and all eight findings, 2/2/1/3 Level 2 formula, full capacity, Go and BSD evidence, unavailable toolchain, and the permissive-parse, pool, random-source, and non-security boundaries."
+          }
         },
         {
           "repository": "grpc/grpc-go",
           "pinned_commit": "6d697e4b65eb0dcfaf326b5b1fcdc66913872442",
-          "discovered_via": ["go-package-registry", "curated-go-ecosystem", "github-go-source", "official-grpc-go-docs"],
-          "inspection_files": ["README.md", "clientconn.go", "resolver_wrapper.go", "balancer_wrapper.go", "picker_wrapper.go", "connectivity/connectivity.go", "test/clientconn_state_transition_test.go", "balancer_wrapper_test.go", "picker_wrapper_test.go", "Documentation/anti-patterns.md", "LICENSE"],
+          "discovered_via": [
+            "go-package-registry",
+            "curated-go-ecosystem",
+            "github-go-source",
+            "official-grpc-go-docs"
+          ],
+          "inspection_files": [
+            "README.md",
+            "clientconn.go",
+            "resolver_wrapper.go",
+            "balancer_wrapper.go",
+            "picker_wrapper.go",
+            "connectivity/connectivity.go",
+            "test/clientconn_state_transition_test.go",
+            "balancer_wrapper_test.go",
+            "picker_wrapper_test.go",
+            "Documentation/anti-patterns.md",
+            "LICENSE"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.",
           "quality_status": "pass",
           "quality_evidence": "Documented synchronization and lifecycle assumptions, recognizable ClientConn, resolver, balancer, subchannel, picker, and transport boundaries, idiomatic Go concurrency, direct state, picker, address, context, and close-race tests, public guides and comments, full update-to-pick-to-reconnect-to-close traceability, centralized transitions, and exceptional concurrent-systems teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 5,
+            "constraint_burden": 5
+          },
           "calculated_level": 5,
           "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and the open Go Level 5 place accepts gRPC-Go's ClientConn control path. The Go toolchain is unavailable locally, so selected tests were inspected but not executed. The path excludes protobuf generation and encoding, HTTP/2 frame implementation, server request execution, credentials and handshake correctness, individual load-balancing algorithms, and xDS; readiness may also include health policy beyond transport viability, while wait-for-ready changes pick failure behavior rather than making an RPC durable.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and resolver-to-service-config-to-balancer-to-subchannel-to-connectivity-to-picker-to-reconnect-and-close path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open slot, Go and Apache evidence, unavailable toolchain, and every generation, protocol, server, security, policy, health, durability, and xDS boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and resolver-to-service-config-to-balancer-to-subchannel-to-connectivity-to-picker-to-reconnect-and-close path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open slot, Go and Apache evidence, unavailable toolchain, and every generation, protocol, server, security, policy, health, durability, and xDS boundary."
+          }
         }
       ],
-      "accepted": ["grpc/grpc-go"],
-      "rejected": ["google/uuid"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "accepted": [
+        "grpc/grpc-go"
+      ],
+      "rejected": [
+        "google/uuid"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections found a qualified compact Level 2 alternate and a distinct Level 5 concurrent ClientConn path. gRPC-Go fills the only score-supported open place; both Level 1 places remain honest because UUID was not moved downward."
     },
     {
@@ -1853,16 +2266,46 @@
       "language": "R",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "r-lib/pkgconfig", "level": 2},
-        {"repository": "r-lib/rematch2", "level": 2},
-        {"repository": "r-lib/withr", "level": 3},
-        {"repository": "tidyverse/ggplot2", "level": 3},
-        {"repository": "r-lib/testthat", "level": 4},
-        {"repository": "tidyverse/glue", "level": 4},
-        {"repository": "nimble-dev/nimble", "level": 5},
-        {"repository": "wch/r-source", "level": 5}
+        {
+          "repository": "r-lib/pkgconfig",
+          "level": 2
+        },
+        {
+          "repository": "r-lib/rematch2",
+          "level": 2
+        },
+        {
+          "repository": "r-lib/withr",
+          "level": 3
+        },
+        {
+          "repository": "tidyverse/ggplot2",
+          "level": 3
+        },
+        {
+          "repository": "r-lib/testthat",
+          "level": 4
+        },
+        {
+          "repository": "tidyverse/glue",
+          "level": 4
+        },
+        {
+          "repository": "nimble-dev/nimble",
+          "level": 5
+        },
+        {
+          "repository": "wch/r-source",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "r-cran-registry",
@@ -1905,37 +2348,92 @@
         {
           "repository": "r-lib/crayon",
           "pinned_commit": "846317afdb813575b97883fd0a4e654f6a5fc4f4",
-          "discovered_via": ["r-cran-registry", "r-universe-builds", "r-maintainer-docs", "github-r-source"],
-          "inspection_files": ["README.md", "R/machinery.R", "R/string_operations.R", "tests/testthat/test-color.R", "tests/testthat/test-operations.R", "tests/testthat/test-styles.R", "LICENSE", "LICENSE.md"],
+          "discovered_via": [
+            "r-cran-registry",
+            "r-universe-builds",
+            "r-maintainer-docs",
+            "github-r-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "R/machinery.R",
+            "R/string_operations.R",
+            "tests/testthat/test-color.R",
+            "tests/testthat/test-operations.R",
+            "tests/testthat/test-styles.R",
+            "LICENSE",
+            "LICENSE.md"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "ANSI style vocabulary needs only a short primer; the path teaches closures, S3-style objects, dynamic function construction, vector recycling, regular-expression spans, nested state restoration, option-driven behavior, and boundary-focused tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional style and ANSI-aware string modules, clear construction and application boundaries, idiomatic vectorized R and closures, direct nested, reset, substring, width, malformed, and option tests, public reference documentation, traceable text-to-style behavior, an explicit support policy, and strong language-teaching value satisfy all eight findings despite feature development moving to cli.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 2, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 3,
+            "design_span": 2,
+            "constraint_burden": 3
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/2/3 sums to 11, whose mean of 2.75 rounds to Level 3. Both gates pass, but withr and ggplot2 already fill the two R Level 3 places with more complementary scoped-state and layered-graphics paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. The pinned README says crayon is superseded by cli for new projects while promising continued important bug fixes; terminal capability and options affect emitted styles, byte and display width differ, and correct nested styling depends on restoring enclosing ANSI state.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin, support and supersession language, style-construction-to-ANSI-aware-string path, both gates and all eight findings, 3/3/2/3 Level 3 formula, full capacity, R and MIT evidence, unavailable toolchain, and the capability, width, vectorization, and nested-state boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin, support and supersession language, style-construction-to-ANSI-aware-string path, both gates and all eight findings, 3/3/2/3 Level 3 formula, full capacity, R and MIT evidence, unavailable toolchain, and the capability, width, vectorization, and nested-state boundaries."
+          }
         },
         {
           "repository": "r-lib/prettyunits",
           "pinned_commit": "a321ec23ea30b904540bb8b0d30f2a519512d90e",
-          "discovered_via": ["r-cran-registry", "r-universe-builds", "r-maintainer-docs", "github-r-source"],
-          "inspection_files": ["README.md", "R/sizes.R", "R/numbers.R", "R/rounding.R", "tests/testthat/test-bytes.R", "tests/testthat/test-numbers.R", "LICENSE", "LICENSE.md"],
+          "discovered_via": [
+            "r-cran-registry",
+            "r-universe-builds",
+            "r-maintainer-docs",
+            "github-r-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "R/sizes.R",
+            "R/numbers.R",
+            "R/rounding.R",
+            "tests/testthat/test-bytes.R",
+            "tests/testthat/test-numbers.R",
+            "LICENSE",
+            "LICENSE.md"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Metric and byte prefixes need only a short primer; the path teaches vectorized masks and indexing, closure-contained standalone functions, magnitude selection, matrix-backed suffix lookup, rounding policy, formatted output, and exact boundary tests.",
           "quality_status": "pass",
           "quality_evidence": "Compact intentional formatter closures, one clear compute-to-format boundary, idiomatic vectorized R, direct invalid, empty, negative, NA, NaN, boundary, style, and standalone-dependency tests, public examples and reference docs, full numeric-input-to-output traceability, centralized tables and rounding, and unusually accessible R teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 3
+          },
           "calculated_level": 2,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 2/2/2/3 sums to 9, whose mean of 2.25 rounds to Level 2. Both gates pass, but pkgconfig and rematch2 already fill the two R Level 2 places with more complementary configuration and match-structure paths. The R toolchain is unavailable locally, so source and direct tests were inspected but not executed. Decimal bytes and SI quantities use different prefix tables, formatting styles intentionally trade padding and precision, negative values retain sign after magnitude selection, large values clamp to the largest named unit, and standalone closure environments must remain base-only.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and numeric-vector-to-magnitude-to-rounding-to-formatting path, both gates and all eight findings, 2/2/2/3 Level 2 formula, full capacity, R and MIT evidence, unavailable toolchain, and the prefix, precision, negative, clamping, and standalone-environment boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and numeric-vector-to-magnitude-to-rounding-to-formatting path, both gates and all eight findings, 2/2/2/3 Level 2 formula, full capacity, R and MIT evidence, unavailable toolchain, and the prefix, precision, negative, clamping, and standalone-environment boundaries."
+          }
         }
       ],
       "accepted": [],
-      "rejected": ["r-lib/crayon", "r-lib/prettyunits"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "rejected": [
+        "r-lib/crayon",
+        "r-lib/prettyunits"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 2 and Level 3 alternatives, but both calculated buckets were already full. Both Level 1 places remain honest because neither candidate was simplified or moved downward."
     },
     {
@@ -1944,14 +2442,38 @@
       "language": "Shell",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "bats-core/bats-support", "level": 2},
-        {"repository": "fsaintjacques/semver-tool", "level": 2},
-        {"repository": "dokku/dokku", "level": 3},
-        {"repository": "rbenv/rbenv", "level": 3},
-        {"repository": "ko1nksm/getoptions", "level": 4},
-        {"repository": "pyenv/pyenv", "level": 4}
+        {
+          "repository": "bats-core/bats-support",
+          "level": 2
+        },
+        {
+          "repository": "fsaintjacques/semver-tool",
+          "level": 2
+        },
+        {
+          "repository": "dokku/dokku",
+          "level": 3
+        },
+        {
+          "repository": "rbenv/rbenv",
+          "level": 3
+        },
+        {
+          "repository": "ko1nksm/getoptions",
+          "level": 4
+        },
+        {
+          "repository": "pyenv/pyenv",
+          "level": 4
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
       "discovery_channels": [
         {
           "id": "shell-system-packages",
@@ -1994,37 +2516,94 @@
         {
           "repository": "magicmonty/bash-git-prompt",
           "pinned_commit": "0bca4060a7b43d315e56113c7fb636e03cc29573",
-          "discovered_via": ["shell-system-packages", "curated-shell-projects", "github-shell-source", "shell-maintainer-docs"],
-          "inspection_files": ["README.md", "gitprompt.sh", "gitstatus.sh", "prompt-colors.sh", "tests/all-tests.sh", "tests/base.sh", "tests/test-prompt-command.sh", "tests/test-rebase-prompt.sh", "LICENSE.txt"],
+          "discovered_via": [
+            "shell-system-packages",
+            "curated-shell-projects",
+            "github-shell-source",
+            "shell-maintainer-docs"
+          ],
+          "inspection_files": [
+            "README.md",
+            "gitprompt.sh",
+            "gitstatus.sh",
+            "prompt-colors.sh",
+            "tests/all-tests.sh",
+            "tests/base.sh",
+            "tests/test-prompt-command.sh",
+            "tests/test-rebase-prompt.sh",
+            "LICENSE.txt"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Git status and prompt hooks need only a short primer; the path teaches sourced-function state, command substitution, arrays and parameter expansion, subprocess coordination, cached asynchronous refresh, theme loading, trap-like prompt composition, and repository-backed tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional prompt and status modules, recognizable configuration, status, rendering, and hook boundaries, idiomatic defensive Bash, direct non-repository, hook, rebase, and recovery tests, extensive option documentation, traceable Git-state-to-PS1 output, centralized status symbols, and strong interactive-shell teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 3,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but dokku and rbenv already fill the two Shell Level 3 places with more complementary deployment and command-shim paths. The complete direct test script passed locally. The prompt runs inside an interactive shell, so global variables and PROMPT_COMMAND composition are deliberate shared state; asynchronous refresh may show cached information briefly; Git worktrees, detached heads, rebases, upstream divergence, and disabled fetch policy alter output; and theme code executes in the user's shell context.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the pin and Git-status-to-cache-to-theme-to-PROMPT_COMMAND path, both gates and all eight findings, 3/3/3/4 Level 3 formula, full capacity, Shell and BSD evidence, passing direct suite, and the shared-state, cache, repository-state, network-policy, and sourced-theme boundaries."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the pin and Git-status-to-cache-to-theme-to-PROMPT_COMMAND path, both gates and all eight findings, 3/3/3/4 Level 3 formula, full capacity, Shell and BSD evidence, passing direct suite, and the shared-state, cache, repository-state, network-policy, and sourced-theme boundaries."
+          }
         },
         {
           "repository": "nvm-sh/nvm",
           "pinned_commit": "6798d1dbc99e879f36a7d2eb2231104dc7e78e77",
-          "discovered_via": ["shell-system-packages", "curated-shell-projects", "github-shell-source", "shell-maintainer-docs"],
-          "inspection_files": ["README.md", "nvm.sh", "install.sh", "test/common.sh", "test/fast/Unit tests/nvm_change_path", "test/fast/Unit tests/nvm_acquire_install_lock", "test/fast/Unit tests/nvm_release_install_lock", "test/fast/Unit tests/nvm_download no eval injection", "LICENSE.md"],
+          "discovered_via": [
+            "shell-system-packages",
+            "curated-shell-projects",
+            "github-shell-source",
+            "shell-maintainer-docs"
+          ],
+          "inspection_files": [
+            "README.md",
+            "nvm.sh",
+            "install.sh",
+            "test/common.sh",
+            "test/fast/Unit tests/nvm_change_path",
+            "test/fast/Unit tests/nvm_acquire_install_lock",
+            "test/fast/Unit tests/nvm_release_install_lock",
+            "test/fast/Unit tests/nvm_download no eval injection",
+            "LICENSE.md"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Node versions and shell startup need concise context; the bounded path teaches portable sourced functions, disciplined quoting and parameter expansion, command bypass, version and alias normalization, PATH rewriting, download and checksum handling, advisory directory locks, cleanup, and adversarial injection tests.",
           "quality_status": "pass",
           "quality_evidence": "Deliberate portable functions, explicit resolution, installation, environment, download, and lock boundaries, highly defensive POSIX-oriented Shell, extensive fast, slow, installation, compatibility, and security tests, unusually detailed user and maintainer docs, traceable request-to-resolved-version-to-installed-path behavior, centralized helpers and compatibility policy, and exceptional production-shell teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 3, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 4,
+            "design_span": 3,
+            "constraint_burden": 5
+          },
           "calculated_level": 4,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/5 sums to 16, whose mean is Level 4. Both gates pass, but getoptions and pyenv already fill the two Shell Level 4 places with more complementary parser-generation and multi-process shim paths. Focused path, install-lock, and injection tests passed locally; one separate nvmrc fixture probe could not run because its referenced fixture subtree was absent from the research checkout and was not used as evidence. nvm must be sourced to mutate the caller's environment; shell and utility differences constrain portability; PATH, MANPATH, NODE_PATH, aliases, mirrors, architecture, checksums, download fallbacks, concurrent installs, signals, and stale locks interact; and the path does not teach Node's runtime implementation.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and version-request-to-alias-to-download-to-lock-to-install-to-PATH path, both gates and all eight findings, 4/4/3/5 Level 4 formula, full capacity, Shell and MIT evidence, focused test results and fixture limitation, and every sourcing, portability, environment, mirror, architecture, integrity, fallback, concurrency, signal, and scope boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and version-request-to-alias-to-download-to-lock-to-install-to-PATH path, both gates and all eight findings, 4/4/3/5 Level 4 formula, full capacity, Shell and MIT evidence, focused test results and fixture limitation, and every sourcing, portability, environment, mirror, architecture, integrity, fallback, concurrency, signal, and scope boundary."
+          }
         }
       ],
       "accepted": [],
-      "rejected": ["magicmonty/bash-git-prompt", "nvm-sh/nvm"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "rejected": [
+        "magicmonty/bash-git-prompt",
+        "nvm-sh/nvm"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections found qualified Level 3 and Level 4 alternatives, but both calculated buckets were already full. The two Level 1 and two Level 5 places remain honest because neither candidate was moved to fit an open bucket."
     },
     {
@@ -2033,15 +2612,42 @@
       "language": "Kotlin",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "JakeWharton/picnic", "level": 2},
-        {"repository": "ajalt/clikt", "level": 3},
-        {"repository": "oshai/kotlin-logging", "level": 3},
-        {"repository": "cashapp/turbine", "level": 4},
-        {"repository": "square/moshi", "level": 4},
-        {"repository": "JetBrains/kotlin", "level": 5},
-        {"repository": "Kotlin/kotlinx.coroutines", "level": 5}
+        {
+          "repository": "JakeWharton/picnic",
+          "level": 2
+        },
+        {
+          "repository": "ajalt/clikt",
+          "level": 3
+        },
+        {
+          "repository": "oshai/kotlin-logging",
+          "level": 3
+        },
+        {
+          "repository": "cashapp/turbine",
+          "level": 4
+        },
+        {
+          "repository": "square/moshi",
+          "level": 4
+        },
+        {
+          "repository": "JetBrains/kotlin",
+          "level": 5
+        },
+        {
+          "repository": "Kotlin/kotlinx.coroutines",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "kotlin-maven-central",
@@ -2086,35 +2692,90 @@
         {
           "repository": "chibatching/Kotpref",
           "pinned_commit": "d3e76d062ccaf19234e8d2f6c573f58b95cdd976",
-          "discovered_via": ["kotlin-maven-central", "kotlin-api-docs", "github-kotlin-source", "kotlin-maintainer-guides"],
-          "inspection_files": ["README.md", "kotpref/src/main/kotlin/com/chibatching/kotpref/KotprefModel.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/BulkEdit.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/AbstractPref.kt", "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/StringSetPref.kt", "kotpref/src/test/java/com/chibatching/kotpref/KotprefModelTest.kt", "kotpref/src/test/java/com/chibatching/kotpref/BulkEditTest.kt", "kotpref/src/test/java/com/chibatching/kotpref/pref/StringSetPrefTest.kt", "LICENSE"],
+          "discovered_via": [
+            "kotlin-maven-central",
+            "kotlin-api-docs",
+            "github-kotlin-source",
+            "kotlin-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "kotpref/src/main/kotlin/com/chibatching/kotpref/KotprefModel.kt",
+            "kotpref/src/main/kotlin/com/chibatching/kotpref/BulkEdit.kt",
+            "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/AbstractPref.kt",
+            "kotpref/src/main/kotlin/com/chibatching/kotpref/pref/StringSetPref.kt",
+            "kotpref/src/test/java/com/chibatching/kotpref/KotprefModelTest.kt",
+            "kotpref/src/test/java/com/chibatching/kotpref/BulkEditTest.kt",
+            "kotpref/src/test/java/com/chibatching/kotpref/pref/StringSetPrefTest.kt",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Android preferences need only a short primer; the path teaches property delegates, generic preference adapters, delegated interfaces, mutable collection wrappers, batched edits, synchronous versus asynchronous persistence, and direct behavior tests.",
           "quality_status": "fail",
           "quality_evidence": "The implementation and tests remain substantive, but GitHub marks the exact repository archived. An archived snapshot cannot satisfy the catalog's maintained-project finding for a new learner exemplar, so the hard quality gate fails before numerical scoring or capacity comparison.",
           "decision_evidence": "Reject at the repository-quality gate: GitHub reports chibatching/Kotpref archived at the exact pinned revision. Its Kotlin delegates, preference wrappers, bulk-edit behavior, tests, documentation, and Apache license remain inspectable, but the read-only repository cannot satisfy the maintained-project requirement. The hard failure precedes numerical scoring and the open Kotlin Level 2 bucket was not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, archived GitHub state, existing Kotlin implementation, direct Android preference tests, documentation and Apache license, and agreed that maintainability fails before scoring or capacity."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, archived GitHub state, existing Kotlin implementation, direct Android preference tests, documentation and Apache license, and agreed that maintainability fails before scoring or capacity."
+          }
         },
         {
           "repository": "Kotlin/kotlinx-io",
           "pinned_commit": "362bdc35e159bad6da1e08101c8321792d762281",
-          "discovered_via": ["kotlin-maven-central", "kotlin-api-docs", "github-kotlin-source", "kotlin-maintainer-guides"],
-          "inspection_files": ["README.md", "core/Module.md", "core/common/src/Buffer.kt", "core/common/src/Segment.kt", "core/common/src/SegmentPool.kt", "core/common/src/RealSource.kt", "core/common/src/RealSink.kt", "core/common/test/CommonBufferTest.kt", "core/common/test/CommonRealSourceTest.kt", "core/jvm/test/PoolingTest.kt", "LICENSE", "NOTICE"],
+          "discovered_via": [
+            "kotlin-maven-central",
+            "kotlin-api-docs",
+            "github-kotlin-source",
+            "kotlin-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "core/Module.md",
+            "core/common/src/Buffer.kt",
+            "core/common/src/Segment.kt",
+            "core/common/src/SegmentPool.kt",
+            "core/common/src/RealSource.kt",
+            "core/common/src/RealSink.kt",
+            "core/common/test/CommonBufferTest.kt",
+            "core/common/test/CommonRealSourceTest.kt",
+            "core/jvm/test/PoolingTest.kt",
+            "LICENSE",
+            "NOTICE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Buffered I/O needs a concise source, sink, and segment primer; the path teaches multiplatform abstractions, inline and extension APIs, linked-list mutation, ownership and copy sharing, platform-specific pools, numeric and UTF-8 encoding, lifecycle state, and cross-segment tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional core modules, explicit buffer, segment, source, sink, and platform boundaries, idiomatic Kotlin multiplatform code, extensive boundary, ownership, pooling, encoding, closed-state, and platform tests, official API and module docs, complete byte-flow traceability, centralized segment invariants, and exceptional low-level Kotlin teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 4,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 4,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/3/4 sums to 15, whose mean of 3.75 rounds to Level 4. Both gates pass, but turbine and moshi already fill the two Kotlin Level 4 places with more complementary asynchronous-flow testing and reflection-or-codegen serialization paths. Java is unavailable locally, so Gradle reported that no Java runtime existed and the focused JVM suite could not execute; source and direct tests were inspected. The API is explicitly experimental; segments may share byte arrays but only an owner may append, shared segments cannot be recycled or mutated, pool implementations differ by target, source and sink close state is enforced, and filesystem and Okio integration remain outside the bounded path.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and Buffer-to-Segment-to-pool-to-Source-and-Sink path, both gates and all eight findings, 4/4/3/4 Level 4 formula, full capacity, Kotlin and Apache evidence, unavailable Java runtime, and every experimental-API, ownership, sharing, recycling, platform, lifecycle, and scope boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and Buffer-to-Segment-to-pool-to-Source-and-Sink path, both gates and all eight findings, 4/4/3/4 Level 4 formula, full capacity, Kotlin and Apache evidence, unavailable Java runtime, and every experimental-API, ownership, sharing, recycling, platform, lifecycle, and scope boundary."
+          }
         }
       ],
       "accepted": [],
-      "rejected": ["chibatching/Kotpref", "Kotlin/kotlinx-io"],
-      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "rejected": [
+        "chibatching/Kotpref",
+        "Kotlin/kotlinx-io"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections produced one hard maintainability rejection for an archived project and one qualified Level 4 capacity alternate. The Level 1 and Level 2 gaps remain honest because no candidate was moved downward."
     },
     {
@@ -2123,14 +2784,38 @@
       "language": "Scala",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "typelevel/case-insensitive", "level": 2},
-        {"repository": "scopt/scopt", "level": 3},
-        {"repository": "softwaremill/retry", "level": 3},
-        {"repository": "circe/circe", "level": 4},
-        {"repository": "http4s/http4s", "level": 4},
-        {"repository": "typelevel/cats-effect", "level": 5}
+        {
+          "repository": "typelevel/case-insensitive",
+          "level": 2
+        },
+        {
+          "repository": "scopt/scopt",
+          "level": 3
+        },
+        {
+          "repository": "softwaremill/retry",
+          "level": 3
+        },
+        {
+          "repository": "circe/circe",
+          "level": 4
+        },
+        {
+          "repository": "http4s/http4s",
+          "level": 4
+        },
+        {
+          "repository": "typelevel/cats-effect",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 1},
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "discovery_channels": [
         {
           "id": "scala-library-index",
@@ -2174,37 +2859,98 @@
         {
           "repository": "com-lihaoyi/os-lib",
           "pinned_commit": "86e5ddb65fe62305afb5885fcc0f8da50aba4b48",
-          "discovered_via": ["scala-library-index", "scala-maven-central", "github-scala-source", "scala-maintainer-guides"],
-          "inspection_files": ["Readme.adoc", "os/src/ProcessOps.scala", "os/src/SubProcess.scala", "os/src/Internals.scala", "os/test/src/SubprocessTests.scala", "os/test/src-jvm/SpawningSubprocessesTests.scala", "os/test/src-jvm/ProcessPipelineTests.scala", "LICENSE"],
+          "discovered_via": [
+            "scala-library-index",
+            "scala-maven-central",
+            "github-scala-source",
+            "scala-maintainer-guides"
+          ],
+          "inspection_files": [
+            "Readme.adoc",
+            "os/src/ProcessOps.scala",
+            "os/src/SubProcess.scala",
+            "os/src/Internals.scala",
+            "os/test/src/SubprocessTests.scala",
+            "os/test/src-jvm/SpawningSubprocessesTests.scala",
+            "os/test/src-jvm/ProcessPipelineTests.scala",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Subprocess streams and exit codes need only a short primer; the path teaches case-class APIs, sealed process abstractions, callbacks, dynamic variables, Java interop, concurrent output pumping, environment and working-directory construction, timeout escalation, recursive process cleanup, and platform tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional process modules, clear command, builder, process, stream, pipeline, and result boundaries, idiomatic concise Scala over JDK primitives, direct input, output, error, environment, timeout, lifecycle, pipeline, and stress tests, extensive cookbook and API docs, complete command-to-result traceability, centralized cleanup behavior, and strong practical Scala teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 3, "design_span": 3, "constraint_burden": 4},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 3,
+            "design_span": 3,
+            "constraint_burden": 4
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/3/3/4 sums to 13, whose mean of 3.25 rounds to Level 3. Both gates pass, but scopt and retry already fill the two Scala Level 3 places with more complementary parser-combinator and effectful retry-policy paths. Java is unavailable locally, so the Mill suite could not execute; source and direct tests were inspected. Output callbacks run concurrently and must be thread safe; call aggregates stdout and stderr chunks but cross-stream order reflects arrival; timeout termination depends on JVM and platform behavior; shutdown hooks, process trees, pipe failure, inherited streams, environment propagation, and binary compatibility constrain changes; and the path excludes operating-system process implementation.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and proc-to-builder-to-pumpers-to-SubProcess-to-result-and-cleanup path, both gates and all eight findings, 3/3/3/4 Level 3 formula, full capacity, Scala and MIT evidence, unavailable Java runtime, and every callback, ordering, timeout, platform, shutdown, pipeline, environment, compatibility, and scope boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and proc-to-builder-to-pumpers-to-SubProcess-to-result-and-cleanup path, both gates and all eight findings, 3/3/3/4 Level 3 formula, full capacity, Scala and MIT evidence, unavailable Java runtime, and every callback, ordering, timeout, platform, shutdown, pipeline, environment, compatibility, and scope boundary."
+          }
         },
         {
           "repository": "typelevel/fs2",
           "pinned_commit": "3320f42213d00a9ec68a15273efadade5efc0ce1",
-          "discovered_via": ["scala-library-index", "scala-maven-central", "github-scala-source", "scala-maintainer-guides"],
-          "inspection_files": ["README.md", "core/shared/src/main/scala/fs2/Compiler.scala", "core/shared/src/main/scala/fs2/Pull.scala", "core/shared/src/main/scala/fs2/Stream.scala", "core/shared/src/main/scala/fs2/internal/Scope.scala", "core/shared/src/main/scala/fs2/internal/ScopedResource.scala", "core/shared/src/main/scala/fs2/internal/InterruptContext.scala", "core/shared/src/test/scala/fs2/BracketSuite.scala", "core/shared/src/test/scala/fs2/PullLawsSuite.scala", "core/shared/src/test/scala/fs2/StreamInterruptSuite.scala", "docs/implementation-notes.markdown", "site/guide.md", "LICENSE"],
+          "discovered_via": [
+            "scala-library-index",
+            "scala-maven-central",
+            "github-scala-source",
+            "scala-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "core/shared/src/main/scala/fs2/Compiler.scala",
+            "core/shared/src/main/scala/fs2/Pull.scala",
+            "core/shared/src/main/scala/fs2/Stream.scala",
+            "core/shared/src/main/scala/fs2/internal/Scope.scala",
+            "core/shared/src/main/scala/fs2/internal/ScopedResource.scala",
+            "core/shared/src/main/scala/fs2/internal/InterruptContext.scala",
+            "core/shared/src/test/scala/fs2/BracketSuite.scala",
+            "core/shared/src/test/scala/fs2/PullLawsSuite.scala",
+            "core/shared/src/test/scala/fs2/StreamInterruptSuite.scala",
+            "docs/implementation-notes.markdown",
+            "site/guide.md",
+            "LICENSE"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.",
           "quality_status": "pass",
           "quality_evidence": "Documented typed compiler, Pull, scope, resource, and interruption modules have explicit ownership and lifecycle boundaries; idiomatic advanced Scala, law, bracket, stack, failure, cancellation, and race suites, official guides, end-to-end compile-to-finalize traceability, centralized transitions, and exceptional functional-runtime teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 5, "behavioral_reasoning": 5, "design_span": 4, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 5,
+            "behavioral_reasoning": 5,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
           "calculated_level": 5,
           "decision_evidence": "The scores were written before capacity was checked. The 5/5/4/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and the open Scala Level 5 place accepts FS2's core compiler and scope path. Java is unavailable locally, so source and direct suites were inspected but not executed. The path assumes fluency with Cats Effect abstractions; it excludes transport protocols, filesystem modules, Reactive Streams adapters, and application-level stream design; interruption support depends on a Concurrent target while Sync-only compilation has reduced capability; and internal algebra and scope APIs are not public compatibility promises even though observable resource and stream semantics are.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and Compiler-to-Pull-interpreter-to-Scope-to-ScopedResource-to-interruption-to-close path, both gates and all eight findings, 5/5/4/5 Level 5 result and guardrail, open slot, Scala and MIT evidence, unavailable Java runtime, and every prerequisite, module, adapter, capability, internal-API, and semantic boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and Compiler-to-Pull-interpreter-to-Scope-to-ScopedResource-to-interruption-to-close path, both gates and all eight findings, 5/5/4/5 Level 5 result and guardrail, open slot, Scala and MIT evidence, unavailable Java runtime, and every prerequisite, module, adapter, capability, internal-API, and semantic boundary."
+          }
         }
       ],
-      "accepted": ["typelevel/fs2"],
-      "rejected": ["com-lihaoyi/os-lib"],
-      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "accepted": [
+        "typelevel/fs2"
+      ],
+      "rejected": [
+        "com-lihaoyi/os-lib"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections found a qualified Level 3 subprocess alternate and a distinct Level 5 functional stream compiler. FS2 fills the only score-supported open place; Level 1 and Level 2 gaps remain honest because os-lib was not moved downward."
     },
     {
@@ -2213,15 +2959,42 @@
       "language": "PowerShell",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "nightroman/Invoke-MsBuild", "level": 2},
-        {"repository": "lipkau/PsIni", "level": 2},
-        {"repository": "Badgerati/Pode", "level": 3},
-        {"repository": "dfinke/ImportExcel", "level": 3},
-        {"repository": "nightroman/Invoke-Build", "level": 4},
-        {"repository": "PoshCode/ModuleBuilder", "level": 4},
-        {"repository": "pester/Pester", "level": 5}
+        {
+          "repository": "nightroman/Invoke-MsBuild",
+          "level": 2
+        },
+        {
+          "repository": "lipkau/PsIni",
+          "level": 2
+        },
+        {
+          "repository": "Badgerati/Pode",
+          "level": 3
+        },
+        {
+          "repository": "dfinke/ImportExcel",
+          "level": 3
+        },
+        {
+          "repository": "nightroman/Invoke-Build",
+          "level": 4
+        },
+        {
+          "repository": "PoshCode/ModuleBuilder",
+          "level": 4
+        },
+        {
+          "repository": "pester/Pester",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "discovery_channels": [
         {
           "id": "powershell-gallery",
@@ -2265,33 +3038,78 @@
         {
           "repository": "EvotecIT/PSWriteColor",
           "pinned_commit": "1a8b25dddec54de1a6f3d19f7052ffdbce77f3ec",
-          "discovered_via": ["powershell-gallery", "powershell-docs", "github-powershell-source", "powershell-published-source"],
-          "inspection_files": ["README.md", "PSWriteColor.psm1", "PSWriteColor.psd1", "Public/Write-Color.ps1", "Docs/Write-Color.md", "Examples/Write-Color-Examples.ps1", "Examples/Write-Color-Output.ps1", "LICENSE"],
+          "discovered_via": [
+            "powershell-gallery",
+            "powershell-docs",
+            "github-powershell-source",
+            "powershell-published-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "PSWriteColor.psm1",
+            "PSWriteColor.psd1",
+            "Public/Write-Color.ps1",
+            "Docs/Write-Color.md",
+            "Examples/Write-Color-Examples.ps1",
+            "Examples/Write-Color-Output.ps1",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Console coloring and append-only logging need almost no domain context; the function teaches advanced parameters and aliases, typed arrays, host capabilities, branching, formatting, pipeline output, file encoding, retries, and platform-facing behavior.",
           "quality_status": "fail",
           "quality_evidence": "The repository contains real maintained PowerShell implementation, examples, and detailed command documentation, but no direct automated test or specification suite exists for color cycling, background-color validation, centering, time formatting, newline behavior, file encoding, retry boundaries, or no-console mode. That leaves a material public behavior surface without executable verification and fails the repository-quality test finding before scoring.",
           "decision_evidence": "Reject at the repository-quality gate: the exact pinned repository has substantive Public/Write-Color.ps1 implementation and examples but no automated tests. The published function combines host output, console geometry, color-array branching, date formatting, newline control, file encoding, append behavior, and retry termination; examples demonstrate calls but do not assert outcomes or prevent regressions. The PowerShell runtime is unavailable locally, but that does not cause the rejection: the required direct tests are nonexistent in the repository. The hard failure precedes numerical scoring and the open Level 5 place was not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, current PowerShell implementation, Gallery publication, examples, command documentation, MIT license, and absence of any direct automated test or specification files, and agreed that test quality fails before scoring or capacity."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, current PowerShell implementation, Gallery publication, examples, command documentation, MIT license, and absence of any direct automated test or specification files, and agreed that test quality fails before scoring or capacity."
+          }
         },
         {
           "repository": "PowerShell/SecretManagement",
           "pinned_commit": "e24cc88e87d02cabbbf0fbaf76e4e287e927dbed",
-          "discovered_via": ["powershell-gallery", "powershell-docs", "github-powershell-source", "powershell-published-source"],
-          "inspection_files": ["README.md", "Docs/ARCHITECTURE.md", "src/Microsoft.PowerShell.SecretManagement.psd1", "src/code/SecretManagement.cs", "src/code/Utils.cs", "test/Microsoft.PowerShell.SecretManagement.Tests.ps1", "ExtensionModules/AKVaultScript/AKVaultScript.Extension/AKVaultScript.Extension.psm1", "LICENSE"],
+          "discovered_via": [
+            "powershell-gallery",
+            "powershell-docs",
+            "github-powershell-source",
+            "powershell-published-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "Docs/ARCHITECTURE.md",
+            "src/Microsoft.PowerShell.SecretManagement.psd1",
+            "src/code/SecretManagement.cs",
+            "src/code/Utils.cs",
+            "test/Microsoft.PowerShell.SecretManagement.Tests.ps1",
+            "ExtensionModules/AKVaultScript/AKVaultScript.Extension/AKVaultScript.Extension.psm1",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "fail",
           "coding_relevance_evidence": "The module is consumed from PowerShell and has PowerShell integration tests and extension examples, but its meaningful first-party runtime, cmdlets, registry, runspace hosting, dispatch, validation, cache, and secret orchestration are implemented in C#. It would primarily teach C# and the PowerShell SDK rather than PowerShell programming.",
           "quality_status": "fail",
           "quality_evidence": "Microsoft Learn and the pinned README state that the module is feature complete, no longer actively developed, and limited to security or critical bug fixes; GitHub marks the code repository archived. The implementation and extensive tests remain inspectable, but a read-only repository cannot satisfy the maintained-project finding for a new exemplar.",
           "decision_evidence": "Reject at the eligibility and repository-quality gates: GitHub reports the repository archived, Microsoft Learn and README.md say active development has ended, and the substantive production runtime is C# under src/code rather than PowerShell. The PowerShell files are manifests, build and deployment scripts, extension examples, and a Pester integration harness around the binary module; they do not make the runtime a meaningful first-party PowerShell implementation. The hard failures precede numerical scoring and the open Level 5 place was not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, archived and feature-complete status in GitHub, Microsoft Learn, and README, the C# cmdlet and orchestration runtime, the existing PowerShell manifests, examples and tests, and MIT license, and agreed that language eligibility and maintainability fail before scoring."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, archived and feature-complete status in GitHub, Microsoft Learn, and README, the C# cmdlet and orchestration runtime, the existing PowerShell manifests, examples and tests, and MIT license, and agreed that language eligibility and maintainability fail before scoring."
+          }
         }
       ],
       "accepted": [],
-      "rejected": ["EvotecIT/PSWriteColor", "PowerShell/SecretManagement"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "rejected": [
+        "EvotecIT/PSWriteColor",
+        "PowerShell/SecretManagement"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections produced one hard test-quality rejection and one hard language-eligibility plus maintainability rejection. The Level 1 and Level 5 places remain honest because neither candidate passed both gates or received a score."
     },
     {
@@ -2300,14 +3118,38 @@
       "language": "Dart",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "felangel/equatable", "level": 2},
-        {"repository": "VeryGoodOpenSource/formz", "level": 2},
-        {"repository": "dart-lang/sdk", "level": 3},
-        {"repository": "dart-lang/shelf", "level": 3},
-        {"repository": "felangel/mocktail", "level": 4},
-        {"repository": "google/json_serializable.dart", "level": 4}
+        {
+          "repository": "felangel/equatable",
+          "level": 2
+        },
+        {
+          "repository": "VeryGoodOpenSource/formz",
+          "level": 2
+        },
+        {
+          "repository": "dart-lang/sdk",
+          "level": 3
+        },
+        {
+          "repository": "dart-lang/shelf",
+          "level": 3
+        },
+        {
+          "repository": "felangel/mocktail",
+          "level": 4
+        },
+        {
+          "repository": "google/json_serializable.dart",
+          "level": 4
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 2},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 2
+      },
       "discovery_channels": [
         {
           "id": "dart-pub-registry",
@@ -2353,48 +3195,121 @@
         {
           "repository": "dart-lang/path",
           "pinned_commit": "7e3d5d87220133ad9cc99f82e85a826011a62859",
-          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source"],
-          "inspection_files": ["README.md", "lib/path.dart", "lib/src/context.dart", "lib/src/style.dart", "test/path_test.dart", "test/context_test.dart", "LICENSE"],
+          "discovered_via": [
+            "dart-pub-registry",
+            "dart-api-docs",
+            "github-dart-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "lib/path.dart",
+            "lib/src/context.dart",
+            "lib/src/style.dart",
+            "test/path_test.dart",
+            "test/context_test.dart",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "POSIX, Windows, and URL path syntax needs only a short primer; the implementation teaches string scanning, platform strategy objects, normalization, joining, relative-path calculation, URI conversion, edge-case contracts, and table-driven tests.",
           "quality_status": "fail",
           "quality_evidence": "The pinned repository contains clear, mature implementation and extensive direct tests, but GitHub marks it archived and README.md states that the package moved to dart-lang/core. This retired repository cannot satisfy the maintained-project finding for a new exemplar even though the package continues elsewhere.",
           "decision_evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/path. The source, platform strategies, documentation, and tests remain strong, but accepting the retired repository would pin learners to a non-current ownership and contribution surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Dart implementation and direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, substantive Dart implementation and direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."
+          }
         },
         {
           "repository": "dart-lang/build",
           "pinned_commit": "c25d2e1e41e463bcdd9282146c0cd4c9dfadc909",
-          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source", "dart-build-guides"],
-          "inspection_files": ["build_runner/README.md", "build_runner/lib/src/build_plan/build_plan.dart", "build_runner/lib/src/build_plan/build_step_plan.dart", "build_runner/lib/src/build_plan/previous_build.dart", "build_runner/lib/src/build/build.dart", "build_runner/lib/src/build/asset_content.dart", "build_runner/lib/src/build/build_state/build_state.dart", "build_runner/lib/src/build/input_tracker.dart", "build_runner/test/build/build_test.dart", "build_runner/test/build/build_state/build_state_test.dart", "build_runner/test/invalidation/asset_input_invalidation_test.dart", "build_runner/test/invalidation/invalidation_stress_test.dart", "build_runner/test/integration_tests/build_command_invalidation_test.dart", "build_runner/test/build/deferred_writes_test.dart", "LICENSE"],
+          "discovered_via": [
+            "dart-pub-registry",
+            "dart-api-docs",
+            "github-dart-source",
+            "dart-build-guides"
+          ],
+          "inspection_files": [
+            "build_runner/README.md",
+            "build_runner/lib/src/build_plan/build_plan.dart",
+            "build_runner/lib/src/build_plan/build_step_plan.dart",
+            "build_runner/lib/src/build_plan/previous_build.dart",
+            "build_runner/lib/src/build/build.dart",
+            "build_runner/lib/src/build/asset_content.dart",
+            "build_runner/lib/src/build/build_state/build_state.dart",
+            "build_runner/lib/src/build/input_tracker.dart",
+            "build_runner/test/build/build_test.dart",
+            "build_runner/test/build/build_state/build_state_test.dart",
+            "build_runner/test/invalidation/asset_input_invalidation_test.dart",
+            "build_runner/test/invalidation/invalidation_stress_test.dart",
+            "build_runner/test/integration_tests/build_command_invalidation_test.dart",
+            "build_runner/test/build/deferred_writes_test.dart",
+            "LICENSE"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "The code-generation vocabulary needs only a short primer; the path teaches transferable asynchronous state machines, graph planning, content-addressed change detection, transitive invalidation, caching, concurrency, failure recovery, resource lifecycle, and adversarial testing.",
           "quality_status": "pass",
           "quality_evidence": "Focused planning, state, execution, content, and dependency types; explicit phase, package, filesystem, and lifecycle boundaries; idiomatic advanced Dart; extensive no-op, update, deletion, failure, concurrency, hidden-asset, output-strategy, command, graph, and randomized stress tests; official user guides and source comments; complete asset-to-plan-to-execution-to-next-state traceability; centralized compatibility and invalidation rules; and exceptional incremental-systems teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 5, "design_span": 5, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 5,
+            "constraint_burden": 5
+          },
           "calculated_level": 5,
           "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and one of two open Dart Level 5 places accepts build_runner's incremental planning and execution path. The Dart toolchain is unavailable locally, so source and direct suites were inspected but not executed. The path excludes builder-specific generation semantics, analyzer implementation, bootstrap compilation, daemon and server protocols, watch notification delivery, Dart compiler internals, and generated built_value companions; compatible state, digest equality, output strategy, declared and actual output ownership, transitive deletion, phase ordering, concurrent actions, lazy work, failure state, resource disposal, package boundaries, and workspace layout remain explicit constraints.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and asset-discovery-to-plan-to-digest-comparison-to-invalidation-to-execution-to-finished-state path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open capacity, Dart and BSD evidence, unavailable toolchain, and every generation, analyzer, compiler, daemon, watch, output, graph, concurrency, lifecycle, package, and workspace boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and asset-discovery-to-plan-to-digest-comparison-to-invalidation-to-execution-to-finished-state path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open capacity, Dart and BSD evidence, unavailable toolchain, and every generation, analyzer, compiler, daemon, watch, output, graph, concurrency, lifecycle, package, and workspace boundary."
+          }
         },
         {
           "repository": "dart-lang/async",
           "pinned_commit": "d6a6a4dbe0c636e42d6cf4ede88ed5a33e35a6ca",
-          "discovered_via": ["dart-pub-registry", "dart-api-docs", "github-dart-source"],
-          "inspection_files": ["README.md", "lib/async.dart", "lib/src/cancelable_operation.dart", "lib/src/stream_queue.dart", "test/cancelable_operation_test.dart", "test/stream_queue_test.dart", "LICENSE"],
+          "discovered_via": [
+            "dart-pub-registry",
+            "dart-api-docs",
+            "github-dart-source"
+          ],
+          "inspection_files": [
+            "README.md",
+            "lib/async.dart",
+            "lib/src/cancelable_operation.dart",
+            "lib/src/stream_queue.dart",
+            "test/cancelable_operation_test.dart",
+            "test/stream_queue_test.dart",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Futures, streams, cancellation, and queued consumption are general programming mechanisms; the selected utilities teach completers, subscriptions, generic wrappers, event ordering, cancellation propagation, buffering, failure behavior, and direct asynchronous tests.",
           "quality_status": "fail",
           "quality_evidence": "The pinned repository contains mature first-party Dart utilities and extensive direct tests, but GitHub marks it archived and README.md states that the package moved to dart-lang/core. This retired repository cannot satisfy the maintained-project finding for a new exemplar even though the package continues elsewhere.",
           "decision_evidence": "Reject at the maintained-project gate: the exact repository is archived and its README explicitly directs development to dart-lang/core/tree/main/pkgs/async. The asynchronous implementation, documentation, and tests remain substantial, but accepting the retired repository would give learners a non-current contribution and maintenance surface. The Dart toolchain is unavailable locally, so tests were inspected but not executed; that does not cause the rejection. The hard failure precedes numerical scoring and the open buckets were not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Dart futures and streams implementation, direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, substantive Dart futures and streams implementation, direct tests, BSD license, GitHub archive flag, and README migration notice, and agreed that the repository-level maintainability failure precedes scoring or capacity."
+          }
         }
       ],
-      "accepted": ["dart-lang/build"],
-      "rejected": ["dart-lang/path", "dart-lang/async"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 1},
+      "accepted": [
+        "dart-lang/build"
+      ],
+      "rejected": [
+        "dart-lang/path",
+        "dart-lang/async"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
       "conclusion": "Four discovery channels and three exact-pin inspections produced two hard maintainability rejections for repositories whose packages moved to dart-lang/core and one distinct Level 5 incremental build path. dart-lang/build fills one score-supported Level 5 place; both Level 1 places and the second Level 5 place remain honest because no candidate was moved or duplicated to manufacture coverage."
     },
     {
@@ -2403,16 +3318,46 @@
       "language": "Objective-C",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "mirego/MCUIViewLayout", "level": 2},
-        {"repository": "shinyfrog/TextBundle", "level": 2},
-        {"repository": "pinterest/PINOperation", "level": 3},
-        {"repository": "sparkle-project/Sparkle", "level": 3},
-        {"repository": "SBJson/SBJson", "level": 4},
-        {"repository": "SDWebImage/SDWebImage", "level": 4},
-        {"repository": "gnachman/iTerm2", "level": 5},
-        {"repository": "gnustep/libs-base", "level": 5}
+        {
+          "repository": "mirego/MCUIViewLayout",
+          "level": 2
+        },
+        {
+          "repository": "shinyfrog/TextBundle",
+          "level": 2
+        },
+        {
+          "repository": "pinterest/PINOperation",
+          "level": 3
+        },
+        {
+          "repository": "sparkle-project/Sparkle",
+          "level": 3
+        },
+        {
+          "repository": "SBJson/SBJson",
+          "level": 4
+        },
+        {
+          "repository": "SDWebImage/SDWebImage",
+          "level": 4
+        },
+        {
+          "repository": "gnachman/iTerm2",
+          "level": 5
+        },
+        {
+          "repository": "gnustep/libs-base",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "objc-cocoapods-registry",
@@ -2457,35 +3402,87 @@
         {
           "repository": "nicklockwood/FXKeychain",
           "pinned_commit": "30ed71e159b130cbae3660f70a095110d68e00ce",
-          "discovered_via": ["objc-cocoapods-registry", "github-objc-source", "objc-maintainer-guides", "apple-platform-docs"],
-          "inspection_files": ["README.md", "FXKeychain/FXKeychain.h", "FXKeychain/FXKeychain.m", "FXKeychain.podspec.json", "Examples/Basic Example/FXKeychainExample/ViewController.m", "Examples/Advanced Example/FXKeychainExample/ViewController.m", "LICENCE.md"],
+          "discovered_via": [
+            "objc-cocoapods-registry",
+            "github-objc-source",
+            "objc-maintainer-guides",
+            "apple-platform-docs"
+          ],
+          "inspection_files": [
+            "README.md",
+            "FXKeychain/FXKeychain.h",
+            "FXKeychain/FXKeychain.m",
+            "FXKeychain.podspec.json",
+            "Examples/Basic Example/FXKeychainExample/ViewController.m",
+            "Examples/Advanced Example/FXKeychainExample/ViewController.m",
+            "LICENCE.md"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "A short Keychain Services primer is sufficient; the wrapper teaches Objective-C dictionary construction, Core Foundation bridging, keyed subscripting, serialization, platform conditionals, accessibility policy, error translation, and security-sensitive input boundaries.",
           "quality_status": "fail",
           "quality_evidence": "The repository contains real compact Objective-C implementation, detailed API documentation, examples, and an MIT license, but README.md opens with an explicit deprecation warning that the project will receive no future updates or bug fixes. The repository also contains no direct automated tests for its security-sensitive storage behavior, so maintainability and direct-test findings materially fail before scoring.",
           "decision_evidence": "Reject at the repository-quality gate: the exact pinned README says the project is deprecated, will receive no future updates or bug fixes, and users should migrate; the last pinned commit is from 2017. The wrapper handles Security framework queries, serialization, access groups, accessibility, deletion, and potentially hostile stored values but supplies examples rather than an automated behavior or failure suite. The Apple toolchain is unavailable locally, but that does not cause the rejection: the support termination and absent direct tests are observed in the repository. The hard failures precede numerical scoring and the Level 1 gap was not consulted.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass verified the exact pin, substantive Objective-C implementation, API documentation, examples, MIT license, literal no-future-updates deprecation notice, 2017 revision, and absence of direct automated tests, and agreed that maintainability and test quality fail before scoring or capacity."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, substantive Objective-C implementation, API documentation, examples, MIT license, literal no-future-updates deprecation notice, 2017 revision, and absence of direct automated tests, and agreed that maintainability and test quality fail before scoring or capacity."
+          }
         },
         {
           "repository": "AliSoftware/OHHTTPStubs",
           "pinned_commit": "c582400a38590a3dabb4353416d9d46cb7278d06",
-          "discovered_via": ["objc-cocoapods-registry", "github-objc-source", "objc-maintainer-guides", "apple-platform-docs"],
-          "inspection_files": ["README.md", "Sources/OHHTTPStubs/include/HTTPStubs.h", "Sources/OHHTTPStubs/HTTPStubs.m", "Sources/OHHTTPStubs/HTTPStubsResponse.m", "Sources/OHHTTPStubs/HTTPStubsMethodSwizzling.m", "Sources/OHHTTPStubs/HTTPStubs+NSURLSessionConfiguration.m", "Tests/OHHTTPStubsTests/NSURLSessionTests.m", "Tests/OHHTTPStubsTests/NSURLConnectionDelegateTests.m", "Tests/OHHTTPStubsTests/TimingTests.m", "Tests/OHHTTPStubsTests/NilValuesTests.m", "LICENSE"],
+          "discovered_via": [
+            "objc-cocoapods-registry",
+            "github-objc-source",
+            "objc-maintainer-guides",
+            "apple-platform-docs"
+          ],
+          "inspection_files": [
+            "README.md",
+            "Sources/OHHTTPStubs/include/HTTPStubs.h",
+            "Sources/OHHTTPStubs/HTTPStubs.m",
+            "Sources/OHHTTPStubs/HTTPStubsResponse.m",
+            "Sources/OHHTTPStubs/HTTPStubsMethodSwizzling.m",
+            "Sources/OHHTTPStubs/HTTPStubs+NSURLSessionConfiguration.m",
+            "Tests/OHHTTPStubsTests/NSURLSessionTests.m",
+            "Tests/OHHTTPStubsTests/NSURLConnectionDelegateTests.m",
+            "Tests/OHHTTPStubsTests/TimingTests.m",
+            "Tests/OHHTTPStubsTests/NilValuesTests.m",
+            "LICENSE"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Custom URL loading needs only a short Foundation primer; the path teaches Objective-C blocks, runtime method replacement, class loading, synchronized shared registries, protocol delegation, run-loop scheduling, stream chunking, manual C buffers, redirects, cancellation, errors, callbacks, and asynchronous integration tests.",
           "quality_status": "pass",
           "quality_evidence": "Intentional registry, protocol, response, swizzling, and compatibility modules; recognizable matcher-to-response-to-client-callback boundaries; idiomatic ARC Objective-C with blocks, synchronization, runtime APIs, streams, and platform guards; extensive request, error, timing, cancellation, cookie, redirect, header, session, connection, nil, and adapter tests; detailed API and limitation docs; complete stub-registration-to-URLProtocol-to-client traceability; centralized lifecycle and response behavior; and strong platform-integration teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 4, "behavioral_reasoning": 4, "design_span": 4, "constraint_burden": 5},
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 4,
+            "design_span": 4,
+            "constraint_burden": 5
+          },
           "calculated_level": 4,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/4/4/5 sums to 17, whose mean of 4.25 rounds to Level 4. Both gates pass, but SBJson and SDWebImage already fill the two Objective-C Level 4 places with more complementary incremental parsing and concurrent image-pipeline paths. The Apple SDK and Xcode toolchain are unavailable locally, so source and XCTest suites were inspected but not executed. The path excludes the operating system's URL-loading implementation, Swift helpers, AFNetworking internals, optional HTTPMessage and Mocktail formats, and real transport; background sessions cannot use custom protocols, upload progress is not simulated, zero-delay redirects have a documented platform-dependent race, stub cleanup is caller-owned, callbacks and client delivery are asynchronous, and method swizzling plus platform availability constrain changes.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and matcher-to-reverse-priority-registry-to-URLProtocol-to-response-delay-and-stream-to-redirect-or-error-to-client-callback path, both gates and all eight findings, 4/4/4/5 Level 4 formula, full capacity, Objective-C and MIT evidence, unavailable Apple toolchain, and every OS, Swift, adapter, format, background-session, upload, redirect, cleanup, asynchronous, runtime, and platform boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and matcher-to-reverse-priority-registry-to-URLProtocol-to-response-delay-and-stream-to-redirect-or-error-to-client-callback path, both gates and all eight findings, 4/4/4/5 Level 4 formula, full capacity, Objective-C and MIT evidence, unavailable Apple toolchain, and every OS, Swift, adapter, format, background-session, upload, redirect, cleanup, asynchronous, runtime, and platform boundary."
+          }
         }
       ],
       "accepted": [],
-      "rejected": ["nicklockwood/FXKeychain", "AliSoftware/OHHTTPStubs"],
-      "gaps_after": {"1": 2, "2": 0, "3": 0, "4": 0, "5": 0},
+      "rejected": [
+        "nicklockwood/FXKeychain",
+        "AliSoftware/OHHTTPStubs"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections produced one hard deprecation and test-quality rejection plus one qualified Level 4 capacity alternate. Both Objective-C Level 1 places remain honest because neither candidate was moved downward."
     },
     {
@@ -2494,14 +3491,38 @@
       "language": "Rust",
       "researched_at": "2026-08-29",
       "starting_entries": [
-        {"repository": "dtolnay/semver", "level": 3},
-        {"repository": "withoutboats/heck", "level": 3},
-        {"repository": "dtolnay/anyhow", "level": 4},
-        {"repository": "tokio-rs/axum", "level": 4},
-        {"repository": "rust-lang/cargo", "level": 5},
-        {"repository": "tokio-rs/tokio", "level": 5}
+        {
+          "repository": "dtolnay/semver",
+          "level": 3
+        },
+        {
+          "repository": "withoutboats/heck",
+          "level": 3
+        },
+        {
+          "repository": "dtolnay/anyhow",
+          "level": 4
+        },
+        {
+          "repository": "tokio-rs/axum",
+          "level": 4
+        },
+        {
+          "repository": "rust-lang/cargo",
+          "level": 5
+        },
+        {
+          "repository": "tokio-rs/tokio",
+          "level": 5
+        }
       ],
-      "gaps_before": {"1": 2, "2": 2, "3": 0, "4": 0, "5": 0},
+      "gaps_before": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "discovery_channels": [
         {
           "id": "rust-crates-registry",
@@ -2545,37 +3566,96 @@
         {
           "repository": "BurntSushi/byteorder",
           "pinned_commit": "5a82625fae462e8ba64cec8146b24a372b4d75c6",
-          "discovered_via": ["rust-crates-registry", "rust-docs-rs", "github-rust-source", "rust-maintainer-guides"],
-          "inspection_files": ["README.md", "Cargo.toml", "src/lib.rs", "src/io.rs", ".github/workflows/ci.yml", "LICENSE-MIT", "UNLICENSE", "COPYING"],
+          "discovered_via": [
+            "rust-crates-registry",
+            "rust-docs-rs",
+            "github-rust-source",
+            "rust-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "Cargo.toml",
+            "src/lib.rs",
+            "src/io.rs",
+            ".github/workflows/ci.yml",
+            "LICENSE-MIT",
+            "UNLICENSE",
+            "COPYING"
+          ],
           "decision": "reject",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "Endianness needs only a short byte-order primer; the path teaches sealed traits, type-level marker enums, generics, I/O extension traits, integer and float conversion, sign extension, no_std feature design, macros, panics, aliases, property tests, and executable documentation.",
           "quality_status": "pass",
           "quality_evidence": "Direct conversion and I/O modules, explicit ByteOrder and extension-trait boundaries, idiomatic generic and macro-assisted Rust, hundreds of round-trip, variable-width, slice, panic, regression, and doctests, detailed API and compatibility docs, complete bytes-to-number-to-I/O traceability, centralized endian implementations and conservative version policy, and strong binary-data teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 3,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 3
+          },
           "calculated_level": 3,
           "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 3/2/2/3 sums to 10, whose mean of 2.50 rounds half up to Level 3. Both gates pass, but semver and heck already fill the two Rust Level 3 places with more complementary typed requirement parsing and Unicode word-boundary paths. `cargo test --all-features` passed 680 unit and property tests plus 122 doctests at the exact pin. The path excludes protocol-specific binary formats and unsafe memory reinterpretation; byte widths and slice lengths are strict, sign extension must match the requested width, I/O errors propagate, no_std and minimum compiler policy remain supported, type-level endian markers are sealed for compatibility, and modern standard numeric conversions overlap some use cases.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and byte-slice-to-sealed-endian-trait-to-conversion-to-Read-and-Write-extension path, both gates and all eight findings, 3/2/2/3 Level 3 formula, full capacity, passing 680-unit-plus-122-doctest suite, Rust and dual Unlicense-or-MIT evidence, and every format, width, sign, I/O, no_std, compiler, sealing, standard-library, and scope boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and byte-slice-to-sealed-endian-trait-to-conversion-to-Read-and-Write-extension path, both gates and all eight findings, 3/2/2/3 Level 3 formula, full capacity, passing 680-unit-plus-122-doctest suite, Rust and dual Unlicense-or-MIT evidence, and every format, width, sign, I/O, no_std, compiler, sealing, standard-library, and scope boundary."
+          }
         },
         {
           "repository": "rust-cli/anstyle",
           "pinned_commit": "38da5ad7a435269eb30b9bf6f734bbe8bf1844e8",
-          "discovered_via": ["rust-crates-registry", "rust-docs-rs", "github-rust-source", "rust-maintainer-guides"],
-          "inspection_files": ["crates/anstyle/src/style.rs", "crates/anstyle/src/color.rs", "crates/anstyle/src/effect.rs", "crates/anstyle/src/reset.rs", "crates/anstyle/src/lib.rs", "crates/anstyle/tests/testsuite.rs", "crates/anstyle/tests/no_leading_zero.vte", "crates/anstyle/README.md", "crates/anstyle/Cargo.toml", "crates/anstyle/LICENSE-MIT", "crates/anstyle/LICENSE-APACHE"],
+          "discovered_via": [
+            "rust-crates-registry",
+            "rust-docs-rs",
+            "github-rust-source",
+            "rust-maintainer-guides"
+          ],
+          "inspection_files": [
+            "crates/anstyle/src/style.rs",
+            "crates/anstyle/src/color.rs",
+            "crates/anstyle/src/effect.rs",
+            "crates/anstyle/src/reset.rs",
+            "crates/anstyle/src/lib.rs",
+            "crates/anstyle/tests/testsuite.rs",
+            "crates/anstyle/tests/no_leading_zero.vte",
+            "crates/anstyle/README.md",
+            "crates/anstyle/Cargo.toml",
+            "crates/anstyle/LICENSE-MIT",
+            "crates/anstyle/LICENSE-APACHE"
+          ],
           "decision": "accept",
           "coding_relevance_status": "pass",
           "coding_relevance_evidence": "ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation.",
           "quality_status": "pass",
           "quality_evidence": "Small intentional Style, Color, Effects, Reset, and DisplayBuffer modules; explicit value, rendering, and reset boundaries; idiomatic traits and const builders; meaningful maximum-buffer, alignment, palette snapshot, doctest, and no_std checks; extensive public examples and purpose docs; exact Style-to-bytes traceability; centralized metadata and exhaustive variants; and strong compact-library teaching value satisfy all eight findings.",
-          "scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 3},
+          "scores": {
+            "language_technique": 2,
+            "behavioral_reasoning": 2,
+            "design_span": 2,
+            "constraint_burden": 3
+          },
           "calculated_level": 2,
           "decision_evidence": "The scores were written before capacity was checked. The 2/2/2/3 profile sums to 9, whose mean of 2.25 rounds to Level 2; both gates pass and one of two open Rust Level 2 places accepts anstyle's core value-to-ANSI-bytes path. `cargo test -p anstyle@1.0.14 --all-features` passed eight unit tests, one snapshot test, and 34 doctests, while `cargo check -p anstyle@1.0.14 --no-default-features` passed the no_std build; the unversioned package selector was initially ambiguous because the workspace also resolved anstyle 1.0.13, so the exact current package selector was used. The path excludes parsing, terminal capability detection, stream adaptation, Windows console translation, SVG or ROFF conversion, and third-party styling adapters; public API stability, exact bytes, const use, no_std, low overhead, fixed buffer capacity, alignment-independent formatting, and the private ASCII-only basis of the single unsafe UTF-8 conversion remain explicit constraints.",
-          "second_review": {"reviewer": "Codex cold self-review", "status": "agree", "notes": "A separate cold pass rechecked the exact pin and Style-to-Effects-and-Color-to-fixed-buffer-to-reset path, both gates and all eight findings, 2/2/2/3 Level 2 formula, open capacity, passing version-qualified all-feature tests and no_std check, Rust and dual MIT-or-Apache evidence, and every parser, terminal, stream, platform, conversion, adapter, API, byte, const, no_std, overhead, capacity, formatting, and unsafe boundary."}
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and Style-to-Effects-and-Color-to-fixed-buffer-to-reset path, both gates and all eight findings, 2/2/2/3 Level 2 formula, open capacity, passing version-qualified all-feature tests and no_std check, Rust and dual MIT-or-Apache evidence, and every parser, terminal, stream, platform, conversion, adapter, API, byte, const, no_std, overhead, capacity, formatting, and unsafe boundary."
+          }
         }
       ],
-      "accepted": ["rust-cli/anstyle"],
-      "rejected": ["BurntSushi/byteorder"],
-      "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
+      "accepted": [
+        "rust-cli/anstyle"
+      ],
+      "rejected": [
+        "BurntSushi/byteorder"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 2,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
       "conclusion": "Four discovery channels and two exact-pin inspections with executable Rust verification found a qualified Level 3 binary conversion alternate and a distinct Level 2 style-value path. anstyle fills one score-supported Level 2 place; both Level 1 places and the second Level 2 place remain honest because byteorder was not moved downward."
     },
     {
@@ -2787,7 +3867,7 @@
     "languages_completed": 20,
     "accepted_new_total": 18,
     "rejected_new_total": 32,
-    "current_entry_total": 151,
-    "remaining_gap_total": 49
+    "current_entry_total": 125,
+    "remaining_gap_total": 75
   }
 }

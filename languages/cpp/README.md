@@ -1,106 +1,43 @@
 # C++
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
-
-### [agauniyal/rang](https://github.com/agauniyal/rang)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A small header-only library that adds portable terminal colors and text styles through C++ stream operators.
-
-**Why study it:** The rang path shows how a header-only C++ API converts type-safe style and color values into stream output while honoring control mode, terminal detection, and platform fallback.
-
-**Prerequisites:**
-
-- Basic familiarity with C++ classes, templates, references, smart pointers, RAII, standard containers, exceptions, and unit tests.
-
-**Concepts this path develops:**
-
-- Scoped enums and stream insertion.
-- Automatic, forced, and disabled control modes.
-- ANSI and Windows terminal portability.
-
-**What you can learn:**
-
-- Use `include/rang.hpp` to study the following transferable techniques and behaviors: Scoped style and color enums, stream insertion operators, enum-to-code helpers, automatic, forced and disabled modes, terminal and color-support detection, ANSI output, Windows console handling, redirection, and no-output fallback.
-
-**Learning path:**
-
-- **Goal:** Understand how rang adapts type-safe color and style values to an output stream while honoring control mode, terminal detection, and cross-platform fallback.
-- **Start here:** [`include/rang.hpp`](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/include/rang.hpp) — include/rang.hpp contains the complete enum API, stream operators, control state, terminal detection, color-support checks, and Windows and ANSI output branches.
-- **Then read:**
-  - [`test/test.cpp`](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/test/test.cpp)
-- **Trace:** Follow style, foreground, background, control and color enums into the stream insertion path, then follow automatic, force and off modes through terminal and color-support detection and the Windows or ANSI output branches; close the behavior with test/test.cpp. The catalog's test/colorTest.cpp only demonstrates colors interactively and is not the closing contract test.
-
-**Why this level:**
-
-- **Language technique 2:** The path uses common professional C++ stream and enum idioms without recurring advanced machinery.
-- **Behavioral reasoning 2:** Several meaningful branches and a small configuration lifecycle remain easy to trace in one header.
-- **Design span 1:** The complete behavior is one focused unit.
-- **Constraint burden 3:** Several material portability and compatibility guarantees constrain an otherwise small implementation.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Unlicense ([evidence 1](https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The project ships an installable CMake, Conan, Meson, and pkg-config compatible terminal-formatting library.
-
-**Language evidence:** Terminal detection, ANSI and native Windows coloring, stream operators, and public enums are implemented in include/rang.hpp.
-
-**Coding relevance:**
-
-The terminal-style concept is familiar and self-contained; the path teaches transferable stream adaptation, platform detection, scoped configuration, enum APIs, fallback behavior, portability, and behavioral testing.
-
-Required domain context:
-
-- Terminal styling writes color or style control sequences only when the configured control mode and output stream's terminal capabilities allow it.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Small enum and stream APIs keep style codes, control modes, stream-specific state, terminal detection, and platform branches explicit.
-- **Architecture:** One header-only component separates public enums and manipulators from control state, environment detection, and platform-specific output helpers.
-- **Naming and idiom:** style, fg, bg, fgB, bgB, control, winTerm, color, setControlMode, isTerminal, supportsColor, and stream operators state output policy.
-- **Tests:** test/test.cpp covers enumeration output, automatic, forced and disabled control, supported and unsupported streams, terminal detection, invalid values, and no-output cases.
-- **Documentation:** The README documents styles, foreground and background colors, control modes, platform behavior, and stream usage corresponding to include/rang.hpp.
-- **Traceability:** A style value can be followed through its insertion operator, control-mode check, terminal and color detection, and ANSI or Windows branch into focused contract assertions.
-- **Maintainability:** A single portable interface, isolated platform checks, and explicit fallback tests constrain changes to terminal compatibility.
-- **Educational value:** The path demonstrates how a tiny cross-platform library layers type safety over conditional operating-system behavior without obscuring its fallbacks.
-
-**Inspection record:** commit `56419fe3348a475c8dd83852d907794cec0ec798`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `include/rang.hpp`, `test/test.cpp`, `LICENSE`. GitHub Linguist label: C++.
-
-</details>
+## Level 2 — Guided real-world code
 
 ### [microsoft/GSL](https://github.com/microsoft/GSL)
 
 **Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
-Microsoft's header-only implementation of selected C++ Core Guidelines support types and utilities.
+A small C++ scope guard that runs a cleanup function when control leaves a block.
 
-**Why study it:** The final_action path shows how a small move-only RAII object owns one cleanup action at scope exit and transfers that responsibility safely when moved.
+**Why study it:** Learn how one object owns a cleanup action, runs it during ordinary destruction, and transfers that responsibility safely when moved.
+
+**Short context:**
+
+- A scope guard owns a cleanup callback and invokes it when the guard leaves scope unless responsibility has been transferred to another guard.
 
 **Prerequisites:**
 
-- Basic familiarity with C++ classes, templates, references, smart pointers, RAII, standard containers, exceptions, and unit tests.
+- The global novice C++ baseline, including classes, templates, object lifetime, move construction, and focused tests.
+- RAII means an object's destructor performs cleanup; moving this guard transfers which object will perform it.
 
 **Concepts this path develops:**
 
-- Generic callable storage and decay.
-- Armed and disarmed guard lifecycle.
-- The active guard invokes cleanup once during ordinary destruction.
+- Owning cleanup with an object's lifetime.
+- Making a moved-from guard inactive.
+- Testing that ordinary scope exit runs the cleanup once.
 
 **What you can learn:**
 
-- Use `include/gsl/util` to study the following transferable techniques and behaviors: RAII scope cleanup, generic callable storage, perfect forwarding, decay, move-only ownership, single-invocation responsibility under ordinary lifetime, noexcept construction and destruction, and a convenience factory that preserves value categories.
+- Follow construction, move construction, and destruction through one small utility.
+- See how moving transfers cleanup responsibility.
+- Use lifecycle tests to distinguish active and inactive guards.
 
 **Learning path:**
 
@@ -117,7 +54,10 @@ Microsoft's header-only implementation of selected C++ Core Guidelines support t
 - **Behavioral reasoning 2:** One small lifecycle and ownership transfer determine whether cleanup runs, with no asynchronous or distributed state.
 - **Design span 1:** The complete behavior is one focused header component with direct tests and documentation.
 - **Constraint burden 3:** Several ownership, exception-safety, and portability guarantees constrain an otherwise small implementation.
-- **Placement:** The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** One cohesive professional idea—an object owns cleanup until destruction or a move—can be taught in a short primer and then traced locally through direct tests.
+  - **Central concepts:** scope-based cleanup (RAII); ownership transfer when a guard is moved; generic cleanup callables
+  - **Incidental concepts:** std::exchange; noexcept spelling
+- **Placement:** The four structural scores 3/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** MIT ([evidence 1](https://github.com/microsoft/GSL/blob/417ef685eafd626db765f0027b7fc5a0057e0770/LICENSE))
 
@@ -132,9 +72,7 @@ Microsoft's header-only implementation of selected C++ Core Guidelines support t
 
 Scope cleanup is a standard programming concern needing only one local definition; the path teaches transferable RAII, ownership transfer, generic callables, exception-safety policy, API design, and direct lifecycle testing.
 
-Required domain context:
-
-- A scope guard owns a cleanup callback and invokes it when the guard leaves scope unless responsibility has been transferred to another guard.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -147,11 +85,11 @@ Required domain context:
 - **Maintainability:** A single data-bearing class, deleted copy and assignment operations, explicit move disarming, and focused lifecycle tests tightly constrain changes.
 - **Educational value:** The path is a compact production example of generic RAII and single-owner cleanup. It has no explicit dismiss operation; moving is the only disarming mechanism, and a throwing callable copy, move, or invocation cannot escape the unconditional noexcept boundary.
 
-**Inspection record:** commit `417ef685eafd626db765f0027b7fc5a0057e0770`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `include/gsl/util`, `tests/utils_tests.cpp`, `docs/headers.md`, `README.md`, `LICENSE`. GitHub Linguist label: C++.
+**Inspection record:** commit `417ef685eafd626db765f0027b7fc5a0057e0770`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `include/gsl/util`, `tests/utils_tests.cpp`, `docs/headers.md`, `README.md`, `LICENSE`. GitHub Linguist label: C++.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [CLIUtils/CLI11](https://github.com/CLIUtils/CLI11)
 
@@ -160,6 +98,10 @@ Required domain context:
 A command-line parser supporting typed options, flags, subcommands, validation, configuration files, aliases, and rich help output.
 
 **Why study it:** The CLI11 App path shows how command-line tokens become typed option and subcommand values while preserving validation, callbacks, fallthrough, remaining arguments, repetition, and structured errors.
+
+**Short context:**
+
+- A command-line parser assigns tokens to options and subcommands, converts values, validates relationships, and invokes callbacks or reports structured errors.
 
 **Prerequisites:**
 
@@ -208,9 +150,7 @@ A command-line parser supporting typed options, flags, subcommands, validation, 
 
 Command-line concepts are familiar and documented locally; the selected path teaches transferable parser state, declarative APIs, type conversion, callbacks, validation, modular design, and error handling rather than a specialized command grammar.
 
-Required domain context:
-
-- A command-line parser assigns tokens to options and subcommands, converts values, validates relationships, and invokes callbacks or reports structured errors.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -234,6 +174,10 @@ Required domain context:
 A dependency-free, header-only Mustache template engine for STL-compatible narrow and wide string types.
 
 **Why study it:** The single-header Mustache path shows how C++ parses templates and renders variables, sections, lambdas, and partials against a context stack while preserving escaping and specification compatibility.
+
+**Short context:**
+
+- A Mustache template contains variables, escaped or unescaped substitutions, sections that repeat or conditionally render, inverted sections, and partial templates.
 
 **Prerequisites:**
 
@@ -278,9 +222,7 @@ A dependency-free, header-only Mustache template engine for STL-compatible narro
 
 The small documented template vocabulary is sufficient context; the path teaches transferable recursive parsing, variant-like data modeling, context lookup, callback rendering, escaping, error reporting, and compatibility testing.
 
-Required domain context:
-
-- A Mustache template contains variables, escaped or unescaped substitutions, sections that repeat or conditionally render, inverted sections, and partial templates.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -297,7 +239,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [catchorg/Catch2](https://github.com/catchorg/Catch2)
 
@@ -306,6 +248,10 @@ Required domain context:
 A C++ testing framework with expressive assertions, matchers, generators, test discovery, filtering, reporters, and benchmarking.
 
 **Why study it:** The assertion-macro path shows how Catch2 captures one C++ expression, decomposes operands without double evaluation, and reports faithful values through a managed assertion lifecycle.
+
+**Short context:**
+
+- An assertion framework evaluates a user's expression once and reports both the original expression and decomposed operand values when it fails.
 
 **Prerequisites:**
 
@@ -353,9 +299,7 @@ A C++ testing framework with expressive assertions, matchers, generators, test d
 
 Assertion semantics are familiar and locally documented; the path teaches transferable macro API design, expression templates, operator overloading, single-evaluation discipline, exception capture, diagnostic construction, and regression testing.
 
-Required domain context:
-
-- An assertion framework evaluates a user's expression once and reports both the original expression and decomposed operand values when it fails.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -379,6 +323,10 @@ Required domain context:
 A high-performance logging library with synchronous and asynchronous loggers, formatters, registries, and many output sinks.
 
 **Why study it:** The asynchronous logger path shows how spdlog hands messages to a bounded queue and worker threads while preserving overflow, ordering, flush, ownership, exceptions, and shutdown contracts.
+
+**Short context:**
+
+- An asynchronous logger queues prepared log messages for a background worker; its overflow policy either blocks producers or discards an older message when the bounded queue is full.
 
 **Prerequisites:**
 
@@ -427,9 +375,7 @@ A high-performance logging library with synchronous and asynchronous loggers, fo
 
 Logging and bounded queues need only short explanations; the path teaches transferable producer-consumer design, ownership transfer, backpressure, worker lifecycles, synchronization, failure handling, and concurrency testing.
 
-Required domain context:
-
-- An asynchronous logger queues prepared log messages for a background worker; its overflow policy either blocks producers or discards an older message when the bounded queue is full.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -446,7 +392,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [boostorg/asio](https://github.com/boostorg/asio)
 
@@ -455,6 +401,11 @@ Required domain context:
 Boost.Asio's portable asynchronous I/O library for networking, timers, executors, completion tokens, coroutines, and composed operations.
 
 **Why study it:** The async_compose path shows how a user state machine becomes a conforming asynchronous operation while preserving completion-token return types, handler characteristics, outstanding work, cancellation, Asio work-guard release, and the model's at-most-once completion contract.
+
+**Short context:**
+
+- An initiating function starts background work, a completion token selects the caller-facing result mechanism, and the resulting completion handler is invoked at most once after temporary operation resources are released.
+- An asynchronous agent's associated executor, allocator, and cancellation slot determine where completion runs, how memory is obtained, and how one operation receives targeted cancellation.
 
 **Prerequisites:**
 
@@ -508,10 +459,7 @@ Boost.Asio's portable asynchronous I/O library for networking, timers, executors
 
 The asynchronous-operation vocabulary is documented locally and consists of broadly reusable concurrency abstractions; the difficulty comes from transferable generic API design, scheduling, cancellation, resource lifetime, ownership, compatibility, and race-sensitive contracts.
 
-Required domain context:
-
-- An initiating function starts background work, a completion token selects the caller-facing result mechanism, and the resulting completion handler is invoked at most once after temporary operation resources are released.
-- An asynchronous agent's associated executor, allocator, and cancellation slot determine where completion runs, how memory is obtained, and how one operation receives targeted cancellation.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -535,6 +483,10 @@ Required domain context:
 Meta's performance-oriented collection of C++20 components for concurrency, containers, memory, networking, I/O, executors, futures, and utilities.
 
 **Why study it:** The Folly Future path shows how Promise and Future coordinate through synchronized shared state and schedule exactly-once continuations on an Executor across values, exceptions, interruption, cancellation, and races.
+
+**Short context:**
+
+- A Future represents a value that may arrive later, a Promise completes it, and an Executor chooses where registered continuations run.
 
 **Prerequisites:**
 
@@ -583,9 +535,7 @@ Meta's performance-oriented collection of C++20 components for concurrency, cont
 
 Future, Promise, and Executor concepts are standard concurrency abstractions documented locally; the path's difficulty comes from transferable template API design, shared-state synchronization, scheduling, ownership, cancellation, exception propagation, and race safety.
 
-Required domain context:
-
-- A Future represents a value that may arrive later, a Promise completes it, and an Executor chooses where registered continuations run.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

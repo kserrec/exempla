@@ -91,18 +91,23 @@ and generated navigation together.
    A material failure rejects the candidate even when a slot is empty.
 6. **Score before consulting gaps.** Record recurring signals and reasons for
    language technique, behavioral reasoning, design span, and constraint
-   burden. Calculate the Level exactly; never work backward from a desired
-   slot.
-7. **Resolve path and slot capacity.** A repository may contribute at most two
+   burden. Calculate the pre-accessibility rubric Level exactly; never work
+   backward from a desired slot.
+7. **Review novice accessibility at low rubric Levels.** For rubric Level 1 or
+   2, identify central and incidental concepts, apply all five accessibility
+   tests, and record a floor from 1 through 3. The final Level is the higher of
+   the rubric Level and accessibility floor. Do not average the floor with the
+   four scores or lower it to fit a slot.
+8. **Resolve path and slot capacity.** A repository may contribute at most two
    materially distinct paths across the entire catalog and may not appear
    twice in one language/Level bucket. Each bucket holds at most two paths.
    Keep the clearest learning paths and record other qualified candidates as
    capacity alternates.
-8. **Record the decision.** Accepted entries go in
+9. **Record the decision.** Accepted entries go in
    `catalog/<language>.json`; serious rejections go in
    `research/rejections.json` with evidence and a literal reconsideration
    condition.
-9. **Record a separate verification pass.** Name the actual person or model
+10. **Record a separate verification pass.** Name the actual person or model
    that cross-checked both gates, the selected path, each anchor, formula,
    capacity result, language, pin, and license. Never imply independent human
    inspection when a model performed the verification.
@@ -119,10 +124,11 @@ corrections with pinned evidence are welcome.
 
 ## Canonical entry format
 
-[`catalog/schema.json`](catalog/schema.json) defines schema version 3 and
+[`catalog/schema.json`](catalog/schema.json) defines schema version 4 and
 [`scripts/catalog.py`](scripts/catalog.py) enforces semantic relationships:
 safe paths, inspection membership, pinned license URL arrays, formula and score
-floors, `(repository, path_slug)` identity, repository and bucket capacity,
+floors, the novice-accessibility floor for structural Levels 1 and 2,
+`(repository, path_slug)` identity, repository and bucket capacity,
 prerequisite/concept separation, order, and research reconciliation.
 
 Keep these terms literal:
@@ -162,6 +168,9 @@ lower anchor when a higher-level signal is isolated or outside the main trace.
 - Stable path slug, goal, start reason, supporting files, trace, prerequisites,
   concepts developed, and domain context describe the path actually scored.
 - All four scores cite observed recurring signals and the formula is exact.
+- Every rubric-Level-1 or rubric-Level-2 path identifies central and incidental
+  concepts, passes the five accessibility tests at its recorded floor, and
+  publishes at `max(rubric level, accessibility floor)`.
 - Inspection files contain every learning-path and license-evidence path.
 - The repository contributes no more than two catalog paths and does not appear
   twice in the same language/Level bucket.

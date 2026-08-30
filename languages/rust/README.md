@@ -1,99 +1,18 @@
 # Rust
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [rust-cli/anstyle](https://github.com/rust-cli/anstyle)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
-A small no_std-compatible Rust crate defining interoperable ANSI terminal style, color, effect, and reset value types.
-
-**Why study it:** Follow an immutable Style through effect and color composition into exact ANSI display bytes and a conditional reset. ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation.
-
-**Prerequisites:**
-
-- Rust structs and enums, `Option`, traits, iterators, bit operations, formatting, const functions, feature flags, and byte slices. The learner should be able to read a small `unsafe` block; the path develops the safety argument for it.
-- ANSI terminal styling is expressed as short escape sequences; a style may combine effects and foreground, background, or underline colors, then emit a reset sequence after the value.
-
-**Concepts this path develops:**
-
-- Composable value modeling through copyable enums, `Option` fields, immutable builders, conversions, and operator traits.
-- Allocation-free decimal rendering with a fixed-capacity byte buffer and a locally proved unchecked UTF-8 conversion.
-- Byte-exact ANSI output that remains compatible with `const`, `no_std`, formatting, and stable public-value constraints.
-
-**What you can learn:**
-
-- Use Rust enums, newtypes, Option fields, copyable value builders, From conversions, Display, Iterator, and operator traits to model composable styling without exposing a rendering dependency.
-- Trace Style formatting through Effects metadata and Color variants into exact foreground, background, underline, and reset escape bytes.
-- Understand how a small fixed-capacity DisplayBuffer writes decimal color components without allocation and why its single unchecked UTF-8 conversion is safe under the type's private write methods.
-- Verify API stability, const use, no_std compilation, exact output, formatting behavior, and edge values through doctests, focused unit tests, and a checked-in output snapshot.
-
-**Learning path:**
-
-- **Goal:** Understand how anstyle composes a copyable terminal Style and renders exact ANSI effect, color, and reset bytes with no required allocation.
-- **Start here:** [`crates/anstyle/src/style.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/src/style.rs) — Begin with Style because its immutable builder methods assemble the public value, and its Display implementation exposes the full branch from effects and optional colors to alternate-format reset output.
-- **Then read:**
-  - [`crates/anstyle/src/color.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/src/color.rs)
-  - [`crates/anstyle/src/effect.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/src/effect.rs)
-  - [`crates/anstyle/src/reset.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/src/reset.rs)
-  - [`crates/anstyle/src/lib.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/src/lib.rs)
-  - [`crates/anstyle/tests/testsuite.rs`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/tests/testsuite.rs)
-  - [`crates/anstyle/tests/no_leading_zero.vte`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/tests/no_leading_zero.vte)
-  - [`crates/anstyle/README.md`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/README.md)
-  - [`crates/anstyle/Cargo.toml`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/Cargo.toml)
-  - [`crates/anstyle/LICENSE-MIT`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-MIT)
-  - [`crates/anstyle/LICENSE-APACHE`](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-APACHE)
-- **Trace:** Start with Style::new and its const-friendly foreground, background, underline, and effect builders; follow Display into EffectsDisplay and Color's ANSI, 256-color, or RGB branch; trace numeric components through the private fixed DisplayBuffer and conditional alternate-format reset; then verify bit-set operations, conversions, exact maximum buffer output, alignment independence, all palette values without leading zeroes, public examples, and no_std compilation.
-
-**Why this level:**
-
-- **Language technique 2:** Common professional value modeling, trait implementations, iterators, and feature conventions shape the path; the one unsafe conversion is small, isolated, and locally justified rather than recurring advanced machinery.
-- **Behavioral reasoning 2:** Meaningful local branches and compact state exist, but the synchronous value-to-bytes flow remains easy to trace.
-- **Design span 2:** A few clear modules cooperate inside one small crate and one process.
-- **Constraint burden 3:** Several compatibility, portability, performance, allocation, byte-exactness, and safety guarantees influence otherwise local code.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds to Level 2. The published result is Level 2.
-
-**License:** MIT OR Apache-2.0 ([evidence 1](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-MIT), [evidence 2](https://github.com/rust-cli/anstyle/blob/38da5ad7a435269eb30b9bf6f734bbe8bf1844e8/crates/anstyle/LICENSE-APACHE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The rust-cli project publishes anstyle on crates.io as the shared style vocabulary used by command-line libraries including anstream and clap's color output ecosystem.
-
-**Language evidence:** The selected Style, Color, Effects, Reset, fixed display buffer, public API, doctests, unit tests, and snapshot test are handwritten first-party Rust under crates/anstyle.
-
-**Coding relevance:**
-
-ANSI styling needs only a short primer; the path teaches value-oriented API design, enums, bit sets, traits, iterators, const-friendly builders, feature-gated I/O, fixed buffers, one bounded unsafe conversion, and executable documentation.
-
-Required domain context:
-
-- ANSI terminal styling is expressed as short escape sequences; a style may combine effects and foreground, background, or underline colors, then emit a reset sequence after the value.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Style, Color, Effects, Reset, and DisplayBuffer use direct small methods, exhaustive variants, explicit comments, and one narrowly documented unsafe block rather than hidden control flow.
-- **Architecture:** Style owns optional colors and effect bits; Effects maps enabled bits to metadata; Color variants render through static strings or a fixed buffer; Reset closes the display contract.
-- **Naming and idiom:** Style, Color, AnsiColor, Ansi256Color, RgbColor, Effects, EffectIter, DisplayBuffer, render_fg, render_bg, and render_reset communicate the model with idiomatic value and trait patterns.
-- **Tests:** Eight focused unit tests, one checked-in snapshot test, and 34 passing doctests cover maximum buffer output, formatting alignment, reset and effect behavior, public builders and operators, and all 16 palette values without leading zeroes; a no-default-features cargo check verifies the no_std boundary.
-- **Documentation:** Crate-level docs and README explain the interoperability purpose, priorities, core Style example, companion adapters, user parsers, converters, utilities, and dual license; public methods carry executable examples.
-- **Traceability:** A Style value can be followed directly through its Display branch into Effects and Color rendering, exact bytes or reset output, then into unit, snapshot, and doctest assertions.
-- **Maintainability:** The public model is separated from rendering helpers, exhaustive enums and centralized metadata expose additions, no_std and std paths are explicit, and current CI plus focused executable examples protect the compact contract.
-- **Educational value:** The crate turns familiar colored command output into a short, complete lesson in professional Rust value APIs, traits, exact formatting, portability, and a carefully bounded unsafe optimization.
-
-**Inspection record:** commit `38da5ad7a435269eb30b9bf6f734bbe8bf1844e8`, inspected 2026-08-29. Review passes: Codex primary pass; Codex cold verification pass. Files inspected: `crates/anstyle/src/style.rs`, `crates/anstyle/src/color.rs`, `crates/anstyle/src/effect.rs`, `crates/anstyle/src/reset.rs`, `crates/anstyle/src/lib.rs`, `crates/anstyle/tests/testsuite.rs`, `crates/anstyle/tests/no_leading_zero.vte`, `crates/anstyle/README.md`, `crates/anstyle/Cargo.toml`, `crates/anstyle/LICENSE-MIT`, `crates/anstyle/LICENSE-APACHE`. GitHub Linguist label: HTML.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [dtolnay/semver](https://github.com/dtolnay/semver)
 
@@ -102,6 +21,10 @@ Required domain context:
 A parser and evaluator for Cargo-flavored Semantic Versioning versions and requirements, including caret, tilde, wildcard, range, and prerelease rules.
 
 **Why study it:** A compact domain library turns a familiar specification into explicit data types, a byte-level parser, precise position-aware errors, comparator normalization, matching semantics, and stable formatting.
+
+**Short context:**
+
+- Semantic versions have major, minor, patch, prerelease, and build components, while Cargo-style requirements add exact, range, caret, tilde, wildcard, conjunction, and disjunction operators.
 
 **Prerequisites:**
 
@@ -152,9 +75,7 @@ A parser and evaluator for Cargo-flavored Semantic Versioning versions and requi
 
 The concise version-requirement grammar is documented in the repository, and the path is programming-led: typed domain modeling, allocation-conscious parsing, position-aware failures, operator-specific predicates, normalization, formatting, and executable specification tests explain its difficulty.
 
-Required domain context:
-
-- Semantic versions have major, minor, patch, prerelease, and build components, while Cargo-style requirements add exact, range, caret, tilde, wildcard, conjunction, and disjunction operators.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -178,6 +99,11 @@ Required domain context:
 A no_std string case-conversion library supporting snake, kebab, title, train, shouty, lower camel, and upper camel forms.
 
 **Why study it:** A small common transform turns subtle acronym, digit, lowercase, uppercase, Unicode, and separator rules into reusable conversion traits and zero-allocation display wrappers.
+
+**Short context:**
+
+- Identifier case styles split text into words and then format those words as snake, kebab, title, train, shouty, or camel case.
+- Unicode uppercase and lowercase conversion can expand or contextually change a character, so the implementation iterates characters rather than bytes.
 
 **Prerequisites:**
 
@@ -227,10 +153,7 @@ A no_std string case-conversion library supporting snake, kebab, title, train, s
 
 The short naming-convention and Unicode primer is subordinate to transferable lessons in stateful text scanning, boundary detection, callback-based reuse, trait and Display API design, no_std constraints, and table-driven edge-case testing.
 
-Required domain context:
-
-- Identifier case styles split text into words and then format those words as snake, kebab, title, train, shouty, or camel case.
-- Unicode uppercase and lowercase conversion can expand or contextually change a character, so the implementation iterates characters rather than bytes.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -247,7 +170,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [dtolnay/anyhow](https://github.com/dtolnay/anyhow)
 
@@ -256,6 +179,10 @@ Required domain context:
 A flexible application-error type that carries context, error chains, downcasting, backtraces, and ergonomic propagation across arbitrary error sources.
 
 **Why study it:** anyhow's context path connects an idiomatic Result extension to the type-erased owned representation that preserves sources, backtraces, formatting, and downcasting.
+
+**Short context:**
+
+- Application error context adds a higher-level explanation while preserving the lower-level source error for reporting and inspection.
 
 **Prerequisites:**
 
@@ -307,9 +234,7 @@ A flexible application-error type that carries context, error chains, downcastin
 
 That short error-handling primer is subordinate to transferable systems-programming lessons in generic conversion, lazy context, type erasure, custom vtables, pointer ownership, source-chain traversal, downcasting, backtrace preservation, conditional compilation, and safety contracts.
 
-Required domain context:
-
-- Application error context adds a higher-level explanation while preserving the lower-level source error for reporting and inspection.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -333,6 +258,11 @@ Required domain context:
 A modular asynchronous web framework built around Tokio, Hyper, Tower services, typed request extractors, composable routers, middleware, and response conversion.
 
 **Why study it:** Axum's Json type is a bounded async framework path from request metadata and one-time body ownership to typed input, precise rejection, and response serialization.
+
+**Short context:**
+
+- An HTTP request extractor validates request metadata, consumes the body once, and either gives typed input to a handler or turns a rejection into an HTTP response.
+- JSON media types include application/json and structured suffixes such as application/cloudevents+json.
 
 **Prerequisites:**
 
@@ -382,10 +312,7 @@ A modular asynchronous web framework built around Tokio, Hyper, Tower services, 
 
 The short HTTP and media-type primer is documented by Axum; the selected path is programming-led and teaches generic async extraction, body ownership, typed rejection design, source-aware serialization errors, response conversion, optional inputs, API documentation, and direct contract tests.
 
-Required domain context:
-
-- An HTTP request extractor validates request metadata, consumes the body once, and either gives typed input to a handler or turns a rejection into an HTTP response.
-- JSON media types include application/json and structured suffixes such as application/cloudevents+json.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -402,7 +329,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [rust-lang/cargo](https://github.com/rust-lang/cargo)
 
@@ -411,6 +338,11 @@ Required domain context:
 Rust's package manager and build orchestrator, covering manifests, workspaces, lockfiles, dependency resolution, registries and other sources, compilation units, caching, credentials, packaging, publishing, installation, and extensible commands.
 
 **Why study it:** Cargo's JobQueue is an expert but bounded build-system path through dependency readiness, shared jobserver capacity, process orchestration, freshness, diagnostics, artifacts, failures, and shutdown.
+
+**Short context:**
+
+- Cargo turns compilation units and their artifact dependencies into runnable jobs; a GNU-compatible jobserver supplies shared concurrency tokens so Cargo, rustc, build scripts, and nested make processes do not collectively oversubscribe the machine.
+- Fresh jobs execute compiler work while fresh jobs can replay cached metadata and messages without rerunning the process.
 
 **Prerequisites:**
 
@@ -462,10 +394,7 @@ Rust's package manager and build orchestrator, covering manifests, workspaces, l
 
 The short build-unit and jobserver primer is documented in the selected modules. Transferable dependency-graph scheduling, bounded concurrency, process orchestration, state machines, message queues, failure propagation, cancellation, output serialization, cache freshness, and compatibility engineering explain the path's difficulty.
 
-Required domain context:
-
-- Cargo turns compilation units and their artifact dependencies into runnable jobs; a GNU-compatible jobserver supplies shared concurrency tokens so Cargo, rustc, build scripts, and nested make processes do not collectively oversubscribe the machine.
-- Fresh jobs execute compiler work while fresh jobs can replay cached metadata and messages without rerunning the process.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -489,6 +418,11 @@ Required domain context:
 An asynchronous runtime platform for Rust with multi-thread and current-thread schedulers, task lifecycles, OS-backed I/O, timers, networking, synchronization, processes, signals, files, macros, streams, and utilities.
 
 **Why study it:** Tokio's bounded MPSC channel is a complete expert trace through permits, backpressure, lock-free storage, wakeups, cancellation, closure, destruction, and model-checked interleavings.
+
+**Short context:**
+
+- A bounded multi-producer, single-consumer channel gives senders permits before enqueueing values so capacity creates backpressure; closing prevents new sends while allowing already queued values and outstanding permits to resolve.
+- Loom systematically explores small concurrent executions by substituting modeled atomics, threads, and synchronization primitives.
 
 **Prerequisites:**
 
@@ -542,10 +476,7 @@ An asynchronous runtime platform for Rust with multi-thread and current-thread s
 
 The short channel and model-checking primer is documented by Tokio. Transferable async API design, atomic state, lock-free linked storage, waker protocols, semaphore permits, backpressure, cancellation safety, close and drop ownership, panic safety, model checking, and exhaustive direct tests explain the path's difficulty.
 
-Required domain context:
-
-- A bounded multi-producer, single-consumer channel gives senders permits before enqueueing values so capacity creates backpressure; closing prevents new sends while allowing already queued values and outstanding permits to resolve.
-- Loom systematically explores small concurrent executions by substituting modeled atomics, threads, and synchronization primitives.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

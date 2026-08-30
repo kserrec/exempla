@@ -1,115 +1,43 @@
 # Go
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
-
-### [spf13/pflag](https://github.com/spf13/pflag)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
-A drop-in Go flag package that adds POSIX/GNU-style long options, shorthand flags, and richer flag-set behavior.
-
-**Why study it:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
-
-**Prerequisites:**
-
-- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
-- FlagSet.Parse converts command-line tokens into named flag values and positional arguments.
-
-**Concepts this path develops:**
-
-- Interface-backed Value parsing.
-- Long, shorthand, positional, and terminator token states.
-- Shorthand and long syntax must agree on value consumption.
-
-**What you can learn:**
-
-- Study these transferable Go mechanisms in `flag.go`: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.
-- Trace these states and branches from `flag.go` through its selected supporting files: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.
-- Identify these architectural responsibilities in the path beginning at `flag.go`: FlagSet parser, Value extension point, and concrete string value and focused tests.
-- Study these change constraints for the path beginning at `flag.go`: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy.
-
-**Learning path:**
-
-- **Goal:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
-- **Start here:** [`flag.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/flag.go) — Begin with `flag.go` because it exposes how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
-- **Then read:**
-  - [`string.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/string.go)
-  - [`flag_test.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/flag_test.go)
-- **Trace:** Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests.
-
-**Why this level:**
-
-- **Language technique 2:** Familiar intermediate Go interfaces and collection techniques recur across parsing.
-- **Behavioral reasoning 2:** A few parser branches recur without a broader lifecycle.
-- **Design span 2:** A small set of cohesive pieces covers token input through typed storage.
-- **Constraint burden 3:** Several material parser guarantees recur, but their interaction remains locally testable rather than strict enough for Constraint 4.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes an importable command-line parsing module designed for Go applications and compatibility with the standard flag package.
-
-**Language evidence:** GNU-style parsing, FlagSet state, typed values, normalization, deprecation, and compatibility behavior are implemented in Go.
-
-**Coding relevance:**
-
-Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
-
-Required domain context:
-
-- FlagSet.Parse converts command-line tokens into named flag values and positional arguments.
-
-**Eight-part quality gate:**
-
-- **Source quality:** flag.go documents the public parser and error policies, string.go supplies a simple concrete Value implementation, and flag_test.go broadly exercises long and shorthand flags, attached and separate values, terminators, unknown flags, normalization, repeated parse behavior, and errors.
-- **Architecture:** The audited architecture of the path beginning at `flag.go` has these boundaries: FlagSet parser, Value extension point, and concrete string value and focused tests.
-- **Naming and idiom:** `flag.go` and its supporting files use these characteristic Go mechanisms: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.
-- **Tests:** Direct tests in `flag_test.go` cover these states and branches in the selected path: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.
-- **Documentation:** `flag.go` and its selected supporting material document the contracts needed to understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
-- **Traceability:** Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests.
-- **Maintainability:** Changes to the path beginning at `flag.go` are constrained by these audited guarantees: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy.
-- **Educational value:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
-
-**Inspection record:** commit `4f8e9056816a26ecbac9fe26cde50968eb3626f8`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `flag.go`, `string.go`, `flag_test.go`, `LICENSE`. GitHub Linguist label: Go.
-
-</details>
+## Level 2 — Guided real-world code
 
 ### [tidwall/match](https://github.com/tidwall/match)
 
 **Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
-A compact wildcard-matching library with Unicode support and an optional complexity limit.
+A small Go matcher that checks text against ordinary characters, question marks, and stars.
 
-**Why study it:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding. Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
+**Why study it:** Follow a compact loop through literal matches, one-character matches, star backtracking, and the boundary where either the text or pattern ends.
+
+**Short context:**
+
+- A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches.
 
 **Prerequisites:**
 
-- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
-- A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches.
+- The global novice Go baseline: functions, byte slices, loops, conditionals, and table-driven tests.
+- In this path, a question mark matches one byte and a star matches zero or more bytes.
 
 **Concepts this path develops:**
 
-- Plain byte slices and indexes.
-- Literal, question-mark, and star branches.
-- Stars may match zero or many bytes.
+- Walking text and pattern indexes together.
+- Trying literal, one-byte, and star cases in a clear order.
+- Backtracking to the most recent star when a later match fails.
 
 **What you can learn:**
 
-- Study these transferable Go mechanisms in `match.go`: plain byte slices and indexes, loops and local conditionals, and small helper functions.
-- Trace these states and branches from `match.go` through its selected supporting files: literal, question-mark, and star branches, empty and exhausted input states, and case-sensitive and insensitive modes.
-- Identify these architectural responsibilities in the path beginning at `match.go`: one matcher implementation and one direct test file.
-- Study these change constraints for the path beginning at `match.go`: stars may match zero or many bytes, pattern and input exhaustion must align, and case folding and arbitrary input must terminate consistently.
+- Trace representative literal, question-mark, and star patterns by hand.
+- See how one saved star position supports bounded backtracking.
+- Use boundary-focused tests to understand empty and exhausted inputs.
 
 **Learning path:**
 
@@ -125,7 +53,10 @@ A compact wildcard-matching library with Unicode support and an optional complex
 - **Behavioral reasoning 2:** A few related matcher states recur within one compact algorithm.
 - **Design span 1:** The complete lesson stays within one local component and its tests.
 - **Constraint burden 3:** Several material boundary and backtracking guarantees recur despite the tiny design span.
-- **Placement:** The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** The entire pattern language is three locally defined forms, so a short primer is sufficient even though star backtracking stretches beyond first-production-code reasoning.
+  - **Central concepts:** literal and wildcard matching; star backtracking; input and pattern exhaustion
+  - **Incidental concepts:** byte-oriented scanning; optional case folding
+- **Placement:** The four structural scores 1/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** MIT ([evidence 1](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/LICENSE))
 
@@ -140,9 +71,7 @@ A compact wildcard-matching library with Unicode support and an optional complex
 
 Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
 
-Required domain context:
-
-- A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -155,11 +84,11 @@ Required domain context:
 - **Maintainability:** Changes to the path beginning at `match.go` are constrained by these audited guarantees: stars may match zero or many bytes, pattern and input exhaustion must align, and case folding and arbitrary input must terminate consistently.
 - **Educational value:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding. Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
 
-**Inspection record:** commit `afc69bce52e08c02e78156a7697bd808fc868ec5`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `match.go`, `match_test.go`, `LICENSE`. GitHub Linguist label: Go.
+**Inspection record:** commit `afc69bce52e08c02e78156a7697bd808fc868ec5`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `match.go`, `match_test.go`, `LICENSE`. GitHub Linguist label: Go.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [gin-gonic/gin](https://github.com/gin-gonic/gin)
 
@@ -168,6 +97,10 @@ Required domain context:
 A high-performance HTTP web framework with routing, middleware, request binding, rendering, recovery, and server utilities.
 
 **Why study it:** Understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup. HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth.
+
+**Short context:**
+
+- An HTTP engine matches a request method and path, prepares a reusable Context, and executes the selected handler chain.
 
 **Prerequisites:**
 
@@ -220,9 +153,7 @@ A high-performance HTTP web framework with routing, middleware, request binding,
 
 HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth.
 
-Required domain context:
-
-- An HTTP engine matches a request method and path, prepares a reusable Context, and executes the selected handler chain.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -246,6 +177,10 @@ Required domain context:
 A cron expression parser and in-process job scheduler for Go applications.
 
 **Why study it:** Understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown. Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy.
+
+**Short context:**
+
+- A Cron scheduler calculates each entry's next time, sleeps until work is due, launches jobs, and accepts updates while running.
 
 **Prerequisites:**
 
@@ -295,9 +230,7 @@ A cron expression parser and in-process job scheduler for Go applications.
 
 Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy.
 
-Required domain context:
-
-- A Cron scheduler calculates each entry's next time, sleeps until work is due, launches jobs, and accepts updates while running.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -314,7 +247,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [caddyserver/caddy](https://github.com/caddyserver/caddy)
 
@@ -323,6 +256,10 @@ Required domain context:
 An extensible server platform and web server with automatic HTTPS, dynamic configuration, multiple HTTP protocols, and a module system.
 
 **Why study it:** Understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure. Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation.
+
+**Short context:**
+
+- Caddy loads a configuration by provisioning module values, validating an app graph, swapping active state, and cleaning up replaced resources.
 
 **Prerequisites:**
 
@@ -373,9 +310,7 @@ An extensible server platform and web server with automatic HTTPS, dynamic confi
 
 Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation.
 
-Required domain context:
-
-- Caddy loads a configuration by provisioning module values, validating an app graph, swapping active state, and cleaning up replaced resources.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -399,6 +334,10 @@ Required domain context:
 A distributed container orchestration platform with declarative APIs, scheduling, controllers, node agents, networking, storage, and extensibility.
 
 **Why study it:** Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown. Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise.
+
+**Short context:**
+
+- A workqueue serializes keys for concurrent workers, suppresses duplicate in-flight work, and can delay or rate-limit retries.
 
 **Prerequisites:**
 
@@ -454,9 +393,7 @@ A distributed container orchestration platform with declarative APIs, scheduling
 
 Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise.
 
-Required domain context:
-
-- A workqueue serializes keys for concurrent workers, suppresses duplicate in-flight work, and can delay or rate-limit retries.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -473,7 +410,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [golang/go](https://github.com/golang/go)
 
@@ -482,6 +419,10 @@ Required domain context:
 The Go programming language implementation, including its compiler, runtime, standard library, build tools, assembler, linker, and platform ports.
 
 **Why study it:** Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants. Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness.
+
+**Short context:**
+
+- The Go runtime implements channel send, receive, close, and select by coordinating goroutines, queues, buffers, locks, and the scheduler.
 
 **Prerequisites:**
 
@@ -533,9 +474,7 @@ The Go programming language implementation, including its compiler, runtime, sta
 
 Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness.
 
-Required domain context:
-
-- The Go runtime implements channel send, receive, close, and select by coordinating goroutines, queues, buffers, locks, and the scheduler.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -559,6 +498,10 @@ Required domain context:
 The Go implementation of gRPC, providing clients, servers, streaming RPCs, transports, resolution, load balancing, retries, observability, and generated-code support.
 
 **Why study it:** Understand how a gRPC-Go ClientConn turns resolver updates into balanced subchannels, waits or fails RPC picks according to connectivity, reconnects with backoff, and closes every concurrent component in dependency order. Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
+
+**Short context:**
+
+- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
 
 **Prerequisites:**
 
@@ -614,9 +557,7 @@ The Go implementation of gRPC, providing clients, servers, streaming RPCs, trans
 
 Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
 
-Required domain context:
-
-- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

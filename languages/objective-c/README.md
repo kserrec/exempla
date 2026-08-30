@@ -1,164 +1,18 @@
 # Objective-C
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [mirego/MCUIViewLayout](https://github.com/mirego/MCUIViewLayout)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A small UIView layout library for sizing and positioning views against superviews and siblings with explicit geometry helpers.
-
-**Why study it:** It turns repetitive frame arithmetic into a bounded vocabulary while leaving every CGRect calculation, margin rule, display-scale rounding choice, and category method visible.
-
-**Prerequisites:**
-
-- Objective-C methods and categories, UIKit views and frames, C structs and bitmasks, coordinate systems, floating-point rounding, and XCTest.
-
-**Concepts this path develops:**
-
-- Objective-C categories over UIKit classes.
-- Parent-relative and sibling-relative coordinate cases.
-- Coordinate-system and margin semantics must remain exact.
-
-**What you can learn:**
-
-- Objective-C categories, NS_OPTIONS bitmasks, CGRect arithmetic, sibling and superview coordinates, display-scale rounding, compatibility, and geometry tests.
-
-**Learning path:**
-
-- **Goal:** Understand how a small Objective-C category library turns composable layout options into exact, scale-aware view frames.
-- **Start here:** [`Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/Sources/MCUIViewLayoutObjC/UIView%2BMCLayoutCalculation.m) — The calculation category expresses the geometry rules without mutation; the public category then applies returned rectangles to views.
-- **Then read:**
-  - [`Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m)
-  - [`Sources/MCUIViewLayoutObjC/UIView+MCLayout.m`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/Sources/MCUIViewLayoutObjC/UIView%2BMCLayout.m)
-  - [`MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m)
-  - [`README.md`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/README.md)
-  - [`LICENSE.md`](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/LICENSE.md)
-- **Trace:** Start with the pure mc_getRect calculation entry points, follow superview and sibling coordinate selection, combined fitting options, margins, and delegation into MCUIViewLayoutPosition's scale-rounded arithmetic, then see UIView+MCLayout apply the calculated frame and close representative CGRect contracts in the direct calculation suite.
-
-**Why this level:**
-
-- **Language technique 2:** Several ordinary Objective-C and UIKit idioms materially shape the API without advanced language machinery.
-- **Behavioral reasoning 2:** Several explicit geometric cases recur, but all reasoning stays synchronous and local.
-- **Design span 1:** One small cohesive library contains the design.
-- **Constraint burden 3:** Several precision, composition, and compatibility guarantees constrain ordinary changes.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** BSD-3-Clause ([evidence 1](https://github.com/mirego/MCUIViewLayout/blob/987cb7ee525f03aeae81db7e3ad639080e23bc46/LICENSE.md))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository distributes Objective-C and Swift package products and documents UIKit use through Swift Package Manager and CocoaPods.
-
-**Language evidence:** The original and still-shipped geometry model, UIView calculation categories, frame mutation methods, compatibility facade, and XCTest suite are Objective-C.
-
-**Coding relevance:**
-
-That short user-interface geometry primer is subordinate to transferable lessons in category design, bitmask options, pure calculations before mutation, coordinate translation, composition of fitting and positioning operations, display-scale rounding, compatibility facades, and exhaustive boundary tests.
-
-Required domain context:
-
-- UIKit represents a view's position and size with CGRect values in superview and sibling coordinate systems.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Pure calculation methods separate geometry from frame mutation, combinations are explicit, and scale-aware rounding avoids blurred half-pixel placement.
-- **Architecture:** A position model and calculation category define geometry; a public UIView category applies it; a deprecated facade isolates compatibility.
-- **Naming and idiom:** mc_setPosition, relativeToView, withMargins, sizeToFit, mc_width, mc_origin, and MCUIViewLayoutPosition state layout intent directly.
-- **Tests:** Nine XCTest files cover base dimensions, all superview alignments, sibling relationships, fitting, combined operations, missing parents, unequal margins, and display-scale rounding.
-- **Documentation:** The README walks through z-order, sizing, absolute, parent-relative, and sibling-relative layout with diagrams and examples.
-- **Traceability:** A position option can be followed from its bitmask through a calculation helper into frame mutation and an exact CGRect assertion.
-- **Maintainability:** The Objective-C implementation is compact, calculation logic is reusable, compatibility code is isolated, and geometry cases are enumerated in focused suites.
-- **Educational value:** It demonstrates how a small convenience API can improve call-site language while preserving transparent, testable arithmetic.
-
-**Inspection record:** commit `987cb7ee525f03aeae81db7e3ad639080e23bc46`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `Sources/MCUIViewLayoutObjC/UIView+MCLayoutCalculation.m`, `Sources/MCUIViewLayoutObjC/MCUIViewLayoutPosition.m`, `Sources/MCUIViewLayoutObjC/UIView+MCLayout.m`, `MCUIViewLayoutExample/UIViewLayoutExampleTests/UIView_MCLayoutCalculationsTest.m`, `README.md`, `LICENSE.md`. GitHub Linguist label: Objective-C.
-
-</details>
-
-### [shinyfrog/TextBundle](https://github.com/shinyfrog/TextBundle)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A compact framework for reading, creating, and writing TextBundle document packages with metadata, text, and optional assets.
-
-**Why study it:** A few files expose the complete path from an on-disk directory package through NSFileWrapper, JSON metadata, text type selection, attachments, validation, and atomic persistence.
-
-**Prerequisites:**
-
-- Objective-C classes and properties, Foundation collections and data, files and URLs, JSON, nullable errors, and document packages.
-
-**Concepts this path develops:**
-
-- Objective-C properties and nullable NSError conventions.
-- Read and write transformations between a package tree and object state.
-- Required package members and metadata keys must remain valid.
-
-**What you can learn:**
-
-- Objective-C properties, NSFileWrapper packages, JSON serialization, Uniform Type Identifiers, NSError conventions, metadata preservation, asset filenames, and fixture tests.
-
-**Learning path:**
-
-- **Goal:** Understand how a compact Objective-C model validates, reads, mutates, and writes a directory-based document package without losing metadata or assets.
-- **Start here:** [`TextBundle/TextBundleWrapper.m`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/TextBundle/TextBundleWrapper.m) — The implementation can be read end to end, from defaults through file-wrapper construction, parsing, validation, assets, and filename generation.
-- **Then read:**
-  - [`TextBundle/TextBundleWrapper.h`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/TextBundle/TextBundleWrapper.h)
-  - [`TextBundleTests/TextBundleTests.m`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/TextBundleTests/TextBundleTests.m)
-  - [`TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/TextBundleTests/Sample%20TextBundles/text%20plus%20attachments.textbundle/info.json)
-  - [`README.md`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/README.md)
-  - [`LICENSE`](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/LICENSE)
-- **Trace:** Start with initialization and readFromURL, follow NSFileWrapper validation into info.json decoding, text filename and type selection, metadata properties, and optional assets, then reverse the flow through fileWrapper, textFilenameForType, asset collision handling, and writeToURL before closing the format and error cases in TextBundleTests.
-
-**Why this level:**
-
-- **Language technique 2:** Several ordinary Objective-C and Foundation idioms shape the path, without advanced runtime or language machinery.
-- **Behavioral reasoning 2:** The behavior has several cases but remains synchronous and locally traceable in one class.
-- **Design span 1:** One unit contains nearly the complete design.
-- **Constraint burden 3:** Several format, persistence, and data-preservation guarantees constrain otherwise ordinary changes.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/shinyfrog/TextBundle/blob/eb0e2c75afec3817cf6817548179fe679ba565ee/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The framework implements the TextBundle interchange format used by writing applications and ships macOS and iOS targets.
-
-**Language evidence:** TextBundle package reading and writing, metadata projection, Uniform Type Identifier handling, asset collision handling, errors, and tests are Objective-C.
-
-**Coding relevance:**
-
-That short format primer is subordinate to transferable file-format engineering: Foundation object modeling, directory-package validation, JSON metadata projection, filename and Uniform Type Identifier mapping, attachment ownership, collision handling, errors, and round-trip tests.
-
-Required domain context:
-
-- A TextBundle is a directory package whose info.json names a text file and optional assets for interchange between writing applications.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Required-file checks, metadata extraction, asset deduplication, package construction, and errors are visible in short methods over Foundation values.
-- **Architecture:** One shared wrapper contains the format behavior while thin macOS and iOS targets expose it.
-- **Naming and idiom:** info.json, textFilenameForType, fileWrapper, metadata, assetsFileWrapper, readFromURL, and writeToURL mirror the package vocabulary.
-- **Tests:** Fixtures cover text-only and attachment packages, missing members, invalid input, creation, writing, and asset collisions; one write-to-new-URL test mistakenly reloads its source fixture, so it is not a complete persistence round trip.
-- **Documentation:** The README explains the TextBundle format, platform targets, installation, and wrapper role.
-- **Traceability:** A bundle can be followed from NSFileWrapper through info.json and text selection into properties, then back through fileWrapper and writeToURL.
-- **Maintainability:** Format constants and transformations are centralized, the surface is narrow, and representative packages live beside the tests.
-- **Educational value:** It is an approachable first study of mapping a real document format onto Foundation without a framework-sized abstraction.
-
-**Inspection record:** commit `eb0e2c75afec3817cf6817548179fe679ba565ee`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `TextBundle/TextBundleWrapper.m`, `TextBundle/TextBundleWrapper.h`, `TextBundleTests/TextBundleTests.m`, `TextBundleTests/Sample TextBundles/text plus attachments.textbundle/info.json`, `README.md`, `LICENSE`. GitHub Linguist label: Objective-C.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [pinterest/PINOperation](https://github.com/pinterest/PINOperation)
 
@@ -167,6 +21,10 @@ Required domain context:
 A thread-safe operation queue with priorities, dynamic concurrency limits, cancellation, data coalescing, completions, and operation groups.
 
 **Why study it:** Its small surface reveals recursive locks, serial and concurrent lanes, semaphores, dispatch groups, priority queues, weak reference maps, duplicate-work coalescing, and nested work.
+
+**Short context:**
+
+- An operation queue schedules blocks for serial or bounded-concurrent execution and may expose priorities, cancellation, and groups.
 
 **Prerequisites:**
 
@@ -216,9 +74,7 @@ A thread-safe operation queue with priorities, dynamic concurrency limits, cance
 
 That familiar concurrency vocabulary is subordinate to transferable scheduler engineering: recursive mutex ownership, priority ordering, serial and concurrent lanes, semaphore-based dynamic limits, dispatch-group accounting, cancellation races, work coalescing, completion fan-out, reference lifetime, nested work, and asynchronous contract tests.
 
-Required domain context:
-
-- An operation queue schedules blocks for serial or bounded-concurrent execution and may expose priorities, cancellation, and groups.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -242,6 +98,10 @@ Required domain context:
 A secure macOS software-update framework with signed appcasts, background downloads, delta updates, sandbox support, privilege-separated installation, phased rollouts, resumable updates, and customizable UI.
 
 **Why study it:** Sparkle's appcast-selection path is a bounded policy engine for filtering and ordering update candidates without requiring the security and installation pipeline.
+
+**Short context:**
+
+- A Sparkle appcast is an update feed whose items carry application versions, operating-system bounds, channels, rollout information, and optional delta relationships.
 
 **Prerequisites:**
 
@@ -293,9 +153,7 @@ A secure macOS software-update framework with signed appcasts, background downlo
 
 That short updater-feed primer is subordinate to transferable selection engineering: immutable item modeling, layered filtering, injectable comparators and delegate policy, version ordering, skipped updates, channels, phased rollout timing, primary and secondary candidates, fallback explanations, and deterministic tests. The security and installation pipeline is deliberately outside this bounded path.
 
-Required domain context:
-
-- A Sparkle appcast is an update feed whose items carry application versions, operating-system bounds, channels, rollout information, and optional delta relationships.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -312,7 +170,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [SBJson/SBJson](https://github.com/SBJson/SBJson)
 
@@ -321,6 +179,10 @@ Required domain context:
 A streaming Objective-C JSON parser and writer that accepts chunks, emits complete values or array elements, and supports bounded depth and deterministic formatting.
 
 **Why study it:** SBJson's streaming path is a production parser lesson in preserving lexical and structural state when tokens and nested values cross arbitrary input chunks.
+
+**Short context:**
+
+- JSON's grammar distinguishes objects, arrays, strings, numbers, booleans, and null; streaming input may split any token across chunks.
 
 **Prerequisites:**
 
@@ -372,9 +234,7 @@ A streaming Objective-C JSON parser and writer that accepts chunks, emits comple
 
 That short grammar primer is subordinate to transferable parser engineering: retained byte chunks, strict UTF-8 and surrogate validation, incremental lexical states, token lifetimes, nested structural state stacks, depth limits, partial-input status, callback delivery, error offsets, and conformance tests.
 
-Required domain context:
-
-- JSON's grammar distinguishes objects, arrays, strings, numbers, booleans, and null; streaming input may split any token across chunks.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -398,6 +258,10 @@ Required domain context:
 An asynchronous image loading and caching framework for Apple platforms with codecs, progressive and animated images, transformations, prefetching, and extensible cache and loader pipelines.
 
 **Why study it:** SDWebImage's manager path shows how a mature Objective-C library coordinates cache, network, decoding, transformation, cancellation, storage, and callback ownership for one request.
+
+**Short context:**
+
+- An image-loading framework resolves a URL through cache and network sources, decodes image bytes, and returns a platform image to a caller.
 
 **Prerequisites:**
 
@@ -448,9 +312,7 @@ An asynchronous image loading and caching framework for Apple platforms with cod
 
 That short media primer is subordinate to transferable systems lessons in asynchronous operation ownership, request deduplication, cancellation, callback queues, layered caches, loader and coder protocols, progressive results, transformations, key identity, memory pressure, persistence policy, error propagation, and race-focused integration tests.
 
-Required domain context:
-
-- An image-loading framework resolves a URL through cache and network sources, decodes image bytes, and returns a platform image to a caller.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -467,7 +329,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [gnachman/iTerm2](https://github.com/gnachman/iTerm2)
 
@@ -476,6 +338,10 @@ Required domain context:
 A full macOS terminal emulator with VT protocols, high-performance grids and rendering, sessions and process control, tmux and shell integration, automation APIs, restoration, search, transfers, profiles, and modern application features.
 
 **Why study it:** iTerm2's state-restoration database is an expert path through cyclic graph encoding, delta persistence, transactions, identity, integrity checks, and recovery after failure.
+
+**Short context:**
+
+- State restoration serializes an application's object graph so windows and sessions can be reconstructed after relaunch; iTerm2 persists graph records in SQLite.
 
 **Prerequisites:**
 
@@ -529,9 +395,7 @@ A full macOS terminal emulator with VT protocols, high-performance grids and ren
 
 That short application primer is subordinate to transferable expert engineering in cyclic graph encoding, stable identity and generations, delta detection, append-only transactional records, relational graph transformation, asynchronous database ownership, integrity assertions, rollback, recovery after failed saves, deep copying, garbage collection, encryption boundaries, compatibility, and real recovery tests.
 
-Required domain context:
-
-- State restoration serializes an application's object graph so windows and sessions can be reconstructed after relaunch; iTerm2 persists graph records in SQLite.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -555,6 +419,10 @@ Required domain context:
 GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa Foundation APIs, from root objects and collections through run loops, networking, serialization, localization, processes, and distributed objects.
 
 **Why study it:** GNUstep's notification center is an expert Foundation-compatible implementation of wildcard registration, weak observer identity, reentrant callbacks, and thread-safe removal.
+
+**Short context:**
+
+- A notification center registers observers by optional notification name and object and synchronously dispatches matching notifications; nil names or objects act as wildcards.
 
 **Prerequisites:**
 
@@ -606,9 +474,7 @@ GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa 
 
 That short framework primer is subordinate to transferable expert library engineering in Objective-C runtime dispatch, weak observer identity, selector and block APIs, wildcard indexing, custom allocation, striped and recursive locking, snapshotting before callbacks, reentrant add and remove, deallocation races, queued delivery, exception safety, compatibility, and concurrency tests.
 
-Required domain context:
-
-- A notification center registers observers by optional notification name and object and synchronously dispatches matching notifications; nil names or objects act as wildcards.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

@@ -6,7 +6,7 @@ without turning judgment into an automated popularity ranking.
 ## Source-of-truth map
 
 - `catalog/languages.json` is the ordered language-scope registry.
-- `catalog/<language>.json` contains accepted schema-version-3 learning paths.
+- `catalog/<language>.json` contains accepted schema-version-4 learning paths.
 - `catalog/schema.json` publishes the serialized contract.
 - `scripts/catalog.py` enforces semantic rules and generates Markdown.
 - `languages/**/README.md` is generated and must not be hand-edited.
@@ -17,6 +17,9 @@ without turning judgment into an automated popularity ranking.
   research from the post-rerun refinement.
 - `research/learner-centered-audit.json` is the active learner-centered corpus
   consistency audit.
+- `research/novice-accessibility-audit.json` is the active lower-rung pedagogy
+  audit and preserves re-leveling, capacity, replacement, and progression
+  evidence.
 - `research/rejections.json` is append-only rejection and alternate evidence.
 - `research/audit.json` is the historical v1 Size / Difficulty / Complexity
   audit and is not the active consistency record.
@@ -64,7 +67,9 @@ generated output together.
    tests, boundaries, documentation, language classification, and license.
 5. Reapply coding relevance and all eight quality findings.
 6. Record recurring evidence for all four dimensions before calculating the
-   Level. Repository size remains irrelevant.
+   rubric Level. If that result is 1 or 2, record central and incidental
+   concepts, apply all five accessibility tests, and publish the greater of the
+   rubric Level and the accessibility floor. Repository size remains irrelevant.
 7. Update the commit, date, named review passes, inspected files, path, domain
    context, prerequisites, concepts developed, learner prose, scores, metadata,
    and license URLs as one evidence unit.
@@ -95,6 +100,8 @@ honest gap is preferable to unsupported retention.
 - Use the lower anchor when the higher signal is isolated or outside the trace.
 - Keep whole-number dimensions and apply the public formula exactly.
 - Apply the score-4 Level-3 floor, score-5 Level-4 floor, and Level-5 guardrail.
+- For rubric Levels 1 and 2, distinguish central from incidental concepts,
+  apply the five accessibility tests, and never lower the floor to fit a slot.
 - Do not add private overrides or average reviewer scores; resolve the supported
   anchor in prose.
 
@@ -133,8 +140,9 @@ accepted entry:
   `(repository, path_slug)` identity, and the two-path repository cap;
 - exact pin and every safe learning-path and inspection path;
 - coding-relevance and all eight quality findings;
-- four scores, formula and all score floors, bucket capacity, prerequisites,
-  concepts developed, their separation, and domain context;
+- four scores, formula and all score floors, novice-accessibility evidence for
+  low rubric Levels, bucket capacity, prerequisites, concepts developed, their
+  separation, and domain context;
 - exact SPDX expression and all pinned license evidence;
 - literal counts, honest gaps, generated navigation, and root-to-source links;
   and

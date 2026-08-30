@@ -1,161 +1,18 @@
 # Java
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [FasterXML/jackson-annotations](https://github.com/FasterXML/jackson-annotations)
-
-**Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-The standalone annotation contract used to configure Jackson serialization, deserialization, polymorphism, creators, and property handling.
-
-**Why study it:** JsonTypeInfo is a compact study of how a public runtime annotation and an immutable programmatic Value object preserve the same polymorphic-serialization contract across reflection and framework configuration.
-
-**Prerequisites:**
-
-- Basic familiarity with Java classes and interfaces, generics, collections, exceptions, annotations and reflection at a basic level, and unit tests.
-
-**Concepts this path develops:**
-
-- Runtime annotations and nested enum types.
-- Default normalization and feature merging.
-- Source and binary compatibility.
-
-**What you can learn:**
-
-- Use `src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java` to study the following transferable techniques and behaviors: Runtime annotation design, nested policy enums, generic annotation-value contracts, immutable copy-with APIs, default normalization, feature precedence, equality, hashing, Java serialization, and compatibility discipline.
-
-**Learning path:**
-
-- **Goal:** Understand how JsonTypeInfo exposes polymorphic serialization metadata and mirrors it in an immutable normalized Value object suitable for framework configuration and compatibility.
-- **Start here:** [`src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java`](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java) — JsonTypeInfo.java defines both the annotation users write and the normalized Value representation frameworks consume, so one file introduces the complete selected contract and its compatibility surface.
-- **Then read:**
-  - [`src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotation.java`](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotation.java)
-  - [`src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotationValue.java`](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotationValue.java)
-  - [`src/main/java/com/fasterxml/jackson/annotation/OptBoolean.java`](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/src/main/java/com/fasterxml/jackson/annotation/OptBoolean.java)
-  - [`src/test/java/com/fasterxml/jackson/annotation/JsonTypeInfoTest.java`](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/src/test/java/com/fasterxml/jackson/annotation/JsonTypeInfoTest.java)
-- **Trace:** Read the runtime annotation contract and its Id, As, and None types, then follow JsonTypeInfo.Value construction, default normalization, copy-with methods, feature merging, equality, hashing, and serialization; correlate reflected annotation defaults, immutable mutations, equality, and JDK serialization in JsonTypeInfoTest.
-
-**Why this level:**
-
-- **Language technique 3:** Annotations and nontrivial type modeling materially shape the component, satisfying substantial abstraction without recurring advanced machinery.
-- **Behavioral reasoning 2:** Branches and configuration state matter, but the behavior remains synchronous, local, and easy to enumerate.
-- **Design span 1:** The selected behavior stays within one cohesive API unit despite its rich contract.
-- **Constraint burden 3:** Public compatibility, reflection-visible defaults, serialization, and safe polymorphic configuration impose several material guarantees.
-- **Placement:** The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/FasterXML/jackson-annotations/blob/474f7c9449f0efc6bf2200aac7ea4c348b429536/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** FasterXML releases this artifact as a core dependency of the production Jackson data-processing ecosystem.
-
-**Language evidence:** The published annotation types, value objects, and metadata contracts under src/main/java are Java.
-
-**Coding relevance:**
-
-The short annotation and serialization context is documented in the source; the path teaches transferable annotation API design, immutable configuration values, normalization, compatibility, and reflection-based testing.
-
-Required domain context:
-
-- Jackson annotations attach serialization and polymorphic-type configuration to Java program elements for a separate data-binding implementation to consume.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The annotation contract, nested Id and As policies, defaults, immutable Value construction, normalization, and copy-with methods are explicit and unusually well documented.
-- **Architecture:** One cohesive annotation and Value component uses small marker and value interfaces plus OptBoolean rather than spreading behavior across a larger data-binding implementation.
-- **Naming and idiom:** JsonTypeInfo, Id, As, None, Value, withIdType, withInclusionType, and feature flags preserve the vocabulary of polymorphic metadata.
-- **Tests:** JsonTypeInfoTest checks reflected defaults, normalization, immutable mutations, equality, hashing, feature behavior, and JDK serialization for the selected component.
-- **Documentation:** Detailed Javadocs explain inclusion modes, identifiers, defaults, compatibility, security considerations, and how the immutable Value mirrors the annotation.
-- **Traceability:** A learner can read the annotation members and enums, follow them into Value normalization and copy-with methods, then match reflection and serialization behavior to focused tests.
-- **Maintainability:** A small stable contract, immutable value semantics, normalized defaults, and focused compatibility tests make changes locally reviewable despite broad downstream use.
-- **Educational value:** The path shows how careful API modeling can make annotation-driven framework configuration explicit, immutable, and testable.
-
-**Inspection record:** commit `474f7c9449f0efc6bf2200aac7ea4c348b429536`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/main/java/com/fasterxml/jackson/annotation/JsonTypeInfo.java`, `src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotation.java`, `src/main/java/com/fasterxml/jackson/annotation/JacksonAnnotationValue.java`, `src/main/java/com/fasterxml/jackson/annotation/OptBoolean.java`, `src/test/java/com/fasterxml/jackson/annotation/JsonTypeInfoTest.java`, `LICENSE`. GitHub Linguist label: Java.
-
-</details>
-
-### [ralfstx/minimal-json](https://github.com/ralfstx/minimal-json)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
-A dependency-free JSON parser and writer built around a compact Java value model and streaming parser.
-
-**Why study it:** The parser path shows how a small Java library turns String and Reader input into a value tree while preserving buffer boundaries, nesting limits, complete-input checks, and precise source errors.
-
-**Prerequisites:**
-
-- Basic familiarity with Java classes and interfaces, generics, collections, exceptions, annotations and reflection at a basic level, and unit tests.
-
-**Concepts this path develops:**
-
-- Generic parser-handler callbacks.
-- Localized parser and capture state.
-- Reader buffer boundaries.
-
-**What you can learn:**
-
-- Use `com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java` to study the following transferable techniques and behaviors: Recursive-descent parsing, Reader buffering, character capture across refills, handler callbacks, JSON value construction, nesting guards, complete-input validation, and line-and-column diagnostics.
-
-**Learning path:**
-
-- **Goal:** Understand how minimal-json turns a String or Reader into a JsonValue while preserving buffer-boundary behavior, nesting limits, and precise parse errors.
-- **Start here:** [`com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java`](https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java) — com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java owns character reading, token recognition, recursive container parsing, handler events, nesting checks, and error locations.
-- **Then read:**
-  - [`com.eclipsesource.json/src/main/java/com/eclipsesource/json/Json.java`](https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/com.eclipsesource.json/src/main/java/com/eclipsesource/json/Json.java)
-  - [`com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonHandler.java`](https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonHandler.java)
-  - [`com.eclipsesource.json/src/test/java/com/eclipsesource/json/JsonParser_Test.java`](https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/com.eclipsesource.json/src/test/java/com/eclipsesource/json/JsonParser_Test.java)
-- **Trace:** Begin with Json.parse and its DefaultHandler, follow JsonParser as it reads and captures characters across buffer fills, dispatches object, array, literal, number, and string events through JsonHandler, enforces nesting and complete-input rules, and reports line and column; correlate valid forms, malformed syntax, buffer boundaries, repeated parsing, source locations, and excessive nesting in JsonParser_Test.
-
-**Why this level:**
-
-- **Language technique 2:** Interfaces, callbacks, composition, and conventional Java classes shape the path without advanced language machinery.
-- **Behavioral reasoning 2:** Meaningful state and branching remain localized in one parser and are straightforward to trace.
-- **Design span 2:** A few explicit modules contain the complete in-process behavior.
-- **Constraint burden 3:** Correctness, resource protection, streaming reliability, and exact diagnostics materially constrain parser changes.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/ralfstx/minimal-json/blob/c091e6985620da04d5abcd902aafb6c9583c48ea/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes a reusable JSON library that has served Java applications and EclipseSource products.
-
-**Language evidence:** The parser, writer, value model, and public factory API in com.eclipsesource.json are implemented entirely in Java.
-
-**Coding relevance:**
-
-The format context is short and self-contained; the selected path primarily teaches buffered reading, recursive parsing, callbacks, state management, error reporting, and resource limits.
-
-Required domain context:
-
-- JSON consists of objects, arrays, strings, numbers, booleans, and null, with a small documented grammar.
-
-**Eight-part quality gate:**
-
-- **Source quality:** JsonParser keeps input position, capture state, buffer refill, container recursion, and malformed-input branches explicit in one focused implementation.
-- **Architecture:** Json.parse supplies the public facade and DefaultHandler, JsonParser performs syntax recognition, and JsonHandler receives typed parsing events.
-- **Naming and idiom:** JsonParser, JsonHandler, readValue, readObject, readArray, readString, captureStart, captureEnd, nestingLevel, line, and column state parser intent.
-- **Tests:** JsonParser_Test covers valid values, malformed syntax, incomplete input, repeated parsing, buffer refill boundaries, source positions, Unicode escapes, and excessive nesting.
-- **Documentation:** Public API and parser Javadocs document accepted input forms, Reader use, exceptions, and the handler boundary exercised by the selected path.
-- **Traceability:** A Json.parse call can be followed into JsonParser character reads and captures, through JsonHandler events and DefaultHandler construction, then matched to exact parser tests.
-- **Maintainability:** A compact parser-handler seam, explicit position state, and exhaustive syntax and boundary tests make changes locally reviewable.
-- **Educational value:** The path provides a complete production parser whose streaming, recursion, resource guard, and diagnostic contracts fit within a small reading scope.
-
-**Inspection record:** commit `c091e6985620da04d5abcd902aafb6c9583c48ea`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonParser.java`, `com.eclipsesource.json/src/main/java/com/eclipsesource/json/Json.java`, `com.eclipsesource.json/src/main/java/com/eclipsesource/json/JsonHandler.java`, `com.eclipsesource.json/src/test/java/com/eclipsesource/json/JsonParser_Test.java`, `LICENSE`. GitHub Linguist label: Java.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [java-diff-utils/java-diff-utils](https://github.com/java-diff-utils/java-diff-utils)
 
@@ -164,6 +21,10 @@ Required domain context:
 A library for computing sequence differences, applying and restoring patches, parsing unified diffs, and producing comparison output.
 
 **Why study it:** The Patch path separates reversible transformation and conflict validation from diff-generation theory, making a familiar algorithmic product readable as a typed production API.
+
+**Short context:**
+
+- A patch is an ordered collection of insert, delete, and change deltas whose source chunks must match before they can be applied or reversed.
 
 **Prerequisites:**
 
@@ -214,9 +75,7 @@ A library for computing sequence differences, applying and restoring patches, pa
 
 This compact patch model is sufficient context and avoids making Myers edit-graph theory the lesson; the selected behavior teaches transferable generics, reversible transformations, validation, conflict handling, and serialization.
 
-Required domain context:
-
-- A patch is an ordered collection of insert, delete, and change deltas whose source chunks must match before they can be applied or reversed.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -240,6 +99,10 @@ Required domain context:
 An HTML parser and manipulation library with DOM traversal, CSS selectors, fetching, sanitization, and standards-aware error recovery.
 
 **Why study it:** The Jsoup.clean path exposes a practical security boundary: parse untrusted HTML, rebuild a separate document, and admit only tags, attributes, and URL protocols allowed by an explicit policy.
+
+**Short context:**
+
+- An HTML sanitizer parses untrusted body content, copies only allowed elements and attributes into a new document, and restricts URL-bearing attributes to configured protocols.
 
 **Prerequisites:**
 
@@ -287,9 +150,7 @@ An HTML parser and manipulation library with DOM traversal, CSS selectors, fetch
 
 The original HtmlTreeBuilder path fails this gate because WHATWG insertion modes, active formatting and open-element stacks, foster parenting, foreign-content rules, and quirks dominate its program logic. The replacement Jsoup.clean-to-Cleaner-to-Safelist path is a substantial documented production feature whose short HTML and XSS context remains subordinate to transferable traversal, policy, normalization, validation, and security-boundary engineering.
 
-Required domain context:
-
-- An HTML sanitizer parses untrusted body content, copies only allowed elements and attributes into a new document, and restricts URL-bearing attributes to configured protocols.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -306,7 +167,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [google/gson](https://github.com/google/gson)
 
@@ -315,6 +176,10 @@ Required domain context:
 A JSON serialization library that maps Java object graphs and generic types through configurable streaming and tree adapters.
 
 **Why study it:** The Gson adapter path shows how a serialization library resolves and caches behavior for a generic type, breaks recursive construction cycles, and falls back to reflective fields or records.
+
+**Short context:**
+
+- Gson maps Java types to JSON through an ordered chain of TypeAdapterFactory implementations, using reflective binding when no earlier adapter handles a type.
 
 **Prerequisites:**
 
@@ -364,9 +229,7 @@ A JSON serialization library that maps Java object graphs and generic types thro
 
 Basic JSON and reflection context is short and documented; the path teaches transferable erased-type modeling, recursive cache construction, concurrency, factory composition, reflective access policy, streaming, and compatibility.
 
-Required domain context:
-
-- Gson maps Java types to JSON through an ordered chain of TypeAdapterFactory implementations, using reflective binding when no earlier adapter handles a type.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -390,6 +253,10 @@ Required domain context:
 The fourth-generation JUnit testing framework, including reflective discovery, runners, rules, assertions, lifecycle statements, and reports.
 
 **Why study it:** The BlockJUnit4ClassRunner path shows how JUnit 4 discovers one annotated method, composes its execution lifecycle from Statements and rules, schedules it, and reports failures safely.
+
+**Short context:**
+
+- A JUnit 4 runner discovers annotated test methods, wraps each invocation with setup, teardown, timeout, expected-exception, and rule behavior, and reports events to listeners.
 
 **Prerequisites:**
 
@@ -441,9 +308,7 @@ The fourth-generation JUnit testing framework, including reflective discovery, r
 
 The familiar test-runner model is short and documented; the path's difficulty is transferable reflection, lifecycle composition, extension ordering, event propagation, isolation, and failure handling.
 
-Required domain context:
-
-- A JUnit 4 runner discovers annotated test methods, wraps each invocation with setup, teardown, timeout, expected-exception, and rule behavior, and reports events to listeners.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -460,7 +325,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [jenkinsci/jenkins](https://github.com/jenkinsci/jenkins)
 
@@ -469,6 +334,10 @@ Required domain context:
 The Jenkins automation server core, including its persistent task queue, extension-driven eligibility policy, executor placement, work handoff, and completion lifecycle.
 
 **Why study it:** The queue-to-executor path exposes how a mature extensible platform coordinates persistent scheduling state, resource assignment, concurrent execution, failure recovery, and compatibility without hiding the difficult invariants.
+
+**Short context:**
+
+- Jenkins queues tasks, assigns their subtasks to eligible executors on agents or the built-in node, and exposes extension points that may veto execution or placement.
 
 **Prerequisites:**
 
@@ -521,9 +390,7 @@ The Jenkins automation server core, including its persistent task queue, extensi
 
 That vocabulary is short and documented in the selected source; the path's difficulty comes from transferable scheduling, concurrent state, resource assignment, extension policy, recovery, and lifecycle engineering rather than a specialist external discipline.
 
-Required domain context:
-
-- Jenkins queues tasks, assigns their subtasks to eligible executors on agents or the built-in node, and exposes extension points that may veto execution or placement.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -547,6 +414,10 @@ Required domain context:
 A comprehensive application framework spanning dependency injection, AOP, transactions, data access, messaging, web stacks, and testing.
 
 **Why study it:** The bean-factory path exposes how Spring resolves typed and qualified dependencies, constructs and post-processes one singleton, and preserves identity through concurrency and circular references.
+
+**Short context:**
+
+- A Spring bean factory stores object definitions, resolves dependencies by type and metadata, constructs and post-processes objects, manages singleton identity and circular references, and runs initialization callbacks.
 
 **Prerequisites:**
 
@@ -597,9 +468,7 @@ A comprehensive application framework spanning dependency injection, AOP, transa
 
 Dependency injection and object lifecycle are documented programming-framework concepts; the selected path's difficulty is transferable reflection, generic type resolution, extension policy, concurrent lifecycle management, caching, compatibility, and error handling.
 
-Required domain context:
-
-- A Spring bean factory stores object definitions, resolves dependencies by type and metadata, constructs and post-processes objects, manages singleton identity and circular references, and runs initialization callbacks.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

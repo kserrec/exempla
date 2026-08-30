@@ -18,11 +18,15 @@ This directory preserves decision evidence outside learner-facing pages.
   reconciles the accepted set, distributions, identities, score guardrails,
   prerequisites and concepts, pins, live metadata, licenses, generated pages,
   source claims, and neighboring-level comparisons.
+- `novice-accessibility-audit.json` is the active lower-rung pedagogy audit. It
+  records all 38 starting Level 1 and Level 2 reviews, five-test judgments,
+  preserved capacity alternates, conditional replacement passes, and
+  progression sanity checks.
 - `rejections.json` is append-only: it contains discovery rejections, cutover
   removals, and later serious candidates that did not qualify.
 - `audit.json` is the historical v1 Size / Difficulty / Complexity corpus audit;
   it is not the current cutover verification record.
-- Accepted evidence lives in schema-version-3 files under `../catalog/` and is
+- Accepted evidence lives in schema-version-4 files under `../catalog/` and is
   rendered into `../languages/`.
 
 See the [research process](../docs/research-process.md), [learning-level

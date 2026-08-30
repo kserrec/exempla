@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "language_slug": "c-sharp",
   "repositories": [
     {
@@ -9,25 +9,26 @@
       "url": "https://github.com/ardalis/GuardClauses",
       "primary_language": "C#",
       "language_evidence": "The guard entry point and validation extension methods under src/GuardClauses are implemented in C#.",
-      "description": "A focused library of guard-clause extension methods for validating arguments and returning narrowed, usable values.",
+      "description": "A small C# library that checks arguments and returns an accepted value so calling code can continue safely.",
       "real_world_evidence": "The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.",
-      "why_study": "The null-guard path shows how a tiny C# API combines runtime validation with compiler flow narrowing, automatic caller-expression capture, generic overloads, and a stable exception contract.",
+      "why_study": "See how one null check becomes a reusable guard while compiler annotations make the successful non-null result available to later code.",
       "learn": [
-        "Use `src/GuardClauses/GuardAgainstNullExtensions.cs` to study the following transferable techniques and behaviors: Generic reference- and value-type overloads, nullable annotations, NotNull flow guarantees, CallerArgumentExpression, optional exception factories, ArgumentNullException construction, and value-returning guards."
+        "Trace reference-type and nullable-value inputs through the same two outcomes.",
+        "See how compiler-facing annotations match the runtime guard.",
+        "Use direct tests to compare default and custom exception behavior."
       ],
       "prerequisites": [
-        "Basic familiarity with C# classes and interfaces, generics, delegates, nullable values, exceptions, asynchronous basics, and unit tests."
+        "The global novice C# baseline, including classes, simple generics, nullable values, exceptions, and focused tests.",
+        "A nullability attribute informs the compiler after a successful guard; caller-expression capture supplies the original argument text for an error name."
       ],
       "concepts_developed": [
-        "Generic reference- and value-type overloads.",
-        "Localized null and non-null branches.",
-        "Stable parameter-name and exception contracts."
+        "Turning one null check into a reusable guard method.",
+        "Returning the accepted value with a non-null compiler contract.",
+        "Preserving useful parameter names and predictable exceptions."
       ],
       "coding_relevance": {
         "gate": "pass",
-        "domain_context": [
-
-        ],
+        "domain_context": [],
         "reason": "The selected behavior is entirely about transferable argument validation, generic nullable-flow contracts, exception construction, and caller-expression capture."
       },
       "learning_path": {
@@ -76,7 +77,7 @@
           ],
           "reason": "The path preserves routine public-API, diagnostic, and compiler-analysis safeguards without several interacting production constraints."
         },
-        "placement": "The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
       },
       "quality": {
         "source_quality": "The two overload families state their generic constraints, nullable contracts, captured argument name, optional message, custom factory, and return value explicitly.",
@@ -90,10 +91,11 @@
       },
       "inspection": {
         "commit": "7d55fa5397d73c0fe4e86a2dcab0230d1db57870",
-        "inspected_at": "2026-08-29",
+        "inspected_at": "2026-08-30",
         "reviewers": [
           "Codex primary pass",
-          "independent Codex verification pass"
+          "independent Codex verification pass",
+          "Codex novice-accessibility audit"
         ],
         "files": [
           "src/GuardClauses/GuardAgainstNullExtensions.cs",
@@ -112,123 +114,162 @@
         "primary_language": "C#",
         "archived": false,
         "metadata_checked_at": "2026-08-29"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "reusable null guard",
+          "generic reference- and value-type overloads",
+          "compiler non-null flow narrowing"
+        ],
+        "incidental_concepts": [
+          "automatic caller-expression capture",
+          "optional custom exception factory"
+        ],
+        "reason": "A short primer can explain the two compiler-facing attributes; after that, the null and accepted-value branches are direct and predictable."
       }
     },
     {
-      "slug": "serilog-sinks-console",
-      "path_slug": "the-serilog-console-sink-configures-a-renderer-and-emits-each",
-      "repository": "serilog/serilog-sinks-console",
-      "url": "https://github.com/serilog/serilog-sinks-console",
+      "slug": "humanizer",
+      "path_slug": "humanizer-truncates-a-string-to-a-fixed-length-from-either-side",
+      "repository": "Humanizr/Humanizer",
+      "url": "https://github.com/Humanizr/Humanizer",
       "primary_language": "C#",
-      "language_evidence": "Console sink configuration, rendering, formatting, platform handling, and theme implementations under src are C#.",
-      "description": "A Serilog sink that renders structured log events as text or JSON to standard output or error with ANSI and Windows console themes.",
-      "real_world_evidence": "Serilog publishes this NuGet package as the production console output adapter for structured .NET logging.",
-      "why_study": "The console-sink path shows how Serilog binds configuration to a renderer and emits every structured event as one synchronized write to standard output or standard error.",
+      "language_evidence": "The selected extension methods, truncation strategy interface, fixed-length implementation, direction enum, and direct tests are implemented in C# under src/Humanizer and tests/Humanizer.Tests.",
+      "description": "A C# string helper that shortens long text to a requested length and can keep either the beginning or the end.",
+      "real_world_evidence": "Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.",
+      "why_study": "Follow a familiar string operation through overloads, one strategy boundary, left-or-right slicing, an optional marker, and a table of concrete boundary cases.",
       "learn": [
-        "Use `src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs` to study the following transferable techniques and behaviors: Configuration extension methods, renderer and theme composition, output-template tokens, format providers, buffered themed output, stream selection, shared locking, and atomic event writes."
+        "Trace simple extension-method overloads into one fixed-length truncation strategy.",
+        "Compare unchanged, right-truncated, and left-truncated strings with and without a marker.",
+        "See how nullable input and a compiler-facing non-null return annotation agree.",
+        "Use table-driven tests to identify the exact maximum-length contract and its documented UTF-16 code-unit limit."
       ],
       "prerequisites": [
-        "Basic familiarity with C# classes and interfaces, generics, delegates, nullable values, exceptions, asynchronous basics, and unit tests."
+        "The global novice C# baseline, including strings, extension methods, interfaces, nullable values, slicing, and focused tests.",
+        "A truncation strategy is an object that decides which part of overlong text to keep; this path uses the direct fixed-length strategy."
       ],
       "concepts_developed": [
-        "Formatter and theme interfaces.",
-        "Localized buffered versus direct output branch.",
-        "Atomic event output."
+        "Delegating friendly overloads to one complete operation.",
+        "Separating a public string helper from a replaceable truncation strategy.",
+        "Preserving a maximum result length while choosing the kept side and optional marker."
       ],
       "coding_relevance": {
         "gate": "pass",
         "domain_context": [
-          "A console sink formats each structured log event, optionally applies a theme, and writes it atomically to standard output or standard error."
+          "Truncation shortens text that exceeds a maximum length; a marker such as an ellipsis can show where text was removed."
         ],
-        "reason": "The logging vocabulary is familiar and short; the path primarily teaches interface composition, conditional buffering, localized synchronization, configuration defaults, and observable formatting."
+        "reason": "The context is familiar and fully defined above; the selected path teaches reusable overload delegation, strategy interfaces, validation, slicing, null contracts, symmetry, and boundary testing."
       },
       "learning_path": {
-        "goal": "Understand how the Serilog console sink configures a renderer and emits each formatted event as one synchronized console write.",
+        "goal": "Understand how a C# helper shortens a string to a fixed maximum length from either side.",
         "start_here": {
-          "path": "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs",
-          "reason": "ConsoleSink.cs contains Emit, where stream selection, optional themed buffering, rendering, and the final shared-lock write meet for each event."
+          "path": "src/Humanizer/TruncateExtensions.cs",
+          "reason": "Begin with the public overloads and follow them into the one overload that validates the strategy and delegates the work."
         },
         "supporting_files": [
-          "src/Serilog.Sinks.Console/ConsoleLoggerConfigurationExtensions.cs",
-          "src/Serilog.Sinks.Console/Sinks/SystemConsole/Output/OutputTemplateRenderer.cs",
-          "test/Serilog.Sinks.Console.Tests/Configuration/ConsoleLoggerConfigurationExtensionsTests.cs",
-          "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs"
+          "src/Humanizer/Truncation/ITruncator.cs",
+          "src/Humanizer/Truncation/FixedLengthTruncator.cs",
+          "src/Humanizer/Truncation/Truncator.cs",
+          "src/Humanizer/TruncateFrom.cs",
+          "tests/Humanizer.Tests/TruncatorTests.cs",
+          "website/docs/api/Humanizer.TruncateExtensions.md"
         ],
-        "trace": "Follow console configuration as it chooses a theme and constructs OutputTemplateRenderer and ConsoleSink, then follow Emit as it selects standard output or error, optionally buffers themed output, and protects the final write with the shared lock; correlate configuration output and token-rendering behavior in the focused tests."
+        "trace": "Start with the simplest Truncate overload, follow overload delegation and strategy validation into FixedLengthTruncator, compare null, already-short, missing-marker, left, and right branches, then close with the direct data-driven cases and the documented UTF-16 code-unit boundary."
       },
       "learning_level": {
         "level": 2,
         "language_technique": {
           "score": 2,
           "signals": [
-            "formatter and theme interfaces",
-            "delegate-based configuration composition"
+            "extension-method overload delegation",
+            "nullable-flow return annotation",
+            "interface-backed strategy and range slicing"
           ],
-          "reason": "Interfaces, callbacks, and ordinary composition shape the path without advanced C# machinery."
+          "reason": "Several common professional C# techniques shape the small API, but each is conventional and locally visible."
         },
         "behavioral_reasoning": {
-          "score": 2,
+          "score": 1,
           "signals": [
-            "localized buffered versus direct output branch",
-            "one synchronized write lifecycle"
+            "null or unchanged early returns",
+            "one left-versus-right branch",
+            "synchronous stateless output"
           ],
-          "reason": "The lock and output choice matter, but all mutable behavior remains localized in one short Emit method and does not require advanced concurrent-state reasoning."
+          "reason": "Each call follows a short deterministic branch and has no lifecycle or hidden state."
         },
         "design_span": {
           "score": 2,
           "signals": [
-            "configuration and sink boundary",
-            "renderer and theme collaborators"
+            "public extension overloads",
+            "one truncation-strategy boundary",
+            "fixed-length implementation and direct tests"
           ],
-          "reason": "A few small modules contain the complete console-output behavior."
+          "reason": "A few cohesive types form the complete public-to-strategy path."
         },
         "constraint_burden": {
-          "score": 3,
+          "score": 2,
           "signals": [
-            "atomic event output",
-            "theming, redirection, and formatting compatibility",
-            "standard-output and standard-error selection"
+            "maximum result length",
+            "null and already-short value preservation",
+            "left and right symmetry with optional markers"
           ],
-          "reason": "Several material reliability and compatibility contracts constrain changes even though the implementation remains compact."
+          "reason": "Routine public-API and boundary guarantees constrain the helper without forming a wider compatibility system."
         },
-        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 2/1/2/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "fixed-length string truncation",
+          "overload delegation to a strategy",
+          "left-versus-right slicing with an optional marker"
+        ],
+        "incidental_concepts": [
+          "nullable-flow annotation",
+          "UTF-16 code-unit rather than grapheme boundaries"
+        ],
+        "reason": "One short strategy primer makes every selected branch predictable; the Unicode limitation is stated as a boundary rather than expanded into a separate text-processing lesson."
       },
       "quality": {
-        "source_quality": "ConsoleSink.Emit expresses output selection, themed buffering, direct rendering, and synchronized final writing in a short explicit lifecycle.",
-        "architecture": "ConsoleLoggerConfigurationExtensions constructs ConsoleSink with OutputTemplateRenderer and theme collaborators, while the sink owns only output coordination.",
-        "naming_and_idiom": "ConsoleSink, Emit, OutputTemplateRenderer, theme, standardErrorFromLevel, output, syncRoot, and render state console behavior directly.",
-        "tests": "The selected configuration and renderer suites cover output selection, themes, templates, format providers, properties, levels, timestamps, trace identifiers, and rendered text.",
-        "documentation": "The sink README explains output templates, themes, standard-error routing, formatting, and configuration options used by this path.",
-        "traceability": "A Console configuration call can be followed through renderer and sink construction into Emit's stream choice, rendering branch, shared lock, and exact output assertions.",
-        "maintainability": "Separate configuration, rendering, theming, and output responsibilities plus focused text tests localize changes to a compact compatibility surface.",
-        "educational_value": "The path demonstrates how a small sink preserves event formatting and write atomicity under concurrent logging without introducing a large subsystem."
+        "source_quality": "The public overloads delegate to a narrow strategy interface and the fixed-length implementation expresses all selected branches directly; extensive table cases cover null, short, exact, long, marker, and direction behavior.",
+        "architecture": "The selected path has three clear boundaries: public extension overloads, one truncation-strategy interface, and one fixed-length implementation with direct tests.",
+        "naming_and_idiom": "Names such as Truncate, FixedLengthTruncator, truncationString, length, and TruncateFrom expose the contract, while extension methods, nullable annotations, interfaces, and ranges are idiomatic C#.",
+        "tests": "TruncatorTests directly exercises null and empty values, exact and overlong text, custom and absent markers, multiple strategies, and left and right directions; the audit does not claim grapheme-safe behavior or omitted negative-length coverage.",
+        "documentation": "XML comments and the generated API page define maximum length, markers, direction, null behavior, defaults, exceptions, and examples.",
+        "traceability": "A learner can follow the simplest overload through one final overload into FixedLengthTruncator and close the same branches in one data-driven test class.",
+        "maintainability": "Overload delegation prevents duplicated behavior, the interface localizes strategy changes, and direct tests protect the stable maximum-length and direction contract.",
+        "educational_value": "The path turns a familiar string operation into a compact lesson in overloads, interfaces, nullable contracts, slicing, direction symmetry, and boundary testing without hiding its UTF-16 limitation."
       },
       "inspection": {
-        "commit": "9b75d510787f5d54cf76584a3c3341d7eab0ee0a",
-        "inspected_at": "2026-08-29",
+        "commit": "ffc2b77c0f30d2fb176875841424379319d0ae9b",
+        "inspected_at": "2026-08-30",
         "reviewers": [
-          "Codex primary pass",
-          "independent Codex verification pass"
+          "Codex exact-pin gap research",
+          "independent Codex reviewer",
+          "Codex novice-accessibility re-review"
         ],
         "files": [
-          "src/Serilog.Sinks.Console/Sinks/SystemConsole/ConsoleSink.cs",
-          "src/Serilog.Sinks.Console/ConsoleLoggerConfigurationExtensions.cs",
-          "src/Serilog.Sinks.Console/Sinks/SystemConsole/Output/OutputTemplateRenderer.cs",
-          "test/Serilog.Sinks.Console.Tests/Configuration/ConsoleLoggerConfigurationExtensionsTests.cs",
-          "test/Serilog.Sinks.Console.Tests/Output/OutputTemplateRendererTests.cs",
-          "LICENSE"
+          "src/Humanizer/TruncateExtensions.cs",
+          "src/Humanizer/Truncation/ITruncator.cs",
+          "src/Humanizer/Truncation/FixedLengthTruncator.cs",
+          "src/Humanizer/Truncation/Truncator.cs",
+          "src/Humanizer/TruncateFrom.cs",
+          "tests/Humanizer.Tests/TruncatorTests.cs",
+          "website/docs/api/Humanizer.TruncateExtensions.md",
+          "readme.md",
+          "license.txt"
         ]
       },
       "license": {
-        "spdx": "Apache-2.0",
+        "spdx": "MIT",
         "urls": [
-          "https://github.com/serilog/serilog-sinks-console/blob/9b75d510787f5d54cf76584a3c3341d7eab0ee0a/LICENSE"
+          "https://github.com/Humanizr/Humanizer/blob/ffc2b77c0f30d2fb176875841424379319d0ae9b/license.txt"
         ]
       },
       "github": {
         "primary_language": "C#",
         "archived": false,
-        "metadata_checked_at": "2026-08-29"
+        "metadata_checked_at": "2026-08-30"
       }
     },
     {
@@ -892,9 +933,7 @@
       ],
       "coding_relevance": {
         "gate": "pass",
-        "domain_context": [
-
-        ],
+        "domain_context": [],
         "reason": "The selected all-C# path is core transferable runtime programming: await continuation registration, captured execution context, synchronization and scheduler choice, lock-free completion, inlining, queuing, cancellation, and error behavior."
       },
       "learning_path": {

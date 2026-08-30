@@ -1,167 +1,18 @@
 # R
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [r-lib/pkgconfig](https://github.com/r-lib/pkgconfig)
-
-**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
-A tiny package for configuration values that are private to each calling R package instead of globally shared.
-
-**Why study it:** Understand how pkgconfig stores configuration in a package-owned environment, identifies calling packages from stack-frame environments, and falls back to a global setting. The compact path makes R environments, namespace discovery, caller-sensitive lookup, named-argument validation, and mutable registry state concrete.
-
-**Prerequisites:**
-
-- Basic R functions, lists, named `...` arguments, environments as mutable key-value stores, and package namespaces.
-- A package may need caller-specific configuration without making every caller share one process-wide value.
-
-**Concepts this path develops:**
-
-- Caller-sensitive lookup through call-stack environments.
-- Package-scoped values in an environment-backed registry.
-- Namespace precedence with an `R_GlobalEnv` fallback.
-
-**What you can learn:**
-
-- Trace `get_config()` into `get_from_session()`, where one key maps to package-specific values and reverse stack inspection selects the nearest calling namespace before considering `R_GlobalEnv`.
-- Follow `set_config()` and `set_config_in()` through `parent.frame()`, `packageName()`, named-argument validation, and mutation of the package-owned registry environment.
-- Use the focused tests to compare two package-specific values, rejection of unnamed arguments, and the precedence between a package caller and the global environment.
-
-**Learning path:**
-
-- **Goal:** Understand how pkgconfig stores and retrieves caller-specific package configuration through an environment-backed registry and call-stack namespace lookup.
-- **Start here:** [`R/getset.R`](https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/R/getset.R) — This file contains the complete public get/set API, mutable registry, stack-frame namespace search, named-argument check, and global fallback.
-- **Then read:**
-  - [`tests/testthat/test-api.R`](https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/tests/testthat/test-api.R)
-  - [`tests/testthat/test-errors.R`](https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/tests/testthat/test-errors.R)
-  - [`tests/testthat/test-globalenv.R`](https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/tests/testthat/test-globalenv.R)
-- **Trace:** Start with `get_config()` reading a key from `config`; follow `get_from_session()` through `sys.frames()`, parent environments, namespace filtering, reverse caller precedence, and `R_GlobalEnv`; then follow `set_config()` through `parent.frame()` and `set_config_in()` into the per-key package list, closing with package-isolation, unnamed-argument, and global-fallback tests.
-
-**Why this level:**
-
-- **Language technique 3:** Nontrivial R environment and stack-introspection APIs materially shape lookup, but the path contains no expression capture, code generation, or pervasive metaprogramming.
-- **Behavioral reasoning 2:** A few local lookup states recur without a larger lifecycle.
-- **Design span 1:** The complete behavior is contained in one production file.
-- **Constraint burden 2:** The API has meaningful safeguards, but they remain few and local enough for Constraint 2.
-- **Placement:** The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. No guardrail changes that result.
-
-**License:** MIT ([evidence 1](https://github.com/r-lib/pkgconfig/blob/687e3154aa407642649beb00334940c71d6f22d9/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes the pkgconfig CRAN package for libraries that need caller-specific configuration without global-option collisions.
-
-**Language evidence:** Per-package configuration storage, stack inspection, lookup precedence, validation, and the public API are implemented in the root R package.
-
-**Coding relevance:**
-
-Package configuration vocabulary is immediate; the path teaches environment-backed state, stack-frame and namespace inspection, caller-sensitive lookup, named-argument validation, and explicit fallback behavior.
-
-Required domain context:
-
-- A package can expose configuration values with package-local defaults and user overrides.
-
-**Eight-part quality gate:**
-
-- **Source quality:** R/getset.R keeps the complete API, registry, namespace search, and validation in short named functions; the focused tests cover package isolation, unnamed arguments, and package-versus-global precedence.
-- **Architecture:** The audited architecture of the path beginning at `R/getset.R` has these boundaries: one compact get and set API and direct focused tests.
-- **Naming and idiom:** The source uses ordinary R lists and environments together with explicit stack and namespace APIs; names such as `get_from_session`, `set_config_in`, and `check_named_args` state each responsibility directly.
-- **Tests:** `test-api.R`, `test-errors.R`, and `test-globalenv.R` directly cover separate package values, unnamed-argument rejection, and package-specific precedence over a global setting.
-- **Documentation:** Function documentation explains caller-sensitive configuration, the global fallback, and the custom-API use of `.in` without claiming expression substitution.
-- **Traceability:** Each published mechanism is visible in `R/getset.R` and closes in a focused test: stack-derived namespace selection in the custom API, validation in the error test, and global fallback precedence in the global-environment test.
-- **Maintainability:** Changes must preserve per-package isolation, reverse caller precedence, global fallback behavior, named-argument validation, and the single registry representation.
-- **Educational value:** The small path makes environment-backed mutable state and caller-sensitive namespace lookup concrete without requiring the learner to know those mechanisms in advance.
-
-**Inspection record:** commit `687e3154aa407642649beb00334940c71d6f22d9`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `R/getset.R`, `tests/testthat/test-api.R`, `tests/testthat/test-errors.R`, `tests/testthat/test-globalenv.R`, `LICENSE`. GitHub Linguist label: R.
-
-</details>
-
-### [r-lib/rematch2](https://github.com/r-lib/rematch2)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
-
-A small wrapper that turns base R regular-expression matches and capture groups into tidy tabular results.
-
-**Why study it:** Understand how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing. Regex capture vocabulary is brief; the path teaches vectorized execution, match and capture attributes, matrix construction, S3 indexing, drop behavior, missing matches, and focused tests.
-
-**Prerequisites:**
-
-- Basic familiarity with R functions, vectors and lists, environments, S3 objects at a basic level, conditions, and testthat tests.
-- A regular-expression match becomes a character matrix whose capture groups can be indexed like a structured result.
-
-**Concepts this path develops:**
-
-- Vector and matrix construction.
-- Matched and unmatched outcomes.
-- Positions, lengths, and capture names must align.
-
-**What you can learn:**
-
-- Study these transferable R mechanisms in `R/exec.R`: vector and matrix construction, attributes and S3 indexing, and named capture handling.
-- Trace these states and branches from `R/exec.R` through its selected supporting files: matched and unmatched outcomes, named and unnamed captures, and subset and drop branches.
-- Identify these architectural responsibilities in the path beginning at `R/exec.R`: execution result builder, indexing method, and two direct test files.
-- Study these change constraints for the path beginning at `R/exec.R`: positions, lengths, and capture names must align, missing matches must retain coherent dimensions, and indexing must honor ordinary matrix drop rules.
-
-**Learning path:**
-
-- **Goal:** Understand how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing.
-- **Start here:** [`R/exec.R`](https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/R/exec.R) — Begin with `R/exec.R` because it exposes how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing.
-- **Then read:**
-  - [`R/indexing.R`](https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/R/indexing.R)
-  - [`tests/testthat/test-exec.R`](https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/tests/testthat/test-exec.R)
-  - [`tests/testthat/test-indexing.R`](https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/tests/testthat/test-indexing.R)
-- **Trace:** Start with re_exec turning regexec positions and lengths into a match matrix and named capture metadata, then follow the S3 indexing method as rows, columns, and drop rules preserve or simplify the result; close with execution and indexing tests. The broader exec-all path is intentionally omitted.
-
-**Why this level:**
-
-- **Language technique 2:** Familiar intermediate R data-shaping and S3 techniques recur.
-- **Behavioral reasoning 2:** A few related result-shaping states recur within a bounded operation.
-- **Design span 2:** Two cohesive components cover creation and consumption of one result type.
-- **Constraint burden 2:** The constraints are material but small and directly observable.
-- **Placement:** The four scores 2/2/2/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/r-lib/rematch2/blob/be7c3a05c060dce37277098967d42ffc695a6943/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes the rematch2 CRAN package for programs that need structured first-match and all-match data.
-
-**Language evidence:** Regex result conversion, capture-group indexing, tidy table construction, match-record classes, and the public API are implemented in R.
-
-**Coding relevance:**
-
-Regex capture vocabulary is brief; the path teaches vectorized execution, match and capture attributes, matrix construction, S3 indexing, drop behavior, missing matches, and focused tests.
-
-Required domain context:
-
-- A regular-expression match becomes a character matrix whose capture groups can be indexed like a structured result.
-
-**Eight-part quality gate:**
-
-- **Source quality:** R/exec.R builds one-match results and capture metadata, R/indexing.R preserves the result contract under subsetting, and focused execution and indexing tests cover named groups, absent matches, dimensions, drops, and edge cases.
-- **Architecture:** The audited architecture of the path beginning at `R/exec.R` has these boundaries: execution result builder, indexing method, and two direct test files.
-- **Naming and idiom:** `R/exec.R` and its supporting files use these characteristic R mechanisms: vector and matrix construction, attributes and S3 indexing, and named capture handling.
-- **Tests:** Direct tests in `tests/testthat/test-exec.R` and `tests/testthat/test-indexing.R` cover these states and branches in the selected path: matched and unmatched outcomes, named and unnamed captures, and subset and drop branches.
-- **Documentation:** `R/exec.R` and its selected supporting material document the contracts needed to understand how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing.
-- **Traceability:** Start with re_exec turning regexec positions and lengths into a match matrix and named capture metadata, then follow the S3 indexing method as rows, columns, and drop rules preserve or simplify the result; close with execution and indexing tests. The broader exec-all path is intentionally omitted.
-- **Maintainability:** Changes to the path beginning at `R/exec.R` are constrained by these audited guarantees: positions, lengths, and capture names must align, missing matches must retain coherent dimensions, and indexing must honor ordinary matrix drop rules.
-- **Educational value:** Understand how rematch2 converts one regular-expression execution into a structured matrix and preserves capture metadata during indexing. Regex capture vocabulary is brief; the path teaches vectorized execution, match and capture attributes, matrix construction, S3 indexing, drop behavior, missing matches, and focused tests.
-
-**Inspection record:** commit `be7c3a05c060dce37277098967d42ffc695a6943`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `R/exec.R`, `R/indexing.R`, `tests/testthat/test-exec.R`, `tests/testthat/test-indexing.R`, `LICENSE`. GitHub Linguist label: R.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [r-lib/withr](https://github.com/r-lib/withr)
 
@@ -170,6 +21,10 @@ Required domain context:
 A library for running code with temporary changes to global process state and reliably restoring that state afterward.
 
 **Why study it:** Understand how withr generates scoped wrappers that evaluate code under temporary state and reliably restore the previous state. Temporary-state vocabulary is familiar; the bounded generated-wrapper path teaches substitute and eval, delayed cleanup, dynamic wrapper generation, option capture, error-safe restoration, and nested scope behavior.
+
+**Short context:**
+
+- A with_* wrapper temporarily changes process or session state, evaluates user code, and restores the previous value on exit.
 
 **Prerequisites:**
 
@@ -219,9 +74,7 @@ A library for running code with temporary changes to global process state and re
 
 Temporary-state vocabulary is familiar; the bounded generated-wrapper path teaches substitute and eval, delayed cleanup, dynamic wrapper generation, option capture, error-safe restoration, and nested scope behavior.
 
-Required domain context:
-
-- A with_* wrapper temporarily changes process or session state, evaluates user code, and restores the previous value on exit.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -245,6 +98,10 @@ Required domain context:
 A declarative graphics system that implements a layered grammar of data, aesthetics, scales, statistics, geometry, coordinates, faceting, guides, and themes.
 
 **Why study it:** Understand how ggplot2 implements prototype inheritance and bound methods in R and uses that system for extensible plot components. Plot-component vocabulary is brief; the replacement path teaches prototype inheritance, parent-method dispatch, environment-backed objects, cloning, method binding, extension contracts, and direct tests without the full plot-build pipeline.
+
+**Short context:**
+
+- ggproto provides inheritance and method dispatch for ggplot2 components such as Geom prototypes.
 
 **Prerequisites:**
 
@@ -295,9 +152,7 @@ A declarative graphics system that implements a layered grammar of data, aesthet
 
 Plot-component vocabulary is brief; the replacement path teaches prototype inheritance, parent-method dispatch, environment-backed objects, cloning, method binding, extension contracts, and direct tests without the full plot-build pipeline.
 
-Required domain context:
-
-- ggproto provides inheritance and method dispatch for ggplot2 components such as Geom prototypes.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -314,7 +169,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [r-lib/testthat](https://github.com/r-lib/testthat)
 
@@ -323,6 +178,10 @@ Required domain context:
 R's xUnit-style testing framework, with expressive expectations, reporters, snapshots, package integration, and parallel execution.
 
 **Why study it:** Understand how testthat evaluates one test block, turns expectations into structured conditions, and reports passing, failure, error, and skip outcomes. Testing vocabulary is familiar; the path teaches captured evaluation, condition signaling, expectation objects, reporter callbacks, nested contexts, failure and skip policy, and self-tests.
+
+**Short context:**
+
+- test_that evaluates a test block, records expectation conditions, and reports structured outcomes.
 
 **Prerequisites:**
 
@@ -374,9 +233,7 @@ R's xUnit-style testing framework, with expressive expectations, reporters, snap
 
 Testing vocabulary is familiar; the path teaches captured evaluation, condition signaling, expectation objects, reporter callbacks, nested contexts, failure and skip policy, and self-tests.
 
-Required domain context:
-
-- test_that evaluates a test block, records expectation conditions, and reports structured outcomes.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -400,6 +257,10 @@ Required domain context:
 A dependency-light string interpolation library that evaluates expressions inside customizable delimiters.
 
 **Why study it:** Understand how glue_data scans an interpolation template, evaluates embedded R expressions, transforms values, and produces vectorized output. Interpolation vocabulary is immediate; the path teaches captured evaluation environments, parser callbacks, delimiter and escape state, transformer extension, vector recycling, missing values, and a C scanning boundary.
+
+**Short context:**
+
+- Glue scans template text, evaluates expressions between delimiters, transforms values, and combines vectorized output.
 
 **Prerequisites:**
 
@@ -451,9 +312,7 @@ A dependency-light string interpolation library that evaluates expressions insid
 
 Interpolation vocabulary is immediate; the path teaches captured evaluation environments, parser callbacks, delimiter and escape state, transformer extension, vector recycling, missing values, and a C scanning boundary.
 
-Required domain context:
-
-- Glue scans template text, evaluates expressions between delimiters, transforms values, and combines vectorized output.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -470,7 +329,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [nimble-dev/nimble](https://github.com/nimble-dev/nimble)
 
@@ -479,6 +338,10 @@ Required domain context:
 A programmable hierarchical-modeling system that compiles BUGS-style models and model-generic algorithms from R into customized C++.
 
 **Why study it:** Understand how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface. The selected compiler path needs typed arithmetic and native-interface vocabulary, not Bayesian or statistical expertise; it teaches custom AST and type processing, project compilation state, code generation, native registration, reflection, specialization, and R/C++ interoperability.
+
+**Short context:**
+
+- A nimbleFunction declares typed setup and run code that NIMBLE specializes, generates as C++, compiles, and exposes back to R.
 
 **Prerequisites:**
 
@@ -531,9 +394,7 @@ A programmable hierarchical-modeling system that compiles BUGS-style models and 
 
 The selected compiler path needs typed arithmetic and native-interface vocabulary, not Bayesian or statistical expertise; it teaches custom AST and type processing, project compilation state, code generation, native registration, reflection, specialization, and R/C++ interoperability.
 
-Required domain context:
-
-- A nimbleFunction declares typed setup and run code that NIMBLE specializes, generates as C++, compiles, and exposes back to R.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -557,6 +418,10 @@ Required domain context:
 The R language implementation, runtime, garbage collector, standard and recommended packages, graphics, statistics, compiler, build system, and platform ports.
 
 **Why study it:** Understand how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics. Compiler vocabulary is introduced directly; the R-authored path teaches language-object traversal, lexical environment analysis, constant handling, control-flow compilation, instruction emission, optimization, byte-code objects, and compiler self-tests.
+
+**Short context:**
+
+- R's compiler transforms R expressions and functions into byte-code instructions executed by the R runtime.
 
 **Prerequisites:**
 
@@ -610,9 +475,7 @@ The R language implementation, runtime, garbage collector, standard and recommen
 
 Compiler vocabulary is introduced directly; the R-authored path teaches language-object traversal, lexical environment analysis, constant handling, control-flow compilation, instruction emission, optimization, byte-code objects, and compiler self-tests.
 
-Required domain context:
-
-- R's compiler transforms R expressions and functions into byte-code instructions executed by the R runtime.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

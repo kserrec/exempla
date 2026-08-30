@@ -41,6 +41,12 @@ DIMENSION_FIELDS = (
     "design_span",
     "constraint_burden",
 )
+NOVICE_ACCESSIBILITY_FIELDS = (
+    "floor",
+    "central_concepts",
+    "incidental_concepts",
+    "reason",
+)
 REPOSITORY_FIELDS = (
     "slug",
     "path_slug",
@@ -62,6 +68,15 @@ REPOSITORY_FIELDS = (
     "license",
     "github",
 )
+OPTIONAL_REPOSITORY_FIELDS = ("novice_accessibility",)
+CATALOG_SCHEMA_VERSION = 4
+LEVEL_LABELS = {
+    1: "First real code",
+    2: "Guided real-world code",
+    3: "Intermediate",
+    4: "Advanced",
+    5: "Expert",
+}
 
 
 class CatalogError(Exception):
@@ -105,7 +120,7 @@ def load_json(path: Path) -> dict[str, Any]:
 def calculate_learning_level(
     language: int, behavior: int, design: int, constraints: int
 ) -> int:
-    """Calculate the public level from the four path-centered scores."""
+    """Calculate the pre-accessibility rubric level from the four scores."""
     scores = (language, behavior, design, constraints)
     if any(type(score) is not int or not 1 <= score <= 5 for score in scores):
         raise ValueError("all learning-level scores must be integers from 1 through 5")
@@ -119,6 +134,15 @@ def calculate_learning_level(
     return level
 
 
+def calculate_published_level(rubric_level: int, accessibility_floor: int) -> int:
+    """Apply the novice-accessibility floor to a structurally low rubric level."""
+    if type(rubric_level) is not int or not 1 <= rubric_level <= 5:
+        raise ValueError("rubric level must be an integer from 1 through 5")
+    if type(accessibility_floor) is not int or not 1 <= accessibility_floor <= 3:
+        raise ValueError("accessibility floor must be an integer from 1 through 3")
+    return max(rubric_level, accessibility_floor)
+
+
 def require_object(value: Any, path: str, errors: list[str]) -> dict[str, Any]:
     if not isinstance(value, dict):
         errors.append(f"{path}: expected object")
@@ -127,12 +151,17 @@ def require_object(value: Any, path: str, errors: list[str]) -> dict[str, Any]:
 
 
 def require_exact_keys(
-    value: dict[str, Any], required: tuple[str, ...], path: str, errors: list[str]
+    value: dict[str, Any],
+    required: tuple[str, ...],
+    path: str,
+    errors: list[str],
+    *,
+    optional: tuple[str, ...] = (),
 ) -> None:
     missing = [key for key in required if key not in value]
     if missing:
         errors.append(f"{path}: missing fields {', '.join(missing)}")
-    unexpected = sorted(set(value) - set(required))
+    unexpected = sorted(set(value) - set(required) - set(optional))
     if unexpected:
         errors.append(f"{path}: unexpected fields {', '.join(unexpected)}")
 
@@ -191,11 +220,17 @@ def validate_repository(
     seen_repository_buckets: set[tuple[str, int, str]],
     seen_slugs: set[str],
 ) -> list[str]:
-    """Validate one accepted schema-version-3 learning-path record."""
+    """Validate one accepted schema-version-4 learning-path record."""
     errors: list[str] = []
     prefix = f"catalog/{language['slug']}.json repositories[{index}]"
     item = require_object(entry, prefix, errors)
-    require_exact_keys(item, REPOSITORY_FIELDS, prefix, errors)
+    require_exact_keys(
+        item,
+        REPOSITORY_FIELDS,
+        prefix,
+        errors,
+        optional=OPTIONAL_REPOSITORY_FIELDS,
+    )
 
     slug = require_text(item.get("slug"), f"{prefix}.slug", errors)
     if slug and not SLUG_RE.fullmatch(slug):
@@ -344,13 +379,71 @@ def validate_repository(
         )
     require_text(learning_level.get("placement"), f"{prefix}.learning_level.placement", errors, 20)
     ordered_scores = tuple(scores[name] for name in DIMENSION_FIELDS)
-    if level is not None and None not in ordered_scores:
-        expected_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
+    rubric_level: int | None = None
+    if None not in ordered_scores:
+        rubric_level = calculate_learning_level(*ordered_scores)  # type: ignore[arg-type]
+
+    accessibility_floor: int | None = None
+    accessibility_present = "novice_accessibility" in item
+    if accessibility_present:
+        accessibility = require_object(
+            item.get("novice_accessibility"),
+            f"{prefix}.novice_accessibility",
+            errors,
+        )
+        require_exact_keys(
+            accessibility,
+            NOVICE_ACCESSIBILITY_FIELDS,
+            f"{prefix}.novice_accessibility",
+            errors,
+        )
+        floor = accessibility.get("floor")
+        if type(floor) is not int or not 1 <= floor <= 3:
+            errors.append(
+                f"{prefix}.novice_accessibility.floor: expected integer from 1 through 3"
+            )
+        else:
+            accessibility_floor = floor
+        require_text_list(
+            accessibility.get("central_concepts"),
+            f"{prefix}.novice_accessibility.central_concepts",
+            errors,
+            minimum_items=0,
+        )
+        require_text_list(
+            accessibility.get("incidental_concepts"),
+            f"{prefix}.novice_accessibility.incidental_concepts",
+            errors,
+            minimum_items=0,
+        )
+        require_text(
+            accessibility.get("reason"),
+            f"{prefix}.novice_accessibility.reason",
+            errors,
+            20,
+        )
+
+    if rubric_level is not None and rubric_level <= 2 and not accessibility_present:
+        errors.append(
+            f"{prefix}.novice_accessibility: required when rubric Level is {rubric_level}"
+        )
+
+    if level is not None and rubric_level is not None:
+        expected_level = rubric_level
+        if accessibility_floor is not None:
+            expected_level = calculate_published_level(
+                rubric_level, accessibility_floor
+            )
         if level != expected_level:
             profile = "/".join(str(score) for score in ordered_scores)
-            errors.append(
-                f"{prefix}.learning_level.level: scores {profile} require Level {expected_level}, not {level}"
-            )
+            if accessibility_floor is None:
+                errors.append(
+                    f"{prefix}.learning_level.level: scores {profile} require rubric Level {expected_level}, not {level}"
+                )
+            else:
+                errors.append(
+                    f"{prefix}.learning_level.level: rubric Level {rubric_level} and accessibility floor {accessibility_floor} require Level {expected_level}, not {level}"
+                )
     if repository and level is not None:
         bucket_key = (language["slug"], level, repository_key)
         if bucket_key in seen_repository_buckets:
@@ -432,11 +525,22 @@ def validate_schema(root: Path) -> list[str]:
         schema = load_json(root / "catalog" / "schema.json")
     except CatalogError as error:
         return [str(error)]
-    if schema.get("properties", {}).get("schema_version", {}).get("const") != 3:
-        errors.append("catalog/schema.json: schema_version must be the constant 3")
+    if (
+        schema.get("properties", {}).get("schema_version", {}).get("const")
+        != CATALOG_SCHEMA_VERSION
+    ):
+        errors.append(
+            f"catalog/schema.json: schema_version must be the constant {CATALOG_SCHEMA_VERSION}"
+        )
     repository = schema.get("$defs", {}).get("repository", {})
     if tuple(repository.get("required", ())) != REPOSITORY_FIELDS:
         errors.append("catalog/schema.json: repository required fields differ from the validator")
+    repository_properties = repository.get("properties", {})
+    if not all(field in repository_properties for field in OPTIONAL_REPOSITORY_FIELDS):
+        errors.append("catalog/schema.json: optional repository fields differ from the validator")
+    accessibility = schema.get("$defs", {}).get("noviceAccessibility", {})
+    if tuple(accessibility.get("required", ())) != NOVICE_ACCESSIBILITY_FIELDS:
+        errors.append("catalog/schema.json: novice accessibility fields differ from the validator")
     quality = schema.get("$defs", {}).get("quality", {})
     if tuple(quality.get("required", ())) != QUALITY_FIELDS:
         errors.append("catalog/schema.json: quality fields differ from the validator")
@@ -498,8 +602,542 @@ def validate_languages(data: dict[str, Any]) -> tuple[list[dict[str, Any]], list
     return languages, errors
 
 
+def validate_novice_accessibility_audit(
+    root: Path,
+    languages: list[dict[str, Any]],
+    canonical_entries: dict[tuple[str, str], dict[str, Any]],
+) -> tuple[list[str], dict[str, Any]]:
+    """Validate the lower-rung audit and expose its reconciliation state."""
+    state: dict[str, Any] = {
+        "capacity_by_repository": {},
+        "records_by_repository": {},
+        "replacement_by_repository": {},
+    }
+    path = root / "research" / "novice-accessibility-audit.json"
+    if not path.exists():
+        return [], state
+    try:
+        audit = load_json(path)
+    except CatalogError as error:
+        return [str(error)], state
+
+    errors: list[str] = []
+    prefix = "research/novice-accessibility-audit.json"
+    require_exact_keys(
+        audit,
+        (
+            "schema_version",
+            "audited_at",
+            "baseline",
+            "method",
+            "records",
+            "capacity_alternates",
+            "replacement_research",
+            "progression_sanity_checks",
+            "summary",
+        ),
+        prefix,
+        errors,
+    )
+    if audit.get("schema_version") != 1:
+        errors.append(f"{prefix} schema_version: expected 1")
+    require_date(audit.get("audited_at"), f"{prefix}.audited_at", errors)
+    require_text(audit.get("baseline"), f"{prefix}.baseline", errors, 40)
+    method = require_object(audit.get("method"), f"{prefix}.method", errors)
+    require_exact_keys(
+        method,
+        ("rubric_level", "published_level", "tests", "capacity"),
+        f"{prefix}.method",
+        errors,
+    )
+    require_text(method.get("rubric_level"), f"{prefix}.method.rubric_level", errors)
+    require_text(
+        method.get("published_level"), f"{prefix}.method.published_level", errors
+    )
+    method_tests = require_text_list(
+        method.get("tests"), f"{prefix}.method.tests", errors, unique=True
+    )
+    if len(method_tests) != 5:
+        errors.append(f"{prefix}.method.tests: expected the five accessibility tests")
+    require_text(method.get("capacity"), f"{prefix}.method.capacity", errors, 20)
+
+    language_by_slug = {language["slug"]: language for language in languages}
+    alternate_entries: dict[tuple[str, str], dict[str, Any]] = {}
+    alternates = audit.get("capacity_alternates")
+    if not isinstance(alternates, list):
+        errors.append(f"{prefix}.capacity_alternates: expected list")
+        alternates = []
+    alternate_fields = (
+        "repository",
+        "path_slug",
+        "status",
+        "displaced_from",
+        "reason",
+        "catalog_entry",
+    )
+    for index, raw_alternate in enumerate(alternates):
+        item_prefix = f"{prefix}.capacity_alternates[{index}]"
+        alternate = require_object(raw_alternate, item_prefix, errors)
+        require_exact_keys(alternate, alternate_fields, item_prefix, errors)
+        repository = require_text(
+            alternate.get("repository"), f"{item_prefix}.repository", errors
+        )
+        path_slug = require_text(
+            alternate.get("path_slug"), f"{item_prefix}.path_slug", errors
+        )
+        if alternate.get("status") != "qualified-capacity-alternate":
+            errors.append(
+                f"{item_prefix}.status: expected qualified-capacity-alternate"
+            )
+        require_text(alternate.get("reason"), f"{item_prefix}.reason", errors, 20)
+        displaced = require_object(
+            alternate.get("displaced_from"), f"{item_prefix}.displaced_from", errors
+        )
+        require_exact_keys(
+            displaced, ("language_slug", "level"), f"{item_prefix}.displaced_from", errors
+        )
+        language_slug = displaced.get("language_slug")
+        if language_slug not in language_by_slug:
+            errors.append(f"{item_prefix}.displaced_from.language_slug: unknown language")
+        if displaced.get("level") != 3:
+            errors.append(f"{item_prefix}.displaced_from.level: expected 3")
+        entry = require_object(
+            alternate.get("catalog_entry"), f"{item_prefix}.catalog_entry", errors
+        )
+        key = (repository.lower(), path_slug)
+        if key in alternate_entries:
+            errors.append(f"{item_prefix}: duplicate capacity alternate")
+        alternate_entries[key] = entry
+        state["capacity_by_repository"].setdefault(repository.lower(), []).append(entry)
+        if entry.get("repository") != repository or entry.get("path_slug") != path_slug:
+            errors.append(f"{item_prefix}.catalog_entry: identity differs from alternate")
+        language = language_by_slug.get(language_slug)
+        if language:
+            errors.extend(
+                validate_repository(
+                    entry,
+                    language,
+                    index,
+                    set(),
+                    Counter(),
+                    set(),
+                    set(),
+                )
+            )
+        if entry.get("learning_level", {}).get("level") != 3:
+            errors.append(f"{item_prefix}.catalog_entry: expected published Level 3")
+
+    records = audit.get("records")
+    if not isinstance(records, list):
+        errors.append(f"{prefix}.records: expected list")
+        records = []
+    record_fields = (
+        "language_slug",
+        "repository",
+        "path_slug",
+        "pinned_commit",
+        "old_level",
+        "rubric_level",
+        "central_concepts",
+        "incidental_concepts",
+        "accessibility_floor",
+        "final_level",
+        "novice_orientation_judgment",
+        "accessibility_tests",
+        "jargon_prerequisite_findings",
+        "source_files_inspected",
+        "decision",
+        "prose_changes",
+        "capacity_result",
+    )
+    test_fields = (
+        "five_minute_orientation",
+        "no_hidden_course",
+        "prediction",
+        "jargon",
+        "prerequisite_stack",
+    )
+    seen_records: set[tuple[str, str]] = set()
+    old_counts: Counter[int] = Counter()
+    for index, raw_record in enumerate(records):
+        item_prefix = f"{prefix}.records[{index}]"
+        record = require_object(raw_record, item_prefix, errors)
+        require_exact_keys(record, record_fields, item_prefix, errors)
+        language_slug = record.get("language_slug")
+        if language_slug not in language_by_slug:
+            errors.append(f"{item_prefix}.language_slug: unknown language")
+        repository = require_text(
+            record.get("repository"), f"{item_prefix}.repository", errors
+        )
+        path_slug = require_text(
+            record.get("path_slug"), f"{item_prefix}.path_slug", errors
+        )
+        key = (repository.lower(), path_slug)
+        if key in seen_records:
+            errors.append(f"{item_prefix}: duplicate audited path")
+        seen_records.add(key)
+        state["records_by_repository"].setdefault(repository.lower(), []).append(record)
+        commit = require_text(
+            record.get("pinned_commit"), f"{item_prefix}.pinned_commit", errors
+        )
+        if commit and not COMMIT_RE.fullmatch(commit):
+            errors.append(f"{item_prefix}.pinned_commit: expected 40 lowercase hexadecimal characters")
+        old_level = record.get("old_level")
+        rubric_level = record.get("rubric_level")
+        floor = record.get("accessibility_floor")
+        final_level = record.get("final_level")
+        if old_level not in (1, 2):
+            errors.append(f"{item_prefix}.old_level: expected 1 or 2")
+        else:
+            old_counts[old_level] += 1
+        if rubric_level != old_level:
+            errors.append(f"{item_prefix}.rubric_level: expected unchanged old Level")
+        if type(floor) is not int or not 1 <= floor <= 3:
+            errors.append(f"{item_prefix}.accessibility_floor: expected integer 1 through 3")
+        elif final_level != max(rubric_level, floor):
+            errors.append(f"{item_prefix}.final_level: must equal max(rubric level, floor)")
+        central = require_text_list(
+            record.get("central_concepts"),
+            f"{item_prefix}.central_concepts",
+            errors,
+            minimum_items=1,
+            unique=True,
+        )
+        incidental = require_text_list(
+            record.get("incidental_concepts"),
+            f"{item_prefix}.incidental_concepts",
+            errors,
+            minimum_items=0,
+            unique=True,
+        )
+        require_text(
+            record.get("novice_orientation_judgment"),
+            f"{item_prefix}.novice_orientation_judgment",
+            errors,
+            20,
+        )
+        accessibility_tests = require_object(
+            record.get("accessibility_tests"),
+            f"{item_prefix}.accessibility_tests",
+            errors,
+        )
+        require_exact_keys(
+            accessibility_tests,
+            test_fields,
+            f"{item_prefix}.accessibility_tests",
+            errors,
+        )
+        for field in test_fields:
+            require_text(
+                accessibility_tests.get(field),
+                f"{item_prefix}.accessibility_tests.{field}",
+                errors,
+            )
+        require_text(
+            record.get("jargon_prerequisite_findings"),
+            f"{item_prefix}.jargon_prerequisite_findings",
+            errors,
+            20,
+        )
+        files = require_text_list(
+            record.get("source_files_inspected"),
+            f"{item_prefix}.source_files_inspected",
+            errors,
+            minimum_items=2,
+            unique=True,
+        )
+        for file_index, file_path in enumerate(files):
+            if not is_safe_relative_path(file_path):
+                errors.append(
+                    f"{item_prefix}.source_files_inspected[{file_index}]: expected canonical safe non-dotenv relative path"
+                )
+        if record.get("decision") not in (
+            "keep-level-1",
+            "keep-level-2",
+            "relevel-to-2",
+            "relevel-to-3",
+            "remove",
+        ):
+            errors.append(f"{item_prefix}.decision: invalid audit decision")
+        require_text(record.get("prose_changes"), f"{item_prefix}.prose_changes", errors)
+        require_text(record.get("capacity_result"), f"{item_prefix}.capacity_result", errors)
+        entry = canonical_entries.get(key) or alternate_entries.get(key)
+        if entry is None:
+            errors.append(f"{item_prefix}: audited path is neither published nor preserved")
+        else:
+            if entry.get("inspection", {}).get("commit") != commit:
+                errors.append(f"{item_prefix}: audited pin differs from resolved path")
+            if entry.get("learning_level", {}).get("level") != final_level:
+                errors.append(f"{item_prefix}: final Level differs from resolved path")
+            accessibility = entry.get("novice_accessibility", {})
+            if accessibility.get("floor") != floor:
+                errors.append(f"{item_prefix}: accessibility floor differs from resolved path")
+            if accessibility.get("central_concepts") != central:
+                errors.append(f"{item_prefix}: central concepts differ from resolved path")
+            if accessibility.get("incidental_concepts") != incidental:
+                errors.append(f"{item_prefix}: incidental concepts differ from resolved path")
+
+    if old_counts != Counter({1: 3, 2: 35}):
+        errors.append(f"{prefix}.records: expected 3 Level 1 and 35 Level 2 starting paths")
+    if set(alternate_entries) - seen_records:
+        errors.append(f"{prefix}.capacity_alternates: every alternate needs an audit record")
+
+    replacement_records = audit.get("replacement_research")
+    if not isinstance(replacement_records, list):
+        errors.append(f"{prefix}.replacement_research: expected list")
+        replacement_records = []
+    replacement_fields = (
+        "language_slug",
+        "trigger",
+        "accepted_repositories_reviewed",
+        "prior_alternates_and_rejections_reviewed",
+        "exact_pin_accessibility_rechecks",
+        "fresh_external_discovery",
+        "accepted",
+        "open_levels_after",
+        "conclusion",
+    )
+    for index, raw_replacement in enumerate(replacement_records):
+        item_prefix = f"{prefix}.replacement_research[{index}]"
+        replacement = require_object(raw_replacement, item_prefix, errors)
+        require_exact_keys(replacement, replacement_fields, item_prefix, errors)
+        expected_language = languages[index] if index < len(languages) else None
+        language_slug = replacement.get("language_slug")
+        if expected_language and language_slug != expected_language["slug"]:
+            errors.append(
+                f"{item_prefix}.language_slug: expected {expected_language['slug']}"
+            )
+        require_text(replacement.get("trigger"), f"{item_prefix}.trigger", errors)
+        require_text_list(
+            replacement.get("accepted_repositories_reviewed"),
+            f"{item_prefix}.accepted_repositories_reviewed",
+            errors,
+            minimum_items=1,
+            unique=True,
+        )
+        if not isinstance(replacement.get("prior_alternates_and_rejections_reviewed"), list):
+            errors.append(
+                f"{item_prefix}.prior_alternates_and_rejections_reviewed: expected list"
+            )
+        rechecks = replacement.get("exact_pin_accessibility_rechecks")
+        if not isinstance(rechecks, list):
+            errors.append(f"{item_prefix}.exact_pin_accessibility_rechecks: expected list")
+            rechecks = []
+        accepted = require_text_list(
+            replacement.get("accepted"),
+            f"{item_prefix}.accepted",
+            errors,
+            minimum_items=0,
+            unique=True,
+        )
+        accepted_from_rechecks: set[str] = set()
+        for recheck_index, raw_recheck in enumerate(rechecks):
+            recheck_prefix = (
+                f"{item_prefix}.exact_pin_accessibility_rechecks[{recheck_index}]"
+            )
+            recheck = require_object(raw_recheck, recheck_prefix, errors)
+            recheck_fields = (
+                "repository",
+                "pinned_commit",
+                "source_files_inspected",
+                "rubric_level",
+                "accessibility_floor",
+                "central_concepts",
+                "incidental_concepts",
+                "decision",
+                "reason",
+            )
+            require_exact_keys(recheck, recheck_fields, recheck_prefix, errors)
+            repository = require_text(
+                recheck.get("repository"), f"{recheck_prefix}.repository", errors
+            )
+            commit = require_text(
+                recheck.get("pinned_commit"), f"{recheck_prefix}.pinned_commit", errors
+            )
+            if commit and not COMMIT_RE.fullmatch(commit):
+                errors.append(f"{recheck_prefix}.pinned_commit: invalid commit")
+            files = require_text_list(
+                recheck.get("source_files_inspected"),
+                f"{recheck_prefix}.source_files_inspected",
+                errors,
+                minimum_items=2,
+                unique=True,
+            )
+            for file_index, file_path in enumerate(files):
+                if not is_safe_relative_path(file_path):
+                    errors.append(
+                        f"{recheck_prefix}.source_files_inspected[{file_index}]: expected canonical safe non-dotenv relative path"
+                    )
+            floor = recheck.get("accessibility_floor")
+            rubric = recheck.get("rubric_level")
+            if rubric not in (1, 2) or type(floor) is not int or not 1 <= floor <= 3:
+                errors.append(f"{recheck_prefix}: invalid rubric level or accessibility floor")
+            require_text_list(
+                recheck.get("central_concepts"),
+                f"{recheck_prefix}.central_concepts",
+                errors,
+                minimum_items=1,
+                unique=True,
+            )
+            require_text_list(
+                recheck.get("incidental_concepts"),
+                f"{recheck_prefix}.incidental_concepts",
+                errors,
+                minimum_items=0,
+                unique=True,
+            )
+            require_text(recheck.get("reason"), f"{recheck_prefix}.reason", errors, 20)
+            decision = recheck.get("decision")
+            if decision == "accept-level-2":
+                accepted_from_rechecks.add(repository)
+                state["replacement_by_repository"][repository.lower()] = recheck
+                matching_entries = [
+                    entry
+                    for (entry_repository, _), entry in canonical_entries.items()
+                    if entry_repository == repository.lower()
+                ]
+                expected_level = max(rubric, floor)
+                if not any(
+                    entry.get("inspection", {}).get("commit") == commit
+                    and entry.get("learning_level", {}).get("level") == expected_level
+                    for entry in matching_entries
+                ):
+                    errors.append(f"{recheck_prefix}: accepted replacement differs from catalog")
+            elif decision != "retain-qualified-alternate-at-level-3":
+                errors.append(f"{recheck_prefix}.decision: invalid replacement decision")
+        if set(accepted) != accepted_from_rechecks:
+            errors.append(f"{item_prefix}.accepted: does not match accepted rechecks")
+        fresh = require_object(
+            replacement.get("fresh_external_discovery"),
+            f"{item_prefix}.fresh_external_discovery",
+            errors,
+        )
+        require_exact_keys(
+            fresh, ("run", "reason"), f"{item_prefix}.fresh_external_discovery", errors
+        )
+        if type(fresh.get("run")) is not bool:
+            errors.append(f"{item_prefix}.fresh_external_discovery.run: expected boolean")
+        require_text(
+            fresh.get("reason"), f"{item_prefix}.fresh_external_discovery.reason", errors, 20
+        )
+        open_levels = require_object(
+            replacement.get("open_levels_after"), f"{item_prefix}.open_levels_after", errors
+        )
+        require_exact_keys(open_levels, ("1", "2"), f"{item_prefix}.open_levels_after", errors)
+        if expected_language:
+            counts = Counter(
+                entry.get("learning_level", {}).get("level")
+                for entry in canonical_entries.values()
+                if entry.get("primary_language") == expected_language["name"]
+            )
+            expected_open = {"1": 2 - counts[1], "2": 2 - counts[2]}
+            if open_levels != expected_open:
+                errors.append(f"{item_prefix}.open_levels_after: differs from catalog")
+        require_text(replacement.get("conclusion"), f"{item_prefix}.conclusion", errors, 20)
+    if replacement_records and len(replacement_records) != len(languages):
+        errors.append(f"{prefix}.replacement_research: expected one pass per language")
+
+    progression = audit.get("progression_sanity_checks")
+    if not isinstance(progression, list):
+        errors.append(f"{prefix}.progression_sanity_checks: expected list")
+        progression = []
+    progression_fields = (
+        "language_slug",
+        "published_progression",
+        "reasonable_increase",
+        "level_1_friendlier_than_level_2",
+        "level_2_prepares_for_level_3",
+        "jargon_progression",
+        "novice_start",
+        "result",
+    )
+    progression_slugs: list[str] = []
+    for index, raw_check in enumerate(progression):
+        item_prefix = f"{prefix}.progression_sanity_checks[{index}]"
+        check = require_object(raw_check, item_prefix, errors)
+        require_exact_keys(check, progression_fields, item_prefix, errors)
+        language_slug = check.get("language_slug")
+        if language_slug not in language_by_slug:
+            errors.append(f"{item_prefix}.language_slug: unknown language")
+        elif language_slug in progression_slugs:
+            errors.append(f"{item_prefix}.language_slug: duplicate progression check")
+        progression_slugs.append(language_slug)
+        published = require_object(
+            check.get("published_progression"),
+            f"{item_prefix}.published_progression",
+            errors,
+        )
+        require_exact_keys(
+            published, ("1", "2", "3"), f"{item_prefix}.published_progression", errors
+        )
+        for level in ("1", "2", "3"):
+            require_text_list(
+                published.get(level),
+                f"{item_prefix}.published_progression.{level}",
+                errors,
+                minimum_items=0,
+                unique=True,
+            )
+        for field in progression_fields[2:-1]:
+            require_text(check.get(field), f"{item_prefix}.{field}", errors, 20)
+        if check.get("result") not in ("pass", "pass-with-explicit-gap"):
+            errors.append(f"{item_prefix}.result: expected pass or pass-with-explicit-gap")
+    if len(progression) < 5:
+        errors.append(f"{prefix}.progression_sanity_checks: expected at least five languages")
+    for required_slug in ("javascript", "php"):
+        if required_slug not in progression_slugs:
+            errors.append(
+                f"{prefix}.progression_sanity_checks: missing required {required_slug} check"
+            )
+
+    summary = require_object(audit.get("summary"), f"{prefix}.summary", errors)
+    summary_fields = (
+        "level_1_before",
+        "level_1_after",
+        "level_2_before",
+        "level_2_after",
+        "promoted",
+        "demoted",
+        "removed_for_quality",
+        "displaced_for_capacity",
+        "removed",
+        "replaced",
+        "remaining_gaps",
+    )
+    require_exact_keys(summary, summary_fields, f"{prefix}.summary", errors)
+    current_counts = Counter(
+        entry.get("learning_level", {}).get("level")
+        for entry in canonical_entries.values()
+    )
+    expected_summary = {
+        "level_1_before": 3,
+        "level_1_after": current_counts[1],
+        "level_2_before": 35,
+        "level_2_after": current_counts[2],
+        "promoted": sum(
+            1 for record in records if record.get("final_level", 0) > record.get("old_level", 0)
+        ),
+        "demoted": sum(
+            1 for record in records if record.get("final_level", 0) < record.get("old_level", 0)
+        ),
+        "removed_for_quality": sum(
+            1 for record in records if record.get("decision") == "remove"
+        ),
+        "displaced_for_capacity": len(alternates),
+        "removed": len(alternates)
+        + sum(1 for record in records if record.get("decision") == "remove"),
+        "replaced": len(state["replacement_by_repository"]),
+        "remaining_gaps": 200 - len(canonical_entries),
+    }
+    if summary != expected_summary:
+        errors.append(f"{prefix}.summary: does not match audited outcomes and catalog")
+    return errors, state
+
+
 def validate_rebuild_reconciliation(
-    root: Path, canonical_entries: dict[tuple[str, str], dict[str, Any]]
+    root: Path,
+    canonical_entries: dict[tuple[str, str], dict[str, Any]],
+    novice_state: dict[str, Any] | None = None,
 ) -> list[str]:
     """Keep the v1 re-review partition reconciled as new candidates are added."""
     audit_path = root / "research" / "learner-centered-rebuild.json"
@@ -541,6 +1179,8 @@ def validate_rebuild_reconciliation(
                 if isinstance(alternate, dict)
                 and isinstance(alternate.get("repository"), str)
             }
+    if novice_state:
+        capacity_alternate_keys.update(novice_state["capacity_by_repository"])
     decision_keys = [
         item.get("repository", "").lower() for item in decisions if isinstance(item, dict)
     ]
@@ -593,6 +1233,7 @@ def validate_gap_research(
     root: Path,
     languages: list[dict[str, Any]],
     canonical_entries: dict[tuple[str, str], dict[str, Any]],
+    novice_state: dict[str, Any] | None = None,
 ) -> list[str]:
     """Reconcile the incremental post-cutover research record with the catalog."""
     path = root / "research" / "learner-centered-gap-research.json"
@@ -607,6 +1248,14 @@ def validate_gap_research(
     entries_by_repository: dict[str, list[dict[str, Any]]] = {}
     for entry in canonical_entries.values():
         entries_by_repository.setdefault(entry["repository"].lower(), []).append(entry)
+    novice_state = novice_state or {
+        "capacity_by_repository": {},
+        "records_by_repository": {},
+        "replacement_by_repository": {},
+    }
+    capacity_by_repository = novice_state["capacity_by_repository"]
+    records_by_repository = novice_state["records_by_repository"]
+    replacement_by_repository = novice_state["replacement_by_repository"]
     require_exact_keys(
         audit,
         (
@@ -846,12 +1495,14 @@ def validate_gap_research(
                 if not scored:
                     errors.append(f"{candidate_prefix}: acceptance requires both gates to pass")
                 entries = entries_by_repository.get(key, [])
-                if not entries:
+                capacity_entries = capacity_by_repository.get(key, [])
+                resolved_entries = entries + capacity_entries
+                if not resolved_entries:
                     errors.append(f"{candidate_prefix}: accepted candidate missing from catalog")
                 else:
                     matching_pin = [
                         entry
-                        for entry in entries
+                        for entry in resolved_entries
                         if entry.get("inspection", {}).get("commit")
                         == candidate.get("pinned_commit")
                     ]
@@ -861,11 +1512,43 @@ def validate_gap_research(
                         entry.get("learning_level", {}).get("level") == calculated
                         for entry in matching_pin
                     ):
-                        errors.append(f"{candidate_prefix}: accepted Level differs from catalog")
+                        novice_records = records_by_repository.get(key, [])
+                        if not any(
+                            record.get("pinned_commit") == candidate.get("pinned_commit")
+                            and record.get("rubric_level") == calculated
+                            and any(
+                                entry.get("learning_level", {}).get("level")
+                                == record.get("final_level")
+                                for entry in matching_pin
+                            )
+                            for record in novice_records
+                        ):
+                            errors.append(
+                                f"{candidate_prefix}: accepted Level differs from catalog"
+                            )
             elif decision == "reject":
                 rejected_total += 1
-                if key in entries_by_repository:
+                if (
+                    key in entries_by_repository
+                    and key not in replacement_by_repository
+                ):
                     errors.append(f"{candidate_prefix}: rejected candidate is accepted")
+                if key in replacement_by_repository:
+                    replacement = replacement_by_repository[key]
+                    matching_entries = entries_by_repository.get(key, [])
+                    if not any(
+                        entry.get("inspection", {}).get("commit")
+                        == replacement.get("pinned_commit")
+                        and entry.get("learning_level", {}).get("level")
+                        == max(
+                            replacement.get("rubric_level", 0),
+                            replacement.get("accessibility_floor", 0),
+                        )
+                        for entry in matching_entries
+                    ):
+                        errors.append(
+                            f"{candidate_prefix}: later novice-accessibility acceptance differs from catalog"
+                        )
                 matching_rejections = [
                     item
                     for item in rejection_records
@@ -945,8 +1628,10 @@ def validate_catalog(root: Path = ROOT, complete: bool = False) -> list[str]:
             continue
         expected_top_fields = ("schema_version", "language_slug", "repositories")
         require_exact_keys(data, expected_top_fields, f"catalog/{language['slug']}.json", errors)
-        if data.get("schema_version") != 3:
-            errors.append(f"catalog/{language['slug']}.json schema_version: expected 3")
+        if data.get("schema_version") != CATALOG_SCHEMA_VERSION:
+            errors.append(
+                f"catalog/{language['slug']}.json schema_version: expected {CATALOG_SCHEMA_VERSION}"
+            )
         if data.get("language_slug") != language["slug"]:
             errors.append(
                 f"catalog/{language['slug']}.json language_slug: expected {language['slug']}"
@@ -1006,8 +1691,14 @@ def validate_catalog(root: Path = ROOT, complete: bool = False) -> list[str]:
                 errors.append(
                     f"catalog/{language['slug']}.json: Level {level} requires 2 entries; found {count}"
                 )
-    errors.extend(validate_rebuild_reconciliation(root, canonical_entries))
-    errors.extend(validate_gap_research(root, languages, canonical_entries))
+    novice_errors, novice_state = validate_novice_accessibility_audit(
+        root, languages, canonical_entries
+    )
+    errors.extend(novice_errors)
+    errors.extend(
+        validate_rebuild_reconciliation(root, canonical_entries, novice_state)
+    )
+    errors.extend(validate_gap_research(root, languages, canonical_entries, novice_state))
     if complete and total != 200:
         errors.append(f"complete catalog requires 200 learning paths; found {total}")
     return errors
@@ -1029,7 +1720,9 @@ def render_index(languages: list[dict[str, Any]], catalogs: dict[str, dict[str, 
     lines = [
         "# Languages",
         "",
-        "Choose a language, then browse from Level 1 (most approachable) through Level 5 (most demanding).",
+        "Choose a language, then browse from Level 1 — First real code through Level 5 — Expert.",
+        "",
+        "If you can write small programs in the language, Level 1 is designed as your first comfortable step into production source. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.",
         "",
         f"The catalog currently contains **{total} qualified learning paths across {len(languages)} languages**. Empty cells are honest research gaps.",
         "",
@@ -1068,6 +1761,7 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
     learning_path = entry["learning_path"]
     start = learning_path["start_here"]
     inspection = entry["inspection"]
+    context = entry["coding_relevance"]["domain_context"]
     lines = [
         f"### [{entry['repository']}]({entry['url']})",
         "",
@@ -1078,6 +1772,10 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
         f"**Why study it:** {entry['why_study']}",
         "",
     ]
+    if context:
+        lines.extend(["**Short context:**", ""])
+        lines.extend(f"- {item}" for item in context)
+        lines.append("")
     lines.extend(["**Prerequisites:**", ""])
     lines.extend(f"- {item}" for item in entry["prerequisites"])
     lines.extend(["", "**Concepts this path develops:**", ""])
@@ -1106,10 +1804,20 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
             f"- **Behavioral reasoning {behavior['score']}:** {behavior['reason']}",
             f"- **Design span {design['score']}:** {design['reason']}",
             f"- **Constraint burden {constraints['score']}:** {constraints['reason']}",
-            f"- **Placement:** {level['placement']}",
-            "",
         ]
     )
+    accessibility = entry.get("novice_accessibility")
+    if accessibility:
+        central = "; ".join(accessibility["central_concepts"]) or "None recorded."
+        incidental = "; ".join(accessibility["incidental_concepts"]) or "None recorded."
+        lines.extend(
+            [
+                f"- **Novice accessibility floor {accessibility['floor']}:** {accessibility['reason']}",
+                f"  - **Central concepts:** {central}",
+                f"  - **Incidental concepts:** {incidental}",
+            ]
+        )
+    lines.extend([f"- **Placement:** {level['placement']}", ""])
     evidence_links = ", ".join(
         f"[evidence {index}]({url})"
         for index, url in enumerate(entry["license"]["urls"], start=1)
@@ -1131,11 +1839,8 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
             "",
         ]
     )
-    context = entry["coding_relevance"]["domain_context"]
     if context:
-        lines.extend(["Required domain context:", ""])
-        lines.extend(f"- {item}" for item in context)
-        lines.append("")
+        lines.extend(["The learner-facing short context appears above.", ""])
     else:
         lines.extend(["No specialist domain context is required.", ""])
     lines.extend(["**Eight-part quality gate:**", ""])
@@ -1167,8 +1872,10 @@ def render_repository(entry: dict[str, Any]) -> list[str]:
 
 
 def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
-    if data.get("schema_version") != 3:
-        raise CatalogError("cannot generate from a schema-version-2 language catalog")
+    if data.get("schema_version") != CATALOG_SCHEMA_VERSION:
+        raise CatalogError(
+            f"cannot generate from a schema-version-{data.get('schema_version')} language catalog"
+        )
     repositories = sorted(
         data["repositories"],
         key=lambda entry: (
@@ -1186,15 +1893,18 @@ def render_language(language: dict[str, Any], data: dict[str, Any]) -> str:
         "",
     ]
     for level in range(1, 6):
-        lines.extend([f"## Level {level}", ""])
+        lines.extend([f"## Level {level} — {LEVEL_LABELS[level]}", ""])
         entries = [entry for entry in repositories if entry["learning_level"]["level"] == level]
         if not entries:
-            lines.extend(
-                [
-                    "No qualified learning path has been published at this level. Standards are not lowered to fill a slot.",
-                    "",
-                ]
+            empty_message = (
+                "No qualified learning path has been published at this level. "
+                "An empty Level 1 means Exempla has not yet found a path gentle "
+                "enough to publish here; learners are not being told to jump to "
+                "Level 2."
+                if level == 1
+                else "No qualified learning path has been published at this level. Standards are not lowered to fill a slot."
             )
+            lines.extend([empty_message, ""])
         else:
             for entry in entries:
                 lines.extend(render_repository(entry))
@@ -1216,8 +1926,13 @@ def generated_files(root: Path = ROOT) -> dict[Path, str]:
         language["slug"]: load_json(root / "catalog" / f"{language['slug']}.json")
         for language in languages
     }
-    if any(data.get("schema_version") != 3 for data in catalogs.values()):
-        raise CatalogError("cannot generate until every language catalog uses schema version 3")
+    if any(
+        data.get("schema_version") != CATALOG_SCHEMA_VERSION
+        for data in catalogs.values()
+    ):
+        raise CatalogError(
+            f"cannot generate until every language catalog uses schema version {CATALOG_SCHEMA_VERSION}"
+        )
     output = {root / "languages" / "README.md": render_index(languages, catalogs)}
     for language in languages:
         output[root / "languages" / language["slug"] / "README.md"] = render_language(

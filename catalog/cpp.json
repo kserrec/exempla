@@ -1,120 +1,7 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "language_slug": "cpp",
   "repositories": [
-    {
-      "slug": "rang",
-      "path_slug": "rang-adapts-type-safe-color-and-style-values-to-an",
-      "repository": "agauniyal/rang",
-      "url": "https://github.com/agauniyal/rang",
-      "primary_language": "C++",
-      "language_evidence": "Terminal detection, ANSI and native Windows coloring, stream operators, and public enums are implemented in include/rang.hpp.",
-      "description": "A small header-only library that adds portable terminal colors and text styles through C++ stream operators.",
-      "real_world_evidence": "The project ships an installable CMake, Conan, Meson, and pkg-config compatible terminal-formatting library.",
-      "why_study": "The rang path shows how a header-only C++ API converts type-safe style and color values into stream output while honoring control mode, terminal detection, and platform fallback.",
-      "learn": [
-        "Use `include/rang.hpp` to study the following transferable techniques and behaviors: Scoped style and color enums, stream insertion operators, enum-to-code helpers, automatic, forced and disabled modes, terminal and color-support detection, ANSI output, Windows console handling, redirection, and no-output fallback."
-      ],
-      "prerequisites": [
-        "Basic familiarity with C++ classes, templates, references, smart pointers, RAII, standard containers, exceptions, and unit tests."
-      ],
-      "concepts_developed": [
-        "Scoped enums and stream insertion.",
-        "Automatic, forced, and disabled control modes.",
-        "ANSI and Windows terminal portability."
-      ],
-      "coding_relevance": {
-        "gate": "pass",
-        "domain_context": [
-          "Terminal styling writes color or style control sequences only when the configured control mode and output stream's terminal capabilities allow it."
-        ],
-        "reason": "The terminal-style concept is familiar and self-contained; the path teaches transferable stream adaptation, platform detection, scoped configuration, enum APIs, fallback behavior, portability, and behavioral testing."
-      },
-      "learning_path": {
-        "goal": "Understand how rang adapts type-safe color and style values to an output stream while honoring control mode, terminal detection, and cross-platform fallback.",
-        "start_here": {
-          "path": "include/rang.hpp",
-          "reason": "include/rang.hpp contains the complete enum API, stream operators, control state, terminal detection, color-support checks, and Windows and ANSI output branches."
-        },
-        "supporting_files": [
-          "test/test.cpp"
-        ],
-        "trace": "Follow style, foreground, background, control and color enums into the stream insertion path, then follow automatic, force and off modes through terminal and color-support detection and the Windows or ANSI output branches; close the behavior with test/test.cpp. The catalog's test/colorTest.cpp only demonstrates colors interactively and is not the closing contract test."
-      },
-      "learning_level": {
-        "level": 2,
-        "language_technique": {
-          "score": 2,
-          "signals": [
-            "scoped enums and stream insertion",
-            "small generic enum-to-code helpers",
-            "conventional platform-conditional functions"
-          ],
-          "reason": "The path uses common professional C++ stream and enum idioms without recurring advanced machinery."
-        },
-        "behavioral_reasoning": {
-          "score": 2,
-          "signals": [
-            "automatic, forced, and disabled control modes",
-            "terminal and color-support branches",
-            "localized stream-specific state"
-          ],
-          "reason": "Several meaningful branches and a small configuration lifecycle remain easy to trace in one header."
-        },
-        "design_span": {
-          "score": 1,
-          "signals": [
-            "one header-only styling component",
-            "one direct contract test"
-          ],
-          "reason": "The complete behavior is one focused unit."
-        },
-        "constraint_burden": {
-          "score": 3,
-          "signals": [
-            "ANSI and Windows terminal portability",
-            "TTY, redirection, and color-support behavior",
-            "stable no-output fallback and stream contracts"
-          ],
-          "reason": "Several material portability and compatibility guarantees constrain an otherwise small implementation."
-        },
-        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
-      },
-      "quality": {
-        "source_quality": "Small enum and stream APIs keep style codes, control modes, stream-specific state, terminal detection, and platform branches explicit.",
-        "architecture": "One header-only component separates public enums and manipulators from control state, environment detection, and platform-specific output helpers.",
-        "naming_and_idiom": "style, fg, bg, fgB, bgB, control, winTerm, color, setControlMode, isTerminal, supportsColor, and stream operators state output policy.",
-        "tests": "test/test.cpp covers enumeration output, automatic, forced and disabled control, supported and unsupported streams, terminal detection, invalid values, and no-output cases.",
-        "documentation": "The README documents styles, foreground and background colors, control modes, platform behavior, and stream usage corresponding to include/rang.hpp.",
-        "traceability": "A style value can be followed through its insertion operator, control-mode check, terminal and color detection, and ANSI or Windows branch into focused contract assertions.",
-        "maintainability": "A single portable interface, isolated platform checks, and explicit fallback tests constrain changes to terminal compatibility.",
-        "educational_value": "The path demonstrates how a tiny cross-platform library layers type safety over conditional operating-system behavior without obscuring its fallbacks."
-      },
-      "inspection": {
-        "commit": "56419fe3348a475c8dd83852d907794cec0ec798",
-        "inspected_at": "2026-08-29",
-        "reviewers": [
-          "Codex primary pass",
-          "independent Codex verification pass"
-        ],
-        "files": [
-          "include/rang.hpp",
-          "test/test.cpp",
-          "LICENSE"
-        ]
-      },
-      "license": {
-        "spdx": "Unlicense",
-        "urls": [
-          "https://github.com/agauniyal/rang/blob/56419fe3348a475c8dd83852d907794cec0ec798/LICENSE"
-        ]
-      },
-      "github": {
-        "primary_language": "C++",
-        "archived": false,
-        "metadata_checked_at": "2026-08-29"
-      }
-    },
     {
       "slug": "gsl",
       "path_slug": "final-action-stores-a-cleanup-callable-invokes-it-once-at",
@@ -122,19 +9,22 @@
       "url": "https://github.com/microsoft/GSL",
       "primary_language": "C++",
       "language_evidence": "The final_action class, finally factory, move-only ownership transfer, and direct contract tests are implemented in C++ in include/gsl/util and tests/utils_tests.cpp.",
-      "description": "Microsoft's header-only implementation of selected C++ Core Guidelines support types and utilities.",
+      "description": "A small C++ scope guard that runs a cleanup function when control leaves a block.",
       "real_world_evidence": "The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.",
-      "why_study": "The final_action path shows how a small move-only RAII object owns one cleanup action at scope exit and transfers that responsibility safely when moved.",
+      "why_study": "Learn how one object owns a cleanup action, runs it during ordinary destruction, and transfers that responsibility safely when moved.",
       "learn": [
-        "Use `include/gsl/util` to study the following transferable techniques and behaviors: RAII scope cleanup, generic callable storage, perfect forwarding, decay, move-only ownership, single-invocation responsibility under ordinary lifetime, noexcept construction and destruction, and a convenience factory that preserves value categories."
+        "Follow construction, move construction, and destruction through one small utility.",
+        "See how moving transfers cleanup responsibility.",
+        "Use lifecycle tests to distinguish active and inactive guards."
       ],
       "prerequisites": [
-        "Basic familiarity with C++ classes, templates, references, smart pointers, RAII, standard containers, exceptions, and unit tests."
+        "The global novice C++ baseline, including classes, templates, object lifetime, move construction, and focused tests.",
+        "RAII means an object's destructor performs cleanup; moving this guard transfers which object will perform it."
       ],
       "concepts_developed": [
-        "Generic callable storage and decay.",
-        "Armed and disarmed guard lifecycle.",
-        "The active guard invokes cleanup once during ordinary destruction."
+        "Owning cleanup with an object's lifetime.",
+        "Making a moved-from guard inactive.",
+        "Testing that ordinary scope exit runs the cleanup once."
       ],
       "coding_relevance": {
         "gate": "pass",
@@ -193,7 +83,7 @@
           ],
           "reason": "Several ownership, exception-safety, and portability guarantees constrain an otherwise small implementation."
         },
-        "placement": "The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 3/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
       },
       "quality": {
         "source_quality": "The compact class makes callable ownership, the armed flag, move transfer, and destructor invocation explicit, with comments explaining its purpose and unavoidable padding.",
@@ -207,10 +97,11 @@
       },
       "inspection": {
         "commit": "417ef685eafd626db765f0027b7fc5a0057e0770",
-        "inspected_at": "2026-08-29",
+        "inspected_at": "2026-08-30",
         "reviewers": [
           "Codex primary pass",
-          "independent Codex verification pass"
+          "independent Codex verification pass",
+          "Codex novice-accessibility audit"
         ],
         "files": [
           "include/gsl/util",
@@ -230,6 +121,19 @@
         "primary_language": "C++",
         "archived": false,
         "metadata_checked_at": "2026-08-29"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "scope-based cleanup (RAII)",
+          "ownership transfer when a guard is moved",
+          "generic cleanup callables"
+        ],
+        "incidental_concepts": [
+          "std::exchange",
+          "noexcept spelling"
+        ],
+        "reason": "One cohesive professional idea—an object owns cleanup until destruction or a move—can be taught in a short primer and then traced locally through direct tests."
       }
     },
     {

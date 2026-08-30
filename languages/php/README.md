@@ -1,34 +1,35 @@
 # PHP
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
 ### [webmozarts/assert](https://github.com/webmozarts/assert)
 
 **Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
-A focused guard clause that rejects only null, returns every accepted value unchanged, and exposes the narrowed contract to static analysis.
+A small PHP guard that rejects only null and returns every accepted value unchanged.
 
-**Why study it:** The path is a small complete production guard clause: it distinguishes null from other falsy values, avoids evaluating a lazy message on success, returns the accepted value, and aligns that runtime contract with PHPDoc and Psalm annotations.
+**Why study it:** Trace one exact success-or-failure branch, see why false and zero remain valid, and use focused tests to confirm the returned value and error message.
 
 **Prerequisites:**
 
-- Basic PHP functions and static methods, strict comparison, `null`, exceptions, union types, callables, and reading a PHPUnit data provider.
+- The global novice PHP baseline: functions, strict comparison, null, exceptions, and focused tests.
+- The nearby type comments tell analysis tools that a successful return is non-null; they do not change runtime behavior.
 
 **Concepts this path develops:**
 
-- A precise null guard that preserves valid falsy values and returns the accepted input.
-- Lazy diagnostic construction that runs only on the failure branch.
-- Agreement between a runtime guard and static-analysis narrowing annotations.
+- Checking specifically for null instead of rejecting every falsy value.
+- Returning an accepted input unchanged.
+- Building an error message only on the failure branch.
 
 **What you can learn:**
 
-- Trace a non-null value through the strict null comparison to the unchanged return value, then trace null through lazy message resolution to `InvalidArgumentException`.
-- Compare false, zero, and null in the shared data provider to see why a null guard must not use a general truthiness check.
-- Relate the runtime return contract to `@template T`, `@param T|null`, `@return T`, and `@psalm-assert !null` without treating those annotations as prerequisites.
+- Trace the direct null check and the unchanged success return.
+- Compare null with valid falsy inputs such as false and zero.
+- Read focused tests for default, custom, and lazy failure messages.
 
 **Learning path:**
 
@@ -45,7 +46,10 @@ A focused guard clause that rejects only null, returns every accepted value unch
 - **Behavioral reasoning 1:** The entire runtime trace is local, synchronous, and directly observable.
 - **Design span 1:** One focused source unit and its direct tests contain the complete lesson.
 - **Constraint burden 1:** These are small local correctness requirements with direct examples and no interacting compatibility system.
-- **Placement:** The four scores 2/1/1/1 sum to 5; their arithmetic mean is 1.25 and rounds half-up to Level 1. No score floor applies.
+- **Novice accessibility floor 1:** The runtime lesson is one precise novice-readable guard; the lazy message and tool-facing annotations can be explained locally without changing the trace.
+  - **Central concepts:** strict null checking; returning accepted input unchanged; throwing an exception on failure
+  - **Incidental concepts:** lazy error-message callback; static-analysis narrowing annotations
+- **Placement:** The four structural scores 2/1/1/1 produce rubric Level 1 under the documented formula and guardrails. Novice accessibility floor 1 produces published Level 1.
 
 **License:** MIT ([evidence 1](https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE))
 
@@ -73,104 +77,40 @@ No specialist domain context is required.
 - **Maintainability:** The method shares stable message and exception helpers but otherwise has no coupling, mutable state, or generated-code dependency.
 - **Educational value:** The path turns a familiar guard clause into a complete lesson about precise falsy handling, lazy diagnostics, returned-value contracts, tests, and static-analysis narrowing.
 
-**Inspection record:** commit `2ccb7c2e821038c03a3e6e1700c570c158c55f70`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/Assert.php`, `tests/AssertTest.php`, `README.md`, `LICENSE`. GitHub Linguist label: PHP.
+**Inspection record:** commit `2ccb7c2e821038c03a3e6e1700c570c158c55f70`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `src/Assert.php`, `tests/AssertTest.php`, `README.md`, `LICENSE`. GitHub Linguist label: PHP.
 
 </details>
 
-## Level 2
-
-### [doctrine/lexer](https://github.com/doctrine/lexer)
-
-**Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
-A small reusable base for tokenizing strings for top-down recursive-descent parsers and domain-specific languages.
-
-**Why study it:** The AbstractLexer path shows how a reusable PHP template method turns one input string into typed tokens while preserving cursor, lookahead, peeking, offset, Unicode, and invalid-input contracts.
-
-**Prerequisites:**
-
-- Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests.
-
-**Concepts this path develops:**
-
-- PHPDoc templates for token value and token type.
-- Localized token-array and cursor state.
-- Regex capture and byte-offset accuracy.
-
-**What you can learn:**
-
-- Use `src/AbstractLexer.php` to study the following transferable techniques and behaviors: Regular-expression tokenization, captured byte offsets, abstract pattern and type hooks, generic token values, cursor movement, lookahead, peeking, reset, skipping, Unicode input, and enum token types.
-
-**Learning path:**
-
-- **Goal:** Understand how Doctrine's reusable lexer scans an input string into typed tokens and maintains lookahead, peeking, and cursor invariants for subclasses.
-- **Start here:** [`src/AbstractLexer.php`](https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/src/AbstractLexer.php) — src/AbstractLexer.php contains setInput, scan, the subclass hooks, and every cursor operation, so it exposes the full reusable lexer contract in one implementation.
-- **Then read:**
-  - [`src/Token.php`](https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/src/Token.php)
-  - [`tests/AbstractLexerTest.php`](https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/tests/AbstractLexerTest.php)
-- **Trace:** Follow setInput through the composed regular expression, preg_split capture offsets, scan, and the subclass getType hook into Token values; then follow moveNext, peek, glimpse, skipUntil, reset, and token checks while correlating movement, position, Unicode, enum-type, locale, and invalid-input tests in AbstractLexerTest.
-
-**Why this level:**
-
-- **Language technique 3:** Generic type relationships and a typed template-method API materially shape the extension contract, satisfying substantial abstraction without advanced runtime machinery.
-- **Behavioral reasoning 2:** Meaningful mutable state and branches require care but remain synchronous and localized in one lexer.
-- **Design span 1:** The complete behavior stays in one focused unit with two narrow subclass hooks.
-- **Constraint burden 2:** Input validation, offsets, explicit errors, and a small stable API impose routine production safeguards rather than several interacting guarantees.
-- **Placement:** The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** Doctrine publishes the package as lexer infrastructure used by its annotation, query, and persistence tooling.
-
-**Language evidence:** The generic lexer state, token value object, and extension hooks under src are implemented in strict PHP.
-
-**Coding relevance:**
-
-The lexer vocabulary and regular-expression model fit in a short prerequisite paragraph; the selected path primarily teaches generic template APIs, token construction, mutable cursor state, validation, and precise source offsets.
-
-Required domain context:
-
-- A lexer splits an input string into typed tokens and exposes a cursor with lookahead for a parser to consume.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The composed pattern, preg_split captures, token conversion, cursor state, and invalid-input branch are direct and compact.
-- **Architecture:** AbstractLexer owns scanning and navigation, Token holds immutable value, type, and position data, and two narrow subclass hooks supply grammar-specific behavior.
-- **Naming and idiom:** setInput, scan, getCatchablePatterns, getNonCatchablePatterns, getType, moveNext, lookahead, peek, glimpse, and reset describe the lexer contract.
-- **Tests:** AbstractLexerTest covers movement, peeking, skipping, resets, positions, enum types, invalid input, Unicode, and locale-sensitive cases.
-- **Documentation:** Class and method documentation explains the generic template parameters, subclass hooks, token positions, and cursor operations used by the selected path.
-- **Traceability:** An input can be followed from setInput through the composed regular expression and captured offsets into Token objects, then through each navigation method and its focused assertions.
-- **Maintainability:** One scanning component, one value object, stable extension hooks, and boundary-focused tests keep grammar reuse separate from cursor policy.
-- **Educational value:** The path demonstrates a small but complete reusable lexer whose abstraction, state, Unicode, and error obligations remain visible.
-
-**Inspection record:** commit `e96fe45e92a54233726014a7cc7340abf29bb14c`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/AbstractLexer.php`, `src/Token.php`, `tests/AbstractLexerTest.php`, `LICENSE`. GitHub Linguist label: PHP.
-
-</details>
+## Level 2 — Guided real-world code
 
 ### [schmittjoh/php-option](https://github.com/schmittjoh/php-option)
 
 **Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
 
-An Option type for representing present and absent values with eager, lazy, mapping, filtering, folding, and fallback operations.
+A small PHP API that represents either a present value or no value, with optional lazy creation.
 
-**Why study it:** The factory-to-lazy-resolution path shows how a compact PHP API normalizes existing values, callables, and Option instances while preserving a strict absence sentinel, identity, deferred work, successful-result memoization, and explicit failure behavior.
+**Why study it:** See how factories create present, absent, and delayed results, then follow one delayed callback until its successful result is stored for reuse.
+
+**Short context:**
+
+- An Option represents either a present value as Some or absence as None, avoiding a raw sentinel value in the rest of a program.
 
 **Prerequisites:**
 
-- Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests.
+- The global novice PHP baseline, including classes, inheritance, callables, strict comparison, exceptions, and focused tests.
+- An Option is either Some with a value or None with no value; LazyOption waits to choose until its callback is needed.
 
 **Concepts this path develops:**
 
-- Abstract class with covariant PHPDoc templates.
-- Strict configurable absence sentinel.
-- Strict sentinel identity.
+- Representing presence and absence with explicit objects.
+- Delaying work until a value is requested.
+- Remembering a successful delayed result for later calls.
 
 **What you can learn:**
 
-- Use `src/PhpOption/Option.php` to study the following transferable techniques and behaviors: Abstract option contracts, PHPDoc covariance and templates, strict sentinel comparison, eager and lazy factory methods, callable normalization, identity preservation, deferred delegation, successful-result memoization, and invalid-callback or invalid-result errors.
+- Trace factory inputs into Some, None, or LazyOption.
+- Follow the first lazy resolution and later reuse of its result.
+- Use focused tests to compare sentinels, identity, success, and invalid callbacks.
 
 **Learning path:**
 
@@ -190,7 +130,10 @@ An Option type for representing present and absent values with eager, lazy, mapp
 - **Behavioral reasoning 2:** Meaningful branching and lazy state require care but remain synchronous and localized in two small classes.
 - **Design span 2:** A few cohesive types contain the complete normalization and resolution behavior.
 - **Constraint burden 3:** Several API guarantees interact across eager and lazy construction, including strict absence semantics, object identity, deferred work, reuse of a successful result, and explicit invalid-input failures.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** The Option model and lazy resolution are common professional abstractions that fit one short, cohesive primer and remain synchronous and locally traceable.
+  - **Central concepts:** present-versus-absent Option model; lazy callback resolution; successful-result memoization
+  - **Incidental concepts:** PHPDoc generic annotations; strict configurable sentinel
+- **Placement:** The four structural scores 2/2/2/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** Apache-2.0 ([evidence 1](https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE))
 
@@ -205,9 +148,7 @@ An Option type for representing present and absent values with eager, lazy, mapp
 
 The presence-versus-absence model needs only a short primer; the path primarily teaches transferable factory design, higher-order functions, strict comparison, lazy evaluation, delegation, memoization, and error contracts.
 
-Required domain context:
-
-- An Option represents either a present value as Some or absence as None, avoiding a raw sentinel value in the rest of a program.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -220,11 +161,11 @@ Required domain context:
 - **Maintainability:** Small implementations, one lazy-resolution seam, strict comparisons, stable abstract operations, and focused tests keep changes locally reviewable.
 - **Educational value:** The path demonstrates how a production PHP library replaces raw absence sentinels with a typed, composable, and optionally lazy API without hiding its control flow.
 
-**Inspection record:** commit `67b192b6a42ec03944b972d6e633ddec78ad2c6d`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/PhpOption/Option.php`, `src/PhpOption/LazyOption.php`, `src/PhpOption/Some.php`, `src/PhpOption/None.php`, `tests/PhpOption/Tests/OptionTest.php`, `tests/PhpOption/Tests/LazyOptionTest.php`, `README.md`, `composer.json`, `LICENSE`. GitHub Linguist label: PHP.
+**Inspection record:** commit `67b192b6a42ec03944b972d6e633ddec78ad2c6d`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `src/PhpOption/Option.php`, `src/PhpOption/LazyOption.php`, `src/PhpOption/Some.php`, `src/PhpOption/None.php`, `tests/PhpOption/Tests/OptionTest.php`, `tests/PhpOption/Tests/LazyOptionTest.php`, `README.md`, `composer.json`, `LICENSE`. GitHub Linguist label: PHP.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [nikic/FastRoute](https://github.com/nikic/FastRoute)
 
@@ -233,6 +174,10 @@ Required domain context:
 A fast HTTP request router that compiles static and variable routes into compact dispatch data and matched parameters.
 
 **Why study it:** The FastRoute path shows how route declarations become validated static or combined-regular-expression data and then one of three explicit HTTP dispatch results.
+
+**Short context:**
+
+- An HTTP router parses static and parameterized route declarations, compiles them into dispatch data, and returns matched, not-matched, or method-not-allowed results for a method and URI.
 
 **Prerequisites:**
 
@@ -284,9 +229,7 @@ A fast HTTP request router that compiles static and variable routes into compact
 
 The route syntax and three dispatch outcomes need only a short primer; the path primarily teaches staged parsing and compilation, regular-expression construction, strategy boundaries, data modeling, validation, and deterministic dispatch.
 
-Required domain context:
-
-- An HTTP router parses static and parameterized route declarations, compiles them into dispatch data, and returns matched, not-matched, or method-not-allowed results for a method and URI.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -310,6 +253,10 @@ Required domain context:
 A defensive-programming library providing typed assertions for method inputs, outputs, values, collections, files, classes, and objects.
 
 **Why study it:** The MixinGenerator path shows how reflection and source generation can extend a repetitive validation API while preserving native signatures, static-analysis contracts, defaults, messages, and runtime behavior.
+
+**Short context:**
+
+- An assertion library validates runtime values, while its generated mixin adds nullOr, all, and allNullOr variants of the base assertion methods.
 
 **Prerequisites:**
 
@@ -357,9 +304,7 @@ A defensive-programming library providing typed assertions for method inputs, ou
 
 The assertion and generated-API context is self-contained; the path primarily teaches reflection, code generation, signature and PHPDoc transformation, compatibility policy, and testing generated behavior.
 
-Required domain context:
-
-- An assertion library validates runtime values, while its generated mixin adds nullOr, all, and allNullOr variants of the base assertion methods.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -376,7 +321,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [Seldaek/monolog](https://github.com/Seldaek/monolog)
 
@@ -385,6 +330,10 @@ Required domain context:
 A logging library that routes structured records through processors, formatters, filters, buffers, groups, files, sockets, databases, and web services.
 
 **Why study it:** The Logger path shows how Monolog builds one immutable record, delays processing until needed, propagates it through bubbling handlers, contains failures, and prevents recursive logging per Fiber.
+
+**Short context:**
+
+- A logger creates a record, optionally processes it, offers it to ordered handlers until bubbling stops, and must prevent recursive logging from becoming an infinite loop.
 
 **Prerequisites:**
 
@@ -433,9 +382,7 @@ A logging library that routes structured records through processors, formatters,
 
 Logging levels, processors, and handlers are familiar and documented; the path primarily teaches typed pipeline design, lazy initialization, event propagation, Fiber-local reentrancy state, exception routing, resource lifecycle, and cleanup.
 
-Required domain context:
-
-- A logger creates a record, optionally processes it, offers it to ordered handlers until bubbling stops, and must prevent recursive logging from becoming an infinite loop.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -459,6 +406,10 @@ Required domain context:
 A component framework spanning dependency injection, HTTP kernels, console tools, events, routing, security, messaging, forms, validation, and integrations.
 
 **Why study it:** The HttpKernel path shows how Symfony transforms one Request into a Response through ordered resolver and event extensions while preserving nested and streamed request context and recovering from exceptions.
+
+**Short context:**
+
+- An HTTP kernel turns a Request into a Response by dispatching request, controller, arguments, view, response, exception, and finish events around controller resolution and invocation.
 
 **Prerequisites:**
 
@@ -513,9 +464,7 @@ A component framework spanning dependency injection, HTTP kernels, console tools
 
 The HTTP request-response lifecycle and event names are documented and familiar; the path primarily teaches staged framework orchestration, extension events, nested request context, exception recovery, cleanup, and strict lifecycle contracts.
 
-Required domain context:
-
-- An HTTP kernel turns a Request into a Response by dispatching request, controller, arguments, view, response, exception, and finish events around controller resolution and invocation.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -532,7 +481,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 

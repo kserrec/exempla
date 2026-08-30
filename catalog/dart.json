@@ -1,128 +1,7 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "language_slug": "dart",
   "repositories": [
-    {
-      "slug": "equatable",
-      "path_slug": "a-dart-value-object-derives-consistent-equality-hashing-and-diagnostic",
-      "repository": "felangel/equatable",
-      "url": "https://github.com/felangel/equatable",
-      "primary_language": "Dart",
-      "language_evidence": "Value equality, recursive collection comparison, hashing, stringification, configuration, and the behavior tests are implemented in Dart under lib and test.",
-      "description": "A compact Dart package that gives immutable objects value equality and stable hashing from an explicit list of properties.",
-      "real_world_evidence": "Equatable is distributed as a versioned pub.dev package and its README documents use in ordinary Dart and Flutter domain models.",
-      "why_study": "Its tiny public contract exposes the complete mechanics behind value objects: runtime-type checks, property traversal, nested collection equality, hash combination, and diagnostic string output.",
-      "learn": [
-        "Dart equality and hashCode contracts, immutable value objects, recursive iterable, map, and set comparison, mixins, global and local configuration, stringification, and focused unit tests."
-      ],
-      "prerequisites": [
-        "Dart classes, getters, operator overloading, generics, iterables, maps and sets, null safety, and basic unit testing."
-      ],
-      "concepts_developed": [
-        "Operator overrides and mixin composition.",
-        "Recursive nested-value comparison.",
-        "Equality and hashCode must remain consistent."
-      ],
-      "coding_relevance": {
-        "gate": "pass",
-        "domain_context": [
-          "A value object defines equality and hashing from the properties that constitute its value."
-        ],
-        "reason": "That short vocabulary is subordinate to transferable lessons in operator contracts, immutable data, recursive collection comparison, hashing, runtime-type checks, configuration, and focused unit testing."
-      },
-      "learning_path": {
-        "goal": "Understand how a Dart value object derives consistent equality, hashing, and diagnostic output from an explicit property list.",
-        "start_here": {
-          "path": "lib/src/equatable.dart",
-          "reason": "The base class shows the whole user contract—props, equality, hashing, and stringification—while equatable_utils.dart supplies the recursive comparison and hash mechanics beneath it."
-        },
-        "supporting_files": [
-          "lib/src/equatable_utils.dart",
-          "test/equatable_test.dart",
-          "test/equatable_utils_test.dart",
-          "README.md",
-          "LICENSE"
-        ],
-        "trace": "Start with Equatable.props, operator ==, hashCode, and stringify; follow the shared utilities through runtime-type checks, recursive iterable, map, and set comparison, order-sensitive and order-insensitive behavior, hash combination, and diagnostics; then close each contract in the two direct unit suites."
-      },
-      "learning_level": {
-        "level": 2,
-        "language_technique": {
-          "score": 2,
-          "signals": [
-            "operator overrides and mixin composition",
-            "generic iterable, map, and set utilities",
-            "ordinary package configuration and null-safe Dart"
-          ],
-          "reason": "Common professional Dart idioms shape the path without advanced type or runtime machinery."
-        },
-        "behavioral_reasoning": {
-          "score": 2,
-          "signals": [
-            "recursive nested-value comparison",
-            "localized type and equality branches",
-            "deterministic hash and string derivation"
-          ],
-          "reason": "Meaningful branching and recursion remain synchronous, stateless, and easy to trace."
-        },
-        "design_span": {
-          "score": 1,
-          "signals": [
-            "one value-object abstraction",
-            "one shared utility layer",
-            "two direct unit suites"
-          ],
-          "reason": "One focused component contains the complete behavior."
-        },
-        "constraint_burden": {
-          "score": 3,
-          "signals": [
-            "equality and hashCode must remain consistent",
-            "nested maps, sets, iterables, nulls, and numeric values need stable semantics",
-            "runtime-type, ordering, mixin, and public API behavior must remain compatible"
-          ],
-          "reason": "Several material semantic and compatibility guarantees constrain otherwise local code."
-        },
-        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
-      },
-      "quality": {
-        "source_quality": "The implementation is small, null-safe, explicit about runtime type, and keeps equality and hashing over the same props representation.",
-        "architecture": "Equatable and EquatableMixin define the public contract; EquatableConfig controls default display behavior; utilities own recursive equality and hash combination.",
-        "naming_and_idiom": "props, stringify, equals, iterableEquals, mapEquals, setEquals, and mapPropsToHashCode make the value-object model discoverable.",
-        "tests": "Unit suites cover identity, runtime types, nulls, nested iterables, sets, maps, numbers, hashes, mixins, configuration, string output, and regressions.",
-        "documentation": "The README explains installation, props, nullable properties, mixins, stringification, immutability, and common usage patterns.",
-        "traceability": "A model's props can be followed directly through operator== or hashCode into one utility branch and an exact assertion.",
-        "maintainability": "The public surface is narrow, shared mechanics are centralized, and edge cases are represented in small targeted tests.",
-        "educational_value": "It turns a language feature often treated as boilerplate into a complete, approachable study of behavioral contracts."
-      },
-      "inspection": {
-        "commit": "f98a58960545ba72b51d0eacf746af393a0c6b24",
-        "inspected_at": "2026-08-29",
-        "reviewers": [
-          "Codex primary pass",
-          "independent Codex verification pass"
-        ],
-        "files": [
-          "lib/src/equatable.dart",
-          "lib/src/equatable_utils.dart",
-          "test/equatable_test.dart",
-          "test/equatable_utils_test.dart",
-          "README.md",
-          "LICENSE"
-        ]
-      },
-      "license": {
-        "spdx": "MIT",
-        "urls": [
-          "https://github.com/felangel/equatable/blob/f98a58960545ba72b51d0eacf746af393a0c6b24/LICENSE"
-        ]
-      },
-      "github": {
-        "primary_language": "Dart",
-        "archived": false,
-        "metadata_checked_at": "2026-08-29"
-      }
-    },
     {
       "slug": "formz",
       "path_slug": "a-small-dart-model-makes-input-interaction-state-typed-validation",
@@ -130,19 +9,22 @@
       "url": "https://github.com/VeryGoodOpenSource/formz",
       "primary_language": "Dart",
       "language_evidence": "Typed form-input state, validation, error caching, aggregate form status, value semantics, and tests are implemented in one Dart library and its Dart test fixtures.",
-      "description": "A minimal typed model for pure and modified form inputs, validation errors, aggregate validity, and submission state.",
+      "description": "A small Dart model for form values, validation errors, untouched inputs, modified inputs, and submission state.",
       "real_world_evidence": "Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.",
-      "why_study": "One file demonstrates how a tiny generic domain model can make input value, interaction state, validation error, display policy, caching, equality, and whole-form queries explicit.",
+      "why_study": "See how one file gives form inputs explicit value, interaction, error, and validation state, then combines several inputs into a whole-form answer.",
       "learn": [
-        "Generic abstract classes, sealed state through constructors, typed validation errors, pure versus dirty input state, lazy caching with mixins, aggregate predicates, enum extensions, immutability, equality, and unit tests."
+        "Trace how pure and dirty inputs expose validation and display errors.",
+        "See how an optional mixin caches one validation result.",
+        "Use focused tests to compare valid, invalid, untouched, and modified inputs."
       ],
       "prerequisites": [
-        "Dart generics, abstract classes, mixins, enums and extensions, null safety, immutable objects, and basic form validation."
+        "The global novice Dart baseline, including classes, simple generics, enums, null safety, and focused tests.",
+        "A pure input is untouched; a dirty input has been modified. A validator returns null for success or a typed error for failure."
       ],
       "concepts_developed": [
-        "Generic value and error modeling.",
-        "Pure and dirty input state.",
-        "Pure and dirty transitions must preserve the value."
+        "Modeling a value and its possible validation error with generic types.",
+        "Separating untouched input state from modified input state.",
+        "Combining local validation results into whole-form validity."
       ],
       "coding_relevance": {
         "gate": "pass",
@@ -203,7 +85,7 @@
           ],
           "reason": "The path carries routine production safeguards and a small stable API rather than interacting strict constraints."
         },
-        "placement": "The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 3/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
       },
       "quality": {
         "source_quality": "Constructors distinguish untouched and modified values, validation remains user-supplied and typed, and the optional cache changes performance without changing the contract.",
@@ -217,10 +99,11 @@
       },
       "inspection": {
         "commit": "57a4e1e7efb13eb1fea614158ccdd1fc52d4f969",
-        "inspected_at": "2026-08-29",
+        "inspected_at": "2026-08-30",
         "reviewers": [
           "Codex primary pass",
-          "independent Codex verification pass"
+          "independent Codex verification pass",
+          "Codex novice-accessibility audit"
         ],
         "files": [
           "lib/formz.dart",
@@ -240,6 +123,19 @@
         "primary_language": "Dart",
         "archived": false,
         "metadata_checked_at": "2026-08-29"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "typed form values and errors",
+          "untouched versus modified input state",
+          "local validation and cached results"
+        ],
+        "incidental_concepts": [
+          "enum convenience extensions",
+          "value equality"
+        ],
+        "reason": "The form-state vocabulary and conventional Dart abstractions form one cohesive professional lesson that can be explained locally and traced in one file."
       }
     },
     {

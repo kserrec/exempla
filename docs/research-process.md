@@ -77,10 +77,18 @@ For a passing candidate, record:
 - transferable lessons that follow from those developed concepts;
 - recurring signals and reasons for language technique, behavioral reasoning,
   design span, and constraint burden; and
-- final Level from the published formula and guardrails.
+- the pre-accessibility rubric Level from the published formula and
+  guardrails.
 
 Write signals and reasons before calculating. Do not inspect the open slot and
 work backward to a desired result.
+
+When that rubric Level is 1 or 2, identify central and incidental concepts and
+record a `novice_accessibility` floor from 1 through 3. Apply the five-minute
+orientation, no-hidden-course, prediction, jargon, and prerequisite-stack
+tests in [the learning-level rubric](learning-levels.md). The published Level
+is the higher of the rubric Level and accessibility floor. The floor is a
+lower-rung guardrail, not a fifth weighted score.
 
 ## 7. Resolve capacity honestly
 
@@ -94,10 +102,11 @@ neighboring Level.
 ## 8. Verification pass and recording
 
 A separate review pass checks both gates, selected path, every score anchor,
-formula, capacity result, language, commit, file paths, quality findings, and
-license evidence. Record whether a person or a model performed each pass;
-never turn a model cross-check into a claim of independent human inspection.
-Resolve disagreements against source and the public anchors before acceptance.
+formula, low-level accessibility evidence when required, final Level, capacity
+result, language, commit, file paths, quality findings, and license evidence.
+Record whether a person or a model performed each pass; never turn a model
+cross-check into a claim of independent human inspection. Resolve
+disagreements against source and the public anchors before acceptance.
 
 Accepted records go in `catalog/<language>.json`; serious failures and
 alternates are appended to `research/rejections.json`. Regenerate and validate

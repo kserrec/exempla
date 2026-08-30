@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "language_slug": "lua",
   "repositories": [
     {
@@ -9,19 +9,22 @@
       "url": "https://github.com/lunarmodules/say",
       "primary_language": "Lua",
       "language_evidence": "The message registry, namespace fallback, positional substitution, callable interface, and behavior tests are implemented in Lua.",
-      "description": "A tiny namespaced message store with fallback lookup, formatted substitution, and a callable retrieval interface.",
+      "description": "A small Lua module that stores named messages, falls back to another namespace, and inserts values into the selected text.",
       "real_world_evidence": "Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.",
-      "why_study": "Fifty production lines expose a complete contract: nested key storage, locale-style fallback, argument validation, substitution, missing-key behavior, and a metatable call API.",
+      "why_study": "Trace one in-memory registry from message storage through active-namespace lookup, fallback lookup, argument checking, and formatted output.",
       "learn": [
-        "Nested tables, dotted namespace traversal, metatable call syntax, fallback lookup, positional substitution, input validation, module state, and compact behavior tests."
+        "Trace message storage and lookup through one module-local registry.",
+        "Compare active, fallback, and missing-key results.",
+        "Use tests to understand substitution, nil values, and invalid argument types."
       ],
       "prerequisites": [
-        "Basic Lua tables, functions, modules, strings, varargs, metatables, error handling, and unit-test assertions."
+        "The global novice Lua baseline, including tables, functions, modules, strings, errors, and focused tests.",
+        "A metatable can make a table callable and define fallback indexing; this module uses one small example of each behavior."
       ],
       "concepts_developed": [
-        "Ordinary module tables and closures.",
-        "Localized active and fallback namespace state.",
-        "Namespace and fallback selection must remain deterministic."
+        "Storing values under a namespace and key.",
+        "Trying the active namespace before a fallback namespace.",
+        "Using a small metatable to present a callable lookup API."
       ],
       "coding_relevance": {
         "gate": "pass",
@@ -81,7 +84,7 @@
           ],
           "reason": "The path carries routine validation and small stable-API safeguards rather than several material guarantees."
         },
-        "placement": "The four scores 2/2/1/2 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2."
+        "placement": "The four structural scores 2/2/1/2 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2."
       },
       "quality": {
         "source_quality": "The registry, namespace walk, fallback choice, substitutions, and error cases are direct and visible without framework indirection.",
@@ -95,10 +98,11 @@
       },
       "inspection": {
         "commit": "fe1475fe2acaf844bd030c2ff998bc99ed8930ed",
-        "inspected_at": "2026-08-29",
+        "inspected_at": "2026-08-30",
         "reviewers": [
           "Codex primary pass",
-          "independent Codex verification pass"
+          "independent Codex verification pass",
+          "Codex novice-accessibility audit"
         ],
         "files": [
           "src/say/init.lua",
@@ -117,6 +121,19 @@
         "primary_language": "Lua",
         "archived": false,
         "metadata_checked_at": "2026-08-29"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "namespaced message lookup",
+          "fallback lookup and positional substitution",
+          "callable and indexable metatable behavior"
+        ],
+        "incidental_concepts": [
+          "table.unpack compatibility fallback",
+          "explicit table length for nil values"
+        ],
+        "reason": "One short metatable primer explains the API; registry state, fallback order, validation, and formatting then remain local and directly tested."
       }
     },
     {

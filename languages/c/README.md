@@ -1,166 +1,100 @@
 # C
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
+## Level 2 — Guided real-world code
 
-### [likle/cwalk](https://github.com/likle/cwalk)
+### [benhoyt/inih](https://github.com/benhoyt/inih)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
-A lightweight cross-platform library for lexical filesystem path manipulation in C and C++ programs.
+A small C parser that reads an INI settings file line by line and reports each section, name, and value to a callback.
 
-**Why study it:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions. No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
+**Why study it:** Follow one input line from whitespace cleanup through comment, section, key-value, continuation, or error handling, then see the parsed result cross one callback boundary.
+
+**Short context:**
+
+- An INI file uses [section] headings and name=value lines; this parser reports text and deliberately leaves value interpretation to its caller.
 
 **Prerequisites:**
 
-- Basic familiarity with C functions, pointers, structs, enums, arrays, manual allocation, function pointers, and focused tests.
-- Lexical paths consist of roots, separators, ordinary segments, dot segments, and parent segments under Unix or Windows conventions.
+- The global novice C baseline, including pointers, character arrays, structs, callbacks, file input, and focused tests.
+- An INI file groups name=value lines under [section] headings; blank lines and prefixed lines can be ignored as comments.
 
 **Concepts this path develops:**
 
-- Pointer-based string and segment scanning.
-- Iterative segment state.
-- Unix, drive-root, and UNC compatibility.
+- Classifying one cleaned input line into a small grammar.
+- Sending parsed section, name, and value strings through a callback.
+- Keeping parsing policy configurable without changing the public trace.
 
 **What you can learn:**
 
-- Study these transferable C mechanisms in `src/cwalk.c`: pointer-based string and segment scanning, caller-owned bounded output buffers, and in-place input and output overlap.
-- Trace these states and branches from `src/cwalk.c` through its selected supporting files: iterative segment state, dot and parent filtering, and shared normalization and relative-path rules.
-- Identify these architectural responsibilities in the path beginning at `src/cwalk.c`: one implementation module, one public header, and one lexical-path concern.
-- Study these change constraints for the path beginning at `src/cwalk.c`: Unix, drive-root, and UNC compatibility, bounded output with theoretical lengths, and overlapping input and output support.
+- Trace a line-oriented parser with direct branches for comments, sections, values, continuations, and malformed input.
+- See how a callback lets application code decide what parsed names and values mean.
+- Compare file, stream, and string readers that share the same parser.
+- Use baseline and configuration tests to understand bounded lines, optional allocation, and compile-time policy choices.
 
 **Learning path:**
 
-- **Goal:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
-- **Start here:** [`src/cwalk.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/src/cwalk.c) — Begin with `src/cwalk.c` because it exposes how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
+- **Goal:** Understand how a compact C parser reads INI text one line at a time and reports each result through a callback.
+- **Start here:** [`ini.c`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.c) — Begin at ini_parse_stream, where every input source joins the same line-classification and handler-callback loop.
 - **Then read:**
-  - [`include/cwalk.h`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/include/cwalk.h)
-  - [`test/normalize_test.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/test/normalize_test.c)
-  - [`test/relative_test.c`](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/test/relative_test.c)
-- **Trace:** Start at cwk_path_normalize, follow joined segment iteration through dot and parent removal into bounded output and termination, then compare cwk_path_get_relative's shared segment model; close with normalization and relative-path cases for overlap, undersized buffers, roots, separators, and excessive parent traversal.
+  - [`ini.h`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/ini.h)
+  - [`README.md`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/README.md)
+  - [`tests/unittest.c`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/tests/unittest.c)
+  - [`tests/unittest.sh`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/tests/unittest.sh)
+  - [`tests/unittest_alloc.c`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/tests/unittest_alloc.c)
+  - [`tests/unittest_string.c`](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/tests/unittest_string.c)
+- **Trace:** Start at ini_parse_stream, follow line reading and bounded growth through whitespace and comment handling, section and name-value classification, optional continuations, callback failure, and error recovery; compare file and string readers, then close with baseline, allocation, and string-source tests.
 
 **Why this level:**
 
-- **Language technique 2:** Ordinary C pointers, structs, enums, and size-aware writes are essential, but the path does not require advanced language machinery.
-- **Behavioral reasoning 2:** Several related branches must stay coherent, yet control flow remains local, synchronous, and easy to simulate.
-- **Design span 1:** A flat API and private helpers keep the complete representative trace within one component.
-- **Constraint burden 3:** Multiple portability and memory-safety guarantees materially shape otherwise straightforward transformations.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
+- **Language technique 2:** Common professional C callbacks, buffers, and preprocessor options materially shape the parser without advanced memory techniques.
+- **Behavioral reasoning 2:** Several related parser branches recur, but each line is handled synchronously in one loop.
+- **Design span 1:** The complete reader-to-handler lesson remains in one focused component and its tests.
+- **Constraint burden 3:** Several material input, resource, configuration, and portability guarantees constrain the otherwise compact parser.
+- **Novice accessibility floor 2:** The full INI grammar and callback role fit a short primer, after which representative lines are predictable; configuration branches stretch the path but remain subordinate to one local loop.
+  - **Central concepts:** a trivial section-and-name-value grammar; line-oriented parsing; reporting parsed values through a callback
+  - **Incidental concepts:** compile-time policy switches; optional stack or heap line storage; UTF-8 byte-order-mark compatibility
+- **Placement:** The four structural scores 2/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
-**License:** MIT ([evidence 1](https://github.com/likle/cwalk/blob/e98d23f68807208952c179b49e4fd1813f31298d/LICENSE.md))
+**License:** BSD-3-Clause ([evidence 1](https://github.com/benhoyt/inih/blob/577ae2dee1f0d9c2d11c7f10375c1715f3d6940c/LICENSE.txt))
 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships an embeddable C library tested on Linux, FreeBSD, macOS, and Windows and packaged by multiple C ecosystems.
+**Real-world evidence:** inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.
 
-**Language evidence:** Path parsing, joining, normalization, relative-path calculation, segment iteration, and Unix and Windows rules are implemented in C under src/ with a C public header.
-
-**Coding relevance:**
-
-No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
-
-Required domain context:
-
-- Lexical paths consist of roots, separators, ordinary segments, dot segments, and parent segments under Unix or Windows conventions.
-
-**Eight-part quality gate:**
-
-- **Source quality:** One focused implementation and public header expose explicit output and segment primitives; the documented API and operation-specific tests cover Unix and Windows roots, overlap, small buffers, empty paths, and excessive parent traversal, making the normalization trace direct and maintainable.
-- **Architecture:** The audited architecture of the path beginning at `src/cwalk.c` has these boundaries: one implementation module, one public header, and one lexical-path concern.
-- **Naming and idiom:** `src/cwalk.c` and its supporting files use these characteristic C mechanisms: pointer-based string and segment scanning, caller-owned bounded output buffers, and in-place input and output overlap.
-- **Tests:** Direct tests in `test/normalize_test.c` and `test/relative_test.c` cover these states and branches in the selected path: iterative segment state, dot and parent filtering, and shared normalization and relative-path rules.
-- **Documentation:** `src/cwalk.c` and its selected supporting material document the contracts needed to understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions.
-- **Traceability:** Start at cwk_path_normalize, follow joined segment iteration through dot and parent removal into bounded output and termination, then compare cwk_path_get_relative's shared segment model; close with normalization and relative-path cases for overlap, undersized buffers, roots, separators, and excessive parent traversal.
-- **Maintainability:** Changes to the path beginning at `src/cwalk.c` are constrained by these audited guarantees: Unix, drive-root, and UNC compatibility, bounded output with theoretical lengths, and overlapping input and output support.
-- **Educational value:** Understand how a small C library normalizes and relativizes lexical paths safely across Unix and Windows conventions. No filesystem knowledge is required: the path teaches transferable pointer scanning, segment iteration, bounded string output, in-place transformation, normalization, and relative-path calculation.
-
-**Inspection record:** commit `e98d23f68807208952c179b49e4fd1813f31298d`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/cwalk.c`, `include/cwalk.h`, `test/normalize_test.c`, `test/relative_test.c`, `LICENSE.md`. GitHub Linguist label: C.
-
-</details>
-
-### [zserge/jsmn](https://github.com/zserge/jsmn)
-
-**Language 2 / Behavior 3 / Design 1 / Constraints 3 → Level 2**
-
-A minimal allocation-free JSON tokenizer designed for embedded and resource-constrained C programs.
-
-**Why study it:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures. The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
-
-**Prerequisites:**
-
-- Basic familiarity with C functions, pointers, structs, enums, arrays, manual allocation, function pointers, and focused tests.
-- JSON has objects, arrays, strings, primitives, delimiters, and nesting, while jsmn returns token spans rather than allocating a value tree.
-
-**Concepts this path develops:**
-
-- Header-only implementation switches.
-- Incremental parser position and next-token state.
-- Zero allocation and zero-copy token spans.
-
-**What you can learn:**
-
-- Study these transferable C mechanisms in `jsmn.h`: header-only implementation switches, caller-owned token arrays, and pointer and index based spans.
-- Trace these states and branches from `jsmn.h` through its selected supporting files: incremental parser position and next-token state, nested container matching, and success, invalid, partial, and no-memory outcomes.
-- Identify these architectural responsibilities in the path beginning at `jsmn.h`: one header, one parser abstraction, and one direct test program.
-- Study these change constraints for the path beginning at `jsmn.h`: zero allocation and zero-copy token spans, caller-selected token capacity, and strict and parent-link compatibility modes.
-
-**Learning path:**
-
-- **Goal:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
-- **Start here:** [`jsmn.h`](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/jsmn.h) — Begin with `jsmn.h` because it exposes how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
-- **Then read:**
-  - [`test/tests.c`](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/test/tests.c)
-- **Trace:** Follow jsmn_parse through primitive and string scanners, container opening and closing, parent or backward matching, and token allocation; then use the direct tests to compare successful nested parses with invalid escapes, partial input, strict mode, parent links, and JSMN_ERROR_NOMEM retries.
-
-**Why this level:**
-
-- **Language technique 2:** The implementation depends on solid C representation and preprocessor fluency without advanced type or memory machinery.
-- **Behavioral reasoning 3:** Several parser states and recovery outcomes interact across calls, making behavior the path's main learning burden.
-- **Design span 1:** The full path is deliberately contained in one cohesive component.
-- **Constraint burden 3:** Memory, incremental-use, and compile-time compatibility contracts all influence parser changes.
-- **Placement:** The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/zserge/jsmn/blob/25647e692c7906b96ffd2b05ca54c097948e879c/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository distributes a portable single-header parser intended to be embedded directly into C applications.
-
-**Language evidence:** The incremental JSON tokenizer, token model, validation, error reporting, and optional parent-link behavior are implemented entirely in the C header jsmn.h.
+**Language evidence:** The selected line parser, public callbacks, string and file readers, allocation policies, and baseline tests are implemented in C in ini.c, ini.h, and tests/unittest.c.
 
 **Coding relevance:**
 
-The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
+The complete grammar fits the short context above; the path teaches callbacks, line scanning, bounded buffers, recovery, optional allocation, compile-time policies, and direct tests.
 
-Required domain context:
-
-- JSON has objects, arrays, strings, primitives, delimiters, and nesting, while jsmn returns token spans rather than allocating a value tree.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
-- **Source quality:** The single public header keeps token types, parser state, allocation, and scanning explicit; its README explains the API and zero-allocation contract, and the direct tests cover strings, escapes, primitives, nesting, partial input, token exhaustion, strict parsing, and parent links.
-- **Architecture:** The audited architecture of the path beginning at `jsmn.h` has these boundaries: one header, one parser abstraction, and one direct test program.
-- **Naming and idiom:** `jsmn.h` and its supporting files use these characteristic C mechanisms: header-only implementation switches, caller-owned token arrays, and pointer and index based spans.
-- **Tests:** Direct tests in `test/tests.c` cover these states and branches in the selected path: incremental parser position and next-token state, nested container matching, and success, invalid, partial, and no-memory outcomes.
-- **Documentation:** `jsmn.h` and its selected supporting material document the contracts needed to understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures.
-- **Traceability:** Follow jsmn_parse through primitive and string scanners, container opening and closing, parent or backward matching, and token allocation; then use the direct tests to compare successful nested parses with invalid escapes, partial input, strict mode, parent links, and JSMN_ERROR_NOMEM retries.
-- **Maintainability:** Changes to the path beginning at `jsmn.h` are constrained by these audited guarantees: zero allocation and zero-copy token spans, caller-selected token capacity, and strict and parent-link compatibility modes.
-- **Educational value:** Understand how a minimal zero-allocation C parser turns JSON text into caller-owned token spans and reports partial or capacity failures. The small JSON vocabulary is sufficient context; the path teaches transferable scanner state, zero-copy tokenization, caller-owned capacity, incremental parsing, error contracts, and compile-time feature variants.
+- **Source quality:** The compact implementation separates trimming helpers, one parser loop, and three input adapters; callback and error contracts are explicit, and malformed-input plus allocation variants are directly exercised.
+- **Architecture:** One implementation and public header own parsing, while caller callbacks own value interpretation and small input adapters reuse the same stream loop.
+- **Naming and idiom:** Names such as ini_parse_stream, ini_reader, ini_handler, section, name, value, and lineno expose the trace; bounded C buffers and callbacks are used conventionally.
+- **Tests:** The checked baseline covers missing files, ordinary data, bad sections and comments, callback errors, continuations, byte-order marks, duplicate sections, no-value lines, long sections and lines, with separate string and allocation variants.
+- **Documentation:** The header and README define the callback contract, return codes, line syntax, configuration switches, allocation modes, continuation behavior, and C and C++ usage.
+- **Traceability:** All input forms converge on ini_parse_stream, whose line branches call one handler and map directly to the baseline cases.
+- **Maintainability:** Small helpers isolate trimming and input adaptation, while compile-time policies are named centrally and the compiler matrix checks supported combinations.
+- **Educational value:** The path is a complete, production-tested example of a deliberately small grammar, callbacks, bounded input, recovery, configuration, and portable C design.
 
-**Inspection record:** commit `25647e692c7906b96ffd2b05ca54c097948e879c`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `jsmn.h`, `test/tests.c`, `LICENSE`. GitHub Linguist label: C.
+**Inspection record:** commit `577ae2dee1f0d9c2d11c7f10375c1715f3d6940c`, inspected 2026-08-30. Review passes: Codex exact-pin gap research; Codex cold self-review; Codex novice-accessibility re-review. Files inspected: `ini.c`, `ini.h`, `README.md`, `tests/unittest.c`, `tests/unittest.sh`, `tests/unittest_alloc.c`, `tests/unittest_string.c`, `LICENSE.txt`. GitHub Linguist label: C++.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [cktan/tomlc17](https://github.com/cktan/tomlc17)
 
@@ -169,6 +103,10 @@ Required domain context:
 A lightweight C17 TOML parser that builds an owned typed tree and supports lookup, merge, structural comparison, source locations, and custom allocators.
 
 **Why study it:** Understand how tomlc17 scans a bounded byte buffer, builds an owned tagged tree, and releases every allocation on success or failure. TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.
+
+**Short context:**
+
+- TOML maps keys to typed scalar, array, and table values; dotted keys and table headers construct nested paths, and malformed documents must fail without leaking a partial tree.
 
 **Prerequisites:**
 
@@ -223,9 +161,7 @@ A lightweight C17 TOML parser that builds an owned typed tree and supports looku
 
 TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.
 
-Required domain context:
-
-- TOML maps keys to typed scalar, array, and table values; dotted keys and table headers construct nested paths, and malformed documents must fail without leaking a partial tree.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -249,6 +185,10 @@ Required domain context:
 An ultralightweight JSON parser, tree model, printer, and manipulation library written in portable ANSI C.
 
 **Why study it:** Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure. The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.
+
+**Short context:**
+
+- JSON values form a recursive tree of objects, arrays, strings, numbers, booleans, and null, with ownership transferred into containers.
 
 **Prerequisites:**
 
@@ -299,9 +239,7 @@ An ultralightweight JSON parser, tree model, printer, and manipulation library w
 
 The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.
 
-Required domain context:
-
-- JSON values form a recursive tree of objects, arrays, strings, numbers, booleans, and null, with ownership transferred into containers.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -318,7 +256,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [git/git](https://github.com/git/git)
 
@@ -327,6 +265,10 @@ Required domain context:
 The distributed version control system implementing content-addressed history, branches, merging, network protocols, and repository maintenance.
 
 **Why study it:** Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure. The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.
+
+**Short context:**
+
+- Git's child-process layer launches external commands with controlled arguments, environment, file descriptors, cleanup, and optional parallel scheduling.
 
 **Prerequisites:**
 
@@ -377,9 +319,7 @@ The distributed version control system implementing content-addressed history, b
 
 The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.
 
-Required domain context:
-
-- Git's child-process layer launches external commands with controlled arguments, environment, file descriptors, cleanup, and optional parallel scheduling.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -403,6 +343,10 @@ Required domain context:
 A unit testing framework for C with fork-based isolation, fixtures, timeouts, diagnostics, and multiple output formats.
 
 **Why study it:** Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results. Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.
+
+**Short context:**
+
+- A C test framework registers suites and cases, runs tests in-process or in child processes, and reports assertion failures, signals, exits, and timeouts.
 
 **Prerequisites:**
 
@@ -456,9 +400,7 @@ A unit testing framework for C with fork-based isolation, fixtures, timeouts, di
 
 Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.
 
-Required domain context:
-
-- A C test framework registers suites and cases, runs tests in-process or in child processes, and reports assertion failures, signals, exits, and timeouts.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -475,7 +417,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [curl/curl](https://github.com/curl/curl)
 
@@ -484,6 +426,10 @@ Required domain context:
 A command-line data transfer tool and reusable library supporting URL-based communication across many protocols and platforms.
 
 **Why study it:** Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs. Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.
+
+**Short context:**
+
+- The curl multi interface advances multiple transfers without blocking and tells callers which sockets or timeouts should drive the next step.
 
 **Prerequisites:**
 
@@ -539,9 +485,7 @@ A command-line data transfer tool and reusable library supporting URL-based comm
 
 Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.
 
-Required domain context:
-
-- The curl multi interface advances multiple transfers without blocking and tells callers which sockets or timeouts should drive the next step.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -565,6 +509,10 @@ Required domain context:
 A portable asynchronous event-notification library with event loops, buffered streams, networking protocols, and threading support.
 
 **Why study it:** Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely. The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.
+
+**Short context:**
+
+- An event loop registers I/O and timeout interests with an operating-system backend, activates ready events, and dispatches callbacks by priority.
 
 **Prerequisites:**
 
@@ -619,9 +567,7 @@ A portable asynchronous event-notification library with event loops, buffered st
 
 The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.
 
-Required domain context:
-
-- An event loop registers I/O and timeout interests with an operating-system backend, activates ready events, and dispatches callbacks by priority.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

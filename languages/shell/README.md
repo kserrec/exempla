@@ -1,168 +1,18 @@
 # Shell
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+4 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [bats-core/bats-support](https://github.com/bats-core/bats-support)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
-
-A compact support library that supplies output and error helpers for reusable Bats test libraries.
-
-**Why study it:** The selected output module shows how a small sourced Bash library keeps single-line and multiline diagnostics consistent while preserving prefixes, alignment, and caller-selected output streams.
-
-**Prerequisites:**
-
-- Basic familiarity with Shell functions, parameter expansion, quoting, pipelines, exit statuses, arrays where supported, and Bats-style tests.
-
-**Concepts this path develops:**
-
-- Sourced Bash modules and arrays.
-- Empty, single-line, and multiline branches.
-- Multiline alignment must remain stable.
-
-**What you can learn:**
-
-- Use `src/output.bash` to study sourced-library boundaries, line-oriented transformations, file-descriptor selection, prefix and mark composition, multiline alignment, and direct Bats contracts.
-
-**Learning path:**
-
-- **Goal:** Understand how a small sourced Bash library produces consistent single-line and multiline diagnostic output without losing stream or formatting contracts.
-- **Start here:** [`src/output.bash`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/src/output.bash) — The output module contains the selected formatting behavior and connects directly to the focused single-line-versus-multiline Bats specification.
-- **Then read:**
-  - [`load.bash`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/load.bash)
-  - [`src/error.bash`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/src/error.bash)
-  - [`test/50-output-16-batslib_print_kv_single_or_multi.bats`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/test/50-output-16-batslib_print_kv_single_or_multi.bats)
-  - [`README.md`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/README.md)
-  - [`LICENSE`](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/LICENSE)
-- **Trace:** Start with line counting and batslib_print_kv_single_or_multi, follow prefixes, widths, multiline values, and selected file descriptors through the output helpers, then close with the narrowly named Bats cases and the load entry point.
-
-**Why this level:**
-
-- **Language technique 2:** Common professional Bash library and stream idioms shape the path without advanced abstraction.
-- **Behavioral reasoning 2:** Formatting has meaningful local branches and mutable counters but no nonlocal lifecycle.
-- **Design span 1:** The selected behavior stays within one focused unit.
-- **Constraint burden 2:** Routine production formatting, stream, and error safeguards constrain the helper.
-- **Placement:** The four scores 2/2/1/2 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** 0BSD ([evidence 1](https://github.com/bats-core/bats-support/blob/0954abb9925cad550424cebca2b99255d4eabe96/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes a versioned Bats helper package intended to be loaded by other test libraries and suites.
-
-**Language evidence:** Output formatting, error emission, caller detection, and the Bats load entry point are implemented in Bash under the repository root and src directory.
-
-**Coding relevance:**
-
-The short testing-library context is subordinate to reusable lessons in sourced modules, arrays, line transforms, stream discipline, prefixes, alignment, and focused behavior contracts.
-
-Required domain context:
-
-- Bats helper libraries format diagnostic values and write them to caller-selected output streams.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The selected helpers keep line counting, prefixing, marking, alignment, and stream selection in small visible transformations.
-- **Architecture:** The load entry sources a narrow output module and a separate error module, keeping the selected formatting behavior composable without a hidden runtime.
-- **Naming and idiom:** batslib_count_lines, batslib_prefix, batslib_mark, and batslib_print_kv_single_or_multi state their output transformations directly.
-- **Tests:** The selected Bats specification closes empty, single-line, multiline, prefixed, marked, aligned, and alternate-file-descriptor behavior for batslib_print_kv_single_or_multi.
-- **Documentation:** The README explains the package's purpose, installation, sourced loading model, compatibility promise, and relationship to other Bats helper libraries.
-- **Traceability:** A key-value diagnostic can be followed through the selected output helpers into the narrowly named single-or-multiline Bats cases.
-- **Maintainability:** The small sourced modules, explicit helper composition, and focused test file keep the selected output contract easy to bound.
-- **Educational value:** This path is an approachable example of turning recurring shell-output conventions into a reusable, tested library.
-
-**Inspection record:** commit `0954abb9925cad550424cebca2b99255d4eabe96`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/output.bash`, `load.bash`, `src/error.bash`, `test/50-output-16-batslib_print_kv_single_or_multi.bats`, `README.md`, `LICENSE`. GitHub Linguist label: Shell.
-
-</details>
-
-### [fsaintjacques/semver-tool](https://github.com/fsaintjacques/semver-tool)
-
-**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-A small command-line utility for validating, comparing, inspecting, and incrementing Semantic Versioning 2.0 versions.
-
-**Why study it:** Understand how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations. The version grammar is stated in the program and README, and the bounded path teaches Bash regular-expression captures, array-based comparison, validation, transformation, and command dispatch without requiring specialist domain knowledge.
-
-**Prerequisites:**
-
-- Basic familiarity with Shell functions, parameter expansion, quoting, pipelines, exit statuses, arrays where supported, and Bats-style tests.
-- Semantic Versioning orders major, minor, patch, and prerelease identifiers while ignoring build metadata for precedence.
-
-**Concepts this path develops:**
-
-- Bash regular expressions and BASH_REMATCH captures.
-- Validation and command-error branches.
-- The published SemVer grammar must be accepted exactly.
-
-**What you can learn:**
-
-- Study these transferable Shell mechanisms in `src/semver`: Bash regular expressions and BASH_REMATCH captures and arrays, parameter expansion, and indirect variable lookup.
-- Trace these states and branches from `src/semver` through its selected supporting files: validation and command-error branches, numeric, lexical, missing-field, and prerelease ordering cases, and localized bump and extraction state.
-- Identify these architectural responsibilities in the path beginning at `src/semver`: one production executable and focused helper functions behind one command dispatcher.
-- Study these change constraints for the path beginning at `src/semver`: the published SemVer grammar must be accepted exactly, numeric and alphanumeric prerelease identifiers have different ordering, build metadata must not affect precedence, and bump and extraction commands must preserve the remaining contract.
-
-**Learning path:**
-
-- **Goal:** Understand how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations.
-- **Start here:** [`src/semver`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/src/semver) — Begin with `src/semver` because it exposes how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations.
-- **Then read:**
-  - [`test/compare.bats`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/test/compare.bats)
-  - [`test/validate.bats`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/test/validate.bats)
-  - [`test/bump.bats`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/test/bump.bats)
-  - [`README.md`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/README.md)
-  - [`LICENSE`](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/LICENSE)
-- **Trace:** Start with SEMVER_REGEX and validate_version, follow BASH_REMATCH fields into compare_fields and compare_version, then trace bump and get dispatch; close with the exact precedence, invalid-version, and transformation cases in the three Bats suites.
-
-**Why this level:**
-
-- **Language technique 2:** These are meaningful professional Bash idioms, but substantial abstraction or advanced metaprogramming does not recur in the path.
-- **Behavioral reasoning 2:** The path has meaningful branching and local state while remaining synchronous and easy to trace.
-- **Design span 1:** The complete behavior remains one focused unit.
-- **Constraint burden 3:** Several specification, compatibility, and command-contract guarantees constrain ordinary changes.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/fsaintjacques/semver-tool/blob/1a547a75f946717223fb7ca821ba6f3f337e9aca/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes an executable release used directly from shell scripts, Git hooks, asdf, and bpkg workflows.
-
-**Language evidence:** Semantic-version parsing, validation, precedence comparison, extraction, bumping, and command dispatch are implemented in one Bash program.
-
-**Coding relevance:**
-
-The version grammar is stated in the program and README, and the bounded path teaches Bash regular-expression captures, array-based comparison, validation, transformation, and command dispatch without requiring specialist domain knowledge.
-
-Required domain context:
-
-- Semantic Versioning orders major, minor, patch, and prerelease identifiers while ignoring build metadata for precedence.
-
-**Eight-part quality gate:**
-
-- **Source quality:** src/semver separates validation, field ordering, prerelease bumping, extraction, and dispatch into specification-named functions; compare, validate, and bump Bats suites directly cover precedence, invalid forms, transformations, metadata, and argument errors; the README documents the complete contract; and the pinned Apache-2.0 license, focused single-file architecture, direct trace, and maintained tests satisfy all eight quality dimensions.
-- **Architecture:** The audited architecture of the path beginning at `src/semver` has these boundaries: one production executable and focused helper functions behind one command dispatcher.
-- **Naming and idiom:** `src/semver` and its supporting files use these characteristic Shell mechanisms: Bash regular expressions and BASH_REMATCH captures and arrays, parameter expansion, and indirect variable lookup.
-- **Tests:** Direct tests in `test/compare.bats`, `test/validate.bats`, and `test/bump.bats` cover these states and branches in the selected path: validation and command-error branches, numeric, lexical, missing-field, and prerelease ordering cases, and localized bump and extraction state.
-- **Documentation:** `src/semver` and its selected supporting material document the contracts needed to understand how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations.
-- **Traceability:** Start with SEMVER_REGEX and validate_version, follow BASH_REMATCH fields into compare_fields and compare_version, then trace bump and get dispatch; close with the exact precedence, invalid-version, and transformation cases in the three Bats suites.
-- **Maintainability:** Changes to the path beginning at `src/semver` are constrained by these audited guarantees: the published SemVer grammar must be accepted exactly, numeric and alphanumeric prerelease identifiers have different ordering, build metadata must not affect precedence, and bump and extraction commands must preserve the remaining contract.
-- **Educational value:** Understand how a Bash command turns the Semantic Versioning grammar into validation, precedence comparison, extraction, and version transformations. The version grammar is stated in the program and README, and the bounded path teaches Bash regular-expression captures, array-based comparison, validation, transformation, and command dispatch without requiring specialist domain knowledge.
-
-**Inspection record:** commit `1a547a75f946717223fb7ca821ba6f3f337e9aca`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/semver`, `test/compare.bats`, `test/validate.bats`, `test/bump.bats`, `README.md`, `LICENSE`. GitHub Linguist label: Shell.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [dokku/dokku](https://github.com/dokku/dokku)
 
@@ -171,6 +21,10 @@ Required domain context:
 A self-hosted platform as a service that builds, deploys, configures, networks, schedules, and serves applications on a user's server.
 
 **Why study it:** Understand how Dokku resolves aliases and dispatches a command through enabled plugin subcommands and the legacy command protocol. The bounded execute_dokku_cmd trace needs only concise plugin-dispatch vocabulary and primarily teaches associative alias maps, argument adaptation, extension precedence, dynamic executable routing, compatibility fallback, and explicit exit semantics; Docker, Git deployment, proxies, certificates, and Kubernetes are excluded.
+
+**Short context:**
+
+- Dokku commands are implemented by enabled plugins whose executable files follow a documented command and exit-status convention.
 
 **Prerequisites:**
 
@@ -224,9 +78,7 @@ A self-hosted platform as a service that builds, deploys, configures, networks, 
 
 The bounded execute_dokku_cmd trace needs only concise plugin-dispatch vocabulary and primarily teaches associative alias maps, argument adaptation, extension precedence, dynamic executable routing, compatibility fallback, and explicit exit semantics; Docker, Git deployment, proxies, certificates, and Kubernetes are excluded.
 
-Required domain context:
-
-- Dokku commands are implemented by enabled plugins whose executable files follow a documented command and exit-status convention.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -250,6 +102,10 @@ Required domain context:
 A per-user Ruby version manager that selects installations through PATH shims, directory-local version files, environment overrides, and plugins.
 
 **Why study it:** Understand how rbenv safely reconciles a directory of executable shims with installed runtimes and plugin-provided commands. The short runtime-selection context is subordinate to transferable lessons in filesystem reconciliation, lock ownership, cleanup traps, generated wrappers, plugin hooks, exact-name matching, and behavior-driven tests.
+
+**Short context:**
+
+- A shim is a small executable placed earlier in PATH so a version manager can choose the real runtime command.
 
 **Prerequisites:**
 
@@ -301,9 +157,7 @@ A per-user Ruby version manager that selects installations through PATH shims, d
 
 The short runtime-selection context is subordinate to transferable lessons in filesystem reconciliation, lock ownership, cleanup traps, generated wrappers, plugin hooks, exact-name matching, and behavior-driven tests.
 
-Required domain context:
-
-- A shim is a small executable placed earlier in PATH so a version manager can choose the real runtime command.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -320,7 +174,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions)
 
@@ -329,6 +183,10 @@ Required domain context:
 A portable POSIX-shell option parser and parser generator supporting short, long, optional, abbreviated, and subcommand forms.
 
 **Why study it:** Understand how a portable Shell definition DSL emits and evaluates a parser for flags, values, validation, scanning modes, abbreviations, subcommands, and rest arguments. Command-line option vocabulary is concise; the path primarily teaches portable Shell metaprogramming, quoting, generated parsers, stateful scanning, callbacks, modular extensions, and cross-shell contracts.
+
+**Short context:**
+
+- An option definition describes flags, required and optional values, subcommands, validation, and remaining positional arguments.
 
 **Prerequisites:**
 
@@ -383,9 +241,7 @@ A portable POSIX-shell option parser and parser generator supporting short, long
 
 Command-line option vocabulary is concise; the path primarily teaches portable Shell metaprogramming, quoting, generated parsers, stateful scanning, callbacks, modular extensions, and cross-shell contracts.
 
-Required domain context:
-
-- An option definition describes flags, required and optional values, subcommands, validation, and remaining positional arguments.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -409,6 +265,10 @@ Required domain context:
 A Python version manager that selects installed runtimes through shims and can download and build many Python implementations.
 
 **Why study it:** Understand how pyenv detects a caller shell, emits compatible initialization code, and safely installs startup configuration across several shell languages. Startup-file vocabulary is short and the selected path teaches cross-language code generation, parent-shell detection, persistent configuration safeguards, idempotent PATH handling, and directly tested compatibility without Python build-toolchain breadth.
+
+**Short context:**
+
+- Shell startup files establish environment variables, PATH entries, completions, and wrapper functions for interactive sessions.
 
 **Prerequisites:**
 
@@ -459,9 +319,7 @@ A Python version manager that selects installed runtimes through shims and can d
 
 Startup-file vocabulary is short and the selected path teaches cross-language code generation, parent-shell detection, persistent configuration safeguards, idempotent PATH handling, and directly tested compatibility without Python build-toolchain breadth.
 
-Required domain context:
-
-- Shell startup files establish environment variables, PATH entries, completions, and wrapper functions for interactive sessions.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -478,7 +336,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 

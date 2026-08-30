@@ -1,92 +1,18 @@
 # Scala
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [typelevel/case-insensitive](https://github.com/typelevel/case-insensitive)
-
-**Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-Typelevel's small locale-independent case-insensitive string value with lawful equality, hashing, ordering, Cats instances, interpolation, and extraction.
-
-**Why study it:** The repository turns one deceptively subtle value-semantic requirement into a tiny implementation whose equality, hash, ordering, interpolation, and Unicode edge cases are all visible.
-
-**Prerequisites:**
-
-- Scala classes and companion objects, ordinary `equals` and `hashCode` overrides, string operations, implicits or givens, and reading property tests.
-- Basic awareness that Unicode case conversion has edge cases; the path develops the exact locale-independent contract.
-
-**Concepts this path develops:**
-
-- One lawful case-insensitive contract shared by equality, hashing, ordering, and containment.
-- Cats type-class instances and interpolation that preserve the core value semantics.
-- Locale-independent case folding verified against Unicode edge cases and cross-version behavior.
-
-**What you can learn:**
-
-- Value-object invariants, equals and hashCode contracts, locale-independent case folding, cached hashes, ordering, Cats type-class instances, string interpolators, cross-version compatibility, property testing, and Unicode edge cases.
-
-**Learning path:**
-
-- **Goal:** Understand how a small Scala value type preserves lawful case-insensitive equality, hashing, ordering, interpolation, and Unicode behavior.
-- **Start here:** [`core/src/main/scala/org/typelevel/ci/CIString.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala/org/typelevel/ci/CIString.scala) — CIString.scala states the equality contract, implements hashing and ordering, and supplies the algebraic instances exercised directly by CIStringSuite and TurkeySuite.
-- **Then read:**
-  - [`core/src/main/scala/org/typelevel/ci/package.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala/org/typelevel/ci/package.scala)
-  - [`core/src/main/scala-3/org/typelevel/ci/compat.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala-3/org/typelevel/ci/compat.scala)
-  - [`tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala)
-  - [`tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala)
-  - [`README.md`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/README.md)
-  - [`LICENSE`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/LICENSE)
-- **Trace:** Start with CIString equality, cached normalized hashing, ordering, containment, and Cats instances; follow the package and Scala 3 compatibility layers into interpolation and extraction; then close equality/hash laws, serialization, containment, Turkish-I, and sharp-s behavior in the direct suites.
-
-**Why this level:**
-
-- **Language technique 3:** Type-class instances and compatibility abstractions materially shape the public value semantics without advanced metaprogramming.
-- **Behavioral reasoning 2:** The behavior is subtle but remains a synchronous localized value transformation with no nonlocal lifecycle.
-- **Design span 1:** One abstraction contains the meaningful production behavior.
-- **Constraint burden 3:** Several semantic, algebraic, Unicode, serialization, and compatibility guarantees constrain the small implementation.
-- **Placement:** The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Apache-2.0 ([evidence 1](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** Typelevel publishes the cross-version case-insensitive artifact used as a dedicated value type in Scala libraries and documents its Maven coordinates and microsite.
-
-**Language evidence:** The CIString value type, interpolator compatibility layers, Cats instances, test generators, and property suites are Scala across the core, testing, and cross-platform test modules.
-
-**Coding relevance:**
-
-The short text vocabulary is subordinate to reusable programming lessons in value-object invariants, equality and hash contracts, cached computation, ordering, type-class instances, compatibility shims, property testing, and Unicode edge cases.
-
-Required domain context:
-
-- A CIString compares, hashes, orders, interpolates, and extracts strings using locale-independent case-insensitive semantics.
-
-**Eight-part quality gate:**
-
-- **Source quality:** The implementation documents its surprising substitutability caveat, keeps equality and hashing aligned, and uses direct loops where allocation-free behavior matters.
-- **Architecture:** CIString owns value semantics, its companion supplies Cats instances, and version-specific compatibility files implement interpolation without contaminating the core.
-- **Naming and idiom:** CIString, calculateHash, contains, catsInstancesForOrgTypelevelCIString, and the ci interpolator expose precise responsibilities.
-- **Tests:** Property suites verify equality, ordering, hashing, algebraic laws, serialization, interpolation, containment, and the Turkish-I edge case across platforms.
-- **Documentation:** The README gives installation and points to the microsite, while the primary type documents the exact equality rule and its observable caveat.
-- **Traceability:** CIString equality can be followed into case-insensitive comparison and the matching normalized hash loop, then checked against property laws and TurkeySuite.
-- **Maintainability:** The public surface is narrow, platform differences are isolated, algebraic laws guard refactors, and the project remains actively maintained.
-- **Educational value:** It demonstrates why a seemingly tiny value type deserves explicit contracts and law-based tests.
-
-**Inspection record:** commit `2b28be5341a0f1c6bc5c00a8486622f26018ae9c`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `core/src/main/scala/org/typelevel/ci/CIString.scala`, `core/src/main/scala/org/typelevel/ci/package.scala`, `core/src/main/scala-3/org/typelevel/ci/compat.scala`, `tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala`, `tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [scopt/scopt](https://github.com/scopt/scopt)
 
@@ -95,6 +21,10 @@ Required domain context:
 A small cross-platform command-line option parser for Scala with functional and object-oriented declaration styles and interceptable effects.
 
 **Why study it:** Its source connects a typed declaration DSL to token matching, occurrence constraints, configuration updates, validation, usage rendering, and effect handling without a large framework.
+
+**Short context:**
+
+- A command-line parser maps option, positional, and command tokens into a typed application configuration and explicit effects.
 
 **Prerequisites:**
 
@@ -145,9 +75,7 @@ A small cross-platform command-line option parser for Scala with functional and 
 
 The concise command-line vocabulary is subordinate to transferable lessons in generic readers, declarative builders, immutable descriptions, token-state execution, recursive commands, validation, and effect separation.
 
-Required domain context:
-
-- A command-line parser maps option, positional, and command tokens into a typed application configuration and explicit effects.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -171,6 +99,10 @@ Required domain context:
 A compact library of composable retry policies for Scala Futures, including immediate, paused, exponential-backoff, jittered, conditional, and fail-fast strategies.
 
 **Why study it:** softwaremill/retry is a small, inspectable example of composing nonblocking retry policies around deferred Future work without obscuring delays or failures.
+
+**Short context:**
+
+- A retry policy classifies a Future result, chooses whether and when to try deferred work again, and optionally modifies the delay with backoff or jitter.
 
 **Prerequisites:**
 
@@ -221,9 +153,7 @@ A compact library of composable retry policies for Scala Futures, including imme
 
 The small retry vocabulary is subordinate to transferable lessons in deferred computation, asynchronous recursion, policy composition, type-class predicates, delay scheduling, bounded arithmetic, and failure propagation.
 
-Required domain context:
-
-- A retry policy classifies a Future result, chooses whether and when to try deferred work again, and optionally modifies the delay with backoff or jitter.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -240,7 +170,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [circe/circe](https://github.com/circe/circe)
 
@@ -249,6 +179,10 @@ Required domain context:
 A modular functional JSON library for Scala with immutable values, typed codecs, cursor navigation, generic derivation, parsing integrations, literals, and JSON Pointer.
 
 **Why study it:** Circe's core decoder path shows how typed composition, immutable cursors, navigation history, and two error strategies fit together in a production functional API.
+
+**Short context:**
+
+- A JSON decoder traverses a cursor, produces typed values or precise failures, and can fail fast or accumulate independent errors.
 
 **Prerequisites:**
 
@@ -298,9 +232,7 @@ A modular functional JSON library for Scala with immutable values, typed codecs,
 
 The small JSON vocabulary is subordinate to transferable lessons in higher-kinded type classes, recursive traversal, cursor state and history, applicative error accumulation, validation, and stack-safe composition.
 
-Required domain context:
-
-- A JSON decoder traverses a cursor, produces typed values or precise failures, and can fail fast or accumulate independent errors.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -324,6 +256,10 @@ Required domain context:
 A purely functional, streaming HTTP toolkit for Scala with protocol types, clients, servers, routing, middleware, codecs, and the Ember network implementation.
 
 **Why study it:** http4s makes resource ownership visible by modeling a client response as an effectful Resource whose streaming body and connection lifetime stay in one scope.
+
+**Short context:**
+
+- An effect-polymorphic HTTP client acquires a response as a Resource so the caller can consume a streaming body and reliably release the underlying connection.
 
 **Prerequisites:**
 
@@ -373,9 +309,7 @@ A purely functional, streaming HTTP toolkit for Scala with protocol types, clien
 
 The short HTTP request and response vocabulary is documented locally and remains subordinate to transferable lessons in higher-kinded interfaces, Resource ownership, streaming values, scoped use, transformation, error handling, cleanup, and contract tests.
 
-Required domain context:
-
-- An effect-polymorphic HTTP client acquires a response as a Resource so the caller can consume a streaming body and reliably release the underlying connection.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -392,7 +326,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [typelevel/cats-effect](https://github.com/typelevel/cats-effect)
 
@@ -401,6 +335,10 @@ Required domain context:
 Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cancelable, concurrent Scala applications.
 
 **Why study it:** Cats Effect provides a complete expert trace from an IO algebra through a cancelable fiber interpreter into a fair work-stealing runtime.
+
+**Short context:**
+
+- An IO fiber interprets an effect algebra while coordinating asynchronous suspension, cancellation, finalization, joining, tracing, and runtime scheduling.
 
 **Prerequisites:**
 
@@ -454,9 +392,7 @@ Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cance
 
 Concurrency and runtime scheduling are core programming subject matter; the path directly teaches effect interpreters, manual continuation state, lock-free publication, work stealing, cancellation masks, finalizers, fairness, and race-sensitive contract testing.
 
-Required domain context:
-
-- An IO fiber interprets an effect algebra while coordinating asynchronous suspension, cancellation, finalization, joining, tracing, and runtime scheduling.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -480,6 +416,10 @@ Required domain context:
 A compositional, effect-polymorphic streaming I/O library for Scala with resource-safe and concurrent stream processing.
 
 **Why study it:** Understand how FS2 compiles a typed Pull program into an effect while opening and closing nested scopes, preserving resource finalizers, interruption, stack safety, and error semantics. A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.
+
+**Short context:**
+
+- A Stream is represented by a Pull program; compilation interprets that program in an effect while scopes own resources and guarantee cleanup across success, failure, cancellation, interruption, and early termination.
 
 **Prerequisites:**
 
@@ -539,9 +479,7 @@ A compositional, effect-polymorphic streaming I/O library for Scala with resourc
 
 A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.
 
-Required domain context:
-
-- A Stream is represented by a Pull program; compilation interprets that program in an effect while scopes own resources and guarantee cleanup across success, failure, cancellation, interruption, and early termination.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

@@ -7,10 +7,15 @@ Learn transferable programming skills from exemplary real-world source code.
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through production implementation and tests. The catalog currently has
-**151 qualified learning paths from 150 public repositories across 20
-languages**. Its **49 open slots are honest research gaps** after the completed
-learner-centered re-review, path-centered remediation, and documented gap
+**125 qualified learning paths from 124 public repositories across 20
+languages**. Its **75 open slots are honest research gaps** after the completed
+learner-centered re-review, novice-accessibility audit, and documented gap
 research. No gate or score is lowered to preserve an arbitrary count.
+
+If you can write small programs in the language, **Level 1 — First real code**
+is designed to be your first comfortable step into production source. An empty
+Level 1 does not mean you should simply jump to Level 2; it means Exempla has
+not yet found a path gentle enough to publish there.
 
 ## Browse the catalog
 
@@ -22,6 +27,8 @@ research. No gate or score is lowered to preserve an arbitrary count.
 - prerequisites, concepts developed by the path, and any short domain context;
 - the coding-relevance and eight-part repository-quality evidence;
 - four path-centered scores and the resulting Level;
+- for structurally low-level paths, the central and incidental concepts plus a
+  novice-accessibility judgment;
 - the exact inspected commit and files; and
 - one or more pinned license-evidence links.
 
@@ -43,9 +50,17 @@ subject-matter prestige.
 Each dimension is an integer from 1 through 5. Their arithmetic mean rounds
 halves upward. One score of 4 forces at least Level 3, one score of 5 forces at
 least Level 4, and Level 5 requires a rounded mean of 5 plus at least two scores
-of 5. The complete anchors and coding-relevance gate are in the
+of 5. This produces the rubric Level. When it is 1 or 2, a separate
+novice-accessibility floor prevents a mechanically small path from hiding a
+large conceptual prerequisite; the published Level is the higher result. The
+floor is not averaged into the four scores. The complete anchors,
+accessibility tests, and coding-relevance gate are in the
 [learning-level rubric](docs/learning-levels.md). Repository quality remains a
 separate [pass/fail gate](docs/qualification.md).
+
+The learner-facing rungs are **Level 1 — First real code**, **Level 2 — Guided
+real-world code**, **Level 3 — Intermediate**, **Level 4 — Advanced**, and
+**Level 5 — Expert**.
 
 ## How to study an entry
 
@@ -72,10 +87,14 @@ separate [pass/fail gate](docs/qualification.md).
 - [The current corpus audit](research/learner-centered-audit.json) reconciles
   counts, identities, guardrails, metadata, licenses, generated pages, source
   claims, and neighboring-level comparisons.
+- [The novice-accessibility audit](research/novice-accessibility-audit.json)
+  records every starting Level 1 and Level 2 judgment, all five accessibility
+  tests, capacity alternates, conditional replacement passes, and progression
+  sanity checks.
 - [Rejected candidates](research/rejections.json) are append-only.
 - [`research/audit.json`](research/audit.json) is the historical v1 corpus
   audit; it is no longer the active consistency record.
-- Canonical schema-version-3 JSON under [`catalog/`](catalog/README.md)
+- Canonical schema-version-4 JSON under [`catalog/`](catalog/README.md)
   deterministically generates every language page.
 
 Automation validates local structure, formulas, reconciliation, and generated
@@ -86,17 +105,14 @@ passes, and no independent human review is implied.
 
 ## Current learner-centered refinement
 
-The post-rerun remediation made learning paths first-class identities. One
-repository may now contribute at most two materially distinct paths, never two
-paths in the same language and Level bucket. It also added the score-4 floor,
-separated prior knowledge from concepts developed, corrected and rescored the
-known `r-lib/pkgconfig` source mismatch, completed a targeted source-claim
-audit, and revisited every Level 1 gap without weakening qualification. That
-review added Webmozart Assert's distinct `notNull()` path at Level 1; the total
-initially remained 150 because the score floor moved Swift Tagged into a full
-Level 3 bucket and preserved Swift Log as a qualified capacity alternate. Final
-integration also preserved the independently completed APISIX Level 5 path, so
-the published corpus now contains 151 paths without weakening a gate or score.
+The lower-rung review inspected all 3 starting Level 1 paths and all 35
+starting Level 2 paths at their exact pins. It retained the four structural
+scores, added a separate novice-accessibility floor, promoted 29 concept-heavy
+paths to Level 3, and resolved Level 3 capacity only after those judgments were
+fixed. Twenty-eight qualified overflow paths remain preserved as restorable
+capacity alternates. Current exact-pin gap evidence yielded two honest Level 2
+replacements—Humanizer string truncation for C# and inih's line-oriented parser
+for C—while every other lower-level gap remains visible.
 
 ## Contributing
 

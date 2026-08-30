@@ -1,90 +1,18 @@
 # Swift
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
+
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+
+## Level 2 — Guided real-world code
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 2
-
-### [JohnSundell/Files](https://github.com/JohnSundell/Files)
-
-**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
-
-A small object-oriented filesystem library that wraps Foundation paths as File and Folder values.
-
-**Why study it:** Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders. Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging.
-
-**Prerequisites:**
-
-- Basic familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest.
-- Folder children are filesystem entries exposed as typed File and Folder values.
-
-**Concepts this path develops:**
-
-- Sequence and IteratorProtocol conformances.
-- Shallow and recursive traversal.
-- Lazy enumeration must preserve path and type identity.
-
-**What you can learn:**
-
-- Study these transferable Swift mechanisms in `Sources/Files.swift`: Sequence and IteratorProtocol conformances, lazy typed child construction, and Foundation error bridging.
-- Trace these states and branches from `Sources/Files.swift` through its selected supporting files: shallow and recursive traversal, file and folder filtering, and end-of-sequence and lookup failures.
-- Identify these architectural responsibilities in the path beginning at `Sources/Files.swift`: Folder sequence facade, child iterator, and FileManager-backed location model.
-- Study these change constraints for the path beginning at `Sources/Files.swift`: lazy enumeration must preserve path and type identity, recursive and shallow modes must remain distinct, and filesystem errors cross the Foundation boundary.
-
-**Learning path:**
-
-- **Goal:** Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders.
-- **Start here:** [`Sources/Files.swift`](https://github.com/JohnSundell/Files/blob/e85f2b4a8dfa0f242889f45236f3867d16e40480/Sources/Files.swift) — Begin with `Sources/Files.swift` because it exposes how a small Swift API turns directory traversal into lazy typed sequences over files and folders.
-- **Then read:**
-  - [`Tests/FilesTests/FilesTests.swift`](https://github.com/JohnSundell/Files/blob/e85f2b4a8dfa0f242889f45236f3867d16e40480/Tests/FilesTests/FilesTests.swift)
-- **Trace:** Begin at Folder.ChildIterator and ChildSequence, follow FileManager enumeration into typed File or Folder values, then compare shallow, recursive, file-only, and folder-only child sequences; close with temporary-directory tests that verify iteration order, filtering, paths, and failures.
-
-**Why this level:**
-
-- **Language technique 2:** Familiar Swift protocol and iterator techniques recur without advanced type-level machinery.
-- **Behavioral reasoning 2:** A few related traversal branches recur within one bounded iterator lifecycle.
-- **Design span 2:** A small set of cohesive pieces spans the public traversal API and platform adapter.
-- **Constraint burden 3:** Real filesystem state adds recurring correctness constraints, though the selected trace remains compact.
-- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** MIT ([evidence 1](https://github.com/JohnSundell/Files/blob/e85f2b4a8dfa0f242889f45236f3867d16e40480/LICENSE))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes Swift Package Manager and CocoaPods libraries used by macOS, iOS, Linux, tvOS, and watchOS code.
-
-**Language evidence:** File and folder values, traversal, creation, copying, moving, renaming, deletion, attributes, and Foundation interoperation are implemented in Swift in Sources/Files.swift.
-
-**Coding relevance:**
-
-Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging.
-
-Required domain context:
-
-- Folder children are filesystem entries exposed as typed File and Folder values.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Files.swift keeps Folder.ChildIterator and ChildSequence beside the File and Folder model, and FilesTests.swift exercises real temporary-directory traversal, recursive and shallow enumeration, filtering, paths, errors, and mutations.
-- **Architecture:** The audited architecture of the path beginning at `Sources/Files.swift` has these boundaries: Folder sequence facade, child iterator, and FileManager-backed location model.
-- **Naming and idiom:** `Sources/Files.swift` and its supporting files use these characteristic Swift mechanisms: Sequence and IteratorProtocol conformances, lazy typed child construction, and Foundation error bridging.
-- **Tests:** Direct tests in `Tests/FilesTests/FilesTests.swift` cover these states and branches in the selected path: shallow and recursive traversal, file and folder filtering, and end-of-sequence and lookup failures.
-- **Documentation:** `Sources/Files.swift` and its selected supporting material document the contracts needed to understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders.
-- **Traceability:** Begin at Folder.ChildIterator and ChildSequence, follow FileManager enumeration into typed File or Folder values, then compare shallow, recursive, file-only, and folder-only child sequences; close with temporary-directory tests that verify iteration order, filtering, paths, and failures.
-- **Maintainability:** Changes to the path beginning at `Sources/Files.swift` are constrained by these audited guarantees: lazy enumeration must preserve path and type identity, recursive and shallow modes must remain distinct, and filesystem errors cross the Foundation boundary.
-- **Educational value:** Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders. Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging.
-
-**Inspection record:** commit `e85f2b4a8dfa0f242889f45236f3867d16e40480`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `Sources/Files.swift`, `Tests/FilesTests/FilesTests.swift`, `LICENSE`. GitHub Linguist label: Swift.
-
-</details>
-
-## Level 3
+## Level 3 — Intermediate
 
 ### [pointfreeco/swift-tagged](https://github.com/pointfreeco/swift-tagged)
 
@@ -93,6 +21,10 @@ Required domain context:
 A tiny generic wrapper that gives otherwise identical raw values distinct compile-time identities.
 
 **Why study it:** Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine. The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion.
+
+**Short context:**
+
+- A phantom Tag parameter distinguishes values with the same RawValue at compile time while the runtime representation remains one wrapped value.
 
 **Prerequisites:**
 
@@ -141,9 +73,7 @@ A tiny generic wrapper that gives otherwise identical raw values distinct compil
 
 The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion.
 
-Required domain context:
-
-- A phantom Tag parameter distinguishes values with the same RawValue at compile time while the runtime representation remains one wrapped value.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -167,6 +97,10 @@ Required domain context:
 A server-side Swift web framework built on SwiftNIO with routing, middleware, content, authentication, sessions, clients, and operational integrations.
 
 **Why study it:** Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow. HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing.
+
+**Short context:**
+
+- Middleware wraps an HTTP Responder so request handling can be composed as an ordered chain.
 
 **Prerequisites:**
 
@@ -218,9 +152,7 @@ A server-side Swift web framework built on SwiftNIO with routing, middleware, co
 
 HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing.
 
-Required domain context:
-
-- Middleware wraps an HTTP Responder so request handling can be composed as an ordered chain.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -237,7 +169,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [Alamofire/Alamofire](https://github.com/Alamofire/Alamofire)
 
@@ -246,6 +178,10 @@ Required domain context:
 An HTTP networking library for Apple platforms built over URLSession with fluent, async, Combine, streaming, and WebSocket APIs.
 
 **Why study it:** Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup. HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup.
+
+**Short context:**
+
+- A Request owns a URLSession task lifecycle and may consult a RequestInterceptor before retrying a completed attempt.
 
 **Prerequisites:**
 
@@ -298,9 +234,7 @@ An HTTP networking library for Apple platforms built over URLSession with fluent
 
 HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup.
 
-Required domain context:
-
-- A Request owns a URLSession task lifecycle and may consult a RequestInterceptor before retrying a completed attempt.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -324,6 +258,10 @@ Required domain context:
 A configurable Swift style and static-analysis tool with hundreds of rules, autocorrection, baselines, reporters, and build integrations.
 
 **Why study it:** Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration. Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers.
+
+**Short context:**
+
+- The sorted_imports rule groups adjacent Swift import declarations, reports inversions, and rewrites each block into configured order.
 
 **Prerequisites:**
 
@@ -378,9 +316,7 @@ A configurable Swift style and static-analysis tool with hundreds of rules, auto
 
 Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers.
 
-Required domain context:
-
-- The sorted_imports rule groups adjacent Swift import declarations, reports inversions, and rewrites each block into configured order.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -397,7 +333,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [apple/swift-nio](https://github.com/apple/swift-nio)
 
@@ -406,6 +342,10 @@ Required domain context:
 A cross-platform high-performance event-driven networking framework for building protocol servers and clients in Swift.
 
 **Why study it:** Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering. Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants.
+
+**Short context:**
+
+- EventLoopFuture represents a result whose callbacks and transformations are confined to an EventLoop.
 
 **Prerequisites:**
 
@@ -456,9 +396,7 @@ A cross-platform high-performance event-driven networking framework for building
 
 Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants.
 
-Required domain context:
-
-- EventLoopFuture represents a result whose callbacks and transformations are confined to an EventLoop.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -482,6 +420,10 @@ Required domain context:
 Swift's source-accurate syntax-tree libraries, parser tooling, refactoring support, and macro-expansion infrastructure.
 
 **Why study it:** Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics. A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.
+
+**Short context:**
+
+- A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted.
 
 **Prerequisites:**
 
@@ -537,9 +479,7 @@ Swift's source-accurate syntax-tree libraries, parser tooling, refactoring suppo
 
 A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.
 
-Required domain context:
-
-- A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 

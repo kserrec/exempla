@@ -6,7 +6,7 @@
   "required": ["schema_version", "language_slug", "repositories"],
   "additionalProperties": false,
   "properties": {
-    "schema_version": {"const": 3},
+    "schema_version": {"const": 4},
     "language_slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
     "repositories": {"type": "array", "items": {"$ref": "#/$defs/repository"}}
   },
@@ -30,6 +30,23 @@
       "properties": {
         "score": {"$ref": "#/$defs/score"},
         "signals": {"$ref": "#/$defs/stringList"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "noviceAccessibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["floor", "central_concepts", "incidental_concepts", "reason"],
+      "properties": {
+        "floor": {"type": "integer", "minimum": 1, "maximum": 3},
+        "central_concepts": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        },
+        "incidental_concepts": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        },
         "reason": {"$ref": "#/$defs/nonEmptyString"}
       }
     },
@@ -148,6 +165,7 @@
             "placement": {"$ref": "#/$defs/nonEmptyString"}
           }
         },
+        "novice_accessibility": {"$ref": "#/$defs/noviceAccessibility"},
         "quality": {"$ref": "#/$defs/quality"},
         "inspection": {
           "type": "object",

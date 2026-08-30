@@ -1,117 +1,43 @@
 # Ruby
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## Level 1
+## Level 1 — First real code
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2
-
-### [ruby/base64](https://github.com/ruby/base64)
-
-**Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
-
-Ruby's standard Base64 library for printable encoding of binary data, including strict and URL-safe variants.
-
-**Why study it:** Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.
-
-**Prerequisites:**
-
-- Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.
-- Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected.
-
-**Concepts this path develops:**
-
-- Module-function APIs.
-- MIME versus strict behavior.
-- RFC-2045 and RFC-4648 alphabet differences.
-
-**What you can learn:**
-
-- Study these transferable Ruby mechanisms in `lib/base64.rb`: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.
-- Trace these states and branches from `lib/base64.rb` through its selected supporting files: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.
-- Identify these architectural responsibilities in the path beginning at `lib/base64.rb`: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.
-- Study these change constraints for the path beginning at `lib/base64.rb`: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips.
-
-**Learning path:**
-
-- **Goal:** Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input.
-- **Start here:** [`lib/base64.rb`](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/lib/base64.rb) — Begin with `lib/base64.rb` because it contains the complete MIME, strict, and URL-safe encoding and decoding path.
-- **Then read:**
-  - [`test/base64/test_base64.rb`](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/test/base64/test_base64.rb)
-  - [`README.md`](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/README.md)
-  - [`sig/base64.rbs`](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/sig/base64.rbs)
-  - [`test_sig/test_base64.rb`](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/test_sig/test_base64.rb)
-- **Trace:** Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc.
-
-**Why this level:**
-
-- **Language technique 1:** The complete path uses ordinary Ruby functions and string operations around a standard primitive boundary.
-- **Behavioral reasoning 2:** Several visible variants and boundary branches must be compared, but state remains local and linear.
-- **Design span 1:** The behavior is deliberately concentrated in six small methods and one direct test file.
-- **Constraint burden 3:** Multiple externally visible encoding, padding, newline, and malformed-input contracts shape otherwise tiny methods.
-- **Placement:** The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2.
-
-**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/COPYING), [evidence 2](https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/BSDL))
-
-<details>
-<summary>Quality and review evidence</summary>
-
-**Real-world evidence:** The repository publishes the base64 default gem used by Ruby applications and the Ruby standard library.
-
-**Language evidence:** The published encoding and decoding APIs, URL-safe adaptation, padding repair, and direct behavioral tests are first-party Ruby in lib/ and test/.
-
-**Coding relevance:**
-
-Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.
-
-Required domain context:
-
-- Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected.
-
-**Eight-part quality gate:**
-
-- **Source quality:** Six compact methods delegate the bit-level transform to Ruby's documented pack/unpack primitives and keep URL-safe alphabet and padding policy explicit; direct tests cover empty input, binary bytes, strict malformed input, padded and unpadded variants, and round trips.
-- **Architecture:** The audited architecture of the path beginning at `lib/base64.rb` has these boundaries: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.
-- **Naming and idiom:** `lib/base64.rb` and its supporting files use these characteristic Ruby mechanisms: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.
-- **Tests:** Direct tests in `test/base64/test_base64.rb` cover these states and branches in the selected path: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.
-- **Documentation:** Inline API documentation, type signatures, and README examples distinguish the three method pairs, padding, newlines, and malformed-input behavior. The URL-safe decoder RDoc overstates alphabet rejection: valid-length standard `+` and `/` input is accepted, as source and tests show.
-- **Traceability:** Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc.
-- **Maintainability:** Changes to the path beginning at `lib/base64.rb` are constrained by these audited guarantees: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips.
-- **Educational value:** Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.
-
-**Inspection record:** commit `9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `lib/base64.rb`, `test/base64/test_base64.rb`, `README.md`, `sig/base64.rbs`, `test_sig/test_base64.rb`, `COPYING`, `BSDL`. GitHub Linguist label: Ruby.
-
-</details>
+## Level 2 — Guided real-world code
 
 ### [ruby/pathname](https://github.com/ruby/pathname)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
-An immutable object-oriented representation of filesystem paths from Ruby's standard library.
+A Ruby path method that removes redundant path pieces without reading the filesystem.
 
-**Why study it:** Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety. Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing.
+**Why study it:** Follow path components through a small stack that removes dots, handles parent steps, preserves roots, and offers a conservative mode for symbolic links.
+
+**Short context:**
+
+- Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning.
 
 **Prerequisites:**
 
-- Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.
-- Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning.
+- The global novice Ruby baseline, including classes, arrays, iteration, strings, and table-driven tests.
+- Lexical cleanup changes only path text; conservative mode keeps pieces whose removal could change meaning when symbolic links exist.
 
 **Concepts this path develops:**
 
-- Immutable value-object methods.
-- Aggressive and conservative branches.
-- Relative and absolute root preservation.
+- Normalizing a path as a sequence of components.
+- Using a stack to handle dot and parent pieces.
+- Preserving roots and choosing conservative behavior when needed.
 
 **What you can learn:**
 
-- Study these transferable Ruby mechanisms in `lib/pathname_builtin.rb`: immutable value-object methods, component iteration and regular-expression helpers, and conventional private helper composition.
-- Trace these states and branches from `lib/pathname_builtin.rb` through its selected supporting files: aggressive and conservative branches, localized component-stack state, and root and trailing-separator edge paths.
-- Identify these architectural responsibilities in the path beginning at `lib/pathname_builtin.rb`: one lexical normalization component and one direct assertion matrix.
-- Study these change constraints for the path beginning at `lib/pathname_builtin.rb`: relative and absolute root preservation, symbolic-link-safe conservative semantics, Unix, drive-letter, and UNC portability, and stable lexical output contracts.
+- Trace ordinary, dot, parent, rooted, and trailing-separator examples.
+- Compare aggressive and conservative cleanup modes.
+- Use the test matrix to understand platform and boundary cases.
 
 **Learning path:**
 
@@ -128,7 +54,10 @@ An immutable object-oriented representation of filesystem paths from Ruby's stan
 - **Behavioral reasoning 2:** Meaningful branches and local mutable state remain easy to trace in one normalization routine.
 - **Design span 1:** The behavior stays within a few methods in one focused implementation unit.
 - **Constraint burden 3:** Several material compatibility and portability guarantees shape otherwise local normalization.
-- **Placement:** The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2.
+- **Novice accessibility floor 2:** A short path-components primer makes the local normalization stack predictable; portability cases stretch the lesson but do not require a separate course.
+  - **Central concepts:** lexical path normalization; component-stack handling of dot and parent pieces; conservative symbolic-link behavior
+  - **Incidental concepts:** regular-expression helpers; Windows drive and UNC cases
+- **Placement:** The four structural scores 2/2/1/3 produce rubric Level 2 under the documented formula and guardrails. Novice accessibility floor 2 produces published Level 2.
 
 **License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/COPYING), [evidence 2](https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/BSDL))
 
@@ -143,9 +72,7 @@ An immutable object-oriented representation of filesystem paths from Ruby's stan
 
 Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing.
 
-Required domain context:
-
-- Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -158,11 +85,11 @@ Required domain context:
 - **Maintainability:** Changes to the path beginning at `lib/pathname_builtin.rb` are constrained by these audited guarantees: relative and absolute root preservation, symbolic-link-safe conservative semantics, Unix, drive-letter, and UNC portability, and stable lexical output contracts.
 - **Educational value:** Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety. Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing.
 
-**Inspection record:** commit `f0217bbd486b2f7d5c7de1ff3951c7422d42c761`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `lib/pathname_builtin.rb`, `lib/pathname.rb`, `test/pathname/test_pathname.rb`, `COPYING`, `BSDL`. GitHub Linguist label: Ruby.
+**Inspection record:** commit `f0217bbd486b2f7d5c7de1ff3951c7422d42c761`, inspected 2026-08-30. Review passes: Codex primary pass; independent Codex verification pass; Codex novice-accessibility audit. Files inspected: `lib/pathname_builtin.rb`, `lib/pathname.rb`, `test/pathname/test_pathname.rb`, `COPYING`, `BSDL`. GitHub Linguist label: Ruby.
 
 </details>
 
-## Level 3
+## Level 3 — Intermediate
 
 ### [jekyll/jekyll](https://github.com/jekyll/jekyll)
 
@@ -171,6 +98,10 @@ Required domain context:
 A static-site generator that transforms Markdown, Liquid templates, data, assets, and configuration into a deployable website.
 
 **Why study it:** Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output. Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing.
+
+**Short context:**
+
+- A static-site document may pass through a template engine, one or more markup converters, nested layouts, hooks, and an incremental-build dependency tracker before being written.
 
 **Prerequisites:**
 
@@ -223,9 +154,7 @@ A static-site generator that transforms Markdown, Liquid templates, data, assets
 
 Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing.
 
-Required domain context:
-
-- A static-site document may pass through a template engine, one or more markup converters, nested layouts, hooks, and an incremental-build dependency tracker before being written.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -249,6 +178,10 @@ Required domain context:
 Ruby's standard temporary-file library, providing secure creation plus explicit and automatic cleanup lifecycles.
 
 **Why study it:** Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block. Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing.
+
+**Short context:**
+
+- A temporary file must be created without a name race, opened with restrictive permissions, and removed after its owner finishes using it.
 
 **Prerequisites:**
 
@@ -297,9 +230,7 @@ Ruby's standard temporary-file library, providing secure creation plus explicit 
 
 Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing.
 
-Required domain context:
-
-- A temporary file must be created without a name race, opened with restrictive permissions, and removed after its owner finishes using it.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -316,7 +247,7 @@ Required domain context:
 
 </details>
 
-## Level 4
+## Level 4 — Advanced
 
 ### [rubocop/rubocop](https://github.com/rubocop/rubocop)
 
@@ -325,6 +256,10 @@ Required domain context:
 A configurable Ruby static analyzer and formatter built around independently selectable cops.
 
 **Why study it:** Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected. AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing.
+
+**Short context:**
+
+- A lint cop receives callbacks while an abstract syntax tree is visited, reports source-range offenses, and may propose edits that must be combined and repeatedly applied until stable.
 
 **Prerequisites:**
 
@@ -378,9 +313,7 @@ A configurable Ruby static analyzer and formatter built around independently sel
 
 AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing.
 
-Required domain context:
-
-- A lint cop receives callbacks while an abstract syntax tree is visited, reports source-range offenses, and may propose edits that must be combined and repeatedly applied until stable.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -404,6 +337,10 @@ Required domain context:
 A multithreaded background-job processor for Ruby applications backed by Redis.
 
 **Why study it:** Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown. Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing.
+
+**Short context:**
+
+- A background worker fetches a job, may execute it at least once, records failure for retry, acknowledges completed work, and must preserve in-progress work during shutdown.
 
 **Prerequisites:**
 
@@ -457,9 +394,7 @@ A multithreaded background-job processor for Ruby applications backed by Redis.
 
 Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing.
 
-Required domain context:
-
-- A background worker fetches a job, may execute it at least once, records failure for retry, acknowledges completed work, and must preserve in-progress work during shutdown.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -476,7 +411,7 @@ Required domain context:
 
 </details>
 
-## Level 5
+## Level 5 — Expert
 
 ### [ruby-concurrency/concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby)
 
@@ -485,6 +420,10 @@ Required domain context:
 A production concurrency toolkit whose promise framework composes asynchronous tasks, dependency graphs, executors, and single-assignment results.
 
 **Why study it:** Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.
+
+**Short context:**
+
+- A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning.
 
 **Prerequisites:**
 
@@ -540,9 +479,7 @@ A production concurrency toolkit whose promise framework composes asynchronous t
 
 Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.
 
-Required domain context:
-
-- A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
@@ -566,6 +503,10 @@ Required domain context:
 A composable fiber-based asynchronous I/O framework with structured task trees, cancellation, timeouts, and Ruby's Fiber scheduler integration.
 
 **Why study it:** Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.
+
+**Short context:**
+
+- Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work.
 
 **Prerequisites:**
 
@@ -626,9 +567,7 @@ A composable fiber-based asynchronous I/O framework with structured task trees, 
 
 Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.
 
-Required domain context:
-
-- Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work.
+The learner-facing short context appears above.
 
 **Eight-part quality gate:**
 
