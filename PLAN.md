@@ -166,7 +166,7 @@ standards.
   pages, and the final 17-of-20 Level 2 coverage result; run the full supported
   verification gates.
 
-## Active learner usability and launch polish
+## Completed learner usability and launch polish
 
 This phase implements `EXEMPLA_LEARNER_USABILITY_AND_LAUNCH_POLISH_SPEC.md`
 without changing the ranking algorithm, capacity, or accepted corpus.
@@ -186,11 +186,11 @@ without changing the ranking algorithm, capacity, or accepted corpus.
   same-Level progression, improve README and index onboarding, add novice
   difficulty feedback, review narrow-width readability, and correct the public
   repository description.
-- [ ] Step 5 — Simulate every populated Level 1 journey, every available Level
+- [x] Step 5 — Simulate every populated Level 1 journey, every available Level
   1-to-2 transition, and at least ten Level 2-to-3 transitions; publish the
   before/after audit, regenerate, and pass every required verification gate.
-  The simulations, audit, and all local workflow-equivalent gates pass; GitHub
-  Actions remains pending until an explicitly authorized commit and push.
+  The simulations, audit, local gates, and GitHub Actions run `33342127488` all
+  passed.
 
 ## Completed learner-centered remediation
 

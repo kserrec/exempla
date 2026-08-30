@@ -1653,8 +1653,11 @@
         "result": "pass"
       },
       "github_actions": {
-        "result": "pending-publication",
-        "reason": "This work is not committed or pushed because this request did not authorize publication. The same commands used by the repository workflow pass locally; GitHub Actions can run after an explicit commit-and-push request."
+        "workflow": "Validate catalog",
+        "result": "pass",
+        "implementation_commit": "31bafd55fd2456232d459cfd63225711be43c8b2",
+        "run_id": 33342127488,
+        "url": "https://github.com/kserrec/exempla/actions/runs/33342127488"
       }
     }
   }
