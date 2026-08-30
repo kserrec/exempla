@@ -2,97 +2,113 @@
 
 [![Validate catalog](https://github.com/kserrec/exempla/actions/workflows/validate.yml/badge.svg)](https://github.com/kserrec/exempla/actions/workflows/validate.yml)
 
-Learn programming from exemplary real-world source code.
+Learn transferable programming skills from exemplary real-world source code.
 
 Exempla is a curated, GitHub-native catalog of public open-source software.
-Choose a programming language, choose an SDC difficulty level, and find two
-codebases worth reading at that stage of your learning. The initial catalog
-contains **200 repositories across 20 languages**.
+Choose a language and a learner Level from 1 through 5, then follow one concrete
+path through production implementation and tests. The catalog currently has
+**150 qualified learning paths from 149 public repositories across 20
+languages**. Its **50 open slots are honest research gaps** after the completed
+learner-centered re-review, path-centered remediation, and documented gap
+research. No gate or score is lowered to preserve an arbitrary count.
 
 ## Browse the catalog
 
-[Choose a language](languages/README.md), then work from SDC 1 toward SDC 5 at
-the pace that fits you. Every entry explains:
+[Choose a language](languages/README.md). Each entry records:
 
-- what the software does and why it is real-world software;
-- what its source can teach you;
-- what you should know first;
-- the file where reading should begin;
-- why its size, code difficulty, and system complexity produce that level;
-- the source, architecture, test, documentation, traceability, maintenance, and
-  educational evidence behind its admission; and
-- the exact commit, sampled files, LOC exclusions, and license reviewed.
+- the real behavior the learner will understand;
+- the first source file to open, supporting implementation and test files, and
+  an entry-to-result trace;
+- prerequisites, concepts developed by the path, and any short domain context;
+- the coding-relevance and eight-part repository-quality evidence;
+- four path-centered scores and the resulting Level;
+- the exact inspected commit and files; and
+- one or more pinned license-evidence links.
 
-Exempla links to upstream projects; it does not copy or mirror their source.
-Start and license links are pinned to the inspected commit so the written
-reasoning remains reproducible when an upstream default branch changes.
+Exempla links to upstream projects; it does not copy their source. Path and
+license links are pinned so the review stays reproducible when a default branch
+moves.
 
-## How SDC works
+## How levels work
 
-SDC keeps three different questions visible:
+Exempla ranks the transferable programming skill needed to understand the
+published path—not repository size, popularity, product importance, or outside
+subject-matter prestige.
 
-- **S — Size:** how much meaningful first-party implementation code must be
-  navigated?
-- **D — Difficulty:** how demanding is the code itself to understand?
-- **C — Complexity:** how demanding is the software as a whole system?
+- **Language technique:** fluency beyond basic syntax.
+- **Behavioral reasoning:** control flow, state, time, failure, and resources.
+- **Design span:** how many meaningful boundaries the path crosses.
+- **Constraint burden:** the guarantees a correct change must preserve.
 
-The three integer scores produce one broad learner-facing level from SDC 1
-through SDC 5. Size is measured; difficulty and complexity are evidence-backed
-expert judgments. The formula and its two guardrails are deliberately simple
-and public in the [SDC rubric](docs/sdc.md).
-
-Difficulty is not quality. A repository is scored only after it passes the
-separate [qualification gate](docs/qualification.md). Empty catalog slots never
-justify lowering either standard.
+Each dimension is an integer from 1 through 5. Their arithmetic mean rounds
+halves upward. One score of 4 forces at least Level 3, one score of 5 forces at
+least Level 4, and Level 5 requires a rounded mean of 5 plus at least two scores
+of 5. The complete anchors and coding-relevance gate are in the
+[learning-level rubric](docs/learning-levels.md). Repository quality remains a
+separate [pass/fail gate](docs/qualification.md).
 
 ## How to study an entry
 
-1. Read the prerequisites and the entry's short description.
-2. Open the pinned **Start here** file and trace the behavior named in its
-   explanation.
-3. Follow that behavior into the sampled implementation and test files.
-4. Use the quality evidence as questions to ask while reading: where are the
-   boundaries, how are failures represented, and which tests define the
-   contract?
-5. Move upward only when the current level feels navigable; SDC is a guide, not
-   a contest.
+1. Read the goal, prerequisites, and short domain context.
+2. Open the pinned **Start here** file.
+3. Follow the published trace through its supporting implementation and tests.
+4. Use the quality evidence as review questions: are responsibilities clear,
+   failures explicit, and contracts protected?
+5. Move upward when the current Level feels navigable; Levels guide learning,
+   not prestige.
 
 ## Trust and transparency
 
-The catalog is designed to be auditable without a website or opaque ranking
-service:
+- [Language selection](docs/language-selection.md) records the dated scope.
+- [Candidate research](docs/research-process.md) requires three independent
+  discovery channels and pinned-source inspection before scoring.
+- [Learning-level calibration](docs/learning-level-calibration.md) records the
+  smoke test and completed corpus-wide consistency pass.
+- [The v1 re-review](research/learner-centered-rebuild.json) preserves all 200
+  retain/remove decisions and their recorded review passes.
+- [The remediation record](research/learner-centered-remediation.json) preserves
+  the verified 150-path baseline, 55 targeted claim-to-source checks, and the
+  Level 1 follow-up for every affected language.
+- [The current corpus audit](research/learner-centered-audit.json) reconciles
+  counts, identities, guardrails, metadata, licenses, generated pages, source
+  claims, and neighboring-level comparisons.
+- [Rejected candidates](research/rejections.json) are append-only.
+- [`research/audit.json`](research/audit.json) is the historical v1 corpus
+  audit; it is no longer the active consistency record.
+- Canonical schema-version-3 JSON under [`catalog/`](catalog/README.md)
+  deterministically generates every language page.
 
-- [Language selection](docs/language-selection.md) records the dated scope and
-  replacement rule.
-- [Candidate research](docs/research-process.md) defines discovery, source
-  inspection, measurement, review, and refreshes.
-- [Calibration](docs/calibration.md) records the initial sample and the final
-  200-entry consistency pass.
-- [Rejected candidates](research/rejections.json) preserve evidence for
-  decisions that did not become entries.
-- [The corpus audit](research/audit.json) records live repository, pinned path,
-  license, duplication, distribution, navigation, and clean-snapshot results.
-- Canonical JSON under [`catalog/`](catalog/README.md) generates every
-  learner-facing language page deterministically.
+Automation validates local structure, formulas, reconciliation, and generated
+output. Source inspection and admission, rejection, and scoring judgments are
+AI-assisted in the current corpus; the project owner directed the process and
+accepted the resulting catalog. Inspection records name the actual review
+passes, and no independent human review is implied.
 
-GitHub metadata and automation can verify facts; they never decide whether code
-is good or what level it deserves.
+## Current learner-centered refinement
+
+The post-rerun remediation made learning paths first-class identities. One
+repository may now contribute at most two materially distinct paths, never two
+paths in the same language and Level bucket. It also added the score-4 floor,
+separated prior knowledge from concepts developed, corrected and rescored the
+known `r-lib/pkgconfig` source mismatch, completed a targeted source-claim
+audit, and revisited every Level 1 gap without weakening qualification. That
+review added Webmozart Assert's distinct `notNull()` path at Level 1; the total
+remains 150 because the score floor moved Swift Tagged into a full Level 3
+bucket and preserved Swift Log as a qualified capacity alternate.
 
 ## Contributing
 
-Corrections, well-researched candidates, and maintenance improvements are
-welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before editing catalog data or
-use the [structured issue chooser](https://github.com/kserrec/exempla/issues/new/choose)
-to submit the evidence for a candidate, correction, SDC dispute, or maintenance
-problem. The complete ownership and refresh procedure is in
-[docs/maintenance.md](docs/maintenance.md).
+Corrections, inspected candidates, and maintenance improvements are welcome.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) or use the
+[structured issue chooser](https://github.com/kserrec/exempla/issues/new/choose).
 
-The project uses only Python's standard library for validation and generation.
-Continuous integration runs the unit tests, requires the complete 200-entry
-corpus, and rejects stale generated Markdown.
+Validation and generation use only Python's standard library. Continuous
+integration runs tests, gap-tolerant catalog validation, and generated-output
+checks. `--complete` remains available and is used only when every one of the
+200 possible slots is genuinely filled.
 
 ## License
 
 Exempla's original catalog text and tooling are released under the
-[MIT License](LICENSE). Each linked repository remains governed by its own
-license, recorded on its entry at the inspected revision.
+[MIT License](LICENSE). Each linked repository remains governed by the license
+recorded at its inspected revision.

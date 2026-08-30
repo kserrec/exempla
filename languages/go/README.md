@@ -1,457 +1,636 @@
 # Go
 
-10 qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## SDC 1
+## Level 1
 
-### [mattn/go-isatty](https://github.com/mattn/go-isatty)
+No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-**S1 / D2 / C1 → SDC 1**
-
-A small cross-platform library that determines whether a file descriptor is a terminal or a Cygwin/MSYS terminal.
-
-**Real-world evidence:** The repository publishes a Go module intended for command-line programs that must adapt output to terminal capabilities.
-
-**Language evidence:** Terminal detection, operating-system branches, and the public API are implemented in Go files selected by build constraints.
-
-**Why study it:** It offers a very small, concrete introduction to build tags, platform system calls, file descriptors, and keeping one API consistent across operating systems.
-
-**What you can learn:**
-
-- Go build constraints, Unix ioctl calls, Windows console detection, Cygwin/MSYS pipe recognition, file descriptors, and platform-specific tests.
-
-**Prerequisites:**
-
-- Go packages and build tags, basic operating-system concepts, file descriptors or handles, and unit testing.
-
-**Start here:** [`isatty_others.go`](https://github.com/mattn/go-isatty/blob/c44dc0b9c702c76577fdb7898032969e0611efc2/isatty_others.go) — The Unix implementation shows the common API and ioctl-based decision before the learner compares BSD and Windows variants.
-
-**Why this level:**
-
-- **S1:** 165 meaningful implementation LOC measured with tokei 14.0.0. Count includes every platform production implementation and excludes tests and module metadata.
-- **D2:** The operating-system boundary is unfamiliar to many learners, but each platform implementation is short and explicit.
-- **C1:** The package exposes two checks and has no runtime components beyond the local operating-system query.
-- **Placement:** S1/D2/C1 averages to 1.33, making go-isatty an SDC 1 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Each platform file performs the minimum required system query and returns a direct boolean result.
-- **Architecture:** Build constraints select focused Unix, BSD, Windows, App Engine, and unsupported implementations behind one API.
-- **Naming and idiom:** IsTerminal and IsCygwinTerminal describe observable questions while platform suffixes make compilation boundaries visible.
-- **Tests:** Unix and Windows tests exercise real descriptors or handles, standard streams, files, and the Cygwin/MSYS path where supported.
-- **Documentation:** The README explains both checks, supported platforms, installation, usage, and licensing.
-- **Traceability:** A call to IsTerminal can be followed from the public symbol to the active build-tagged file, system call, and matching platform test.
-- **Maintainability:** Small independent platform files prevent conditional logic from accumulating inside a single implementation.
-- **Educational value:** It is a bounded example of designing a portable Go facade over genuinely different operating-system mechanisms.
-
-**Inspection record:** commit `c44dc0b9c702c76577fdb7898032969e0611efc2`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `isatty_others.go`, `isatty_bsd.go`, `isatty_windows.go`, `isatty_others_test.go`, `isatty_windows_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go.
-
-**License:** [MIT](https://github.com/mattn/go-isatty/blob/c44dc0b9c702c76577fdb7898032969e0611efc2/LICENSE)
-
-### [tidwall/match](https://github.com/tidwall/match)
-
-**S1 / D2 / C1 → SDC 1**
-
-A compact wildcard-matching library with Unicode support and an optional complexity limit.
-
-**Real-world evidence:** The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.
-
-**Language evidence:** The wildcard matcher, limit-aware traversal, Unicode handling, and public API are implemented in the root Go package.
-
-**Why study it:** Its tiny surface turns a familiar feature into a careful lesson in byte versus rune handling, escaping, suffix optimization, and bounding adversarial work.
-
-**What you can learn:**
-
-- Iterative wildcard matching, UTF-8 decoding, escape rules, fast-path trimming, complexity budgets, fuzzing, and denial-of-service-aware API design.
-
-**Prerequisites:**
-
-- Go functions and loops, strings and byte slices, UTF-8 basics, table-driven tests, and elementary algorithm analysis.
-
-**Start here:** [`match.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match.go) — The complete algorithm and both public entry points fit in one file, so every branch can be followed directly into its tests.
-
-**Why this level:**
-
-- **S1:** 205 meaningful implementation LOC measured with tokei 14.0.0. Count covers the root production package and excludes tests and repository metadata.
-- **D2:** The algorithm has a few subtle edge cases, but it is compact, iterative, and locally explained.
-- **C1:** There is no persistence, networking, shared state, or cross-package control flow.
-- **Placement:** S1/D2/C1 averages to 1.33, making match an SDC 1 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** The implementation separates public wrappers from the internal traversal, documents the limit contract, and keeps allocation and state minimal.
-- **Architecture:** One package contains the matcher and an optional limit-aware variant without unnecessary layers.
-- **Naming and idiom:** Match, MatchLimit, Allowable, pattern, str, and maxcomp expose the small domain directly.
-- **Tests:** Deterministic, randomized, Unicode, escape, allowable-range, complexity-limit, regression, and fuzz tests reveal the matching contract.
-- **Documentation:** The README states the wildcard grammar, examples, complexity protection, installation, and license.
-- **Traceability:** A pattern can be traced from Match into the shared matcher loop and then to literal, wildcard, escape, Unicode, and limit tests.
-- **Maintainability:** The small API, no dependencies, bounded state, and broad edge-case suite make changes easy to reason about.
-- **Educational value:** It shows that even a tiny text algorithm benefits from explicit adversarial limits and Unicode-aware decisions.
-
-**Inspection record:** commit `afc69bce52e08c02e78156a7697bd808fc868ec5`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `match.go`, `match_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go.
-
-**License:** [MIT](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/LICENSE)
-
-## SDC 2
-
-### [robfig/cron](https://github.com/robfig/cron)
-
-**S1 / D3 / C2 → SDC 2**
-
-A cron expression parser and in-process job scheduler for Go applications.
-
-**Real-world evidence:** The repository publishes a versioned Go module for applications that schedule recurring work inside a process.
-
-**Language evidence:** The schedule parser, scheduler loop, job wrappers, and public interfaces are implemented in the root Go package.
-
-**Why study it:** It combines parsing, time arithmetic, goroutines, channels, job ordering, lifecycle state, and middleware-style wrappers without becoming a large codebase.
-
-**What you can learn:**
-
-- Cron expression parsing, time-zone-aware schedule calculation, event-loop ownership, goroutines and channels, sorted job queues, lifecycle APIs, and composable job wrappers.
-
-**Prerequisites:**
-
-- Go interfaces and structs, goroutines and channels, time.Time and locations, parsing, sorting, and table-driven tests.
-
-**Start here:** [`cron.go`](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/cron.go) — Cron.run owns the scheduler state and exposes how additions, removals, snapshots, timers, stops, and job launches are serialized.
-
-**Why this level:**
-
-- **S1:** 884 meaningful implementation LOC measured with tokei 14.0.0. Count covers scheduler, parser, specification, constants, chain, and logger production files while excluding tests.
-- **D3:** The code is readable, but concurrent lifecycle behavior and calendar semantics require material prerequisite knowledge.
-- **C2:** Several responsibilities interact, but all scheduling state is coordinated within one process and one owning loop.
-- **Placement:** S1/D3/C2 averages to 2.00, making cron an SDC 2 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** The scheduler centralizes mutable state, the parser isolates grammar decisions, and job wrappers keep recovery and overlap policies composable.
-- **Architecture:** Clear Schedule, Job, Entry, Parser, Cron, Chain, and Logger abstractions separate timing, execution, and configuration.
-- **Naming and idiom:** EntryID, Schedule.Next, AddFunc, Entries, SkipIfStillRunning, and Recover communicate the scheduling domain in ordinary Go.
-- **Tests:** Parser, time-zone, daylight-saving, ordering, add/remove, stop, wrapper, panic recovery, and concurrent behavior tests specify difficult boundaries.
-- **Documentation:** The README, package documentation, examples, compatibility notes, and issue-linked change log explain both normal use and semantic choices.
-- **Traceability:** Adding a job can be followed through parsing, entry creation, the run-loop channel, next-time sorting, timer wake-up, job launch, and lifecycle tests.
-- **Maintainability:** Single-owner state, narrow interfaces, options, and extensive time-based tests contain concurrency and compatibility risk.
-- **Educational value:** It teaches how to make a stateful concurrent service small enough that its full control loop remains understandable.
-
-**Inspection record:** commit `bc59245fe10efaed9d51b56900192527ed733435`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `cron.go`, `parser.go`, `chain.go`, `cron_test.go`, `parser_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go.
-
-**License:** [MIT](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/LICENSE)
+## Level 2
 
 ### [spf13/pflag](https://github.com/spf13/pflag)
 
-**S2 / D2 / C2 → SDC 2**
+**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
 
 A drop-in Go flag package that adds POSIX/GNU-style long options, shorthand flags, and richer flag-set behavior.
+
+**Why study it:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
+
+**Prerequisites:**
+
+- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
+- FlagSet.Parse converts command-line tokens into named flag values and positional arguments.
+
+**Concepts this path develops:**
+
+- Interface-backed Value parsing.
+- Long, shorthand, positional, and terminator token states.
+- Shorthand and long syntax must agree on value consumption.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `flag.go`: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.
+- Trace these states and branches from `flag.go` through its selected supporting files: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.
+- Identify these architectural responsibilities in the path beginning at `flag.go`: FlagSet parser, Value extension point, and concrete string value and focused tests.
+- Study these change constraints for the path beginning at `flag.go`: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy.
+
+**Learning path:**
+
+- **Goal:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
+- **Start here:** [`flag.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/flag.go) — Begin with `flag.go` because it exposes how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
+- **Then read:**
+  - [`string.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/string.go)
+  - [`flag_test.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/flag_test.go)
+- **Trace:** Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests.
+
+**Why this level:**
+
+- **Language technique 2:** Familiar intermediate Go interfaces and collection techniques recur across parsing.
+- **Behavioral reasoning 2:** A few parser branches recur without a broader lifecycle.
+- **Design span 2:** A small set of cohesive pieces covers token input through typed storage.
+- **Constraint burden 3:** Several material parser guarantees recur, but their interaction remains locally testable rather than strict enough for Constraint 4.
+- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The repository publishes an importable command-line parsing module designed for Go applications and compatibility with the standard flag package.
 
 **Language evidence:** GNU-style parsing, FlagSet state, typed values, normalization, deprecation, and compatibility behavior are implemented in Go.
 
-**Why study it:** It shows how a stable library grows around one core parser while preserving compatibility, typed conversions, diagnostics, annotations, and ergonomic command-line conventions.
+**Coding relevance:**
 
-**What you can learn:**
+Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
 
-- Command-line token parsing, typed Value interfaces, FlagSet state, shorthand clusters, normalization, deprecation, compatibility adapters, error policies, and API evolution.
+Required domain context:
+
+- FlagSet.Parse converts command-line tokens into named flag values and positional arguments.
+
+**Eight-part quality gate:**
+
+- **Source quality:** flag.go documents the public parser and error policies, string.go supplies a simple concrete Value implementation, and flag_test.go broadly exercises long and shorthand flags, attached and separate values, terminators, unknown flags, normalization, repeated parse behavior, and errors.
+- **Architecture:** The audited architecture of the path beginning at `flag.go` has these boundaries: FlagSet parser, Value extension point, and concrete string value and focused tests.
+- **Naming and idiom:** `flag.go` and its supporting files use these characteristic Go mechanisms: interface-backed Value parsing, maps, slices, and callbacks, and table-driven tests.
+- **Tests:** Direct tests in `flag_test.go` cover these states and branches in the selected path: long, shorthand, positional, and terminator token states, attached and following values, and success and configured error outcomes.
+- **Documentation:** `flag.go` and its selected supporting material document the contracts needed to understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees.
+- **Traceability:** Start at FlagSet.Parse, follow long and shorthand token recognition into lookup and Value.Set using the string flag as a concrete example, then trace positional arguments, the double-dash terminator, unknown flags, and configured error handling; close with focused parser tests.
+- **Maintainability:** Changes to the path beginning at `flag.go` are constrained by these audited guarantees: shorthand and long syntax must agree on value consumption, the terminator must preserve remaining positional arguments, and unknown flags and conversion failures must honor configured policy.
+- **Educational value:** Understand how pflag turns command-line tokens into typed values while preserving shorthand, positional, terminator, and error-policy guarantees. Flag syntax is familiar; the path teaches token scanning, interface-backed value conversion, stateful parsing, shorthand and terminator handling, configurable error policy, and direct table-driven tests.
+
+**Inspection record:** commit `4f8e9056816a26ecbac9fe26cde50968eb3626f8`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `flag.go`, `string.go`, `flag_test.go`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+### [tidwall/match](https://github.com/tidwall/match)
+
+**Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+A compact wildcard-matching library with Unicode support and an optional complexity limit.
+
+**Why study it:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding. Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
 
 **Prerequisites:**
 
-- Go interfaces, maps and slices, error handling, command-line conventions, string conversion, and table-driven testing.
+- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
+- A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches.
 
-**Start here:** [`flag.go`](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/flag.go) — FlagSet and parseLongArg or parseSingleShortArg connect registration, token interpretation, mutation, errors, and usage behavior.
+**Concepts this path develops:**
+
+- Plain byte slices and indexes.
+- Literal, question-mark, and star branches.
+- Stars may match zero or many bytes.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `match.go`: plain byte slices and indexes, loops and local conditionals, and small helper functions.
+- Trace these states and branches from `match.go` through its selected supporting files: literal, question-mark, and star branches, empty and exhausted input states, and case-sensitive and insensitive modes.
+- Identify these architectural responsibilities in the path beginning at `match.go`: one matcher implementation and one direct test file.
+- Study these change constraints for the path beginning at `match.go`: stars may match zero or many bytes, pattern and input exhaustion must align, and case folding and arbitrary input must terminate consistently.
+
+**Learning path:**
+
+- **Goal:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
+- **Start here:** [`match.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match.go) — Begin with `match.go` because it exposes how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
+- **Then read:**
+  - [`match_test.go`](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/match_test.go)
+- **Trace:** Start with the main pattern and string scan, follow literal and question-mark consumption into the star branch and recursive or iterative suffix search, then compare the case-insensitive path; close with table tests and randomized TestRandomInput, which is randomized coverage rather than a Go Fuzz target.
 
 **Why this level:**
 
-- **S2:** 4,755 meaningful implementation LOC measured with tokei 14.0.0. Count includes the parser and all production typed flag implementations, excluding tests and examples.
-- **D2:** There are many edge cases and value types, but control flow and conversions remain direct and idiomatic.
-- **C2:** The package has several cohesive files around one parser and no services, persistence, or distributed behavior.
-- **Placement:** S2/D2/C2 averages to 2.00, making pflag an SDC 2 project.
+- **Language technique 1:** The implementation relies on basic Go mechanics with no recurring intermediate language technique.
+- **Behavioral reasoning 2:** A few related matcher states recur within one compact algorithm.
+- **Design span 1:** The complete lesson stays within one local component and its tests.
+- **Constraint burden 3:** Several material boundary and backtracking guarantees recur despite the tiny design span.
+- **Placement:** The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2.
 
-**Quality-gate evidence:**
+**License:** MIT ([evidence 1](https://github.com/tidwall/match/blob/afc69bce52e08c02e78156a7697bd808fc868ec5/LICENSE))
 
-- **Source quality:** Parsing branches make token cases explicit, typed values isolate conversion, and errors preserve actionable context.
-- **Architecture:** FlagSet owns registration and parsing while small Value implementations provide type-specific behavior behind a standard interface.
-- **Naming and idiom:** FlagSet, Value, Changed, NoOptDefVal, Shorthand, NormalizeFunc, and ParseErrorsWhitelist expose command-line semantics.
-- **Tests:** Extensive tests cover long and short syntax, clusters, defaults, normalization, deprecation, unknown flags, type conversions, compatibility, and regressions.
-- **Documentation:** The README documents differences from the standard package, usage, shorthand forms, normalization, deprecation, and compatibility.
-- **Traceability:** A token can be followed from Parse through long or shorthand handling, flag lookup, Value.Set, Changed state, and focused parser tests.
-- **Maintainability:** The central parser, stable interfaces, one-file value types, and broad compatibility suite constrain changes to a mature API.
-- **Educational value:** It is a strong example of evolving a familiar standard-library design while keeping compatibility and edge cases visible.
+<details>
+<summary>Quality and review evidence</summary>
 
-**Inspection record:** commit `4f8e9056816a26ecbac9fe26cde50968eb3626f8`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `flag.go`, `string.go`, `flag_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go.
+**Real-world evidence:** The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.
 
-**License:** [BSD-3-Clause](https://github.com/spf13/pflag/blob/4f8e9056816a26ecbac9fe26cde50968eb3626f8/LICENSE)
+**Language evidence:** The wildcard matcher, limit-aware traversal, Unicode handling, and public API are implemented in the root Go package.
 
-## SDC 3
+**Coding relevance:**
+
+Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
+
+Required domain context:
+
+- A glob pattern uses literal bytes, question marks, and stars to decide whether a string matches.
+
+**Eight-part quality gate:**
+
+- **Source quality:** match.go keeps the complete matcher and case-folding behavior in one compact implementation, while match_test.go covers literals, wildcards, empty strings, Unicode byte behavior, case-insensitive matching, adversarial patterns, and randomized TestRandomInput coverage.
+- **Architecture:** The audited architecture of the path beginning at `match.go` has these boundaries: one matcher implementation and one direct test file.
+- **Naming and idiom:** `match.go` and its supporting files use these characteristic Go mechanisms: plain byte slices and indexes, loops and local conditionals, and small helper functions.
+- **Tests:** Direct tests in `match_test.go` cover these states and branches in the selected path: literal, question-mark, and star branches, empty and exhausted input states, and case-sensitive and insensitive modes.
+- **Documentation:** `match.go` and its selected supporting material document the contracts needed to understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding.
+- **Traceability:** Start with the main pattern and string scan, follow literal and question-mark consumption into the star branch and recursive or iterative suffix search, then compare the case-insensitive path; close with table tests and randomized TestRandomInput, which is randomized coverage rather than a Go Fuzz target.
+- **Maintainability:** Changes to the path beginning at `match.go` are constrained by these audited guarantees: stars may match zero or many bytes, pattern and input exhaustion must align, and case folding and arbitrary input must terminate consistently.
+- **Educational value:** Understand how a compact Go matcher handles literal bytes, single-byte wildcards, star backtracking, and case folding. Glob vocabulary is explained immediately; the path is programming-led and teaches byte scanning, local branching, star backtracking, case folding, and boundary-focused testing.
+
+**Inspection record:** commit `afc69bce52e08c02e78156a7697bd808fc868ec5`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `match.go`, `match_test.go`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+## Level 3
 
 ### [gin-gonic/gin](https://github.com/gin-gonic/gin)
 
-**S2 / D3 / C3 → SDC 3**
+**Language 2 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
 
 A high-performance HTTP web framework with routing, middleware, request binding, rendering, recovery, and server utilities.
+
+**Why study it:** Understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup. HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth.
+
+**Prerequisites:**
+
+- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
+- An HTTP engine matches a request method and path, prepares a reusable Context, and executes the selected handler chain.
+
+**Concepts this path develops:**
+
+- Sync.Pool context reuse.
+- Acquire, reset, route, handle, abort, respond, and release states.
+- Pooled contexts must be fully reset between requests.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `gin.go`: sync.Pool context reuse, slice-backed handler chains, and tree and map-based routing.
+- Trace these states and branches from `gin.go` through its selected supporting files: acquire, reset, route, handle, abort, respond, and release states, match, not-found, parameter, middleware, and error branches, and handler index progression.
+- Identify these architectural responsibilities in the path beginning at `gin.go`: Engine entry and pool owner, routing tree, and Context handler-chain executor and focused tests.
+- Study these change constraints for the path beginning at `gin.go`: pooled contexts must be fully reset between requests, route precedence and parameter capture must stay deterministic, and middleware order, aborts, and response state must remain coherent.
+
+**Learning path:**
+
+- **Goal:** Understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup.
+- **Start here:** [`gin.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/gin.go) — Begin with `gin.go` because it exposes how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup.
+- **Then read:**
+  - [`tree.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/tree.go)
+  - [`context.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/context.go)
+  - [`gin_test.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/gin_test.go)
+  - [`tree_test.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/tree_test.go)
+  - [`context_test.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/context_test.go)
+- **Trace:** Start at Engine.ServeHTTP, follow Context acquisition and reset into method-tree lookup and parameter capture, then trace handlers through Context.Next and abort behavior before the response and context return to the pool; close with focused engine, tree, and context tests.
+
+**Why this level:**
+
+- **Language technique 2:** Familiar Go collections, pooling, and method techniques recur without advanced language machinery.
+- **Behavioral reasoning 3:** Several related request states recur within one bounded routing lifecycle.
+- **Design span 3:** A few cohesive components span request entry through routing and handler completion.
+- **Constraint burden 4:** Reuse, ordering, matching, and response guarantees recur in normal request handling.
+- **Placement:** The four scores 2/3/3/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3.
+
+**License:** MIT ([evidence 1](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The repository publishes the Gin Go module for building HTTP services and documents supported production deployment patterns.
 
 **Language evidence:** The HTTP engine, radix route trees, request context, middleware chain, binding, rendering, recovery, and server adapters are implemented in Go.
 
-**Why study it:** It provides a compact but substantial framework path from net/http through route matching, pooled request context, middleware control flow, input binding, output rendering, and recovery.
+**Coding relevance:**
 
-**What you can learn:**
+HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth.
 
-- HTTP framework architecture, radix-tree routing, middleware chains, context pooling, request binding and validation, rendering, panic recovery, trusted proxies, and net/http integration.
+Required domain context:
 
-**Prerequisites:**
+- An HTTP engine matches a request method and path, prepares a reusable Context, and executes the selected handler chain.
 
-- Go interfaces and concurrency basics, net/http, HTTP semantics, trees, middleware, serialization formats, reflection, and integration testing.
+**Eight-part quality gate:**
 
-**Start here:** [`gin.go`](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/gin.go) — Engine.ServeHTTP and handleHTTPRequest connect the standard HTTP entry point to context pooling, route lookup, middleware execution, and response handling.
+- **Source quality:** gin.go provides the production ServeHTTP entry and pooled-context lifecycle, tree.go isolates routing, context.go owns handler-chain progression, and focused engine, tree, and context tests cover matching, parameters, middleware, aborts, errors, reuse, and response behavior.
+- **Architecture:** The audited architecture of the path beginning at `gin.go` has these boundaries: Engine entry and pool owner, routing tree, and Context handler-chain executor and focused tests.
+- **Naming and idiom:** `gin.go` and its supporting files use these characteristic Go mechanisms: sync.Pool context reuse, slice-backed handler chains, and tree and map-based routing.
+- **Tests:** Direct tests in `gin_test.go`, `tree_test.go`, and `context_test.go` cover these states and branches in the selected path: acquire, reset, route, handle, abort, respond, and release states, match, not-found, parameter, middleware, and error branches, and handler index progression.
+- **Documentation:** `gin.go` and its selected supporting material document the contracts needed to understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup.
+- **Traceability:** Start at Engine.ServeHTTP, follow Context acquisition and reset into method-tree lookup and parameter capture, then trace handlers through Context.Next and abort behavior before the response and context return to the pool; close with focused engine, tree, and context tests.
+- **Maintainability:** Changes to the path beginning at `gin.go` are constrained by these audited guarantees: pooled contexts must be fully reset between requests, route precedence and parameter capture must stay deterministic, and middleware order, aborts, and response state must remain coherent.
+- **Educational value:** Understand how Gin carries one HTTP request from ServeHTTP through route lookup, parameter capture, a middleware chain, and pooled-context cleanup. HTTP routing vocabulary is concise; the bounded trace teaches pooling, radix-tree route lookup, parameter capture, middleware-chain indexing, abort behavior, response state, and integration tests without requiring Gin's binding or rendering breadth.
 
-**Why this level:**
+**Inspection record:** commit `dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `gin.go`, `tree.go`, `context.go`, `gin_test.go`, `tree_test.go`, `context_test.go`, `LICENSE`. GitHub Linguist label: Go.
 
-- **S2:** 5,468 meaningful implementation LOC measured with tokei 14.0.0. Count includes all production framework packages while excluding tests, examples, documentation, fixtures, and generated assets.
-- **D3:** Framework internals combine several moderate concepts, but responsibilities and request flow remain inspectable.
-- **C3:** A request crosses multiple framework layers and protocol boundaries, though the system remains a single library in one process.
-- **Placement:** S2/D3/C3 averages to 2.67 and rounds to SDC 3.
+</details>
 
-**Quality-gate evidence:**
+### [robfig/cron](https://github.com/robfig/cron)
 
-- **Source quality:** Hot-path routing and context reuse are contained, middleware control flow is explicit, and error or recovery behavior is visible at boundaries.
-- **Architecture:** Engine and RouterGroup configure route trees; Context drives each request; focused binding, render, middleware, and server packages provide services.
-- **Naming and idiom:** Engine, Context, HandlerFunc, Next, Abort, RouterGroup, Routes, Bind, Render, and Recovery describe the HTTP framework model.
-- **Tests:** Unit, integration, fuzz, race-sensitive, server, TLS, h2c, routing, middleware, binding, rendering, proxy, and regression tests cover the public contract.
-- **Documentation:** The README, package docs, examples, benchmarks, deployment notes, API docs, and migration guidance give several entry paths.
-- **Traceability:** An HTTP request can be followed from ServeHTTP through context reset, radix lookup, handler chain execution, binding or rendering, response writing, and request tests.
-- **Maintainability:** Stable core types, specialized packages, options, benchmarks, fuzzing, and broad compatibility tests contain performance-driven code.
-- **Educational value:** It is a manageable framework codebase for studying the gap between a standard-library HTTP server and a production web framework.
+**Language 2 / Behavior 4 / Design 2 / Constraints 4 → Level 3**
 
-**Inspection record:** commit `dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `gin.go`, `context.go`, `tree.go`, `gin_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go, examples/, docs/, testdata/.
+A cron expression parser and in-process job scheduler for Go applications.
 
-**License:** [MIT](https://github.com/gin-gonic/gin/blob/dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9/LICENSE)
-
-### [spf13/cobra](https://github.com/spf13/cobra)
-
-**S2 / D3 / C3 → SDC 3**
-
-A framework for building command-line applications with nested commands, flags, help, validation, and shell completion.
-
-**Real-world evidence:** The repository publishes the Cobra Go module and its generator for developers building production command-line applications.
-
-**Language evidence:** Command trees, execution, argument validation, flag inheritance, help, usage, and completion behavior are implemented in Go.
-
-**Why study it:** It demonstrates how a compact framework coordinates command trees, inherited state, lifecycle hooks, documentation, validation, suggestions, and multiple shell protocols.
-
-**What you can learn:**
-
-- Tree-structured command dispatch, flag inheritance, lifecycle hooks, argument contracts, help and usage templates, shell completion protocols, error handling, and framework API design.
+**Why study it:** Understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown. Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy.
 
 **Prerequisites:**
 
-- Comfort with Go interfaces, pointers, closures, pflag-style parsing, tree traversal, templates, command-line UX, and test doubles.
+- Basic familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests.
+- A Cron scheduler calculates each entry's next time, sleeps until work is due, launches jobs, and accepts updates while running.
 
-**Start here:** [`command.go`](https://github.com/spf13/cobra/blob/adbc8813901bba65827259daa8e22ff94ec1f30e/command.go) — Command.Execute and execute connect tree lookup, flag parsing, validation, hooks, context, errors, help, and completion behavior.
+**Concepts this path develops:**
+
+- Goroutines, channels, and timers.
+- Stopped, running, sleeping, waking, and stopping states.
+- Timer reset and deadline ordering must avoid missed work.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `cron.go`: goroutines, channels, and timers, sort-based deadline ordering, and function and interface job wrappers.
+- Trace these states and branches from `cron.go` through its selected supporting files: stopped, running, sleeping, waking, and stopping states, timer, add, remove, snapshot, and stop events, and due, delayed, empty, and panic branches.
+- Identify these architectural responsibilities in the path beginning at `cron.go`: Cron scheduler owner, job wrapper chain, and direct lifecycle tests.
+- Study these change constraints for the path beginning at `cron.go`: timer reset and deadline ordering must avoid missed work, live mutation must remain serialized with scheduling, and shutdown, overlapping jobs, and optional panic recovery require explicit policy.
+
+**Learning path:**
+
+- **Goal:** Understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown.
+- **Start here:** [`cron.go`](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/cron.go) — Begin with `cron.go` because it exposes how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown.
+- **Then read:**
+  - [`chain.go`](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/chain.go)
+  - [`cron_test.go`](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/cron_test.go)
+- **Trace:** Start at Cron.run, follow next-time calculation and sorting into timer selection, then trace wakeups alongside add, remove, snapshot, and stop channels before jobs launch in goroutines; compare chain wrappers and verify that panic recovery occurs only when WithChain(Recover(...)) is explicitly configured, contrary to the localized cron.go comment.
 
 **Why this level:**
 
-- **S2:** 4,925 meaningful implementation LOC measured with tokei 14.0.0. Count covers the reusable Cobra framework package, excluding tests, the documentation site, generated docs, examples, and the separate generator command.
-- **D3:** Several moderate concerns interact through a flexible API, options, callbacks, and compatibility behavior.
-- **C3:** Tracing a command crosses the tree, inherited flags, validation, hooks, output policy, and optional shell completion boundaries.
-- **Placement:** S2/D3/C3 averages to 2.67 and rounds to SDC 3.
+- **Language technique 2:** Familiar Go concurrency primitives recur without advanced language machinery.
+- **Behavioral reasoning 4:** Several coupled scheduler states and event branches recur throughout the run loop.
+- **Design span 2:** A few compact components cover one scheduler lifecycle.
+- **Constraint burden 4:** Concurrency, timing, mutation, and failure constraints recur in normal scheduler operation.
+- **Placement:** The four scores 2/4/2/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3.
 
-**Quality-gate evidence:**
+**License:** MIT ([evidence 1](https://github.com/robfig/cron/blob/bc59245fe10efaed9d51b56900192527ed733435/LICENSE))
 
-- **Source quality:** Execution stages, validators, output destinations, flag relationships, and completion responses are represented explicitly despite a broad compatibility surface.
-- **Architecture:** Command is the central composition object, with focused argument, completion, help, documentation, and flag-group modules around it.
-- **Naming and idiom:** Use, Short, Long, Args, RunE, PersistentPreRunE, Find, Traverse, and SilenceUsage mirror the command-line lifecycle.
-- **Tests:** Large suites cover command search, aliases, flags, hooks, contexts, errors, templates, suggestions, help, completion, and regression behavior.
-- **Documentation:** The README, user guide, generated-reference support, examples, and shell completion docs orient both application authors and contributors.
-- **Traceability:** An invocation can be traced through Execute, command discovery, flag parsing, Args validation, lifecycle hooks, RunE, output selection, and command tests.
-- **Maintainability:** Compatibility-sensitive behavior is protected by focused tests, stable extension points, explicit options, and localized shell adapters.
-- **Educational value:** It shows how an ergonomic framework API translates declarative command definitions into a disciplined execution pipeline.
+<details>
+<summary>Quality and review evidence</summary>
 
-**Inspection record:** commit `adbc8813901bba65827259daa8e22ff94ec1f30e`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `command.go`, `args.go`, `command_test.go`, `LICENSE.txt`. GitHub Linguist label: Go. LOC exclusions: *_test.go, site/, doc/, cobra-cli/.
+**Real-world evidence:** The repository publishes a versioned Go module for applications that schedule recurring work inside a process.
 
-**License:** [Apache-2.0](https://github.com/spf13/cobra/blob/adbc8813901bba65827259daa8e22ff94ec1f30e/LICENSE.txt)
+**Language evidence:** The schedule parser, scheduler loop, job wrappers, and public interfaces are implemented in the root Go package.
 
-## SDC 4
+**Coding relevance:**
+
+Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy.
+
+Required domain context:
+
+- A Cron scheduler calculates each entry's next time, sleeps until work is due, launches jobs, and accepts updates while running.
+
+**Eight-part quality gate:**
+
+- **Source quality:** cron.go centralizes the scheduler loop and lifecycle, chain.go makes wrappers including Recover explicit, and cron_test.go uses controlled schedules and synchronization to cover ordering, add and remove while running, stop, delayed jobs, and wrapper behavior.
+- **Architecture:** The audited architecture of the path beginning at `cron.go` has these boundaries: Cron scheduler owner, job wrapper chain, and direct lifecycle tests.
+- **Naming and idiom:** `cron.go` and its supporting files use these characteristic Go mechanisms: goroutines, channels, and timers, sort-based deadline ordering, and function and interface job wrappers.
+- **Tests:** Direct tests in `cron_test.go` cover these states and branches in the selected path: stopped, running, sleeping, waking, and stopping states, timer, add, remove, snapshot, and stop events, and due, delayed, empty, and panic branches.
+- **Documentation:** `cron.go` and its selected supporting material document the contracts needed to understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown.
+- **Traceability:** Start at Cron.run, follow next-time calculation and sorting into timer selection, then trace wakeups alongside add, remove, snapshot, and stop channels before jobs launch in goroutines; compare chain wrappers and verify that panic recovery occurs only when WithChain(Recover(...)) is explicitly configured, contrary to the localized cron.go comment.
+- **Maintainability:** Changes to the path beginning at `cron.go` are constrained by these audited guarantees: timer reset and deadline ordering must avoid missed work, live mutation must remain serialized with scheduling, and shutdown, overlapping jobs, and optional panic recovery require explicit policy.
+- **Educational value:** Understand how robfig/cron owns scheduler state in one goroutine and coordinates timers, live updates, job launches, and shutdown. Scheduling vocabulary is brief; the path teaches a goroutine-owned event loop, timer reset rules, channels for mutation and shutdown, sorted deadlines, job wrappers, and explicit recovery policy.
+
+**Inspection record:** commit `bc59245fe10efaed9d51b56900192527ed733435`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `cron.go`, `chain.go`, `cron_test.go`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+## Level 4
 
 ### [caddyserver/caddy](https://github.com/caddyserver/caddy)
 
-**S3 / D4 / C4 → SDC 4**
+**Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
 
 An extensible server platform and web server with automatic HTTPS, dynamic configuration, multiple HTTP protocols, and a module system.
+
+**Why study it:** Understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure. Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation.
+
+**Prerequisites:**
+
+- Working familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests, plus experience tracing behavior across several production files.
+- Caddy loads a configuration by provisioning module values, validating an app graph, swapping active state, and cleaning up replaced resources.
+
+**Concepts this path develops:**
+
+- Interface-driven module registry.
+- Decoded, provisioned, validated, started, active, replaced, and cleaned states.
+- A failed candidate must not replace the working configuration.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `caddy.go`: interface-driven module registry, reflection and JSON-backed provisioning, and context-scoped lifecycle callbacks.
+- Trace these states and branches from `caddy.go` through its selected supporting files: decoded, provisioned, validated, started, active, replaced, and cleaned states, success, validation, provisioning, start, and cleanup branches, and old and candidate configuration interaction.
+- Identify these architectural responsibilities in the path beginning at `caddy.go`: global load and activation owner, module registry, provisioning Context, and admin reload boundary and integration tests.
+- Study these change constraints for the path beginning at `caddy.go`: a failed candidate must not replace the working configuration, module dependencies must provision and clean up in valid scope, and activation, replacement, and resource cleanup must remain ordered.
+
+**Learning path:**
+
+- **Goal:** Understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure.
+- **Start here:** [`caddy.go`](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/caddy.go) — Begin with `caddy.go` because it exposes how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure.
+- **Then read:**
+  - [`context.go`](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/context.go)
+  - [`modules.go`](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/modules.go)
+  - [`admin_test.go`](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/admin_test.go)
+- **Trace:** Start at Load, follow configuration decoding and Context-based module provisioning into app validation and staged startup, then trace the synchronized active-config swap and cleanup of replaced modules; close with admin tests that exercise rejected and successful reloads and preservation of the prior configuration.
+
+**Why this level:**
+
+- **Language technique 3:** Intermediate Go extension and dynamic-loading techniques recur across configuration loading.
+- **Behavioral reasoning 4:** Several coupled configuration and resource states recur throughout reload.
+- **Design span 4:** Multiple cohesive components participate in one end-to-end reload lifecycle.
+- **Constraint burden 4:** Failure atomicity, lifecycle, ordering, and compatibility guarantees recur in ordinary reload work.
+- **Placement:** The four scores 3/4/4/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The repository builds the released Caddy server used to host sites and services, and documents production installation, operation, and extension.
 
 **Language evidence:** Configuration loading, module lifecycle, administration, HTTP servers, routing, automatic HTTPS, storage integration, and bundled modules are implemented in Go.
 
-**Why study it:** It exposes a production server's complete lifecycle: typed modules, transactional configuration reloads, administration API, route compilation, HTTP serving, certificate automation, storage, logging, and graceful cleanup.
+**Coding relevance:**
 
-**What you can learn:**
+Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation.
 
-- Server lifecycle, module registries and provisioning, transactional configuration reloads, HTTP routing and middleware, automatic TLS, storage abstractions, graceful operation, observability, and extensible platform design.
+Required domain context:
 
-**Prerequisites:**
+- Caddy loads a configuration by provisioning module values, validating an app graph, swapping active state, and cleaning up replaced resources.
 
-- Strong Go, interfaces and reflection, concurrency and contexts, net/http, TLS and PKI, JSON configuration, networking, storage, logging, and plugin architecture.
+**Eight-part quality gate:**
 
-**Start here:** [`caddy.go`](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/caddy.go) — Config, Run, Load, and changeConfig reveal how JSON configuration becomes provisioned modules and how a live server changes safely.
+- **Source quality:** caddy.go centralizes Load and active-config replacement, context.go handles module provisioning and cleanup scope, modules.go defines registration and lookup, and admin_test.go closes the actual reload path through admin requests, validation failures, state preservation, and successful replacement. The catalog's caddy_test.go does not close that reload trace.
+- **Architecture:** The audited architecture of the path beginning at `caddy.go` has these boundaries: global load and activation owner, module registry, provisioning Context, and admin reload boundary and integration tests.
+- **Naming and idiom:** `caddy.go` and its supporting files use these characteristic Go mechanisms: interface-driven module registry, reflection and JSON-backed provisioning, and context-scoped lifecycle callbacks.
+- **Tests:** Direct tests in `admin_test.go` cover these states and branches in the selected path: decoded, provisioned, validated, started, active, replaced, and cleaned states, success, validation, provisioning, start, and cleanup branches, and old and candidate configuration interaction.
+- **Documentation:** `caddy.go` and its selected supporting material document the contracts needed to understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure.
+- **Traceability:** Start at Load, follow configuration decoding and Context-based module provisioning into app validation and staged startup, then trace the synchronized active-config swap and cleanup of replaced modules; close with admin tests that exercise rejected and successful reloads and preservation of the prior configuration.
+- **Maintainability:** Changes to the path beginning at `caddy.go` are constrained by these audited guarantees: a failed candidate must not replace the working configuration, module dependencies must provision and clean up in valid scope, and activation, replacement, and resource cleanup must remain ordered.
+- **Educational value:** Understand how Caddy stages, validates, activates, and cleans up a modular configuration without losing the last working state on failure. Configuration and module vocabulary is bounded; the path teaches interface-driven plugin loading, dependency context, staged validation, transactional replacement, resource cleanup, admin-triggered reloads, and failure preservation.
 
-**Why this level:**
+**Inspection record:** commit `502691f5182123ef30f463d7f132e7c2fe55e2bf`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `caddy.go`, `context.go`, `modules.go`, `admin_test.go`, `LICENSE`. GitHub Linguist label: Go.
 
-- **S3:** 47,547 meaningful implementation LOC measured with tokei 14.0.0. Count covers the core server, command, HTTP, TLS, logging, storage, and bundled module implementations while excluding tests, fixtures, documentation, and helper scripts.
-- **D4:** Advanced lifecycle, concurrency, extension, and security-sensitive networking concerns recur across the main path.
-- **C4:** Many configurable components interact across startup, live reload, request handling, certificate automation, and shutdown.
-- **Placement:** S3/D4/C4 averages to 3.67 and rounds to SDC 4.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Lifecycle stages, validation, rollback, concurrency control, configuration hashes, and module ownership are explicit at security-sensitive boundaries.
-- **Architecture:** A small core owns configuration and module lifecycle while registered apps and modules provide HTTP, TLS, storage, logging, events, PKI, and protocol features.
-- **Naming and idiom:** Config, Module, Provisioner, Validator, App, Load, Cleanup, Route, Handler, Matcher, and AutomationPolicy expose lifecycle and server concepts.
-- **Tests:** Unit, integration, adapter, module, routing, TLS, configuration, storage, command, fuzz, and regression suites cover behavior across packages.
-- **Documentation:** The README, architecture guide, generated module reference, API documentation, tutorials, conventions, and inline lifecycle contracts support deep study.
-- **Traceability:** A configuration change can be followed through the admin API, JSON mutation and hash checks, module loading, provisioning and validation, app start, route execution, and reload tests.
-- **Maintainability:** Explicit module interfaces, transactional replacement, cleanup hooks, namespaces, validation, structured logs, and extensive tests isolate extension risk.
-- **Educational value:** It is a strong advanced example of making a network server both operationally safe and deeply extensible without hiding lifecycle mechanics.
-
-**Inspection record:** commit `502691f5182123ef30f463d7f132e7c2fe55e2bf`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `caddy.go`, `modules/caddyhttp/app.go`, `caddy_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go, caddytest/, integration/, testdata/, docs/.
-
-**License:** [Apache-2.0](https://github.com/caddyserver/caddy/blob/502691f5182123ef30f463d7f132e7c2fe55e2bf/LICENSE)
-
-### [gohugoio/hugo](https://github.com/gohugoio/hugo)
-
-**S4 / D4 / C4 → SDC 4**
-
-A static site generator with content modeling, templates, multilingual sites, asset processing, modules, and fast incremental builds.
-
-**Real-world evidence:** The repository builds the released Hugo command-line application used to generate and serve real websites from content and templates.
-
-**Language evidence:** Site assembly, content processing, templates, resources, asset pipelines, modules, file watching, and build orchestration are implemented primarily in Go.
-
-**Why study it:** It demonstrates a large local application that converts heterogeneous inputs into deterministic sites while supporting templates, content graphs, assets, multilingual variants, modules, caches, and incremental rebuilds.
-
-**What you can learn:**
-
-- Build orchestration, content graphs, template execution, resource pipelines, caching, incremental invalidation, file watching, modules, multilingual variants, command architecture, and performance-oriented application design.
-
-**Prerequisites:**
-
-- Strong Go, interfaces and generics, concurrency, filesystems, templates, parsing, dependency graphs, caching, web assets, command-line applications, and integration testing.
-
-**Start here:** [`hugolib/hugo_sites.go`](https://github.com/gohugoio/hugo/blob/d6e6f9e500eebdeae8e28de830fff2e3bfc7d534/hugolib/hugo_sites.go) — HugoSites and its build orchestration connect configuration, sites, pages, dependencies, rendering, caching, and rebuild state at the product's center.
-
-**Why this level:**
-
-- **S4:** 97,826 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party application, library, template, content, resource, module, command, and support packages while excluding tests, fixtures, examples, documentation, vendored, and generated material.
-- **D4:** Performance-sensitive state, graph invalidation, templating, and many content rules recur through the main build path.
-- **C4:** A site build crosses many subsystems and variants, though it remains a coherent local build application rather than a distributed platform.
-- **Placement:** S4/D4/C4 averages to 4.00, making Hugo an SDC 4 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Build state, dependency tracking, cache ownership, rendering phases, and content variants use explicit domain types and guarded transitions.
-- **Architecture:** Commands and configuration feed HugoSites, which composes content, page maps, templates, resources, modules, filesystems, publishers, and build-state services.
-- **Naming and idiom:** HugoSites, Site, Page, Resource, Template, BuildCfg, BuildState, DependencyManager, and OutputFormat reflect the publishing domain.
-- **Tests:** Extensive unit, integration, golden, benchmark, content, template, resource, module, server, filesystem, race, and regression suites cover site generation.
-- **Documentation:** The README, contributor guide, package docs, architecture notes, command help, and full public documentation support both use and maintenance.
-- **Traceability:** A site build can be followed from command configuration into HugoSites.Build, content assembly, template lookup and execution, resource processing, publication, and build tests.
-- **Maintainability:** Domain packages, interfaces, immutable or scoped build data, layered caches, explicit dependencies, and large integration suites contain product breadth.
-- **Educational value:** It shows how to organize a large performance-sensitive transformation pipeline whose output must remain predictable across many content variants.
-
-**Inspection record:** commit `d6e6f9e500eebdeae8e28de830fff2e3bfc7d534`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `hugolib/hugo_sites.go`, `tpl/tplimpl/templates.go`, `hugolib/hugo_sites_build_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go, testdata/, examples/, docs/, resources/testdata/, vendor/, generated files.
-
-**License:** [Apache-2.0](https://github.com/gohugoio/hugo/blob/d6e6f9e500eebdeae8e28de830fff2e3bfc7d534/LICENSE)
-
-## SDC 5
-
-### [golang/go](https://github.com/golang/go)
-
-**S5 / D5 / C5 → SDC 5**
-
-The Go programming language implementation, including its compiler, runtime, standard library, build tools, assembler, linker, and platform ports.
-
-**Real-world evidence:** The repository is the upstream source used to build official Go toolchains and standard-library releases across supported operating systems and architectures.
-
-**Language evidence:** The compiler, runtime, garbage collector, scheduler, standard library, assembler, linker, debugger support, and developer tools are implemented predominantly in Go with first-party assembly and small C boundaries.
-
-**Why study it:** It joins a self-hosting compiler, concurrent runtime, garbage collector, scheduler, networking and cryptography libraries, build system, linker, assembler, tooling, and extensive portability work in one rigorously documented system.
-
-**What you can learn:**
-
-- Compiler pipelines, parsing and type checking, intermediate representations and SSA optimization, code generation, runtime scheduling, garbage collection, stacks and memory, reflection, interfaces, standard-library design, networking, cryptography, toolchains, bootstrapping, portability, and compatibility.
-
-**Prerequisites:**
-
-- Expert Go, compiler construction, operating systems, concurrency and memory models, garbage collection, assembly and computer architecture, networking, cryptography, filesystems, build systems, performance engineering, and very large codebase navigation.
-
-**Start here:** [`src/cmd/compile/README.md`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/cmd/compile/README.md) — The compiler guide maps parsing, type checking, IR construction, optimization, SSA lowering, code generation, export data, and package boundaries before source-level study begins.
-
-**Why this level:**
-
-- **S5:** 868,648 meaningful implementation LOC measured with tokei 14.0.0. Count covers non-generated first-party Go, C, header, and GNU-style assembly implementation under src/, excluding tests, fixtures, vendored dependencies, documentation, compatibility manifests, miscellaneous support trees, and 661,972 generated implementation lines identified by standard generated-file headers.
-- **D5:** Expert compiler, runtime, operating-system, architecture, concurrency, performance, protocol, and security concerns recur throughout the toolchain and standard library.
-- **C5:** The repository is a platform-scale language ecosystem whose components must coordinate across compilation, execution, tooling, packages, operating systems, and architectures.
-- **Placement:** S5/D5/C5 averages to 5.00 and satisfies the two-dimensions-at-5 guardrail, making Go an SDC 5 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Critical compiler and runtime paths document invariants, isolate architecture-specific code, expose phases explicitly, and favor inspectable mechanisms over hidden frameworks.
-- **Architecture:** The source tree separates compiler phases, runtime, internal platform support, standard packages, commands, assembler, linker, tracing, profiling, testing, and release machinery around stable package boundaries.
-- **Naming and idiom:** Package and symbol names such as syntax, types2, ir, noder, escape, ssa, ssagen, runtime, goroutine, m, p, schedule, and findRunnable encode language and runtime concepts consistently.
-- **Tests:** Package tests, compiler error and code-generation tests, runtime stress tests, race tests, fuzzing, benchmarks, platform builders, API checks, and full toolchain tests cover semantics and regressions.
-- **Documentation:** Language specifications, package documentation, compiler and runtime guides, design notes, memory-model documentation, contributor guides, proposals, and source comments orient expert readers.
-- **Traceability:** Compiling a function can be followed from compiler Main through parsing, types, unified IR, transformations, SSA, architecture lowering, object emission, linking, runtime scheduling, and focused phase tests.
-- **Maintainability:** Compatibility policy, explicit internal boundaries, generated-code markers, platform build constraints, exhaustive builders, proposals, benchmarks, and rigorous review protect a self-hosting system.
-- **Educational value:** It is an unusually complete expert reference for how a modern language moves from specification through compilation and runtime execution to a portable standard ecosystem.
-
-**Inspection record:** commit `da7c67f59526a02ef22f80fe91fd2960a6547e59`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `src/cmd/compile/README.md`, `src/cmd/compile/internal/gc/main.go`, `src/cmd/compile/internal/noder/noder.go`, `src/cmd/compile/internal/ssa/compile.go`, `src/runtime/proc.go`, `src/runtime/proc_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go, test/, testdata/, cmd/vendor/, vendor/, misc/, doc/, api/, files marked as generated.
-
-**License:** [BSD-3-Clause](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/LICENSE)
+</details>
 
 ### [kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
 
-**S5 / D5 / C5 → SDC 5**
+**Language 3 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
 
 A distributed container orchestration platform with declarative APIs, scheduling, controllers, node agents, networking, storage, and extensibility.
+
+**Why study it:** Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown. Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise.
+
+**Prerequisites:**
+
+- Working familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests, plus experience tracing behavior across several production files.
+- A workqueue serializes keys for concurrent workers, suppresses duplicate in-flight work, and can delay or rate-limit retries.
+
+**Concepts this path develops:**
+
+- Mutex and condition-variable coordination.
+- Queued, dirty, processing, delayed, rate-limited, done, shutting-down, and drained states.
+- One logical key must not execute concurrently or be lost when re-added.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `staging/src/k8s.io/client-go/util/workqueue/queue.go`: mutex and condition-variable coordination, goroutines, timers, and channels, and interface-composed rate limiters and typed sets.
+- Trace these states and branches from `staging/src/k8s.io/client-go/util/workqueue/queue.go` through its selected supporting files: queued, dirty, processing, delayed, rate-limited, done, shutting-down, and drained states, duplicate add during processing and retry transitions, and timing, fairness, cancellation, and shutdown branches.
+- Identify these architectural responsibilities in the path beginning at `staging/src/k8s.io/client-go/util/workqueue/queue.go`: core typed queue, delaying queue, rate-limiting facade and limiter policies, and corresponding focused tests.
+- Study these change constraints for the path beginning at `staging/src/k8s.io/client-go/util/workqueue/queue.go`: one logical key must not execute concurrently or be lost when re-added, delays, backoff, fairness, and retries must interact predictably, and shutdown and draining must wake waiters and preserve completion invariants.
+
+**Learning path:**
+
+- **Goal:** Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
+- **Start here:** [`staging/src/k8s.io/client-go/util/workqueue/queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/queue.go) — Begin with `staging/src/k8s.io/client-go/util/workqueue/queue.go` because it exposes how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
+- **Then read:**
+  - [`staging/src/k8s.io/client-go/util/workqueue/doc.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/doc.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/queue_test.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/queue_test.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/delaying_queue_test.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/delaying_queue_test.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue_test.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue_test.go)
+  - [`staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters_test.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters_test.go)
+- **Trace:** Start with Add, Get, Done, dirty, processing, and the condition variable in the core queue, then follow shutdown and drain behavior into delayed scheduling and rate-limited requeue policy; close with the four focused suites for concurrency, deduplication, timing, retries, fairness, and shutdown.
+
+**Why this level:**
+
+- **Language technique 3:** Intermediate Go concurrency and composition techniques recur without multiple expert language mechanisms.
+- **Behavioral reasoning 5:** Many tightly coupled concurrent states and failure-sensitive transitions recur in ordinary use.
+- **Design span 3:** A few cohesive sibling components form one bounded workqueue subsystem.
+- **Constraint burden 5:** Expert concurrency, deduplication, timing, fairness, and shutdown guarantees recur throughout the path.
+- **Placement:** The four scores 3/5/3/5 sum to 16; their arithmetic mean is 4.00 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The repository builds the upstream Kubernetes control plane and node components released for operating containerized workloads across clusters.
 
 **Language evidence:** The API server, controllers, scheduler, kubelet, proxy, storage and API machinery, command binaries, and core control-plane behavior are implemented primarily in Go.
 
-**Why study it:** It is an expert reference for declarative distributed control: versioned APIs, watches, reconciliation, admission, scheduling, resource ownership, leader election, node management, storage, networking, and compatibility at platform scale.
+**Coding relevance:**
 
-**What you can learn:**
+Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise.
 
-- Distributed control planes, declarative reconciliation, API machinery, storage and watches, admission and authorization, scheduling algorithms, controllers, leader election, node agents, networking and storage plugins, versioning, observability, and large-project governance.
+Required domain context:
+
+- A workqueue serializes keys for concurrent workers, suppresses duplicate in-flight work, and can delay or rate-limit retries.
+
+**Eight-part quality gate:**
+
+- **Source quality:** queue.go documents and implements the core dirty, processing, condition, shutdown, and drain invariants; sibling delaying and rate-limiting layers extend the lifecycle; default limiters make retry policy explicit; and corresponding focused tests cover concurrency, deduplication, timing, shutdown, draining, fairness, and limiter behavior.
+- **Architecture:** The audited architecture of the path beginning at `staging/src/k8s.io/client-go/util/workqueue/queue.go` has these boundaries: core typed queue, delaying queue, rate-limiting facade and limiter policies, and corresponding focused tests.
+- **Naming and idiom:** `staging/src/k8s.io/client-go/util/workqueue/queue.go` and its supporting files use these characteristic Go mechanisms: mutex and condition-variable coordination, goroutines, timers, and channels, and interface-composed rate limiters and typed sets.
+- **Tests:** Direct tests in `staging/src/k8s.io/client-go/util/workqueue/queue_test.go`, `staging/src/k8s.io/client-go/util/workqueue/delaying_queue_test.go`, `staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue_test.go`, and `staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters_test.go` cover these states and branches in the selected path: queued, dirty, processing, delayed, rate-limited, done, shutting-down, and drained states, duplicate add during processing and retry transitions, and timing, fairness, cancellation, and shutdown branches.
+- **Documentation:** `staging/src/k8s.io/client-go/util/workqueue/queue.go` and its selected supporting material document the contracts needed to understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown.
+- **Traceability:** Start with Add, Get, Done, dirty, processing, and the condition variable in the core queue, then follow shutdown and drain behavior into delayed scheduling and rate-limited requeue policy; close with the four focused suites for concurrency, deduplication, timing, retries, fairness, and shutdown.
+- **Maintainability:** Changes to the path beginning at `staging/src/k8s.io/client-go/util/workqueue/queue.go` are constrained by these audited guarantees: one logical key must not execute concurrently or be lost when re-added, delays, backoff, fairness, and retries must interact predictably, and shutdown and draining must wake waiters and preserve completion invariants.
+- **Educational value:** Understand how Kubernetes client-go coordinates concurrent workers with deduplicated keys, delayed retries, rate limiting, and safe shutdown. Workqueue vocabulary is brief and transferable; the replacement path teaches condition-variable coordination, dirty and processing sets, shutdown and drain semantics, delayed scheduling, rate-limiter composition, retry bookkeeping, fairness, and concurrency tests without Kubernetes API-server or scheduler expertise.
+
+**Inspection record:** commit `e72c2715ade37738aa5c029e8de5285cbe1c9441`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `staging/src/k8s.io/client-go/util/workqueue/queue.go`, `staging/src/k8s.io/client-go/util/workqueue/doc.go`, `staging/src/k8s.io/client-go/util/workqueue/delaying_queue.go`, `staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue.go`, `staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters.go`, `staging/src/k8s.io/client-go/util/workqueue/queue_test.go`, `staging/src/k8s.io/client-go/util/workqueue/delaying_queue_test.go`, `staging/src/k8s.io/client-go/util/workqueue/rate_limiting_queue_test.go`, `staging/src/k8s.io/client-go/util/workqueue/default_rate_limiters_test.go`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+## Level 5
+
+### [golang/go](https://github.com/golang/go)
+
+**Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+The Go programming language implementation, including its compiler, runtime, standard library, build tools, assembler, linker, and platform ports.
+
+**Why study it:** Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants. Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness.
 
 **Prerequisites:**
 
-- Expert Go, distributed systems, consensus-backed storage, concurrency, networking, containers, Linux, authentication and authorization, API versioning, scheduling, fault tolerance, observability, and monorepo navigation.
+- Strong working familiarity with Go functions, structs and interfaces, slices and maps, errors, goroutines and channels at a basic level, and table-driven tests, plus experience tracing state, resources, or asynchronous control flow across many production files.
+- The Go runtime implements channel send, receive, close, and select by coordinating goroutines, queues, buffers, locks, and the scheduler.
 
-**Start here:** [`cmd/kube-apiserver/app/server.go`](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/cmd/kube-apiserver/app/server.go) — The API server construction path exposes authentication, admission, storage, versioning, discovery, aggregation, controllers, and lifecycle boundaries shared across the control plane.
+**Concepts this path develops:**
+
+- Unsafe pointer arithmetic and typed memory operations.
+- Open, buffered, empty, full, waiting, closed, parked, and readied states.
+- Send, receive, close, and select semantics must be race-correct.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `src/runtime/chan.go`: unsafe pointer arithmetic and typed memory operations, runtime-internal atomics, locks, barriers, and scheduler primitives, and compiler-recognized and nosplit or system-stack mechanisms.
+- Trace these states and branches from `src/runtime/chan.go` through its selected supporting files: open, buffered, empty, full, waiting, closed, parked, and readied states, direct handoff, buffer transfer, block, wakeup, close, panic, and select branches, and sender, receiver, scheduler, and garbage-collector interaction.
+- Identify these architectural responsibilities in the path beginning at `src/runtime/chan.go`: channel core and wait queues, select implementation, shared runtime scheduler structures, and semantic tests and runtime guide.
+- Study these change constraints for the path beginning at `src/runtime/chan.go`: send, receive, close, and select semantics must be race-correct, lock order, parking, wakeup, stack, and GC barriers must remain safe, and fast paths must preserve fairness, memory-model, panic, and performance guarantees.
+
+**Learning path:**
+
+- **Goal:** Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
+- **Start here:** [`src/runtime/chan.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/chan.go) — Begin with `src/runtime/chan.go` because it exposes how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
+- **Then read:**
+  - [`src/runtime/select.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/select.go)
+  - [`src/runtime/runtime2.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/runtime2.go)
+  - [`src/runtime/chan_test.go`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/chan_test.go)
+  - [`src/runtime/HACKING.md`](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/src/runtime/HACKING.md)
+- **Trace:** Start with hchan layout and channel creation, follow fast and blocking send and receive through buffers, sudog queues, gopark, and readying, then trace close wakeups and select's lock and race protocol; close with runtime structures, channel tests, and the runtime hacking guide.
 
 **Why this level:**
 
-- **S5:** 927,813 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party command, package, plugin, and staging-module implementation across the platform while excluding tests, fixtures, vendored and copied code, documentation, examples, generated clients, apply configurations, and protobuf output.
-- **D5:** Expert distributed-systems, security, scheduling, networking, storage, and compatibility concerns recur across every central learning path.
-- **C5:** Kubernetes is a platform-scale system whose useful behaviors span independently deployed components, shared APIs, persistent cluster state, and reconciliation loops.
-- **Placement:** S5/D5/C5 averages to 5.00 and satisfies the two-dimensions-at-5 guardrail, making Kubernetes an SDC 5 project.
+- **Language technique 5:** Multiple expert Go runtime and low-level language mechanisms recur throughout channel operations.
+- **Behavioral reasoning 5:** Many tightly coupled concurrent states and race-sensitive transitions recur throughout normal channel behavior.
+- **Design span 4:** Several major runtime components participate, while the trace stays bounded to channels rather than mixing compiler and unrelated runtime systems.
+- **Constraint burden 5:** Expert concurrency, memory, scheduler, GC, semantic, and performance constraints recur across every channel operation.
+- **Placement:** The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5.
 
-**Quality-gate evidence:**
+**License:** BSD-3-Clause ([evidence 1](https://github.com/golang/go/blob/da7c67f59526a02ef22f80fe91fd2960a6547e59/LICENSE))
 
-- **Source quality:** Core paths make ownership, contexts, queues, retries, feature gates, API conversions, validation, and failure handling explicit despite platform breadth.
-- **Architecture:** Versioned APIs and shared machinery connect the API server and storage to controllers, scheduler, kubelet, proxy, plugins, generated clients, and ecosystem extension points.
-- **Naming and idiom:** Pod, Node, Scheduler, Informer, Lister, Reconciler, Controller, Queue, Admission, Strategy, and Kubelet expose the control-plane model.
-- **Tests:** Unit, integration, conformance, end-to-end, scalability, upgrade, fuzz, API compatibility, scheduler, storage, node, and component suites protect the platform.
-- **Documentation:** The README, contributor site, architecture and enhancement proposals, API references, component docs, code-generation guides, and operational documentation provide deep context.
-- **Traceability:** Scheduling a pod can be followed from API creation and persisted watch events through informers, the scheduler queue and framework, binding, kubelet observation, runtime execution, status updates, and integration tests.
-- **Maintainability:** Versioned APIs, generated boundaries, feature gates, shared libraries, ownership conventions, review processes, compatibility policy, and broad tests manage change at exceptional scale.
-- **Educational value:** It is a definitive expert corpus for studying how declarative APIs and reconciliation organize a distributed infrastructure platform.
+<details>
+<summary>Quality and review evidence</summary>
 
-**Inspection record:** commit `e72c2715ade37738aa5c029e8de5285cbe1c9441`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `go.mod`, `cmd/kube-apiserver/app/server.go`, `pkg/scheduler/scheduler.go`, `test/integration/scheduler/scheduler_test.go`, `LICENSE`. GitHub Linguist label: Go. LOC exclusions: *_test.go, test/, vendor/, third_party/, docs/, examples/, generated files, protobuf outputs, staging/src/k8s.io/client-go/applyconfigurations/.
+**Real-world evidence:** The repository is the upstream source used to build official Go toolchains and standard-library releases across supported operating systems and architectures.
 
-**License:** [Apache-2.0](https://github.com/kubernetes/kubernetes/blob/e72c2715ade37738aa5c029e8de5285cbe1c9441/LICENSE)
+**Language evidence:** The compiler, runtime, garbage collector, scheduler, standard library, assembler, linker, debugger support, and developer tools are implemented predominantly in Go with first-party assembly and small C boundaries.
+
+**Coding relevance:**
+
+Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness.
+
+Required domain context:
+
+- The Go runtime implements channel send, receive, close, and select by coordinating goroutines, queues, buffers, locks, and the scheduler.
+
+**Eight-part quality gate:**
+
+- **Source quality:** chan.go documents and implements buffered and unbuffered channel operations and close, select.go supplies multi-channel coordination, runtime2.go defines shared scheduler and wait structures, chan_test.go exercises semantics and regressions, and HACKING.md explains runtime invariants and development conventions.
+- **Architecture:** The audited architecture of the path beginning at `src/runtime/chan.go` has these boundaries: channel core and wait queues, select implementation, shared runtime scheduler structures, and semantic tests and runtime guide.
+- **Naming and idiom:** `src/runtime/chan.go` and its supporting files use these characteristic Go mechanisms: unsafe pointer arithmetic and typed memory operations, runtime-internal atomics, locks, barriers, and scheduler primitives, and compiler-recognized and nosplit or system-stack mechanisms.
+- **Tests:** Direct tests in `src/runtime/chan_test.go` cover these states and branches in the selected path: open, buffered, empty, full, waiting, closed, parked, and readied states, direct handoff, buffer transfer, block, wakeup, close, panic, and select branches, and sender, receiver, scheduler, and garbage-collector interaction.
+- **Documentation:** `src/runtime/chan.go` and its selected supporting material document the contracts needed to understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants.
+- **Traceability:** Start with hchan layout and channel creation, follow fast and blocking send and receive through buffers, sudog queues, gopark, and readying, then trace close wakeups and select's lock and race protocol; close with runtime structures, channel tests, and the runtime hacking guide.
+- **Maintainability:** Changes to the path beginning at `src/runtime/chan.go` are constrained by these audited guarantees: send, receive, close, and select semantics must be race-correct, lock order, parking, wakeup, stack, and GC barriers must remain safe, and fast paths must preserve fairness, memory-model, panic, and performance guarantees.
+- **Educational value:** Understand how the Go runtime implements channel send, receive, close, and select while coordinating memory, goroutine parking, wakeup, and scheduler invariants. Runtime vocabulary is introduced once; the bounded path teaches unsafe memory layout, scheduler integration, sudog wait queues, lock ordering, atomic state, blocking and wakeup, select races, garbage-collector barriers, and performance-sensitive correctness.
+
+**Inspection record:** commit `da7c67f59526a02ef22f80fe91fd2960a6547e59`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/runtime/chan.go`, `src/runtime/select.go`, `src/runtime/runtime2.go`, `src/runtime/chan_test.go`, `src/runtime/HACKING.md`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+### [grpc/grpc-go](https://github.com/grpc/grpc-go)
+
+**Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+The Go implementation of gRPC, providing clients, servers, streaming RPCs, transports, resolution, load balancing, retries, observability, and generated-code support.
+
+**Why study it:** Understand how a gRPC-Go ClientConn turns resolver updates into balanced subchannels, waits or fails RPC picks according to connectivity, reconnects with backoff, and closes every concurrent component in dependency order. Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
+
+**Prerequisites:**
+
+- Be fluent with Go interfaces, goroutines, channels, contexts, mutexes, atomics, error wrapping, closures, and cancellation-aware tests.
+- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
+
+**Concepts this path develops:**
+
+- Interacting interfaces and callback adapters across resolver, balancer, picker, and transport layers.
+- Idle, connecting, ready, transient-failure, and shutdown transitions.
+- Race-free state visibility, wakeups, and callback serialization.
+
+**What you can learn:**
+
+- Study these transferable Go mechanisms in `clientconn.go`: interface-driven resolver, balancer, picker, and transport boundaries; goroutines, channels, contexts, mutexes, atomics, and wait groups; and callback serializers with explicit ownership.
+- Trace these states and branches through the selected implementation: idle, connecting, ready, transient-failure, and shutdown states; resolver and service-config updates; address attempts and backoff; picker blocking, fail-fast, and wait-for-ready behavior; and concurrent close races.
+- Identify these architectural responsibilities: ClientConn orchestration, resolver and balancer wrappers, per-address connection and transport lifecycle, picker admission, connectivity publication, and direct unit and integration state-transition tests.
+- Study these change constraints: state notifications and picks must not be missed, resolver and balancer callbacks must remain serialized, RPC and connection paths must stay race-safe, backoff and cancellation must bound work, and close must quiesce serializers and subchannels without deadlock or use-after-close.
+
+**Learning path:**
+
+- **Goal:** Understand how a gRPC-Go ClientConn turns resolver updates into balanced subchannels, waits or fails RPC picks according to connectivity, reconnects with backoff, and closes every concurrent component in dependency order.
+- **Start here:** [`clientconn.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/clientconn.go) — Begin with ClientConn and addrConn because their documented ownership, update, connection, backoff, state, and close methods connect every selected boundary.
+- **Then read:**
+  - [`resolver_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/resolver_wrapper.go)
+  - [`balancer_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/balancer_wrapper.go)
+  - [`picker_wrapper.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/picker_wrapper.go)
+  - [`connectivity/connectivity.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/connectivity/connectivity.go)
+  - [`test/clientconn_state_transition_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/test/clientconn_state_transition_test.go)
+  - [`balancer_wrapper_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/balancer_wrapper_test.go)
+  - [`picker_wrapper_test.go`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/picker_wrapper_test.go)
+  - [`Documentation/anti-patterns.md`](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/Documentation/anti-patterns.md)
+- **Trace:** Start at ClientConn creation and resolverWrapper updates, follow service configuration into the balancer serializer, NewSubConn into addrConn connection attempts and backoff, connectivity publication and picker replacement into blocking or fail-fast RPC selection, then follow transport loss and address updates through reconnection; finish at ClientConn.Close's picker-before-balancer ordering, serializer drains, parallel subchannel teardown, and state, picker, and close-race tests.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced Go concurrency and interface machinery recurs throughout the path, but the language deliberately avoids type-level or metaprogramming complexity sufficient for expert score 5.
+- **Behavioral reasoning 5:** Several concurrent state machines and failure lifecycles interact pervasively, making expert nonlocal reasoning unavoidable.
+- **Design span 5:** The path coordinates several major runtime subsystems and pervasive extension policies even while RPC framing and server execution stay out of scope.
+- **Constraint burden 5:** Concurrency, lifecycle, reliability, extensibility, observability, and compatibility guarantees interact so local changes can strand RPCs or leak live work.
+- **Placement:** The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/grpc/grpc-go/blob/6d697e4b65eb0dcfaf326b5b1fcdc66913872442/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Real-world evidence:** The module publishes google.golang.org/grpc, the production Go runtime used to build interoperable RPC clients and servers across the gRPC ecosystem.
+
+**Language evidence:** The selected ClientConn, resolver and balancer wrappers, address-connection state machine, picker coordination, shutdown behavior, and direct tests are handwritten first-party Go in the root, resolver/, connectivity/, and test/.
+
+**Coding relevance:**
+
+Endpoint resolution and client-side load balancing need only a short primer; the path teaches transferable goroutine ownership, channel wakeups, serialized callbacks, connection state machines, backoff, dynamic policy, concurrent selection, shutdown ordering, observability, and race-focused tests.
+
+Required domain context:
+
+- A resolver produces endpoint addresses, a load balancer owns subchannels and publishes a picker, and each RPC either chooses a ready transport, waits for a usable one, or fails according to its context and wait-for-ready policy.
+
+**Eight-part quality gate:**
+
+- **Source quality:** ClientConn and addrConn document field synchronization and lifecycle assumptions; resolver, balancer, and picker wrappers isolate callbacks and publication; direct tests exercise transition sequences, address failure, blocking picks, contexts, policy updates, and close races.
+- **Architecture:** The selected files expose recognizable ClientConn orchestration, resolver, configuration, balancer, subchannel, picker, transport, connectivity, and observability boundaries with explicit ownership and serializer rules.
+- **Naming and idiom:** ClientConn, addrConn, updateResolverStateAndUnlock, resetTransportAndUnlock, connectivityStateManager, pickerWrapper, serializer, and firstResolveEvent make state and ownership visible while demonstrating advanced idiomatic Go concurrency.
+- **Tests:** State-transition integration tests cover successful readiness, preface failure, timeouts, disconnection, multiple failed addresses, and reconnects; picker tests cover blocking, deadlines, transient failure, fail-fast, subchannel readiness, and concurrent wakeups; balancer tests target creation-versus-close races.
+- **Documentation:** README.md, API comments, anti-pattern guidance, and official gRPC Go documentation explain the client abstraction, connectivity, supported use, and relevant lifecycle context.
+- **Traceability:** A resolver update can be followed through serialized balancer state, subchannel creation, address connection and transport state, picker publication, RPC selection, reconnection, and ordered shutdown into direct assertions.
+- **Maintainability:** Synchronization ownership is documented near fields, callback streams are serialized, close order is explained in source, state changes are centralized, and race-shaped tests protect the most dangerous interleavings.
+- **Educational value:** The bounded client-connection path is a strong production study of concurrent control-plane and data-plane coordination in Go without requiring the learner to understand protobuf encoding or HTTP/2 frame implementation.
+
+**Inspection record:** commit `6d697e4b65eb0dcfaf326b5b1fcdc66913872442`, inspected 2026-08-29. Review passes: Codex primary pass; Codex cold verification pass. Files inspected: `README.md`, `clientconn.go`, `resolver_wrapper.go`, `balancer_wrapper.go`, `picker_wrapper.go`, `connectivity/connectivity.go`, `test/clientconn_state_transition_test.go`, `balancer_wrapper_test.go`, `picker_wrapper_test.go`, `Documentation/anti-patterns.md`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
 
 _Generated from `catalog/go.json`; do not edit by hand._

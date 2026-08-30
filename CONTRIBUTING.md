@@ -1,188 +1,172 @@
 # Contributing to Exempla
 
-Exempla accepts evidence-backed improvements to a curated learning catalog. A
-candidate does not qualify because it is famous, convenient, or needed to fill
-a slot. Real software, a coherent source-reading path, the full quality gate,
-and an honest SDC placement are required every time.
+Exempla accepts evidence-backed improvements to a learning catalog. A
+repository does not qualify because it is famous, convenient, or needed to
+fill a slot. Its selected path must teach transferable programming, pass the
+repository-quality gate, and earn its Level from observed source evidence.
 
 ## Start here
 
-Read these documents before proposing a catalog change:
-
+- [Learning levels](docs/learning-levels.md) defines the learner baseline,
+  coding-relevance gate, four score dimensions, formula, and guardrails.
 - [Repository qualification](docs/qualification.md) defines hard eligibility
-  and the eight pass/fail quality dimensions.
-- [SDC difficulty rubric](docs/sdc.md) defines size, code difficulty, system
-  complexity, the formula, and guardrails.
-- [Candidate research process](docs/research-process.md) defines the evidence
-  expected from discovery through review.
-- [Catalog source data](catalog/README.md) explains the canonical/generated
-  boundary.
+  and the eight quality findings.
+- [Candidate research](docs/research-process.md) defines discovery, inspection,
+  review, and rejection evidence.
+- [Catalog source data](catalog/README.md) explains canonical and generated
+  files.
 
-Do not hand-edit anything under `languages/`. Those pages are generated from
-the JSON under `catalog/`.
+Never hand-edit `languages/`; those pages are generated from `catalog/`.
 
 ## Choose the right contribution path
 
-Use the focused GitHub form that matches the evidence you have:
-
 - [Propose a repository](https://github.com/kserrec/exempla/issues/new?template=01-repository-candidate.yml)
-  after inspecting a pinned revision and completing the qualification and SDC
-  work. This proposes a review; it does not pre-approve the candidate.
+  after inspecting a pinned learning path and applying both gates and all four
+  scores.
 - [Report a catalog correction](https://github.com/kserrec/exempla/issues/new?template=02-catalog-correction.yml)
-  when a specific existing fact is demonstrably incorrect at the revision the
-  entry records.
-- [Dispute an SDC placement](https://github.com/kserrec/exempla/issues/new?template=03-sdc-dispute.yml)
-  when observed source signals support a different published rubric anchor.
+  when direct evidence proves a current fact wrong or outdated.
+- [Dispute a learning-level placement](https://github.com/kserrec/exempla/issues/new?template=03-learning-level-dispute.yml)
+  when recurring path evidence supports a different rubric anchor.
 - [Report a maintenance problem](https://github.com/kserrec/exempla/issues/new?template=04-maintenance-problem.yml)
-  for reproducible faults in validation, generation, tests, navigation, or
-  contributor documentation.
+  for validation, generation, navigation, or workflow defects.
 
-Blank public issues are disabled so that every report arrives with the minimum
-information needed to evaluate it. Maintainers can still open a blank issue
-when an unusual case does not fit a form.
-
-If you already have a complete, evidence-backed change, you may open a pull
-request directly. GitHub will load the repository's checklist automatically;
-answer every applicable section and write `Not applicable` for the others.
+An issue proposes review; it does not pre-approve a repository.
 
 ## Local setup
 
-You need Git and Python 3.12 or newer. Validation and generation use only the
-Python standard library; there is no package installation step.
+Git and Python 3.12 or newer are sufficient. There are no package dependencies.
 
 ```console
 git clone https://github.com/kserrec/exempla.git
 cd exempla
 python3 -m unittest discover -s tests -v
-python3 scripts/catalog.py validate --complete
-python3 scripts/catalog.py check-generated --complete
+python3 scripts/catalog.py validate
+python3 scripts/catalog.py check-generated
 ```
-
-Use `tokei 14.0.0` when measuring a candidate. Its installation is intentionally
-not automated by this repository because reviewers may work on different
-platforms; record the tool version, exact source scope, and exclusions in the
-entry.
 
 ## Changes we accept
 
 ### Correct an existing entry
 
-Verify the exact pinned commit, field, source path, and behavior before calling
-anything wrong or outdated. Explain the observed discrepancy, update the
-canonical JSON, regenerate Markdown, and keep the change no broader than the
-evidence supports.
+Verify the exact pinned commit, field, path, and behavior before calling
+anything wrong or outdated. Explain the observed discrepancy, make the
+smallest supported canonical change, and regenerate Markdown.
 
 ### Add or replace a repository
 
-Use the complete candidate workflow below. If removing an entry temporarily
-leaves a language or level with fewer than two repositories, leave the honest
-gap visible until another candidate passes. Never alter S, D, C, or the quality
-gate to preserve a full grid.
+Use the full candidate workflow below. A removal may leave a visible gap.
+Never alter a gate or score to preserve a full grid.
 
 ### Refresh an accepted repository
 
-A moving default branch does not make the recorded entry stale by itself: its
-links and claims are pinned. Move an entry to a newer commit only after
-repeating source inspection, meaningful LOC measurement, every quality
-judgment, language classification, license review, and SDC scoring. Update the
-inspection date and sampled files together.
+A moving default branch does not make pinned evidence stale. Move an entry to
+a new commit only after repeating the coding-relevance review, path inspection,
+eight quality findings, four scores, language classification, and license
+review. Update the inspection date and files as one evidence unit.
 
 ### Change the language scope
 
-The 20-language list is a dated product decision, not a casual catalog edit.
-Follow the annual scope procedure in [docs/maintenance.md](docs/maintenance.md),
-update the language-selection rationale and validator expectations, and make
-the addition, removal, or replacement explicit.
+The 20-language list is a dated product decision. Follow the annual procedure
+in [docs/maintenance.md](docs/maintenance.md), preserve the prior basis in Git
+history, and update the language registry, rationale, canonical files, tests,
+and generated navigation together.
 
 ## Candidate workflow
 
-1. **Triage eligibility.** Confirm the repository is public, the software has a
-   genuine purpose, the cataloged language contains meaningful first-party
-   implementation, and a pinned license permits source inspection.
-2. **Pin the revision.** Record a full 40-character commit before inspecting or
-   measuring. Evidence must describe that revision, not a floating branch.
-3. **Inspect source.** Review the documented purpose, an entry point, core
-   behavior, relevant boundaries, meaningful tests, and architecture or build
-   material. Large repositories require representative subsystem sampling and
-   one end-to-end trace, not a claim of exhaustive review.
-4. **Measure S.** Count first-party implementation with `tokei 14.0.0`. Exclude
-   tests, fixtures, benchmarks, examples, vendored, copied, generated or
-   minified source, build output, caches, documentation, static assets,
-   lockfiles, dumps, and large data. Record repository-specific exclusions.
-5. **Apply the quality gate.** Write observed evidence for all eight dimensions.
-   A material failure rejects the candidate even when the target slot is empty.
-6. **Score D and C independently.** Use the published anchors before calculating
-   the final level. Do not choose a desired level and work backward.
-7. **Write the learner path.** State what the code teaches, its prerequisites,
-   the concrete starting path, and a behavior that can be traced into tests or
-   an observable result.
-8. **Record the decision.** Add an accepted candidate to the appropriate
-   `catalog/<language>.json`. Add a rejected candidate to
-   `research/rejections.json` with the failed requirement, evidence, and a
-   literal reconsideration condition.
-9. **Seek an independent review.** The reviewer checks the source evidence,
-   license, language classification, quality gate, LOC scope, D/C anchors, and
-   formula. Disputes are resolved before acceptance.
+1. **Triage eligibility.** Confirm public source, a genuine software purpose,
+   meaningful first-party code in the cataloged language, and inspectable
+   license terms.
+2. **Pin the revision.** Record a full 40-character commit before judging
+   source. Do not use a floating branch as evidence.
+3. **Choose a representative path.** Assign a stable `path_slug`; name one real
+   behavior, its first source file, supporting implementation and tests, and
+   an entry-to-result trace. Separate prior knowledge in `prerequisites` from
+   the skills taught in `concepts_developed`.
+4. **Apply the coding-relevance gate.** Reject paths whose difficulty depends
+   primarily on specialist mathematics, science, medicine, finance, law,
+   regulation, cryptography, hardware, protocols, or comparable outside
+   expertise. Record short subordinate domain context when it is genuinely
+   needed.
+5. **Apply the quality gate.** Record all eight findings for this exact path.
+   A material failure rejects the candidate even when a slot is empty.
+6. **Score before consulting gaps.** Record recurring signals and reasons for
+   language technique, behavioral reasoning, design span, and constraint
+   burden. Calculate the Level exactly; never work backward from a desired
+   slot.
+7. **Resolve path and slot capacity.** A repository may contribute at most two
+   materially distinct paths across the entire catalog and may not appear
+   twice in one language/Level bucket. Each bucket holds at most two paths.
+   Keep the clearest learning paths and record other qualified candidates as
+   capacity alternates.
+8. **Record the decision.** Accepted entries go in
+   `catalog/<language>.json`; serious rejections go in
+   `research/rejections.json` with evidence and a literal reconsideration
+   condition.
+9. **Record a separate verification pass.** Name the actual person or model
+   that cross-checked both gates, the selected path, each anchor, formula,
+   capacity result, language, pin, and license. Never imply independent human
+   inspection when a model performed the verification.
 
-Never use star counts, download counts, reputation, or beginner-labeled issues
-as a substitute for inspecting source.
+Discovery must use at least three independent channels and deliberately include
+smaller real projects. Stars, downloads, reputation, and beginner labels are
+leads at most, never admission evidence.
+
+The current catalog was curated with AI-assisted source inspection and
+cross-checking under the project owner's direction and acceptance. Automated
+validation proves structural and formula invariants; it cannot independently
+prove source quality, educational value, or scoring judgment. Community
+corrections with pinned evidence are welcome.
 
 ## Canonical entry format
 
-[`catalog/schema.json`](catalog/schema.json) defines the serialized contract and
-[`scripts/catalog.py`](scripts/catalog.py) enforces its semantic rules. The best
-template is an existing entry in the same language, but every value must be
-rewritten from evidence; copying another entry's rationale is not review.
+[`catalog/schema.json`](catalog/schema.json) defines schema version 3 and
+[`scripts/catalog.py`](scripts/catalog.py) enforces semantic relationships:
+safe paths, inspection membership, pinned license URL arrays, formula and score
+floors, `(repository, path_slug)` identity, repository and bucket capacity,
+prerequisite/concept separation, order, and research reconciliation.
 
-Keep these distinctions literal:
+Keep these terms literal:
 
-- `wrong` or `broken` means the exact existing behavior was inspected and shown
-  to be incorrect;
-- `outdated` means an existing fact no longer matches a stated requirement;
-- `missing` means the component does not exist; creating it is new work; and
-- `unverified` means the exact source or behavior has not been checked yet.
+- `wrong` or `broken`: an existing component was inspected and directly shown
+  to behave incorrectly;
+- `outdated`: an existing fact no longer matches a stated requirement;
+- `missing`: the component does not exist, so creating it is new work; and
+- `unverified`: the exact source or behavior has not been checked.
 
 ## Generate and verify
 
-During an incomplete replacement, ordinary validation can report record errors
-without requiring all 200 entries:
-
-```console
-python3 scripts/catalog.py validate
-```
-
-Once the canonical JSON is ready, regenerate and run the complete release gate:
+Run the ordinary gate while honest gaps remain:
 
 ```console
 python3 scripts/catalog.py generate
 python3 -m unittest discover -s tests -v
-python3 scripts/catalog.py validate --complete
-python3 scripts/catalog.py check-generated --complete
+python3 scripts/catalog.py validate
+python3 scripts/catalog.py check-generated
 ```
 
-Commit canonical JSON and its generated Markdown together. A generated-only
-change is not a valid catalog update.
+Use `--complete` on both catalog commands only when every language has two
+qualified entries at every Level. Canonical JSON and generated Markdown belong
+in the same commit.
 
 ## Scoring disagreements
 
-State which dimension is disputed, quote the relevant rubric anchor, and point
-to the observed source signal. S, D, and C remain whole integers. Reviewers do
-not average competing scores; they resolve which anchor the evidence supports.
-When the higher anchor is uncertain, the rubric requires the lower score unless
-the higher-level signal recurs in the main learning path.
+Name the disputed dimension, cite its published anchor, and point to recurring
+evidence in the selected path. All four dimensions are whole integers.
+Reviewers resolve the supported anchor rather than averaging scores. Use the
+lower anchor when a higher-level signal is isolated or outside the main trace.
 
 ## Pull request checklist
 
 - The exact starting state and pinned revision are identified.
-- The repository passes every hard qualification requirement.
-- Source, tests, boundaries, documentation, language relevance, and license were
-  inspected rather than inferred from metadata.
-- Meaningful LOC and every exclusion are reproducible.
-- D and C cite observed signals and the final level follows the published
-  formula and guardrails.
-- The learner path names prerequisites, a starting file, and a traceable
-  behavior.
+- The selected path passes the coding-relevance and quality gates.
+- Stable path slug, goal, start reason, supporting files, trace, prerequisites,
+  concepts developed, and domain context describe the path actually scored.
+- All four scores cite observed recurring signals and the formula is exact.
+- Inspection files contain every learning-path and license-evidence path.
+- The repository contributes no more than two catalog paths and does not appear
+  twice in the same language/Level bucket.
 - Accepted and rejected decisions are recorded in the correct canonical files.
-- Generated Markdown is current and all complete-corpus checks pass.
+- Generated Markdown is current and the applicable ordinary or complete gate
+  passes.
 - No dotenv file or dotenv naming variant was opened, searched, printed,
-  parsed, sourced, or included in review output.
+  parsed, sourced, diffed, or included in output.

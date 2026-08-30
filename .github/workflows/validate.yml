@@ -17,7 +17,7 @@ jobs:
           python-version: "3.12"
       - name: Test catalog tooling
         run: python3 -m unittest discover -s tests -v
-      - name: Validate the complete corpus
-        run: python3 scripts/catalog.py validate --complete
+      - name: Validate catalog
+        run: python3 scripts/catalog.py validate
       - name: Check generated Markdown
-        run: python3 scripts/catalog.py check-generated --complete
+        run: python3 scripts/catalog.py check-generated

@@ -13,7 +13,7 @@ gate and was not scored.
 
 | Repository and selected path | Pinned commit | Gate | Scores → level | Observed reason |
 | --- | --- | --- | --- | --- |
-| `webmozarts/assert`: `notNull()` from `src/Assert.php` into `tests/AssertTest.php` | `2ccb7c2e821038c03a3e6e1700c570c158c55f70` | Pass | `1 / 1 / 1 / 2` → Level 1 | One direct guard, one explicit exception contract, and focused tests require only ordinary PHP and routine API safeguards. |
+| `webmozarts/assert`: `notNull()` from `src/Assert.php` into `tests/AssertTest.php` | `2ccb7c2e821038c03a3e6e1700c570c158c55f70` | Pass | `2 / 1 / 1 / 1` → Level 1 | One direct guard and focused tests keep behavior and constraints local; the PHPDoc/Psalm assertion convention is a common professional PHP idiom developed by the path. |
 | `sindresorhus/p-limit`: enqueue a promise-returning task in `index.js`, then verify concurrency and error behavior in `test.js` | `df476048d023ff868cd45b35ee47f5fb0ca2b25a` | Pass | `2 / 3 / 1 / 3` → Level 2 | Closures and promise composition are familiar professional idioms, while queue state, microtask order, async-context preservation, and error propagation require nontrivial behavioral reasoning. |
 | `ardalis/GuardClauses`: `Guard.Against.Null()` from `src/GuardClauses/GuardAgainstNullExtensions.cs` into `test/GuardClauses.UnitTests/GuardAgainstNull.cs` | `7d55fa5397d73c0fe4e86a2dcab0230d1db57870` | Pass | `3 / 1 / 1 / 2` → Level 2 | Generic overloads, nullable-flow annotations, and caller-argument expressions materially shape a path whose runtime branch and test contract remain local and direct. |
 | `DaveGamble/cJSON`: parse and own an object tree in `cJSON.c`, then follow object cases in `tests/parse_object.c` | `fb16e5cf358798aabb049655975cde8427101056` | Pass | `4 / 3 / 2 / 4` → Level 3 | Pointer arithmetic, allocation hooks, recursive ownership, offsets, format rules, ABI stability, locale handling, and failure cleanup recur in a compact two-module design. |
@@ -36,6 +36,10 @@ The anchors distinguish the intended programming growth without adjustment:
 - Level 1 remains reachable for direct real-world code with one small contract.
 - Asynchronous behavior raises behavioral reasoning without making a compact
   module look advanced in every dimension.
+- A score of 4 denotes advanced machinery, reasoning, span, or constraints and
+  therefore cannot publish below Level 3; the corpus-wide pass made this floor
+  explicit when the full catalog exposed an edge case absent from the small
+  smoke sample.
 - A single expert burden cannot publish below Level 4, as the OpenCV matrix path
   demonstrates.
 - Level 5 remains reachable only when several expert programming burdens
@@ -47,6 +51,37 @@ The anchors distinguish the intended programming growth without adjustment:
 - No dimension swallowed the other three, and no score was adjusted to preserve
   an old SDC placement.
 
-**Decision:** retain the four anchors, formula, both guardrails, domain gate,
-and lower-score borderline rule exactly as published. Calibration stops here.
-A completed-corpus consistency pass will be appended after the rebuild.
+**Smoke-test decision:** retain the four anchors, arithmetic formula, score-5
+floor, Level-5 guardrail, domain gate, and lower-score borderline rule. The
+smoke test established qualitative separation; it was not statistical
+validation and did not replace a completed-corpus consistency pass.
+
+## Corpus-wide consistency pass — 2026-08-29
+
+The post-rerun pass reviewed the completed 150-path corpus as paths rather than
+whole repositories. It enforced globally unique `(repository, path_slug)`
+identities, a two-path maximum per repository, no repeated repository within a
+language/Level bucket, the arithmetic formula, all score floors, and explicit
+separation between prior knowledge and concepts developed. Twelve neighboring-
+level comparisons covered three paths at each Level boundary; additional checks
+covered unusual language distributions and matching score profiles across
+languages.
+
+The four dimension anchors did not change. One new consistency guardrail did:
+any score of 4 now forces at least Level 3, because an advanced burden in even
+one dimension should not be presented as a beginner or ordinary intermediate
+path. This moved `pointfreeco/swift-tagged` from Level 2 to Level 3. The source
+audit separately found that `r-lib/pkgconfig` does not use the previously
+claimed advanced R metaprogramming mechanisms; correcting its language score
+from 4 to 3 left it at Level 2. The distinct Webmozart `notNull()` path was
+accepted at Level 1 after the Level 1 follow-up, while Swift Log was retained as
+a qualified Level 3 capacity alternate rather than moving any path to fit a
+slot.
+
+The [current learner-centered audit](../research/learner-centered-audit.json)
+records all distributions, 14 invariant checks, comparisons, corrections, and
+known gaps. It ends `pass-with-documented-gaps`: 150 of 200 possible paths are
+accepted, and all 50 open slots remain explicit rather than lowering a gate or
+score. No obvious cross-level inconsistency remains, so calibration stops here;
+future placement changes require new path-specific evidence rather than tuning
+the corpus toward a desired distribution.

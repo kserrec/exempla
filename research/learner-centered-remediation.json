@@ -1,0 +1,764 @@
+{
+  "schema_version": 1,
+  "remediation_started_at": "2026-08-29",
+  "specification": {
+    "title": "Exempla Learner-Centered Remediation Spec",
+    "source": "/home/serrecchia/Downloads/EXEMPLA_PEDAGOGY_REMEDIATION_SPEC.md",
+    "sha256": "a0d0336b168f4304afe0948da7415f3a5286ebd08524a3a8a913554c106e54b8"
+  },
+  "starting_state": {
+    "commit": "b48a4d9a004320a39622f4d6f026d4a95e2ce6cf",
+    "branch": "main",
+    "working_tree": "dirty learner-centered rebuild",
+    "tracked_diff_sha256": "4d5cbf578c8b1f6a9a3c7592cb0a47b5ca809eb4753a21af4ec343cd0e7941fc",
+    "untracked_files": [
+      {
+        "path": ".github/ISSUE_TEMPLATE/03-learning-level-dispute.yml",
+        "sha256": "dfe124a046ccb3e1095ac0f3ce6fb00ac3d5ac0bb8e947f44794c158a0a523c9"
+      },
+      {
+        "path": "LEARNER_CENTERED_REBUILD_SPEC.md",
+        "sha256": "37418806222ed85b9be88f4a372f687ca90823aea007fdaa0f474aad62df2846"
+      },
+      {
+        "path": "research/learner-centered-cutover-overrides.json",
+        "sha256": "68c655bec818253c16ce94795e266c987e2552ab4c5018ba4ad675434f4598ae"
+      },
+      {
+        "path": "research/learner-centered-gap-research.json",
+        "sha256": "abe1eeec38c94841debbce7bff21e6870b5b5699516cf2b0b4ff82605d2f88c0"
+      },
+      {
+        "path": "research/learner-centered-rebuild.json",
+        "sha256": "460883648965c12afc8e31b58922b8875d8ff26aa35c7bdbadd6d4dcfb1c66a1"
+      }
+    ],
+    "accepted_entry_total": 150,
+    "catalog_capacity": 200,
+    "open_slot_total": 50,
+    "language_level_distribution": [
+      {
+        "language_slug": "c",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "c-sharp",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "cpp",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "dart",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "total": 7
+      },
+      {
+        "language_slug": "go",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "java",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "javascript",
+        "levels": {
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 10
+      },
+      {
+        "language_slug": "kotlin",
+        "levels": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 7
+      },
+      {
+        "language_slug": "lua",
+        "levels": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "total": 6
+      },
+      {
+        "language_slug": "objective-c",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "php",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "total": 6
+      },
+      {
+        "language_slug": "powershell",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 1
+        },
+        "total": 7
+      },
+      {
+        "language_slug": "python",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "r",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "ruby",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "rust",
+        "levels": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 7
+      },
+      {
+        "language_slug": "scala",
+        "levels": {
+          "1": 0,
+          "2": 1,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 7
+      },
+      {
+        "language_slug": "shell",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 0
+        },
+        "total": 6
+      },
+      {
+        "language_slug": "swift",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 2,
+          "4": 2,
+          "5": 2
+        },
+        "total": 8
+      },
+      {
+        "language_slug": "typescript",
+        "levels": {
+          "1": 0,
+          "2": 2,
+          "3": 1,
+          "4": 2,
+          "5": 2
+        },
+        "total": 7
+      }
+    ],
+    "verification": [
+      {
+        "command": "python3 -m unittest discover -s tests -v",
+        "status": "pass",
+        "result": "25 tests passed"
+      },
+      {
+        "command": "python3 scripts/catalog.py validate",
+        "status": "pass",
+        "result": "Catalog data is valid."
+      },
+      {
+        "command": "python3 scripts/catalog.py check-generated",
+        "status": "pass",
+        "result": "Generated Markdown is current."
+      }
+    ]
+  },
+  "path_identity_migration": {
+    "status": "completed",
+    "accepted_path_total": 150,
+    "unique_repository_total": 149,
+    "identity": "(repository, path_slug)",
+    "repository_path_maximum": 2,
+    "same_language_level_repository_repetition": 0,
+    "notes": [
+      "Every accepted entry now has a canonical path_slug and all 150 identity pairs are globally unique.",
+      "webmozarts/assert contributes the distinct not-null-guard and mixin-generator paths at PHP Levels 1 and 3; every other accepted repository contributes one path.",
+      "The validator rejects a third path from one repository and rejects two paths from the same repository in one language and Level bucket."
+    ]
+  },
+  "score_guardrail_migration": {
+    "status": "completed",
+    "affected_entries": [
+      {
+        "repository": "r-lib/pkgconfig",
+        "old_scores": [
+          4,
+          2,
+          1,
+          2
+        ],
+        "verified_scores": [
+          3,
+          2,
+          1,
+          2
+        ],
+        "old_level": 2,
+        "new_level": 2,
+        "status": "corrected",
+        "evidence": "Pinned source uses an environment-backed registry and call-stack namespace inspection; it does not use substitute, caller-expression capture, or non-standard argument interpretation."
+      },
+      {
+        "repository": "pointfreeco/swift-tagged",
+        "scores": [
+          4,
+          1,
+          1,
+          3
+        ],
+        "old_level": 2,
+        "new_level": 3,
+        "status": "moved",
+        "evidence": "Pinned source repeatedly uses conditional conformances and dynamic-member lookup, with isolated unsafeBitCast coercions; Language Technique 4 remains supported and the new floor applies."
+      }
+    ],
+    "capacity_comparison": {
+      "language_slug": "swift",
+      "level": 3,
+      "candidates": [
+        "pointfreeco/swift-tagged",
+        "apple/swift-log",
+        "vapor/vapor"
+      ],
+      "retained": [
+        "pointfreeco/swift-tagged",
+        "vapor/vapor"
+      ],
+      "decision": "swift-tagged offers the most compact direct advanced-type lesson, and Vapor offers a linear balanced middleware trace. swift-log remains qualified but combines per-call filtering with a separate global-bootstrap lifecycle, so it ranks third for path focus."
+    },
+    "capacity_alternates": [
+      {
+        "repository": "apple/swift-log",
+        "path_slug": "a-stable-swift-logging-facade-lazily-filters-calls-and-delegates",
+        "status": "qualified-capacity-alternate",
+        "displaced_from": {
+          "language_slug": "swift",
+          "level": 3
+        },
+        "reason": "The score-4 migration moved swift-tagged into an already-full Level 3. Among the three qualified paths, swift-log is least focused because it combines the producer-to-backend trace with process-wide bootstrap state.",
+        "catalog_entry": {
+          "slug": "swift-log",
+          "path_slug": "a-stable-swift-logging-facade-lazily-filters-calls-and-delegates",
+          "repository": "apple/swift-log",
+          "url": "https://github.com/apple/swift-log",
+          "primary_language": "Swift",
+          "language_evidence": "Logger values, levels, messages, metadata, backend protocols, global bootstrap, multiplexing, streams, concurrency safety, and testing handlers are Swift under Sources/.",
+          "description": "The Swift server ecosystem's vendor-neutral logging API with pluggable backends and structured metadata.",
+          "real_world_evidence": "The project publishes the Logging package used by Swift libraries and applications to share a stable logging abstraction across backend implementations.",
+          "why_study": "Understand how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup. Logging concepts are familiar and quickly defined; the path teaches protocol-backed adapters, value semantics around an existential handler, autoclosure laziness, metadata merging, process-wide bootstrap, and concurrency-safe setup.",
+          "learn": [
+            "Study these transferable Swift mechanisms in `Sources/Logging/Logger.swift`: protocol existential backend, autoclosure-based lazy messages, and value facade with Sendable-aware mutation.",
+            "Trace these states and branches from `Sources/Logging/Logger.swift` through its selected supporting files: level filtering before message construction, metadata precedence and handler mutation, and initial and bootstrapped factory states.",
+            "Identify these architectural responsibilities in the path beginning at `Sources/Logging/Logger.swift`: Logger facade, LogHandler extension boundary, and LoggingSystem bootstrap and focused tests.",
+            "Study these change constraints for the path beginning at `Sources/Logging/Logger.swift`: messages must stay lazy below the active level, metadata precedence and source attribution must remain stable, and global bootstrap must be concurrency-safe and effectively one-time."
+          ],
+          "prerequisites": [
+            "Comfort with Swift structs and protocols, closures and autoclosures, existential protocol values, value and reference semantics, and basic concurrency vocabulary.",
+            "Familiarity with logging levels, structured key-value metadata, and the role of a backend log handler."
+          ],
+          "concepts_developed": [
+            "A copy-on-write Logger facade can preserve value semantics while delegating to a replaceable LogHandler existential.",
+            "Autoclosure messages can remain unevaluated until level filtering admits the event.",
+            "A concurrency-safe, replace-once global bootstrap can configure a process-wide backend factory."
+          ],
+          "coding_relevance": {
+            "gate": "pass",
+            "domain_context": [
+              "A Logger filters a level, combines structured metadata, and delegates emission to a configured LogHandler."
+            ],
+            "reason": "Logging concepts are familiar and quickly defined; the path teaches protocol-backed adapters, value semantics around an existential handler, autoclosure laziness, metadata merging, process-wide bootstrap, and concurrency-safe setup."
+          },
+          "learning_path": {
+            "goal": "Understand how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup.",
+            "start_here": {
+              "path": "Sources/Logging/Logger.swift",
+              "reason": "Begin with `Sources/Logging/Logger.swift` because it exposes how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup."
+            },
+            "supporting_files": [
+              "Sources/Logging/LogHandler.swift",
+              "Sources/Logging/LoggingSystem.swift",
+              "Tests/LoggingTests/LoggingTest.swift",
+              "Tests/LoggingTests/GlobalLoggingTest.swift",
+              "Sources/Logging/Docs.docc/UnderstandingLoggers.md"
+            ],
+            "trace": "Start at Logger.log and convenience methods, follow level filtering before autoclosure materialization and metadata combination into LogHandler.log, then trace LoggingSystem bootstrap into the handler factory; close with direct call-site and global-bootstrap tests plus the conceptual guide."
+          },
+          "learning_level": {
+            "level": 3,
+            "language_technique": {
+              "score": 3,
+              "signals": [
+                "protocol existential backend",
+                "autoclosure-based lazy messages",
+                "value facade with Sendable-aware mutation"
+              ],
+              "reason": "Several intermediate Swift techniques recur across the facade and backend boundary."
+            },
+            "behavioral_reasoning": {
+              "score": 3,
+              "signals": [
+                "level filtering before message construction",
+                "metadata precedence and handler mutation",
+                "initial and bootstrapped factory states"
+              ],
+              "reason": "Multiple related states and branches recur but remain bounded to one logging pipeline."
+            },
+            "design_span": {
+              "score": 3,
+              "signals": [
+                "Logger facade",
+                "LogHandler extension boundary",
+                "LoggingSystem bootstrap and focused tests"
+              ],
+              "reason": "A few cohesive components form the complete producer-to-backend trace."
+            },
+            "constraint_burden": {
+              "score": 4,
+              "signals": [
+                "messages must stay lazy below the active level",
+                "metadata precedence and source attribution must remain stable",
+                "global bootstrap must be concurrency-safe and effectively one-time"
+              ],
+              "reason": "Performance, compatibility, and process-wide concurrency guarantees recur in ordinary use."
+            },
+            "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
+          },
+          "quality": {
+            "source_quality": "Logger and LogHandler document producer and backend contracts, LoggingSystem isolates one-time factory bootstrap, focused logging and global-bootstrap tests cover filtering, laziness, metadata, mutation, concurrency, and repeated setup, and UnderstandingLoggers.md explains the model.",
+            "architecture": "The audited architecture of the path beginning at `Sources/Logging/Logger.swift` has these boundaries: Logger facade, LogHandler extension boundary, and LoggingSystem bootstrap and focused tests.",
+            "naming_and_idiom": "`Sources/Logging/Logger.swift` and its supporting files use these characteristic Swift mechanisms: protocol existential backend, autoclosure-based lazy messages, and value facade with Sendable-aware mutation.",
+            "tests": "Direct tests in `Tests/LoggingTests/LoggingTest.swift` and `Tests/LoggingTests/GlobalLoggingTest.swift` cover these states and branches in the selected path: level filtering before message construction, metadata precedence and handler mutation, and initial and bootstrapped factory states.",
+            "documentation": "`Sources/Logging/Logger.swift` and its selected supporting material document the contracts needed to understand how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup.",
+            "traceability": "Start at Logger.log and convenience methods, follow level filtering before autoclosure materialization and metadata combination into LogHandler.log, then trace LoggingSystem bootstrap into the handler factory; close with direct call-site and global-bootstrap tests plus the conceptual guide.",
+            "maintainability": "Changes to the path beginning at `Sources/Logging/Logger.swift` are constrained by these audited guarantees: messages must stay lazy below the active level, metadata precedence and source attribution must remain stable, and global bootstrap must be concurrency-safe and effectively one-time.",
+            "educational_value": "Understand how a stable Swift logging facade lazily filters calls and delegates them to replaceable backends with one-time global setup. Logging concepts are familiar and quickly defined; the path teaches protocol-backed adapters, value semantics around an existential handler, autoclosure laziness, metadata merging, process-wide bootstrap, and concurrency-safe setup."
+          },
+          "inspection": {
+            "commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95",
+            "inspected_at": "2026-08-29",
+            "reviewers": [
+              "Codex primary pass",
+              "independent Codex verification pass"
+            ],
+            "files": [
+              "Sources/Logging/Logger.swift",
+              "Sources/Logging/LogHandler.swift",
+              "Sources/Logging/LoggingSystem.swift",
+              "Tests/LoggingTests/LoggingTest.swift",
+              "Tests/LoggingTests/GlobalLoggingTest.swift",
+              "Sources/Logging/Docs.docc/UnderstandingLoggers.md",
+              "LICENSE.txt"
+            ]
+          },
+          "license": {
+            "spdx": "Apache-2.0",
+            "urls": [
+              "https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt"
+            ]
+          },
+          "github": {
+            "primary_language": "Swift",
+            "archived": false,
+            "metadata_checked_at": "2026-08-28"
+          }
+        }
+      }
+    ]
+  },
+  "claim_source_audit": [
+    {"repository":"FluentValidation/FluentValidation","path_slug":"fluentvalidation-turns-a-typed-rulefor-expression-into-an-authored-asynchronous","pinned_commit":"daa00b795450881c233253488e3ddeb362f59f56","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned rule builder and validator sources contain typed RuleFor expressions, cascade behavior, asynchronous validators, cancellation propagation, and the stated validation branches."},
+    {"repository":"serilog/serilog","path_slug":"serilog-parses-and-caches-a-message-template-binds-one-structured","pinned_commit":"49b5339ce85385dc52d4d8e8f2b8308becf23506","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned parser, template cache, binding, logger, sink, enrichment, level-switch, and disposal paths support the published structured-logging claims."},
+    {"repository":"cktan/tomlc17","path_slug":"tomlc17-scans-a-bounded-byte-buffer-builds-an-owned-tagged","pinned_commit":"64a063b8636a4b48d142f978270f5e53e605e240","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned parser uses bounded byte ranges, allocator callbacks, owned tagged nodes, pool pages, recursive destruction, and explicit error cleanup."},
+    {"repository":"DaveGamble/cJSON","path_slug":"cjson-parses-bounded-text-into-an-owned-recursive-object-tree","pinned_commit":"fb16e5cf358798aabb049655975cde8427101056","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3","prerequisite-overlap scrub"],"status":"pass","evidence":"The pinned implementation exposes allocation hooks, recursive child links, bounded parsing, deletion, and error-pointer behavior matching the path claims."},
+    {"repository":"dart-lang/sdk","path_slug":"future-wait-preserves-input-order-while-coordinating-concurrent-completions-first","pinned_commit":"967bed205c83cba3ac05b0f8d084d11291e93ff1","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"Future.wait stores values by input position, counts remaining completions, preserves the first error and stack, cleans up earlier and later successes, and implements eager or deferred error completion."},
+    {"repository":"gin-gonic/gin","path_slug":"gin-carries-one-http-request-from-servehttp-through-route-lookup","pinned_commit":"dcaa4296d111981ffb31ac3eba90bb63e1eb5ab9","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned engine obtains and resets contexts through sync.Pool, searches method route trees, assigns parameters and handlers, and executes the middleware chain."},
+    {"repository":"robfig/cron","path_slug":"robfig-cron-owns-scheduler-state-in-one-goroutine-and-coordinates","pinned_commit":"bc59245fe10efaed9d51b56900192527ed733435","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned scheduler owns entries in one goroutine and coordinates add, remove, snapshot, stop, timers, running jobs, and shutdown waiting through explicit channels and a wait group."},
+    {"repository":"jhy/jsoup","path_slug":"jsoup-cleans-untrusted-html-by-parsing-a-body-fragment-copying","pinned_commit":"7860d088e044236e288c1f88a743b68b2a0edece","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"Cleaner and Safelist parse a body fragment, traverse it with a destination stack, copy only safe nodes and attributes, enforce protocols and relative-link policy, and apply configured enforced attributes."},
+    {"repository":"ai/nanoid","path_slug":"nano-id-converts-cryptographically-random-bytes-into-uniformly-distributed-custom","pinned_commit":"07a39d62d84c21af5046fe6b2ef7b3e36ee557db","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned implementation obtains cryptographic bytes, computes a mask and step, rejects out-of-range samples, and therefore avoids modulo bias for custom alphabets."},
+    {"repository":"jquery/jquery","path_slug":"jquery-constructs-an-array-like-chainable-collection-from-different-selector","pinned_commit":"71c0dd14927c41d1aab5ce5ef2687d7808a4186b","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned init and extend paths construct chainable collections from selector forms, merge array-like inputs, perform recursive extension, and explicitly reject the __proto__ pollution key."},
+    {"repository":"ajalt/clikt","path_slug":"clikt-turns-a-delegated-command-dsl-into-recursively-parsed-finalized","pinned_commit":"fa2e48c54995a88d492f05568a64889d99994877","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned parser tokenizes arguments, resolves nested invocations, handles eager and ordinary options, finalizes delegated values, validates them, and invokes commands in the stated order."},
+    {"repository":"oshai/kotlin-logging","path_slug":"a-multiplatform-kotlin-logging-facade-keeps-messages-lazy-while-preserving","pinned_commit":"0aaa57ccef9e1cc619de0d30bd65cc0a7271332d","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned facade uses inline message lambdas, checks enabled levels before evaluation, preserves marker and throwable overloads, and delegates through platform-specific logger implementations."},
+    {"repository":"kikito/middleclass","path_slug":"a-single-lua-module-builds-classes-and-inheritance-by-translating","pinned_commit":"359f0e2742f51ca77801b513ec91eb9029de8de4","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned module implements class construction, allocation, inheritance, method propagation, mixins, weak subclass tracking, and instance lookup with Lua tables and metatables."},
+    {"repository":"openresty/lua-resty-lrucache","path_slug":"an-openresty-lua-cache-maintains-bounded-lru-order-expiration-flags","pinned_commit":"ad373f457a091ffa85de984938f948bc1721d922","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned cache uses LuaJIT FFI nodes, hash storage, free and used queues, a sentinel, expiration and stale reads, flags, deletion, and flush behavior exactly as claimed."},
+    {"repository":"pinterest/PINOperation","path_slug":"an-objective-c-operation-queue-preserves-priority-cancellation-coalescing-completion","pinned_commit":"a74f978733bdaf982758bfa23d70a189f4b4c1b6","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned queue and operation sources use a recursive pthread mutex, dispatch queues, groups and semaphores to preserve priority, cancellation, coalescing, completion, and wait behavior."},
+    {"repository":"sparkle-project/Sparkle","path_slug":"sparkle-filters-an-appcast-and-selects-the-best-applicable-update","pinned_commit":"164f2fd30f7b6feb60596246322648a784dd308c","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned appcast selection path filters channels and skipped versions, applies minimum and maximum system requirements, compares versions, chooses deltas, and returns the best eligible candidate."},
+    {"repository":"webmozarts/assert","path_slug":"mixin-generator","pinned_commit":"2ccb7c2e821038c03a3e6e1700c570c158c55f70","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3","specific reflection and code-generation claims"],"status":"pass","evidence":"MixinGenerator uses ReflectionClass and ReflectionMethod, rewrites union and intersection types and Psalm assertions, preserves defaults, and emits nullOr, all, and allNullOr method families."},
+    {"repository":"Badgerati/Pode","path_slug":"a-powershell-web-framework-turns-declarative-method-path-handler-middleware","pinned_commit":"512a99018dc13027de2d746d5467c4d39a9401b2","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned route path registers method and path scriptblocks, detects duplicates, composes middleware and handlers, and carries authentication, access, endpoint, and OpenAPI state through dispatch."},
+    {"repository":"dfinke/ImportExcel","path_slug":"a-powershell-adapter-opens-an-excel-package-turns-bounded-worksheet","pinned_commit":"5387c061461c811d106b125588f064c4739342cb","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3","resource-ownership claim"],"status":"pass","evidence":"Import-Excel distinguishes path and caller-supplied package parameter sets, maps bounded cells to ordered objects, and closes the stream and disposes the package in finally only when it opened them from a path."},
+    {"repository":"psf/requests","path_slug":"requests-get-becomes-a-prepared-request-passes-through-a-persistent","pinned_commit":"5460f467b02e49471c0fd6cfc9ca0adab6351f98","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3","prerequisite-overlap scrub"],"status":"pass","evidence":"The pinned Session path prepares requests, sends through an adapter, follows redirects, maintains history and cookies, strips or rebuilds authentication, rewinds bodies when possible, streams responses, and closes owned resources."},
+    {"repository":"r-lib/withr","path_slug":"withr-generates-scoped-wrappers-that-evaluate-code-under-temporary-state","pinned_commit":"d82e4bc2d69a34f044ad205210e26207bfb8f3e0","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned R sources visibly use substitute, eval, bquote, parent.frame, environments, and on.exit to generate and run scoped wrappers around temporary state."},
+    {"repository":"tidyverse/ggplot2","path_slug":"ggplot2-implements-prototype-inheritance-and-bound-methods-in-r-and","pinned_commit":"6870419aa6e106c3580c45c81d5b688cb31758bd","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned ggproto implementation uses environments, parent-prototype lookup, self binding, method wrapping, and fetch behavior to implement inheritance and bound methods."},
+    {"repository":"jekyll/jekyll","path_slug":"jekyll-transforms-one-source-document-through-liquid-converters-hooks-nested","pinned_commit":"74d751339d3e534aa51d5d7b0640e9bd743509e4","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned document renderer runs Liquid, converters, hooks, nested layouts, dependency tracking, and cycle protection along the published transformation trace."},
+    {"repository":"ruby/tempfile","path_slug":"tempfile-create-securely-opens-a-temporary-file-and-guarantees-deterministic","pinned_commit":"344da5e29e3215691209223249ebd64e66dff6b8","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned create path opens securely, yields under a block, ensures close and unlink, handles anonymous files and platform differences, and makes ownership rules explicit."},
+    {"repository":"dtolnay/semver","path_slug":"semver-parses-cargo-style-version-and-requirement-strings-into-typed","pinned_commit":"280ebcb6edac3aa4cdc545dbff8a26c5ac4861fe","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned parser covers versions, requirements, comparator operators, wildcards, prerelease identifiers, overflow handling, allocation modes, and the isolated justified unsafe buffer initialization named by the entry."},
+    {"repository":"rbenv/rbenv","path_slug":"rbenv-safely-reconciles-a-directory-of-executable-shims-with-installed","pinned_commit":"07e9b1e297a5977298c6aadc9971ae0e9eb7f0dc","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3"],"status":"pass","evidence":"The pinned rehash script uses a noclobber lock, EXIT cleanup trap, a shim prototype, installed-command and plugin discovery, and explicit stale, outdated, and registered shim reconciliation."},
+    {"repository":"pointfreeco/swift-tagged","path_slug":"tagged-value-identity","pinned_commit":"6a8517578035408b6c14ccba00ee990a1435515c","mandatory_reasons":["Level changed under score-4 guardrail","pre-migration score 4 with final Level 2 or 3"],"status":"corrected","evidence":"The pinned source repeatedly defines conditional conformances, uses dynamic-member lookup through KeyPath, and contains isolated unsafeBitCast coercions. The 4/1/1/3 profile now publishes at Level 3."},
+    {"repository":"r-lib/pkgconfig","path_slug":"package-config-lookup","pinned_commit":"687e3154aa407642649beb00334940c71d6f22d9","mandatory_reasons":["known source-evidence mismatch","pre-migration score 4 with final Level 2 or 3"],"status":"corrected","evidence":"The pinned source uses an environment-backed registry, sys.frames, parent environments, namespace detection, reverse caller lookup, and global fallback. Unsupported substitute, expression-capture, and code-generation claims were removed and Language Technique was corrected from 4 to 3."},
+    {"repository":"apple/swift-log","path_slug":"a-stable-swift-logging-facade-lazily-filters-calls-and-delegates","pinned_commit":"47a917767fde0cd7f5b5dfdabbec733d2cb2dd95","mandatory_reasons":["pre-migration score 4 with final Level 2 or 3","qualified path displaced by score-floor capacity"],"status":"pass","evidence":"Logger uses copy-on-write handler storage and autoclosures evaluated only after level filtering; LoggingSystem guards a replace-once factory with reader-writer locking and a precondition. The path remains a qualified documented capacity alternate."},
+    {"repository":"alexreardon/tiny-invariant","path_slug":"tiny-invariant-keeps-runtime-truthiness-checks-typescript-narrowing-lazy-messages","pinned_commit":"b5587cf4ba45e257bce49053c3345b6614324252","mandatory_reasons":["prerequisite-overlap scrub"],"status":"pass","evidence":"The pinned function has an assertion-function signature, returns on truthy input, throws in both builds, evaluates a message function only in the development failure branch, and strips message detail in production."},
+    {"repository":"rust-cli/anstyle","path_slug":"anstyle-composes-a-copyable-terminal-style-and-renders-exact-ansi","pinned_commit":"38da5ad7a435269eb30b9bf6f734bbe8bf1844e8","mandatory_reasons":["prerequisite-overlap scrub","specific unsafe-code claim"],"status":"pass","evidence":"The pinned Style composes effects and optional colors into exact ANSI output; DisplayBuffer has a localized from_utf8_unchecked call whose safety comment is supported by its string-only writes and exact-output tests."},
+    {"repository":"typelevel/case-insensitive","path_slug":"a-small-scala-value-type-preserves-lawful-case-insensitive-equality","pinned_commit":"2b28be5341a0f1c6bc5c00a8486622f26018ae9c","mandatory_reasons":["prerequisite-overlap scrub"],"status":"pass","evidence":"CIString implements locale-independent equals, compatible cached hashing through upper-then-lower character folding, compareToIgnoreCase ordering, and aligned Cats Order, Hash, Monoid, and Show instances."},
+    {"repository":"mafintosh/pump","path_slug":"pump-tears-down-every-stream-and-completes-exactly-once-when","pinned_commit":"714c0a70a8199104bf65a57582009d42f81d8d94","mandatory_reasons":["prerequisite-overlap scrub"],"status":"pass","evidence":"The pinned module wraps per-stream callbacks with once, observes end-of-stream, records the first error, tears down every stream, handles legacy file streams and requests specially, and invokes the final callback exactly once."},
+    {"repository":"typelevel/fs2","path_slug":"fs2-compiles-a-typed-pull-program-into-an-effect-while","pinned_commit":"3320f42213d00a9ec68a15273efadade5efc0ce1","mandatory_reasons":["prerequisite-overlap scrub","high-risk resource and interruption claims"],"status":"pass","evidence":"Compiler creates and closes a root Scope with Resource.makeCase; Scope tracks resources, finalizers, parents, children, interruption contexts, and guarantees children and resources close with their parent."},
+    {"repository":"sindresorhus/escape-string-regexp","path_slug":"a-small-javascript-utility-validates-a-string-and-escapes-regular","pinned_commit":"cbc42403142c96923b482604e1f3d627b1956aff","mandatory_reasons":["Level 1 calibration anchor"],"status":"pass","evidence":"The complete pinned implementation performs one string type guard and two lexical replacements, including the Unicode-compatible hexadecimal escape for hyphen."},
+    {"repository":"sindresorhus/slash","path_slug":"a-small-javascript-utility-converts-windows-separators-lexically-while-preserving","pinned_commit":"98b618f5a3bfcb5dd374b204868818845b87bb2f","mandatory_reasons":["Level 1 calibration anchor"],"status":"pass","evidence":"The complete pinned implementation preserves extended-length Windows paths and otherwise performs one backslash-to-slash replacement."},
+    {"repository":"webmozarts/assert","path_slug":"not-null-guard","pinned_commit":"2ccb7c2e821038c03a3e6e1700c570c158c55f70","mandatory_reasons":["Level 1 calibration anchor","required path-centered reconsideration"],"status":"pass","evidence":"Assert::notNull uses a strict null branch, resolves callable messages only on failure, throws InvalidArgumentException for null, returns accepted values unchanged, and declares matching template and Psalm narrowing annotations."},
+    {"repository":"apple/swift-nio","path_slug":"swiftnio-completes-transforms-combines-and-bridges-futures-while-preserving-event","pinned_commit":"a931f2c1de8dd49381ce3bf2e279d033f68d8865","mandatory_reasons":["Level 5 calibration anchor","high-risk concurrency claim"],"status":"pass","evidence":"The pinned future and promise implementation queues callbacks, eliminates recursive flatMap execution, enforces event-loop affinity, schedules cross-loop completion, cascades results, and exposes the documented transform and bridge operations."},
+    {"repository":"Kong/kong","path_slug":"kong-durably-broadcasts-a-cluster-event-and-delivers-it-once","pinned_commit":"fa9c3b695af72668f135cb17bbb84a8b4dc511d2","mandatory_reasons":["Level 5 calibration anchor","high-risk lock and concurrency claim"],"status":"pass","evidence":"The pinned cluster-event implementation persists broadcasts, polls by timestamp and node identity, coordinates workers with locks and timers, dispatches registered callbacks, and handles expiry and strategy behavior."},
+    {"repository":"spring-projects/spring-framework","path_slug":"spring-registers-a-bean-definition-resolves-generic-and-qualified-dependencies","pinned_commit":"1b56f58999046051d76a653922c3ab72b4db9cf7","mandatory_reasons":["Level 5 calibration anchor","high-risk reflection and lifecycle claim"],"status":"pass","evidence":"The pinned bean factory registers and resets definitions, resolves ResolvableType dependencies, filters autowire candidates and qualifiers, handles arrays, collections and maps, selects primary candidates, and coordinates singleton caches and lifecycle."},
+    {"repository":"DapperLib/Dapper","path_slug":"dapper-converts-one-data-reader-row-into-a-typed-object","pinned_commit":"6d48ef664acc7298c649e2d449d903b3360d5a90","mandatory_reasons":["high-risk reflection, cache, and generated-code claims"],"status":"pass","evidence":"The pinned deserializer cache keys reader shapes and stores delegates; SqlMapper constructs DynamicMethod and ILGenerator deserializers while applying constructor, member, null, conversion, enum, and type-handler rules."},
+    {"repository":"dotnet/runtime","path_slug":"an-awaited-task-registers-and-eventually-runs-a-continuation-while","pinned_commit":"c4eee2b76e574b0dd6cfe3387220a905ba69aca6","mandatory_reasons":["high-risk concurrency and context-flow claims"],"status":"pass","evidence":"TaskAwaiter routes OnCompleted and UnsafeOnCompleted through explicit captured-context and ExecutionContext flags; the pinned Task continuation sources implement completion races, scheduler and synchronization-context selection, and asynchronous-continuation policy."},
+    {"repository":"dotnet/roslyn","path_slug":"roslyn-validates-an-emit-request-and-turns-one-immutable-csharpcompilation","pinned_commit":"8323a94cb432bbffad016d4f6d7e04ee0f8419f2","mandatory_reasons":["high-risk compiler and deterministic-output claims"],"status":"pass","evidence":"Compilation validates emit options, creates a module builder, gathers diagnostics, serializes PE and PDB streams, and passes deterministic flags and checksums through the pinned emission pipeline."},
+    {"repository":"boostorg/asio","path_slug":"async-compose-turns-a-stateful-implementation-into-a-conforming-asynchronous","pinned_commit":"a7dc25b4cb6c49a6946d86ea20664f1027203225","mandatory_reasons":["high-risk asynchronous state-machine claim"],"status":"pass","evidence":"The pinned async_compose path wraps a stateful implementation, maintains outstanding work, propagates completion-token associators and per-operation cancellation state, and exposes explicit self.complete result delivery."},
+    {"repository":"facebook/folly","path_slug":"folly-connects-a-promise-and-future-through-synchronized-shared-state","pinned_commit":"011e8761a42b20085ce3937e73b5b7aaf482d499","mandatory_reasons":["high-risk synchronization and executor claim"],"status":"pass","evidence":"The pinned Core stores atomic state, result, callback, executor and attachment counts; its producer and consumer detach paths and callback dispatch coordinate exactly-once result delivery across concurrent ownership changes."},
+    {"repository":"kubernetes/kubernetes","path_slug":"kubernetes-client-go-coordinates-concurrent-workers-with-deduplicated-keys-delayed","pinned_commit":"e72c2715ade37738aa5c029e8de5285cbe1c9441","mandatory_reasons":["high-risk concurrency, mutex, and retry claim"],"status":"pass","evidence":"The pinned workqueue uses a sync.Cond plus dirty and processing sets to deduplicate keys, requeue work added during processing, coordinate Get and Done, drain safely, and layer delayed and rate-limited retries."},
+    {"repository":"golang/go","path_slug":"the-go-runtime-implements-channel-send-receive-close-and-select","pinned_commit":"da7c67f59526a02ef22f80fe91fd2960a6547e59","mandatory_reasons":["high-risk runtime, unsafe, locking, and scheduler claims"],"status":"pass","evidence":"The pinned runtime defines channel buffer and waiter invariants, send and receive queues, unsafe element pointers, race synchronization, channel locking, goroutine parking and wakeup, close behavior, and select coordination."},
+    {"repository":"react/react","path_slug":"react-schedules-a-state-update-by-lane-performs-interruptible-work","pinned_commit":"2dc7da790d6388b95b83198ca9b588b2ad5f5c0b","mandatory_reasons":["high-risk scheduler and state-machine claims"],"status":"pass","evidence":"The pinned reconciler assigns lanes in scheduleUpdateOnFiber, tracks work-in-progress root state, chooses concurrent or synchronous rendering, and enters commitRoot only after a finished tree and its effects are ready."},
+    {"repository":"apache/airflow","path_slug":"airflow-turns-persisted-due-dags-into-queued-executor-work-while","pinned_commit":"ff601cb5b75e77c1f28aaf014914f4e9d5cb0947","mandatory_reasons":["high-risk scheduler, locking, and capacity claims"],"status":"pass","evidence":"The pinned scheduler selects eligible task instances under row locks with skip_locked, orders by priority, enforces pools and DAG concurrency, marks work queued, submits it to executors, and contains recovery and retry paths."},
+    {"repository":"home-assistant/core","path_slug":"home-assistant-safely-loads-migrates-retries-reloads-unloads-and-persists","pinned_commit":"471f2c28e285c268cc4ca67ad80ff4044b365d70","mandatory_reasons":["high-risk lifecycle, retry, and concurrency claims"],"status":"pass","evidence":"ConfigEntry has explicit lifecycle states and setup locks, runs migration and setup, schedules bounded exponential retry with jitter, cancels retry callbacks, and serializes unload and reload operations around shutdown state."},
+    {"repository":"wch/r-source","path_slug":"r-s-r-authored-compiler-turns-functions-and-expressions-into","pinned_commit":"780021752eb83a71e2198019acf069ba8741103b","mandatory_reasons":["high-risk compiler and metaprogramming claims"],"status":"pass","evidence":"The pinned compiler is implemented primarily in R, traverses expression trees in a single pass, emits an instruction stream and constant pool, and preserves function calling and lexical evaluation semantics documented by its tests."},
+    {"repository":"tokio-rs/tokio","path_slug":"tokio-s-bounded-mpsc-channel-coordinates-permits-lock-free-message","pinned_commit":"ea91b33ca57ff0581b38e735cc108f831bccbdaa","mandatory_reasons":["high-risk unsafe and lock-free concurrency claims"],"status":"pass","evidence":"The pinned channel connects semaphore permits to a lock-free list, uses AtomicWaker and Notify for receiver and close transitions, confines UnsafeCell receiver fields to the sole receiver, and handles sender counts, closure, and destruction."},
+    {"repository":"typelevel/cats-effect","path_slug":"cats-effect-interprets-io-as-a-cancelable-fiber-and-schedules","pinned_commit":"3d4486d47a22a40ba33f822cf4adb1eccfdb4feb","mandatory_reasons":["high-risk fiber runtime and cancellation claims"],"status":"pass","evidence":"The pinned IOFiber contains the interpreter run loop, suspension and resume state, cancellation masks, finalizer and callback stacks, cede states, and runtime handoff needed for cancelable fair fiber execution."},
+    {"repository":"angular/angular","path_slug":"angular-s-public-signal-and-computed-apis-maintain-a-dynamic","pinned_commit":"34817da7354f2a4e55f277a991d4345a4ca8a91d","mandatory_reasons":["high-risk dynamic dependency-graph claim"],"status":"pass","evidence":"The pinned signal graph tracks active consumers, producer and consumer edges, versions, a global epoch, dirty and live state, recomputation, notification, and cycle-sensitive dependency updates."},
+    {"repository":"colinhacks/zod","path_slug":"a-zod-object-schema-keeps-inferred-input-and-output-types","pinned_commit":"571c8e8a3d73b4305f4abfdd6977773cc12f2bf5","mandatory_reasons":["high-risk generated, asynchronous, and recursive parsing claims"],"status":"pass","evidence":"The pinned schema core exposes synchronous and asynchronous parse paths, a jitless switch, deferred and generated execution paths, cycle-aware memoization, lazy schemas, recursive object handling, and matching typed schema definitions."}
+  ],
+  "level_one_research": [
+    {
+      "language_slug": "c",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["DaveGamble/cJSON", "cktan/tomlc17", "curl/curl", "git/git", "libcheck/check", "libevent/libevent", "likle/cwalk", "zserge/jsmn"],
+      "existing_path_result": "The smallest complete paths remain cwalk's bounded lexical path operations and jsmn's token parser. Subsetting either to a helper would repeat the published behavior rather than form a distinct production path, and their pointer, buffer, and error contracts still calculate above Level 1.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["benhoyt/inih", "cktan/tomlc99"], "result": "inih remains a qualified Level 2 alternate and tomlc99 remains a quality rejection; neither is a Level 1 path."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "c-sharp",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["DapperLib/Dapper", "FluentValidation/FluentValidation", "ardalis/GuardClauses", "dotnet/aspnetcore", "dotnet/roslyn", "dotnet/runtime", "serilog/serilog", "serilog/serilog-sinks-console"],
+      "existing_path_result": "GuardClauses and the console sink are the simplest accepted sources. Alternate guard methods repeat the existing guard-clause path, while nullable annotations, caller metadata, rendering, and sink lifecycle keep the complete behaviors at Level 2 or above.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["Humanizr/Humanizer", "dotnet/roslyn"], "result": "Humanizer remains a Level 2 capacity alternate and Roslyn a Level 5 compiler path."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "cpp",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["CLIUtils/CLI11", "agauniyal/rang", "boostorg/asio", "catchorg/Catch2", "facebook/folly", "gabime/spdlog", "kainjow/Mustache", "microsoft/GSL"],
+      "existing_path_result": "GSL final_action and rang are already the smallest complete accepted behaviors. Their templates, move and destruction rules, stream adaptation, and platform policy keep them at Level 2; smaller helpers are not materially distinct paths.",
+      "external_research": {"basis": "reused the current same-day five-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["Neargye/semver", "Neargye/nameof", "microsoft/GSL", "boostorg/asio"], "result": "The candidates still calculate to Levels 2 through 5, with no Level 1 result."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "dart",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["VeryGoodOpenSource/formz", "dart-lang/build", "dart-lang/sdk", "dart-lang/shelf", "felangel/equatable", "felangel/mocktail", "google/json_serializable.dart"],
+      "existing_path_result": "Equatable and Formz contain the simplest accepted APIs, but equality and hash lawfulness or typed validation state are their whole published paths and remain Level 2. No independent Level 1 behavior was found inside the larger repositories.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["dart-lang/path", "dart-lang/async", "dart-lang/build"], "result": "The two small package repositories remain maintenance rejections after their sources moved, and build remains Level 5."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "go",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["caddyserver/caddy", "gin-gonic/gin", "golang/go", "grpc/grpc-go", "kubernetes/kubernetes", "robfig/cron", "spf13/pflag", "tidwall/match"],
+      "existing_path_result": "tidwall/match and pflag are the simplest complete accepted paths. A literal-only matcher branch or one flag setter is not a separate production behavior, and wildcard semantics or typed flag mutation keep the full paths at Level 2.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["google/uuid", "grpc/grpc-go"], "result": "UUID remains a compact Level 2 alternate and gRPC-Go a Level 5 path."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "java",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["FasterXML/jackson-annotations", "google/gson", "java-diff-utils/java-diff-utils", "jenkinsci/jenkins", "jhy/jsoup", "junit-team/junit4", "ralfstx/minimal-json", "spring-projects/spring-framework"],
+      "existing_path_result": "Jackson's polymorphic annotation and minimal-json's parser are the simplest accepted paths. Individual annotation members are declarations rather than complete behavior, while the annotation contract and parser state still calculate to Level 2.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["stleary/JSON-java", "jenkinsci/jenkins"], "result": "The inspected JSON Pointer path remains a quality rejection and Jenkins remains Level 5."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "kotlin",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["JakeWharton/picnic", "JetBrains/kotlin", "Kotlin/kotlinx.coroutines", "ajalt/clikt", "cashapp/turbine", "oshai/kotlin-logging", "square/moshi"],
+      "existing_path_result": "Picnic and kotlin-logging are the smallest accepted sources. A single style builder or log-level overload repeats the published DSL or facade behavior, and receiver DSL or lazy cross-platform delegation keeps the complete paths above Level 1.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["chibatching/Kotpref", "Kotlin/kotlinx-io"], "result": "Kotpref remains an archived maintenance rejection and kotlinx-io a Level 4 alternate."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "lua",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["Kong/kong", "kikito/middleclass", "lunarmodules/busted", "lunarmodules/luacheck", "lunarmodules/say", "openresty/lua-resty-lrucache"],
+      "existing_path_result": "say's namespace setters remain part of the same message-registry behavior, middleclass allocation remains part of its class system, and the other repositories have no distinct production-complete behavior below their current paths.",
+      "external_research": {
+        "basis": "new four-channel pass: LuaRocks registry and dependency statistics, the LewisJEllis awesome-lua curated list, GitHub small public Lua repository search, and focused source review of small-library maintainers and OpenResty",
+        "sources": ["https://luarocks.org/modules/kikito/ansicolors", "https://luarocks.org/stats/dependencies", "https://github.com/LewisJEllis/awesome-lua", "https://api.github.com/search/repositories?q=language%3ALua+archived%3Afalse+stars%3A%3E100+size%3A%3C200&sort=updated&order=desc&per_page=20"],
+        "candidates_rechecked": ["kikito/ansicolors.lua@a788ef99bbb54b3f1e22aaa34e2c99a44cb0606a", "kikito/inspect.lua@a8ca3120dfec48801036eaeff9335ab7a096dd24", "rxi/log.lua@7396ae2ee6d68829aecbc96d0b2ee1e5620c1ed7", "openresty/lua-resty-string@2b67e4f3018cdfa84576bfe28b9b71c3d83ee88f"],
+        "result": "ansicolors is a quality pass but its pattern callback, metatable call surface, platform branch, validation, and reset contract score 2/2/1/2 for Level 2; inspect.lua's recursive cycle-aware formatter is Level 3; rxi/log.lua has no first-party tests and fails the quality gate; lua-resty-string to_hex is production-tested but its LuaJIT FFI types, shared buffer, size branch, allocation, C call, and byte-length contract force at least Level 3. No Level 1 candidate qualified."
+      },
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "objective-c",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["SBJson/SBJson", "SDWebImage/SDWebImage", "gnachman/iTerm2", "gnustep/libs-base", "mirego/MCUIViewLayout", "pinterest/PINOperation", "shinyfrog/TextBundle", "sparkle-project/Sparkle"],
+      "existing_path_result": "MCUIViewLayout and TextBundle are the smallest accepted paths. Their block-based layout policy or coordinated validation, file I/O, mutation, and locking remain Level 2, and narrower methods are not distinct complete paths.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["nicklockwood/FXKeychain", "AliSoftware/OHHTTPStubs"], "result": "FXKeychain remains a deprecation and test-quality rejection; OHHTTPStubs remains a Level 4 alternate."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "php",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["Seldaek/monolog", "doctrine/lexer", "nikic/FastRoute", "schmittjoh/php-option", "symfony/symfony", "webmozarts/assert"],
+      "existing_path_result": "Webmozart Assert's notNull guard is materially distinct from its existing MixinGenerator path: one strict local guard and its direct tests versus reflection-driven generation of three method families. Exact-pin inspection supports scores 2/1/1/1 and Level 1, so it was accepted without changing standards.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["schmittjoh/php-option", "laravel/framework"], "result": "php-option remains Level 2 and Laravel remains a Level 4 capacity alternate; neither fills the second Level 1 place."},
+      "accepted_paths": ["webmozarts/assert::not-null-guard"],
+      "level_one_gaps_after": 1,
+      "conclusion": "one path accepted; the remaining gap is unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "powershell",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["Badgerati/Pode", "PoshCode/ModuleBuilder", "deadlydog/Invoke-MsBuild", "dfinke/ImportExcel", "lipkau/PSIni", "nightroman/Invoke-Build", "pester/Pester"],
+      "existing_path_result": "PSIni export and Invoke-MsBuild resolution were the plausible simpler alternatives, but advanced-function parameter handling, nested sections and encoding or versioned executable discovery and process policy keep them at Level 2 and within the same repository concerns.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["EvotecIT/PSWriteColor", "PowerShell/SecretManagement"], "result": "PSWriteColor still fails test quality; SecretManagement still fails language-path and maintainability gates."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "python",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["apache/airflow", "dbader/schedule", "home-assistant/core", "pallets/click", "pallets/flask", "pallets/itsdangerous", "psf/requests", "pytest-dev/pytest"],
+      "existing_path_result": "schedule and itsdangerous contain the smallest accepted behaviors. A single cancellation helper or signer wrapper remains part of the published scheduler or signing contract; timing, descriptors, key rotation, serialization, and error policy keep complete paths at Level 2 or above.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["pallets/markupsafe", "tox-dev/platformdirs"], "result": "Both candidates remain qualified Level 3 paths, not Level 1 paths."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "r",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["nimble-dev/nimble", "r-lib/pkgconfig", "r-lib/rematch2", "r-lib/testthat", "r-lib/withr", "tidyverse/ggplot2", "tidyverse/glue", "wch/r-source"],
+      "existing_path_result": "pkgconfig set_config was inspected as the strongest distinct second-path lead, but named variadic validation, caller and package environment selection, nested registry mutation, and four-function span calculate to Level 2. rematch2's smallest complete path likewise retains matrix-shape and capture constraints at Level 2.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["r-lib/crayon", "r-lib/prettyunits"], "result": "crayon remains Level 3 and prettyunits Level 2, both in full buckets."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "ruby",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["jekyll/jekyll", "rubocop/rubocop", "ruby-concurrency/concurrent-ruby", "ruby/base64", "ruby/pathname", "ruby/tempfile", "sidekiq/sidekiq", "socketry/async"],
+      "existing_path_result": "Base64's wrappers and Pathname's lexical normalization are already the smallest accepted paths. Strict and URL-safe encoding contracts or root and dot-segment rules keep them at Level 2, and individual helpers do not form separate production paths.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["ruby/base64", "puma/puma", "ruby-concurrency/concurrent-ruby", "socketry/async"], "result": "The inspected candidates remain Levels 2, 4, or 5; none is Level 1."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "rust",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["dtolnay/anyhow", "dtolnay/semver", "rust-cli/anstyle", "rust-lang/cargo", "tokio-rs/axum", "tokio-rs/tokio", "withoutboats/heck"],
+      "existing_path_result": "anstyle is the smallest accepted path, but its composable value API, exact no_std rendering, fixed buffer, and localized unsafe conversion support Level 2. A single color method would repeat that path rather than form a distinct behavior.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["BurntSushi/byteorder", "rust-cli/anstyle"], "result": "byteorder remains Level 3 and anstyle Level 2 after executable verification."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "scala",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["circe/circe", "http4s/http4s", "scopt/scopt", "softwaremill/retry", "typelevel/case-insensitive", "typelevel/cats-effect", "typelevel/fs2"],
+      "existing_path_result": "case-insensitive is the smallest accepted path, but lawful equality, cached compatible hashing, ordering, locale-independent Unicode behavior, and Cats instances keep it at Level 2. Its individual operations are not independent paths.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["com-lihaoyi/os-lib", "typelevel/fs2"], "result": "os-lib remains Level 3 and FS2 Level 5."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "shell",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["bats-core/bats-support", "dokku/dokku", "fsaintjacques/semver-tool", "ko1nksm/getoptions", "pyenv/pyenv", "rbenv/rbenv"],
+      "existing_path_result": "bats-support's formatter is the smallest accepted behavior, but portable shell quoting, whitespace normalization, terminal-width handling, and sourced-library compatibility support Level 2. semver-tool likewise retains grammar and exit-status policy at Level 2.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["magicmonty/bash-git-prompt", "nvm-sh/nvm"], "result": "The candidates remain Levels 3 and 4."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "swift",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["Alamofire/Alamofire", "JohnSundell/Files", "apple/swift-nio", "pointfreeco/swift-tagged", "realm/SwiftLint", "swiftlang/swift-syntax", "vapor/vapor"],
+      "existing_path_result": "Files is the smallest accepted repository, but even its narrow traversal path combines throwing filesystem APIs, typed wrappers, lazy sequences, and platform behavior at Level 2. Smaller accessors repeat that abstraction rather than form a distinct production path.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["apple/swift-argument-parser", "swiftlang/swift-syntax"], "result": "ArgumentParser remains Level 4 and SwiftSyntax Level 5."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    },
+    {
+      "language_slug": "typescript",
+      "level_one_gaps_before": 2,
+      "existing_repositories_considered": ["alexreardon/tiny-invariant", "angular/angular", "colinhacks/zod", "developit/mitt", "reduxjs/redux", "reduxjs/reselect", "trpc/trpc"],
+      "existing_path_result": "tiny-invariant is one complete function already, and mitt's on, off, and emit operations share one event-map lifecycle. Assertion-function narrowing plus build-sensitive lazy diagnostics or typed wildcard dispatch keep the complete paths at Level 2; neither contains a distinct Level 1 path.",
+      "external_research": {"basis": "reused the current same-day four-channel exact-pin pass in learner-centered-gap-research.json", "candidates_rechecked": ["unjs/ofetch", "sindresorhus/p-queue", "sindresorhus/p-retry", "sindresorhus/yocto-queue", "alexreardon/tiny-invariant"], "result": "The pass still yields a quality rejection, Level 2 and Level 4 paths, or packages without a TypeScript runtime path; none is Level 1."},
+      "accepted_paths": [],
+      "level_one_gaps_after": 2,
+      "conclusion": "unresolved after the current documented research pass"
+    }
+  ],
+  "final_verification": [
+    {
+      "command": "python3 scripts/catalog.py generate",
+      "status": "pass",
+      "result": "Generated learner-facing Markdown."
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "status": "pass",
+      "result": "30 tests passed"
+    },
+    {
+      "command": "python3 scripts/catalog.py validate",
+      "status": "pass",
+      "result": "Catalog data is valid."
+    },
+    {
+      "command": "python3 scripts/catalog.py check-generated",
+      "status": "pass",
+      "result": "Generated Markdown is current."
+    }
+  ],
+  "final_status": "pass-with-documented-gaps",
+  "known_limitations": [
+    "Fifty of 200 possible language and Level paths remain unfilled. Each affected Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
+    "Repository status and GitHub Linguist labels are a point-in-time check dated 2026-08-29 and can change after the audit.",
+    "The audit and verification passes are AI-assisted. No independent human inspection is claimed.",
+    "Hosted CI is external release evidence rather than a corpus-quality judgment and is not embedded in this point-in-time remediation record."
+  ]
+}

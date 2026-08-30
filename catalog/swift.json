@@ -1,336 +1,878 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "language_slug": "swift",
   "repositories": [
     {
-      "slug": "tagged",
-      "repository": "pointfreeco/swift-tagged",
-      "url": "https://github.com/pointfreeco/swift-tagged",
-      "primary_language": "Swift",
-      "language_evidence": "The generic tag wrapper, conditional conformances, literal support, serialization, identifiers, money, and time helpers are implemented in Swift under Sources/.",
-      "description": "A tiny generic wrapper that gives otherwise identical raw values distinct compile-time identities.",
-      "real_world_evidence": "The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.",
-      "why_study": "One struct demonstrates how Swift's type system, conditional conformances, dynamic members, literals, Codable, collections, and numeric protocols compose into a practical domain tool.",
-      "learn": ["Phantom types, generic wrappers, conditional protocol conformance, dynamic member lookup, Codable forwarding, literal protocols, numeric protocols, and zero-cost domain modeling."],
-      "prerequisites": ["Swift structs and generics, protocols and extensions, key paths, Codable, collections, numeric types, and basic domain modeling."],
-      "start_here": {"path": "Sources/Tagged/Tagged.swift", "reason": "The main file defines the wrapper and builds nearly every behavior through conditional conformance to the raw value's protocols."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 326, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Tagged.playground/"], "notes": "Count covers all production package targets, excluding tests, the playground, documentation, and package metadata."},
-        "difficulty": {"score": 2, "signals": ["generic phantom tag", "many conditional conformances"], "reason": "The type-system ideas are moderately unfamiliar, but each forwarding implementation is short and directly testable."},
-        "complexity": {"score": 1, "signals": ["one wrapper abstraction", "small optional helper modules"], "reason": "A single value abstraction and two tiny domain helpers have no I/O, services, or runtime coordination."},
-        "placement": "S1/D2/C1 averages to 1.33, making Tagged an SDC 1 project."
-      },
-      "quality": {
-        "source_quality": "The wrapper stores one raw value, forwards only when constraints permit, and keeps conversions and unsafe coercion explicit.",
-        "architecture": "A generic core type gains behavior through focused extensions, with optional money and time targets layered above it.",
-        "naming_and_idiom": "Tagged, Tag, RawValue, rawValue, map, coerced, and conditional conformances state the type-level design plainly.",
-        "tests": "Tests cover initialization, protocols, Codable strategies, literals, numeric behavior, dynamic members, optional values, identities, coercion, money, and time.",
-        "documentation": "The README develops the motivating bugs, type solution, collisions, features, caveats, installation, and practical examples.",
-        "traceability": "A typed identifier can be followed from its type alias into storage, protocol forwarding, encoding, comparison, and focused tests.",
-        "maintainability": "One core representation and compiler-enforced conditional extensions keep behavior local and prevent unsupported operations from compiling.",
-        "educational_value": "It is a compact demonstration of using the compiler to eliminate an entire class of domain mistakes."
-      },
-      "inspection": {"commit": "6a8517578035408b6c14ccba00ee990a1435515c", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/Tagged/Tagged.swift", "Tests/TaggedTests/TaggedTests.swift", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/pointfreeco/swift-tagged/blob/6a8517578035408b6c14ccba00ee990a1435515c/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
       "slug": "files",
+      "path_slug": "a-small-swift-api-turns-directory-traversal-into-lazy-typed",
       "repository": "JohnSundell/Files",
       "url": "https://github.com/JohnSundell/Files",
       "primary_language": "Swift",
       "language_evidence": "File and folder values, traversal, creation, copying, moving, renaming, deletion, attributes, and Foundation interoperation are implemented in Swift in Sources/Files.swift.",
       "description": "A small object-oriented filesystem library that wraps Foundation paths as File and Folder values.",
       "real_world_evidence": "The repository publishes Swift Package Manager and CocoaPods libraries used by macOS, iOS, Linux, tvOS, and watchOS code.",
-      "why_study": "It turns FileManager's string-heavy API into typed values and sequences while keeping filesystem effects, errors, traversal, and path relationships visible.",
-      "learn": ["Value-oriented API design, filesystem traversal, Sequence conformance, path relationships, file operations, lazy properties, error modeling, Foundation bridging, and cross-platform conditions."],
-      "prerequisites": ["Swift classes and protocols, sequences, optionals and errors, Foundation FileManager, paths, closures, and computed properties."],
-      "start_here": {"path": "Sources/Files.swift", "reason": "The complete implementation introduces shared location behavior before File and Folder specialize creation, traversal, mutation, and metadata."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 640, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Configs/"], "notes": "Count covers the complete production source, excluding tests, configuration, project files, documentation, and packaging metadata."},
-        "difficulty": {"score": 2, "signals": ["filesystem mutation and errors", "lazy recursive traversal"], "reason": "Filesystem edge cases add care, but behavior is expressed through familiar Foundation calls and small typed wrappers."},
-        "complexity": {"score": 1, "signals": ["single source file", "File and Folder value model"], "reason": "Two related types and shared helpers cover one local filesystem concern without services or plugin boundaries."},
-        "placement": "S1/D2/C1 averages to 1.33, placing Files at SDC 1."
+      "why_study": "Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders. Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Sources/Files.swift`: Sequence and IteratorProtocol conformances, lazy typed child construction, and Foundation error bridging.",
+        "Trace these states and branches from `Sources/Files.swift` through its selected supporting files: shallow and recursive traversal, file and folder filtering, and end-of-sequence and lookup failures.",
+        "Identify these architectural responsibilities in the path beginning at `Sources/Files.swift`: Folder sequence facade, child iterator, and FileManager-backed location model.",
+        "Study these change constraints for the path beginning at `Sources/Files.swift`: lazy enumeration must preserve path and type identity, recursive and shallow modes must remain distinct, and filesystem errors cross the Foundation boundary."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest.",
+        "Folder children are filesystem entries exposed as typed File and Folder values."
+      ],
+      "concepts_developed": [
+        "Sequence and IteratorProtocol conformances.",
+        "Shallow and recursive traversal.",
+        "Lazy enumeration must preserve path and type identity."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Folder children are filesystem entries exposed as typed File and Folder values."
+        ],
+        "reason": "Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging."
       },
-      "quality": {
-        "source_quality": "Path operations validate location kinds, make mutation explicit, preserve references after moves, and translate Foundation failures into domain errors.",
-        "architecture": "A shared Location protocol and internal helpers support File and Folder classes plus sequence-based child traversal.",
-        "naming_and_idiom": "File, Folder, path, name, extension, parent, subfolders, files, create, move, copy, and delete mirror user intent.",
-        "tests": "The suite covers lookup, creation, traversal, paths, extensions, reads and writes, copy and move, rename, delete, attributes, errors, equality, and platform behavior.",
-        "documentation": "The README teaches common and advanced operations, traversal, errors, testing, installation, and platform support through examples.",
-        "traceability": "Creating and moving a file can be followed from Folder helpers through FileManager, path updates, returned values, and temporary-directory tests.",
-        "maintainability": "The entire public model is visible in one source file and integration-style tests exercise actual filesystem effects.",
-        "educational_value": "It shows how a thin wrapper can materially improve domain clarity without hiding the underlying platform."
+      "learning_path": {
+        "goal": "Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders.",
+        "start_here": {
+          "path": "Sources/Files.swift",
+          "reason": "Begin with `Sources/Files.swift` because it exposes how a small Swift API turns directory traversal into lazy typed sequences over files and folders."
+        },
+        "supporting_files": [
+          "Tests/FilesTests/FilesTests.swift"
+        ],
+        "trace": "Begin at Folder.ChildIterator and ChildSequence, follow FileManager enumeration into typed File or Folder values, then compare shallow, recursive, file-only, and folder-only child sequences; close with temporary-directory tests that verify iteration order, filtering, paths, and failures."
       },
-      "inspection": {"commit": "e85f2b4a8dfa0f242889f45236f3867d16e40480", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/Files.swift", "Tests/FilesTests/FilesTests.swift", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/JohnSundell/Files/blob/e85f2b4a8dfa0f242889f45236f3867d16e40480/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "swift-log",
-      "repository": "apple/swift-log",
-      "url": "https://github.com/apple/swift-log",
-      "primary_language": "Swift",
-      "language_evidence": "Logger values, levels, messages, metadata, backend protocols, global bootstrap, multiplexing, streams, concurrency safety, and testing handlers are Swift under Sources/.",
-      "description": "The Swift server ecosystem's vendor-neutral logging API with pluggable backends and structured metadata.",
-      "real_world_evidence": "The project publishes the Logging package used by Swift libraries and applications to share a stable logging abstraction across backend implementations.",
-      "why_study": "A familiar Logger API demonstrates protocol-based backends, value semantics around mutable handlers, autoclosure performance, metadata composition, global one-time setup, task context, and concurrency.",
-      "learn": ["Protocol-based adapters, copy-on-write style handler mutation, log filtering, lazy autoclosures, structured metadata, string interpolation, one-time global bootstrap, task-local context, locks, and Sendable design."],
-      "prerequisites": ["Swift protocols and existentials, structs and value semantics, closures and autoclosures, generics, concurrency and Sendable, locks, and logging concepts."],
-      "start_here": {"path": "Sources/Logging/Logger.swift", "reason": "Logger connects levels, messages, metadata, convenience methods, filtering, backend ownership, and log-site calls before global setup is introduced."},
-      "sdc": {
+      "learning_level": {
         "level": 2,
-        "size": {"score": 2, "loc": 3516, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Benchmarks/", "Snippets/"], "notes": "Count covers production logging and in-memory logging targets, excluding tests, benchmarks, snippets, documentation, CMake support, and package metadata."},
-        "difficulty": {"score": 2, "signals": ["existential backend value semantics", "concurrency-safe global bootstrap"], "reason": "The API uses several modern Swift features, but the logging pipeline and synchronization rules are compact and clearly documented."},
-        "complexity": {"score": 2, "signals": ["facade-handler-bootstrap layers", "stream, multiplex, no-op, and in-memory handlers"], "reason": "A few cohesive modules implement one logging abstraction and bounded extension surface."},
-        "placement": "S2/D2/C2 is a balanced SDC 2 project."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "Sequence and IteratorProtocol conformances",
+            "lazy typed child construction",
+            "Foundation error bridging"
+          ],
+          "reason": "Familiar Swift protocol and iterator techniques recur without advanced type-level machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "shallow and recursive traversal",
+            "file and folder filtering",
+            "end-of-sequence and lookup failures"
+          ],
+          "reason": "A few related traversal branches recur within one bounded iterator lifecycle."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "Folder sequence facade",
+            "child iterator",
+            "FileManager-backed location model"
+          ],
+          "reason": "A small set of cohesive pieces spans the public traversal API and platform adapter."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "lazy enumeration must preserve path and type identity",
+            "recursive and shallow modes must remain distinct",
+            "filesystem errors cross the Foundation boundary"
+          ],
+          "reason": "Real filesystem state adds recurring correctness constraints, though the selected trace remains compact."
+        },
+        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Filtering occurs before message materialization, handler mutation is deliberate, bootstrap is guarded, and concurrency contracts are annotated and tested.",
-        "architecture": "Logger is a value facade over LogHandler; LoggingSystem chooses a process-wide factory; handlers implement destinations and composition; metadata providers add context.",
-        "naming_and_idiom": "Logger, LogHandler, Level, Message, Metadata, bootstrap, multiplex, label, metadataProvider, and logLevel define the domain.",
-        "tests": "Tests cover filtering and laziness, metadata and interpolation, handler mutation, multiplexing, bootstrap rules, concurrency, task-local loggers, streams, no-op and in-memory handlers, and compatibility.",
-        "documentation": "The README and generated API docs explain use, backend authoring, metadata, source information, global setup, concurrency, compatibility, and ecosystem packages.",
-        "traceability": "An info call can be followed through level filtering, lazy message construction, metadata merge, handler dispatch, multiplexing, and history assertions.",
-        "maintainability": "A deliberately small API, backend protocol, semantic-versioning policy, concurrency annotations, and focused tests keep ecosystem compatibility manageable.",
-        "educational_value": "It is a clean study of designing a shared abstraction whose main value is decoupling producers from implementations."
+        "source_quality": "Files.swift keeps Folder.ChildIterator and ChildSequence beside the File and Folder model, and FilesTests.swift exercises real temporary-directory traversal, recursive and shallow enumeration, filtering, paths, errors, and mutations.",
+        "architecture": "The audited architecture of the path beginning at `Sources/Files.swift` has these boundaries: Folder sequence facade, child iterator, and FileManager-backed location model.",
+        "naming_and_idiom": "`Sources/Files.swift` and its supporting files use these characteristic Swift mechanisms: Sequence and IteratorProtocol conformances, lazy typed child construction, and Foundation error bridging.",
+        "tests": "Direct tests in `Tests/FilesTests/FilesTests.swift` cover these states and branches in the selected path: shallow and recursive traversal, file and folder filtering, and end-of-sequence and lookup failures.",
+        "documentation": "`Sources/Files.swift` and its selected supporting material document the contracts needed to understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders.",
+        "traceability": "Begin at Folder.ChildIterator and ChildSequence, follow FileManager enumeration into typed File or Folder values, then compare shallow, recursive, file-only, and folder-only child sequences; close with temporary-directory tests that verify iteration order, filtering, paths, and failures.",
+        "maintainability": "Changes to the path beginning at `Sources/Files.swift` are constrained by these audited guarantees: lazy enumeration must preserve path and type identity, recursive and shallow modes must remain distinct, and filesystem errors cross the Foundation boundary.",
+        "educational_value": "Understand how a small Swift API turns directory traversal into lazy typed sequences over files and folders. Filesystem vocabulary is brief and subordinate; the bounded path teaches Sequence and IteratorProtocol composition, lazy traversal, filtering, value construction, and error-aware Foundation bridging."
       },
-      "inspection": {"commit": "47a917767fde0cd7f5b5dfdabbec733d2cb2dd95", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/Logging/Logger.swift", "Sources/Logging/LoggingSystem.swift", "Tests/LoggingTests/LoggingTest.swift", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/apple/swift-log/blob/47a917767fde0cd7f5b5dfdabbec733d2cb2dd95/LICENSE.txt"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "e85f2b4a8dfa0f242889f45236f3867d16e40480",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Sources/Files.swift",
+          "Tests/FilesTests/FilesTests.swift",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/JohnSundell/Files/blob/e85f2b4a8dfa0f242889f45236f3867d16e40480/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "swift-system",
-      "repository": "apple/swift-system",
-      "url": "https://github.com/apple/swift-system",
+      "slug": "tagged",
+      "path_slug": "tagged-value-identity",
+      "repository": "pointfreeco/swift-tagged",
+      "url": "https://github.com/pointfreeco/swift-tagged",
       "primary_language": "Swift",
-      "language_evidence": "Typed file descriptors, paths, system strings, errors, permissions, file operations, stat data, IO request types, and Darwin, POSIX, Windows, and WASI mappings are Swift under Sources/System.",
-      "description": "Idiomatic strongly typed Swift interfaces over low-level operating-system calls and currency types.",
-      "real_world_evidence": "The project publishes SystemPackage for Swift libraries and applications that need direct, safer access to platform system interfaces.",
-      "why_study": "It shows how to wrap C and OS APIs without pretending platforms are identical, preserving raw semantics while adding types, ownership helpers, error mapping, and source-stable Swift interfaces.",
-      "learn": ["System call wrappers, strongly typed flags and handles, errno mapping, EINTR retry, buffer lifetimes, filesystem paths and strings, platform conditional compilation, availability, ABI and source stability, and unsafe Swift boundaries."],
-      "prerequisites": ["Comfortable Swift, C interoperation, pointers and buffers, POSIX and Windows file APIs, errors, option sets, generics, platform compilation, and systems concepts."],
-      "start_here": {"path": "Sources/System/FileDescriptor.swift", "reason": "FileDescriptor builds typed access modes and options around a raw handle before operation files connect them to system calls and lifetime helpers."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 2, "loc": 8797, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Proposals/", "cmake/"], "notes": "Count covers production SystemPackage and C shims, excluding tests, proposals, documentation, CMake support, and package metadata."},
-        "difficulty": {"score": 3, "signals": ["unsafe pointer and system-call boundaries", "platform-specific ABI and error semantics"], "reason": "Low-level interfaces require precision, but wrappers are repetitive, documented, and organized by operating-system concept."},
-        "complexity": {"score": 2, "signals": ["path, descriptor, stat, and I/O modules", "Darwin, POSIX, Windows, and WASI branches"], "reason": "Several related modules expose one low-level system interface layer with no service orchestration."},
-        "placement": "S2/D3/C2 averages to 2.33, placing Swift System at SDC 2."
+      "language_evidence": "The generic tag wrapper, conditional conformances, literal support, serialization, identifiers, money, and time helpers are implemented in Swift under Sources/.",
+      "description": "A tiny generic wrapper that gives otherwise identical raw values distinct compile-time identities.",
+      "real_world_evidence": "The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.",
+      "why_study": "Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine. The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Sources/Tagged/Tagged.swift`: phantom generic tag parameter, conditional protocol conformances, and dynamic-member, literal, and Codable forwarding.",
+        "Trace these states and branches from `Sources/Tagged/Tagged.swift` through its selected supporting files: one wrapped raw value, local forwarding operations, and no independent runtime lifecycle.",
+        "Identify these architectural responsibilities in the path beginning at `Sources/Tagged/Tagged.swift`: one core wrapper abstraction and one direct test suite.",
+        "Study these change constraints for the path beginning at `Sources/Tagged/Tagged.swift`: operations exist only when RawValue satisfies matching constraints, type identity must not alter raw representation, and encoding and literal behavior must preserve RawValue semantics."
+      ],
+      "prerequisites": [
+        "Swift generic structs, protocols, extensions, key paths, literal protocols, and basic `Codable` use.",
+        "A generic type can include a type parameter that distinguishes values even when that parameter stores no runtime data."
+      ],
+      "concepts_developed": [
+        "Phantom tags that create distinct compile-time identities over one raw representation.",
+        "Conditional conformances that forward only capabilities supported by `RawValue`.",
+        "Dynamic-member, literal, serialization, and explicit coercion behavior that preserves raw-value semantics."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A phantom Tag parameter distinguishes values with the same RawValue at compile time while the runtime representation remains one wrapped value."
+        ],
+        "reason": "The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion."
       },
-      "quality": {
-        "source_quality": "Raw values, platform constants, retry policy, ownership responsibility, availability, and unsafe buffer scopes are visible and extensively documented.",
-        "architecture": "Strongly typed currency types and option sets wrap narrow C shims; operation files provide platform-specific calls while FilePath and SystemString own path representation.",
-        "naming_and_idiom": "FileDescriptor, FilePath, Errno, FilePermissions, OpenOptions, retryOnInterrupt, closeAfter, read, writeAll, and Stat map directly to system concepts.",
-        "tests": "Cross-platform tests cover paths and syntax, file operations, descriptors, permissions, errors, stat data, strings, mocking, temporary paths, Windows behavior, I/O requests, and visibility.",
-        "documentation": "The README defines platform philosophy, usage, supported systems, source-stability rules, toolchains, branching, and API documentation.",
-        "traceability": "Opening and writing a file can be followed from typed path and flags through platform constants and system-call wrappers, errno translation, lifetime cleanup, and operation tests.",
-        "maintainability": "Generated availability, explicit platform branches, narrow C modules, source-stability rules, and multi-platform CI contain a difficult compatibility surface.",
-        "educational_value": "It teaches how to make unsafe platform power more expressive without erasing the semantics learners need to understand."
+      "learning_path": {
+        "goal": "Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.",
+        "start_here": {
+          "path": "Sources/Tagged/Tagged.swift",
+          "reason": "Begin with `Sources/Tagged/Tagged.swift` because it exposes how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine."
+        },
+        "supporting_files": [
+          "Tests/TaggedTests/TaggedTests.swift"
+        ],
+        "trace": "Start with Tagged's Tag and RawValue parameters and single rawValue field, then follow mapping and dynamic-member lookup into the recurring conditional conformances; close with tests that show which operations are forwarded, encoded, compared, or deliberately coerced."
       },
-      "inspection": {"commit": "1b452c2996c677d8e435bf0b766fc927176d8c77", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/System/FileDescriptor.swift", "Sources/System/FilePath/FilePath.swift", "Tests/SystemTests/FileOperationsTest.swift", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0 WITH Swift-exception", "url": "https://github.com/apple/swift-system/blob/1b452c2996c677d8e435bf0b766fc927176d8c77/LICENSE.txt"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "alamofire",
-      "repository": "Alamofire/Alamofire",
-      "url": "https://github.com/Alamofire/Alamofire",
-      "primary_language": "Swift",
-      "language_evidence": "Session management, requests, uploads, downloads, streams, WebSockets, serialization, validation, authentication, retries, trust evaluation, reachability, and event monitoring are Swift under Source/.",
-      "description": "An HTTP networking library for Apple platforms built over URLSession with fluent, async, Combine, streaming, and WebSocket APIs.",
-      "real_world_evidence": "The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.",
-      "why_study": "It turns URLSession's delegate model into explicit request state, queues, serializers, validators, interceptors, authentication refresh, trust policy, retries, events, and several user-facing concurrency styles.",
-      "learn": ["Request state machines, URLSession delegation, concurrency queues, async and await, Combine, serializers and validators, uploads and downloads, WebSockets and streams, retries, authentication, TLS trust, and event monitoring."],
-      "prerequisites": ["Swift closures and generics, structured concurrency, Foundation URLSession, HTTP, TLS basics, state machines, dispatch queues, streams, and testing asynchronous code."],
-      "start_here": {"path": "Source/Core/Session.swift", "reason": "Session owns URLSession, request creation, delegate routing, root queues, interceptors, trust, lifecycle events, cancellation, and cleanup."},
-      "sdc": {
+      "learning_level": {
         "level": 3,
-        "size": {"score": 2, "loc": 9287, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Example/", "Documentation/", "docs/"], "notes": "Count covers first-party production Swift under Source, excluding tests, examples, resources, generated documentation, project files, and packaging metadata."},
-        "difficulty": {"score": 3, "signals": ["asynchronous request state and delegate coordination", "retry, authentication, trust, and stream semantics"], "reason": "Networking and concurrency rules recur, but URLSession provides the transport and the library names its state transitions clearly."},
-        "complexity": {"score": 3, "signals": ["session-request-serializer pipeline", "upload, download, stream, WebSocket, auth, trust, and event extensions"], "reason": "Several substantial features cooperate through a common request lifecycle within one library."},
-        "placement": "S2/D3/C3 averages to 2.67, which rounds to SDC 3."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "phantom generic parameters and many conditional protocol conformances",
+            "@dynamicMemberLookup and KeyPath forwarding",
+            "isolated unsafeBitCast representation coercions"
+          ],
+          "reason": "Advanced generic constraints, conditional conformances, dynamic-member lookup, and isolated unsafe representation coercions recur across the wrapper's public behavior."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one wrapped raw value",
+            "local forwarding operations",
+            "no independent runtime lifecycle"
+          ],
+          "reason": "The main trace has one local value state, so compile-time sophistication does not raise runtime behavior above the Level 1 anchor."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one core wrapper abstraction",
+            "one direct test suite"
+          ],
+          "reason": "The lesson is intentionally contained in one production type and its tests."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "operations exist only when RawValue satisfies matching constraints",
+            "type identity must not alter raw representation",
+            "encoding and literal behavior must preserve RawValue semantics"
+          ],
+          "reason": "Several type-safety and representation constraints recur, but they are compiler-enforced and locally visible."
+        },
+        "placement": "The four scores 4/1/1/3 sum to 9 and have a mean of 2.25; the score-4 guardrail raises the published result from the rounded Level 2 to Level 3."
       },
       "quality": {
-        "source_quality": "Request states, protected mutation, queue boundaries, delegate ownership, retry decisions, serializer ordering, cancellation, and completion are explicit.",
-        "architecture": "Session creates Request subclasses and maps URLSession tasks; delegates report transport events; serializers, validators, interceptors, monitors, trust evaluators, and reachability provide focused extensions.",
-        "naming_and_idiom": "Session, Request, DataRequest, DownloadRequest, UploadRequest, DataStreamRequest, interceptor, retrier, serializer, validator, and event monitor form a coherent model.",
-        "tests": "Extensive tests cover sessions, requests, delegates, uploads, downloads, streaming, WebSockets, serialization, validation, retries, authentication, trust, reachability, concurrency, memory leaks, and regressions.",
-        "documentation": "The README, API docs, migration guides, usage guides, advanced examples, and release history explain architecture and every feature family.",
-        "traceability": "A data request can be followed from Session construction through task mapping and delegate events, validation and serialization queues, retry or completion, async response delivery, and tests.",
-        "maintainability": "Feature protocols and Request subclasses isolate concerns, while state protection and a broad asynchronous test suite guard the shared lifecycle.",
-        "educational_value": "It is a readable production example of converting callback-heavy platform APIs into a coherent modern Swift library."
+        "source_quality": "Tagged.swift keeps the representation and conditional protocol extensions in one documented source file, while TaggedTests.swift directly covers construction, mapping, dynamic members, comparison, literals, encoding, numeric behavior, and coercion.",
+        "architecture": "The audited architecture of the path beginning at `Sources/Tagged/Tagged.swift` has these boundaries: one core wrapper abstraction and one direct test suite.",
+        "naming_and_idiom": "`Tagged`, `Tag`, and `RawValue` expose the phantom-identity model directly; conditional conformances, dynamic-member lookup, and the small isolated coercions use recognizable Swift type-system idioms.",
+        "tests": "Direct tests in `Tests/TaggedTests/TaggedTests.swift` cover these states and branches in the selected path: one wrapped raw value, local forwarding operations, and no independent runtime lifecycle.",
+        "documentation": "`Sources/Tagged/Tagged.swift` and its selected supporting material document the contracts needed to understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine.",
+        "traceability": "Start with Tagged's Tag and RawValue parameters and single rawValue field, then follow mapping and dynamic-member lookup into the recurring conditional conformances; close with tests that show which operations are forwarded, encoded, compared, or deliberately coerced.",
+        "maintainability": "Changes to the path beginning at `Sources/Tagged/Tagged.swift` are constrained by these audited guarantees: operations exist only when RawValue satisfies matching constraints, type identity must not alter raw representation, and encoding and literal behavior must preserve RawValue semantics.",
+        "educational_value": "Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine. The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion."
       },
-      "inspection": {"commit": "0455bfb650893e86ad07ace16e5f2d36dadf46f4", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Source/Core/Session.swift", "Source/Core/Request.swift", "Tests/SessionTests.swift", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "6a8517578035408b6c14ccba00ee990a1435515c",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Sources/Tagged/Tagged.swift",
+          "Tests/TaggedTests/TaggedTests.swift",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/pointfreeco/swift-tagged/blob/6a8517578035408b6c14ccba00ee990a1435515c/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "vapor",
+      "path_slug": "vapor-builds-an-ordered-middleware-chain-around-a-terminal-responder",
       "repository": "vapor/vapor",
       "url": "https://github.com/vapor/vapor",
       "primary_language": "Swift",
       "language_evidence": "Application lifecycle, routing, requests and responses, middleware, content coding, authentication, sessions, clients, servers, WebSockets, validation, views, caching, tracing, metrics, and testing are Swift under Sources/.",
       "description": "A server-side Swift web framework built on SwiftNIO with routing, middleware, content, authentication, sessions, clients, and operational integrations.",
       "real_world_evidence": "The repository publishes the Vapor package used to build and run production HTTP and WebSocket services in Swift.",
-      "why_study": "It shows how a framework composes a low-level evented network stack into application lifecycle, typed routing, requests, middleware, content, authentication, sessions, observability, and test ergonomics.",
-      "learn": ["Framework application lifecycle, typed routing, middleware chains, HTTP request and response modeling, content negotiation, authentication, sessions, WebSockets, structured concurrency, dependency storage, logging, metrics, tracing, and testing."],
-      "prerequisites": ["Comfortable Swift and concurrency, HTTP and WebSockets, SwiftNIO basics, Codable, dependency injection, middleware, authentication, sessions, and server application design."],
-      "start_here": {"path": "Sources/Vapor/Application.swift", "reason": "Application owns environment, event loops, storage, lifecycle, services, startup, running, and ordered shutdown, providing the framework map."},
-      "sdc": {
+      "why_study": "Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow. HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Sources/Vapor/Middleware/Middleware.swift`: protocol-based middleware and responder contracts, closure and type-erased composition, and asynchronous response values.",
+        "Trace these states and branches from `Sources/Vapor/Middleware/Middleware.swift` through its selected supporting files: ordered before and after behavior, continue, transform, short-circuit, and error branches, and terminal responder completion.",
+        "Identify these architectural responsibilities in the path beginning at `Sources/Vapor/Middleware/Middleware.swift`: middleware extension point, ordered configuration, and application assembly and terminal responder.",
+        "Study these change constraints for the path beginning at `Sources/Vapor/Middleware/Middleware.swift`: configured order must be preserved, each layer must invoke or intentionally bypass the next responder, and responses and errors must propagate through the chain."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest.",
+        "Middleware wraps an HTTP Responder so request handling can be composed as an ordered chain."
+      ],
+      "concepts_developed": [
+        "Protocol-based middleware and responder contracts.",
+        "Ordered before and after behavior.",
+        "Configured order must be preserved."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Middleware wraps an HTTP Responder so request handling can be composed as an ordered chain."
+        ],
+        "reason": "HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing."
+      },
+      "learning_path": {
+        "goal": "Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.",
+        "start_here": {
+          "path": "Sources/Vapor/Middleware/Middleware.swift",
+          "reason": "Begin with `Sources/Vapor/Middleware/Middleware.swift` because it exposes how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow."
+        },
+        "supporting_files": [
+          "Sources/Vapor/Middleware/MiddlewareConfiguration.swift",
+          "Sources/Vapor/Middleware/Application+Middleware.swift",
+          "Sources/Vapor/HTTP/Responder.swift",
+          "Tests/VaporTests/MiddlewareTests.swift"
+        ],
+        "trace": "Start with Middleware.respond(to:chainingTo:), follow configuration order as middleware wraps the next Responder, then trace the application-built chain into its terminal responder; close with tests for execution order, transformed responses, short circuits, and propagated failures."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 3, "loc": 13509, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Performance/", "Sources/Development/"], "notes": "Count covers production framework, testing support, and macros, excluding tests, performance harnesses, development server examples, documentation, and package metadata."},
-        "difficulty": {"score": 3, "signals": ["SwiftNIO and async lifecycle coordination", "typed request, middleware, and content abstractions"], "reason": "Concurrency and framework contracts matter, while most transport depth is delegated to SwiftNIO and components are conventionally structured."},
-        "complexity": {"score": 3, "signals": ["application-route-middleware-response pipeline", "server, client, auth, session, cache, view, and observability modules"], "reason": "Many framework capabilities cooperate through one application container and request lifecycle."},
-        "placement": "S3/D3/C3 makes Vapor a balanced SDC 3 project."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "protocol-based middleware and responder contracts",
+            "closure and type-erased composition",
+            "asynchronous response values"
+          ],
+          "reason": "Intermediate Swift protocol and composition techniques recur across the chain."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "ordered before and after behavior",
+            "continue, transform, short-circuit, and error branches",
+            "terminal responder completion"
+          ],
+          "reason": "Several related chain states recur without a broad independent lifecycle."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "middleware extension point",
+            "ordered configuration",
+            "application assembly and terminal responder"
+          ],
+          "reason": "A few cohesive components cover the complete composition path."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "configured order must be preserved",
+            "each layer must invoke or intentionally bypass the next responder",
+            "responses and errors must propagate through the chain"
+          ],
+          "reason": "Composition and propagation constraints recur but are locally inspectable and directly tested."
+        },
+        "placement": "The four scores 3/3/3/3 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Lifecycle ownership, thread-safe storage, request mutation, body modes, async boundaries, route metadata, and shutdown order are explicit and documented.",
-        "architecture": "Application stores configured providers and lifecycle handlers; routing and middleware turn NIO HTTP traffic into Request and Response values; focused modules add content, auth, sessions, clients, servers, views, caches, and telemetry.",
-        "naming_and_idiom": "Application, Request, Response, Route, RoutesBuilder, Middleware, Content, Abort, LifecycleHandler, storage, and withApp expose framework roles.",
-        "tests": "The suite covers routing, middleware, requests, responses, content, streams, servers, TLS, WebSockets, clients, auth, sessions, validation, caches, views, errors, observability, macros, and shutdown.",
-        "documentation": "The README and maintained documentation cover setup, async APIs, routing, content, databases, authentication, middleware, testing, deployment, packages, and contributor workflows.",
-        "traceability": "An HTTP route can be followed from registration through matcher parameters, middleware, Request storage and body handling, async handler, response encoding, NIO write, and route tests.",
-        "maintainability": "Application storage keys and protocol-based providers isolate features, while lifecycle rules and full-stack tests protect framework integration.",
-        "educational_value": "It is a strong intermediate framework study because abstractions are rich but the full request path remains visible."
+        "source_quality": "Middleware.swift defines the extension contract, MiddlewareConfiguration owns ordering, Application+Middleware connects configured middleware to the application, Responder defines the terminal boundary, and MiddlewareTests verifies order, short-circuiting, errors, and composition.",
+        "architecture": "The audited architecture of the path beginning at `Sources/Vapor/Middleware/Middleware.swift` has these boundaries: middleware extension point, ordered configuration, and application assembly and terminal responder.",
+        "naming_and_idiom": "`Sources/Vapor/Middleware/Middleware.swift` and its supporting files use these characteristic Swift mechanisms: protocol-based middleware and responder contracts, closure and type-erased composition, and asynchronous response values.",
+        "tests": "Direct tests in `Tests/VaporTests/MiddlewareTests.swift` cover these states and branches in the selected path: ordered before and after behavior, continue, transform, short-circuit, and error branches, and terminal responder completion.",
+        "documentation": "`Sources/Vapor/Middleware/Middleware.swift` and its selected supporting material document the contracts needed to understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow.",
+        "traceability": "Start with Middleware.respond(to:chainingTo:), follow configuration order as middleware wraps the next Responder, then trace the application-built chain into its terminal responder; close with tests for execution order, transformed responses, short circuits, and propagated failures.",
+        "maintainability": "Changes to the path beginning at `Sources/Vapor/Middleware/Middleware.swift` are constrained by these audited guarantees: configured order must be preserved, each layer must invoke or intentionally bypass the next responder, and responses and errors must propagate through the chain.",
+        "educational_value": "Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow. HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing."
       },
-      "inspection": {"commit": "86ab4300efa1b3e270eeba2ca4b253998b734669", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/Vapor/Application.swift", "Sources/Vapor/Request/Request.swift", "Tests/VaporTests/RouteTests.swift", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "86ab4300efa1b3e270eeba2ca4b253998b734669",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Sources/Vapor/Middleware/Middleware.swift",
+          "Sources/Vapor/Middleware/MiddlewareConfiguration.swift",
+          "Sources/Vapor/Middleware/Application+Middleware.swift",
+          "Sources/Vapor/HTTP/Responder.swift",
+          "Tests/VaporTests/MiddlewareTests.swift",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/vapor/vapor/blob/86ab4300efa1b3e270eeba2ca4b253998b734669/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "swift-nio",
-      "repository": "apple/swift-nio",
-      "url": "https://github.com/apple/swift-nio",
+      "slug": "alamofire",
+      "path_slug": "alamofire-coordinates-one-request-s-task-completion-interceptor-decision-retry",
+      "repository": "Alamofire/Alamofire",
+      "url": "https://github.com/Alamofire/Alamofire",
       "primary_language": "Swift",
-      "language_evidence": "Event loops, channels and pipelines, futures, byte buffers, sockets, selectors, bootstraps, HTTP/1, WebSockets, TLS abstractions, async sequences, and filesystem APIs are primarily Swift under Sources/.",
-      "description": "A cross-platform high-performance event-driven networking framework for building protocol servers and clients in Swift.",
-      "real_world_evidence": "The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.",
-      "why_study": "It makes asynchronous systems mechanics explicit: selector threads, event-loop confinement, channels, handler pipelines, byte buffers, promises, backpressure, bootstraps, protocol codecs, and modern async bridges.",
-      "learn": ["Nonblocking I/O, event loops and thread confinement, channels and handler pipelines, futures and promises, byte buffers, backpressure, socket bootstraps, HTTP and WebSocket codecs, async sequences, filesystems, performance, and portability."],
-      "prerequisites": ["Advanced Swift and generics, structured and callback concurrency, sockets and readiness APIs, protocol state machines, memory and buffer management, threads and atomics, HTTP, performance engineering, and large-library navigation."],
-      "start_here": {"path": "Sources/NIOCore/Channel.swift", "reason": "Channel and ChannelPipeline define ownership and event flow; then EventLoop explains the execution model that makes handlers safe and nonblocking."},
-      "sdc": {
+      "language_evidence": "Session management, requests, uploads, downloads, streams, WebSockets, serialization, validation, authentication, retries, trust evaluation, reachability, and event monitoring are Swift under Source/.",
+      "description": "An HTTP networking library for Apple platforms built over URLSession with fluent, async, Combine, streaming, and WebSocket APIs.",
+      "real_world_evidence": "The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.",
+      "why_study": "Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup. HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Source/Core/Request.swift`: closure and protocol-based interceptor callbacks, synchronized mutable request state, and typed request and task coordination.",
+        "Trace these states and branches from `Source/Core/Request.swift` through its selected supporting files: created, resumed, suspended, cancelled, completed, and retried states, delegate callback and interceptor decision ordering, and success, failure, retry, cancellation, and invalidation branches.",
+        "Identify these architectural responsibilities in the path beginning at `Source/Core/Request.swift`: Request state owner, Session task coordinator, task map and delegate bridge, and interceptor extension point and integration tests.",
+        "Study these change constraints for the path beginning at `Source/Core/Request.swift`: callbacks must serialize state transitions, retry must not leak or duplicate URLSession tasks, and cancellation, invalidation, and completion cleanup must remain ordered."
+      ],
+      "prerequisites": [
+        "Working familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest, plus experience tracing behavior across several production files.",
+        "A Request owns a URLSession task lifecycle and may consult a RequestInterceptor before retrying a completed attempt."
+      ],
+      "concepts_developed": [
+        "Closure and protocol-based interceptor callbacks.",
+        "Created, resumed, suspended, cancelled, completed, and retried states.",
+        "Callbacks must serialize state transitions."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Request owns a URLSession task lifecycle and may consult a RequestInterceptor before retrying a completed attempt."
+        ],
+        "reason": "HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup."
+      },
+      "learning_path": {
+        "goal": "Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.",
+        "start_here": {
+          "path": "Source/Core/Request.swift",
+          "reason": "Begin with `Source/Core/Request.swift` because it exposes how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup."
+        },
+        "supporting_files": [
+          "Source/Core/Session.swift",
+          "Source/Core/RequestTaskMap.swift",
+          "Source/Core/SessionDelegate.swift",
+          "Source/Features/RequestInterceptor.swift",
+          "Tests/SessionTests.swift"
+        ],
+        "trace": "Start at Request completion and retry handling, follow state changes and interceptor decisions into Session task creation, RequestTaskMap ownership, and SessionDelegate callbacks, then return through retry or terminal cleanup; close with Session tests for successful completion, cancellation, retry, invalidation, and task-map removal."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 4, "loc": 88031, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "IntegrationTests/", "Benchmarks/", "Snippets/", "dev/", "docs/"], "notes": "Count covers first-party production Swift and native shims under Sources, excluding tests, integration and performance harnesses, snippets, development tools, documentation, generated files, and package metadata."},
-        "difficulty": {"score": 4, "signals": ["nonblocking I/O and event-loop confinement", "generic handler and future machinery", "buffer, lifetime, atomics, and protocol performance"], "reason": "Concurrency, ownership, low-level networking, and performance invariants are pervasive across central abstractions."},
-        "complexity": {"score": 4, "signals": ["core-posix-embedded-protocol-filesystem modules", "many platform selector and socket backends", "large extension ecosystem and compatibility surface"], "reason": "Many interdependent library products form a networking platform, though deployment remains within client and server processes built by consumers."},
-        "placement": "S4/D4/C4 makes SwiftNIO an SDC 4 project."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "closure and protocol-based interceptor callbacks",
+            "synchronized mutable request state",
+            "typed request and task coordination"
+          ],
+          "reason": "Intermediate Swift abstraction and synchronization techniques recur without requiring multiple expert language mechanisms."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "created, resumed, suspended, cancelled, completed, and retried states",
+            "delegate callback and interceptor decision ordering",
+            "success, failure, retry, cancellation, and invalidation branches"
+          ],
+          "reason": "Several coupled asynchronous states and branches recur throughout the bounded request lifecycle."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "Request state owner",
+            "Session task coordinator",
+            "task map and delegate bridge",
+            "interceptor extension point and integration tests"
+          ],
+          "reason": "Multiple cohesive components participate in one end-to-end retry and completion path."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "callbacks must serialize state transitions",
+            "retry must not leak or duplicate URLSession tasks",
+            "cancellation, invalidation, and completion cleanup must remain ordered"
+          ],
+          "reason": "Concurrency, lifecycle, and cleanup constraints recur, but the lesson does not require the whole networking framework."
+        },
+        "placement": "The four scores 3/4/4/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Event-loop preconditions, ownership, Sendable boundaries, state machines, promises, buffer indices, backpressure, and performance-sensitive branches are explicit and asserted.",
-        "architecture": "NIOCore defines abstractions; NIOPosix supplies selector-driven sockets; embedded implementations enable deterministic tests; protocol, TLS, concurrency, Foundation, and filesystem modules build on the core.",
-        "naming_and_idiom": "EventLoop, Channel, ChannelPipeline, ChannelHandler, ByteBuffer, EventLoopFuture, EventLoopPromise, Bootstrap, Selector, and writability define the runtime model.",
-        "tests": "Large unit, integration, allocation, performance, crash, concurrency, protocol, filesystem, sanitizer, and platform suites cover abstractions, transports, codecs, edge cases, and regressions.",
-        "documentation": "The conceptual README, API docs, public-API policy, migration guides, performance guidance, examples, and ecosystem maps explain both use and internals.",
-        "traceability": "A socket read can be followed from selector readiness through an EventLoop-owned Channel, inbound pipeline handlers and decoders, backpressure state, user callback or async sequence, and embedded or POSIX tests.",
-        "maintainability": "Strict event-loop rules, protocol boundaries, embedded test doubles, compatibility contracts, allocation benchmarks, and modular packages constrain a performance-sensitive system.",
-        "educational_value": "It is an advanced source for understanding the execution machinery beneath modern Swift servers rather than only consuming async APIs."
+        "source_quality": "Request.swift documents and centralizes request state, completion, cancellation, and retry; Session, RequestTaskMap, SessionDelegate, and RequestInterceptor expose the coordinating boundaries, and SessionTests exercises task creation, completion, cancellation, retry, invalidation, and cleanup.",
+        "architecture": "The audited architecture of the path beginning at `Source/Core/Request.swift` has these boundaries: Request state owner, Session task coordinator, task map and delegate bridge, and interceptor extension point and integration tests.",
+        "naming_and_idiom": "`Source/Core/Request.swift` and its supporting files use these characteristic Swift mechanisms: closure and protocol-based interceptor callbacks, synchronized mutable request state, and typed request and task coordination.",
+        "tests": "Direct tests in `Tests/SessionTests.swift` cover these states and branches in the selected path: created, resumed, suspended, cancelled, completed, and retried states, delegate callback and interceptor decision ordering, and success, failure, retry, cancellation, and invalidation branches.",
+        "documentation": "`Source/Core/Request.swift` and its selected supporting material document the contracts needed to understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup.",
+        "traceability": "Start at Request completion and retry handling, follow state changes and interceptor decisions into Session task creation, RequestTaskMap ownership, and SessionDelegate callbacks, then return through retry or terminal cleanup; close with Session tests for successful completion, cancellation, retry, invalidation, and task-map removal.",
+        "maintainability": "Changes to the path beginning at `Source/Core/Request.swift` are constrained by these audited guarantees: callbacks must serialize state transitions, retry must not leak or duplicate URLSession tasks, and cancellation, invalidation, and completion cleanup must remain ordered.",
+        "educational_value": "Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup. HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup."
       },
-      "inspection": {"commit": "a931f2c1de8dd49381ce3bf2e279d033f68d8865", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Sources/NIOCore/Channel.swift", "Sources/NIOCore/EventLoop.swift", "Tests/NIOCoreTests/CustomChannelTests.swift", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/LICENSE.txt"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "0455bfb650893e86ad07ace16e5f2d36dadf46f4",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Source/Core/Request.swift",
+          "Source/Core/Session.swift",
+          "Source/Core/RequestTaskMap.swift",
+          "Source/Core/SessionDelegate.swift",
+          "Source/Features/RequestInterceptor.swift",
+          "Tests/SessionTests.swift",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/Alamofire/Alamofire/blob/0455bfb650893e86ad07ace16e5f2d36dadf46f4/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "swiftlint",
+      "path_slug": "one-swiftlint-rule-detects-and-safely-corrects-unsorted-import-blocks",
       "repository": "realm/SwiftLint",
       "url": "https://github.com/realm/SwiftLint",
       "primary_language": "Swift",
       "language_evidence": "Rule protocols and implementations, SwiftSyntax and SourceKit analysis, configuration, corrections, baselines, caching, reporters, file discovery, command execution, plugins, and macros are Swift under Source/ and Plugins/.",
       "description": "A configurable Swift style and static-analysis tool with hundreds of rules, autocorrection, baselines, reporters, and build integrations.",
       "real_world_evidence": "The repository releases the SwiftLint command, frameworks, package plugins, and build-tool integrations used by Swift projects and CI systems.",
-      "why_study": "It analyzes its own language using protocol-oriented rules, syntax trees, compiler services, configuration graphs, generated registries, corrections, caching, reporters, plugins, and a substantial CLI.",
-      "learn": ["Static analysis, syntax visitors, SourceKit integration, rule protocols and registries, configuration merging, diagnostics and source locations, autocorrection, baselines, caching, reporters, package plugins, macros, and command-line architecture."],
-      "prerequisites": ["Advanced Swift, SwiftSyntax and AST concepts, compiler tooling, protocols and generics, concurrency, YAML configuration, source ranges and rewriting, command-line tools, build plugins, and large-rule-set navigation."],
-      "start_here": {"path": "Source/SwiftLintFramework/Models/Linter.swift", "reason": "Linter connects files and syntax, configured rule storage, collectors, corrections, violation production, command directives, and benchmark timing."},
-      "sdc": {
+      "why_study": "Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration. Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift`: SwiftSyntax visitor and rewriter subclasses, macro-generated rule conformance, and typed syntax and trivia transformations.",
+        "Trace these states and branches from `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` through its selected supporting files: collect, group, compare, report, and rewrite phases, adjacent, conditional-compilation, disabled-region, and trivia branches, and violation and correction outcomes.",
+        "Identify these architectural responsibilities in the path beginning at `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift`: built-in rule implementation, shared visitor and correction protocols, and macro integration and generated test harness.",
+        "Study these change constraints for the path beginning at `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift`: sorting must respect configured grouping and case behavior, comments, trivia, conditional blocks, and disabled regions must survive correction, and reported positions and correction counts must remain stable."
+      ],
+      "prerequisites": [
+        "Working familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest, plus experience tracing behavior across several production files.",
+        "The sorted_imports rule groups adjacent Swift import declarations, reports inversions, and rewrites each block into configured order."
+      ],
+      "concepts_developed": [
+        "SwiftSyntax visitor and rewriter subclasses.",
+        "Collect, group, compare, report, and rewrite phases.",
+        "Sorting must respect configured grouping and case behavior."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "The sorted_imports rule groups adjacent Swift import declarations, reports inversions, and rewrites each block into configured order."
+        ],
+        "reason": "Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers."
+      },
+      "learning_path": {
+        "goal": "Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.",
+        "start_here": {
+          "path": "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift",
+          "reason": "Begin with `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` because it exposes how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration."
+        },
+        "supporting_files": [
+          "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRuleExamples.swift",
+          "Source/SwiftLintBuiltInRules/Rules/RuleConfigurations/SortedImportsConfiguration.swift",
+          "Source/SwiftLintCore/Protocols/SwiftSyntaxCorrectableRule.swift",
+          "Source/SwiftLintCore/Visitors/ViolationsSyntaxVisitor.swift",
+          "Source/SwiftLintCoreMacros/SwiftSyntaxRule.swift",
+          "Tests/GeneratedTests/GeneratedTests_08.swift",
+          "Tests/TestHelpers/TestHelpers.swift"
+        ],
+        "trace": "Start with the rule's visitor collecting adjacent ImportDeclSyntax nodes and reporting inversions, then follow the rewriter's block sorting, configuration, disabled regions, trivia preservation, and correction count through shared visitor and macro machinery; close with examples and generated rule tests."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 4, "loc": 61065, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Platforms/", "assets/", "bazel/", "tools/"], "notes": "Count covers production frameworks, built-in rules, command, macros, and plugins, excluding tests and fixtures, platform packaging, assets, build tooling, generated test sources, documentation, and dependency metadata."},
-        "difficulty": {"score": 3, "signals": ["SwiftSyntax and SourceKit analysis", "source correction and location mapping", "configuration and concurrency interactions"], "reason": "Compiler tooling is specialized, but rule implementations share well-defined protocols and reusable visitor and configuration machinery."},
-        "complexity": {"score": 4, "signals": ["hundreds of rules and configurations", "core-framework-command-plugin-macro products", "cache, baseline, reporter, remote configuration, and build integrations"], "reason": "Many extensible subsystems and rules interact across analysis, correction, configuration, output, and delivery surfaces."},
-        "placement": "S4/D3/C4 averages to 3.67, which rounds to SDC 4."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "SwiftSyntax visitor and rewriter subclasses",
+            "macro-generated rule conformance",
+            "typed syntax and trivia transformations"
+          ],
+          "reason": "Advanced compiler-tooling and source-rewriting techniques recur across the rule lifecycle."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "collect, group, compare, report, and rewrite phases",
+            "adjacent, conditional-compilation, disabled-region, and trivia branches",
+            "violation and correction outcomes"
+          ],
+          "reason": "Several related rule states recur, but they remain bounded to one syntax transformation."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "built-in rule implementation",
+            "shared visitor and correction protocols",
+            "macro integration and generated test harness"
+          ],
+          "reason": "A few clear components connect one rule to reusable infrastructure and direct tests."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "sorting must respect configured grouping and case behavior",
+            "comments, trivia, conditional blocks, and disabled regions must survive correction",
+            "reported positions and correction counts must remain stable"
+          ],
+          "reason": "Source-preservation and diagnostic correctness constraints recur across detection and correction."
+        },
+        "placement": "The four scores 4/3/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Rule capabilities, correction modes, configuration state, source regions, syntax and SourceKit paths, cache keys, and concurrency boundaries use explicit types and protocols.",
-        "architecture": "Core defines rules and models; Framework handles files, configuration, linting and correction; BuiltInRules supplies rule families; the command, reporters, plugins, macros, and analyzer extensions provide delivery surfaces.",
-        "naming_and_idiom": "Rule, RuleRegistry, Linter, SwiftLintFile, StyleViolation, Correction, Configuration, Region, Reporter, baseline, and opt-in rule define the tool vocabulary.",
-        "tests": "Large generated and focused suites cover every rule and correction, configuration, baselines, caching, file graphs, SourceKit failures, reporters, commands, plugins, macros, integration cases, and regressions.",
-        "documentation": "The README, generated Rules reference, configuration examples, custom-rule guidance, baseline and analyzer docs, build integrations, changelog, and contributor guide are extensive.",
-        "traceability": "A rule violation can be followed from configured registry through syntax collection and Linter dispatch, region and command filtering, severity and baseline handling, reporter output or correction, and rule tests.",
-        "maintainability": "Protocol families, generated registries and docs, shared configurations, isolated rule tests, semantic versioning, and multiple integration suites contain a wide feature surface.",
-        "educational_value": "It is an advanced but approachable study of a language tool implemented in the language and tested rule by rule."
+        "source_quality": "SortedImportsRule.swift contains a focused visitor and rewriter, its examples and configuration define observable contracts, the core visitor and correctable-rule protocols plus macro expose integration mechanics, and generated tests and TestHelpers close the rule's violation and correction path.",
+        "architecture": "The audited architecture of the path beginning at `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` has these boundaries: built-in rule implementation, shared visitor and correction protocols, and macro integration and generated test harness.",
+        "naming_and_idiom": "`Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` and its supporting files use these characteristic Swift mechanisms: SwiftSyntax visitor and rewriter subclasses, macro-generated rule conformance, and typed syntax and trivia transformations.",
+        "tests": "`Tests/GeneratedTests/GeneratedTests_08.swift` runs the sorted-imports examples as violation and correction cases, while `Tests/TestHelpers/TestHelpers.swift` supplies the shared harness rather than an independent rule suite.",
+        "documentation": "`Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` and its selected supporting material document the contracts needed to understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration.",
+        "traceability": "Start with the rule's visitor collecting adjacent ImportDeclSyntax nodes and reporting inversions, then follow the rewriter's block sorting, configuration, disabled regions, trivia preservation, and correction count through shared visitor and macro machinery; close with examples and generated rule tests.",
+        "maintainability": "Changes to the path beginning at `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift` are constrained by these audited guarantees: sorting must respect configured grouping and case behavior, comments, trivia, conditional blocks, and disabled regions must survive correction, and reported positions and correction counts must remain stable.",
+        "educational_value": "Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration. Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers."
       },
-      "inspection": {"commit": "29d5c2b0484c9cf52d9745402160e59b7741b1db", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "Source/SwiftLintCore/Models/RuleRegistry.swift", "Source/SwiftLintFramework/Models/Linter.swift", "Tests/CoreTests/RuleTests.swift", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "29d5c2b0484c9cf52d9745402160e59b7741b1db",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift",
+          "Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRuleExamples.swift",
+          "Source/SwiftLintBuiltInRules/Rules/RuleConfigurations/SortedImportsConfiguration.swift",
+          "Source/SwiftLintCore/Protocols/SwiftSyntaxCorrectableRule.swift",
+          "Source/SwiftLintCore/Visitors/ViolationsSyntaxVisitor.swift",
+          "Source/SwiftLintCoreMacros/SwiftSyntaxRule.swift",
+          "Tests/GeneratedTests/GeneratedTests_08.swift",
+          "Tests/TestHelpers/TestHelpers.swift",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/realm/SwiftLint/blob/29d5c2b0484c9cf52d9745402160e59b7741b1db/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "signal-ios",
-      "repository": "signalapp/Signal-iOS",
-      "url": "https://github.com/signalapp/Signal-iOS",
+      "slug": "swift-nio",
+      "path_slug": "swiftnio-completes-transforms-combines-and-bridges-futures-while-preserving-event",
+      "repository": "apple/swift-nio",
+      "url": "https://github.com/apple/swift-nio",
       "primary_language": "Swift",
-      "language_evidence": "Application lifecycle, encrypted messaging, identity and key management, contacts, conversations, attachments, calls, groups, backups, storage, networking, notifications, UI, and extensions are principally Swift across Signal, SignalServiceKit, and SignalUI.",
-      "description": "The complete Signal private messenger for iPhone and iPad, including encrypted messages, calls, groups, media, backups, and platform integration.",
-      "real_world_evidence": "The repository builds the production Signal iOS application distributed to users for private communication.",
-      "why_study": "It combines a security-critical messaging domain with key and identity lifecycle, durable local state, queued delivery, attachments, groups, calls, backups, push notifications, complex UI, migrations, and platform extensions.",
-      "learn": ["Security-critical mobile architecture, encrypted messaging workflows, identity and key state, durable message queues, database transactions and migrations, attachments and backups, calling, groups, networking, push notifications, app lifecycle, extensions, concurrency, and privacy engineering."],
-      "prerequisites": ["Expert Swift and iOS, cryptographic protocol concepts, databases and migrations, networking and queues, concurrency, UIKit, media and calling, background execution, secure storage, threat modeling, performance, and very large-codebase navigation."],
-      "start_here": {"path": "SignalServiceKit/Messages/MessageSender.swift", "reason": "MessageSender connects persisted outgoing messages to recipient state, encryption, attachments, queues, network requests, retries, errors, and completion across the product."},
-      "sdc": {
+      "language_evidence": "Event loops, channels and pipelines, futures, byte buffers, sockets, selectors, bootstraps, HTTP/1, WebSockets, TLS abstractions, async sequences, and filesystem APIs are primarily Swift under Sources/.",
+      "description": "A cross-platform high-performance event-driven networking framework for building protocol servers and clients in Swift.",
+      "real_world_evidence": "The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.",
+      "why_study": "Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering. Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Sources/NIOCore/EventLoopFuture.swift`: deep generic future and promise composition, Sendable and concurrency-aware callback APIs, and async-await bridging with performance-sensitive specialization.",
+        "Trace these states and branches from `Sources/NIOCore/EventLoopFuture.swift` through its selected supporting files: pending and completed success or failure states, scheduled callback, cascade, aggregate, and cancellation behavior, and cross-thread submission and event-loop-affine execution.",
+        "Identify these architectural responsibilities in the path beginning at `Sources/NIOCore/EventLoopFuture.swift`: future and promise core, EventLoop execution contract, async compatibility policy, and large focused regression suite.",
+        "Study these change constraints for the path beginning at `Sources/NIOCore/EventLoopFuture.swift`: callbacks must execute on the owning event loop, completion must be exactly once with ordered propagation, and thread safety, cancellation, failure, and allocation costs must remain controlled."
+      ],
+      "prerequisites": [
+        "Strong working familiarity with Swift structs and classes, protocols, generics, closures, optionals, errors, asynchronous basics, and XCTest, plus experience tracing state, resources, or asynchronous control flow across many production files.",
+        "EventLoopFuture represents a result whose callbacks and transformations are confined to an EventLoop."
+      ],
+      "concepts_developed": [
+        "Deep generic future and promise composition.",
+        "Pending and completed success or failure states.",
+        "Callbacks must execute on the owning event loop."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "EventLoopFuture represents a result whose callbacks and transformations are confined to an EventLoop."
+        ],
+        "reason": "Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants."
+      },
+      "learning_path": {
+        "goal": "Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.",
+        "start_here": {
+          "path": "Sources/NIOCore/EventLoopFuture.swift",
+          "reason": "Begin with `Sources/NIOCore/EventLoopFuture.swift` because it exposes how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering."
+        },
+        "supporting_files": [
+          "Sources/NIOCore/EventLoop.swift",
+          "Tests/NIOPosixTests/EventLoopFutureTest.swift",
+          "docs/public-async-nio-apis.md"
+        ],
+        "trace": "Begin with EventLoopFuture and Promise completion, follow map, flatMap, cascade, and aggregate operations through event-loop scheduling and callback queues, then examine failure and async-await bridges; close with the focused future tests and the public async API compatibility guidance."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 497732, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Pods/", "ThirdParty/", "**/test/", "**/tests/", "Protos/", "*.xcassets", "*.strings", "*.json"], "notes": "Count covers first-party app, extensions, service kit, and UI implementation, excluding tests, CocoaPods, third-party code, generated protocol files, assets, translations, large data files, scripts, and project metadata."},
-        "difficulty": {"score": 5, "signals": ["cryptographic identity and message protocols", "durable asynchronous delivery and recovery", "privacy, platform, database, call, and backup invariants"], "reason": "Security and correctness depend on subtle interactions among untrusted networks, persistent state, cryptographic sessions, background execution, and user-visible lifecycle."},
-        "complexity": {"score": 5, "signals": ["full mobile product and extensions", "messaging-calling-storage-network-UI subsystems", "service, push, media, backup, and platform integration boundaries"], "reason": "Many runtime components and external systems coordinate long-lived encrypted state across devices, accounts, groups, and application processes."},
-        "placement": "S5/D5/C5 requires SDC 5."
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "deep generic future and promise composition",
+            "Sendable and concurrency-aware callback APIs",
+            "async-await bridging with performance-sensitive specialization"
+          ],
+          "reason": "Multiple expert Swift mechanisms recur in the core future implementation and public composition surface."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "pending and completed success or failure states",
+            "scheduled callback, cascade, aggregate, and cancellation behavior",
+            "cross-thread submission and event-loop-affine execution"
+          ],
+          "reason": "Many coupled asynchronous states and failure branches recur throughout normal future work."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "future and promise core",
+            "EventLoop execution contract",
+            "async compatibility policy",
+            "large focused regression suite"
+          ],
+          "reason": "Several major components participate, but the path remains bounded below the entire networking stack."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "callbacks must execute on the owning event loop",
+            "completion must be exactly once with ordered propagation",
+            "thread safety, cancellation, failure, and allocation costs must remain controlled"
+          ],
+          "reason": "Expert concurrency, ordering, safety, and performance guarantees recur throughout the representative path."
+        },
+        "placement": "The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Security and state transitions use explicit transaction, recipient, job, request, and error types, with comments concentrated around protocol, privacy, recovery, and migration invariants.",
-        "architecture": "The app and extensions build on SignalServiceKit for domain, storage, network, jobs, crypto bindings, backups, and notifications, while SignalUI and feature modules compose the iOS experience.",
-        "naming_and_idiom": "TSMessage, SignalRecipient, MessageSender, job queue, thread, interaction, attachment, identity key, session, group, backup, and AppLaunch define the product model.",
-        "tests": "Extensive unit and integration suites cover messaging, recipients, storage, migrations, networking, registration, groups, backups, attachments, calls, notifications, cryptographic integration, UI models, and regressions.",
-        "documentation": "Build and maintenance guides, security policy, inline protocol commentary, architecture-oriented names, and linked Signal specifications provide essential context.",
-        "traceability": "An outgoing message can be followed from UI and persisted interaction through job enqueue, attachment preparation, recipient and session lookup, encryption, network submission, retry or failure state, delivery updates, and tests.",
-        "maintainability": "Transaction-scoped services, dependency shims, durable job records, migrations, feature modules, generated protocol boundaries, and broad regression suites support continuous security-sensitive evolution.",
-        "educational_value": "It is an expert study of a real privacy product where architecture must preserve trust across every layer."
+        "source_quality": "EventLoopFuture.swift and EventLoop.swift carry extensive contracts for affinity, completion, callback ordering, and thread safety; EventLoopFutureTest covers transformations, combination, cascading, failure, scheduling, and edge cases, while the public async API guide explains compatibility boundaries.",
+        "architecture": "The audited architecture of the path beginning at `Sources/NIOCore/EventLoopFuture.swift` has these boundaries: future and promise core, EventLoop execution contract, async compatibility policy, and large focused regression suite.",
+        "naming_and_idiom": "`Sources/NIOCore/EventLoopFuture.swift` and its supporting files use these characteristic Swift mechanisms: deep generic future and promise composition, Sendable and concurrency-aware callback APIs, and async-await bridging with performance-sensitive specialization.",
+        "tests": "Direct tests in `Tests/NIOPosixTests/EventLoopFutureTest.swift` cover these states and branches in the selected path: pending and completed success or failure states, scheduled callback, cascade, aggregate, and cancellation behavior, and cross-thread submission and event-loop-affine execution.",
+        "documentation": "`Sources/NIOCore/EventLoopFuture.swift` and its selected supporting material document the contracts needed to understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering.",
+        "traceability": "Begin with EventLoopFuture and Promise completion, follow map, flatMap, cascade, and aggregate operations through event-loop scheduling and callback queues, then examine failure and async-await bridges; close with the focused future tests and the public async API compatibility guidance.",
+        "maintainability": "Changes to the path beginning at `Sources/NIOCore/EventLoopFuture.swift` are constrained by these audited guarantees: callbacks must execute on the owning event loop, completion must be exactly once with ordered propagation, and thread safety, cancellation, failure, and allocation costs must remain controlled.",
+        "educational_value": "Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering. Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants."
       },
-      "inspection": {"commit": "eec0a2f587b49082efdb5a4dc1e2a491fd52144f", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Podfile", "Signal/AppLaunch/AppDelegate.swift", "SignalServiceKit/Messages/MessageSender.swift", "Signal/test/AppDelegateTest.swift", "LICENSE"]},
-      "license": {"spdx": "AGPL-3.0-only", "url": "https://github.com/signalapp/Signal-iOS/blob/eec0a2f587b49082efdb5a4dc1e2a491fd52144f/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "a931f2c1de8dd49381ce3bf2e279d033f68d8865",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Sources/NIOCore/EventLoopFuture.swift",
+          "Sources/NIOCore/EventLoop.swift",
+          "Tests/NIOPosixTests/EventLoopFutureTest.swift",
+          "docs/public-async-nio-apis.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/apple/swift-nio/blob/a931f2c1de8dd49381ce3bf2e279d033f68d8865/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "firefox-ios",
-      "repository": "mozilla-mobile/firefox-ios",
-      "url": "https://github.com/mozilla-mobile/firefox-ios",
+      "slug": "swift-syntax",
+      "path_slug": "swiftsyntax-discovers-attached-and-freestanding-macro-uses-dispatches-them-by",
+      "repository": "swiftlang/swift-syntax",
+      "url": "https://github.com/swiftlang/swift-syntax",
       "primary_language": "Swift",
-      "language_evidence": "Browser lifecycle, tabs and windows, WebKit integration, navigation, accounts and sync, history, bookmarks, passwords, downloads, privacy, search, settings, telemetry, extensions, and shared component packages are primarily Swift.",
-      "description": "The Firefox and Focus browser products for iOS, including tab management, synchronization, privacy features, browser UI, and reusable component packages.",
-      "real_world_evidence": "The repository builds Mozilla's production Firefox and Focus applications distributed through Apple's App Store.",
-      "why_study": "It exposes a large browser product within iOS constraints: WebKit lifecycle, multiwindow tab state, accounts and sync, history and passwords, downloads, privacy, experiments, telemetry, reusable packages, and two related apps.",
-      "learn": ["Large iOS application architecture, WebKit embedding, tab and window state, coordinators and stores, browser navigation, accounts and sync, data persistence, privacy and content blocking, downloads, feature flags and experiments, telemetry, accessibility, and product modularization."],
-      "prerequisites": ["Expert Swift and iOS, UIKit and WebKit, structured concurrency, state management, databases, networking, browser concepts, accounts and sync, privacy, accessibility, telemetry, testing, and very large monorepo navigation."],
-      "start_here": {"path": "firefox-ios/Client/TabManagement/TabManagerImplementation.swift", "reason": "TabManagerImplementation connects windows, tabs, WebKit views, private state, persistence, restoration, downloads, delegates, telemetry, and selection behavior at the browser's center."},
-      "sdc": {
+      "language_evidence": "The selected macro-expansion system, syntax rewriter, role dispatch, expansion context, diagnostics, formatting, and direct behavioral tests are handwritten first-party Swift under Sources/SwiftSyntaxMacroExpansion and Tests/SwiftSyntaxMacroExpansionTest.",
+      "description": "Swift's source-accurate syntax-tree libraries, parser tooling, refactoring support, and macro-expansion infrastructure.",
+      "real_world_evidence": "The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.",
+      "why_study": "Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics. A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.",
+      "learn": [
+        "Study these transferable Swift mechanisms in `Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`: generic `some` and existential `any` protocol APIs, runtime metatype dispatch across macro roles, and SyntaxProtocol rewriting and typed-node conversion.",
+        "Trace these states and branches through the selected implementation: registered macro lookup, attached and freestanding role selection, detached input and lexical context creation, recursive rewrite and generated-node insertion, formatting and trivia restoration, diagnostics, and recursive-expansion rejection.",
+        "Identify these architectural responsibilities in the path: public expansion facade, role-specific expansion helpers, tree rewriter and application state, macro context and diagnostics, and focused expression, attached-role, lexical-context, recursive, and failure tests.",
+        "Study these change constraints: generated Swift must remain syntactically valid and source-accurate, each role must attach output at the correct structural location, context and diagnostics must point back to original source, recursion must terminate, and package behavior must remain aligned with Swift toolchain releases."
+      ],
+      "prerequisites": [
+        "Be fluent with Swift protocols, generics, metatypes, existentials, enums with associated values, throwing APIs, builders, value semantics, and visitor or rewriter patterns.",
+        "A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted."
+      ],
+      "concepts_developed": [
+        "Interacting generic, opaque, and existential protocol APIs.",
+        "Attached and freestanding role-specific insertion lifecycles.",
+        "Source-accurate syntax, trivia, indentation, and diagnostic locations."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A Swift macro receives a typed syntax node at compile time and returns new syntax; freestanding and attached roles determine where generated declarations, expressions, members, accessors, peers, extensions, or bodies may be inserted."
+        ],
+        "reason": "A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests."
+      },
+      "learning_path": {
+        "goal": "Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics.",
+        "start_here": {
+          "path": "Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift",
+          "reason": "Begin with the public SyntaxProtocol.expand facade and MacroApplication rewriter because they expose registration, discovery, role dispatch, recursive traversal, insertion, and failure handling in one path."
+        },
+        "supporting_files": [
+          "Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift",
+          "Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift",
+          "Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift",
+          "Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift"
+        ],
+        "trace": "Start at SyntaxProtocol.expand, build MacroSystem and MacroApplication, follow the rewriter as it resolves a macro specification and role, creates a context, detaches and folds the input node, calls the role protocol's expansion, formats and reindents generated syntax, inserts it at the correct tree position, recursively expands generated uses, and records diagnostics on failure; close with expression, multi-role, lexical-context, interpolation-error, and recursive-expansion tests."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 255137, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["**/*test*", "test-fixtures/", "MozillaRustComponents/", "archived-scripts/", "docs/", "*.xcassets", "*.strings", "*.json", "Mocks/"], "notes": "Count covers first-party Firefox, Focus, BrowserKit, and shared Swift packages, excluding tests and mocks, Rust component bindings, fixtures, archived scripts, assets, translations, large data files, documentation, generated content, and dependency metadata."},
-        "difficulty": {"score": 4, "signals": ["WebKit and iOS lifecycle coordination", "concurrent tab, persistence, download, account, and sync state", "privacy and browser correctness constraints"], "reason": "Many platform and product invariants recur, though core browser engine execution is delegated to WebKit and Rust components."},
-        "complexity": {"score": 5, "signals": ["two full browser products", "large reusable package and feature architecture", "WebKit, storage, sync, accounts, experiments, telemetry, notification, and platform boundaries"], "reason": "The monorepo coordinates many product surfaces and external systems across windows, extensions, application modes, and long-lived user data."},
-        "placement": "S5/D4/C5 has two dimensions at 5 and therefore requires SDC 5."
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "interacting generic, opaque, and existential protocol APIs",
+            "runtime metatype casting across many macro-role protocols",
+            "typed syntax builders, rewriters, SPI imports, and conditional compiler interfaces"
+          ],
+          "reason": "Several advanced Swift type-system and metaprogramming mechanisms interact pervasively throughout ordinary expansion behavior."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "attached and freestanding role-specific insertion lifecycles",
+            "recursive discovery and expansion of generated macro uses",
+            "context, lexical scope, diagnostics, trivia, and failure propagation"
+          ],
+          "reason": "Multiple transformation state machines and source-context concerns interact nonlocally, making expert behavioral reasoning unavoidable."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public expansion API and macro registry",
+            "syntax rewriter and role-specific expansion helpers",
+            "context, diagnostics, formatting, and broad focused test suites"
+          ],
+          "reason": "Many significant components participate, while parser generation, compiler plugin transport, and the full SwiftSyntax tree implementation remain outside the selected path."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "source-accurate syntax, trivia, indentation, and diagnostic locations",
+            "role legality, recursive termination, and correct structural insertion",
+            "Swift toolchain, SPI, concurrency, formatting, and compatibility guarantees"
+          ],
+          "reason": "A local expansion change can violate syntax validity, source mapping, diagnostics, termination, role semantics, or toolchain compatibility elsewhere in the path."
+        },
+        "placement": "The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Window and tab ownership, main-actor boundaries, persistence, feature flags, privacy state, navigation decisions, telemetry, and lifecycle events use explicit protocols and domain types.",
-        "architecture": "Application and scene lifecycles compose coordinators, store and middleware features, tab and window managers, BrowserKit packages, profile services, WebKit delegates, sync components, and reusable UI systems for Firefox and Focus.",
-        "naming_and_idiom": "Tab, TabManager, WindowManager, BrowserCoordinator, Profile, BrowserViewController, feature flag, middleware, private mode, and restoration expose the browser domain.",
-        "tests": "Large client, component, snapshot, UI, integration, middleware, tab, coordinator, account, sync, privacy, download, telemetry, and regression suites cover both products and shared packages.",
-        "documentation": "The README, contributor setup, architecture decision records, package docs, testing guides, accessibility practices, security policy, and inline rationale support ownership.",
-        "traceability": "Opening and selecting a tab can be followed from browser actions through coordinator and store or manager state, WebKit construction and navigation, persistence and restoration, UI updates, telemetry, and tab-manager tests.",
-        "maintainability": "Protocol-driven services, coordinators, state stores and middleware, feature packages, window scoping, dependency containers, ADRs, and extensive tests contain product breadth.",
-        "educational_value": "It is an expert source for studying how a long-lived consumer app balances platform constraints, modularity, privacy, and rapid product change."
+        "source_quality": "The selected handwritten implementation partitions registration, role dispatch, rewriting, context, formatting, and diagnostics despite the inherent breadth; focused tests exercise every macro role, recursion, malformed expansions, context, indentation, and source-location behavior.",
+        "architecture": "MacroSystem.swift exposes the public facade and application rewriter, MacroExpansion.swift owns role-specific calls and diagnostics, BasicMacroExpansionContext owns lexical and location state, and dedicated tests isolate each transformation contract.",
+        "naming_and_idiom": "MacroRole, MacroSpec, MacroApplication, expandAttachedMacro, expandFreestandingMacro, lexicalContext, detach, rewrite, and formattedExpansion communicate the transformation model while demonstrating expert Swift protocol and syntax-builder idioms.",
+        "tests": "Expression, multi-role, lexical-context, and interpolation-error suites assert successful insertions, nested and recursive behavior, role combinations, contextual names, indentation and trivia, diagnostics, malformed output, and failure containment.",
+        "documentation": "README.md and public API comments orient syntax trees and macro expansion; the Swift language's macro documentation supplies the short role model needed to read the implementation without requiring compiler theory.",
+        "traceability": "A learner can follow SyntaxProtocol.expand into MacroSystem, MacroApplication, role-specific helpers, context generation, formatting, insertion, recursion, and direct expected-source and diagnostic assertions.",
+        "maintainability": "Responsibilities are localized, error cases become explicit diagnostics, recursion is guarded, compatibility imports are isolated, and comprehensive role-specific tests protect the source-accurate transformation contract.",
+        "educational_value": "The bounded handwritten subsystem is a rare production example of Swift metaprogramming infrastructure where advanced type machinery, transformation state, source fidelity, and testing all remain observable."
       },
-      "inspection": {"commit": "b0799c34c313be9e832b749794f91277a9ce57eb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Package.swift", "firefox-ios/Client/Application/AppDelegate.swift", "firefox-ios/Client/TabManagement/TabManagerImplementation.swift", "firefox-ios/firefox-ios-tests/Tests/ClientTests/TabManagement/TabManagerTests.swift", "LICENSE"]},
-      "license": {"spdx": "MPL-2.0", "url": "https://github.com/mozilla-mobile/firefox-ios/blob/b0799c34c313be9e832b749794f91277a9ce57eb/LICENSE"},
-      "github": {"primary_language": "Swift", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "dfd70da7d018493ed39721e7312f707d3f59ed2c",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "Codex cold verification pass"
+        ],
+        "files": [
+          "README.md",
+          "Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift",
+          "Sources/SwiftSyntaxMacroExpansion/MacroExpansion.swift",
+          "Sources/SwiftSyntaxMacroExpansion/BasicMacroExpansionContext.swift",
+          "Sources/SwiftSyntaxMacroExpansion/MacroSpec.swift",
+          "Sources/SwiftSyntaxMacroExpansion/IndentationUtils.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/ExpressionMacroTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/MultiRoleMacroTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/LexicalContextTests.swift",
+          "Tests/SwiftSyntaxMacroExpansionTest/StringInterpolationErrorTests.swift",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/swiftlang/swift-syntax/blob/dfd70da7d018493ed39721e7312f707d3f59ed2c/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Swift",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     }
   ]
 }

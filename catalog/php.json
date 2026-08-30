@@ -1,336 +1,862 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "language_slug": "php",
   "repositories": [
     {
+      "slug": "webmozart-assert-not-null",
+      "path_slug": "not-null-guard",
+      "repository": "webmozarts/assert",
+      "url": "https://github.com/webmozarts/assert",
+      "primary_language": "PHP",
+      "language_evidence": "The public assertion API, message resolution, exception boundary, generated mixins, and direct test suite are first-party PHP.",
+      "description": "A focused guard clause that rejects only null, returns every accepted value unchanged, and exposes the narrowed contract to static analysis.",
+      "real_world_evidence": "Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.",
+      "why_study": "The path is a small complete production guard clause: it distinguishes null from other falsy values, avoids evaluating a lazy message on success, returns the accepted value, and aligns that runtime contract with PHPDoc and Psalm annotations.",
+      "learn": [
+        "Trace a non-null value through the strict null comparison to the unchanged return value, then trace null through lazy message resolution to `InvalidArgumentException`.",
+        "Compare false, zero, and null in the shared data provider to see why a null guard must not use a general truthiness check.",
+        "Relate the runtime return contract to `@template T`, `@param T|null`, `@return T`, and `@psalm-assert !null` without treating those annotations as prerequisites."
+      ],
+      "prerequisites": [
+        "Basic PHP functions and static methods, strict comparison, `null`, exceptions, union types, callables, and reading a PHPUnit data provider."
+      ],
+      "concepts_developed": [
+        "A precise null guard that preserves valid falsy values and returns the accepted input.",
+        "Lazy diagnostic construction that runs only on the failure branch.",
+        "Agreement between a runtime guard and static-analysis narrowing annotations."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "The behavior is a general-purpose precondition and type-narrowing boundary with no specialist domain knowledge."
+      },
+      "learning_path": {
+        "goal": "Understand how `Assert::notNull()` rejects exactly null, preserves other falsy values, resolves diagnostics lazily, and communicates the narrowed return type.",
+        "start_here": {
+          "path": "src/Assert.php",
+          "reason": "Read the `notNull()` method and the nearby `resolveMessage()` and `reportInvalidArgument()` helpers; together they contain the complete production behavior."
+        },
+        "supporting_files": [
+          "tests/AssertTest.php",
+          "README.md"
+        ],
+        "trace": "Start at `notNull()` with a mixed value; follow the strict `null === $value` branch to lazy message resolution and the exception helper, or follow the success branch to the unchanged return value. Close the trace in the shared tests for false, zero, null, return identity, custom messages, and one-time lazy-message evaluation, then confirm the public contract in the README."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "one mixed-value static guard with a string-or-callable message",
+            "one PHPDoc template and Psalm assertion contract"
+          ],
+          "reason": "The runtime body uses basic PHP; a small, locally stated static-analysis convention adds one common professional technique without recurring advanced machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "one synchronous success-or-failure branch",
+            "no mutable state or lifecycle",
+            "lazy message evaluation only on failure"
+          ],
+          "reason": "The entire runtime trace is local, synchronous, and directly observable."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public method and two tiny shared helpers",
+            "one direct parameterized test suite"
+          ],
+          "reason": "One focused source unit and its direct tests contain the complete lesson."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "reject null without rejecting false or zero",
+            "return accepted values unchanged",
+            "evaluate a callable message only on failure"
+          ],
+          "reason": "These are small local correctness requirements with direct examples and no interacting compatibility system."
+        },
+        "placement": "The four scores 2/1/1/1 sum to 5; their arithmetic mean is 1.25 and rounds half-up to Level 1. No score floor applies."
+      },
+      "quality": {
+        "source_quality": "The guard and its two shared helpers are short, explicit, and free of hidden state; each branch has one responsibility.",
+        "architecture": "The selected behavior stays inside the public assertion class and closes in one shared behavior test suite.",
+        "naming_and_idiom": "`notNull`, `resolveMessage`, and `reportInvalidArgument` state the guard, diagnostic, and failure responsibilities directly while using strict comparison and conventional annotations.",
+        "tests": "The parameterized tests cover false, zero, and null, assert return identity or failure, verify custom messages, and count lazy-message callback execution on both branches.",
+        "documentation": "The README describes the library purpose, the `notNull` public contract, exception behavior, lazy messages, and static-analysis support.",
+        "traceability": "Every claim follows from the `notNull()` branch into one of two adjacent helpers and closes in named rows and shared assertions in `AssertTest.php`.",
+        "maintainability": "The method shares stable message and exception helpers but otherwise has no coupling, mutable state, or generated-code dependency.",
+        "educational_value": "The path turns a familiar guard clause into a complete lesson about precise falsy handling, lazy diagnostics, returned-value contracts, tests, and static-analysis narrowing."
+      },
+      "inspection": {
+        "commit": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/Assert.php",
+          "tests/AssertTest.php",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
       "slug": "doctrine-lexer",
+      "path_slug": "doctrine-s-reusable-lexer-scans-an-input-string-into-typed",
       "repository": "doctrine/lexer",
       "url": "https://github.com/doctrine/lexer",
       "primary_language": "PHP",
       "language_evidence": "The generic lexer state, token value object, and extension hooks under src are implemented in strict PHP.",
       "description": "A small reusable base for tokenizing strings for top-down recursive-descent parsers and domain-specific languages.",
       "real_world_evidence": "Doctrine publishes the package as lexer infrastructure used by its annotation, query, and persistence tooling.",
-      "why_study": "A tiny abstract class shows how regex tokenization, lookahead, peeking, position management, generic annotations, and extension hooks fit together.",
-      "learn": ["Lexing, regex token capture, lookahead, token streams, resettable cursors, generics in static analysis, and template-method APIs."],
-      "prerequisites": ["PHP classes, regular expressions, arrays, enums, exceptions, and basic parser terminology."],
-      "start_here": {"path": "src/AbstractLexer.php", "reason": "Almost the entire runtime lives here: input scanning, token creation, lookahead, movement, matching, and subclass hooks."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 155, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "export-only package metadata"], "notes": "Count covers the two production PHP files under src, excluding tests, documentation, and package metadata."},
-        "difficulty": {"score": 2, "signals": ["regex tokenization", "lookahead cursor state"], "reason": "Lexer concepts and cursor invariants need modest care, but the full algorithm is short and explicit."},
-        "complexity": {"score": 1, "signals": ["one abstract component", "two subclass hooks"], "reason": "One class scans and navigates tokens while one value object carries results; no external systems are involved."},
-        "placement": "A complete and reusable lexer foundation in 155 lines is a strong SDC 1 reading project."
+      "why_study": "The AbstractLexer path shows how a reusable PHP template method turns one input string into typed tokens while preserving cursor, lookahead, peeking, offset, Unicode, and invalid-input contracts.",
+      "learn": [
+        "Use `src/AbstractLexer.php` to study the following transferable techniques and behaviors: Regular-expression tokenization, captured byte offsets, abstract pattern and type hooks, generic token values, cursor movement, lookahead, peeking, reset, skipping, Unicode input, and enum token types."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests."
+      ],
+      "concepts_developed": [
+        "PHPDoc templates for token value and token type.",
+        "Localized token-array and cursor state.",
+        "Regex capture and byte-offset accuracy."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A lexer splits an input string into typed tokens and exposes a cursor with lookahead for a parser to consume."
+        ],
+        "reason": "The lexer vocabulary and regular-expression model fit in a short prerequisite paragraph; the selected path primarily teaches generic template APIs, token construction, mutable cursor state, validation, and precise source offsets."
+      },
+      "learning_path": {
+        "goal": "Understand how Doctrine's reusable lexer scans an input string into typed tokens and maintains lookahead, peeking, and cursor invariants for subclasses.",
+        "start_here": {
+          "path": "src/AbstractLexer.php",
+          "reason": "src/AbstractLexer.php contains setInput, scan, the subclass hooks, and every cursor operation, so it exposes the full reusable lexer contract in one implementation."
+        },
+        "supporting_files": [
+          "src/Token.php",
+          "tests/AbstractLexerTest.php"
+        ],
+        "trace": "Follow setInput through the composed regular expression, preg_split capture offsets, scan, and the subclass getType hook into Token values; then follow moveNext, peek, glimpse, skipUntil, reset, and token checks while correlating movement, position, Unicode, enum-type, locale, and invalid-input tests in AbstractLexerTest."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "PHPDoc templates for token value and token type",
+            "abstract pattern and token-recognition hooks",
+            "enum, integer, and string token-type modeling"
+          ],
+          "reason": "Generic type relationships and a typed template-method API materially shape the extension contract, satisfying substantial abstraction without advanced runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "localized token-array and cursor state",
+            "lookahead, peek, and reset branches",
+            "invalid-input recognition"
+          ],
+          "reason": "Meaningful mutable state and branches require care but remain synchronous and localized in one lexer."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one abstract lexer component",
+            "one token value object"
+          ],
+          "reason": "The complete behavior stays in one focused unit with two narrow subclass hooks."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "regex capture and byte-offset accuracy",
+            "stable cursor semantics",
+            "Unicode, locale, and invalid-input safeguards"
+          ],
+          "reason": "Input validation, offsets, explicit errors, and a small stable API impose routine production safeguards rather than several interacting guarantees."
+        },
+        "placement": "The four scores 3/2/1/2 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "State is private, movement operations are explicit, generics document token types, and subclasses override only recognition and patterns.",
-        "architecture": "AbstractLexer owns scanning and navigation while Token represents the immutable output of recognition.",
-        "naming_and_idiom": "lookahead, token, peek, moveNext, isNextToken, getCatchablePatterns, and getType match parser vocabulary.",
-        "tests": "Tests exercise scanning, movement, peeking, resets, positions, enum token types, invalid input, and token equality.",
-        "documentation": "README and API comments explain extension, token types, cursor behavior, and package compatibility.",
-        "traceability": "Input can be followed from setInput through regex splitting and getType into the token array and navigation methods.",
-        "maintainability": "A two-file surface and protected template hooks sharply constrain extension and change impact.",
-        "educational_value": "It teaches a real parser primitive without framework setup or generated machinery."
+        "source_quality": "The composed pattern, preg_split captures, token conversion, cursor state, and invalid-input branch are direct and compact.",
+        "architecture": "AbstractLexer owns scanning and navigation, Token holds immutable value, type, and position data, and two narrow subclass hooks supply grammar-specific behavior.",
+        "naming_and_idiom": "setInput, scan, getCatchablePatterns, getNonCatchablePatterns, getType, moveNext, lookahead, peek, glimpse, and reset describe the lexer contract.",
+        "tests": "AbstractLexerTest covers movement, peeking, skipping, resets, positions, enum types, invalid input, Unicode, and locale-sensitive cases.",
+        "documentation": "Class and method documentation explains the generic template parameters, subclass hooks, token positions, and cursor operations used by the selected path.",
+        "traceability": "An input can be followed from setInput through the composed regular expression and captured offsets into Token objects, then through each navigation method and its focused assertions.",
+        "maintainability": "One scanning component, one value object, stable extension hooks, and boundary-focused tests keep grammar reuse separate from cursor policy.",
+        "educational_value": "The path demonstrates a small but complete reusable lexer whose abstraction, state, Unicode, and error obligations remain visible."
       },
-      "inspection": {"commit": "e96fe45e92a54233726014a7cc7340abf29bb14c", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/AbstractLexer.php", "src/Token.php", "tests/AbstractLexerTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "e96fe45e92a54233726014a7cc7340abf29bb14c",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/AbstractLexer.php",
+          "src/Token.php",
+          "tests/AbstractLexerTest.php",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/doctrine/lexer/blob/e96fe45e92a54233726014a7cc7340abf29bb14c/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "webmozart-assert",
-      "repository": "webmozarts/assert",
-      "url": "https://github.com/webmozarts/assert",
+      "slug": "php-option",
+      "path_slug": "php-option-turns-eager-values-callables-and-existing-option-objects",
+      "repository": "schmittjoh/php-option",
+      "url": "https://github.com/schmittjoh/php-option",
       "primary_language": "PHP",
-      "language_evidence": "The assertion API, generated mixin variants, static-analysis plugin, and exception type under src are PHP.",
-      "description": "A defensive-programming library providing typed assertions for method inputs, outputs, values, collections, files, classes, and objects.",
-      "real_world_evidence": "The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.",
-      "why_study": "Its repetitive but disciplined API shows precise type narrowing, useful error construction, callable messages, compound assertions, and exhaustive edge testing.",
-      "learn": ["Guard clauses, type refinement, static-analysis annotations, reusable error messages, collection validation, reflection checks, and data-driven testing."],
-      "prerequisites": ["PHP types and exceptions, iterables, callables, reflection basics, and Psalm/PHPStan assertion annotations."],
-      "start_here": {"path": "src/Assert.php", "reason": "The primary class contains the base assertions, shared message helpers, type formatting, and extension seam from which variants are derived."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 2, "loc": 3671, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests"], "notes": "Count covers production PHP under src, including generated assertion variants used by the shipped package, excluding tests and project metadata."},
-        "difficulty": {"score": 1, "signals": ["direct predicate checks", "static-analysis annotations"], "reason": "Each method is a straightforward predicate and exception, with annotations adding precision rather than runtime indirection."},
-        "complexity": {"score": 1, "signals": ["single assertion component", "no runtime integration"], "reason": "Nearly every behavior is local to one static API and shared formatting helpers."},
-        "placement": "S2 length is primarily a broad, repetitive contract; direct code and one-component architecture yield SDC 1."
+      "language_evidence": "The Option abstraction, eager Some and None implementations, lazy wrapper, and focused tests under src and tests are implemented in PHP.",
+      "description": "An Option type for representing present and absent values with eager, lazy, mapping, filtering, folding, and fallback operations.",
+      "real_world_evidence": "The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.",
+      "why_study": "The factory-to-lazy-resolution path shows how a compact PHP API normalizes existing values, callables, and Option instances while preserving a strict absence sentinel, identity, deferred work, successful-result memoization, and explicit failure behavior.",
+      "learn": [
+        "Use `src/PhpOption/Option.php` to study the following transferable techniques and behaviors: Abstract option contracts, PHPDoc covariance and templates, strict sentinel comparison, eager and lazy factory methods, callable normalization, identity preservation, deferred delegation, successful-result memoization, and invalid-callback or invalid-result errors."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests."
+      ],
+      "concepts_developed": [
+        "Abstract class with covariant PHPDoc templates.",
+        "Strict configurable absence sentinel.",
+        "Strict sentinel identity."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An Option represents either a present value as Some or absence as None, avoiding a raw sentinel value in the rest of a program."
+        ],
+        "reason": "The presence-versus-absence model needs only a short primer; the path primarily teaches transferable factory design, higher-order functions, strict comparison, lazy evaluation, delegation, memoization, and error contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how php-option turns eager values, callables, and existing Option objects into a consistent eager or lazy Option while preserving strict absence and resolution behavior.",
+        "start_here": {
+          "path": "src/PhpOption/Option.php",
+          "reason": "Option.php defines fromValue, fromReturn, and ensure alongside the abstract contract, so it exposes every selected normalization decision before the lazy wrapper delegates operations."
+        },
+        "supporting_files": [
+          "src/PhpOption/LazyOption.php",
+          "src/PhpOption/Some.php",
+          "src/PhpOption/None.php",
+          "tests/PhpOption/Tests/OptionTest.php",
+          "tests/PhpOption/Tests/LazyOptionTest.php"
+        ],
+        "trace": "Follow Option.fromValue as strict equality chooses None or Some, then compare fromReturn and ensure as they capture callables or preserve an existing Option; continue into LazyOption.option as it validates, resolves, stores a successful Option, and delegates reads and transforms, while correlating sentinel, callable, identity, fallback, delegation, and invalid-result cases in OptionTest and LazyOptionTest."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "abstract class with covariant PHPDoc templates",
+            "static factories and captured closures",
+            "final lazy delegating implementation"
+          ],
+          "reason": "Conventional inheritance, callbacks, closure capture, and documented generic relationships materially shape the API without advanced runtime language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "strict configurable absence sentinel",
+            "eager-versus-deferred resolution branches",
+            "successful memoization and explicit failure paths"
+          ],
+          "reason": "Meaningful branching and lazy state require care but remain synchronous and localized in two small classes."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "factory and abstract Option boundary",
+            "Some, None, and LazyOption implementations",
+            "focused factory and lazy-behavior tests"
+          ],
+          "reason": "A few cohesive types contain the complete normalization and resolution behavior."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "strict sentinel identity",
+            "existing Option identity preservation",
+            "deferred resolution, successful caching, and callback-result validation"
+          ],
+          "reason": "Several API guarantees interact across eager and lazy construction, including strict absence semantics, object identity, deferred work, reuse of a successful result, and explicit invalid-input failures."
+        },
+        "placement": "The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Assertions return narrowed values, centralize message formatting, accept lazy messages, and consistently raise one package exception.",
-        "architecture": "One base assertion class, one generated variant trait, a small static-analysis plugin, and an exception form the package.",
-        "naming_and_idiom": "stringNotEmpty, positiveInteger, isInstanceOf, allString, and nullOrString make contracts readable at call sites.",
-        "tests": "Large data-driven tests cover success, failure, custom messages, variant parity, edge values, resources, reflection, and static analysis.",
-        "documentation": "The README documents installation, generated variants, extending the class, and every assertion in a searchable reference.",
-        "traceability": "A guard call stays in one method before reaching shared message resolution and reportInvalidArgument.",
-        "maintainability": "Generated variants remove manual drift while project-code tests enforce synchronization and public API constraints.",
-        "educational_value": "It shows how rigor and developer ergonomics matter even in deliberately simple validation code."
+        "source_quality": "The three factory branches, lazy state, delegation, validation, and successful-result assignment are compact and explicit.",
+        "architecture": "Option owns normalization and the abstract contract, Some and None model the two eager cases, and LazyOption isolates deferred resolution before delegating to a resolved Option.",
+        "naming_and_idiom": "fromValue, fromReturn, ensure, Some, None, LazyOption, isDefined, isEmpty, getOrElse, map, and flatMap state the presence and transformation vocabulary directly.",
+        "tests": "OptionTest covers default and custom sentinels, eager factories, lazy return conversion, alternatives, and lifting; LazyOptionTest covers construction, arguments, repeated delegated reads, None behavior, invalid callbacks, invalid results, and delegated operations. The selected tests do not directly count callback invocations, so no exact-once execution claim is made.",
+        "documentation": "Class and method documentation explains strict sentinel behavior, factory normalization, callable expectations, laziness, and the Option operations used by the selected path.",
+        "traceability": "A value or callable can be followed from one of three factories into Some, None, or LazyOption, through successful resolution or an explicit error, and into focused factory and delegation assertions.",
+        "maintainability": "Small implementations, one lazy-resolution seam, strict comparisons, stable abstract operations, and focused tests keep changes locally reviewable.",
+        "educational_value": "The path demonstrates how a production PHP library replaces raw absence sentinels with a typed, composable, and optionally lazy API without hiding its control flow."
       },
-      "inspection": {"commit": "2ccb7c2e821038c03a3e6e1700c570c158c55f70", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Assert.php", "src/Mixin.php", "tests/AssertTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "67b192b6a42ec03944b972d6e633ddec78ad2c6d",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/PhpOption/Option.php",
+          "src/PhpOption/LazyOption.php",
+          "src/PhpOption/Some.php",
+          "src/PhpOption/None.php",
+          "tests/PhpOption/Tests/OptionTest.php",
+          "tests/PhpOption/Tests/LazyOptionTest.php",
+          "README.md",
+          "composer.json",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/schmittjoh/php-option/blob/67b192b6a42ec03944b972d6e633ddec78ad2c6d/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "fastroute",
+      "path_slug": "fastroute-turns-a-route-declaration-into-compiled-static-or-regular",
       "repository": "nikic/FastRoute",
       "url": "https://github.com/nikic/FastRoute",
       "primary_language": "PHP",
       "language_evidence": "Route parsing, regex data generation, dispatch strategies, caching, and URI generation under src are PHP.",
       "description": "A fast HTTP request router that compiles static and variable routes into compact dispatch data and matched parameters.",
       "real_world_evidence": "FastRoute is a published production routing library used by PHP web frameworks and applications.",
-      "why_study": "It makes route compilation tangible: readable route syntax becomes chunked regular expressions, marker strategies, dispatch results, and reverse URI generation.",
-      "learn": ["Route parsing, regular-expression compilation, dispatch tables, capture-group strategies, conflict detection, caching, and immutable results."],
-      "prerequisites": ["Regular expressions, HTTP routing, PHP interfaces and arrays, exceptions, and basic parsing."],
-      "start_here": {"path": "src/RouteParser/Std.php", "reason": "The parser turns optional segments, placeholders, and custom patterns into route alternatives consumed by data generators."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 1, "loc": 1243, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks"], "notes": "Calibration count covers production PHP under src, excluding tests, benchmarks, documentation, and packaging files."},
-        "difficulty": {"score": 3, "signals": ["regex compilation", "capture-group accounting", "route ambiguity"], "reason": "Correct placeholder parsing and several optimized dispatch encodings require sustained regex and representation reasoning."},
-        "complexity": {"score": 2, "signals": ["parser/generator/dispatcher stages", "several interchangeable strategies"], "reason": "The pipeline has a few clear interfaces and strategy variants but remains a small in-process library."},
-        "placement": "Very small size is balanced by nontrivial regex compilation, producing SDC 2."
+      "why_study": "The FastRoute path shows how route declarations become validated static or combined-regular-expression data and then one of three explicit HTTP dispatch results.",
+      "learn": [
+        "Use `src/RouteParser/Std.php` to study the following transferable techniques and behaviors: Optional route-segment expansion, placeholder parsing, capture-group rejection, static and variable route validation, combined regular expressions, group-count dispatch, method fallback, and typed dispatch results."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests."
+      ],
+      "concepts_developed": [
+        "Interfaces and abstract strategy bases.",
+        "Route syntax expansion and validation.",
+        "Optional-segment and placeholder grammar."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An HTTP router parses static and parameterized route declarations, compiles them into dispatch data, and returns matched, not-matched, or method-not-allowed results for a method and URI."
+        ],
+        "reason": "The route syntax and three dispatch outcomes need only a short primer; the path primarily teaches staged parsing and compilation, regular-expression construction, strategy boundaries, data modeling, validation, and deterministic dispatch."
       },
-      "quality": {
-        "source_quality": "Parsing, bad-route validation, data generation, and match decoding are explicit and separated by small interfaces.",
-        "architecture": "Configuration connects route collectors, parsers, data generators, dispatchers, caches, and URI generators through stable roles.",
-        "naming_and_idiom": "RouteParser, DataGenerator, Dispatcher, Matched, MethodNotAllowed, and GenerateUri express the full routing lifecycle.",
-        "tests": "Focused suites cover conflicts, optional segments, custom regex, dispatcher strategies, cache behavior, URI generation, and invalid routes.",
-        "documentation": "The README explains route syntax, dispatch outcomes, caching, shortcuts, and strategy choices with executable examples.",
-        "traceability": "A route can be followed from registration through parsing and data generation to dispatcher matching and extracted variables.",
-        "maintainability": "Strategy interfaces isolate performance experiments while common results and validation preserve the public contract.",
-        "educational_value": "It shows why a production router is more than matching a path against a list of strings."
+      "learning_path": {
+        "goal": "Understand how FastRoute turns a route declaration into compiled static or regular-expression dispatch data and returns the correct dispatch result for an HTTP method and URI.",
+        "start_here": {
+          "path": "src/RouteParser/Std.php",
+          "reason": "src/RouteParser/Std.php defines the route grammar and expands optional suffixes before declarations enter collection, compiled data generation, and dispatch."
+        },
+        "supporting_files": [
+          "src/RouteCollector.php",
+          "src/DataGenerator/RegexBasedAbstract.php",
+          "src/DataGenerator/GroupCountBased.php",
+          "src/Dispatcher/RegexBasedAbstract.php",
+          "src/Dispatcher/GroupCountBased.php",
+          "test/RouteParser/StdTest.php",
+          "test/Dispatcher/GroupCountBasedTest.php",
+          "test/Dispatcher/DispatcherTestCase.php"
+        ],
+        "trace": "Follow Std.parse through optional suffix expansion, placeholder extraction, and capturing-group rejection; continue through RouteCollector into RegexBasedAbstract's static and variable route validation and GroupCountBased's combined regular expressions, then through the regex dispatcher into Matched, NotMatched, or MethodNotAllowed while correlating parser cases and the inherited shared dispatcher contract tests."
       },
-      "inspection": {"commit": "1c961398bef1ff6ecd8b273bef651d7afe90312b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/RouteParser/Std.php", "src/Dispatcher/GroupCountBased.php", "test/Dispatcher/GroupCountBasedTest.php"]},
-      "license": {"spdx": "BSD-3-Clause", "url": "https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "ramsey-uuid",
-      "repository": "ramsey/uuid",
-      "url": "https://github.com/ramsey/uuid",
-      "primary_language": "PHP",
-      "language_evidence": "UUID parsing, generation, fields, codecs, math, conversion, validation, and RFC 4122 variants under src are PHP.",
-      "description": "A UUID library supporting standard versions, binary and string codecs, generation strategies, validation, conversion, and multiple math backends.",
-      "real_world_evidence": "ramsey/uuid is a widely consumed Composer package used to generate and interpret production identifiers.",
-      "why_study": "It converts a binary standard into typed value objects and swappable providers while keeping compatibility and platform limitations explicit.",
-      "learn": ["Binary layouts, RFC variants and versions, codecs, factories, time and random providers, immutable values, validation, and fallback strategies."],
-      "prerequisites": ["UUID standards, bit and byte representations, PHP interfaces and traits, immutable values, time, randomness, and big-number concepts."],
-      "start_here": {"path": "src/Uuid.php", "reason": "The central value object and factory methods connect textual parsing, bytes, fields, comparison, generation, and version-specific subclasses."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 2, "loc": 4283, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks", "static-analysis fixtures"], "notes": "Count covers production PHP under src, excluding tests, benchmarks, static-analysis fixtures, docs, and package metadata."},
-        "difficulty": {"score": 3, "signals": ["binary UUID fields", "time and number conversion", "standard-version semantics"], "reason": "Bit layouts, endian conversions, timestamp epochs, name hashing, and variant rules require domain knowledge beyond ordinary value objects."},
-        "complexity": {"score": 2, "signals": ["factory/provider/codec modules", "optional platform backends"], "reason": "Several interchangeable helpers support one identifier abstraction in one process with clear interfaces."},
-        "placement": "Moderate size plus contained standards and binary reasoning make ramsey/uuid SDC 2."
-      },
-      "quality": {
-        "source_quality": "Version rules, invalid representations, provider failures, and conversion boundaries are typed and reported through focused exceptions.",
-        "architecture": "Value types depend on factories, builders, fields, codecs, generators, providers, converters, math, and validators through interfaces.",
-        "naming_and_idiom": "UuidV4, Fields, Codec, TimeProvider, RandomGenerator, Validator, and Converter match the standard's concepts.",
-        "tests": "Extensive suites cover versions, variants, bytes, strings, timestamps, providers, math backends, invalid inputs, and expected behavior.",
-        "documentation": "README, docs, upgrade notes, API references, and examples explain generation, conversion, databases, and customization.",
-        "traceability": "A versioned UUID can be followed from a factory through providers and fields into a concrete immutable value and encoded output.",
-        "maintainability": "Interfaces isolate environment-dependent randomness, clocks, number math, and codecs from the value model.",
-        "educational_value": "It is a strong example of translating a binary interoperability standard into an approachable PHP API."
-      },
-      "inspection": {"commit": "da5b521600a707d2dd097598464bd3090de850f5", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Uuid.php", "src/Rfc4122/UuidV7.php", "tests/UuidTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/ramsey/uuid/blob/da5b521600a707d2dd097598464bd3090de850f5/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "guzzle",
-      "repository": "guzzle/guzzle",
-      "url": "https://github.com/guzzle/guzzle",
-      "primary_language": "PHP",
-      "language_evidence": "Client configuration, middleware, handlers, authentication, redirects, cookies, retries, proxying, and transfer state under src are PHP.",
-      "description": "An extensible HTTP client that composes PSR messages, middleware, asynchronous promises, cURL or stream handlers, redirects, retries, and cookies.",
-      "real_world_evidence": "Guzzle is published as production HTTP infrastructure and underpins networking in a large part of the PHP ecosystem.",
-      "why_study": "It shows how immutable messages and handler stacks turn a rich request configuration into sync or async network transfers across multiple transports.",
-      "learn": ["Middleware stacks, promises, PSR interfaces, transport handlers, request normalization, redirects, retries, cookies, proxying, TLS, and resource cleanup."],
-      "prerequisites": ["HTTP, PSR-7 and PSR-18 concepts, closures, promises, streams, cURL, exceptions, and TLS basics."],
-      "start_here": {"path": "src/Client.php", "reason": "The client merges configuration, builds requests, transfers through the handler stack, and adapts promise results to sync and async APIs."},
-      "sdc": {
+      "learning_level": {
         "level": 3,
-        "size": {"score": 3, "loc": 11664, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "server fixtures", "documentation"], "notes": "Count covers production PHP under src, excluding tests, local server fixtures, docs, packaging, and generated artifacts."},
-        "difficulty": {"score": 3, "signals": ["promise-based middleware", "cURL and stream resource lifecycles", "HTTP edge cases"], "reason": "Handler composition, async results, redirects, proxy selection, body framing, timeouts, and cleanup introduce recurring technical depth."},
-        "complexity": {"score": 3, "signals": ["client/middleware/handler layers", "multiple transports and PSR boundaries"], "reason": "A request crosses configuration, messages, middleware, handlers, promises, transport state, and response or exception adaptation."},
-        "placement": "Moderate source size and a layered cross-transport request lifecycle place Guzzle at SDC 3."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "interfaces and abstract strategy bases",
+            "callable handlers and typed result objects",
+            "ordinary object-oriented composition"
+          ],
+          "reason": "Interfaces, callbacks, inheritance, and ecosystem conventions shape the path without generics, reflection, or other advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "route syntax expansion and validation",
+            "compiled static and variable dispatch data",
+            "method fallback and dispatch-result transitions"
+          ],
+          "reason": "The staged parser-to-compiled-data-to-dispatch trace has nontrivial state and interactions beyond localized branching."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "parser and collector boundary",
+            "data-generator strategies",
+            "dispatcher and result layers"
+          ],
+          "reason": "The trace crosses several meaningful, locally understandable components and interfaces."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "optional-segment and placeholder grammar",
+            "duplicate, shadow, and capture-group rejection",
+            "HTTP method fallback and backward-compatible result forms"
+          ],
+          "reason": "Syntax, regular-expression safety, route precedence, HTTP semantics, and compatibility impose several material guarantees."
+        },
+        "placement": "The four scores 2/3/3/3 sum to 11; their arithmetic mean is 2.75 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Client and handler code validates options, isolates protocol concerns, protects terminal resources, and preserves exception context.",
-        "architecture": "A Client drives immutable messages through a HandlerStack of middleware into cURL, multi-cURL, stream, or mock handlers.",
-        "naming_and_idiom": "HandlerStack, Middleware, RequestOptions, CurlFactory, TransferStats, and CookieJar provide consistent HTTP vocabulary.",
-        "tests": "Unit and integration suites cover clients, handlers, middleware, redirects, retries, proxies, auth, cookies, streams, failures, and cleanup.",
-        "documentation": "Quickstarts, request options, handlers, middleware, testing, FAQ, and migration guides cover the full API.",
-        "traceability": "A request can be followed from Client.requestAsync through middleware and a handler into transfer completion and response mapping.",
-        "maintainability": "PSR boundaries and handler interfaces isolate message, promise, and transport packages from client orchestration.",
-        "educational_value": "It demonstrates how production networking hides transport variation without hiding the lifecycle from source readers."
+        "source_quality": "The parser, collector, regex data generator, and dispatcher express each transformation and rejection branch as a distinct stage.",
+        "architecture": "Std parses declarations, RouteCollector registers them, RegexBasedAbstract validates them, GroupCountBased compiles them, and the dispatcher returns explicit result objects.",
+        "naming_and_idiom": "RouteParser, RouteCollector, addStaticRoute, addVariableRoute, DataGenerator, Dispatcher, Matched, NotMatched, and MethodNotAllowed preserve routing vocabulary.",
+        "tests": "The selected parser and dispatcher suites cover optional segments, placeholders, invalid captures, duplicates, shadowed routes, method behavior, variables, and result contracts.",
+        "documentation": "The README and public API documentation explain route syntax, registration, dispatch results, and method handling corresponding to the selected stages.",
+        "traceability": "A route string can be followed through Std.parse, collector validation, grouped regex generation, URI matching, and explicit dispatch results into focused parser and shared dispatcher tests.",
+        "maintainability": "Strategy interfaces and staged compiled data isolate grammar, validation, regex layout, and request dispatch while tests protect their shared contracts.",
+        "educational_value": "The path makes router implementation concrete as a small compiler pipeline followed by a deterministic runtime matcher."
       },
-      "inspection": {"commit": "7b7b04a0f5a548bfe9ced4b56f5661deee229ac3", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Client.php", "src/Handler/CurlHandler.php", "tests/ClientTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/guzzle/guzzle/blob/7b7b04a0f5a548bfe9ced4b56f5661deee229ac3/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "1c961398bef1ff6ecd8b273bef651d7afe90312b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/RouteParser/Std.php",
+          "src/RouteCollector.php",
+          "src/DataGenerator/RegexBasedAbstract.php",
+          "src/DataGenerator/GroupCountBased.php",
+          "src/Dispatcher/RegexBasedAbstract.php",
+          "src/Dispatcher/GroupCountBased.php",
+          "test/RouteParser/StdTest.php",
+          "test/Dispatcher/GroupCountBasedTest.php",
+          "test/Dispatcher/DispatcherTestCase.php",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/nikic/FastRoute/blob/1c961398bef1ff6ecd8b273bef651d7afe90312b/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "webmozart-assert",
+      "path_slug": "mixin-generator",
+      "repository": "webmozarts/assert",
+      "url": "https://github.com/webmozarts/assert",
+      "primary_language": "PHP",
+      "language_evidence": "The assertion API, generated mixin variants, static-analysis plugin, and exception type under src are PHP.",
+      "description": "A defensive-programming library providing typed assertions for method inputs, outputs, values, collections, files, classes, and objects.",
+      "real_world_evidence": "The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.",
+      "why_study": "The MixinGenerator path shows how reflection and source generation can extend a repetitive validation API while preserving native signatures, static-analysis contracts, defaults, messages, and runtime behavior.",
+      "learn": [
+        "Use `bin/src/MixinGenerator.php` to study the following transferable techniques and behaviors: ReflectionClass and ReflectionMethod, deterministic PHP generation, union and intersection type rewriting, PHPDoc assertion transformation, default-value rendering, generated method families, and compatibility testing."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests."
+      ],
+      "concepts_developed": [
+        "ReflectionClass and ReflectionMethod introspection.",
+        "Deterministic method-family generation.",
+        "Native signature and default-value fidelity."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An assertion library validates runtime values, while its generated mixin adds nullOr, all, and allNullOr variants of the base assertion methods."
+        ],
+        "reason": "The assertion and generated-API context is self-contained; the path primarily teaches reflection, code generation, signature and PHPDoc transformation, compatibility policy, and testing generated behavior."
+      },
+      "learning_path": {
+        "goal": "Understand how Webmozart Assert reflects over its base assertions and generates type-preserving nullOr, all, and allNullOr runtime variants.",
+        "start_here": {
+          "path": "bin/src/MixinGenerator.php",
+          "reason": "MixinGenerator.php contains the hand-written reflection and transformation rules that produce nullOr, all, and allNullOr methods, so it is the source of truth rather than the deliberately repetitive generated trait."
+        },
+        "supporting_files": [
+          "bin/generate.php",
+          "src/Assert.php",
+          "src/Mixin.php",
+          "tests/AssertTest.php"
+        ],
+        "trace": "Begin with bin/generate.php, follow MixinGenerator as ReflectionClass and ReflectionMethod enumerate Assert methods, reduce native union and intersection types, transform PHPDoc assertions, defaults, return types, and method bodies, and emit the Mixin trait; then correlate the generated nullOr, all, and allNullOr methods with the parameterized success, failure, lazy-message, and custom-message cases in AssertTest."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "ReflectionClass and ReflectionMethod introspection",
+            "native union and intersection type rewriting",
+            "PHP source and static-analysis annotation generation"
+          ],
+          "reason": "Reflection, metaprogramming, and code generation recur throughout the selected behavior and require advanced PHP machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "deterministic method-family generation",
+            "localized skip and transformation branches",
+            "explicit default and documentation handling"
+          ],
+          "reason": "The generator has many cases but its synchronous transformation state remains locally traceable."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "maintainer generation entry point",
+            "base assertion API and generated runtime trait"
+          ],
+          "reason": "A few clear modules contain the generator-to-runtime behavior."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "native signature and default-value fidelity",
+            "Psalm and PHPStan assertion compatibility",
+            "stable generated runtime API across three method families"
+          ],
+          "reason": "Runtime behavior, native types, PHPDoc types, static-analyser limitations, defaults, messages, and backward-compatible method families interact across the path."
+        },
+        "placement": "The four scores 4/2/2/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3."
+      },
+      "quality": {
+        "source_quality": "The generator names method enumeration, skips, type reduction, PHPDoc rewriting, defaults, signatures, bodies, and output assembly as separate deterministic transformations.",
+        "architecture": "A small generation entry point invokes MixinGenerator over the base Assert API to produce the runtime Mixin trait, whose behavior is exercised through the public assertion tests.",
+        "naming_and_idiom": "MixinGenerator, generate, Assert, Mixin, nullOr, all, allNullOr, reportInvalidArgument, and lazy messages preserve the package's validation vocabulary.",
+        "tests": "AssertTest broadly checks base and generated variants, success and failure values, lazy and custom messages, collection behavior, and errors across all three method families.",
+        "documentation": "The README documents generated variants, extension, public assertions, messages, and static-analysis use, providing context for each emitted API family.",
+        "traceability": "A learner can follow bin/generate.php into reflected Assert methods, signature and documentation transformations, emitted Mixin code, and parameterized runtime assertions.",
+        "maintainability": "Keeping generation rules hand-written and output reproducible prevents manual drift among three large method families while preserving a stable public API.",
+        "educational_value": "This path demonstrates disciplined metaprogramming used to remove duplication without treating generated source as unexplained magic."
+      },
+      "inspection": {
+        "commit": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "bin/src/MixinGenerator.php",
+          "bin/generate.php",
+          "src/Assert.php",
+          "src/Mixin.php",
+          "tests/AssertTest.php",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/webmozarts/assert/blob/2ccb7c2e821038c03a3e6e1700c570c158c55f70/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "monolog",
+      "path_slug": "monolog-creates-and-processes-one-log-record-propagates-it-through",
       "repository": "Seldaek/monolog",
       "url": "https://github.com/Seldaek/monolog",
       "primary_language": "PHP",
       "language_evidence": "Logger channels, immutable records, handlers, formatters, processors, error integration, and reset contracts under src/Monolog are PHP.",
       "description": "A logging library that routes structured records through processors, formatters, filters, buffers, groups, files, sockets, databases, and web services.",
       "real_world_evidence": "Monolog is a production PSR-3 logging implementation used by major PHP applications and frameworks.",
-      "why_study": "A simple record pipeline grows into an extensible integration library while retaining clear handler, processor, formatter, and bubbling contracts.",
-      "learn": ["Pipeline composition, immutable log records, handler stacks, filtering and bubbling, buffering, formatting, integration adapters, fibers, and error handling."],
-      "prerequisites": ["Interfaces and traits, exceptions, callables, streams, PSR-3, serialization, and common logging destinations."],
-      "start_here": {"path": "src/Monolog/Logger.php", "reason": "Logger constructs records, applies channel processors, prevents logging loops, and walks the handler stack according to bubbling rules."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 7887, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "documentation"], "notes": "Count covers production PHP under src/Monolog, excluding tests, docs, package metadata, and build files."},
-        "difficulty": {"score": 3, "signals": ["nested handler composition", "resource and failure isolation", "fiber-aware cycle prevention"], "reason": "Most handlers are direct adapters, while buffering, grouping, retries, streams, signals, and recursive logging create several advanced paths."},
-        "complexity": {"score": 3, "signals": ["logger/processor/formatter/handler layers", "many external destination integrations"], "reason": "Records move through a compact core into a broad but consistently shaped family of transport integrations."},
-        "placement": "S2 size is raised by extension breadth and nontrivial pipeline behavior, making Monolog SDC 3."
+      "why_study": "The Logger path shows how Monolog builds one immutable record, delays processing until needed, propagates it through bubbling handlers, contains failures, and prevents recursive logging per Fiber.",
+      "learn": [
+        "Use `src/Monolog/Logger.php` to study the following transferable techniques and behaviors: Immutable log records, level normalization, callable processors, handler bubbling, once-only processing, exception routing, Fiber-local WeakMap state, recursive-call detection, reset and close lifecycles, and finally-based cleanup."
+      ],
+      "prerequisites": [
+        "Working familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests, plus experience tracing behavior across several production files."
+      ],
+      "concepts_developed": [
+        "Typed immutable LogRecord and Level enum.",
+        "Fiber-local recursive logging state.",
+        "PSR-3 and legacy level compatibility."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A logger creates a record, optionally processes it, offers it to ordered handlers until bubbling stops, and must prevent recursive logging from becoming an infinite loop."
+        ],
+        "reason": "Logging levels, processors, and handlers are familiar and documented; the path primarily teaches typed pipeline design, lazy initialization, event propagation, Fiber-local reentrancy state, exception routing, resource lifecycle, and cleanup."
       },
-      "quality": {
-        "source_quality": "The core record path is explicit, immutable data limits mutation, and handlers share processing and formatting templates.",
-        "architecture": "Logger coordinates records, processors, formatters, and a stack of handlers whose adapters share small contracts.",
-        "naming_and_idiom": "LogRecord, Level, Handler, Processor, Formatter, bubbling, buffering, and reset are consistent across integrations.",
-        "tests": "Handler-specific and core suites cover routing, levels, processors, formatting, buffering, failures, resources, fibers, and integrations.",
-        "documentation": "README, usage guide, handler catalog, extension notes, recipes, and changelog make the ecosystem navigable.",
-        "traceability": "A log call can be followed through record creation and processors into each handler's format, write, and bubbling decision.",
-        "maintainability": "Abstract handlers and narrow interfaces let destinations vary without duplicating core filtering and processing behavior.",
-        "educational_value": "It shows how a tiny conceptual pipeline can support many production boundaries without losing a common model."
+      "learning_path": {
+        "goal": "Understand how Monolog creates and processes one log record, propagates it through bubbling handlers, contains processor or handler failures, and detects recursive logging independently in each Fiber.",
+        "start_here": {
+          "path": "src/Monolog/Logger.php",
+          "reason": "src/Monolog/Logger.php owns addRecord, where level normalization, recursion depth, record construction, lazy processors, handler bubbling, exception handling, and cleanup meet."
+        },
+        "supporting_files": [
+          "src/Monolog/LogRecord.php",
+          "src/Monolog/Handler/HandlerInterface.php",
+          "src/Monolog/Handler/ProcessableHandlerTrait.php",
+          "src/Monolog/Handler/AbstractProcessingHandler.php",
+          "tests/Monolog/LoggerTest.php"
+        ],
+        "trace": "Follow Logger.addRecord as it normalizes the level, increments global or Fiber-local recursion depth, constructs LogRecord, delays processors until a handler accepts the record, clones and propagates it until bubbling stops, routes exceptions, and decrements depth in finally; connect the handler pipeline to ProcessableHandlerTrait and AbstractProcessingHandler and correlate ordering, processor, exception, recursive, Fiber, close, and reset tests."
       },
-      "inspection": {"commit": "2a50ae6f387a6da963bf2e2662803a01517a58ca", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Monolog/Logger.php", "src/Monolog/Handler/AbstractProcessingHandler.php", "tests/Monolog/LoggerTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "composer",
-      "repository": "composer/composer",
-      "url": "https://github.com/composer/composer",
-      "primary_language": "PHP",
-      "language_evidence": "Dependency solving, repositories, downloads, installation, autoloading, plugins, command handling, and package models under src/Composer are PHP.",
-      "description": "PHP's dependency manager, resolving version constraints and then downloading, installing, locking, autoloading, auditing, and running package plugins.",
-      "real_world_evidence": "Composer is the production package manager and dependency resolver used throughout the modern PHP ecosystem.",
-      "why_study": "It joins a SAT-based dependency solver to practical repository protocols, lockfiles, secure downloads, filesystem transactions, autoload generation, and plugins.",
-      "learn": ["SAT solving, semantic-version constraints, repositories and caches, lock transactions, download/install pipelines, autoloading, plugins, CLI orchestration, and security policy."],
-      "prerequisites": ["Advanced PHP, graph and SAT concepts, package management, filesystems, HTTP, processes, serialization, and CLI design."],
-      "start_here": {"path": "src/Composer/DependencyResolver/Solver.php", "reason": "The solver turns package constraints into rules, propagates decisions, analyzes conflicts, backtracks, and returns an install transaction."},
-      "sdc": {
+      "learning_level": {
         "level": 4,
-        "size": {"score": 3, "loc": 46701, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "documentation", "schemas", "compiled phar output"], "notes": "Count covers production PHP under src, excluding tests, docs, JSON schemas, generated phar output, and packaging support."},
-        "difficulty": {"score": 4, "signals": ["conflict-driven SAT solving", "version constraint algebra", "transaction and filesystem edge cases"], "reason": "The solver, repository policies, archive/download security, VCS behavior, and rollback paths repeatedly require advanced algorithmic and systems reasoning."},
-        "complexity": {"score": 4, "signals": ["solver/repository/downloader/installer/autoload/plugin subsystems", "network and filesystem side effects"], "reason": "One command crosses configuration, repositories, pools, the solver, operations, downloads, installation, lockfiles, plugins, and autoload generation."},
-        "placement": "Advanced algorithmic code and a broad side-effecting package pipeline raise the S3-sized repository to SDC 4."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "typed immutable LogRecord and Level enum",
+            "handler interfaces, callable processors, and traits",
+            "WeakMap keyed by Fiber objects"
+          ],
+          "reason": "Framework idioms, higher-order processors, traits, enums, and nontrivial type modeling materially shape the path without several pervasive expert mechanisms."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "Fiber-local recursive logging state",
+            "lazy processor initialization and handler bubbling",
+            "exception routing and finally-based depth cleanup"
+          ],
+          "reason": "Reentrancy, event propagation, failure containment, resource lifecycle, and cross-cutting cleanup recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "logger and immutable record",
+            "processor and handler extension boundaries",
+            "processing and output-handler lifecycle"
+          ],
+          "reason": "The trace crosses several meaningful, locally understandable interfaces and components without spanning the entire handler ecosystem."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "PSR-3 and legacy level compatibility",
+            "once-only processing and deterministic bubbling",
+            "reentrancy containment, exception isolation, reset, and cleanup"
+          ],
+          "reason": "Compatibility, ordering, recursive safety, failure behavior, lifecycle reuse, and resource cleanup interact throughout the logging path."
+        },
+        "placement": "The four scores 3/4/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Solver invariants, transaction objects, policy boundaries, platform filters, and error explanations keep difficult behavior inspectable.",
-        "architecture": "Console and factories assemble package, repository, dependency resolver, downloader, installer, plugin, autoload, cache, and audit layers.",
-        "naming_and_idiom": "Pool, RuleSet, Decisions, Solver, LockTransaction, Repository, Downloader, Installer, and Locker encode the package workflow.",
-        "tests": "Extensive unit and integration tests cover resolution, conflicts, repositories, downloads, plugins, lockfiles, autoloading, security, and regressions.",
-        "documentation": "README, command and schema docs, articles, troubleshooting, version guides, and plugin APIs cover users and extenders.",
-        "traceability": "A requirement can be followed from repository loading through rules, SAT decisions, operations, downloads, installation, and the lockfile.",
-        "maintainability": "Interfaces and operation objects separate algorithms from external systems while compatibility and security policies are explicit.",
-        "educational_value": "It is a rare accessible implementation of both a real dependency solver and the operational machinery around it."
+        "source_quality": "Logger.addRecord makes handler selection, delayed processor execution, record cloning, bubbling, failure routing, recursion depth, and finally cleanup explicit.",
+        "architecture": "Logger orchestrates, LogRecord carries immutable data, HandlerInterface defines propagation, ProcessableHandlerTrait applies processors, and AbstractProcessingHandler joins formatting to output.",
+        "naming_and_idiom": "addRecord, LogRecord, Level, handlers, processors, bubbling, handleException, detectCycles, Fiber, close, and reset consistently expose pipeline behavior.",
+        "tests": "LoggerTest covers handler selection and order, processor-once behavior, cloned records, exceptions, recursion, Fiber isolation, reset, close, and cleanup.",
+        "documentation": "Monolog's usage, handler, processor, bubbling, and lifecycle documentation explains the public behavior implemented by this selected pipeline.",
+        "traceability": "A log call can be followed through addRecord, LogRecord creation, first accepting handler, delayed processors, bubbling or failure, Fiber-local depth cleanup, and focused tests.",
+        "maintainability": "Immutable records, stable handler and processor contracts, explicit reentrancy state, and lifecycle regressions localize changes across a large handler ecosystem.",
+        "educational_value": "The path demonstrates how an extensible logging pipeline preserves ordering, isolation, reentrancy safety, and cleanup without obscuring its control flow."
       },
-      "inspection": {"commit": "2616959b478c47ef3968dde41ec98bd7cba6d050", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Composer/Composer.php", "src/Composer/DependencyResolver/Solver.php", "tests/Composer/Test/DependencyResolver/SolverTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/composer/composer/blob/2616959b478c47ef3968dde41ec98bd7cba6d050/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "phpstan-src",
-      "repository": "phpstan/phpstan-src",
-      "url": "https://github.com/phpstan/phpstan-src",
-      "primary_language": "PHP",
-      "language_evidence": "Parser integration, reflection, type lattice, scope analysis, rules, extensions, dependency export, and diagnostics under src are PHP.",
-      "description": "The development source of PHPStan, a static analyzer that infers PHP types and reports errors through an extensible rule system.",
-      "real_world_evidence": "PHPStan is released as production developer tooling and is integrated into large PHP codebases and CI systems.",
-      "why_study": "It exposes a rich type system, flow-sensitive scopes, reflection models, AST traversal, extension points, caching, and diagnostic policy in PHP itself.",
-      "learn": ["Abstract interpretation, type lattices, flow-sensitive narrowing, AST analysis, reflection, generics, rule extensions, dependency graphs, caching, and diagnostics."],
-      "prerequisites": ["Advanced PHP, compiler and AST concepts, type theory, generics, control-flow analysis, reflection, and static-analysis architecture."],
-      "start_here": {"path": "src/Analyser/Analyser.php", "reason": "The analyzer coordinates file processing, node scopes, rule evaluation, ignored errors, internal failures, dependencies, and result aggregation."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 4, "loc": 174051, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "benchmarks", "end-to-end fixtures"], "notes": "Count covers production PHP under src, excluding tests, benchmark and end-to-end fixtures, docs, generated outputs, and packaging."},
-        "difficulty": {"score": 4, "signals": ["type-system algorithms", "flow-sensitive AST analysis", "reflection and generics"], "reason": "Understanding the main path requires repeated reasoning about type lattices, scopes, templates, reflection variants, and AST semantics."},
-        "complexity": {"score": 4, "signals": ["parser/analyser/type/reflection/rule subsystems", "large extension ecosystem"], "reason": "Analysis crosses parsing, node scopes, types, reflection, rules, extensions, dependency export, caching, parallel workers, and output."},
-        "placement": "S4 breadth plus advanced compiler-like mechanisms and a highly extensible architecture make PHPStan SDC 4."
+      "inspection": {
+        "commit": "2a50ae6f387a6da963bf2e2662803a01517a58ca",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/Monolog/Logger.php",
+          "src/Monolog/LogRecord.php",
+          "src/Monolog/Handler/HandlerInterface.php",
+          "src/Monolog/Handler/ProcessableHandlerTrait.php",
+          "src/Monolog/Handler/AbstractProcessingHandler.php",
+          "tests/Monolog/LoggerTest.php",
+          "LICENSE"
+        ]
       },
-      "quality": {
-        "source_quality": "Interfaces and immutable result objects make analysis stages explicit, while precise type declarations document complex data flow.",
-        "architecture": "Parser, analyzer, types, reflection, rules, dependency resolution, cache, command, parallel, and extension packages have distinct contracts.",
-        "naming_and_idiom": "Scope, Type, TrinaryLogic, Rule, ReflectionProvider, NodeScopeResolver, and AnalyserResult provide a rigorous shared model.",
-        "tests": "A vast fixture-driven suite covers types, rules, language versions, extensions, reflection, generics, performance, and regressions.",
-        "documentation": "User guides, rule and extension references, type-system docs, error identifiers, upgrade notes, and contributor docs are extensive.",
-        "traceability": "A source node can be followed through parsed nodes and scope resolution into matching rules, errors, dependencies, and cached results.",
-        "maintainability": "Extension interfaces, error identifiers, compatibility tests, and isolated type/reflection abstractions govern a difficult domain.",
-        "educational_value": "It is an expert but readable example of implementing a modern static-analysis system in the language it analyzes."
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/Seldaek/monolog/blob/2a50ae6f387a6da963bf2e2662803a01517a58ca/LICENSE"
+        ]
       },
-      "inspection": {"commit": "4f80a48ebac54bee75500661a1664ae52df56ace", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Analyser/Analyser.php", "src/Rules/Rule.php", "tests/PHPStan/Analyser/AnalyserTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/phpstan/phpstan-src/blob/4f80a48ebac54bee75500661a1664ae52df56ace/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "symfony",
+      "path_slug": "symfony-httpkernel-transforms-one-request-into-a-response-through-resolver",
       "repository": "symfony/symfony",
       "url": "https://github.com/symfony/symfony",
       "primary_language": "PHP",
       "language_evidence": "The framework's dependency injection, HTTP, console, event, routing, security, messaging, persistence bridges, and component implementations are PHP.",
       "description": "A component framework spanning dependency injection, HTTP kernels, console tools, events, routing, security, messaging, forms, validation, and integrations.",
       "real_world_evidence": "Symfony is actively released production infrastructure used directly and as a foundation for major PHP applications and frameworks.",
-      "why_study": "It shows how independently useful components become a coherent application platform through stable contracts, events, compiled containers, bridges, and compatibility policy.",
-      "learn": ["Dependency-injection compilation, HTTP request lifecycles, event dispatch, routing, console architecture, messaging, security, extension contracts, and long-term compatibility."],
-      "prerequisites": ["Expert PHP, reflection, attributes, dependency injection, HTTP, event systems, security, concurrency, databases, and framework architecture."],
-      "start_here": {"path": "src/Symfony/Component/HttpKernel/HttpKernel.php", "reason": "The kernel's compact handle path connects requests, controller resolution, arguments, events, responses, exceptions, and request-stack cleanup."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 1250347, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "documentation", "fixtures", "generated files"], "notes": "Count covers first-party PHP and small supporting source under src, excluding Tests directories, docs, fixtures, generated output, and build artifacts."},
-        "difficulty": {"score": 4, "signals": ["compiled dependency injection", "reflection and dynamic extension", "security and asynchronous subsystems"], "reason": "Advanced framework mechanisms and many specialist domains recur, though individual components generally favor explicit, idiomatic PHP."},
-        "complexity": {"score": 5, "signals": ["dozens of interoperating components", "large bridge and extension ecosystem", "cross-cutting application lifecycle"], "reason": "Full behavior spans containers, kernels, events, routing, security, messaging, persistence bridges, configuration, console, and deployment concerns."},
-        "placement": "S5 and C5 place the full Symfony monorepo at SDC 5 under the rubric guardrail."
+      "why_study": "The HttpKernel path shows how Symfony transforms one Request into a Response through ordered resolver and event extensions while preserving nested and streamed request context and recovering from exceptions.",
+      "learn": [
+        "Use `src/Symfony/Component/HttpKernel/HttpKernel.php` to study the following transferable techniques and behaviors: RequestStack ownership, ordered event dispatch, controller and argument resolution, short circuits, callable invocation, view conversion, response filtering, exception recovery, streamed callbacks, finish events, termination, and cleanup."
+      ],
+      "prerequisites": [
+        "Working familiarity with PHP classes, interfaces and traits, arrays, callables, exceptions, type declarations, and unit tests, plus experience tracing behavior across several production files."
+      ],
+      "concepts_developed": [
+        "Interface-driven controller and argument resolution.",
+        "Ordered event propagation and short circuits.",
+        "Strict event and resolver ordering."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An HTTP kernel turns a Request into a Response by dispatching request, controller, arguments, view, response, exception, and finish events around controller resolution and invocation."
+        ],
+        "reason": "The HTTP request-response lifecycle and event names are documented and familiar; the path primarily teaches staged framework orchestration, extension events, nested request context, exception recovery, cleanup, and strict lifecycle contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how Symfony HttpKernel transforms one Request into a Response through resolver and event extension points while preserving nested-request context and recovering from exceptions.",
+        "start_here": {
+          "path": "src/Symfony/Component/HttpKernel/HttpKernel.php",
+          "reason": "src/Symfony/Component/HttpKernel/HttpKernel.php owns handle and handleRaw, which expose every selected request, controller, view, response, exception, finish, and terminate transition."
+        },
+        "supporting_files": [
+          "src/Symfony/Component/HttpKernel/HttpKernelInterface.php",
+          "src/Symfony/Component/HttpKernel/Controller/ControllerResolver.php",
+          "src/Symfony/Component/HttpKernel/Event/RequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerArgumentsEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ViewEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ResponseEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ExceptionEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/FinishRequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/TerminateEvent.php",
+          "src/Symfony/Component/HttpKernel/Tests/HttpKernelTest.php"
+        ],
+        "trace": "Follow HttpKernel.handle as it pushes the RequestStack and dispatches RequestEvent, resolves and filters the controller and arguments, invokes the controller, converts a non-Response through ViewEvent, filters the Response, or recovers through ExceptionEvent; then follow streamed-response context restoration, FinishRequestEvent, stack cleanup, and termination while correlating each lifecycle branch in HttpKernelTest."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "interface-driven controller and argument resolution",
+            "typed event hierarchy and dispatcher composition",
+            "callable controllers and streamed-response callbacks"
+          ],
+          "reason": "Framework idioms, event types, callbacks, and substantial interface composition materially shape the path without pervasive advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "ordered event propagation and short circuits",
+            "nested request-stack state",
+            "exception recovery, streamed callbacks, finish, and termination"
+          ],
+          "reason": "Event propagation, nested lifecycle state, recovery, callback context, and cleanup recur and require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "kernel and request-stack orchestration",
+            "controller and argument resolver boundaries",
+            "event-dispatch, response, exception, and termination extension points"
+          ],
+          "reason": "Many framework modules and extension points contribute directly to one request lifecycle."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "strict event and resolver ordering",
+            "nested and streamed request-context integrity",
+            "exception status, response filtering, finish, and termination compatibility"
+          ],
+          "reason": "Ordering, extension compatibility, context integrity, recovery, response correctness, and cleanup guarantees interact throughout the kernel."
+        },
+        "placement": "The four scores 3/4/4/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Core components make lifecycle stages, contracts, event transitions, cleanup, and error conversion explicit despite broad features.",
-        "architecture": "Independent Components and Contracts connect through Bridges and Bundles into a full-stack framework without erasing standalone boundaries.",
-        "naming_and_idiom": "ContainerBuilder, Request, Response, HttpKernel, EventDispatcher, RouteCollection, Messenger, and Constraint form stable language.",
-        "tests": "Component-level and integration suites cover kernels, containers, events, security, messaging, forms, bridges, compatibility, and regressions.",
-        "documentation": "Books, component docs, API references, recipes, best practices, upgrade guides, and contributor documentation are comprehensive.",
-        "traceability": "A request can be followed through HttpKernel events and controller resolution while service construction is traced separately through ContainerBuilder.",
-        "maintainability": "Small contracts, component boundaries, deprecations, backward-compatibility promises, and exhaustive tests control a huge ecosystem.",
-        "educational_value": "Advanced readers can compare focused component design with the integration demands of a mature application platform."
+        "source_quality": "HttpKernel names each lifecycle transition and keeps early responses, resolver failures, exception recovery, streamed callbacks, and final cleanup explicit.",
+        "architecture": "HttpKernel orchestrates RequestStack, ControllerResolver, the event dispatcher, typed lifecycle events, Response handling, and termination through stable interfaces.",
+        "naming_and_idiom": "handle, handleRaw, RequestEvent, ControllerEvent, ControllerArgumentsEvent, ViewEvent, ResponseEvent, ExceptionEvent, FinishRequestEvent, and TerminateEvent state event order.",
+        "tests": "HttpKernelTest covers request short circuits, controller and argument resolution, view conversion, response filtering, exceptions, streamed responses, nested requests, finish, and termination.",
+        "documentation": "Symfony's HttpKernel and event documentation explains the request lifecycle, resolver contracts, subrequests, exception handling, response events, and termination used here.",
+        "traceability": "A Request can be followed from stack push through each typed event, resolver, controller or view conversion, response filtering, exception recovery, finish cleanup, and termination assertions.",
+        "maintainability": "Typed events, resolver interfaces, explicit stack ownership, and lifecycle tests let extensions evolve without weakening ordering or context guarantees.",
+        "educational_value": "The path provides a compact example of event-driven framework orchestration in which every short circuit, recovery branch, and cleanup step is observable."
       },
-      "inspection": {"commit": "c69a0a62bc6cff4c25ae9447e16f52960dba71af", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Symfony/Component/HttpKernel/HttpKernel.php", "src/Symfony/Component/DependencyInjection/ContainerBuilder.php", "src/Symfony/Component/HttpKernel/Tests/HttpKernelTest.php"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/LICENSE"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "nextcloud-server",
-      "repository": "nextcloud/server",
-      "url": "https://github.com/nextcloud/server",
-      "primary_language": "PHP",
-      "language_evidence": "The server container, files platform, sharing, users, security, federation, APIs, apps, background jobs, and web runtime are primarily PHP with first-party client code.",
-      "description": "A self-hosted collaboration server providing file storage and sync, sharing, users, apps, federation, security, APIs, background work, and web administration.",
-      "real_world_evidence": "Nextcloud Server is continuously released and deployed as a production data and collaboration platform.",
-      "why_study": "It exposes the architecture required to sustain a security-sensitive multi-user web platform across storage, apps, databases, federation, background jobs, APIs, and upgrades.",
-      "learn": ["Service containers, virtual filesystems, sharing and permissions, app lifecycles, database abstraction, federation, background jobs, security controls, migrations, and web APIs."],
-      "prerequisites": ["Expert PHP and web security, databases, storage systems, distributed services, JavaScript clients, background processing, and large-codebase navigation."],
-      "start_here": {"path": "lib/private/Server.php", "reason": "The central container registers and wires storage, users, apps, security, HTTP, federation, background jobs, and platform services."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 592334, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests", "third-party libraries", "documentation", "generated and built assets"], "notes": "Count covers first-party PHP, JavaScript, TypeScript, Vue, styles, and shell, excluding tests, 3rdparty and vendor code, docs, generated bundles, and build output."},
-        "difficulty": {"score": 4, "signals": ["security-sensitive storage and sharing", "concurrent background and distributed behavior", "large compatibility surface"], "reason": "Correctness repeatedly depends on permissions, locking, encryption, caches, databases, remote federation, migrations, and async jobs."},
-        "complexity": {"score": 5, "signals": ["platform-scale service graph", "many bundled apps and integrations", "persistent multi-user topology"], "reason": "User actions cross a large container, virtual storage, databases, apps, APIs, security, sharing, federation, jobs, and client assets."},
-        "placement": "S5 and C5 make Nextcloud Server an unambiguous SDC 5 platform."
+      "inspection": {
+        "commit": "c69a0a62bc6cff4c25ae9447e16f52960dba71af",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/Symfony/Component/HttpKernel/HttpKernel.php",
+          "src/Symfony/Component/HttpKernel/HttpKernelInterface.php",
+          "src/Symfony/Component/HttpKernel/Controller/ControllerResolver.php",
+          "src/Symfony/Component/HttpKernel/Event/RequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ControllerArgumentsEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ViewEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ResponseEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/ExceptionEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/FinishRequestEvent.php",
+          "src/Symfony/Component/HttpKernel/Event/TerminateEvent.php",
+          "src/Symfony/Component/HttpKernel/Tests/HttpKernelTest.php",
+          "LICENSE"
+        ]
       },
-      "quality": {
-        "source_quality": "Core services use interfaces, typed constructors, explicit security checks, migrations, and failure-aware storage abstractions.",
-        "architecture": "A central container connects public OCP contracts to private services, apps, storage, databases, HTTP APIs, jobs, and security layers.",
-        "naming_and_idiom": "Server, AppManager, RootFolder, ShareManager, UserSession, BackgroundJob, Federation, and OCP contracts define the platform.",
-        "tests": "Unit, integration, database, app, API, browser, upgrade, storage, security, and acceptance suites cover the system.",
-        "documentation": "Administrator, developer, app, API, architecture, security, upgrade, and contributor documentation is extensive.",
-        "traceability": "A file action can be traced from an HTTP or OCS route through controllers and services into virtual storage, permissions, events, and persistence.",
-        "maintainability": "Public OCP interfaces, app boundaries, migrations, code ownership, review tooling, and layered test suites govern the large surface.",
-        "educational_value": "It is a rich advanced case study in sustaining a self-hosted application platform where user data and trust are central."
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/symfony/symfony/blob/c69a0a62bc6cff4c25ae9447e16f52960dba71af/LICENSE"
+        ]
       },
-      "inspection": {"commit": "529c4e4a6b236e6367e926d9a375ae9600335d73", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "lib/base.php", "lib/private/Server.php", "tests/lib/ServerTest.php"]},
-      "license": {"spdx": "AGPL-3.0-or-later", "url": "https://github.com/nextcloud/server/blob/529c4e4a6b236e6367e926d9a375ae9600335d73/COPYING"},
-      "github": {"primary_language": "PHP", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     }
   ]
 }

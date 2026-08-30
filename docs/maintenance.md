@@ -1,181 +1,164 @@
 # Maintaining Exempla
 
-This is the ownership guide for keeping the catalog accurate without turning
-its evidence-backed judgments into an automated popularity ranking.
+This is the ownership guide for preserving an evidence-backed learning catalog
+without turning judgment into an automated popularity ranking.
 
 ## Source-of-truth map
 
-- `catalog/languages.json` defines the ordered language scope and its source.
-- `catalog/<language>.json` is the canonical accepted-entry data.
-- `catalog/schema.json` defines the serialized entry shape.
-- `scripts/catalog.py` enforces semantic rules and generates learner pages.
-- `languages/README.md` and `languages/*/README.md` are generated; never edit
-  them directly.
-- `research/rejections.json` prevents rejected candidates from being
-  rediscovered without new evidence.
-- `research/audit.json` records the latest whole-corpus verification.
-- `docs/sdc.md`, `docs/qualification.md`, and `docs/research-process.md` define
-  the human judgment rules.
-- `tests/test_catalog.py` protects validation, scoring boundaries, dotenv-path
-  rejection, complete-corpus rules, and deterministic generation.
-- `.github/workflows/validate.yml` applies the release gate to pushes and pull
-  requests.
+- `catalog/languages.json` is the ordered language-scope registry.
+- `catalog/<language>.json` contains accepted schema-version-3 learning paths.
+- `catalog/schema.json` publishes the serialized contract.
+- `scripts/catalog.py` enforces semantic rules and generates Markdown.
+- `languages/**/README.md` is generated and must not be hand-edited.
+- `research/learner-centered-rebuild.json` preserves all v1 re-review decisions.
+- `research/learner-centered-remediation.json` preserves the 150-path baseline,
+  path migration, targeted source checks, capacity decisions, and Level 1 gap
+  research from the post-rerun refinement.
+- `research/learner-centered-audit.json` is the active learner-centered corpus
+  consistency audit.
+- `research/rejections.json` is append-only rejection and alternate evidence.
+- `research/audit.json` is the historical v1 Size / Difficulty / Complexity
+  audit and is not the active consistency record.
+- `docs/learning-levels.md`, `docs/qualification.md`, and
+  `docs/research-process.md` define source inspection and review judgment.
+- `tests/test_catalog.py` protects the formula, gates, paths, licenses,
+  reconciliation, gaps, and deterministic generation.
+- `.github/workflows/validate.yml` runs the same ordinary gate the README
+  claims while gaps exist.
 
-The repository has no runtime service and no third-party Python dependencies.
-Its product is the reviewed data and the Markdown generated from it.
+The repository has no runtime service or third-party Python dependency. Its
+product is reviewed canonical data and generated Markdown. The current corpus
+uses named AI-assisted source-inspection and verification passes under the
+project owner's direction and acceptance; automation does not independently
+prove source-quality or pedagogical judgments.
 
 ## Routine verification
 
-Run the complete gate before every release and after any canonical catalog or
-generator change:
-
 ```console
 python3 -m unittest discover -s tests -v
-python3 scripts/catalog.py validate --complete
-python3 scripts/catalog.py check-generated --complete
+python3 scripts/catalog.py validate
+python3 scripts/catalog.py check-generated
 ```
 
-Run generation only after editing canonical JSON:
+After canonical changes:
 
 ```console
 python3 scripts/catalog.py generate
 ```
 
-Generated output and canonical input belong in the same commit. If
-`check-generated` reports a stale file, diagnose whether canonical data or the
-generator changed before regenerating; do not hand-patch the Markdown.
+Use `--complete` on validation and generated checks only when every language
+has two qualified learning paths at every Level. Commit canonical input and
+generated output together.
 
 ## Refreshing an accepted entry
 
-1. Establish the verified starting state: exact catalog file, repository,
-   pinned commit, start path, sampled files, LOC, S/D/C, license, and GitHub
-   metadata.
-2. Confirm the pinned repository, commit, start path, and license target still
-   resolve publicly. A default-branch move alone does not invalidate pinned
-   evidence.
-3. Decide whether a refresh is warranted. Use a newer commit only for a factual
-   correction, a material upstream change, or an intentional periodic review;
-   never silently replace the evidence base.
-4. Inspect the new revision from scratch: purpose, entry point, core behavior,
-   boundaries, tests, architecture, language classification, and license.
-5. Recount meaningful implementation LOC with the global and repository-specific
-   exclusions. Reassign S from the count, then judge D and C independently.
-6. Reapply all eight quality dimensions and rewrite claims that changed. Do not
-   preserve prose merely to minimize the diff.
-7. Update the full commit, inspection date, reviewers, sampled files, metadata
-   date, start link, license link, LOC evidence, and placement explanation as
-   one review unit.
+1. Establish the exact catalog file, `(repository, path_slug)` identity, pin,
+   learning path, prerequisites, concepts developed, four scores, quality
+   findings, inspection files, language evidence, and license URLs.
+2. Verify that the pinned repository, commit, every path, and every license
+   target remain public. A default-branch move alone does not invalidate them.
+3. Move to a new commit only for a factual correction, material upstream
+   change, or intentional periodic review.
+4. Reinspect the new revision: purpose, selected behavior, implementation,
+   tests, boundaries, documentation, language classification, and license.
+5. Reapply coding relevance and all eight quality findings.
+6. Record recurring evidence for all four dimensions before calculating the
+   Level. Repository size remains irrelevant.
+7. Update the commit, date, named review passes, inspected files, path, domain
+   context, prerequisites, concepts developed, learner prose, scores, metadata,
+   and license URLs as one evidence unit.
 8. Regenerate, verify, and compare the diff with the intended boundary.
 
-If the refreshed revision no longer qualifies, remove the entry and record the
-reason in `research/rejections.json`. An honest gap is preferable to retaining
-an unsupported recommendation.
+If the refresh no longer qualifies, remove the entry and append the reason. An
+honest gap is preferable to unsupported retention.
 
-## Repository, link, and license drift
+## Repository, path, and license drift
 
-- **Renamed or transferred repository:** verify the GitHub redirect and new
-  canonical owner/name. Update every canonical URL only if the pinned commit and
-  paths resolve under the new location.
-- **Deleted or private repository:** remove it; public source inspection is a
-  hard requirement. Do not substitute an unverified fork.
-- **Archived repository:** archival is not automatic rejection. Reapply the
-  archived-project rule in `docs/qualification.md` and disclose the state.
-- **Missing pinned commit:** determine whether history was rewritten or the
-  repository moved. A replacement commit requires a full source refresh.
-- **License changed:** the accepted evidence remains pinned, but moving to a new
-  revision requires reviewing its current terms. Preserve compound,
-  package-specific, exception, and third-party-notice expressions rather than
-  flattening them into a simpler label.
-- **GitHub language label changed:** inspect the actual first-party paths.
-  Linguist is evidence, not authority, and generated or vendored source can
-  dominate it.
+- **Rename or transfer:** verify the redirect and that the pin and paths resolve
+  under the canonical location before changing URLs.
+- **Deleted or private:** remove the entry; never substitute an unreviewed fork.
+- **Archived:** reapply the archived-project rule and disclose the state;
+  archival alone is not rejection.
+- **Missing pin:** determine whether history moved. A replacement pin requires a
+  full refresh.
+- **Changed license:** preserve exact compound, package-specific, exception, and
+  third-party-notice terms. Every expression component needs pinned evidence.
+- **Changed GitHub language label:** inspect first-party paths. Linguist is
+  evidence, not authority.
 
-## SDC review and disputes
+## Learning-level review and disputes
 
-S is mechanical once the meaningful source boundary is correct. D and C are
-expert judgments constrained by public anchors.
+- Compare the selected paths and their four-score profiles, not repository
+  prestige or a desired slot.
+- Cite recurring evidence for the disputed anchor.
+- Use the lower anchor when the higher signal is isolated or outside the trace.
+- Keep whole-number dimensions and apply the public formula exactly.
+- Apply the score-4 Level-3 floor, score-5 Level-4 floor, and Level-5 guardrail.
+- Do not add private overrides or average reviewer scores; resolve the supported
+  anchor in prose.
 
-- Compare disputed entries to neighboring projects with similar S/D/C profiles,
-  not merely to projects in the desired slot.
-- Cite the exact recurring source signal that supports the higher D or C anchor.
-- Use the lower anchor when the higher signal is isolated or outside the main
-  learner path.
-- Keep whole-number dimensions; never publish decimal repository rankings.
-- Apply the arithmetic formula and two guardrails exactly. Do not add a private
-  override for one awkward project.
-- Resolve disagreement through review and record the reason in prose; do not
-  average reviewers' scores.
-
-Corpus-wide changes require a new dated section in `docs/calibration.md` and an
-updated `research/audit.json` explaining every measurement or placement change.
+Corpus-wide corrections belong in `docs/learning-level-calibration.md` and the
+current audit with every placement change explained.
 
 ## Rejected candidates
 
-Before researching a candidate, search `research/rejections.json`. Reconsider
-it only when the recorded condition is now true or the proposed learning track
-has materially changed. Add a new dated record rather than erasing the old
-decision; Git history should show why the conclusion changed.
-
-A rejection needs a concrete failed requirement and observed evidence. “Not
-good enough” and “found a better project” are not reviewable explanations.
+Search `research/rejections.json` before reviewing. Reconsider a record only
+when its literal condition is now true or the proposed path materially differs.
+Append a new dated decision; never erase history. “Not good enough” is not a
+reviewable failed requirement.
 
 ## Adding, removing, or replacing a language
 
-Review the language scope annually or when a clearly newer source ranking is
-available. A scope change must:
+Review scope annually or when a clearly newer ranking is available. A scope
+change must:
 
-1. preserve the previous source and date in Git history;
-2. update `docs/language-selection.md` with the new rule and ambiguous cases;
-3. update the order and evidence in `catalog/languages.json`;
-4. add or remove the matching canonical language JSON;
-5. curate up to two qualified entries for every level without lowered
+1. preserve the prior source and date in Git history;
+2. update `docs/language-selection.md` and `catalog/languages.json`;
+3. add or remove the matching canonical file;
+4. research up to two qualified learning paths per Level without lowered
    standards;
-6. update the current 20-language and 200-entry expectations in
-   `scripts/catalog.py` and their tests when the scope size changes;
-7. regenerate every learner page and repeat the live-facts, distribution, and
-   navigation audits; and
-8. update the README counts and audit record.
+5. update language-count expectations in the validator and tests;
+6. regenerate navigation and repeat the live-fact and consistency audits; and
+7. update literal counts and gaps in public documentation.
 
-Do not silently swap one language to preserve a fixed count. The selection rule
-is part of the public methodology.
+Do not swap a language merely to preserve a fixed total.
 
 ## Whole-corpus audit
 
-Repeat the audit before a tagged release and after a material scope change.
-For every accepted entry, verify:
+Before a tagged release and after material scope changes, verify for every
+accepted entry:
 
-- canonical repository and public visibility;
-- archive state and sensible language classification;
-- exact pinned commit, start path, and license target;
-- license terms permitting public source inspection;
-- no inappropriate duplicate repository;
-- required learner prose, prerequisites, and all eight quality findings;
-- correct size band, formula, and guardrails;
-- current generated Markdown and root-to-entry navigation; and
-- no admission rationale that substitutes stars, downloads, or reputation for
-  source evidence.
+- public repository, archive state, language classification, globally unique
+  `(repository, path_slug)` identity, and the two-path repository cap;
+- exact pin and every safe learning-path and inspection path;
+- coding-relevance and all eight quality findings;
+- four scores, formula and all score floors, bucket capacity, prerequisites,
+  concepts developed, their separation, and domain context;
+- exact SPDX expression and all pinned license evidence;
+- literal counts, honest gaps, generated navigation, and root-to-source links;
+  and
+- no popularity signal substituted for source inspection.
 
-Record the date, checked commit, method, totals, failures, corrections, and the
-literal repository set in `research/audit.json`. Run the final tests from an
-isolated committed snapshot, with every dotenv naming variant explicitly
-excluded from the snapshot operation.
+Record date, checked commit, method, totals, failures, corrections, accepted
+set, rejected set, review provenance, and remaining gaps in the current audit.
+Run the final gate from an isolated committed snapshot that explicitly excludes
+all dotenv naming variants.
 
 ## Dotenv and secret boundary
 
-Dotenv files are opaque secrets. Never open, read, search, print, diff, parse,
-source, or otherwise inspect `.env`, names ending in `.env`, `.env.*`, or
-`*.env.*`. Every recursive listing, search, archive, and bulk-content operation
-must explicitly exclude those patterns. If maintenance appears to require a
-value from one, stop and ask the file's owner to handle it without pasting the
-secret into an issue or pull request.
+Never open, read, search, print, diff, parse, source, or inspect `.env`, names
+ending in `.env`, `.env.*`, or `*.env.*`. Explicitly exclude all four patterns
+from every recursive listing, search, archive, and bulk-content operation. If
+maintenance seems to require one, the file owner must handle it without pasting
+its contents into an issue or pull request.
 
 ## Release checklist
 
-- Canonical data validates as a complete corpus.
+- Ordinary validation passes; complete validation also passes only when no gap
+  remains.
 - Unit tests pass on the supported Python version.
-- Generated Markdown is current and has no manual edits.
-- The live-facts and navigation audits are dated and pass.
-- README counts, project status, and maintenance links are current.
-- The repository is public and the default branch is `main`.
+- Generated Markdown is current and unmodified by hand.
+- Live-fact, license, path, and navigation audits are dated and pass.
+- README counts, project status, and maintenance links are literal.
 - GitHub Actions passes on `main`.
-- Local `main` matches `origin/main` and the recognized working tree is clean.
+- Local and remote `main` agree, and the recognized working tree is clean.

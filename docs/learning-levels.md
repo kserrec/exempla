@@ -108,10 +108,13 @@ Each dimension receives one whole-number score from 1 through 5.
 
 Take the arithmetic mean of language technique, behavioral reasoning, design
 span, and constraint burden, then round exact halves upward. If any dimension
-is 5, the published level is at least 4. A path reaches Level 5 only when its
-rounded mean is 5 and at least two dimensions are themselves 5.
+is 4, the published level is at least 3. If any dimension is 5, the published
+level is at least 4. A path reaches Level 5 only when its rounded mean is 5 and
+at least two dimensions are themselves 5.
 
 For example, `3 / 3 / 2 / 2` has a mean of 2.50 and becomes **Level 3**.
+`4 / 1 / 1 / 1` has a mean of 1.75 but becomes **Level 3** because advanced
+machinery in one dimension is not a beginner or intermediate learning burden.
 `5 / 2 / 2 / 2` has a mean of 2.75 but becomes **Level 4** because one expert
 burden may not be published as beginner or intermediate. `5 / 5 / 4 / 4` has a
 mean of 4.50 and becomes **Level 5**.

@@ -1,31 +1,89 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/kserrec/exempla/blob/main/catalog/schema.json",
-  "title": "Exempla language catalog",
+  "title": "Exempla learner-centered language catalog",
   "type": "object",
   "required": ["schema_version", "language_slug", "repositories"],
   "additionalProperties": false,
   "properties": {
-    "schema_version": {"const": 1},
+    "schema_version": {"const": 3},
     "language_slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
-    "repositories": {
-      "type": "array",
-      "items": {"$ref": "#/$defs/repository"}
-    }
+    "repositories": {"type": "array", "items": {"$ref": "#/$defs/repository"}}
   },
   "$defs": {
     "nonEmptyString": {"type": "string", "minLength": 1},
     "score": {"type": "integer", "minimum": 1, "maximum": 5},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\/$)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))(?![^/]*\\.[eE][nN][vV](?:\\.[^/]*)?(?:/|$))(?!.*\\/[^/]*\\.[eE][nN][vV](?:\\.[^/]*)?(?:/|$))(?!.*//)(?!.*\\\\).+$"
+    },
+    "stringList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "judgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "signals", "reason"],
+      "properties": {
+        "score": {"$ref": "#/$defs/score"},
+        "signals": {"$ref": "#/$defs/stringList"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_quality",
+        "architecture",
+        "naming_and_idiom",
+        "tests",
+        "documentation",
+        "traceability",
+        "maintainability",
+        "educational_value"
+      ],
+      "properties": {
+        "source_quality": {"$ref": "#/$defs/nonEmptyString"},
+        "architecture": {"$ref": "#/$defs/nonEmptyString"},
+        "naming_and_idiom": {"$ref": "#/$defs/nonEmptyString"},
+        "tests": {"$ref": "#/$defs/nonEmptyString"},
+        "documentation": {"$ref": "#/$defs/nonEmptyString"},
+        "traceability": {"$ref": "#/$defs/nonEmptyString"},
+        "maintainability": {"$ref": "#/$defs/nonEmptyString"},
+        "educational_value": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
     "repository": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "slug", "repository", "url", "primary_language", "language_evidence", "description",
-        "real_world_evidence", "why_study", "learn", "prerequisites",
-        "start_here", "sdc", "quality", "inspection", "license", "github"
+        "slug",
+        "path_slug",
+        "repository",
+        "url",
+        "primary_language",
+        "language_evidence",
+        "description",
+        "real_world_evidence",
+        "why_study",
+        "learn",
+        "prerequisites",
+        "concepts_developed",
+        "coding_relevance",
+        "learning_path",
+        "learning_level",
+        "quality",
+        "inspection",
+        "license",
+        "github"
       ],
       "properties": {
-        "slug": {"$ref": "#/$defs/nonEmptyString"},
+        "slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+        "path_slug": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
         "repository": {"type": "string", "pattern": "^[^/\\s]+/[^/\\s]+$"},
         "url": {"type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+$"},
         "primary_language": {"$ref": "#/$defs/nonEmptyString"},
@@ -33,56 +91,64 @@
         "description": {"$ref": "#/$defs/nonEmptyString"},
         "real_world_evidence": {"$ref": "#/$defs/nonEmptyString"},
         "why_study": {"$ref": "#/$defs/nonEmptyString"},
-        "learn": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonEmptyString"}},
-        "prerequisites": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonEmptyString"}},
-        "start_here": {
+        "learn": {"$ref": "#/$defs/stringList"},
+        "prerequisites": {"$ref": "#/$defs/stringList"},
+        "concepts_developed": {"$ref": "#/$defs/stringList"},
+        "coding_relevance": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["path", "reason"],
+          "required": ["gate", "domain_context", "reason"],
           "properties": {
-            "path": {"$ref": "#/$defs/nonEmptyString"},
+            "gate": {"const": "pass"},
+            "domain_context": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
             "reason": {"$ref": "#/$defs/nonEmptyString"}
           }
         },
-        "sdc": {
+        "learning_path": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["level", "size", "difficulty", "complexity", "placement"],
+          "required": ["goal", "start_here", "supporting_files", "trace"],
           "properties": {
-            "level": {"$ref": "#/$defs/score"},
-            "size": {
+            "goal": {"$ref": "#/$defs/nonEmptyString"},
+            "start_here": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["score", "loc", "tool", "measured_at", "exclusions", "notes"],
+              "required": ["path", "reason"],
               "properties": {
-                "score": {"$ref": "#/$defs/score"},
-                "loc": {"type": "integer", "minimum": 1},
-                "tool": {"$ref": "#/$defs/nonEmptyString"},
-                "measured_at": {"type": "string", "format": "date"},
-                "exclusions": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}},
-                "notes": {"$ref": "#/$defs/nonEmptyString"}
+                "path": {"$ref": "#/$defs/safePath"},
+                "reason": {"$ref": "#/$defs/nonEmptyString"}
               }
             },
-            "difficulty": {"$ref": "#/$defs/judgment"},
-            "complexity": {"$ref": "#/$defs/judgment"},
+            "supporting_files": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/safePath"}
+            },
+            "trace": {"$ref": "#/$defs/nonEmptyString"}
+          }
+        },
+        "learning_level": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "level",
+            "language_technique",
+            "behavioral_reasoning",
+            "design_span",
+            "constraint_burden",
+            "placement"
+          ],
+          "properties": {
+            "level": {"$ref": "#/$defs/score"},
+            "language_technique": {"$ref": "#/$defs/judgment"},
+            "behavioral_reasoning": {"$ref": "#/$defs/judgment"},
+            "design_span": {"$ref": "#/$defs/judgment"},
+            "constraint_burden": {"$ref": "#/$defs/judgment"},
             "placement": {"$ref": "#/$defs/nonEmptyString"}
           }
         },
-        "quality": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": ["source_quality", "architecture", "naming_and_idiom", "tests", "documentation", "traceability", "maintainability", "educational_value"],
-          "properties": {
-            "source_quality": {"$ref": "#/$defs/nonEmptyString"},
-            "architecture": {"$ref": "#/$defs/nonEmptyString"},
-            "naming_and_idiom": {"$ref": "#/$defs/nonEmptyString"},
-            "tests": {"$ref": "#/$defs/nonEmptyString"},
-            "documentation": {"$ref": "#/$defs/nonEmptyString"},
-            "traceability": {"$ref": "#/$defs/nonEmptyString"},
-            "maintainability": {"$ref": "#/$defs/nonEmptyString"},
-            "educational_value": {"$ref": "#/$defs/nonEmptyString"}
-          }
-        },
+        "quality": {"$ref": "#/$defs/quality"},
         "inspection": {
           "type": "object",
           "additionalProperties": false,
@@ -90,17 +156,27 @@
           "properties": {
             "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
             "inspected_at": {"type": "string", "format": "date"},
-            "reviewers": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonEmptyString"}},
-            "files": {"type": "array", "minItems": 3, "items": {"$ref": "#/$defs/nonEmptyString"}}
+            "reviewers": {"$ref": "#/$defs/stringList"},
+            "files": {
+              "type": "array",
+              "minItems": 3,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/safePath"}
+            }
           }
         },
         "license": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["spdx", "url"],
+          "required": ["spdx", "urls"],
           "properties": {
             "spdx": {"$ref": "#/$defs/nonEmptyString"},
-            "url": {"type": "string", "pattern": "^https://github\\.com/"}
+            "urls": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"type": "string", "pattern": "^https://github\\.com/"}
+            }
           }
         },
         "github": {
@@ -113,16 +189,6 @@
             "metadata_checked_at": {"type": "string", "format": "date"}
           }
         }
-      }
-    },
-    "judgment": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["score", "signals", "reason"],
-      "properties": {
-        "score": {"$ref": "#/$defs/score"},
-        "signals": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/nonEmptyString"}},
-        "reason": {"$ref": "#/$defs/nonEmptyString"}
       }
     }
   }

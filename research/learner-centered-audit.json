@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "audit_name": "learner-centered corpus audit",
+  "audited_at": "2026-08-29",
+  "scope": "The 150 accepted learning paths after the path-identity, score-floor, prerequisite, concepts-developed, source-evidence, and Level 1 remediation pass.",
+  "catalog_summary": {
+    "accepted_path_total": 150,
+    "unique_repository_total": 149,
+    "capacity": 200,
+    "documented_gap_total": 50,
+    "by_level": {
+      "1": 3,
+      "2": 35,
+      "3": 39,
+      "4": 40,
+      "5": 33
+    },
+    "by_language": [
+      {"language_slug": "c", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "c-sharp", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "cpp", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "dart", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 1}, "total": 7},
+      {"language_slug": "go", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "java", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "javascript", "levels": {"1": 2, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 10},
+      {"language_slug": "kotlin", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
+      {"language_slug": "lua", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 1}, "total": 6},
+      {"language_slug": "objective-c", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "php", "levels": {"1": 1, "2": 2, "3": 2, "4": 2, "5": 0}, "total": 7},
+      {"language_slug": "powershell", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 1}, "total": 7},
+      {"language_slug": "python", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "r", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "ruby", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
+      {"language_slug": "rust", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
+      {"language_slug": "scala", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
+      {"language_slug": "shell", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 0}, "total": 6},
+      {"language_slug": "swift", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
+      {"language_slug": "typescript", "levels": {"1": 0, "2": 2, "3": 1, "4": 2, "5": 2}, "total": 7}
+    ]
+  },
+  "checks": [
+    {
+      "check": "accepted-entry total and distribution",
+      "status": "pass",
+      "evidence": "150 accepted paths reconcile to the 20 language files and to the 3/35/39/40/33 level totals recorded above. Fifty unfilled capacity slots remain explicit gaps."
+    },
+    {
+      "check": "path identity",
+      "status": "pass",
+      "evidence": "All 150 (repository, path_slug) pairs are unique. Every accepted record has a canonical path_slug."
+    },
+    {
+      "check": "repository diversity cap",
+      "status": "pass",
+      "evidence": "No repository supplies more than two paths. webmozarts/assert supplies exactly two materially distinct paths; each of the other 148 repositories supplies one."
+    },
+    {
+      "check": "same-bucket repository duplication",
+      "status": "pass",
+      "evidence": "No repository occupies both slots in one language and Level bucket. Webmozart's two paths occupy PHP Levels 1 and 3."
+    },
+    {
+      "check": "formula correctness",
+      "status": "pass",
+      "evidence": "scripts/catalog.py recalculated all four-score profiles with half-up rounding and found no published-level mismatch."
+    },
+    {
+      "check": "score guardrails",
+      "status": "pass",
+      "evidence": "All 92 paths containing a score of 4 publish at Level 3 or above; all 43 paths containing a score of 5 publish at Level 4 or above; every Level 5 path has at least two scores of 5. There are zero violations."
+    },
+    {
+      "check": "concepts developed",
+      "status": "pass",
+      "evidence": "All 150 paths have non-empty, distinct concepts_developed lists."
+    },
+    {
+      "check": "prerequisite and lesson separation",
+      "status": "pass",
+      "evidence": "The exact-duplicate validator reports zero overlaps. A normalized content-token scrub followed by manual review reports zero remaining high-overlap prerequisite/concept pairs; the audit record separately deep-checks the source claims for the flagged paths."
+    },
+    {
+      "check": "pinned source evidence",
+      "status": "pass",
+      "evidence": "All 150 paths have a full 40-character pinned commit and inspected source, test, documentation, and license paths."
+    },
+    {
+      "check": "public repository, archive, and GitHub language metadata",
+      "status": "pass",
+      "evidence": "A live GitHub GraphQL and REST check on 2026-08-29 resolved all 149 unique repositories as public, enabled, and unarchived and matched every stored GitHub Linguist label."
+    },
+    {
+      "check": "selected-path language classification",
+      "status": "pass",
+      "evidence": "All selected paths contain meaningful first-party source in their catalog language. Two deliberate repository-label differences are documented: nimble-dev/nimble selects an R compiler path in a C++-labeled repository, and rust-cli/anstyle selects a Rust crate in an HTML-labeled repository."
+    },
+    {
+      "check": "license evidence",
+      "status": "pass",
+      "evidence": "All 150 paths carry an SPDX expression and at least one pinned license URL; 167 pinned license evidence URLs are recorded in total."
+    },
+    {
+      "check": "generated-page reconciliation",
+      "status": "pass",
+      "evidence": "python3 scripts/catalog.py generate completed, and check-generated reports that every learner-facing language README matches canonical catalog data."
+    },
+    {
+      "check": "source-mechanism claim consistency",
+      "status": "pass",
+      "evidence": "The remediation record contains 55 per-path pinned-source results: 53 pass and 2 corrected. r-lib/pkgconfig was corrected and rescored; pointfreeco/swift-tagged was corrected to Level 3. No unresolved high-risk mechanism claim remains."
+    }
+  ],
+  "cross_level_sanity": {
+    "level_1_vs_2": [
+      {
+        "lower": "sindresorhus/slash::a-small-javascript-utility-converts-windows-separators-lexically-while-preserving",
+        "higher": "mafintosh/pump::pump-tears-down-every-stream-and-completes-exactly-once-when",
+        "judgment": "Slash has one protected-prefix branch and one lexical replacement; pump coordinates multiple stream lifecycles, first-error propagation, teardown variants, and exactly-once completion. The Level 1 to Level 2 ordering is coherent."
+      },
+      {
+        "lower": "sindresorhus/escape-string-regexp::a-small-javascript-utility-validates-a-string-and-escapes-regular",
+        "higher": "sindresorhus/p-limit::p-limit-admits-queues-runs-and-completes-promise-returning-tasks",
+        "judgment": "A staged local string transformation is materially simpler than mutable concurrency admission, queuing, promise settlement, and capacity changes."
+      },
+      {
+        "lower": "webmozarts/assert::not-null-guard",
+        "higher": "doctrine/lexer::doctrine-s-reusable-lexer-scans-an-input-string-into-typed",
+        "judgment": "A strict null guard with one lazy failure message is materially simpler than cursor-driven token scanning with lookahead, skipping, and token contracts."
+      }
+    ],
+    "level_2_vs_3": [
+      {
+        "lower": "likle/cwalk::a-small-c-library-normalizes-and-relativizes-lexical-paths-safely",
+        "higher": "DaveGamble/cJSON::cjson-parses-bounded-text-into-an-owned-recursive-object-tree",
+        "judgment": "Bounded lexical path operations are narrower than allocation-hooked recursive parsing, owned tree topology, and recursive cleanup."
+      },
+      {
+        "lower": "tidwall/match::a-compact-go-matcher-handles-literal-bytes-single-byte-wildcards",
+        "higher": "gin-gonic/gin::gin-carries-one-http-request-from-servehttp-through-route-lookup",
+        "judgment": "A local wildcard matcher is narrower than pooled request context state, route-tree search, parameters, and middleware execution."
+      },
+      {
+        "lower": "rust-cli/anstyle::anstyle-composes-a-copyable-terminal-style-and-renders-exact-ansi",
+        "higher": "dtolnay/semver::semver-parses-cargo-style-version-and-requirement-strings-into-typed",
+        "judgment": "A bounded immutable rendering value is simpler than a byte parser and evaluator covering version, requirement, comparator, wildcard, prerelease, overflow, and formatting policy."
+      }
+    ],
+    "level_3_vs_4": [
+      {
+        "lower": "psf/requests::requests-get-becomes-a-prepared-request-passes-through-a-persistent",
+        "higher": "pallets/flask::flask-request-from-wsgi-entry-through-context-binding-routing-hooks",
+        "judgment": "The bounded client request/session trace spans fewer interacting extension and lifecycle systems than Flask's context binding, routing, hooks, exception handling, and response finalization."
+      },
+      {
+        "lower": "ai/nanoid::nano-id-converts-cryptographically-random-bytes-into-uniformly-distributed-custom",
+        "higher": "eslint/eslint::eslint-parses-one-source-file-creates-isolated-rule-listeners-traverses",
+        "judgment": "Nano ID has a compact rejection-sampling constraint; ESLint coordinates parsing, traversal, rule listeners, diagnostics, fixes, and configuration-sensitive behavior."
+      },
+      {
+        "lower": "pointfreeco/swift-tagged::tagged-value-identity",
+        "higher": "Alamofire/Alamofire::alamofire-coordinates-one-request-s-task-completion-interceptor-decision-retry",
+        "judgment": "Tagged's advanced language machinery stays behaviorally local, while Alamofire combines asynchronous task lifecycle, adaptation, retry decisions, queues, cancellation, and completion ordering."
+      }
+    ],
+    "level_4_vs_5": [
+      {
+        "lower": "DapperLib/Dapper::dapper-converts-one-data-reader-row-into-a-typed-object",
+        "higher": "dotnet/runtime::an-awaited-task-registers-and-eventually-runs-a-continuation-while",
+        "judgment": "Dapper's generated row-deserializer path is advanced but bounded; Task awaiting must preserve scheduler, synchronization-context, execution-context, race, inlining, cancellation, and continuation guarantees inside the runtime."
+      },
+      {
+        "lower": "kubernetes/kubernetes::kubernetes-client-go-coordinates-concurrent-workers-with-deduplicated-keys-delayed",
+        "higher": "golang/go::the-go-runtime-implements-channel-send-receive-close-and-select",
+        "judgment": "The workqueue is a cohesive synchronization abstraction; runtime channels additionally coordinate unsafe memory, scheduler parking and wakeup, send and receive queues, close, select, and race instrumentation."
+      },
+      {
+        "lower": "http4s/http4s::http4s-models-a-client-response-as-an-effectful-resource-so",
+        "higher": "typelevel/cats-effect::cats-effect-interprets-io-as-a-cancelable-fiber-and-schedules",
+        "judgment": "The response Resource path applies an effect system at one ownership boundary; Cats Effect implements the fiber interpreter, cancellation and finalization semantics, fairness, and runtime scheduling beneath such applications."
+      }
+    ],
+    "unusual_distributions": [
+      {
+        "languages": ["lua", "shell"],
+        "judgment": "Both retain only six accepted paths because source inspection did not justify beginner paths; Shell also has no qualifying Level 5 path, while Lua has one. The gaps are documented research outcomes, not formula anomalies."
+      },
+      {
+        "languages": ["php"],
+        "judgment": "PHP now has one Level 1 path through the distinct Webmozart guard but no Level 5 paths. This reflects one justified path-centered addition and two still-unresolved expert gaps."
+      },
+      {
+        "languages": ["swift", "typescript"],
+        "judgment": "Swift has one Level 2 path after the score-4 floor moved swift-tagged to Level 3; TypeScript has one Level 3 path. Both capacity gaps follow the rubric and recorded candidate decisions."
+      }
+    ],
+    "similar_profiles_across_languages": [
+      {
+        "profile": "3/2/1/2",
+        "paths": ["ardalis/GuardClauses", "VeryGoodOpenSource/formz", "doctrine/lexer", "r-lib/pkgconfig", "developit/mitt"],
+        "judgment": "Across five languages, recurring intermediate language constructs with local behavior and small design span consistently publish at Level 2."
+      },
+      {
+        "profile": "2/3/3/4",
+        "paths": ["gin-gonic/gin", "jhy/jsoup", "psf/requests"],
+        "judgment": "Across Go, Java, and Python, ordinary language machinery plus multi-component behavior and a demanding constraint set consistently publish at Level 3."
+      },
+      {
+        "profile": "5/5/4/5",
+        "paths": ["boostorg/asio", "facebook/folly", "golang/go", "spring-projects/spring-framework", "pester/Pester", "typelevel/cats-effect", "apple/swift-nio", "colinhacks/zod"],
+        "judgment": "Specialized language machinery, expert behavioral reasoning, and pervasive constraints consistently publish at Level 5 across unrelated ecosystems."
+      }
+    ],
+    "result": "pass"
+  },
+  "verification": [
+    {"command": "python3 -m unittest discover -s tests -v", "status": "pass", "result": "30 tests passed"},
+    {"command": "python3 scripts/catalog.py validate", "status": "pass", "result": "Catalog data is valid."},
+    {"command": "python3 scripts/catalog.py check-generated", "status": "pass", "result": "Generated Markdown is current."},
+    {"check": "GitHub live metadata query", "status": "pass", "result": "149 of 149 unique repositories resolved as public, enabled, and unarchived; zero stored metadata mismatches."}
+  ],
+  "known_limitations": [
+    "Fifty of 200 possible language and Level slots remain unfilled, including 37 of 40 possible Level 1 slots. Each Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
+    "Repository status and GitHub Linguist labels are a point-in-time check dated 2026-08-29 and can change after the audit.",
+    "The audit and verification passes are AI-assisted. No independent human inspection is claimed.",
+    "Hosted CI is external release evidence rather than a corpus-quality judgment and is not embedded in this point-in-time audit record."
+  ],
+  "audit_status": "pass-with-documented-gaps"
+}

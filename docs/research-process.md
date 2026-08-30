@@ -1,101 +1,123 @@
 # Candidate research process
 
-This process is systematic enough to be repeatable and deliberately small
-enough to keep human source review at its center.
+This process is repeatable but keeps source inspection and judgment at its
+center. Automation may validate facts and formulas; it may not admit, reject,
+or score a repository.
 
-## 1. Discover a varied candidate pool
+## 1. Calculate the real gaps
 
-For one language and one tentative difficulty band, gather candidates from at
-least three of these channels:
+List accepted entries and open slots for one language. Read the rebuild audit
+and existing rejection history before rediscovering candidates. Gaps direct
+research effort, but they never determine a candidate's score.
 
-- official language, foundation, or major ecosystem organizations;
-- package registries and reverse-dependency signals;
-- GitHub language/topic search across several repository-size ranges;
-- software named in production documentation or real user workflows;
-- respected maintainers' smaller libraries and tools;
-- curated ecosystem lists used only as leads, never as admission evidence.
+## 2. Discover through at least three channels
 
-Include smaller, less-famous projects deliberately. Do not sort only by stars,
-and do not use `good first issue` as a discovery or quality criterion.
+Use at least three independent sources such as:
 
-## 2. Triage eligibility before deep review
+- official language, foundation, or ecosystem organizations;
+- package registries and reverse-dependency evidence;
+- GitHub language and topic search across varied project sizes;
+- software named in production documentation or real workflows;
+- respected maintainers' smaller libraries and tools; and
+- curated ecosystem lists used only as leads.
 
-Record the canonical URL, public status, default branch, license, archive state,
-GitHub language breakdown, project purpose, and a pinned commit. Reject obvious
-tutorials, examples, generated artifacts, mirrors, templates, or projects whose
-cataloged language is incidental.
+Deliberately include smaller and less-famous real software. Do not search for a
+desired Level or sort only by stars.
 
-GitHub Linguist's top label is evidence, not a verdict. Generated files,
-fixtures, embedded intermediate representations, or documentation can dominate
-that label. When it differs from the catalog language, record the exact
-first-party implementation paths that justify classification; reject the
-candidate if the catalog language is not substantial in the real software.
+## 3. Triage before deep review
 
-Repository discovery and metadata APIs may automate this triage. They may not
-decide quality or SDC level.
+Record canonical URL, public status, genuine purpose, license, archive state,
+GitHub language label, meaningful first-party language paths, and a full pinned
+commit. Reject tutorials, examples, generated artifacts, mirrors, templates,
+incidental-language candidates, and obvious domain-gate failures early.
 
-## 3. Inspect actual source
+GitHub Linguist is evidence, not authority. Generated or vendored files can
+dominate its label; explicit first-party path evidence may support a different
+catalog classification.
 
-At the pinned revision, review enough of the artifact to cover:
+## 4. Inspect one representative learning path
 
-1. the top-level structure and documented purpose;
-2. a primary entry point or public API;
-3. the core implementation behind one meaningful behavior;
-4. at least one boundary such as persistence, network, filesystem, process,
-   plugin, or platform integration when present;
-5. tests that exercise the chosen behavior and an important edge case;
-6. architecture/developer documentation and the relevant build manifest.
+At the pin, review:
 
-For a small repository, read most implementation files. For a large repository,
-sample at least two major subsystems and trace one behavior end-to-end; do not
-pretend that sampling is an exhaustive whole-repository review.
+1. repository purpose and orientation documentation;
+2. one concrete production behavior;
+3. the public entry point or first source file;
+4. the implementation modules and meaningful boundaries in its trace;
+5. tests covering the behavior and an important failure or edge case;
+6. architecture or developer material needed to understand the boundaries;
+7. language-classification evidence; and
+8. every file needed to prove the selected-path license expression.
 
-Dotenv files (`.env`, names ending in `.env`, and variants such as `.env.local`
-or `service.env.production`) are opaque secrets: never open, search, print,
-diff, parse, or source them. Every recursive operation must exclude them.
+Rank this bounded path, not the whole repository. A large repository does not
+require a broad subsystem survey when a smaller representative path is
+complete, and total lines of code never enter the calculation.
 
-## 4. Measure S
+Dotenv files (`.env`, names ending in `.env`, `.env.*`, and `*.env.*`) are opaque
+secrets. Never open, search, print, diff, parse, or source them. Explicitly
+exclude all four patterns from every recursive operation.
 
-Run `tokei` against the pinned checkout with the global exclusions in
-[`sdc.md`](sdc.md) plus recorded repository-specific generated/vendor/fixture
-paths. Store the resulting meaningful implementation LOC, tool version, commit,
-date, and exclusions. The reviewer checks that the count represents the code a
-learner would actually navigate.
+## 5. Apply both gates
 
-## 5. Apply the quality gate
+Apply the [coding-relevance gate and eight quality findings](qualification.md)
+before scoring. A failed gate rejects even when the corresponding catalog slot
+is empty. Record the exact failed condition, evidence, and reconsideration
+condition immediately.
 
-Write observed evidence for all eight dimensions in
-[`qualification.md`](qualification.md). Reject a failed hard requirement even
-if the repository would fill an empty SDC slot. Add the reason to
-`research/rejections.json`.
+## 6. Write path and score evidence
 
-## 6. Score D and C independently
+For a passing candidate, record:
 
-Use the anchors and short signal checklists in [`sdc.md`](sdc.md). Write D and C
-evidence before calculating the final level. This prevents a desired level from
-back-propagating into the dimensions.
+- a stable `path_slug` that names this learning path inside the repository;
+- concrete goal;
+- start path and why reading begins there;
+- supporting implementation, tests, and documentation;
+- entry-to-result trace;
+- short prerequisites, distinct concepts developed, and any subordinate domain
+  context;
+- transferable lessons that follow from those developed concepts;
+- recurring signals and reasons for language technique, behavioral reasoning,
+  design span, and constraint burden; and
+- final Level from the published formula and guardrails.
 
-## 7. Write the learner path
+Write signals and reasons before calculating. Do not inspect the open slot and
+work backward to a desired result.
 
-For accepted candidates, state:
+## 7. Resolve capacity honestly
 
-- what the software does and the evidence that it is real-world software;
-- why this source is worth studying, not merely why the product is notable;
-- concrete concepts a learner can learn;
-- prerequisites beyond the assumed learner baseline;
-- a suggested starting file or directory and a traceable behavior;
-- why S, D, and C produce this placement.
+A repository may contribute at most two materially distinct learning paths
+across the catalog and may not appear twice in the same `(language, Level)`
+bucket. Each bucket holds at most two paths. When more paths qualify, compare
+educational clarity and path quality, retain the strongest two, and record the
+others as qualified capacity alternates. Never move a candidate to a
+neighboring Level.
 
-## 8. Review and record
+## 8. Verification pass and recording
 
-A second review checks the source evidence, hard qualification gate, level, and
-language classification. Disagreements cite a rubric anchor and are resolved
-before acceptance. The catalog records reviewer identifiers and inspection
-date; Git history preserves later changes.
+A separate review pass checks both gates, selected path, every score anchor,
+formula, capacity result, language, commit, file paths, quality findings, and
+license evidence. Record whether a person or a model performed each pass;
+never turn a model cross-check into a claim of independent human inspection.
+Resolve disagreements against source and the public anchors before acceptance.
 
-## 9. Refresh
+Accepted records go in `catalog/<language>.json`; serious failures and
+alternates are appended to `research/rejections.json`. Regenerate and validate
+canonical and learner-facing files together.
 
-Automated maintenance may detect dead links, changed default revisions, missing
-licenses, or generated-page drift. A human repeats source inspection and
-scoring before changing quality or difficulty claims. Automation never
-auto-admits or auto-regrades a repository.
+The current corpus was curated through AI-assisted source inspection and Codex
+verification passes under the project owner's direction and acceptance.
+Automation checks the schema, paths, formulas, capacity, reconciliation, and
+generated output, but source-quality and pedagogical judgments remain review
+judgments. Pinned community corrections are welcome.
+
+## 9. Declaring an unresolved gap
+
+A gap may remain only after recording the three or more discovery channels and
+the plausible candidates inspected. A superficial single search is not
+diligent research. Truth outranks a full grid.
+
+## 10. Refresh
+
+Automated checks may report dead links, metadata changes, or generated drift.
+Changing a pin, gate, path, quality finding, or Level requires a new source
+review by a human or an explicitly identified model. Automation never
+auto-regrades an entry.

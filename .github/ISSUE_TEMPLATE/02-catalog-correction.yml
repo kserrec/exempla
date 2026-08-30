@@ -25,7 +25,9 @@ body:
         - Description or real-world evidence
         - License
         - Language classification
-        - LOC measurement or exclusions
+        - Inspected learning-path files
+        - Coding-relevance evidence
+        - Learning-level score evidence or placement
         - Learning path or prerequisites
         - Quality evidence
         - Other factual metadata

@@ -1,336 +1,860 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "language_slug": "powershell",
   "repositories": [
     {
-      "slug": "psini",
-      "repository": "lipkau/PSIni",
-      "url": "https://github.com/lipkau/PSIni",
-      "primary_language": "PowerShell",
-      "language_evidence": "INI parsing, ordered-hashtable construction, duplicate-key handling, comment preservation, serialization, encoding support, and the test suite are implemented in PowerShell under PSIni and Tests.",
-      "description": "A compact PowerShell module that reads and writes INI files as ordered hashtables while preserving sections, comments, repeated keys, and encoding choices.",
-      "real_world_evidence": "PSIni is maintained as a versioned PowerShell Gallery module, and its README documents command-line and pipeline use for application and system configuration files.",
-      "why_study": "Two small public commands expose the complete path from line-oriented text through section and key parsing into an ordered object model and back to a stable file representation.",
-      "learn": ["Advanced functions, pipeline input, ordered hashtables, line-oriented parsing, regular expressions, repeated-key policies, comment preservation, text encodings, ShouldProcess, and focused Pester tests."],
-      "prerequisites": ["PowerShell functions and parameters, hashtables, pipelines, regular expressions, filesystem cmdlets, encodings, and basic Pester assertions."],
-      "start_here": {"path": "PSIni/Public/Import-Ini.ps1", "reason": "Import-Ini contains the whole read path: it selects an encoding, recognizes sections, comments, and key-value lines, applies duplicate-key policy, and returns the ordered structure exercised by the unit suite."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 413, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "build and packaging files", "README.md"], "notes": "Count covers the complete production PowerShell module under PSIni and excludes tests, documentation, and release metadata."},
-        "difficulty": {"score": 1, "signals": ["explicit line classification", "bounded regular expressions", "straightforward encoding selection"], "reason": "The parser handles useful edge cases, but its state is limited to the current section and output hashtable, with no advanced algorithm or runtime concern."},
-        "complexity": {"score": 1, "signals": ["two public commands", "one in-memory representation", "single file-read and file-write boundary"], "reason": "All behavior is local to one small module with no services, concurrency, persistence model, or plugin topology."},
-        "placement": "S1/D1/C1 averages to 1.00, making PSIni an SDC 1 project."
-      },
-      "quality": {
-        "source_quality": "Parsing and serialization keep their branches explicit, preserve input order deliberately, and report malformed or duplicate data through visible policies.",
-        "architecture": "Import-Ini builds an ordered section model and Export-Ini serializes the same model; small private helpers centralize encoding and formatting details.",
-        "naming_and_idiom": "Import-Ini, Export-Ini, AllowDuplicateKeys, SkipComments, and NoSection make both the object model and edge-case policy discoverable.",
-        "tests": "Pester suites cover files and literal content, comments, blank lines, global keys, sections, duplicate keys, malformed input, encodings, pipelines, and round trips.",
-        "documentation": "The README explains installation, both commands, object shapes, switches, encodings, examples, and compatibility.",
-        "traceability": "A line can be followed through Import-Ini's match branches into a specific hashtable entry and then through Export-Ini into exact text assertions.",
-        "maintainability": "The public surface is narrow, behavior flags are explicit, the representation is a standard PowerShell type, and regression cases are close to the implementation.",
-        "educational_value": "It is an approachable complete parser and serializer whose useful edge cases do not overwhelm the central control flow."
-      },
-      "inspection": {"commit": "6895c42fdba461a1a171fe70e11d67c037bac1d0", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "PSIni/Public/Import-Ini.ps1", "PSIni/Public/Export-Ini.ps1", "Tests/Import-Ini.Unit.Tests.ps1", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
       "slug": "invoke-msbuild",
+      "path_slug": "a-powershell-adapter-discovers-a-versioned-external-build-executable-across",
       "repository": "deadlydog/Invoke-MsBuild",
       "url": "https://github.com/deadlydog/Invoke-MsBuild",
       "primary_language": "PowerShell",
       "language_evidence": "MSBuild discovery, argument construction, process execution, log lifecycle, result classification, and Pester tests are implemented in PowerShell under src/Invoke-MsBuild.",
       "description": "A small PowerShell module that locates an installed MSBuild, runs a project or solution with structured options, manages logs, and reports a typed build result.",
       "real_world_evidence": "The repository publishes the Invoke-MsBuild PowerShell module and documents use from build scripts, continuous-integration jobs, and ordinary PowerShell sessions.",
-      "why_study": "One production module shows how to wrap a real external tool responsibly: discover it, translate friendly parameters into command-line arguments, isolate process execution, capture logs, and distinguish success from failure.",
-      "learn": ["Advanced functions, parameter sets, executable discovery, Visual Studio installation probing, command-line construction, System.Diagnostics.Process, output and error capture, temporary logs, result objects, mocking, and platform-dependent tests."],
-      "prerequisites": ["PowerShell modules and advanced functions, filesystem paths, external processes, quoting, hashtables, try/finally cleanup, and basic MSBuild concepts."],
-      "start_here": {"path": "src/Invoke-MsBuild/Invoke-MsBuild.psm1", "reason": "The single production file contains executable discovery, argument assembly, process invocation, logging, cleanup, and result construction, so the complete adapter can be read in sequence."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 420, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["src/Tests/", "examples and sample build files", "documentation and packaging files"], "notes": "Count covers the complete production module under src/Invoke-MsBuild and excludes tests, examples, documentation, and package metadata."},
-        "difficulty": {"score": 2, "signals": ["toolchain discovery across Visual Studio generations", "external process and log lifecycle", "command-line quoting and option translation"], "reason": "The wrapper crosses a process boundary and several installation layouts, but the logic remains direct and uses standard .NET and PowerShell facilities."},
-        "complexity": {"score": 1, "signals": ["one module", "one external executable boundary", "single invocation-to-result path"], "reason": "There is no internal subsystem graph; discovery and execution are cohesive stages in one file."},
-        "placement": "S1/D2/C1 averages to 1.33, making Invoke-MsBuild an SDC 1 project."
+      "why_study": "The selected discovery function shows how a PowerShell adapter searches versioned installation layouts, orders candidates, chooses an architecture, falls back to legacy locations, and makes absence explicit.",
+      "learn": [
+        "Use `Get-LatestMsBuildPath` in `Invoke-MsBuild.psm1` to study advanced functions, filesystem candidate discovery, version sorting, architecture selection, legacy fallback, explicit missing-tool behavior, and mocked installation-layout tests."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PowerShell functions, scriptblocks, pipelines, arrays and hashtables, .NET objects, errors, and Pester tests."
+      ],
+      "concepts_developed": [
+        "PowerShell functions over filesystem and .NET path APIs.",
+        "Ordered candidate probing.",
+        "Visual Studio generations use different directory layouts."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "MSBuild discovery means locating the executable or developer command prompt across conventional Visual Studio installation generations and architectures."
+        ],
+        "reason": "The short tool vocabulary is subordinate to transferable lessons in filesystem probing, version ordering, architecture selection, fallbacks, parameter validation, and isolating operating-system dependencies behind focused tests."
       },
-      "quality": {
-        "source_quality": "Input validation, command construction, process ownership, log cleanup, and failure reporting are visible rather than hidden behind a generic shell helper.",
-        "architecture": "Discovery resolves an executable, the public command builds its argument vector, a process wrapper executes it, and a result object exposes the outcome and log.",
-        "naming_and_idiom": "Invoke-MsBuild, Get-MsBuildPath, BuildParameters, LogVerbosity, and BuildResult communicate the adapter's responsibilities directly.",
-        "tests": "Pester tests mock installation layouts and process calls while covering path selection, parameters, logging, success, failure, cleanup, and pipeline behavior.",
-        "documentation": "The README explains installation, common calls, every major option, returned data, logging, and continuous-integration usage.",
-        "traceability": "A project path can be followed into the exact MSBuild argument string, ProcessStartInfo, log file, exit classification, and corresponding mocked test.",
-        "maintainability": "The module has one clear dependency boundary, keeps discovery replaceable, and exercises operating-system-specific decisions with mocks.",
-        "educational_value": "It demonstrates that even a small command wrapper benefits from explicit process, path, quoting, cleanup, and error contracts."
+      "learning_path": {
+        "goal": "Understand how a PowerShell adapter discovers a versioned external build executable across operating-system installation conventions and validates its fallback choices.",
+        "start_here": {
+          "path": "src/Invoke-MsBuild/Invoke-MsBuild.psm1",
+          "reason": "Get-LatestMsBuildPath is the exact entry to the scored discovery behavior inside the module and connects directly to fake-installation tests for its ordering and fallback choices."
+        },
+        "supporting_files": [
+          "src/Tests/Invoke-MsBuild.Tests.ps1",
+          "ReadMe.md",
+          "License.md"
+        ],
+        "trace": "Begin at Get-LatestMsBuildPath, follow conventional Visual Studio and MSBuild directory candidates through version sorting, architecture choice, legacy fallback, and missing-path behavior, then close those decisions in the fake-installation tests. The broader invocation, process, logging, cleanup, and result lifecycle is intentionally not claimed because the listed suite does not directly close it."
       },
-      "inspection": {"commit": "7fee8e141296ea6c337e433537d7061f52e24157", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["ReadMe.md", "src/Invoke-MsBuild/Invoke-MsBuild.psm1", "src/Tests/Invoke-MsBuild.Tests.ps1", "License.md"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/License.md"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "invoke-build",
-      "repository": "nightroman/Invoke-Build",
-      "url": "https://github.com/nightroman/Invoke-Build",
-      "primary_language": "PowerShell",
-      "language_evidence": "Task declaration, dependency validation, incremental scheduling, execution, error propagation, checkpoints, parallel builds, graph output, and the behavior suites are PowerShell.",
-      "description": "A compact build-automation engine for PowerShell with task graphs, incremental inputs and outputs, nested builds, checkpoints, hooks, structured results, and parallel build execution.",
-      "real_world_evidence": "Invoke-Build is distributed through the PowerShell Gallery, NuGet, and a dotnet tool, and its documentation links to production projects that use its build-script model.",
-      "why_study": "The project fits a real build engine into a small codebase while leaving task registration, graph validation, up-to-date checks, scope handling, job execution, and parallel orchestration inspectable.",
-      "learn": ["PowerShell dynamic parameters, build DSLs, task dependency graphs, cycle detection, incremental timestamps, nested script scopes, hooks, structured errors, asynchronous PowerShell instances, timeouts, checkpoints, and executable specification tests."],
-      "prerequisites": ["Advanced PowerShell functions and scopes, scriptblocks, dynamic parameters, collections, graph traversal, filesystem timestamps, asynchronous invocation, and build-system concepts."],
-      "start_here": {"path": "Invoke-Build.ps1", "reason": "The engine file defines the task DSL, constructs and validates the graph, evaluates incremental work, manages nested scopes, runs jobs, and records results; Build-Parallel.ps1 then extends the same contract across asynchronous PowerShell instances."},
-      "sdc": {
+      "learning_level": {
         "level": 2,
-        "size": {"score": 1, "loc": 1731, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Tasks/ samples", "Docs/", "packaged Content copies", "build and release files"], "notes": "Count covers Invoke-Build.ps1 and the production companion scripts for parallel execution, checkpoints, task selection, help, argument completion, graph output, and MSBuild resolution; duplicated package content, tests, samples, and documentation are excluded."},
-        "difficulty": {"score": 3, "signals": ["dynamic-parameter and scope manipulation", "recursive graph validation and execution", "incremental and partial input-output semantics", "asynchronous child PowerShell lifecycle"], "reason": "The engine depends on nontrivial PowerShell runtime behavior and graph state, but its algorithms and state transitions are explicit in a small set of scripts."},
-        "complexity": {"score": 2, "signals": ["task DSL, graph engine, incremental evaluator, hooks, results, and parallel runner", "nested build and process boundaries", "several optional execution modes"], "reason": "Multiple cohesive mechanisms cooperate around one build model, without the broader topology of a service platform."},
-        "placement": "S1/D3/C2 averages to 2.00, making Invoke-Build an SDC 2 project."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "PowerShell functions over filesystem and .NET path APIs",
+            "version-aware sorting and candidate filtering",
+            "mockable operating-system discovery"
+          ],
+          "reason": "The path uses common professional PowerShell and .NET interoperation without recurring advanced language machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "ordered candidate probing",
+            "newest-installation and architecture branches",
+            "legacy and missing-installation fallbacks"
+          ],
+          "reason": "The discovery decision tree is synchronous, bounded, and locally inspectable."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one production module",
+            "one external installation-layout boundary",
+            "one focused test suite"
+          ],
+          "reason": "A single cohesive module contains the complete scored discovery behavior."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "Visual Studio generations use different directory layouts",
+            "32-bit and 64-bit executable choices must remain correct",
+            "newest-version ordering and legacy fallbacks must remain compatible"
+          ],
+          "reason": "Several platform and backward-compatibility contracts constrain an otherwise small adapter."
+        },
+        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "The implementation is dense but disciplined: task state is explicit, cycles and missing references fail early, cleanup uses finally blocks, and errors retain source positions.",
-        "architecture": "A task-registration DSL builds an ordered graph; validation checks references; the executor applies conditions and freshness rules; companion scripts add parallelism, checkpoints, and projections.",
-        "naming_and_idiom": "Add-BuildTask, Inputs, Outputs, Partial, Enter-BuildTask, Get-BuildError, Build-Parallel, and Result map directly to the build model.",
-        "tests": "Executable build scripts cover graph ordering, cycles, incremental and partial work, dynamic parameters, nested scopes, hooks, errors, safe mode, checkpoints, timeouts, parallel failures, and regressions.",
-        "documentation": "The README, command help, concepts, design notes, tutorials, templates, and comparisons explain both usage and the engine's choices.",
-        "traceability": "A task declaration can be followed into the graph table, recursive reference checks, freshness evaluation, job execution, result aggregation, and an exact .test.ps1 scenario.",
-        "maintainability": "The core model has remained compact, optional tools are separate scripts, errors are observable, and the test corpus doubles as runnable behavior documentation.",
-        "educational_value": "It is a rare small implementation of a genuine build system and a strong study of how a language-native DSL becomes a scheduler."
+        "source_quality": "The discovery path makes candidate roots, version ordering, architecture choice, legacy fallback, and missing-path outcomes visible in ordinary PowerShell control flow.",
+        "architecture": "The selected path is bounded to one executable-discovery responsibility in the production module and one Pester suite that supplies fake installation layouts.",
+        "naming_and_idiom": "Get-LatestMsBuildPath, VisualStudioVersion, MsBuildArchitecture, and the candidate path variables communicate the selected policy directly.",
+        "tests": "The selected Pester cases construct representative installation layouts and close version preference, architecture selection, legacy fallback, explicit paths, and not-found behavior.",
+        "documentation": "The README explains supported MSBuild and Visual Studio choices and the public parameters that lead into executable discovery.",
+        "traceability": "A requested or inferred tool version can be followed through candidate-directory construction, version sorting, architecture selection, fallback, and the matching mocked filesystem assertion.",
+        "maintainability": "Keeping discovery in a named function and testing filesystem conventions through mocks lets installation-policy changes remain separate from the unscored build-process lifecycle.",
+        "educational_value": "This path teaches how to make environment-dependent executable discovery explicit, deterministic, and testable without claiming the broader process and logging behavior."
       },
-      "inspection": {"commit": "16e0279db6dcc3845d0a550373e1f9f137f2f51b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Invoke-Build.ps1", "Build-Parallel.ps1", "Tests/Incremental.test.ps1", "Tests/Build-Parallel/Parallel.test.ps1", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/nightroman/Invoke-Build/blob/16e0279db6dcc3845d0a550373e1f9f137f2f51b/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "7fee8e141296ea6c337e433537d7061f52e24157",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/Invoke-MsBuild/Invoke-MsBuild.psm1",
+          "src/Tests/Invoke-MsBuild.Tests.ps1",
+          "ReadMe.md",
+          "License.md"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/deadlydog/Invoke-MsBuild/blob/7fee8e141296ea6c337e433537d7061f52e24157/License.md"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "modulebuilder",
-      "repository": "PoshCode/ModuleBuilder",
-      "url": "https://github.com/PoshCode/ModuleBuilder",
+      "slug": "psini",
+      "path_slug": "a-compact-powershell-advanced-function-parses-line-oriented-configuration-text",
+      "repository": "lipkau/PSIni",
+      "url": "https://github.com/lipkau/PSIni",
       "primary_language": "PowerShell",
-      "language_evidence": "Module assembly, manifest rewriting, syntax-tree parsing, using-statement relocation, source mapping, generator transforms, signing and packaging support, and tests are PowerShell.",
-      "description": "A PowerShell build module that compiles source folders into versioned modules, rewrites manifests, preserves source mappings, applies syntax-tree generators, and prepares packages for publication.",
-      "real_world_evidence": "ModuleBuilder is published as a PowerShell Gallery module and documents a source-to-package workflow used by PowerShell module authors.",
-      "why_study": "It turns ordinary module source files into reproducible artifacts while demonstrating when text concatenation is insufficient and PowerShell's abstract syntax tree should guide safe transformations.",
-      "learn": ["PowerShell module layout, manifests, semantic versions, abstract syntax trees, token and extent handling, using-statement normalization, source-line mapping, generator visitors, function and alias discovery, packaging, signing, and integration tests."],
-      "prerequisites": ["Advanced PowerShell modules, manifests, scriptblocks, AST and token concepts, filesystem builds, semantic versioning, metadata, and Pester."],
-      "start_here": {"path": "Source/Public/Build-Module.ps1", "reason": "Build-Module owns the end-to-end pipeline from source discovery and output selection through content assembly, manifest updates, optional AST generators, versioning, and the final module artifact."},
-      "sdc": {
+      "language_evidence": "INI parsing, ordered-hashtable construction, duplicate-key handling, comment preservation, serialization, encoding support, and the test suite are implemented in PowerShell under PSIni and Tests.",
+      "description": "A compact PowerShell module that reads and writes INI files as ordered hashtables while preserving sections, comments, repeated keys, and encoding choices.",
+      "real_world_evidence": "PSIni is maintained as a versioned PowerShell Gallery module, and its README documents command-line and pipeline use for application and system configuration files.",
+      "why_study": "Import-Ini is a compact production parser whose path, literal-path, and string inputs converge on explicit section, comment, key-value, duplicate-key, and malformed-line policies.",
+      "learn": [
+        "Use `PSIni/Public/Import-Ini.ps1` to study advanced functions, parameter sets, pipeline input, encoding selection, ordered case-insensitive dictionaries, line-oriented regular-expression parsing, duplicate-key policy, comment preservation, and direct Pester contracts."
+      ],
+      "prerequisites": [
+        "Basic familiarity with PowerShell functions, scriptblocks, pipelines, arrays and hashtables, .NET objects, errors, and Pester tests."
+      ],
+      "concepts_developed": [
+        "Advanced-function parameter sets and pipeline input.",
+        "Current-section parser state.",
+        "Input order and case behavior must remain stable."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An INI document is line-oriented configuration text containing sections, comments, keys, values, and repeated-key policy."
+        ],
+        "reason": "That small vocabulary is subordinate to transferable PowerShell lessons in advanced-function input, regular-expression classification, ordered object construction, localized parser state, duplicate handling, and encoding-aware file boundaries."
+      },
+      "learning_path": {
+        "goal": "Understand how a compact PowerShell advanced function parses line-oriented configuration text into an ordered object model without losing its practical edge cases.",
+        "start_here": {
+          "path": "PSIni/Public/Import-Ini.ps1",
+          "reason": "Import-Ini contains the entire selected read path, from input and encoding choice through line classification to the ordered object returned by the focused unit suite."
+        },
+        "supporting_files": [
+          "Tests/Import-Ini.Unit.Tests.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Import-Ini's path, literal-path, and string parameter sets, follow each line through section, comment, and key-value matching into ordered case-insensitive dictionaries, observe how repeated values and the no-section sentinel are represented, then close malformed and compatibility behavior in the direct import suite. Export-Ini is intentionally outside this import-only scored trace."
+      },
+      "learning_level": {
         "level": 2,
-        "size": {"score": 1, "loc": 1473, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "Build/ generated output", "PotentialContribution/", "documentation and release files"], "notes": "Count covers every production PowerShell file under Source and excludes tests, generated build artifacts, experimental contribution material, documentation, and release metadata."},
-        "difficulty": {"score": 3, "signals": ["PowerShell AST visitors and extent replacement", "manifest and export metadata rewriting", "source mapping across merged files", "generator-driven scriptblock transformation"], "reason": "Safe source transformation and metadata synchronization require compiler-facing APIs and careful offsets, even though the project remains compact."},
-        "complexity": {"score": 2, "signals": ["source discovery, merge, manifest, generator, version, sign, and package stages", "filesystem and signing boundaries", "clean, build, and combined targets"], "reason": "The pipeline has several explicit stages but one artifact flow and no persistent or distributed runtime."},
-        "placement": "S1/D3/C2 averages to 2.00, making ModuleBuilder an SDC 2 project."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "advanced-function parameter sets and pipeline input",
+            "regular-expression switch branches",
+            "ordered case-insensitive dictionaries and ArrayList promotion"
+          ],
+          "reason": "Common professional PowerShell idioms materially shape the parser, but no advanced runtime or metaprogramming machinery recurs."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "current-section parser state",
+            "localized duplicate and comment policy branches",
+            "bounded file, literal-path, and string input modes"
+          ],
+          "reason": "Behavior is a synchronous line transformation with only local parser state and explicit branches."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public parser",
+            "one ordered result representation",
+            "one direct contract suite"
+          ],
+          "reason": "The complete scored behavior is contained in one cohesive implementation unit and its tests."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "input order and case behavior must remain stable",
+            "comments, empty sections, valueless keys, and repeated keys need defined policies",
+            "path modes, text input, and encoding behavior must remain compatible"
+          ],
+          "reason": "Several parser and compatibility guarantees recur even though the control flow is compact."
+        },
+        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Build stages are named functions, AST parsing returns tokens and errors together, transformations operate on source extents, and output ownership is explicit.",
-        "architecture": "Initialization resolves module metadata; content assembly normalizes scripts; manifest helpers synchronize exports and versions; optional generators rewrite AST regions before packaging.",
-        "naming_and_idiom": "Build-Module, ConvertToAst, SetModuleContent, Merge-ScriptBlock, Update-Metadata, and ResolveOutputFolder expose the compilation pipeline.",
-        "tests": "Pester unit and integration suites verify clean versus build targets, using placement, file combination, exports, aliases, semantic versions, metadata, AST parsing, generator replacements, and idempotence.",
-        "documentation": "The README explains conventions, build settings, versioned output, publishing, generators, source mappings, and complete examples.",
-        "traceability": "A source function can be followed from directory discovery through AST-aware content generation into the built psm1, manifest export list, and integration assertions.",
-        "maintainability": "Compiler-like operations are isolated behind helpers, public build policy is parameterized, and integration fixtures constrain emitted artifacts rather than implementation calls alone.",
-        "educational_value": "It gives module authors a concrete introduction to build pipelines and syntax-aware code generation without requiring a general compiler framework."
+        "source_quality": "Import-Ini keeps section, comment, key-value, duplicate, malformed-line, and encoding branches explicit while deliberately preserving input order.",
+        "architecture": "The selected path stays within one public advanced function and its direct Import-Ini unit suite, with path, literal-path, and string parameter sets converging on one parser.",
+        "naming_and_idiom": "Import-Ini, AllowDuplicateKeys, SkipComments, NoSection, and the ordered section tables make the parser's representation and edge-case policy discoverable.",
+        "tests": "The Import-Ini unit suite covers file and literal content, comments, blank lines, global keys, sections, duplicate keys, malformed input, parameter forms, and compatibility cases used by this trace.",
+        "documentation": "The README explains Import-Ini inputs, returned object shape, parsing switches, encodings, and examples needed to interpret the selected path.",
+        "traceability": "An input line can be followed through Import-Ini's section, comment, key-value, and malformed branches into a specific ordered-table assertion in the direct suite.",
+        "maintainability": "The narrow public read surface, explicit behavior flags, standard PowerShell representation, and nearby regression cases keep parser changes bounded.",
+        "educational_value": "This path is an approachable example of a useful line-oriented parser with real input-policy decisions, without claiming the separate export implementation."
       },
-      "inspection": {"commit": "3b19a45518b99aded3ecc20e709d96a19a3e937b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["ReadMe.md", "Source/Public/Build-Module.ps1", "Source/Public/Merge-ScriptBlock.ps1", "Source/Private/ConvertToAst.ps1", "Tests/Public/Build-Module.Tests.ps1", "Tests/Public/Merge-ScriptBlock.Tests.ps1", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "scoop",
-      "repository": "ScoopInstaller/Scoop",
-      "url": "https://github.com/ScoopInstaller/Scoop",
-      "primary_language": "PowerShell",
-      "language_evidence": "Manifest resolution, dependency traversal, downloads, hash verification, extraction, installation hooks, shims, persistence, environment changes, updates, and tests are implemented in PowerShell.",
-      "description": "A command-line package manager for Windows that installs applications from declarative manifests with dependency resolution, verified downloads, extraction, shims, persistence, and reversible environment changes.",
-      "real_world_evidence": "Scoop is an actively maintained installer used with public application buckets, and the project documents repeatable user-level installation and package-author workflows.",
-      "why_study": "Its source exposes the concrete lifecycle behind a package manager: find a manifest, resolve a dependency graph, select architecture-specific data, fetch and verify artifacts, extract them, run constrained hooks, create shims, persist data, and record installation state.",
-      "learn": ["Command dispatch, JSON manifests, recursive dependency resolution, cycle detection, architecture selection, HTTP downloads, hashes and cache policy, archive extraction, install hooks, path containment, shims, persistent data, environment mutation, rollback concerns, and mocked integration tests."],
-      "prerequisites": ["PowerShell scripting, JSON, recursive graph traversal, web requests, checksums, archives, Windows paths and environment variables, symbolic links or junctions, and package-manager concepts."],
-      "start_here": {"path": "lib/install.ps1", "reason": "install_app composes manifest selection, download and verification, extraction, hooks, installer execution, shims, shortcuts, modules, environment changes, persistence, and installation records; lib/depends.ps1 supplies the preceding graph step."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 7302, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "bucket and fixture data", "documentation", "installer bootstrap repository", "build and release files"], "notes": "Count covers Scoop's production PowerShell under lib, libexec, and bin/scoop.ps1 and excludes tests, fixtures, external bucket manifests, documentation, and release metadata."},
-        "difficulty": {"score": 3, "signals": ["recursive dependency and cycle handling", "artifact integrity and cache behavior", "path containment and external installer execution", "persistent data and environment mutation"], "reason": "Package installation crosses security-sensitive filesystem, network, archive, process, and environment boundaries with architecture- and manifest-dependent branches."},
-        "complexity": {"score": 3, "signals": ["command, manifest, dependency, download, extraction, install, shim, persistence, update, and configuration subsystems", "network, process, filesystem, registry, and environment boundaries", "user and global installation modes"], "reason": "A normal install traverses several cooperating components and durable state transitions, but the system remains a single-machine command-line application."},
-        "placement": "S2/D3/C3 averages to 2.67 and rounds upward, making Scoop an SDC 3 project."
+      "inspection": {
+        "commit": "6895c42fdba461a1a171fe70e11d67c037bac1d0",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "PSIni/Public/Import-Ini.ps1",
+          "Tests/Import-Ini.Unit.Tests.ps1",
+          "README.md",
+          "LICENSE"
+        ]
       },
-      "quality": {
-        "source_quality": "Lifecycle steps are separate functions, path escape is checked before installer execution, hashes are first-class, and manifest-dependent mutations are visible.",
-        "architecture": "Command scripts call shared libraries for manifest interpretation, dependencies, downloads, extraction, installation, shims, persistence, configuration, and updates.",
-        "naming_and_idiom": "Get-Dependency, Get-Manifest, Invoke-ScoopDownload, Invoke-Extraction, Invoke-Installer, create_shims, persist_data, and save_install_info reveal the package lifecycle.",
-        "tests": "Pester suites cover manifests, dependency order and cycles, helper selection, downloads, hashes, archives, install definitions, containment, shims, persistence, configuration, command dispatch, and regressions.",
-        "documentation": "The README explains user behavior and installation, while the maintained wiki and contributing material cover manifests, buckets, configuration, and package authoring.",
-        "traceability": "A package name can be followed from command dispatch into manifest selection, dependency expansion, verified download, extraction, installation mutations, saved metadata, and targeted tests.",
-        "maintainability": "Manifest policy is separated from execution helpers, functions are organized by domain, and broad fixture-driven tests protect the supported package shapes.",
-        "educational_value": "It is a readable production package manager that makes operational and trust boundaries visible instead of reducing installation to a download command."
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/lipkau/PSIni/blob/6895c42fdba461a1a171fe70e11d67c037bac1d0/LICENSE"
+        ]
       },
-      "inspection": {"commit": "b588a06e41d920d2123ec70aee682bae14935939", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "lib/depends.ps1", "lib/download.ps1", "lib/manifest.ps1", "lib/install.ps1", "test/Scoop-Depends.Tests.ps1", "test/Scoop-Install.Tests.ps1", "LICENSE"]},
-      "license": {"spdx": "Unlicense OR MIT", "url": "https://github.com/ScoopInstaller/Scoop/blob/b588a06e41d920d2123ec70aee682bae14935939/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "importexcel",
-      "repository": "dfinke/ImportExcel",
-      "url": "https://github.com/dfinke/ImportExcel",
-      "primary_language": "PowerShell",
-      "language_evidence": "Workbook import and export, cell typing and formatting, tables, charts, pivot tables, conditional formatting, worksheet operations, and Pester tests are implemented in PowerShell around the bundled EPPlus API.",
-      "description": "A PowerShell module for reading, writing, formatting, charting, and pivoting Excel workbooks without requiring Microsoft Excel.",
-      "real_world_evidence": "ImportExcel is published on the PowerShell Gallery and documents automation workflows for reports, inventory, charts, pivot tables, SQL data, and workbook transformation.",
-      "why_study": "It shows how a PowerShell-friendly pipeline API maps dynamic objects onto a rich document model while preserving types, formats, formulas, tables, charts, pivots, and workbook resource ownership.",
-      "learn": ["Pipeline object discovery, workbook and worksheet lifecycles, cell addressing, type and number-format inference, formulas, tables, charts and series, pivot tables, conditional formatting, streamed row conversion, resource cleanup, and artifact-level tests."],
-      "prerequisites": ["PowerShell objects and pipelines, .NET object interop, spreadsheets and cell ranges, dates and number formats, disposable resources, charts, pivot tables, and Pester."],
-      "start_here": {"path": "Public/Export-Excel.ps1", "reason": "Export-Excel is the main composition path: it opens or creates a package, infers pipeline properties and cell types, writes data, applies tables and formatting, adds charts or pivots, and saves or returns the workbook."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 4341, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["__tests__/", "Examples/", "bundled EPPlus binaries", "documentation and build files"], "notes": "Count covers production PowerShell in Public, Private, Charting, Pivot, and the module loader; tests, examples, binary dependencies, documentation, and package metadata are excluded."},
-        "difficulty": {"score": 3, "signals": ["dynamic object-to-cell type mapping", "spreadsheet range and formatting semantics", "chart series and pivot construction", "package stream and save lifecycle"], "reason": "Correct output depends on a large third-party object model and many spreadsheet-specific rules, though the algorithms themselves remain conventional."},
-        "complexity": {"score": 3, "signals": ["import, export, worksheet, style, table, chart, pivot, query, and conversion surfaces", "file, stream, clipboard, database, and Office Open XML boundaries", "create, append, update, and pass-through modes"], "reason": "A report can combine several document subsystems and resource lifecycles, but execution stays within one process and one workbook model."},
-        "placement": "S2/D3/C3 averages to 2.67 and rounds upward, making ImportExcel an SDC 3 project."
-      },
-      "quality": {
-        "source_quality": "Public commands separate workbook concerns into helpers, handle null and type distinctions explicitly, and make package ownership and save behavior configurable.",
-        "architecture": "Public pipeline commands coordinate package helpers; charting, pivot, formatting, validation, and worksheet operations wrap focused regions of the EPPlus object model.",
-        "naming_and_idiom": "Import-Excel, Export-Excel, Open-ExcelPackage, Add-ExcelChart, New-PivotTableDefinition, Set-ExcelRange, and Close-ExcelPackage mirror workbook operations.",
-        "tests": "Pester suites create and reopen real xlsx artifacts to verify rows, columns, values, formats, formulas, ranges, worksheets, charts, pivots, protection, validation, imports, and performance bounds.",
-        "documentation": "The README and example collection show installation, one-line exports, charts, pivots, conditional formatting, SQL workflows, and the richer API surface.",
-        "traceability": "A pipeline property can be followed through discovery and type conversion into a worksheet cell, table or chart range, saved package, reopened workbook, and exact artifact assertion.",
-        "maintainability": "Spreadsheet features are partitioned into domain-named commands, compatibility decisions stay at the EPPlus boundary, and output tests detect document regressions.",
-        "educational_value": "It teaches how a dynamic shell can provide an ergonomic facade over a complex document API without hiding the underlying workbook lifecycle."
-      },
-      "inspection": {"commit": "5387c061461c811d106b125588f064c4739342cb", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Public/Export-Excel.ps1", "Public/Import-Excel.ps1", "Public/Add-ExcelChart.ps1", "Pivot/Pivot.ps1", "__tests__/Export-Excel.Tests.ps1", "__tests__/ImportExcelTests/Simple.tests.ps1", "LICENSE.txt"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/dfinke/ImportExcel/blob/5387c061461c811d106b125588f064c4739342cb/LICENSE.txt"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "pester",
-      "repository": "pester/Pester",
-      "url": "https://github.com/pester/Pester",
-      "primary_language": "PowerShell",
-      "language_evidence": "Test discovery and execution, nested scopes, hooks, assertions, mocking, filtering, output and result formats, code coverage integration, parallel orchestration, and supporting runtime types are implemented in PowerShell and first-party C#.",
-      "description": "PowerShell's test and mock framework, with a discovery and execution runtime, assertions, scope-aware mocks, filtering, plugins, code coverage, parallel containers, and CI result formats.",
-      "real_world_evidence": "Pester is the standard PowerShell testing framework, is distributed through the PowerShell Gallery, ships with older Windows installations, and integrates with editors and continuous-integration systems.",
-      "why_study": "The repository reveals how a language-native test DSL becomes a real runtime: script discovery, nested block trees, user-scope execution, setup and teardown, assertion dispatch, command interception, result modeling, tracing, reporting, and parallel isolation.",
-      "learn": ["Test discovery versus execution, runtime trees, scriptblock session state, reflection over PowerShell internals, nested setup and teardown, plugin hooks, assertion protocols, command mocking, parameter filters, code-coverage tracing, parallel runspaces, result formats, and self-hosting tests."],
-      "prerequisites": ["Expert PowerShell scopes and session state, scriptblocks and ASTs, reflection, command resolution, mocking semantics, concurrency and runspaces, tracing, test-runner architecture, and C# interoperability."],
-      "start_here": {"path": "src/Pester.Runtime.ps1", "reason": "Pester.Runtime.ps1 constructs block and test objects, separates discovery from execution, moves between user and framework scopes, invokes hooks and plugins, filters work, records results, and hands containers to higher-level orchestration."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 3, "loc": 21665, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tst/", "docs/ and examples", "build and release files"], "notes": "Count covers 16,582 production PowerShell lines and 5,083 first-party C# lines under src, including the runtime, mocks, assertions, reporting, configuration, tracing, and result types; tests, documentation, examples, and build metadata are excluded."},
-        "difficulty": {"score": 5, "signals": ["reflection into PowerShell session-state internals", "discovery and execution across nested dynamic scopes", "runtime command interception and mock dispatch", "trace-based code coverage", "parallel container isolation"], "reason": "Core correctness depends on expert knowledge of PowerShell's runtime, scope ownership, command resolution, reflection, tracing, and concurrent isolation."},
-        "complexity": {"score": 4, "signals": ["runtime, DSL, assertions, mocks, plugins, filters, coverage, output, result formats, configuration, and parallel execution", "module, user-scope, runspace, filesystem, and CI boundaries", "discovery-only, sequential, parallel, debug, and coverage modes"], "reason": "A test run crosses many coordinated subsystems and representations, while remaining one developer-tool platform rather than a distributed service."},
-        "placement": "S3/D5/C4 averages to 4.00; the D5 floor also prevents placement below level 4, making Pester an SDC 4 project."
-      },
-      "quality": {
-        "source_quality": "Runtime state, domain types, plugin steps, timers, and result conversion are explicit; delicate scope manipulation is documented and tested, though the core appropriately assumes advanced readers.",
-        "architecture": "DSL commands create a block tree; the runtime discovers and executes it; plugins attach mocks, coverage, and output; C# types carry stable configuration and result models.",
-        "naming_and_idiom": "Discover-Test, Invoke-ContainerRun, Invoke-TestItem, Invoke-InNewScriptScope, Get-MockPlugin, Should-Invoke, Coverage, and PesterConfiguration reveal lifecycle and ownership.",
-        "tests": "Pester's extensive self-tests cover discovery, filtering, nested hooks, data-driven cases, scope movement, mocks, assertions, coverage, output formats, configuration, parallel containers, timing, failures, and regressions.",
-        "documentation": "The README gives a production example and feature map, while the maintained documentation covers quick starts, assertions, mocks, configuration, coverage, CI, migration, and contribution internals.",
-        "traceability": "A Describe and It pair can be followed from DSL registration into block objects, discovery filters, scoped execution, assertion or mock plugins, result post-processing, output rendering, and focused runtime tests.",
-        "maintainability": "Typed result and configuration models constrain the public contract, plugins isolate cross-cutting features, and deep self-hosting suites guard runtime behavior across supported PowerShell versions.",
-        "educational_value": "It is an advanced study of implementing a testing language inside the language being tested, including the runtime seams that simple test examples conceal."
-      },
-      "inspection": {"commit": "bfcbd4d2b0fc5e89d058f59da19feabf853d33c2", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Pester.Runtime.ps1", "src/Pester.RSpec.ps1", "src/functions/Pester.SessionState.Mock.ps1", "src/csharp/Pester/Tracing/CodeCoverageTracer.cs", "tst/Pester.Runtime.ts.ps1", "tst/Pester.Mock.RSpec.ts.ps1", "tst/Pester.RSpec.Parallel.ts.ps1", "LICENSE"]},
-      "license": {"spdx": "Apache-2.0", "url": "https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "dbatools",
-      "repository": "dataplat/dbatools",
-      "url": "https://github.com/dataplat/dbatools",
-      "primary_language": "PowerShell",
-      "language_evidence": "SQL Server discovery, connections, migrations, backup and restore, availability, security, performance, configuration, messaging, background maintenance, and the test corpus are predominantly PowerShell.",
-      "description": "A broad PowerShell automation toolkit for administering and migrating SQL Server estates, from connections and configuration through backup, restore, availability, security, diagnostics, and cloud workflows.",
-      "real_world_evidence": "dbatools is released as a PowerShell module for database administrators and documents production operations across SQL Server instances, migrations, disaster recovery, security, and estate management.",
-      "why_study": "The project demonstrates how a large operational toolkit builds consistent command contracts over a complex external platform while centralizing connections, configuration, messaging, types, runspaces, safety behavior, and test infrastructure.",
-      "learn": ["Large PowerShell module architecture, advanced command contracts, SQL Management Objects, connection reuse, credentials and encryption, backup and restore planning, ShouldProcess, configuration persistence, typed output, background runspaces, structured messaging, remote operations, cloud storage, integration fixtures, and operational failure handling."],
-      "prerequisites": ["Advanced PowerShell, SQL Server administration, SMO, credentials and connection strings, T-SQL, backup and recovery concepts, remoting, concurrency, configuration systems, and large integration suites."],
-      "start_here": {"path": "public/Connect-DbaInstance.ps1", "reason": "Connect-DbaInstance introduces the common input, credential, encryption, connection-reuse, SMO, error, and output conventions that many commands share; Backup-DbaDatabase then shows those conventions driving a state-changing workflow."},
-      "sdc": {
-        "level": 4,
-        "size": {"score": 4, "loc": 104547, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "bin/ and bundled assemblies", "docs and website material", "build and release files"], "notes": "Count covers production PowerShell in public, private, and dbatools.psm1; tests, binary dependencies, documentation, generated help, and build metadata are excluded."},
-        "difficulty": {"score": 4, "signals": ["SQL Server and SMO operational semantics", "backup, restore, availability, security, and migration invariants", "credential, encryption, remoting, and cloud boundaries", "background runspace and typed-output infrastructure"], "reason": "Individual commands must encode expert database operations and failure policy across versions and environments, although they build on established SQL Server APIs rather than implementing a database engine."},
-        "complexity": {"score": 4, "signals": ["hundreds of commands plus connection, configuration, messaging, type, runspace, and test infrastructure", "SQL, filesystem, network, remoting, cloud, registry, and service boundaries", "local, remote, migration, disaster-recovery, and diagnostic modes"], "reason": "Real workflows cross many shared services and external systems, but the repository remains a modular administration toolkit rather than a database or distributed runtime itself."},
-        "placement": "S4/D4/C4 averages to 4.00, making dbatools an SDC 4 project."
-      },
-      "quality": {
-        "source_quality": "Commands expose safety switches, return domain objects, centralize connection and messaging behavior, and document operational caveats close to parameters and branches.",
-        "architecture": "Public commands express administrator workflows; private functions centralize platform mechanics; shared configuration, types, connection caches, messages, and runspaces enforce module-wide conventions.",
-        "naming_and_idiom": "Connect-DbaInstance, Backup-DbaDatabase, Restore-DbaDatabase, Test-DbaConnection, Write-Message, Register-DbaRunspace, and Get-DbatoolsConfig map to administrator intent.",
-        "tests": "Unit, integration, compliance, and hardening suites exercise command contracts, supported SQL versions, real instances, backup and restore states, migrations, configuration, safety behavior, and regression scenarios.",
-        "documentation": "Each public command carries extensive help and examples, and the maintained site organizes installation, command reference, concepts, migration paths, and contribution guidance.",
-        "traceability": "A backup request can be followed from parameter validation through connection acquisition, database selection, path and option planning, generated SMO or T-SQL work, verification, typed history output, and integration cleanup.",
-        "maintainability": "Shared infrastructure avoids repeating connection and error policy, commands remain domain-focused, compliance tests enforce conventions, and integration fixtures model actual server state.",
-        "educational_value": "It is a strong advanced example of turning deep operational expertise into a consistent, safe, discoverable automation surface."
-      },
-      "inspection": {"commit": "0473789e928c8e9e7d891770c95cfcfa76724d3e", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["readme.md", "dbatools.psm1", "public/Connect-DbaInstance.ps1", "public/Backup-DbaDatabase.ps1", "public/Restore-DbaDatabase.ps1", "private/functions/runspaces/Register-DbaRunspace.ps1", "private/functions/configuration/Read-DbatoolsConfigFile.ps1", "tests/Backup-DbaDatabase.Tests.ps1", "license"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/dataplat/dbatools/blob/0473789e928c8e9e7d891770c95cfcfa76724d3e/license"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "pode",
+      "path_slug": "a-powershell-web-framework-turns-declarative-method-path-handler-middleware",
       "repository": "Badgerati/Pode",
       "url": "https://github.com/Badgerati/Pode",
       "primary_language": "PowerShell",
       "language_evidence": "Server lifecycle, routing, middleware, authentication, sessions, OpenAPI, scheduling, MCP, and runspace orchestration are PowerShell, while first-party C# implements asynchronous listeners, sockets, HTTP, TCP, SMTP, WebSocket, TLS, concurrent structures, and transport logging.",
       "description": "A cross-platform PowerShell application-server framework with its own asynchronous HTTP, WebSocket, server-sent events, TCP, SMTP, file-watcher, and TLS runtime plus routing, middleware, authentication, sessions, OpenAPI, schedules, and serverless adapters.",
       "real_world_evidence": "Pode is released through the PowerShell Gallery, Chocolatey, and Docker and documents production hosting for APIs, sites, protocol servers, serverless functions, and container deployments.",
-      "why_study": "Pode is the smallest project in the catalog that still exposes a full server platform: sockets and request strategies, asynchronous listeners, concurrent runspaces, protocol contexts, middleware, routing, security, state, schedules, documentation generation, and multiple hosting modes.",
-      "learn": ["Asynchronous sockets, HTTP request and response handling, TCP and SMTP strategies, TLS, WebSockets and server-sent events, cancellation tokens, runspace pools, concurrent collections, routing, middleware, sessions, authentication and authorization, OpenAPI, cron schedules, serverless adapters, logging, and end-to-end protocol tests."],
-      "prerequisites": ["Expert PowerShell and C#, asynchronous I/O, sockets and TLS, HTTP and WebSocket protocols, SMTP and TCP servers, concurrency and cancellation, runspaces, web security, authentication, OpenAPI, and application-server architecture."],
-      "start_here": {"path": "src/Private/PodeServer.ps1", "reason": "PodeServer selects endpoints, configures the C# listeners, creates request runspaces, builds each WebEvent, applies middleware and routes, writes responses, and coordinates cancellation; the Listener subtree provides the transport implementation beneath it."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 3, "loc": 49408, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["tests/", "examples/", "docs/", "generated module output", "bundled third-party web assets", "build and release files"], "notes": "Count covers 41,540 production PowerShell lines and 7,868 first-party C# lines under src, including the listener and transport runtime; tests, examples, documentation, generated distribution output, third-party assets, and build metadata are excluded."},
-        "difficulty": {"score": 5, "signals": ["asynchronous multi-protocol socket and TLS runtime", "concurrent request execution across runspace pools", "cancellation, shutdown, streaming, and connection lifecycle", "authentication, sessions, cryptography, and request security", "HTTP, WebSocket, SSE, SMTP, TCP, and MCP protocol semantics"], "reason": "The main path combines expert protocol, concurrency, runtime, lifecycle, and security work rather than delegating the server engine to an external web framework."},
-        "complexity": {"score": 5, "signals": ["listener, transport, protocol, runspace, route, middleware, auth, session, state, schedule, OpenAPI, logging, and hosting subsystems", "network, TLS, filesystem, secret-store, process, cloud-function, and browser boundaries", "HTTP, WebSocket, SSE, TCP, SMTP, file-watcher, serverless, and service modes"], "reason": "Pode is a platform whose normal behavior crosses multiple independently meaningful subsystems, execution models, and protocol-specific state machines."},
-        "placement": "S3/D5/C5 triggers the two-dimensions-at-5 rule, making Pode an SDC 5 project despite remaining below the S5 size band."
+      "why_study": "Pode's routing subsystem is a compact PowerShell example of normalizing declarative inputs into a registry and retrieving the correct ordered match.",
+      "learn": [
+        "Follow route methods, paths, groups, middleware, authentication, endpoints, and handlers through validation, normalization, duplicate policy, registry insertion, and matching."
+      ],
+      "prerequisites": [
+        "Readers should know PowerShell scriptblocks, hashtables and concurrent collections, regular expressions, middleware composition, and basic HTTP methods, routes, and path parameters."
+      ],
+      "concepts_developed": [
+        "Scriptblock and middleware composition.",
+        "Localized registration mutation.",
+        "Methods, literal and parameterized paths, endpoints, and duplicate policy must remain consistent."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An HTTP route associates a method and normalized path pattern with a handler, middleware, endpoint, and optional access metadata."
+        ],
+        "reason": "That short routing vocabulary is subordinate to transferable lessons in scriptblock composition, registry design, normalization, validation, duplicate policy, regex matching, metadata inheritance, concurrent collections, and direct behavior testing."
+      },
+      "learning_path": {
+        "goal": "Understand how a PowerShell web framework turns declarative method, path, handler, middleware, and endpoint inputs into a normalized route registry and retrieves the correct match.",
+        "start_here": {
+          "path": "src/Public/Routes.ps1",
+          "reason": "The reviewed trace begins in public Routes.ps1 because Add-PodeRoute defines and validates the user-facing route before private helpers normalize and index it."
+        },
+        "supporting_files": [
+          "src/Private/Routes.ps1",
+          "tests/unit/Routes.Tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Begin at Add-PodeRoute, follow method and path validation, route-group inheritance, placeholder-to-regex normalization, scoped handler and middleware conversion, access and authentication middleware injection, endpoint-aware duplicate policy, and registry insertion; continue to Find-PodeRoute's exact, wildcard, regex, and endpoint filtering, then close registration, lookup, removal, duplicate, middleware, static-route, content-type, and failure behavior in the direct unit suite."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "scriptblock and middleware composition",
+            "scoped-variable conversion and splatted metadata",
+            "ordered and concurrent route registries with regex normalization"
+          ],
+          "reason": "Advanced cmdlet, scriptblock, collection, and dynamic metadata techniques materially shape registration without expert runtime machinery."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "localized registration mutation",
+            "explicit validation and duplicate branches",
+            "bounded exact, wildcard, regex, and endpoint lookup"
+          ],
+          "reason": "The selected registry path is synchronous and locally inspectable; request and server lifecycles are deliberately outside it."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "public route DSL",
+            "private matcher and registry",
+            "middleware, endpoint, access metadata, and direct unit-test boundaries"
+          ],
+          "reason": "Several cohesive components and adapter boundaries cooperate around one route model."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "methods, literal and parameterized paths, endpoints, and duplicate policy must remain consistent",
+            "group, middleware, authentication, access, content, and OpenAPI metadata must compose in the right order",
+            "lookup, static-route safety, error behavior, and cross-platform PowerShell compatibility must remain stable"
+          ],
+          "reason": "Routing, composition, safety, API, and compatibility guarantees recur throughout registration and lookup."
+        },
+        "placement": "The four scores 3/2/3/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Transport and protocol types are explicit, cancellation flows through listener APIs, PowerShell orchestration separates event construction from middleware and routes, and subtle boundaries carry targeted error handling.",
-        "architecture": "C# listener adapters and request strategies own sockets and protocol I/O; PowerShell server loops construct events and invoke middleware, routes, security, state, schedules, and response helpers through shared context.",
-        "naming_and_idiom": "PodeHttpListener, PodeSocket, PodeRequestStrategy, Start-PodeWebServer, WebEvent, Invoke-PodeMiddleware, Add-PodeRoute, and Close-PodeDisposable expose the runtime path.",
-        "tests": "Unit, integration, compliance, and performance suites cover HTTP and HTTPS, WebSockets, authentication, sessions, routes, endpoints, OpenAPI 3.0 and 3.1, schedules, timers, serverless contexts, security, headers, state, and shutdown.",
-        "documentation": "The README provides a minimal server and feature map, and the maintained documentation spans tutorials, protocols, hosting, middleware, security, OpenAPI, schedules, deployment, and internals.",
-        "traceability": "An incoming socket can be followed through a protocol listener and request strategy into a WebEvent, middleware, authentication, route logic, response encoding, connection completion, and a live integration test.",
-        "maintainability": "Protocol-specific C# types isolate byte-level concerns, PowerShell modules partition server features, cancellation and disposal have shared primitives, and integration suites verify cross-layer contracts.",
-        "educational_value": "It provides an unusually transparent advanced path from application-server ergonomics down to the network and concurrency mechanisms that implement them."
+        "source_quality": "Public and private Routes.ps1 keep validation, inheritance, normalization, middleware conversion, endpoint indexing, duplicate handling, and lookup visible.",
+        "architecture": "A public registration API produces normalized route records in an endpoint-aware registry, and Find-PodeRoute resolves exact, wildcard, and regular-expression candidates.",
+        "naming_and_idiom": "Add-PodeRoute, Find-PodeRoute, route groups, middleware, endpoints, and path parameters make the registry model clear through PowerShell-native scriptblocks and collections.",
+        "tests": "Routes.Tests.ps1 covers adding, finding, removing, clearing, endpoints, middleware, static paths, duplicates, content types, and invalid inputs.",
+        "documentation": "README.md documents routing and supplies the framework context required for the bounded registration-and-lookup path.",
+        "traceability": "A route declaration can be followed from Add-PodeRoute through normalization and indexing to Find-PodeRoute and the direct unit assertions.",
+        "maintainability": "Registration and retrieval share explicit route records, and one direct unit suite constrains normalization, duplicate, and matching policies.",
+        "educational_value": "The path teaches registry and matching design in PowerShell without requiring the broader server and protocol platform."
       },
-      "inspection": {"commit": "512a99018dc13027de2d746d5467c4d39a9401b2", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "src/Private/PodeServer.ps1", "src/Private/Runspaces.ps1", "src/Private/TcpServer.ps1", "src/Private/WebSockets.ps1", "src/Private/MCP.ps1", "src/Listener/Protocols/Http/PodeHttpListener.cs", "src/Listener/Protocols/Smtp/PodeSmtpRequestStrategy.cs", "src/Listener/Transport/Sockets/PodeSocket.cs", "tests/integration/WebSocket.Tests.ps1", "tests/integration/Authentication.Tests.ps1", "tests/integration/OpenApi.Tests.ps1", "LICENSE.txt"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/LICENSE.txt"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "512a99018dc13027de2d746d5467c4d39a9401b2",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/Public/Routes.ps1",
+          "src/Private/Routes.ps1",
+          "tests/unit/Routes.Tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/Badgerati/Pode/blob/512a99018dc13027de2d746d5467c4d39a9401b2/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "microsoft365dsc",
-      "repository": "Microsoft365DSC/Microsoft365DSC",
-      "url": "https://github.com/Microsoft365DSC/Microsoft365DSC",
+      "slug": "importexcel",
+      "path_slug": "a-powershell-adapter-opens-an-excel-package-turns-bounded-worksheet",
+      "repository": "dfinke/ImportExcel",
+      "url": "https://github.com/dfinke/ImportExcel",
       "primary_language": "PowerShell",
-      "language_evidence": "Hundreds of Desired State Configuration resources, tenant extraction, authentication, workload orchestration, drift comparison, export, monitoring, telemetry, dependency handling, and tests are PowerShell, with first-party C# comparison, conversion, cache, connection, and Intune helpers.",
-      "description": "A Desired State Configuration platform that deploys, extracts, compares, reports, and monitors configuration across Microsoft 365, Azure, Entra ID, Exchange, Intune, Teams, SharePoint, Security and Compliance, Power Platform, and related workloads.",
-      "real_world_evidence": "Microsoft365DSC is released as a PowerShell module for organizations to manage tenant configuration through DSC, and the repository runs workload-specific unit and integration pipelines against its broad resource catalog.",
-      "why_study": "The repository shows configuration management at platform scale: normalize many cloud APIs into get, test, set, and export contracts; support several authentication modes; compare nested desired state; order dependencies; parallelize extraction; generate portable configuration; and test hundreds of resources.",
-      "learn": ["PowerShell Desired State Configuration resources, cloud control-plane APIs, Microsoft Graph, workload-specific cmdlets, delegated and application authentication, certificates and managed identity, reverse configuration extraction, nested state normalization and comparison, dependency graphs, parallel export, configuration drift, telemetry, code generation, and large mocked plus live test matrices."],
-      "prerequisites": ["Expert PowerShell and C#, DSC resource contracts, Microsoft 365 administration, Microsoft Graph and service APIs, OAuth application and delegated authentication, certificates, cloud configuration management, schema-driven comparison, concurrency, and very large modular systems."],
-      "start_here": {"path": "Modules/Microsoft365DSC/Modules/M365DSCReverse.psm1", "reason": "Start-M365DSCConfigurationExtract shows the platform-level path: validate the tool, resolve workloads and resources, select authentication, build dependencies and configuration data, export resources sequentially or in parallel, validate output, and emit statistics."},
-      "sdc": {
-        "level": 5,
-        "size": {"score": 5, "loc": 399138, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["Tests/", "generator tests and generated documentation", "examples and sample configurations", "vendored module binaries", "build and release files"], "notes": "Count covers 394,750 production PowerShell lines under Modules/Microsoft365DSC and 4,388 first-party C# lines under src for comparison, conversion, caching, connections, utilities, and Intune export; tests, examples, documentation, binaries, and build metadata are excluded."},
-        "difficulty": {"score": 5, "signals": ["configuration convergence across many independent cloud control planes", "multiple OAuth, certificate, token, and managed-identity modes", "schema-driven nested object normalization and drift comparison", "parallel reverse extraction and dependency ordering", "service-specific create, update, delete, membership, licensing, and policy semantics"], "reason": "Correctness requires expert knowledge across DSC, identity, cloud APIs, authentication, schema comparison, concurrency, and many Microsoft 365 workloads."},
-        "complexity": {"score": 5, "signals": ["hundreds of resources plus connection, export, compare, telemetry, monitoring, dependency, cache, schema, and generator subsystems", "Graph, Exchange, Teams, SharePoint, Intune, Security, Azure, Power Platform, filesystem, and agent boundaries", "deploy, test, extract, compare, report, monitor, validate, and parallel modes"], "reason": "A tenant configuration is a platform-scale graph spanning many APIs, authentication contexts, resource schemas, state transitions, and output artifacts."},
-        "placement": "S5/D5/C5 triggers the two-dimensions-at-5 rule and makes Microsoft365DSC an SDC 5 project."
+      "language_evidence": "Workbook import and export, cell typing and formatting, tables, charts, pivot tables, conditional formatting, worksheet operations, and Pester tests are implemented in PowerShell around the bundled EPPlus API.",
+      "description": "A PowerShell module for reading, writing, formatting, charting, and pivoting Excel workbooks without requiring Microsoft Excel.",
+      "real_world_evidence": "ImportExcel is published on the PowerShell Gallery and documents automation workflows for reports, inventory, charts, pivot tables, SQL data, and workbook transformation.",
+      "why_study": "ImportExcel provides a practical PowerShell adapter path in which workbook ownership, rectangular ranges, header policy, typed values, and deterministic cleanup are all visible.",
+      "learn": [
+        "Trace a path-owned or caller-owned Excel package through worksheet selection, range bounds, headers, typed cell extraction, ordered objects, and finally-based disposal."
+      ],
+      "prerequisites": [
+        "Readers should know PowerShell parameter sets and pipelines, .NET object interoperation, try and finally cleanup, and basic workbook, worksheet, row, column, and header concepts."
+      ],
+      "concepts_developed": [
+        "Advanced-function parameter sets and pipeline modes.",
+        "Path-owned versus caller-owned package lifecycle.",
+        "Valid extensions, paths, worksheets, dimensions, and unique headers."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "An Excel workbook exposes worksheets, rectangular cell ranges, header rows, typed values, and an open or owned package resource."
+        ],
+        "reason": "That short spreadsheet vocabulary is subordinate to transferable lessons in pipeline adapters, typed .NET interoperation, input normalization, resource ownership, row-to-object mapping, validation, and deterministic cleanup."
+      },
+      "learning_path": {
+        "goal": "Understand how a PowerShell adapter opens an Excel package, turns bounded worksheet cells into ordered objects, and releases only the resources it owns.",
+        "start_here": {
+          "path": "Public/Import-Excel.ps1",
+          "reason": "The reviewed trace begins in Import-Excel.ps1 because it distinguishes package ownership and coordinates the complete worksheet-to-object conversion."
+        },
+        "supporting_files": [
+          "Public/Open-ExcelPackage.ps1",
+          "Public/Close-ExcelPackage.ps1",
+          "__tests__/ImportExcelTests/Simple.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelEndRowEndColumn.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelReadSheets.tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ],
+        "trace": "Start with Import-Excel's path-versus-ExcelPackage parameter sets, follow path validation and stream loading into worksheet selection, row and column bounds, header derivation, duplicate rejection, typed cell extraction, ordered PSCustomObject rows, and finally-based close and disposal; compare caller-owned Open-ExcelPackage and Close-ExcelPackage behavior, then close simple, multiple-sheet, bounded-range, pipeline, resource, and performance behavior in the focused import suites."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "advanced-function parameter sets and pipeline modes",
+            "typed OfficeOpenXml and .NET stream interoperation",
+            "ordered dynamic object construction and compiled matching"
+          ],
+          "reason": "Advanced cmdlet composition, pipeline behavior, typed .NET resources, and dynamic property construction materially shape the adapter without expert metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "path-owned versus caller-owned package lifecycle",
+            "state across several files, worksheets, rows, and columns",
+            "header, range, empty-data, failure, and cleanup branches"
+          ],
+          "reason": "The learner follows resource and iteration state across several stages while the lifecycle remains bounded to one import operation."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "public import adapter",
+            "open and close resource boundary",
+            "focused real-artifact contract suites"
+          ],
+          "reason": "A few cohesive modules and one third-party package boundary contain the complete behavior."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "valid extensions, paths, worksheets, dimensions, and unique headers",
+            "range, no-header, supplied-header, data-only, text, and date semantics",
+            "caller ownership, stream disposal, multi-file and multi-sheet output, performance, and cross-platform compatibility"
+          ],
+          "reason": "Artifact validity, mapping, ownership, error, performance, and compatibility guarantees recur throughout the adapter."
+        },
+        "placement": "The four scores 3/3/2/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Resource contracts and shared helpers make a vast surface navigable, while typed C# normalizers and comparers reduce repeated dynamic-object logic; the scale also exposes ordinary local defects, so learners should study representative paths rather than assume uniform perfection.",
-        "architecture": "DSC resources implement workload state; shared modules own authentication, export, comparison, telemetry, dependencies, and utilities; C# libraries normalize and compare complex objects and accelerate repeated policy transformations.",
-        "naming_and_idiom": "Get-TargetResource, Test-TargetResource, Set-TargetResource, Start-M365DSCConfigurationExtract, Compare-M365DSCResourceState, ResourceComparer, and New-M365DSCConnection expose the convergence model.",
-        "tests": "Hundreds of Pester suites mock workload APIs for present, absent, drift, update, export, and authentication cases, while QA and workload-specific integration pipelines check schemas, manifests, examples, and live service behavior.",
-        "documentation": "The README establishes deployment and licensing constraints, and the project site and generated resource references cover setup, authentication, workloads, exports, monitoring, examples, and each DSC contract.",
-        "traceability": "An AADGroup declaration can be followed through connection creation, Graph retrieval and batching, normalized current state, comparison, create or update operations, export formatting, and mocked present, absent, and drift tests.",
-        "maintainability": "Uniform DSC contracts, generated schema metadata, shared authentication and comparison layers, workload partitions, QA checks, and broad automated suites make coordinated changes possible across hundreds of resources.",
-        "educational_value": "It is an advanced study of how one configuration-management model is adapted across a heterogeneous cloud suite while retaining convergence, export, and audit semantics."
+        "source_quality": "Import-Excel.ps1 keeps input modes, worksheet selection, range derivation, header rules, row mapping, error handling, and cleanup visible; open and close helpers clarify ownership.",
+        "architecture": "The adapter either opens a package or accepts a caller-owned one, projects bounded cells into ordered objects, and disposes only resources it acquired.",
+        "naming_and_idiom": "Import-Excel, Open-ExcelPackage, Close-ExcelPackage, worksheet and range parameters, and PSCustomObject rows mirror PowerShell and spreadsheet intent.",
+        "tests": "Simple.tests.ps1, ImportExcelEndRowEndColumn.tests.ps1, and ImportExcelReadSheets.tests.ps1 cover real XLSX input, sheets, bounds, pipelines, ownership, and representative performance.",
+        "documentation": "README.md documents importing, worksheet selection, ranges, and explicit package use.",
+        "traceability": "A workbook path or package can be followed through sheet and range normalization into emitted objects and then matched against focused artifact-based tests.",
+        "maintainability": "Ownership rules are explicit, conversion stays in one public adapter, and direct real-file tests constrain resource and mapping regressions.",
+        "educational_value": "The path teaches that a useful data adapter must make lifetime and input-shape policy as clear as its happy-path conversion."
       },
-      "inspection": {"commit": "f79f29719b824fd534d51839f87f728cf83d64d1", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Modules/Microsoft365DSC/Modules/M365DSCReverse.psm1", "Modules/Microsoft365DSC/Modules/M365DSCCompare.psm1", "Modules/Microsoft365DSC/Modules/M365DSCExportUtil.psm1", "Modules/Microsoft365DSC/DscResources/MSFT_AADGroup/MSFT_AADGroup.psm1", "src/Microsoft365DSC.Compare/ResourceComparer.cs", "src/Microsoft365DSC.Intune/SettingCatalogPolicyExporter.cs", "Tests/Unit/Microsoft365DSC/Microsoft365DSC.AADGroup.Tests.ps1", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/Microsoft365DSC/Microsoft365DSC/blob/f79f29719b824fd534d51839f87f728cf83d64d1/LICENSE"},
-      "github": {"primary_language": "PowerShell", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "5387c061461c811d106b125588f064c4739342cb",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Public/Import-Excel.ps1",
+          "Public/Open-ExcelPackage.ps1",
+          "Public/Close-ExcelPackage.ps1",
+          "__tests__/ImportExcelTests/Simple.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelEndRowEndColumn.tests.ps1",
+          "__tests__/ImportExcelTests/ImportExcelReadSheets.tests.ps1",
+          "README.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/dfinke/ImportExcel/blob/5387c061461c811d106b125588f064c4739342cb/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "invoke-build",
+      "path_slug": "a-powershell-coordinator-schedules-several-build-scripts-concurrently-limits-active",
+      "repository": "nightroman/Invoke-Build",
+      "url": "https://github.com/nightroman/Invoke-Build",
+      "primary_language": "PowerShell",
+      "language_evidence": "Task declaration, dependency validation, incremental scheduling, execution, error propagation, checkpoints, parallel builds, graph output, and the behavior suites are PowerShell.",
+      "description": "A compact build-automation engine for PowerShell with task graphs, incremental inputs and outputs, nested builds, checkpoints, hooks, structured results, and parallel build execution.",
+      "real_world_evidence": "Invoke-Build is distributed through the PowerShell Gallery, NuGet, and a dotnet tool, and its documentation links to production projects that use its build-script model.",
+      "why_study": "Invoke-Build's parallel coordinator is a bounded example of scheduling asynchronous PowerShell workers while preserving concurrency, output, timeout, and failure contracts.",
+      "learn": [
+        "Trace queued build scripts through admission, PowerShell instance creation, asynchronous invocation, completion polling, timeout stopping, output collection, and final error aggregation."
+      ],
+      "prerequisites": [
+        "Readers should know PowerShell scripts, pipelines, collections, errors, asynchronous invocation, and the basic idea of limiting concurrent build workers."
+      ],
+      "concepts_developed": [
+        "System.Management.Automation.PowerShell instances.",
+        "Pending, active, completed, failed, and timed-out worker states.",
+        "MaximumBuilds must bound concurrency."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A parallel build coordinator starts independent build scripts as workers while limiting concurrency and collecting their results."
+        ],
+        "reason": "That small build vocabulary is subordinate to transferable lessons in asynchronous PowerShell instances, bounded scheduling, coordinator state, timeout and cancellation, output capture, nested invocation, and aggregated failure reporting."
+      },
+      "learning_path": {
+        "goal": "Understand how a PowerShell coordinator schedules several build scripts concurrently, limits active workers, and preserves output, timeout, and failure contracts.",
+        "start_here": {
+          "path": "Build-Parallel.ps1",
+          "reason": "The reviewed trace begins in Build-Parallel.ps1 because it owns the pending and active queues, worker limit, asynchronous lifecycle, timeout, and aggregate result."
+        },
+        "supporting_files": [
+          "Invoke-Build.ps1",
+          "Tests/Build-Parallel/Parallel.build.ps1",
+          "Tests/Build-Parallel/Parallel.test.ps1",
+          "Docs/Parallel-Builds.md",
+          "Docs/Design-Notes.md",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Build-Parallel's queue, MaximumBuilds admission rule, PowerShell instance creation, BeginInvoke and EndInvoke lifecycle, completion polling, timeout stop, output collection, and final error aggregation; use Invoke-Build only as the worker boundary, then close concurrent success, partial failure, timeout, nesting, and validation in the dedicated build and test scripts plus design notes."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "System.Management.Automation.PowerShell instances",
+            "BeginInvoke and EndInvoke asynchronous handles",
+            "scriptblock, stream, and structured error handling"
+          ],
+          "reason": "Asynchronous PowerShell APIs and language-native worker composition materially shape the path without recurring expert runtime manipulation."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "pending, active, completed, failed, and timed-out worker states",
+            "bounded admission and completion polling",
+            "cancellation, cleanup, nesting, and aggregated recovery"
+          ],
+          "reason": "Scheduling and failure state must be followed across several asynchronous workers and lifecycle transitions, matching the Level 4 anchor."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "parallel coordinator",
+            "Invoke-Build worker boundary",
+            "direct executable build and contract-test layer"
+          ],
+          "reason": "Several cohesive components and one asynchronous runtime boundary contain the complete behavior."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "MaximumBuilds must bound concurrency",
+            "output and errors must remain attributable to the correct worker",
+            "timeouts, partial failures, nested calls, and cleanup must remain correct"
+          ],
+          "reason": "Concurrency, timeout, resource, compatibility, and error contracts recur throughout the coordinator."
+        },
+        "placement": "The four scores 3/4/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4."
+      },
+      "quality": {
+        "source_quality": "Build-Parallel.ps1 keeps pending, active, completed, failed, and timed-out worker state visible in one coordinator.",
+        "architecture": "The coordinator admits bounded workers, delegates each script to Invoke-Build, polls asynchronous handles, and consolidates output and failures.",
+        "naming_and_idiom": "MaximumBuilds, BeginInvoke, EndInvoke, pending and active collections, and timeout state make the scheduler legible through standard PowerShell hosting APIs.",
+        "tests": "Parallel.build.ps1 and Parallel.test.ps1 exercise overlap, concurrency limits, partial failure, timeout, nesting, information output, and invalid input.",
+        "documentation": "Parallel-Builds.md explains use, and Design-Notes.md documents the coordinator boundary and lifecycle decisions.",
+        "traceability": "A queued build path can be followed through worker admission and asynchronous completion to exact scenarios in the dedicated parallel test files.",
+        "maintainability": "The selected coordinator is separate from the broader task engine, and direct executable scenarios constrain its scheduling and reporting behavior.",
+        "educational_value": "The path makes bounded concurrency and asynchronous resource cleanup inspectable in ordinary PowerShell rather than hiding them behind a build service."
+      },
+      "inspection": {
+        "commit": "16e0279db6dcc3845d0a550373e1f9f137f2f51b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Build-Parallel.ps1",
+          "Invoke-Build.ps1",
+          "Tests/Build-Parallel/Parallel.build.ps1",
+          "Tests/Build-Parallel/Parallel.test.ps1",
+          "Docs/Parallel-Builds.md",
+          "Docs/Design-Notes.md",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/nightroman/Invoke-Build/blob/16e0279db6dcc3845d0a550373e1f9f137f2f51b/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "modulebuilder",
+      "path_slug": "powershell-s-parser-and-ast-can-drive-a-source-to",
+      "repository": "PoshCode/ModuleBuilder",
+      "url": "https://github.com/PoshCode/ModuleBuilder",
+      "primary_language": "PowerShell",
+      "language_evidence": "Module assembly, manifest rewriting, syntax-tree parsing, using-statement relocation, source mapping, generator transforms, signing and packaging support, and tests are PowerShell.",
+      "description": "A PowerShell build module that compiles source folders into versioned modules, rewrites manifests, preserves source mappings, applies syntax-tree generators, and prepares packages for publication.",
+      "real_world_evidence": "ModuleBuilder is published as a PowerShell Gallery module and documents a source-to-package workflow used by PowerShell module authors.",
+      "why_study": "ModuleBuilder shows how PowerShell's own parser and syntax tree can support a source-to-source transformation that remains syntactically valid and executable.",
+      "learn": [
+        "Follow named-block and function AST discovery through exact source extents, ordered replacements, script generation, reparsing, and behavior tests."
+      ],
+      "prerequisites": [
+        "Readers should know PowerShell functions and scriptblocks, begin, process, and end blocks, abstract syntax trees, visitors, source offsets, and parsing errors."
+      ],
+      "concepts_developed": [
+        "PowerShell parser, token, extent, and typed AST hierarchy APIs.",
+        "Parse, visit, collect, replace, generate, and reparse stages.",
+        "Replacement offsets and ordering must preserve source structure."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A module build generator rewrites PowerShell source blocks while preserving valid module structure and source meaning."
+        ],
+        "reason": "The compact module-build vocabulary is subordinate to transferable lessons in syntax trees, visitor dispatch, source extents, ordered text replacement, scriptblock generation, closure capture, reparsing, and transformation contracts."
+      },
+      "learning_path": {
+        "goal": "Understand how PowerShell's parser and AST can drive a source-to-source generator that merges scriptblocks without corrupting syntax or execution structure.",
+        "start_here": {
+          "path": "Source/Public/Merge-ScriptBlock.ps1",
+          "reason": "The reviewed trace begins in Merge-ScriptBlock.ps1 because its visitor decides which syntax nodes become the generated merged scriptblock."
+        },
+        "supporting_files": [
+          "Source/Private/ConvertToAst.ps1",
+          "Source/Classes/10. TextReplacement.ps1",
+          "Source/Public/Invoke-ScriptGenerator.ps1",
+          "Tests/Private/ConvertToAst.Tests.ps1",
+          "Tests/Public/Merge-ScriptBlock.Tests.ps1",
+          "ReadMe.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Merge-ScriptBlock's BlockGenerator visitor over NamedBlockAst and FunctionDefinitionAst nodes, follow ConvertToAst selection and exact source extents into ordered TextReplacement edits and Invoke-ScriptGenerator execution, then reparse the generated text and close begin, process, end, parameter, function, and parse-failure behavior in the two direct AST suites."
+      },
+      "learning_level": {
+        "level": 4,
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "PowerShell parser, token, extent, and typed AST hierarchy APIs",
+            "custom AST visitor dispatch over named blocks and functions",
+            "scriptblock closures, generated source, ordered replacements, and reparsing"
+          ],
+          "reason": "Multiple advanced PowerShell language and compiler-facing mechanisms interact pervasively across the selected transformation, meeting the expert Language 5 anchor."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "parse, visit, collect, replace, generate, and reparse stages",
+            "ordered source-offset mutation",
+            "begin, process, end, parameter, and function cases"
+          ],
+          "reason": "The learner follows a multistage synchronous transformation whose state is explicit and bounded."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "AST conversion boundary",
+            "visitor and replacement model",
+            "generator invocation and direct parse-contract tests"
+          ],
+          "reason": "Several cohesive components cooperate across parser, transformation, generator, and test boundaries."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "replacement offsets and ordering must preserve source structure",
+            "parameter and named-block semantics must survive merging",
+            "generated text must reparse without errors across supported PowerShell versions"
+          ],
+          "reason": "Syntax preservation, transformation ordering, semantic compatibility, and version guarantees recur throughout the path."
+        },
+        "placement": "The four scores 5/3/3/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4."
+      },
+      "quality": {
+        "source_quality": "Merge-ScriptBlock.ps1 and ConvertToAst.ps1 keep traversal and selection explicit, while TextReplacement.ps1 and Invoke-ScriptGenerator.ps1 isolate mutation and execution.",
+        "architecture": "A parser produces AST nodes and exact extents, a visitor plans ordered replacements, a generator applies them, and the output is reparsed before use.",
+        "naming_and_idiom": "BlockGenerator, ConvertToAst, TextReplacement, and Invoke-ScriptGenerator expose each transformation stage and use PowerShell AST APIs directly.",
+        "tests": "ConvertToAst.Tests.ps1 and Merge-ScriptBlock.Tests.ps1 verify begin, process, end, parameter, function, source-selection, and parse-failure behavior.",
+        "documentation": "ReadMe.md explains module generation and gives the context needed to understand why scriptblocks are merged.",
+        "traceability": "A selected NamedBlockAst or FunctionDefinitionAst can be followed from visitor dispatch through extent replacement and reparsing into direct AST test assertions.",
+        "maintainability": "Parsing, transformation planning, text application, and generator execution have separate boundaries, with focused tests around generated syntax.",
+        "educational_value": "The path demonstrates advanced PowerShell as a language-tooling platform, not only as a command shell."
+      },
+      "inspection": {
+        "commit": "3b19a45518b99aded3ecc20e709d96a19a3e937b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "Source/Public/Merge-ScriptBlock.ps1",
+          "Source/Private/ConvertToAst.ps1",
+          "Source/Classes/10. TextReplacement.ps1",
+          "Source/Public/Invoke-ScriptGenerator.ps1",
+          "Tests/Private/ConvertToAst.Tests.ps1",
+          "Tests/Public/Merge-ScriptBlock.Tests.ps1",
+          "ReadMe.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/PoshCode/ModuleBuilder/blob/3b19a45518b99aded3ecc20e709d96a19a3e937b/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "pester",
+      "path_slug": "pester-turns-describe-and-it-scriptblocks-into-a-discovered-test",
+      "repository": "pester/Pester",
+      "url": "https://github.com/pester/Pester",
+      "primary_language": "PowerShell",
+      "language_evidence": "Test discovery and execution, nested scopes, hooks, assertions, mocking, filtering, output and result formats, code coverage integration, parallel orchestration, and supporting runtime types are implemented in PowerShell and first-party C#.",
+      "description": "PowerShell's test and mock framework, with a discovery and execution runtime, assertions, scope-aware mocks, filtering, plugins, code coverage, parallel containers, and CI result formats.",
+      "real_world_evidence": "Pester is the standard PowerShell testing framework, is distributed through the PowerShell Gallery, ships with older Windows installations, and integrates with editors and continuous-integration systems.",
+      "why_study": "Pester exposes an expert PowerShell framework lifecycle from Describe and It declarations through discovery, scoping, hooks, execution, errors, filtering, and results.",
+      "learn": [
+        "Trace declared scriptblocks into a discovered tree, then through recursive execution, session-state switching, setup and teardown, plugin callbacks, filtering, timing, and result decoration."
+      ],
+      "prerequisites": [
+        "Readers should know advanced PowerShell scriptblocks, scopes and session state, dynamic parameters, recursive trees, hooks, error records, and ordinary test-framework vocabulary."
+      ],
+      "concepts_developed": [
+        "Dynamic scriptblock generation and closure handling.",
+        "Separate discovery and execution phases over a recursive block tree.",
+        "Discovery must never accidentally execute test bodies."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Describe and It declare nested test blocks whose discovery, filtering, setup, execution, result, and cleanup lifecycle is managed by the framework runtime."
+        ],
+        "reason": "That familiar testing vocabulary is subordinate to transferable expert PowerShell lessons in scriptblock scope, session-state manipulation, dynamic test generation, tree construction, recursive lifecycle execution, plugin hooks, error capture, timing, filtering, and isolation."
+      },
+      "learning_path": {
+        "goal": "Understand how Pester turns Describe and It scriptblocks into a discovered test tree and then executes that tree with correct scopes, hooks, errors, timing, filtering, and results.",
+        "start_here": {
+          "path": "src/functions/Describe.ps1",
+          "reason": "The reviewed trace begins in Describe.ps1 because Describe establishes the outer DSL contract and registers blocks that the runtime later discovers and executes."
+        },
+        "supporting_files": [
+          "src/functions/It.ps1",
+          "src/Pester.Runtime.ps1",
+          "src/Pester.RSpec.ps1",
+          "tst/Pester.Runtime.ts.ps1",
+          "tst/Pester.RSpec.ts.ps1",
+          "README.md",
+          "LICENSE"
+        ],
+        "trace": "Start with Describe and It validation, parameterized block and test registration, and interactive handling; follow New-Block and New-Test into Pester.Runtime's discovery tree, recursive Invoke-Block execution, session-state and scriptblock scope switching, setup and teardown order, plugin callbacks, filtering, errors, timing, and result decoration in Pester.RSpec; then close nested, generated, scoped, skipped, failed, and filtered lifecycle behavior in the focused runtime and DSL suites."
+      },
+      "learning_level": {
+        "level": 5,
+        "language_technique": {
+          "score": 5,
+          "signals": [
+            "dynamic scriptblock generation and closure handling",
+            "reflection over nonpublic SessionState internals and scope reassignment",
+            "data-driven DSL registration, framework object construction, and safe-command indirection"
+          ],
+          "reason": "Multiple expert PowerShell runtime, scope, reflection, and dynamic-language mechanisms interact pervasively across declaration, discovery, and execution."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "separate discovery and execution phases over a recursive block tree",
+            "nested setup, teardown, plugin, filtering, skip, error, timing, and result state",
+            "scope isolation and recovery across containers, blocks, and tests"
+          ],
+          "reason": "Expert nonlocal lifecycle reasoning is pervasive across nested state machines, callbacks, scopes, failures, and recovery."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public Describe and It DSL",
+            "runtime tree and lifecycle engine",
+            "RSpec orchestration and result layer",
+            "focused self-hosting contract suites"
+          ],
+          "reason": "Several major subsystems and boundaries cooperate, while the selected trace remains narrower than the entire framework including mocking, coverage, and parallel orchestration."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "discovery must never accidentally execute test bodies",
+            "user scopes, data parameters, setup and teardown order, filters, skip and result semantics must remain exact",
+            "failures must be isolated, attributed, timed, cleaned up, and compatible across PowerShell versions and platforms"
+          ],
+          "reason": "Scope, lifecycle, error, isolation, determinism, API, version, and platform guarantees are pervasive and tightly coupled."
+        },
+        "placement": "The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5."
+      },
+      "quality": {
+        "source_quality": "Describe.ps1 and It.ps1 validate and register test declarations, while Pester.Runtime.ps1 and Pester.RSpec.ps1 make discovery and execution state explicit.",
+        "architecture": "The public DSL builds block and test records during discovery, and a recursive runtime executes that tree with scopes, hooks, plugins, filters, timing, and results.",
+        "naming_and_idiom": "Describe, It, New-Block, New-Test, Invoke-Block, discovery state, and execution state map directly to the framework lifecycle and PowerShell scriptblock semantics.",
+        "tests": "Pester.Runtime.ts.ps1 and Pester.RSpec.ts.ps1 exercise nesting, data expansion, scope fidelity, setup paths, filtering, skips, failures, and aggregated results.",
+        "documentation": "README.md introduces the DSL and expected lifecycle, supplying the user-facing contract for the selected runtime path.",
+        "traceability": "A Describe and It declaration can be followed into discovered records, recursive execution, hook and error handling, and the focused runtime and RSpec suites.",
+        "maintainability": "Discovery and execution are separated, lifecycle state has named records and phases, and self-tests protect scope and ordering behavior.",
+        "educational_value": "The path reveals how a familiar test DSL depends on careful dynamic scope and lifecycle engineering underneath."
+      },
+      "inspection": {
+        "commit": "bfcbd4d2b0fc5e89d058f59da19feabf853d33c2",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "src/functions/Describe.ps1",
+          "src/functions/It.ps1",
+          "src/Pester.Runtime.ps1",
+          "src/Pester.RSpec.ps1",
+          "tst/Pester.Runtime.ts.ps1",
+          "tst/Pester.RSpec.ts.ps1",
+          "README.md",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "Apache-2.0",
+        "urls": [
+          "https://github.com/pester/Pester/blob/bfcbd4d2b0fc5e89d058f59da19feabf853d33c2/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PowerShell",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     }
   ]
 }

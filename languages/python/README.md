@@ -1,457 +1,600 @@
 # Python
 
-10 qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).
+8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## SDC 1
+## Level 1
+
+No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+
+## Level 2
 
 ### [dbader/schedule](https://github.com/dbader/schedule)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 2 / Behavior 3 / Design 1 / Constraints 3 → Level 2**
 
 An in-process job scheduler with a fluent API for running Python callables at human-readable intervals.
+
+**Why study it:** The fluent scheduling path shows how a compact Python library turns declarations into recurring mutable state while handling deadlines, cancellation, missed runs, time zones, and daylight-saving transitions.
+
+**Prerequisites:**
+
+- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
+
+**Concepts this path develops:**
+
+- Fluent object API and callable composition.
+- Recurring mutable schedule state.
+- Timezone and DST correctness.
+
+**What you can learn:**
+
+- Use `schedule/__init__.py` to study the following transferable techniques and behaviors: Fluent object APIs, callable jobs, due-time ordering, recurrence calculation, randomized intervals, deadlines, cancellation sentinels, rescheduling, time-zone conversion, and daylight-saving gaps and folds.
+
+**Learning path:**
+
+- **Goal:** Understand how a fluent schedule declaration becomes a due job, executes or cancels, and computes its following run across deadlines and daylight-saving transitions.
+- **Start here:** [`schedule/__init__.py`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/schedule/__init__.py) — schedule/__init__.py contains every, Job, Scheduler.run_pending, Job.run, and next-run calculation, keeping the complete production trace in one module.
+- **Then read:**
+  - [`test_schedule.py`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/test_schedule.py)
+  - [`docs/timezones.rst`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/docs/timezones.rst)
+- **Trace:** Follow every().at().do() as Job stores interval, unit, time, callable, and deadline; trace _schedule_next_run and _correct_utc_offset into Scheduler.run_pending, Job.run, CancelJob handling, and rescheduling; then correlate ordinary recurrence, random intervals, deadlines, time zones, DST gaps and folds, and cancellation tests.
+
+**Why this level:**
+
+- **Language technique 2:** The path uses familiar professional Python techniques to build a readable fluent API without substantial metaprogramming.
+- **Behavioral reasoning 3:** Time progression and repeated state transitions materially affect behavior, including nontrivial daylight-saving branches.
+- **Design span 1:** The complete production trace stays in schedule/__init__.py; tests and documentation explain contracts but do not add implementation boundaries.
+- **Constraint burden 3:** Several material time, compatibility, and cancellation guarantees constrain changes to otherwise compact code.
+- **Placement:** The four scores 2/3/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The repository publishes a maintained scheduling package intended for recurring application jobs rather than an instructional toy.
 
 **Language evidence:** The scheduler, jobs, interval calculations, decorators, and public API live in the Python module schedule/__init__.py.
 
-**Why study it:** Its single main module demonstrates a complete domain model, fluent interface, time arithmetic, cancellation, and testable clock-dependent behavior.
+**Coding relevance:**
 
-**What you can learn:**
+The README and time-zone guide supply the required scheduling context, while the selected path primarily teaches fluent APIs, mutable lifecycle state, datetime edge handling, cancellation, and deterministic testing.
 
-- Fluent APIs, datetime scheduling, ordering, cancellation sentinels, decorators, and deterministic tests around time.
+Required domain context:
 
-**Prerequisites:**
+- An in-process scheduler stores the next local run time for recurring callables; daylight-saving transitions can make a requested wall-clock time nonexistent or repeated.
 
-- Python functions and classes, decorators, datetime arithmetic, exceptions, and sorting.
+**Eight-part quality gate:**
 
-**Start here:** [`schedule/__init__.py`](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/schedule/__init__.py) — The Scheduler and Job classes expose the entire domain model and the calculation that turns fluent configuration into run times.
+- **Source quality:** Scheduler and Job expose validation, due checks, execution, cancellation, and next-run calculation as explicit methods in one focused module.
+- **Architecture:** One scheduler-and-job component owns production behavior, while test_schedule.py and docs/timezones.rst explain its contracts and edge cases.
+- **Naming and idiom:** every, at, do, run_pending, should_run, next_run, cancel_after, CancelJob, and _schedule_next_run form a readable scheduling vocabulary.
+- **Tests:** test_schedule.py covers ordinary and random recurrence, deadlines, cancellation, missed-run policy, time zones, daylight-saving gaps and folds, and errors.
+- **Documentation:** docs/timezones.rst documents timezone-aware scheduling and the library's naive-local public behavior, including daylight-saving limitations relevant to the selected trace.
+- **Traceability:** A fluent every().at().do() declaration can be followed into stored Job state, next-run calculation, Scheduler.run_pending, Job.run, cancellation, and rescheduling assertions.
+- **Maintainability:** The one-module design and exhaustive time tests make recurrence policy visible while protecting compatibility at daylight-saving and deadline boundaries.
+- **Educational value:** The path demonstrates that a small fluent API can contain substantial temporal reasoning without requiring architectural scaffolding.
 
-**Why this level:**
+**Inspection record:** commit `82a43db1b938d8fdf60103bd41f329e06c8d3651`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `schedule/__init__.py`, `test_schedule.py`, `docs/timezones.rst`, `LICENSE.txt`. GitHub Linguist label: Python.
 
-- **S1:** 1,978 meaningful implementation LOC measured with tokei 14.0.0. Count covers the schedule package, excluding the test suite, documentation, examples, and packaging files.
-- **D2:** Time zones, missed intervals, deadlines, and randomized ranges add edge cases, but the implementation uses familiar Python constructs.
-- **C1:** Scheduler owns a list of Jobs and each Job owns its next-run calculation; there are no workers, queues, or persistent stores.
-- **Placement:** The entire useful scheduler remains readable as one local object model, so it belongs at SDC 1.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Validation and next-run calculations are explicit, with domain errors and cancellation behavior kept close to their use sites.
-- **Architecture:** Scheduler coordinates jobs while Job owns interval configuration and execution, producing a clean two-object model.
-- **Naming and idiom:** The every, at, until, do, run_pending, and next_run vocabulary mirrors how users describe recurring work.
-- **Tests:** A broad single-file suite covers units, tags, time zones, deadlines, missed runs, random intervals, cancellation, and failure cases.
-- **Documentation:** The README provides executable examples, limitations, API patterns, and guidance for background execution.
-- **Traceability:** A fluent statement can be traced through Job configuration, scheduling, due checks, execution, and rescheduling in one file.
-- **Maintainability:** No hidden thread or persistence layer exists, and the clock can be replaced in tests through a small seam.
-- **Educational value:** It is a rare production library whose complete behavioral model fits into an introductory repository reading.
-
-**Inspection record:** commit `82a43db1b938d8fdf60103bd41f329e06c8d3651`, reviewed 2026-08-28 by Codex. Files sampled: `README.rst`, `schedule/__init__.py`, `test_schedule.py`, `docs/timezones.rst`. GitHub Linguist label: Python. LOC exclusions: test_schedule.py, docs.
-
-**License:** [MIT](https://github.com/dbader/schedule/blob/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt)
+</details>
 
 ### [pallets/itsdangerous](https://github.com/pallets/itsdangerous)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
 
 A compact library for signing and timestamping data so tampering can be detected without encrypting the payload.
+
+**Why study it:** The signer path is a compact security-boundary study of byte normalization, key derivation, constant-time verification, secret rotation, and informative failure payloads.
+
+**Prerequisites:**
+
+- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
+
+**Concepts this path develops:**
+
+- Algorithm strategy objects and class composition.
+- Localized sign and unsign branches.
+- Constant-time signature verification.
+
+**What you can learn:**
+
+- Use `src/itsdangerous/signer.py` to study the following transferable techniques and behaviors: Byte encoding, derived signing keys, algorithm strategy objects, constant-time comparison, rotated-secret fallback, signature framing, rejected-payload exceptions, and serializer integration.
+
+**Learning path:**
+
+- **Goal:** Understand how ItsDangerous signs and verifies a payload, rotates secrets, preserves the rejected payload on failure, and supplies that contract to serializers.
+- **Start here:** [`src/itsdangerous/signer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py) — src/itsdangerous/signer.py owns Signer.sign, verify_signature, and unsign, so it exposes both creation and verification before the trace reaches shared encoding, exceptions, and serializer construction.
+- **Then read:**
+  - [`src/itsdangerous/encoding.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/encoding.py)
+  - [`src/itsdangerous/exc.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/exc.py)
+  - [`src/itsdangerous/serializer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/serializer.py)
+  - [`tests/test_itsdangerous/test_signer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/tests/test_itsdangerous/test_signer.py)
+- **Trace:** Follow Signer.sign through byte conversion, key derivation, algorithm delegation, and signature joining; then follow verify_signature and unsign as they try rotated keys newest-first, use constant-time comparison, and raise BadSignature with the payload. Finish at Serializer.make_signer and the signer tests for mutation, malformed input, derivation modes, custom algorithms, and rotation.
+
+**Why this level:**
+
+- **Language technique 2:** The path relies on common professional object composition, iterables, class methods, and exception idioms without advanced Python machinery.
+- **Behavioral reasoning 2:** Several validation and fallback paths matter, but state and control flow remain synchronous, local, and easy to enumerate.
+- **Design span 2:** The behavior crosses a few small, explicit modules whose responsibilities remain locally understandable.
+- **Constraint burden 3:** Security boundaries, encoding rules, old-key acceptance, and stable exception payloads materially constrain ordinary changes.
+- **Placement:** The four scores 2/2/2/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Pallets publishes ItsDangerous as the signing layer used by Flask and other production Python applications.
 
 **Language evidence:** The signing, serialization, timestamp, encoding, and exception modules under src/itsdangerous are implemented in Python.
 
-**Why study it:** A small codebase shows how a security-sensitive contract can remain explicit through focused abstractions, key derivation, serializers, and precise failure modes.
+**Coding relevance:**
 
-**What you can learn:**
+The repository documents this short trust model and delegates HMAC, digest, and constant-time comparison primitives to established library implementations; the selected path teaches transferable API composition, validation, compatibility, and error design rather than cryptographic theory.
 
-- Message authentication, key derivation, constant-time comparison, serializer composition, timestamp validation, and exception design.
+Required domain context:
 
-**Prerequisites:**
+- A message authentication code lets a holder of a secret detect payload tampering; salts separate uses, and key rotation accepts old secrets while signing with the newest one.
 
-- Python classes and bytes, hashing and MAC concepts, serialization, and exceptions.
+**Eight-part quality gate:**
 
-**Start here:** [`src/itsdangerous/signer.py`](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/src/itsdangerous/signer.py) — Signer contains the core key derivation, signature, verification, and unsigning contract used by the higher-level serializers.
+- **Source quality:** Signing, byte conversion, key derivation, algorithm delegation, rotated-key verification, and failure construction are expressed as short named operations.
+- **Architecture:** Signer, encoding helpers, exception types, and Serializer.make_signer have narrow responsibilities across a small selected path.
+- **Naming and idiom:** Signer, derive_key, get_signature, verify_signature, unsign, BadSignature, payload, separator, and secret_keys state the security contract directly.
+- **Tests:** tests/test_itsdangerous/test_signer.py covers payload mutation, malformed signatures, derivation modes, custom algorithms, separators, rotated keys, and rejected payloads.
+- **Documentation:** The README and narrative signer documentation explain the signing boundary, key rotation, salts, algorithms, and serializer responsibilities used by this path.
+- **Traceability:** A payload can be followed through byte conversion, derived key and algorithm signing, separator framing, newest-first verification, BadSignature payload preservation, and serializer construction.
+- **Maintainability:** Separate encoding, algorithm, signer, exception, and serializer boundaries make security and backward-compatibility changes locally reviewable.
+- **Educational value:** The path teaches how a friendly signing API preserves security-sensitive comparison, rotation, encoding, and error contracts without a large framework.
 
-**Why this level:**
+**Inspection record:** commit `672971d66a2ef9f85151e53283113f33d642dabd`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/itsdangerous/signer.py`, `src/itsdangerous/encoding.py`, `src/itsdangerous/exc.py`, `src/itsdangerous/serializer.py`, `tests/test_itsdangerous/test_signer.py`, `LICENSE.txt`. GitHub Linguist label: Python.
 
-- **S1:** 890 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Python under src, excluding tests, documentation, and build metadata.
-- **D2:** The cryptographic primitives and encoding rules need care, but the library delegates algorithms and keeps each transformation local.
-- **C1:** A few classes layer serializers and timestamps over one signing abstraction without services, plugins, or persistence.
-- **Placement:** Its compact topology and traceable data path make it SDC 1 despite the importance of its cryptographic boundary.
+</details>
 
-**Quality-gate evidence:**
-
-- **Source quality:** Security-relevant operations are short, documented, and built on standard cryptographic primitives rather than homemade algorithms.
-- **Architecture:** Signers, serializers, timestamps, encoding helpers, and exceptions form a small progression of responsibilities.
-- **Naming and idiom:** Names such as derive_key, get_signature, unsign, and BadSignature make success and failure semantics visible.
-- **Tests:** Focused tests cover key rotation, derivation methods, malformed signatures, fallback signers, timestamps, and serialization behavior.
-- **Documentation:** The README and narrative documentation explain the trust model, use cases, API layers, and non-encryption boundary.
-- **Traceability:** A payload can be followed from serializer through signer and digest comparison into a specific exception path.
-- **Maintainability:** The narrow surface, typed code, isolated encoding helpers, and explicit compatibility hooks limit change impact.
-- **Educational value:** It teaches production integrity checks without burying the learner in a full authentication framework.
-
-**Inspection record:** commit `672971d66a2ef9f85151e53283113f33d642dabd`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `src/itsdangerous/signer.py`, `src/itsdangerous/serializer.py`, `tests/test_itsdangerous/test_signer.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs.
-
-**License:** [BSD-3-Clause](https://github.com/pallets/itsdangerous/blob/672971d66a2ef9f85151e53283113f33d642dabd/LICENSE.txt)
-
-## SDC 2
+## Level 3
 
 ### [pallets/click](https://github.com/pallets/click)
 
-**S3 / D2 / C2 → SDC 2**
+**Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
 
 A composable command-line toolkit that maps decorators and command objects onto parsing, validation, help, invocation, and shell completion.
+
+**Why study it:** Starting with Click's decorators connects a polished declarative API to the command objects, parser state, managed contexts, callbacks, errors, and cleanup that implement it.
+
+**Prerequisites:**
+
+- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
+
+**Concepts this path develops:**
+
+- Overloaded higher-order decorators.
+- Parser and parameter-processing state.
+- Stable declarative API.
+
+**What you can learn:**
+
+- Use `src/click/decorators.py` to study the following transferable techniques and behaviors: Higher-order decorators, dynamic declaration metadata, command construction, parameter parsing, context propagation, nested invocation, usage errors, return values, and deterministic teardown.
+
+**Learning path:**
+
+- **Goal:** Understand how a decorated Python callback becomes a command, parses arguments into parameters, invokes inside a managed context, and produces a result or usage error.
+- **Start here:** [`src/click/decorators.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/decorators.py) — decorators.py is where user functions and parameter declarations become Command objects, so it establishes the public contract before the trace enters parsing and invocation internals.
+- **Then read:**
+  - [`src/click/core.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/core.py)
+  - [`src/click/parser.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/parser.py)
+  - [`tests/test_commands.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/tests/test_commands.py)
+- **Trace:** Start at @command and parameter decorators as they create a Command and attach declaration metadata; continue through Command.main, make_context, parser construction, argument processing, and Context.invoke into the original callback and context cleanup; correlate invocation, nested command, default, error, return-value, and teardown behavior in test_commands.py.
+
+**Why this level:**
+
+- **Language technique 3:** Decorators, overloads, higher-order construction, dynamic metadata, and managed contexts materially shape the public-to-runtime path.
+- **Behavioral reasoning 3:** Token consumption, defaults, context state, nested invocation, error translation, and cleanup create nontrivial behavior across one command run.
+- **Design span 3:** The trace crosses several framework abstractions whose responsibilities remain explicit and independently testable.
+- **Constraint burden 3:** Several material public, lifecycle, and cross-platform CLI guarantees constrain implementation changes.
+- **Placement:** The four scores 3/3/3/3 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.
 
 **Language evidence:** Command parsing, parameter types, decorators, terminal helpers, and shell completion under src/click are Python.
 
-**Why study it:** Its public decorators reveal a disciplined object model underneath, making it useful for studying API ergonomics, contexts, parsing, and extension points.
+**Coding relevance:**
 
-**What you can learn:**
+The README and familiar command-line conventions provide sufficient context; the path primarily teaches declarative API construction, parsing, context propagation, invocation, cleanup, and compatibility.
 
-- Decorator APIs, command trees, context propagation, parsing state machines, parameter conversion, help rendering, and shell completion.
+Required domain context:
 
-**Prerequisites:**
+- A command-line program converts argument tokens into typed parameters, invokes a callback within a context, and reports usage or errors to a terminal.
 
-- Decorators, callables, classes, iterators, terminal conventions, and command-line argument syntax.
+**Eight-part quality gate:**
 
-**Start here:** [`src/click/core.py`](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/src/click/core.py) — Context, Command, Group, Parameter, Option, and Argument define the domain model that decorators construct.
+- **Source quality:** The decorators preserve callback metadata and declarations in focused constructors, while core command and context methods document parsing, invocation, error, and cleanup behavior.
+- **Architecture:** Decorator construction, Command and Context objects, the parser, parameter conversion, callback invocation, and terminal behavior are separated by clear seams.
+- **Naming and idiom:** command, option, argument, Context, make_context, invoke, result callback, and usage error form a consistent command-line vocabulary.
+- **Tests:** tests/test_commands.py covers decorated commands, defaults, nested groups, invocation, return values, usage failures, context behavior, and teardown relevant to the trace.
+- **Documentation:** Tutorials, API references, patterns, testing guidance, and examples explain both decorator use and the command and context lifecycle underneath it.
+- **Traceability:** A decorated callback can be followed through Command construction, parser creation, argument processing, Context.invoke, result handling, and context cleanup, with direct assertions for each stage.
+- **Maintainability:** Stable public decorators build explicit runtime objects, allowing parsing, contexts, parameters, terminals, and completion behavior to evolve behind documented contracts.
+- **Educational value:** This path makes the implementation cost of a declarative Python API visible without losing the approachable call site that motivates it.
 
-**Why this level:**
+**Inspection record:** commit `36baa15ff831b939a22bc527cd76ce653ef6f66d`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/click/decorators.py`, `src/click/core.py`, `src/click/parser.py`, `tests/test_commands.py`, `LICENSE.txt`. GitHub Linguist label: Python.
 
-- **S3:** 10,038 meaningful implementation LOC measured with tokei 14.0.0. Count covers Python under src/click, excluding tests, documentation, examples, and generated shell-completion artifacts.
-- **D2:** The library has many behaviors, but individual mechanisms are idiomatic and the public abstraction maps cleanly to its core objects.
-- **C2:** Several focused modules support one command invocation pipeline without external services or persistence.
-- **Placement:** Its size reaches S3, but conventional mechanisms and a cohesive command pipeline yield SDC 2 under the published averaging rule.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Parsing, conversion, help formatting, and context cleanup are factored into named units with detailed behavioral docstrings.
-- **Architecture:** Core command objects coordinate parsing, types, decorators, formatting, terminal utilities, and completion through clear seams.
-- **Naming and idiom:** Command, Group, Context, Option, Argument, Parameter, and ResultCallback form a consistent CLI vocabulary.
-- **Tests:** The suite exercises commands, contexts, decorators, types, prompting, terminals, completion, deprecations, and compatibility.
-- **Documentation:** Tutorials, API references, patterns, testing guidance, and examples explain both routine and advanced use.
-- **Traceability:** A decorated function can be followed into a Command object, parser state, parameter processing, context invocation, and result handling.
-- **Maintainability:** Public abstractions are stable while platform-specific terminal and completion behavior stays in dedicated modules.
-- **Educational value:** It teaches how a polished declarative API can be implemented with explicit, inspectable runtime objects.
-
-**Inspection record:** commit `36baa15ff831b939a22bc527cd76ce653ef6f66d`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `src/click/core.py`, `src/click/decorators.py`, `tests/test_commands.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs, examples.
-
-**License:** [BSD-3-Clause](https://github.com/pallets/click/blob/36baa15ff831b939a22bc527cd76ce653ef6f66d/LICENSE.txt)
+</details>
 
 ### [psf/requests](https://github.com/psf/requests)
 
-**S2 / D2 / C2 → SDC 2**
+**Language 2 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
 
 A synchronous HTTP client that turns URLs, headers, authentication, cookies, redirects, and connection pools into a small Python API.
+
+**Why study it:** Beginning with requests.get and api.request shows how a deliberately small convenience API creates and cleans up a Session while preserving preparation, redirect, transport, streaming, and security policy.
+
+**Prerequisites:**
+
+- Basic familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests.
+
+**Concepts this path develops:**
+
+- Layering a convenience API over persistent session preparation and adapter dispatch.
+- Redirect history, method rewriting, cookies, credentials, and replayable request bodies.
+- Ownership and cleanup of streamed responses across success, redirect, and exception paths.
+
+**What you can learn:**
+
+- Use `src/requests/api.py` to study the following transferable techniques and behaviors: API layering, temporary and persistent sessions, request preparation, adapter dispatch, redirect state, cookie and credential policy, streamed-response ownership, hooks, and exception cleanup.
+
+**Learning path:**
+
+- **Goal:** Understand how requests.get becomes a prepared request, passes through a persistent Session and adapter, follows redirects safely, and returns or closes a streamed response.
+- **Start here:** [`src/requests/api.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/api.py) — api.py contains the familiar request and verb helpers and immediately exposes their temporary-Session lifetime, making it the clearest entrance to the selected public-API-to-transport trace.
+- **Then read:**
+  - [`src/requests/sessions.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/sessions.py)
+  - [`src/requests/models.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/models.py)
+  - [`src/requests/adapters.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/adapters.py)
+  - [`tests/test_requests.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/tests/test_requests.py)
+- **Trace:** Begin at api.request and its temporary Session, then follow Session.request through Request and PreparedRequest construction, cookie, authentication, hook, and environment merging; continue through Session.send to the selected adapter and Response, then through redirect method, body, credential, cookie, rewind, and connection-release policy, correlating the focused redirect, streaming, authentication, cookie, hook, and failure tests.
+
+**Why this level:**
+
+- **Language technique 2:** The path is built from conventional professional Python object, iterator, callback, and context-manager idioms.
+- **Behavioral reasoning 3:** Redirect transitions, mutable session state, hooks, stream ownership, and error cleanup materially affect the request over time.
+- **Design span 3:** The trace crosses several meaningful but locally understandable layers from convenience API to model and transport.
+- **Constraint burden 4:** Security, HTTP compatibility, persistent state, and resource-lifetime guarantees interact throughout normal redirect handling.
+- **Placement:** The four scores 2/3/3/4 sum to 12; their arithmetic mean is 3.00 and rounds half-up to Level 3. The published result is Level 3.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.
 
 **Language evidence:** The public API, sessions, models, authentication, cookies, adapters, and utilities under src/requests are Python.
 
-**Why study it:** It shows how a friendly public API can sit over protocol details, stateful sessions, transport adapters, and disciplined exception translation.
+**Coding relevance:**
 
-**What you can learn:**
+Ordinary HTTP concepts and the repository documentation are sufficient; the difficult work is transferable API layering, state management, adapter design, resource cleanup, compatibility, and security policy.
 
-- API layering, request preparation, sessions, adapter boundaries, redirect policy, authentication, cookies, and exception normalization.
+Required domain context:
 
-**Prerequisites:**
+- An HTTP client prepares a request, sends it through a connection-pool adapter, and may follow redirects while preserving or removing method, body, cookies, and credentials according to HTTP and security rules.
 
-- HTTP fundamentals, context managers, Python mappings and classes, exceptions, and basic TLS concepts.
+**Eight-part quality gate:**
 
-**Start here:** [`src/requests/sessions.py`](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/src/requests/sessions.py) — Session.prepare_request and Session.send connect user configuration, persistent state, redirects, hooks, and the selected transport adapter.
+- **Source quality:** The API helper is intentionally small, while Session and adapter code make request normalization, redirects, stream ownership, and cleanup branches explicit.
+- **Architecture:** Public API helpers feed Session, Request, PreparedRequest, Response, and transport-adapter layers with recognizable ownership boundaries.
+- **Naming and idiom:** request, Session, PreparedRequest, Response, hooks, adapters, redirect history, and merge settings consistently describe the HTTP client lifecycle.
+- **Tests:** tests/test_requests.py directly covers verbs, redirects, authentication, cookies, hooks, streaming, rewind behavior, transport failures, and response cleanup used by this path.
+- **Documentation:** The quick start and advanced guides explain sessions, authentication, SSL, streaming, hooks, redirects, and exceptions at the level this trace requires.
+- **Traceability:** A requests.get call can be followed from api.request through Session.request, preparation, adapter send, Response construction, redirect rebuilding, and connection release into focused tests.
+- **Maintainability:** The narrow public helpers and stable model and adapter boundaries isolate convenience API, persistent state, redirect policy, and third-party transport changes.
+- **Educational value:** The path demonstrates how a friendly API remains small by delegating difficult state, security, compatibility, and resource-lifetime work to explicit layers.
 
-**Why this level:**
+**Inspection record:** commit `5460f467b02e49471c0fd6cfc9ca0adab6351f98`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/requests/api.py`, `src/requests/sessions.py`, `src/requests/models.py`, `src/requests/adapters.py`, `tests/test_requests.py`, `LICENSE`. GitHub Linguist label: Python.
 
-- **S2:** 4,951 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Python under src/requests, excluding tests, documentation, vendored certificates, and packaging files.
-- **D2:** HTTP edge cases are substantive, but Requests deliberately presents them through conventional classes and readable control flow.
-- **C2:** A request crosses several modules, yet the dependency boundary and preparation-to-send flow are stable and easy to identify.
-- **Placement:** Moderate size and a clear layered request path make Requests an instructive SDC 2 project.
+</details>
 
-**Quality-gate evidence:**
-
-- **Source quality:** Input normalization, redirect rules, cookie handling, and transport exceptions are explicit and supported by narrow helpers.
-- **Architecture:** API helpers feed Sessions and prepared Models, with adapters isolating the urllib3 transport implementation.
-- **Naming and idiom:** PreparedRequest, Session, Response, Adapter, hooks, and merge_setting consistently describe the HTTP client lifecycle.
-- **Tests:** The suite covers HTTP verbs, redirects, authentication, proxies, cookies, encodings, streaming, hooks, and regression cases.
-- **Documentation:** README and guides document quick starts, advanced sessions, authentication, SSL, streaming, hooks, and exceptions.
-- **Traceability:** A call to requests.get can be followed through api.request, Session.request, preparation, send, adapter, and response construction.
-- **Maintainability:** Stable public objects and a distinct adapter boundary contain protocol and third-party transport changes.
-- **Educational value:** It demonstrates the engineering behind an API that feels simpler than the protocol it represents.
-
-**Inspection record:** commit `5460f467b02e49471c0fd6cfc9ca0adab6351f98`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `src/requests/api.py`, `src/requests/sessions.py`, `tests/test_requests.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs, ext.
-
-**License:** [Apache-2.0](https://github.com/psf/requests/blob/5460f467b02e49471c0fd6cfc9ca0adab6351f98/LICENSE)
-
-## SDC 3
-
-### [encode/httpx](https://github.com/encode/httpx)
-
-**S2 / D3 / C3 → SDC 3**
-
-A modern HTTP client with matching synchronous and asynchronous APIs, streaming, redirects, authentication, proxies, and pluggable transports.
-
-**Real-world evidence:** Encode publishes HTTPX for production Python clients, with maintained protocol behavior and integrations built on HTTP Core.
-
-**Language evidence:** Synchronous and asynchronous clients, models, authentication, decoders, URLs, and transports in the httpx package are Python.
-
-**Why study it:** Its paired sync/async design makes resource lifetime, transport abstraction, exception translation, and API symmetry concrete.
-
-**What you can learn:**
-
-- Sync/async API parity, transport adapters, streaming lifecycles, exception mapping, redirects, authentication, and client state machines.
-
-**Prerequisites:**
-
-- HTTP, context managers, async iteration, type hints, exceptions, and TLS/proxy basics.
-
-**Start here:** [`httpx/_client.py`](https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/httpx/_client.py) — Client and AsyncClient show request construction, state, redirects, authentication, event hooks, streaming, and transport delegation.
-
-**Why this level:**
-
-- **S2:** 7,308 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Python in httpx, excluding tests, documentation, scripts, and package metadata.
-- **D3:** Streaming ownership, redirects, authentication, timeouts, and paired concurrency styles require careful lifecycle reasoning.
-- **C3:** Behavior crosses client state, models, authentication, decoders, URL logic, and sync/async transports, but boundaries are explicit.
-- **Placement:** Moderate size with meaningful concurrency and transport architecture puts HTTPX squarely at SDC 3.
-
-**Quality-gate evidence:**
-
-- **Source quality:** State checks, default resolution, stream wrappers, and exception mapping make ownership and failure behavior explicit.
-- **Architecture:** Clients build models and delegate I/O through a narrow transport interface, with parallel synchronous and asynchronous implementations.
-- **Naming and idiom:** ClientState, Request, Response, ByteStream, Transport, Timeout, and Auth consistently describe the HTTP domain.
-- **Tests:** Focused suites cover clients, transports, models, authentication, URLs, proxies, streaming, timeouts, and sync/async parity.
-- **Documentation:** Quickstarts, advanced guides, API references, compatibility notes, and transport documentation explain the full surface.
-- **Traceability:** A client call can be followed through request building, authentication, redirects, transport handling, streaming, and response closure.
-- **Maintainability:** The HTTP Core boundary isolates protocol engines while transport interfaces make testing and custom I/O straightforward.
-- **Educational value:** It provides a clean study of one API expressed over both synchronous and asynchronous resource models.
-
-**Inspection record:** commit `b5addb64f0161ff6bfe94c124ef76f6a1fba5254`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `httpx/_client.py`, `httpx/_transports/default.py`, `tests/client/test_client.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs, scripts.
-
-**License:** [BSD-3-Clause](https://github.com/encode/httpx/blob/b5addb64f0161ff6bfe94c124ef76f6a1fba5254/LICENSE.md)
+## Level 4
 
 ### [pallets/flask](https://github.com/pallets/flask)
 
-**S2 / D3 / C3 → SDC 3**
+**Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
 
 A web application framework that composes routing, request contexts, templating, sessions, error handling, and extensions over Werkzeug.
+
+**Why study it:** The Flask request path shows one complete WSGI lifecycle through scoped context binding, routing, hooks, view dispatch, error handling, response finalization, and guaranteed teardown.
+
+**Prerequisites:**
+
+- Working familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests, plus experience tracing behavior across several production files.
+
+**Concepts this path develops:**
+
+- Decorator and framework idioms.
+- Nested application and request context ownership.
+- WSGI and HTTP response semantics.
+
+**What you can learn:**
+
+- Use `src/flask/app.py` to study the following transferable techniques and behaviors: WSGI application entry, RequestContext ownership, ContextVar-backed globals, route matching, before and after hooks, sync-to-async adaptation, error handlers, response conversion, and teardown ordering.
+
+**Learning path:**
+
+- **Goal:** Understand one complete Flask request from WSGI entry through context binding, routing, hooks, dispatch, error handling, response finalization, and teardown.
+- **Start here:** [`src/flask/app.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/app.py) — src/flask/app.py owns Flask.wsgi_app and full_dispatch_request, which coordinate the selected lifecycle before delegating context storage to ctx.py and globals.py.
+- **Then read:**
+  - [`src/flask/ctx.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/ctx.py)
+  - [`src/flask/globals.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/globals.py)
+  - [`tests/test_basic.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/tests/test_basic.py)
+- **Trace:** Follow Flask.wsgi_app as it creates and pushes RequestContext, uses context-backed globals, matches the route, runs full_dispatch_request, preprocessors, the view, error handlers, make_response and process_response, then pops contexts and runs teardown even after failure; correlate ordering, short-circuit, exception, response, and teardown tests.
+
+**Why this level:**
+
+- **Language technique 3:** Substantial framework abstractions and scoped-context machinery recur throughout the request path without requiring expert Python metaprogramming.
+- **Behavioral reasoning 4:** Hook propagation, exception resolution, nested contexts, response finalization, and guaranteed teardown must be held together across the lifecycle.
+- **Design span 3:** The trace crosses several meaningful framework and dependency boundaries while retaining locally clear responsibilities.
+- **Constraint burden 4:** Multiple strict protocol, resource, isolation, error, and compatibility guarantees interact throughout normal dispatch.
+- **Placement:** The four scores 3/4/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.
 
 **Language evidence:** Application, blueprint, context, helper, session, CLI, and templating integration modules under src/flask are Python.
 
-**Why study it:** Flask keeps the web lifecycle visible while demonstrating context-local state, decorators, extension hooks, blueprints, and separation from lower-level HTTP machinery.
+**Coding relevance:**
 
-**What you can learn:**
+A short HTTP, WSGI, and context prerequisite is enough; the path's difficulty comes from transferable lifecycle staging, scoped state, hook ordering, exception handling, cleanup, and dependency boundaries.
 
-- WSGI request dispatch, application and request contexts, blueprints, hooks, error resolution, sessions, and dependency boundaries.
+Required domain context:
 
-**Prerequisites:**
+- WSGI presents one HTTP request as an environment and response callback; Flask binds application and request context to the active execution before routing and dispatch.
 
-- HTTP and WSGI basics, decorators, context managers, mappings, exceptions, and template concepts.
+**Eight-part quality gate:**
 
-**Start here:** [`src/flask/app.py`](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/src/flask/app.py) — Flask dispatch, hooks, errors, response finalization, and WSGI entry points meet in the application class.
+- **Source quality:** Named application methods separate WSGI entry, request preprocessing, view dispatch, error handling, response processing, and teardown.
+- **Architecture:** Flask application orchestration, RequestContext ownership, ContextVar-backed globals, Werkzeug routing, and response construction meet at explicit boundaries.
+- **Naming and idiom:** wsgi_app, full_dispatch_request, preprocess_request, dispatch_request, handle_exception, process_response, and teardown_request state lifecycle order.
+- **Tests:** tests/test_basic.py covers hook ordering, early returns, view and error behavior, response construction, nested contexts, and teardown after success or failure.
+- **Documentation:** Flask's request-context, application-context, lifecycle, error-handling, and asynchronous-callback documentation explains the contracts visible in this trace.
+- **Traceability:** A WSGI request can be followed from wsgi_app through context push, route match, hooks, view or handler, response processing, and context pop into focused lifecycle assertions.
+- **Maintainability:** Explicit Flask and Werkzeug boundaries plus guaranteed context cleanup isolate extension hooks without obscuring request ownership.
+- **Educational value:** The path turns a framework request into an observable sequence of context, dispatch, response, and cleanup decisions suitable for advanced study.
 
-**Why this level:**
+**Inspection record:** commit `d318b683471101618febed18996405ad26462110`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/flask/app.py`, `src/flask/ctx.py`, `src/flask/globals.py`, `tests/test_basic.py`, `LICENSE.txt`. GitHub Linguist label: Python.
 
-- **S2:** 7,660 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Python under src/flask, excluding tests, documentation, examples, and project metadata.
-- **D3:** Correctness depends on nested contexts, hook ordering, error selection, and response conversion across synchronous and asynchronous views.
-- **C3:** A request crosses several framework components and an important Werkzeug boundary, though each responsibility remains identifiable.
-- **Placement:** Framework lifecycle reasoning balances its moderate code size, making Flask a representative SDC 3 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Lifecycle stages are named, documented, and wrapped in controlled context cleanup and error handling.
-- **Architecture:** Application, blueprints, contexts, helpers, sessions, templating, and CLI integration have explicit responsibilities over Werkzeug.
-- **Naming and idiom:** before_request, dispatch_request, make_response, teardown_request, and context names mirror the web lifecycle.
-- **Tests:** Extensive tests cover dispatch, contexts, blueprints, sessions, templates, CLI behavior, signals, errors, and regressions.
-- **Documentation:** Quickstarts, tutorials, patterns, API references, extension guidance, and deployment material support multiple learning depths.
-- **Traceability:** A WSGI call can be traced through context creation, preprocessing, dispatch, response processing, and teardown.
-- **Maintainability:** The Werkzeug/Jinja boundaries and extension hooks are explicit, while shared lifecycle logic stays centralized.
-- **Educational value:** It exposes the machinery of a real web framework without the breadth of a batteries-included platform.
-
-**Inspection record:** commit `d318b683471101618febed18996405ad26462110`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `src/flask/app.py`, `src/flask/ctx.py`, `tests/test_basic.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs, examples.
-
-**License:** [BSD-3-Clause](https://github.com/pallets/flask/blob/d318b683471101618febed18996405ad26462110/LICENSE.txt)
-
-## SDC 4
+</details>
 
 ### [pytest-dev/pytest](https://github.com/pytest-dev/pytest)
 
-**S3 / D4 / C4 → SDC 4**
+**Language 4 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
 
 An extensible testing framework that discovers tests, resolves fixtures, rewrites assertions, runs lifecycle hooks, and reports results.
+
+**Why study it:** The collection path shows how pytest converts command-line paths into a deterministic extensible tree while coordinating imports, plugin hooks, reflection, parametrization, duplicate policy, and failures.
+
+**Prerequisites:**
+
+- Working familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests, plus experience tracing behavior across several production files.
+
+**Concepts this path develops:**
+
+- Reflection and dynamic Python-object discovery.
+- Recursive collection-tree expansion.
+- Plugin and node API compatibility.
+
+**What you can learn:**
+
+- Use `src/_pytest/main.py` to study the following transferable techniques and behaviors: Recursive collector trees, filesystem hook proxies, dynamic imports, reflective Python discovery, plugin dispatch, cached collectors, parametrized item generation, node identifiers, duplicate handling, and collection reports.
+
+**Learning path:**
+
+- **Goal:** Understand how pytest converts command-line paths into a deterministic collection tree of Python test items while honoring plugin hooks, imports, parametrization, duplicates, and collection failures.
+- **Start here:** [`src/_pytest/main.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/main.py) — src/_pytest/main.py contains Session.perform_collect and recursive item generation, providing the session-level entrance before src/_pytest/python.py handles Python-specific discovery.
+- **Then read:**
+  - [`src/_pytest/python.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/python.py)
+  - [`testing/test_collection.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/testing/test_collection.py)
+- **Trace:** Follow Session.perform_collect through argument resolution and overlap normalization, filesystem hook proxies, collector creation, cached recursive genitems, and collection reports; continue into Python module import, reflective object discovery, function and parametrized-item generation, then correlate hook order, node IDs, duplicate and overlap semantics, import modes, symlinks, failures, and parametrized ordering in test_collection.py.
+
+**Why this level:**
+
+- **Language technique 4:** Reflection, import machinery, plugin-hook indirection, dynamic node construction, and advanced type modeling recur in essential collection behavior, satisfying the advanced-language-machinery anchor rather than the lower abstraction anchor.
+- **Behavioral reasoning 4:** Tree state, hook propagation, cached collectors, duplicate policy, parametrization, and error reporting require advanced nonlocal reasoning across collection.
+- **Design span 4:** Many modules and pervasive extension points contribute directly to the selected collection behavior.
+- **Constraint burden 4:** Multiple strict compatibility, portability, determinism, extension, and error-reporting guarantees interact throughout the path.
+- **Placement:** The four scores 4/4/4/4 sum to 16; their arithmetic mean is 4.00 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** MIT ([evidence 1](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.
 
 **Language evidence:** Collection, fixtures, assertion rewriting, hooks, configuration, execution, reports, and terminal output under src/_pytest are Python.
 
-**Why study it:** It demonstrates a mature plugin architecture whose dynamic behavior still has explicit collection nodes, hook contracts, fixture graphs, and execution phases.
+**Coding relevance:**
 
-**What you can learn:**
+The README and familiar testing/import concepts provide sufficient context; the path primarily teaches transferable plugin architecture, tree traversal, reflection, import handling, deterministic ordering, compatibility, and error reporting.
 
-- Plugin hooks, collection trees, fixture dependency resolution, AST assertion rewriting, setup/call/teardown phases, and structured reports.
+Required domain context:
 
-**Prerequisites:**
+- Test collection turns command-line paths and Python objects into a tree of Collector and Item nodes while plugins may observe or replace stages through hooks.
 
-- Python import machinery, decorators and generators, AST concepts, dependency graphs, exceptions, and testing fundamentals.
+**Eight-part quality gate:**
 
-**Start here:** [`src/_pytest/main.py`](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/src/_pytest/main.py) — Session startup, collection, failure policy, and the run loop provide the map needed before entering fixtures or assertion rewriting.
+- **Source quality:** Session, Collector, Item, Module, Function, hook, and report types make a dense dynamic collection mechanism explicit.
+- **Architecture:** Session orchestration, plugin hooks, filesystem collectors, Python collectors, import handling, item factories, and reports have recognizable responsibilities.
+- **Naming and idiom:** perform_collect, collect, genitems, Collector, Item, Module, Function, nodeid, hookproxy, and CollectReport preserve the collection model.
+- **Tests:** testing/test_collection.py covers hook order, node identifiers, duplicate and overlapping paths, import modes, symlinks, failures, and parametrized ordering.
+- **Documentation:** Pytest's collection, plugin, hook, import-mode, parametrization, and node documentation defines the extension contracts followed by this path.
+- **Traceability:** A command-line path can be followed through argument normalization, hook proxies, cached collectors, recursive genitems, Python object discovery, item construction, and collection reports.
+- **Maintainability:** Typed node boundaries, explicit hook contracts, stable identifiers, and self-hosting collection tests constrain changes to extensible discovery behavior.
+- **Educational value:** The path demonstrates how reflection and plugins can remain deterministic when their tree, ordering, identity, and failure contracts are made explicit.
 
-**Why this level:**
+**Inspection record:** commit `fdba12e1708313f56e9cf713d260c029764ca2b7`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `src/_pytest/main.py`, `src/_pytest/python.py`, `testing/test_collection.py`, `LICENSE`. GitHub Linguist label: Python.
 
-- **S3:** 32,506 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Python under src, excluding the test suite, documentation, benchmarks, examples, and generated files.
-- **D4:** Core behavior repeatedly depends on metaprogramming, import state, hook dispatch, scoped dependency resolution, and exception-aware phases.
-- **C4:** A test run crosses configuration, discovery, nodes, plugins, fixtures, assertion rewriting, runners, capture, warnings, and reporters.
-- **Placement:** Advanced mechanisms and a multi-subsystem execution pipeline raise this S3-sized codebase to SDC 4.
+</details>
 
-**Quality-gate evidence:**
-
-- **Source quality:** Dense mechanisms are backed by strong type hints, explicit hook specifications, structured nodes and reports, and carefully scoped helpers.
-- **Architecture:** Configuration and plugins drive a collection tree, fixture manager, phased runner, assertion engine, capture services, and reporters.
-- **Naming and idiom:** Collector, Item, Session, FixtureDef, CallInfo, TestReport, and hook names provide a shared execution vocabulary.
-- **Tests:** A large self-hosting suite covers collection, fixtures, hooks, assertions, capture, terminal output, configuration, and regressions.
-- **Documentation:** User guides, how-to material, references, examples, plugin guidance, and contributor documentation cover both consumers and extenders.
-- **Traceability:** A test can be traced from discovery through node collection, fixture setup, runtest phases, report construction, and plugin reporting.
-- **Maintainability:** Hook contracts and structured domain objects let independent plugins evolve around a stable lifecycle.
-- **Educational value:** It is an unusually transparent example of extensible developer tooling, metaprogramming, and framework self-testing.
-
-**Inspection record:** commit `fdba12e1708313f56e9cf713d260c029764ca2b7`, reviewed 2026-08-28 by Codex. Files sampled: `README.rst`, `src/_pytest/main.py`, `src/_pytest/python.py`, `testing/test_collection.py`. GitHub Linguist label: Python. LOC exclusions: testing, doc, bench.
-
-**License:** [MIT](https://github.com/pytest-dev/pytest/blob/fdba12e1708313f56e9cf713d260c029764ca2b7/LICENSE)
-
-### [scrapy/scrapy](https://github.com/scrapy/scrapy)
-
-**S3 / D4 / C4 → SDC 4**
-
-An asynchronous web-crawling framework coordinating spiders, request scheduling, downloading, scraping, pipelines, extensions, and signals.
-
-**Real-world evidence:** Scrapy is released as a production crawling and extraction framework with maintained middleware and extension ecosystems.
-
-**Language evidence:** Crawler orchestration, engine, scheduler, downloader, scraper, spiders, middleware, pipelines, and extensions in the scrapy package are Python.
-
-**Why study it:** Its event-driven engine makes backpressure, lifecycle ownership, pluggable stages, settings, signals, and concurrency coordination visible in Python.
-
-**What you can learn:**
-
-- Asynchronous engines, schedulers, middleware chains, backpressure, signals, extension loading, settings precedence, and lifecycle state.
-
-**Prerequisites:**
-
-- Async Python, deferred/future concepts, HTTP crawling, queues, callbacks, dependency injection, and framework configuration.
-
-**Start here:** [`scrapy/core/engine.py`](https://github.com/scrapy/scrapy/blob/53eb8d60bcd0160633f6513478f958ed5a457363/scrapy/core/engine.py) — ExecutionEngine coordinates scheduler, downloader, scraper, spider input, backpressure, startup, idleness, and shutdown.
-
-**Why this level:**
-
-- **S3:** 25,936 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Python in scrapy, excluding tests, typing tests, documentation, examples, and packaging files.
-- **D4:** Deferred/coroutine bridging, reactor selection, concurrent slots, cancellation, and signal ordering recur through core lifecycle code.
-- **C4:** Crawling crosses settings, add-ons, signals, scheduler, downloader, scraper, spiders, item pipelines, stats, and process orchestration.
-- **Placement:** Its advanced asynchronous lifecycle and interconnected plugin pipeline make Scrapy SDC 4 despite a mid-sized source count.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Lifecycle flags, late-bound attributes, error translation, and shutdown paths are explicit in the engine and crawler orchestration.
-- **Architecture:** The engine mediates distinct scheduler, downloader, scraper, spider, middleware, pipeline, signal, and extension components.
-- **Naming and idiom:** Crawler, Spider, Scheduler, Downloader, Scraper, Request, Response, Item, and Signal consistently model the crawl pipeline.
-- **Tests:** Extensive unit and integration tests cover reactors, crawlers, engines, middleware, protocols, pipelines, commands, and regressions.
-- **Documentation:** Tutorials, topic guides, API references, extension docs, architecture explanations, and deployment guidance are comprehensive.
-- **Traceability:** A request can be followed from spider output through scheduling, downloading, response handling, item processing, and idle detection.
-- **Maintainability:** Protocols and component loaders isolate replaceable implementations while settings and signals provide controlled extension surfaces.
-- **Educational value:** It is a concrete production example of an asynchronous pipeline framework rather than a thin wrapper around an event loop.
-
-**Inspection record:** commit `53eb8d60bcd0160633f6513478f958ed5a457363`, reviewed 2026-08-28 by Codex. Files sampled: `README.rst`, `scrapy/crawler.py`, `scrapy/core/engine.py`, `tests/test_crawler.py`. GitHub Linguist label: Python. LOC exclusions: tests, tests_typing, docs.
-
-**License:** [BSD-3-Clause](https://github.com/scrapy/scrapy/blob/53eb8d60bcd0160633f6513478f958ed5a457363/LICENSE)
-
-## SDC 5
+## Level 5
 
 ### [apache/airflow](https://github.com/apache/airflow)
 
-**S5 / D4 / C5 → SDC 5**
+**Language 3 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
 
 A workflow-orchestration platform that defines directed task graphs and schedules, executes, retries, observes, and persists their runs.
+
+**Why study it:** The scheduler-job path exposes how Airflow converts persisted due workflows into queued executor work while enforcing transactional claims, capacity, priority, fairness, and crash recovery.
+
+**Prerequisites:**
+
+- Strong working familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests, plus experience tracing state, resources, or asynchronous control flow across many production files.
+
+**Concepts this path develops:**
+
+- SQLAlchemy expression and ORM model DSL.
+- Concurrent durable scheduler state.
+- Atomicity and duplicate-scheduling prevention.
+
+**What you can learn:**
+
+- Use `airflow-core/src/airflow/jobs/scheduler_job_runner.py` to study the following transferable techniques and behaviors: SQLAlchemy query construction, row locking, DAG-run creation, task-instance state transitions, pool and concurrency limits, priority selection, atomic queueing, executor dispatch, event reconciliation, and orphan recovery.
+
+**Learning path:**
+
+- **Goal:** Understand how Airflow turns persisted due DAGs into queued executor work while preventing duplicate scheduling, enforcing capacity and priority, and recovering tasks from failed schedulers.
+- **Start here:** [`airflow-core/src/airflow/jobs/scheduler_job_runner.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/jobs/scheduler_job_runner.py) — airflow-core/src/airflow/jobs/scheduler_job_runner.py coordinates due-DAG processing, executable-task selection, atomic queueing, executor submission, event reconciliation, and orphan adoption.
+- **Then read:**
+  - [`airflow-core/src/airflow/models/dag.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/models/dag.py)
+  - [`airflow-core/src/airflow/models/pool.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/models/pool.py)
+  - [`airflow-core/src/airflow/models/taskinstance.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/models/taskinstance.py)
+  - [`airflow-core/src/airflow/executors/base_executor.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/executors/base_executor.py)
+  - [`airflow-core/tests/unit/models/test_dag.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/tests/unit/models/test_dag.py)
+  - [`airflow-core/tests/unit/jobs/test_scheduler_job.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/tests/unit/jobs/test_scheduler_job.py)
+- **Trace:** Follow DagModel.dags_needing_dagruns as it filters and row-locks due schedule- and asset-triggered DAGs, then SchedulerJobRunner as it creates DagRuns, schedules their task instances, selects executable work under pool, DAG, task, run, team, priority, and executor limits, atomically marks tasks queued, submits workloads to BaseExecutor, reconciles executor events, and adopts or resets orphaned tasks; correlate due-DAG, query-count, pool, priority, concurrency, critical-section, multi-executor, and orphan-recovery tests.
+
+**Why this level:**
+
+- **Language technique 3:** Substantial framework abstractions and type modeling recur, while the expert difficulty comes more from system behavior and architecture than Python language machinery itself.
+- **Behavioral reasoning 5:** Distributed scheduling, state machines, database coordination, resource limits, recovery, and event reconciliation interact pervasively.
+- **Design span 5:** The path coordinates several major subsystems, processes, persistence models, executors, and pervasive policy mechanisms at platform scale.
+- **Constraint burden 5:** Several system-wide correctness, performance, compatibility, liveness, and recovery guarantees interact so that a local scheduling change can fail elsewhere in the path.
+- **Placement:** The four scores 3/5/5/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Apache Airflow is an actively released Apache project used to operate production data and automation workflows.
 
 **Language evidence:** The scheduler, DAG and task models, executors, APIs, providers, serialization, jobs, and operational services are predominantly Python.
 
-**Why study it:** It exposes the engineering of a distributed control plane: durable workflow state, transactional scheduling, executors, serialization, APIs, plugins, and deployment boundaries.
+**Coding relevance:**
 
-**What you can learn:**
+The repository explains this general workflow-orchestration model, and no specialist data domain is needed; the hard parts are transferable distributed scheduling, durable state, transactional coordination, fairness, recovery, performance, and extension architecture.
 
-- Distributed scheduling, DAG models, transactional locking, concurrency limits, executors, durable state machines, serialization, plugins, and service boundaries.
+Required domain context:
 
-**Prerequisites:**
+- A DAG contains task instances and dependencies; scheduler processes persist runs, use database row locks to claim work, enforce pools and concurrency limits, and submit queued workloads to executors.
 
-- Advanced Python, SQL and transactions, distributed systems, queues, concurrency, web APIs, and deployment architecture.
+**Eight-part quality gate:**
 
-**Start here:** [`airflow-core/src/airflow/jobs/scheduler_job_runner.py`](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/airflow-core/src/airflow/jobs/scheduler_job_runner.py) — The scheduler loop and executable-task selection reveal how persisted DAG state, locks, priorities, pools, and concurrency limits become work.
+- **Source quality:** Critical sections, lock scope, concurrency maps, starvation filters, task states, and executor boundaries use precise names and explanatory comments.
+- **Architecture:** DagModel, DagRun, TaskInstance, Pool, SchedulerJobRunner, BaseExecutor, persistence, and workload services contribute through explicit subsystem boundaries.
+- **Naming and idiom:** dags_needing_dagruns, SchedulerJobRunner, executable task instances, critical section, queued state, executor events, and orphan adoption expose scheduling intent.
+- **Tests:** The selected DAG and scheduler-job suites cover due-DAG queries, query bounds, pools, priority, concurrency, critical sections, multiple executors, and orphan recovery.
+- **Documentation:** Airflow's scheduler, DAG-run, task-instance, pool, executor, and high-availability documentation explains the operational contracts exercised by the selected path.
+- **Traceability:** A due persisted DAG can be followed through row locking, DagRun creation, task selection, atomic queued-state updates, BaseExecutor submission, event reconciliation, and failed-scheduler recovery.
+- **Maintainability:** Transaction boundaries, typed state transitions, explicit resource policies, executor seams, query-count tests, and recovery tests constrain platform-scale scheduler changes.
+- **Educational value:** The path provides an expert study of durable distributed scheduling where correctness, capacity, performance, and liveness must be reasoned about together.
 
-**Why this level:**
+**Inspection record:** commit `ff601cb5b75e77c1f28aaf014914f4e9d5cb0947`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `airflow-core/src/airflow/jobs/scheduler_job_runner.py`, `airflow-core/src/airflow/models/dag.py`, `airflow-core/src/airflow/models/pool.py`, `airflow-core/src/airflow/models/taskinstance.py`, `airflow-core/src/airflow/executors/base_executor.py`, `airflow-core/tests/unit/models/test_dag.py`, `airflow-core/tests/unit/jobs/test_scheduler_job.py`, `LICENSE`. GitHub Linguist label: Python.
 
-- **S5:** 469,511 meaningful implementation LOC measured with tokei 14.0.0. Count covers first-party Python across Airflow core, providers, SDKs, and operational packages, excluding tests, documentation, generated output, and vendored dependencies.
-- **D4:** Correctness repeatedly depends on database isolation, locks, idempotence, concurrency limits, serialization, retries, and distributed worker state.
-- **C5:** Workflow behavior spans many deployable processes, databases, executors, APIs, task SDKs, providers, security boundaries, and operational tooling.
-- **Placement:** Extreme size plus platform-scale architecture and advanced distributed behavior make Airflow an unambiguous SDC 5 repository.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Critical scheduling code documents lock scope, starvation filters, concurrency maps, transactional assumptions, and failure handling.
-- **Architecture:** Core models and jobs connect schedulers, executors, APIs, task SDKs, providers, serialization, security, UI, and deployment packages.
-- **Naming and idiom:** DAG, DagRun, TaskInstance, SchedulerJobRunner, Executor, Pool, Bundle, and Provider form a precise operational vocabulary.
-- **Tests:** Large unit, integration, system, provider, serialization, API, and end-to-end suites exercise the platform and its database backends.
-- **Documentation:** Architecture, administration, operations, security, provider, API, tutorial, and contributor documentation is extensive.
-- **Traceability:** A scheduled task can be traced from serialized DAG state through DagRun and TaskInstance selection, locking, executor dispatch, and state reconciliation.
-- **Maintainability:** Public interfaces, provider boundaries, database models, service packages, and compatibility policies constrain a very large change surface.
-- **Educational value:** It rewards advanced readers with a real distributed orchestration control plane whose tradeoffs are visible in source.
-
-**Inspection record:** commit `ff601cb5b75e77c1f28aaf014914f4e9d5cb0947`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `airflow-core/src/airflow/models/dag.py`, `airflow-core/src/airflow/jobs/scheduler_job_runner.py`, `airflow-core/tests/unit/models/test_dag.py`. GitHub Linguist label: Python. LOC exclusions: tests, docs, generated, third-party front-end dependencies.
-
-**License:** [Apache-2.0](https://github.com/apache/airflow/blob/ff601cb5b75e77c1f28aaf014914f4e9d5cb0947/LICENSE)
+</details>
 
 ### [home-assistant/core](https://github.com/home-assistant/core)
 
-**S5 / D4 / C5 → SDC 5**
+**Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
 
 A home-automation runtime that coordinates devices, integrations, events, services, entity state, configuration, storage, and user automations.
+
+**Why study it:** The configuration-entry lifecycle is a bounded view of Home Assistant's hardest transferable engineering: asynchronous state transitions, migration, retries, locking, persistence, unload cleanup, and shutdown cancellation.
+
+**Prerequisites:**
+
+- Strong working familiarity with Python functions and classes, collections, exceptions, decorators, context managers, generators and asynchronous basics, and focused tests, plus experience tracing state, resources, or asynchronous control flow across many production files.
+
+**Concepts this path develops:**
+
+- PEP 695 generics and overloaded callable APIs.
+- Asynchronous config-entry state machine.
+- Race-free setup, reload, and unload.
+
+**What you can learn:**
+
+- Use `homeassistant/config_entries.py` to study the following transferable techniques and behaviors: Typed asynchronous state machines, per-entry locking, integration loading, schema migration, exponential retry, concurrent reload, runtime-data ownership, persistence notifications, unload callbacks, and shutdown cancellation.
+
+**Learning path:**
+
+- **Goal:** Understand how Home Assistant safely loads, migrates, retries, reloads, unloads, and persists a configuration entry across concurrent operations and runtime shutdown.
+- **Start here:** [`homeassistant/config_entries.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/homeassistant/config_entries.py) — config_entries.py owns the persisted entry model and its setup, migration, retry, reload, unload, and state-transition methods, so it contains the selected lifecycle rather than the platform-wide core runtime.
+- **Then read:**
+  - [`homeassistant/core.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/homeassistant/core.py)
+  - [`homeassistant/loader.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/homeassistant/loader.py)
+  - [`homeassistant/setup.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/homeassistant/setup.py)
+  - [`tests/test_core.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/tests/test_core.py)
+  - [`tests/test_config_entries.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/tests/test_config_entries.py)
+- **Trace:** Follow ConfigEntries.async_setup as it finds the entry and acquires its setup lock, then ConfigEntry.async_setup through integration loading, config-flow import, version migration, component setup, typed state transitions, authentication and fatal failures, ConfigEntryNotReady exponential retry through HomeAssistant jobs and events, and successful load; continue through concurrent reload, unload callbacks, runtime-data cleanup, persistence notifications, and shutdown cancellation, correlating setup-race, backoff, invalid-state, lock, concurrent-reload, event-loop thread, unload, migration, storage, and shutdown tests.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced generic typing, overloads, immutable runtime models, context state, and callable introspection recur across entry and job lifecycle behavior.
+- **Behavioral reasoning 5:** Concurrency, durable state, retries, event scheduling, recovery, resource lifetimes, and shutdown interact pervasively and demand expert nonlocal reasoning.
+- **Design span 4:** Many modules, extension points, lifecycle services, and cross-cutting policies contribute directly, satisfying the broad-architecture anchor.
+- **Constraint burden 5:** Several system-wide correctness, compatibility, persistence, concurrency, and reliability guarantees interact so a local lifecycle change can corrupt state or break integrations elsewhere.
+- **Placement:** The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. The published result is Level 5.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.
 
 **Language evidence:** The automation runtime, state machine, services, event bus, configuration entries, integrations, and coordinators are implemented in Python.
 
-**Why study it:** Its huge integration surface is organized around a coherent event loop, state and service models, lifecycle contracts, typed configuration entries, and strict concurrency rules.
+**Coding relevance:**
 
-**What you can learn:**
+This generic plugin-lifecycle model is short and documented, and the selected path requires no device-protocol expertise; its difficulty is transferable async state-machine, locking, retry, migration, persistence, cleanup, and compatibility engineering.
 
-- Event-driven architecture, state machines, service registries, async task ownership, integration lifecycles, configuration migrations, persistence, and compatibility policy.
+Required domain context:
 
-**Prerequisites:**
+- A Home Assistant config entry is a persisted instance of a device or service integration that must migrate, load, retry when temporarily unavailable, unload, and survive concurrent reload or shutdown.
 
-- Advanced asyncio, event-driven systems, typed Python, dependency injection, device protocols, persistence, and large-project navigation.
+**Eight-part quality gate:**
 
-**Start here:** [`homeassistant/core.py`](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/homeassistant/core.py) — HomeAssistant, EventBus, ServiceRegistry, StateMachine, jobs, and core lifecycle states define the shared runtime every integration enters.
+- **Source quality:** Config-entry states, locks, immutable mappings, retry handles, failure reasons, runtime data, and unload callbacks are explicit and strongly typed throughout the lifecycle.
+- **Architecture:** The entry and manager coordinate with the integration loader, component setup, core jobs and events, dispatcher, and storage through recognizable boundaries.
+- **Naming and idiom:** ConfigEntry, ConfigEntries, async_setup, async_migrate, ConfigEntryNotReady, runtime_data, unload, reload, and state names expose lifecycle intent.
+- **Tests:** Focused core and config-entry tests cover setup races, locks, invalid transitions, migration, exponential backoff, authentication failures, concurrent reload, unload, persistence, thread ownership, and shutdown.
+- **Documentation:** Developer architecture and integration guidance explain configuration entries, setup, migration, availability failures, unloading, and concurrency rules needed for the path.
+- **Traceability:** A persisted entry can be followed from manager lookup and locking through loading, migration, component setup, retries and state events into successful load, reload, unload, storage updates, and shutdown cancellation.
+- **Maintainability:** Typed states, per-entry synchronization, loader and setup boundaries, explicit retry ownership, and focused lifecycle tests constrain changes in this high-concurrency path.
+- **Educational value:** The selected slice teaches expert asynchronous plugin lifecycle design without requiring knowledge of any particular device protocol or the entire Home Assistant platform.
 
-**Why this level:**
+**Inspection record:** commit `471f2c28e285c268cc4ca67ad80ff4044b365d70`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `homeassistant/config_entries.py`, `homeassistant/core.py`, `homeassistant/loader.py`, `homeassistant/setup.py`, `tests/test_core.py`, `tests/test_config_entries.py`, `LICENSE.md`. GitHub Linguist label: Python.
 
-- **S5:** 1,266,444 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Python under homeassistant, excluding tests, type stubs, maintenance scripts, generated metadata, and deployment assets.
-- **D4:** Correct behavior relies on async ownership, thread-safety rules, staged setup and teardown, migrations, retries, and many external protocols.
-- **C5:** Core services connect an enormous integration graph, entity platform, automation engine, storage, authentication, networking, and deployment lifecycle.
-- **Placement:** Million-line scale and ecosystem-wide runtime coordination make Home Assistant Core decisively SDC 5.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Core concurrency contracts, lifecycle states, immutable configuration data, and failure paths are explicit and increasingly type checked.
-- **Architecture:** A central event bus, state machine, service registry, configuration-entry manager, entity model, and integration loader coordinate domain packages.
-- **Naming and idiom:** HomeAssistant, EventBus, StateMachine, ServiceRegistry, ConfigEntry, Entity, and coordinator vocabulary is consistent across integrations.
-- **Tests:** A vast suite covers core services, state, configuration, integrations, protocols, migrations, concurrency rules, and regressions.
-- **Documentation:** Developer architecture, integration quality rules, APIs, testing guidance, user documentation, and contributor standards are extensive.
-- **Traceability:** A device update can be traced from an integration coordinator through entity state writing, event dispatch, service behavior, and tests.
-- **Maintainability:** Manifest contracts, integration boundaries, shared helpers, code ownership, strict linting, typing tiers, and quality scales govern the large surface.
-- **Educational value:** It is a demanding but unusually well-governed case study in sustaining an async platform with thousands of real hardware integrations.
-
-**Inspection record:** commit `471f2c28e285c268cc4ca67ad80ff4044b365d70`, reviewed 2026-08-28 by Codex. Files sampled: `README.rst`, `homeassistant/core.py`, `homeassistant/config_entries.py`, `tests/test_core.py`. GitHub Linguist label: Python. LOC exclusions: tests, stubs, script, generated metadata.
-
-**License:** [Apache-2.0](https://github.com/home-assistant/core/blob/471f2c28e285c268cc4ca67ad80ff4044b365d70/LICENSE.md)
+</details>
 
 _Generated from `catalog/python.json`; do not edit by hand._

@@ -1,336 +1,1060 @@
 {
-  "schema_version": 1,
+  "schema_version": 3,
   "language_slug": "ruby",
   "repositories": [
     {
-      "slug": "tempfile",
-      "repository": "ruby/tempfile",
-      "url": "https://github.com/ruby/tempfile",
+      "slug": "base64",
+      "path_slug": "ruby-s-base64-wrappers-turn-one-binary-string-into-mime",
+      "repository": "ruby/base64",
+      "url": "https://github.com/ruby/base64",
       "primary_language": "Ruby",
-      "language_evidence": "Temporary-file creation, permissions, cleanup, delegation, and lifecycle behavior are implemented in Ruby under lib/.",
-      "description": "Ruby's standard temporary-file library, providing secure creation plus explicit and automatic cleanup lifecycles.",
-      "real_world_evidence": "The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.",
-      "why_study": "A learner can read the entire implementation while seeing how a tiny API handles ownership, cleanup, garbage collection, permissions, and exceptional paths.",
-      "learn": ["Delegation, resource ownership, temporary-file security, explicit versus automatic cleanup, finalizers, exceptions, and standard-library packaging."],
-      "prerequisites": ["Ruby classes and modules, blocks, file I/O, exceptions, garbage collection basics, and tests."],
-      "start_here": {"path": "lib/tempfile.rb", "reason": "The one production file moves from secure creation helpers into Tempfile's lifecycle, delegation, close, unlink, and block APIs."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 201, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/"], "notes": "Count covers the complete production library and excludes tests, documentation, and packaging metadata."},
-        "difficulty": {"score": 2, "signals": ["resource finalization", "secure filesystem semantics"], "reason": "File ownership and cleanup require care, but the implementation uses direct Ruby objects and a small public surface."},
-        "complexity": {"score": 1, "signals": ["single production file", "one resource lifecycle"], "reason": "One cohesive component owns creation, delegation, closing, and deletion without services or extension subsystems."},
-        "placement": "S1/D2/C1 averages to 1.33, making Tempfile a compact SDC 1 study."
+      "language_evidence": "The published encoding and decoding APIs, URL-safe adaptation, padding repair, and direct behavioral tests are first-party Ruby in lib/ and test/.",
+      "description": "Ruby's standard Base64 library for printable encoding of binary data, including strict and URL-safe variants.",
+      "real_world_evidence": "The repository publishes the base64 default gem used by Ruby applications and the Ruby standard library.",
+      "why_study": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/base64.rb`: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.",
+        "Trace these states and branches from `lib/base64.rb` through its selected supporting files: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.",
+        "Identify these architectural responsibilities in the path beginning at `lib/base64.rb`: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.",
+        "Study these change constraints for the path beginning at `lib/base64.rb`: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.",
+        "Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected."
+      ],
+      "concepts_developed": [
+        "Module-function APIs.",
+        "MIME versus strict behavior.",
+        "RFC-2045 and RFC-4648 alphabet differences."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing.",
+        "domain_context": [
+          "Base64 maps each group of three input bytes to four printable characters; variants differ in alphabet, padding, newlines, and whether malformed input is rejected."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input.",
+        "start_here": {
+          "path": "lib/base64.rb",
+          "reason": "Begin with `lib/base64.rb` because it contains the complete MIME, strict, and URL-safe encoding and decoding path."
+        },
+        "supporting_files": [
+          "test/base64/test_base64.rb",
+          "README.md",
+          "sig/base64.rbs",
+          "test_sig/test_base64.rb"
+        ],
+        "trace": "Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "module-function APIs",
+            "Array and String pack/unpack delegation",
+            "keyword arguments with localized string transformation"
+          ],
+          "reason": "The complete path uses ordinary Ruby functions and string operations around a standard primitive boundary."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "MIME versus strict behavior",
+            "padded versus unpadded URL-safe encoding",
+            "URL-safe decoding with conditional padding repair"
+          ],
+          "reason": "Several visible variants and boundary branches must be compared, but state remains local and linear."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one focused public module",
+            "Ruby's binary pack/unpack primitive boundary",
+            "one direct behavioral test suite"
+          ],
+          "reason": "The behavior is deliberately concentrated in six small methods and one direct test file."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "RFC-2045 and RFC-4648 alphabet differences",
+            "strict versus permissive input",
+            "exact padding and newline contracts",
+            "binary-string round trips"
+          ],
+          "reason": "Multiple externally visible encoding, padding, newline, and malformed-input contracts shape otherwise tiny methods."
+        },
+        "placement": "The four scores 1/2/1/3 sum to 7; their arithmetic mean is 1.75 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "The code makes ownership and cleanup state explicit and keeps security-sensitive creation in small named helpers.",
-        "architecture": "A delegating Tempfile object wraps a securely created File and centralizes cleanup in an explicit lifecycle.",
-        "naming_and_idiom": "create, open, close, unlink, anonymous, Remover, and size express Ruby's file and block idioms directly.",
-        "tests": "The suite covers creation, modes, permissions, encodings, paths, unlinking, finalization, anonymous files, blocks, and failure cleanup.",
-        "documentation": "API comments and the README explain each lifecycle choice, including when automatic deletion is appropriate.",
-        "traceability": "A block-based temporary file can be followed from creation through yielding, ensure cleanup, and a focused test.",
-        "maintainability": "One implementation file, standard-library primitives, and lifecycle-focused tests keep behavioral changes reviewable.",
-        "educational_value": "It shows that even a tiny wrapper can teach real resource-safety design without hiding the mechanics."
+        "source_quality": "Six compact methods delegate the bit-level transform to Ruby's documented pack/unpack primitives and keep URL-safe alphabet and padding policy explicit; direct tests cover empty input, binary bytes, strict malformed input, padded and unpadded variants, and round trips.",
+        "architecture": "The audited architecture of the path beginning at `lib/base64.rb` has these boundaries: one focused public module, Ruby's binary pack/unpack primitive boundary, and one direct behavioral test suite.",
+        "naming_and_idiom": "`lib/base64.rb` and its supporting files use these characteristic Ruby mechanisms: module-function APIs, Array and String pack/unpack delegation, and keyword arguments with localized string transformation.",
+        "tests": "Direct tests in `test/base64/test_base64.rb` cover these states and branches in the selected path: MIME versus strict behavior, padded versus unpadded URL-safe encoding, and URL-safe decoding with conditional padding repair.",
+        "documentation": "Inline API documentation, type signatures, and README examples distinguish the three method pairs, padding, newlines, and malformed-input behavior. The URL-safe decoder RDoc overstates alphabet rejection: valid-length standard `+` and `/` input is accepted, as source and tests show.",
+        "traceability": "Start with strict_encode64 and strict_decode64 at Ruby's pack/unpack boundary, compare encode64 and decode64's MIME newline and permissive-input policy, then follow urlsafe_encode64 through optional padding removal and alphabet translation and urlsafe_decode64 through conditional padding repair, reverse translation, and strict decoding; close with the direct empty, binary, malformed-padding, and unpadded URL-safe tests. The repository wraps Ruby's runtime codec rather than implementing bit-level Base64, and urlsafe_decode64 accepts valid-length standard `+` and `/` alphabet input despite stronger wording in its RDoc.",
+        "maintainability": "Changes to the path beginning at `lib/base64.rb` are constrained by these audited guarantees: RFC-2045 and RFC-4648 alphabet differences, strict versus permissive input, exact padding and newline contracts, and binary-string round trips.",
+        "educational_value": "Understand how Ruby's Base64 wrappers turn one binary string into MIME, strict, or URL-safe text and decode permissive, strict, or padding-repaired input. Base64 needs only a short byte-to-text explanation; the path teaches transferable standard-library delegation, API variants, input policy, padding normalization, character translation, compatibility constraints, and boundary testing."
       },
-      "inspection": {"commit": "344da5e29e3215691209223249ebd64e66dff6b8", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "tempfile.gemspec", "lib/tempfile.rb", "test/test_tempfile.rb", "COPYING"]},
-      "license": {"spdx": "Ruby OR BSD-2-Clause", "url": "https://github.com/ruby/tempfile/blob/344da5e29e3215691209223249ebd64e66dff6b8/COPYING"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/base64.rb",
+          "test/base64/test_base64.rb",
+          "README.md",
+          "sig/base64.rbs",
+          "test_sig/test_base64.rb",
+          "COPYING",
+          "BSDL"
+        ]
+      },
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/COPYING",
+          "https://github.com/ruby/base64/blob/9a0eb5cada60ae4b044aae8c5a7cad0ae6d131e6/BSDL"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "pathname",
+      "path_slug": "pathname-cleanpath-normalizes-a-path-lexically-while-preserving-roots-and",
       "repository": "ruby/pathname",
       "url": "https://github.com/ruby/pathname",
       "primary_language": "Ruby",
       "language_evidence": "The path value object and nearly all path and filesystem behavior are Ruby under lib/, with a small C extension for selected primitives.",
       "description": "An immutable object-oriented representation of filesystem paths from Ruby's standard library.",
       "real_world_evidence": "The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.",
-      "why_study": "It wraps familiar filesystem operations in an immutable value object, making delegation, path algorithms, platform rules, and API consistency easy to trace.",
-      "learn": ["Immutable value objects, path normalization, traversal, filesystem delegation, enumerators, platform path rules, and Ruby C-extension boundaries."],
-      "prerequisites": ["Ruby objects and modules, strings, enumerators, file and directory APIs, regular expressions, and basic C reading for the optional extension."],
-      "start_here": {"path": "lib/pathname.rb", "reason": "The main file introduces the value-object invariants, path transformations, traversal, and delegated filesystem operations in API order."},
-      "sdc": {
-        "level": 1,
-        "size": {"score": 1, "loc": 625, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/"], "notes": "Count covers production Ruby and the small native extension, excluding tests, documentation, and build metadata."},
-        "difficulty": {"score": 2, "signals": ["cross-platform path rules", "small native extension"], "reason": "Path corner cases and a narrow C boundary add modest depth while most methods remain short and conventional."},
-        "complexity": {"score": 1, "signals": ["one value-object API", "standard filesystem delegation"], "reason": "One class family models paths and delegates to Ruby's existing file and directory facilities."},
-        "placement": "S1/D2/C1 averages to 1.33, placing Pathname at SDC 1."
+      "why_study": "Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety. Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/pathname_builtin.rb`: immutable value-object methods, component iteration and regular-expression helpers, and conventional private helper composition.",
+        "Trace these states and branches from `lib/pathname_builtin.rb` through its selected supporting files: aggressive and conservative branches, localized component-stack state, and root and trailing-separator edge paths.",
+        "Identify these architectural responsibilities in the path beginning at `lib/pathname_builtin.rb`: one lexical normalization component and one direct assertion matrix.",
+        "Study these change constraints for the path beginning at `lib/pathname_builtin.rb`: relative and absolute root preservation, symbolic-link-safe conservative semantics, Unix, drive-letter, and UNC portability, and stable lexical output contracts."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.",
+        "Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning."
+      ],
+      "concepts_developed": [
+        "Immutable value-object methods.",
+        "Aggressive and conservative branches.",
+        "Relative and absolute root preservation."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Lexical path normalization removes redundant separators and dot components without consulting the filesystem, while a conservative mode must avoid assumptions that could change symbolic-link meaning."
+        ],
+        "reason": "Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing."
       },
-      "quality": {
-        "source_quality": "Transformations preserve immutable string state, edge cases are guarded close to their algorithms, and delegated calls remain visible.",
-        "architecture": "A single value object layers lexical path operations and filesystem calls over Ruby core APIs, with selected helpers in C.",
-        "naming_and_idiom": "ascend, descend, cleanpath, relative_path_from, children, entries, and each_line follow Ruby collection and filesystem vocabulary.",
-        "tests": "The suite exercises Unix and Windows forms, normalization, relative paths, traversal, filesystem delegation, encoding, and exceptions.",
-        "documentation": "The README and extensive method comments pair examples with the path and filesystem contracts.",
-        "traceability": "A relative path calculation can be followed through cleanpath, component comparison, reconstruction, and targeted assertions.",
-        "maintainability": "The narrow model, stable core dependencies, and exhaustive edge-case tests constrain changes despite a broad method list.",
-        "educational_value": "It is a readable lesson in turning primitive strings into a coherent domain type."
+      "learning_path": {
+        "goal": "Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.",
+        "start_here": {
+          "path": "lib/pathname_builtin.rb",
+          "reason": "Begin with `lib/pathname_builtin.rb` because it exposes how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety."
+        },
+        "supporting_files": [
+          "lib/pathname.rb",
+          "test/pathname/test_pathname.rb"
+        ],
+        "trace": "Start at Pathname#cleanpath in lib/pathname_builtin.rb, branch into cleanpath_aggressive or cleanpath_conservative, follow component-stack, prefix, root, and separator handling, then close the behavior with the aggressive and conservative defassert matrices. Read lib/pathname.rb only for loading and the small additional APIs; the catalog's original loader was not the promised normalization implementation."
       },
-      "inspection": {"commit": "f0217bbd486b2f7d5c7de1ff3951c7422d42c761", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "pathname.gemspec", "lib/pathname.rb", "ext/pathname/pathname.c", "test/pathname/test_pathname.rb", "COPYING"]},
-      "license": {"spdx": "Ruby OR BSD-2-Clause", "url": "https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/COPYING"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "redis-rb",
-      "repository": "redis/redis-rb",
-      "url": "https://github.com/redis/redis-rb",
-      "primary_language": "Ruby",
-      "language_evidence": "The public client, command families, pipelining, pub/sub, Sentinel integration, error mapping, and compatibility behavior are Ruby under lib/.",
-      "description": "The official Ruby client for Redis, exposing Redis commands through an idiomatic synchronous API.",
-      "real_world_evidence": "The repository releases the redis gem for application access to Redis servers and maintains protocol and server compatibility.",
-      "why_study": "It connects an approachable command API to connection policy, error translation, pipelining, pub/sub, Sentinel discovery, protocol fallback, and thread safety.",
-      "learn": ["Client facades, command modules, protocol negotiation, pipelining, pub/sub, error translation, synchronization, failover configuration, and compatibility layers."],
-      "prerequisites": ["Ruby modules and delegation, blocks, exceptions, threads and monitors, TCP clients, and Redis command concepts."],
-      "start_here": {"path": "lib/redis.rb", "reason": "The main Redis class shows construction, synchronization, client delegation, pipelining, lifecycle, protocol fallback, and public compatibility behavior."},
-      "sdc": {
+      "learning_level": {
         "level": 2,
-        "size": {"score": 2, "loc": 6395, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "bench/"], "notes": "Count covers first-party production Ruby under lib, excluding tests, benchmarks, documentation, and packaging metadata."},
-        "difficulty": {"score": 2, "signals": ["network client lifecycle", "synchronization and error translation"], "reason": "Networking policies matter, but much of the code is explicit command shaping and delegation to redis-client."},
-        "complexity": {"score": 2, "signals": ["command and client layers", "pub/sub and Sentinel variants"], "reason": "Several cohesive client modes share one in-process API and a common transport abstraction."},
-        "placement": "S2/D2/C2 is a balanced SDC 2 project."
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "immutable value-object methods",
+            "component iteration and regular-expression helpers",
+            "conventional private helper composition"
+          ],
+          "reason": "The path uses common professional Ruby collection, object, and helper idioms without recurring metaprogramming."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "aggressive and conservative branches",
+            "localized component-stack state",
+            "root and trailing-separator edge paths"
+          ],
+          "reason": "Meaningful branches and local mutable state remain easy to trace in one normalization routine."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one lexical normalization component",
+            "one direct assertion matrix"
+          ],
+          "reason": "The behavior stays within a few methods in one focused implementation unit."
+        },
+        "constraint_burden": {
+          "score": 3,
+          "signals": [
+            "relative and absolute root preservation",
+            "symbolic-link-safe conservative semantics",
+            "Unix, drive-letter, and UNC portability",
+            "stable lexical output contracts"
+          ],
+          "reason": "Several material compatibility and portability guarantees shape otherwise local normalization."
+        },
+        "placement": "The four scores 2/2/1/3 sum to 8; their arithmetic mean is 2.00 and rounds half-up to Level 2. The published result is Level 2."
       },
       "quality": {
-        "source_quality": "Connection state, retry boundaries, synchronization, command transformation, and error classes are explicit and locally documented.",
-        "architecture": "A public Redis facade composes command modules and delegates transport to redis-client, with specialized pub/sub, cluster, and Sentinel paths.",
-        "naming_and_idiom": "pipelined, multi, subscribe, synchronize, reconnect_attempts, CommandError, and Sentinel mirror the Redis and Ruby domains.",
-        "tests": "The suite covers command families, clients, pipelines, transactions, pub/sub, distributed and Sentinel behavior, errors, URLs, and protocol variants.",
-        "documentation": "The README documents connection forms, command use, pooling, pipelining, pub/sub, Sentinel, clustering, timeouts, and protocol support.",
-        "traceability": "A command can be followed from the public module through argument normalization, synchronized client dispatch, response transformation, and a focused test.",
-        "maintainability": "Command families are separated from transport and compatibility code, and integration tests protect server-facing contracts.",
-        "educational_value": "It is a manageable production client that exposes protocol concerns without requiring a learner to implement the wire parser first."
+        "source_quality": "The immutable Pathname implementation separates aggressive and conservative normalization into small named methods, documents their filesystem-free contract, and closes it with an exhaustive assertion matrix covering empty, relative, rooted, dot, dot-dot, trailing-separator, drive, and UNC cases; the corrected implementation path is direct and maintainable.",
+        "architecture": "The audited architecture of the path beginning at `lib/pathname_builtin.rb` has these boundaries: one lexical normalization component and one direct assertion matrix.",
+        "naming_and_idiom": "`lib/pathname_builtin.rb` and its supporting files use these characteristic Ruby mechanisms: immutable value-object methods, component iteration and regular-expression helpers, and conventional private helper composition.",
+        "tests": "Direct tests in `test/pathname/test_pathname.rb` cover these states and branches in the selected path: aggressive and conservative branches, localized component-stack state, and root and trailing-separator edge paths.",
+        "documentation": "`lib/pathname_builtin.rb` and its selected supporting material document the contracts needed to understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety.",
+        "traceability": "Start at Pathname#cleanpath in lib/pathname_builtin.rb, branch into cleanpath_aggressive or cleanpath_conservative, follow component-stack, prefix, root, and separator handling, then close the behavior with the aggressive and conservative defassert matrices. Read lib/pathname.rb only for loading and the small additional APIs; the catalog's original loader was not the promised normalization implementation.",
+        "maintainability": "Changes to the path beginning at `lib/pathname_builtin.rb` are constrained by these audited guarantees: relative and absolute root preservation, symbolic-link-safe conservative semantics, Unix, drive-letter, and UNC portability, and stable lexical output contracts.",
+        "educational_value": "Understand how Pathname.cleanpath normalizes a path lexically while preserving roots and optionally retaining components needed for symbolic-link safety. Path components, roots, separators, and symbolic-link preservation are familiar and self-contained; the path teaches transferable immutable value objects, normalization algorithms, platform compatibility, boundary-case design, and table-driven testing."
       },
-      "inspection": {"commit": "55a1cd8d120dd80d47a8db634ec90429dead8adc", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "redis.gemspec", "lib/redis.rb", "lib/redis/client.rb", "test/redis/client_test.rb", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/redis/redis-rb/blob/55a1cd8d120dd80d47a8db634ec90429dead8adc/LICENSE"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "net-http",
-      "repository": "ruby/net-http",
-      "url": "https://github.com/ruby/net-http",
-      "primary_language": "Ruby",
-      "language_evidence": "HTTP requests, responses, headers, connection reuse, proxy handling, TLS setup, streaming, decoding, and retry behavior are Ruby under lib/.",
-      "description": "Ruby's standard HTTP client library for constructing requests and managing HTTP and HTTPS sessions.",
-      "real_world_evidence": "The repository publishes the net-http default gem that backs HTTP communication across Ruby programs and libraries.",
-      "why_study": "A familiar request API opens into protocol framing, persistent connections, TLS, proxies, streaming bodies, compression, retries, and careful resource cleanup.",
-      "learn": ["HTTP request and response framing, persistent connections, TLS configuration, proxies, body streaming, compression, retries, timeouts, and resource cleanup."],
-      "prerequisites": ["Ruby classes and inheritance, sockets, streams, exceptions, URI structure, HTTP semantics, and basic TLS concepts."],
-      "start_here": {"path": "lib/net/http.rb", "reason": "Net::HTTP contains the session lifecycle and request path that connect public calls to sockets, TLS, responses, retries, and cleanup."},
-      "sdc": {
-        "level": 2,
-        "size": {"score": 2, "loc": 2283, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "test_sig/"], "notes": "Count covers production Ruby under lib, excluding tests, signatures, documentation, and packaging metadata."},
-        "difficulty": {"score": 3, "signals": ["HTTP framing and streaming", "TLS, proxy, timeout, and retry semantics"], "reason": "Correct protocol and socket behavior recur, but the implementation remains compact and follows recognizable request-session phases."},
-        "complexity": {"score": 2, "signals": ["request-response-session layers", "socket and TLS boundary"], "reason": "A small family of cooperating classes implements one network protocol client within a process."},
-        "placement": "S2/D3/C2 averages to 2.33, placing Net::HTTP at SDC 2."
+      "inspection": {
+        "commit": "f0217bbd486b2f7d5c7de1ff3951c7422d42c761",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/pathname_builtin.rb",
+          "lib/pathname.rb",
+          "test/pathname/test_pathname.rb",
+          "COPYING",
+          "BSDL"
+        ]
       },
-      "quality": {
-        "source_quality": "Session state, retry conditions, socket ownership, header rules, body modes, and protocol errors are made explicit near the affected flow.",
-        "architecture": "Request subclasses and header logic feed a session object that owns transport, TLS, response parsing, streaming, and persistence.",
-        "naming_and_idiom": "start, request, transport_request, begin_transport, end_transport, read_body, and keep_alive expose the protocol lifecycle.",
-        "tests": "The suite covers methods, headers, bodies, chunking, compression, proxies, TLS, timeouts, retries, persistence, malformed responses, and regressions.",
-        "documentation": "Extensive API documentation provides request patterns, session use, streaming, TLS, proxies, and timeout behavior.",
-        "traceability": "A GET can be followed from request construction through transport setup, header write, response read, body decode, persistence decision, and tests.",
-        "maintainability": "Protocol roles are split into focused classes while a broad compatibility suite guards edge cases across Ruby and servers.",
-        "educational_value": "It is small enough to map but deep enough to teach why production HTTP clients are more than opening a socket."
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/COPYING",
+          "https://github.com/ruby/pathname/blob/f0217bbd486b2f7d5c7de1ff3951c7422d42c761/BSDL"
+        ]
       },
-      "inspection": {"commit": "23e859e92e10e43cad520fcacac3fd43640dba7b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "net-http.gemspec", "lib/net/http.rb", "lib/net/http/generic_request.rb", "test/net/http/test_http.rb", "COPYING"]},
-      "license": {"spdx": "Ruby OR BSD-2-Clause", "url": "https://github.com/ruby/net-http/blob/23e859e92e10e43cad520fcacac3fd43640dba7b/COPYING"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
-    },
-    {
-      "slug": "sidekiq",
-      "repository": "sidekiq/sidekiq",
-      "url": "https://github.com/sidekiq/sidekiq",
-      "primary_language": "Ruby",
-      "language_evidence": "Job fetching, execution, middleware, retries, scheduling, capsules, Redis coordination, process lifecycle, and the monitoring UI are Ruby under lib/ and web/.",
-      "description": "A multithreaded background-job processor for Ruby applications backed by Redis.",
-      "real_world_evidence": "The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.",
-      "why_study": "It turns a simple perform method into queue polling, thread lifecycle, middleware, retries, shutdown, scheduling, observability, and Redis coordination.",
-      "learn": ["Worker pools, thread lifecycle, Redis queues, reliable fetching, retries and dead jobs, middleware chains, scheduling, signals, shutdown, and operational telemetry."],
-      "prerequisites": ["Ruby threads and synchronization, exceptions, process signals, Redis data structures, background-job semantics, Rack, and testing."],
-      "start_here": {"path": "lib/sidekiq/processor.rb", "reason": "Processor follows one fetched job through decoding, middleware, execution, acknowledgment, retry handling, and shutdown interaction."},
-      "sdc": {
-        "level": 3,
-        "size": {"score": 2, "loc": 7135, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "examples/", "myapp/"], "notes": "Count covers first-party production code under lib, excluding tests, examples, the sample application, documentation, and packaging metadata."},
-        "difficulty": {"score": 4, "signals": ["multithreaded job lifecycle", "at-least-once delivery and retry semantics", "signal-aware shutdown"], "reason": "Concurrency and failure semantics are central, and correctness depends on coordinating process, Redis, middleware, and user-code boundaries."},
-        "complexity": {"score": 3, "signals": ["fetch-process-retry pipeline", "manager, capsules, scheduler, and web UI"], "reason": "Several runtime subsystems cooperate across Redis and application boundaries but remain one deployable worker service."},
-        "placement": "S2/D4/C3 averages exactly to SDC 3."
-      },
-      "quality": {
-        "source_quality": "Job ownership, acknowledgment, retry, termination, and thread state are named explicitly, with narrow rescue and ensure boundaries.",
-        "architecture": "Capsules configure queues and concurrency; managers own processors; fetchers reserve jobs; middleware surrounds execution; retry and scheduling subsystems handle failure and time.",
-        "naming_and_idiom": "Processor, Manager, Capsule, fetch, acknowledge, requeue, dead, quiet, and terminate match worker operations.",
-        "tests": "The suite covers execution, retries, crashes, shutdown, scheduling, queue weighting, middleware, Redis failures, metrics, CLI behavior, and the web UI.",
-        "documentation": "The README and wiki document job semantics, deployment, reliability, configuration, middleware, errors, testing, and operational practices.",
-        "traceability": "A job can be followed from Redis reservation into Processor, server middleware, user code, acknowledgment or retry, and processor tests.",
-        "maintainability": "Runtime responsibilities are separated behind small interfaces and deterministic tests exercise exceptional lifecycle transitions.",
-        "educational_value": "It is a strong bridge from ordinary application code to concurrency and distributed work semantics."
-      },
-      "inspection": {"commit": "1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "sidekiq.gemspec", "lib/sidekiq/processor.rb", "lib/sidekiq/manager.rb", "test/processor_test.rb", "LICENSE.txt"]},
-      "license": {"spdx": "LGPL-3.0-only", "url": "https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/LICENSE.txt"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "jekyll",
+      "path_slug": "jekyll-transforms-one-source-document-through-liquid-converters-hooks-nested",
       "repository": "jekyll/jekyll",
       "url": "https://github.com/jekyll/jekyll",
       "primary_language": "Ruby",
       "language_evidence": "Site discovery, collections, front matter, rendering, plugins, incremental regeneration, destination writing, and CLI behavior are Ruby under lib/.",
       "description": "A static-site generator that transforms Markdown, Liquid templates, data, assets, and configuration into a deployable website.",
       "real_world_evidence": "The repository publishes the Jekyll gem and command-line tool used for blogs, documentation, and GitHub Pages workflows.",
-      "why_study": "Its build pipeline is tangible: discover content, classify it, run generators, render Liquid and markup, track dependencies, write output, and clean stale files.",
-      "learn": ["Build pipelines, content models, front matter, template and markup conversion, plugin registries, dependency tracking, incremental builds, configuration, and filesystem safety."],
-      "prerequisites": ["Ruby objects and modules, files and paths, YAML, Markdown and templating concepts, plugins, dependency graphs, and command-line applications."],
-      "start_here": {"path": "lib/jekyll/site.rb", "reason": "Site is the orchestration center: reset, read, generate, render, cleanup, and write reveal the complete build before deeper components."},
-      "sdc": {
+      "why_study": "Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output. Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/jekyll/renderer.rb`: converter strategy and reduction pipeline, hook and plugin framework idioms, and Liquid payload and document abstractions.",
+        "Trace these states and branches from `lib/jekyll/renderer.rb` through its selected supporting files: ordered mutable render phases, hook and converter error propagation, nested layout state and cycle detection, and incremental dependency updates.",
+        "Identify these architectural responsibilities in the path beginning at `lib/jekyll/renderer.rb`: document and Convertible boundary, Renderer pipeline, Liquid and converter plugins, and layout and Regenerator boundaries.",
+        "Study these change constraints for the path beginning at `lib/jekyll/renderer.rb`: template and converter plugin compatibility, strict Liquid options and error reporting, layout-cycle and data-merging correctness, and output extension and incremental rebuild consistency."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.",
+        "A static-site document may pass through a template engine, one or more markup converters, nested layouts, hooks, and an incremental-build dependency tracker before being written."
+      ],
+      "concepts_developed": [
+        "Converter strategy and reduction pipeline.",
+        "Ordered mutable render phases.",
+        "Template and converter plugin compatibility."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A static-site document may pass through a template engine, one or more markup converters, nested layouts, hooks, and an incremental-build dependency tracker before being written."
+        ],
+        "reason": "Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing."
+      },
+      "learning_path": {
+        "goal": "Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.",
+        "start_here": {
+          "path": "lib/jekyll/renderer.rb",
+          "reason": "Begin with `lib/jekyll/renderer.rb` because it exposes how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output."
+        },
+        "supporting_files": [
+          "lib/jekyll/convertible.rb",
+          "lib/jekyll/regenerator.rb",
+          "test/test_document.rb",
+          "test/test_generated_site.rb",
+          "test/test_site.rb"
+        ],
+        "trace": "Start at Renderer#run, follow payload preparation and pre-render hooks into render_document, then follow optional Liquid rendering, ordered converter reduction, post-convert hooks, nested layout rendering with cycle detection, and Regenerator dependency recording; connect Convertible#do_layout to the public document lifecycle and close with document, generated-site, and site integration tests. The catalog's Site#process start was a broader composition root, and there is no pinned test/test_renderer.rb."
+      },
+      "learning_level": {
         "level": 3,
-        "size": {"score": 2, "loc": 8088, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["test/", "features/", "docs/"], "notes": "Count covers first-party production Ruby under lib, excluding tests, acceptance fixtures, documentation, examples, and packaging metadata."},
-        "difficulty": {"score": 3, "signals": ["multi-stage content transformation", "incremental dependency tracking", "plugin and template execution"], "reason": "Parsing and rendering are delegated to libraries, while Jekyll's main challenge is coordinating mutable content and build phases safely."},
-        "complexity": {"score": 3, "signals": ["reader-generator-renderer-writer pipeline", "collections, plugins, themes, and cache boundaries"], "reason": "Many cohesive subsystems participate in a build and expose extension points, though execution remains a local application pipeline."},
-        "placement": "S2/D3/C3 averages to 2.67, which rounds to SDC 3."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "converter strategy and reduction pipeline",
+            "hook and plugin framework idioms",
+            "Liquid payload and document abstractions"
+          ],
+          "reason": "Framework callbacks, plugin strategies, and higher-order composition materially shape the Ruby path."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "ordered mutable render phases",
+            "hook and converter error propagation",
+            "nested layout state and cycle detection",
+            "incremental dependency updates"
+          ],
+          "reason": "A nontrivial staged lifecycle with hooks, mutable output, cycles, and incremental state remains locally traceable."
+        },
+        "design_span": {
+          "score": 3,
+          "signals": [
+            "document and Convertible boundary",
+            "Renderer pipeline",
+            "Liquid and converter plugins",
+            "layout and Regenerator boundaries"
+          ],
+          "reason": "The path crosses several meaningful interfaces whose responsibilities remain clear."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "template and converter plugin compatibility",
+            "strict Liquid options and error reporting",
+            "layout-cycle and data-merging correctness",
+            "output extension and incremental rebuild consistency"
+          ],
+          "reason": "Multiple compatibility, correctness, cycle, and incremental-build guarantees interact across the renderer."
+        },
+        "placement": "The four scores 3/3/3/4 sum to 13; their arithmetic mean is 3.25 and rounds half-up to Level 3. The published result is Level 3."
       },
       "quality": {
-        "source_quality": "Build phases are short named methods, source and destination invariants are guarded, and rendering errors preserve document context.",
-        "architecture": "Site orchestrates readers, collections, generators, converters, renderers, dependency tracking, cleaners, and writers through registries and hooks.",
-        "naming_and_idiom": "Site, Document, Collection, Generator, Converter, Renderer, Regenerator, payload, frontmatter, and permalink reflect the static-site domain.",
-        "tests": "Unit and acceptance suites cover configuration, content discovery, rendering, plugins, themes, incremental builds, drafts, permalinks, security boundaries, and CLI behavior.",
-        "documentation": "The project maintains user guides, configuration references, plugin APIs, deployment guidance, tutorials, and contributor documentation.",
-        "traceability": "A Markdown post can be followed from Reader into a Collection, through Renderer and converters, dependency recording, destination writing, and site tests.",
-        "maintainability": "Pipeline stages and extension contracts are separated, while fixtures protect the large matrix of content and configuration behavior.",
-        "educational_value": "It provides a visible end-to-end transformation system whose artifacts make architecture easy to test and understand."
+        "source_quality": "Renderer methods expose each transformation phase directly, Convertible supplies a clear public bridge, and Regenerator records incremental dependencies; document, generated-site, and site tests observe template data, converter output, layouts, destinations, hooks, and generated files, while the README and code comments orient the learner. No test/test_renderer.rb exists at the pin, so only verified integration tests close the path.",
+        "architecture": "The audited architecture of the path beginning at `lib/jekyll/renderer.rb` has these boundaries: document and Convertible boundary, Renderer pipeline, Liquid and converter plugins, and layout and Regenerator boundaries.",
+        "naming_and_idiom": "`lib/jekyll/renderer.rb` and its supporting files use these characteristic Ruby mechanisms: converter strategy and reduction pipeline, hook and plugin framework idioms, and Liquid payload and document abstractions.",
+        "tests": "Direct tests in `test/test_document.rb`, `test/test_generated_site.rb`, and `test/test_site.rb` cover these states and branches in the selected path: ordered mutable render phases, hook and converter error propagation, nested layout state and cycle detection, and incremental dependency updates.",
+        "documentation": "`lib/jekyll/renderer.rb` and its selected supporting material document the contracts needed to understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output.",
+        "traceability": "Start at Renderer#run, follow payload preparation and pre-render hooks into render_document, then follow optional Liquid rendering, ordered converter reduction, post-convert hooks, nested layout rendering with cycle detection, and Regenerator dependency recording; connect Convertible#do_layout to the public document lifecycle and close with document, generated-site, and site integration tests. The catalog's Site#process start was a broader composition root, and there is no pinned test/test_renderer.rb.",
+        "maintainability": "Changes to the path beginning at `lib/jekyll/renderer.rb` are constrained by these audited guarantees: template and converter plugin compatibility, strict Liquid options and error reporting, layout-cycle and data-merging correctness, and output extension and incremental rebuild consistency.",
+        "educational_value": "Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output. Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing."
       },
-      "inspection": {"commit": "74d751339d3e534aa51d5d7b0640e9bd743509e4", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.markdown", "jekyll.gemspec", "lib/jekyll/site.rb", "lib/jekyll/renderer.rb", "test/test_site.rb", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/LICENSE"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "74d751339d3e534aa51d5d7b0640e9bd743509e4",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/jekyll/renderer.rb",
+          "lib/jekyll/convertible.rb",
+          "lib/jekyll/regenerator.rb",
+          "test/test_document.rb",
+          "test/test_generated_site.rb",
+          "test/test_site.rb",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/jekyll/jekyll/blob/74d751339d3e534aa51d5d7b0640e9bd743509e4/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
+    },
+    {
+      "slug": "tempfile",
+      "path_slug": "tempfile-create-securely-opens-a-temporary-file-and-guarantees-deterministic",
+      "repository": "ruby/tempfile",
+      "url": "https://github.com/ruby/tempfile",
+      "primary_language": "Ruby",
+      "language_evidence": "Temporary-file creation, permissions, cleanup, delegation, and lifecycle behavior are implemented in Ruby under lib/.",
+      "description": "Ruby's standard temporary-file library, providing secure creation plus explicit and automatic cleanup lifecycles.",
+      "real_world_evidence": "The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.",
+      "why_study": "Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block. Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/tempfile.rb`: block-scoped resource ownership, keyword forwarding and conventional exception cleanup, and ordinary class and file composition.",
+        "Trace these states and branches from `lib/tempfile.rb` through its selected supporting files: create, yield, close, and unlink lifecycle, cleanup after normal return or exception, and anonymous and platform-specific fallback branches.",
+        "Identify these architectural responsibilities in the path beginning at `lib/tempfile.rb`: one public temporary-file component, standard-library name-generation and File boundaries, and one direct behavioral test suite.",
+        "Study these change constraints for the path beginning at `lib/tempfile.rb`: race-resistant name creation and restrictive permissions, exception-safe close and unlink guarantees, Windows, POSIX, and anonymous-file differences, and stable public cleanup semantics."
+      ],
+      "prerequisites": [
+        "Basic familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests.",
+        "A temporary file must be created without a name race, opened with restrictive permissions, and removed after its owner finishes using it."
+      ],
+      "concepts_developed": [
+        "Block-scoped resource ownership.",
+        "Create, yield, close, and unlink lifecycle.",
+        "Race-resistant name creation and restrictive permissions."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A temporary file must be created without a name race, opened with restrictive permissions, and removed after its owner finishes using it."
+        ],
+        "reason": "Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing."
+      },
+      "learning_path": {
+        "goal": "Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block.",
+        "start_here": {
+          "path": "lib/tempfile.rb",
+          "reason": "Begin with `lib/tempfile.rb` because it exposes how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block."
+        },
+        "supporting_files": [
+          "test/test_tempfile.rb"
+        ],
+        "trace": "Start at Tempfile.create, follow Dir::Tmpname.create into restrictive File.open, then follow the yielded File through the ensure branch that closes and unlinks it; close with block, traversal, anonymous-file, permission, and cleanup tests. Compare FinalizerManager only as the fallback used by the older object lifecycle, not as machinery required by the main block-and-ensure trace."
+      },
+      "learning_level": {
+        "level": 3,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "block-scoped resource ownership",
+            "keyword forwarding and conventional exception cleanup",
+            "ordinary class and file composition"
+          ],
+          "reason": "The selected path uses common professional Ruby block, object, and ensure idioms; finalizer machinery is a fallback comparison rather than recurring main-path evidence."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "create, yield, close, and unlink lifecycle",
+            "cleanup after normal return or exception",
+            "anonymous and platform-specific fallback branches"
+          ],
+          "reason": "A real resource lifecycle and its failure cleanup materially shape the trace without creating expert nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "one public temporary-file component",
+            "standard-library name-generation and File boundaries",
+            "one direct behavioral test suite"
+          ],
+          "reason": "A few clear collaborators contain the complete behavior."
+        },
+        "constraint_burden": {
+          "score": 4,
+          "signals": [
+            "race-resistant name creation and restrictive permissions",
+            "exception-safe close and unlink guarantees",
+            "Windows, POSIX, and anonymous-file differences",
+            "stable public cleanup semantics"
+          ],
+          "reason": "Security, resource cleanup, compatibility, and cross-platform guarantees interact throughout temporary-file creation."
+        },
+        "placement": "The four scores 2/3/2/4 sum to 11; their arithmetic mean is 2.75 and rounds half-up to Level 3. The published result is Level 3."
+      },
+      "quality": {
+        "source_quality": "The compact implementation names creation and cleanup responsibilities directly, documents explicit versus automatic cleanup, and has focused tests for block success and failure, restrictive permissions, path traversal, anonymous files, unlink behavior, platform differences, and finalizer fallback; the main Tempfile.create trace remains readable from public API through ensure cleanup to a direct test.",
+        "architecture": "The audited architecture of the path beginning at `lib/tempfile.rb` has these boundaries: one public temporary-file component, standard-library name-generation and File boundaries, and one direct behavioral test suite.",
+        "naming_and_idiom": "`lib/tempfile.rb` and its supporting files use these characteristic Ruby mechanisms: block-scoped resource ownership, keyword forwarding and conventional exception cleanup, and ordinary class and file composition.",
+        "tests": "Direct tests in `test/test_tempfile.rb` cover these states and branches in the selected path: create, yield, close, and unlink lifecycle, cleanup after normal return or exception, and anonymous and platform-specific fallback branches.",
+        "documentation": "`lib/tempfile.rb` and its selected supporting material document the contracts needed to understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block.",
+        "traceability": "Start at Tempfile.create, follow Dir::Tmpname.create into restrictive File.open, then follow the yielded File through the ensure branch that closes and unlinks it; close with block, traversal, anonymous-file, permission, and cleanup tests. Compare FinalizerManager only as the fallback used by the older object lifecycle, not as machinery required by the main block-and-ensure trace.",
+        "maintainability": "Changes to the path beginning at `lib/tempfile.rb` are constrained by these audited guarantees: race-resistant name creation and restrictive permissions, exception-safe close and unlink guarantees, Windows, POSIX, and anonymous-file differences, and stable public cleanup semantics.",
+        "educational_value": "Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block. Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing."
+      },
+      "inspection": {
+        "commit": "344da5e29e3215691209223249ebd64e66dff6b8",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/tempfile.rb",
+          "test/test_tempfile.rb",
+          "COPYING",
+          "BSDL"
+        ]
+      },
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/tempfile/blob/344da5e29e3215691209223249ebd64e66dff6b8/COPYING",
+          "https://github.com/ruby/tempfile/blob/344da5e29e3215691209223249ebd64e66dff6b8/BSDL"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
       "slug": "rubocop",
+      "path_slug": "rubocop-inspects-one-ruby-file-dispatches-ast-callbacks-to-configured",
       "repository": "rubocop/rubocop",
       "url": "https://github.com/rubocop/rubocop",
       "primary_language": "Ruby",
       "language_evidence": "Configuration, target discovery, AST inspection, cop dispatch, offense reporting, autocorrection, caching, formatters, and CLI orchestration are Ruby under lib/ and exe/.",
       "description": "A configurable Ruby static analyzer and formatter built around independently selectable cops.",
       "real_world_evidence": "The repository publishes the RuboCop gem and executable used to lint, format, and enforce Ruby project conventions.",
-      "why_study": "It demonstrates how a large rule engine turns source into AST events, selects and coordinates checks, merges corrections, caches results, preserves output order, and supports extensions.",
-      "learn": ["AST event dispatch, rule registries, configuration inheritance, diagnostics, source rewriting, conflict resolution, parallel processing, caching, formatters, and plugin APIs."],
-      "prerequisites": ["Ruby metaprogramming, ASTs and source ranges, visitors or event dispatch, configuration systems, parallel processes, testing, and static-analysis concepts."],
-      "start_here": {"path": "lib/rubocop/runner.rb", "reason": "Runner connects file discovery, configuration, parallel or serial inspection, correction iterations, caching, reporting, and exit status."},
-      "sdc": {
+      "why_study": "Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected. AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/rubocop/runner.rb`: runtime class_eval generation of AST callback methods, reflection and callback discovery, cop DSL and plugin framework conventions, and dynamic dispatch over node and restriction maps.",
+        "Trace these states and branches from `lib/rubocop/runner.rb` through its selected supporting files: AST event propagation through many cops, repeated autocorrection to a fixed point, overlap, conflict, and cycle handling, and cop error isolation and cache paths.",
+        "Identify these architectural responsibilities in the path beginning at `lib/rubocop/runner.rb`: Runner orchestration and reporting, Team cop coordination, Commissioner visitor dispatch, Base extension lifecycle and Corrector edits, and configuration, cache, and formatter policies.",
+        "Study these change constraints for the path beginning at `lib/rubocop/runner.rb`: exact source ranges, encodings, and syntax preservation, overlapping-edit and semantic-correction safety, termination and infinite-cycle detection, and configuration, plugin, target-Ruby, cache, and formatter compatibility."
+      ],
+      "prerequisites": [
+        "Working familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests, plus experience tracing behavior across several production files.",
+        "A lint cop receives callbacks while an abstract syntax tree is visited, reports source-range offenses, and may propose edits that must be combined and repeatedly applied until stable."
+      ],
+      "concepts_developed": [
+        "Runtime class_eval generation of AST callback methods.",
+        "AST event propagation through many cops.",
+        "Exact source ranges, encodings, and syntax preservation."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A lint cop receives callbacks while an abstract syntax tree is visited, reports source-range offenses, and may propose edits that must be combined and repeatedly applied until stable."
+        ],
+        "reason": "AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing."
+      },
+      "learning_path": {
+        "goal": "Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.",
+        "start_here": {
+          "path": "lib/rubocop/runner.rb",
+          "reason": "Begin with `lib/rubocop/runner.rb` because it exposes how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected."
+        },
+        "supporting_files": [
+          "lib/rubocop/cop/team.rb",
+          "lib/rubocop/cop/commissioner.rb",
+          "lib/rubocop/cop/base.rb",
+          "lib/rubocop/cop/corrector.rb",
+          "spec/rubocop/runner_spec.rb",
+          "spec/rubocop/cop/team_spec.rb"
+        ],
+        "trace": "Start at Runner#process_file and file_offenses, follow the correction loop into Team#investigate, Commissioner-generated node callbacks, Base offense registration, and Corrector edits, then return through Team's corrector collation and conflict handling to Runner's convergence or infinite-loop result; close with Runner and Team specs."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 4, "loc": 60814, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["spec/", "tasks/"], "notes": "Count covers first-party production Ruby under lib and exe, excluding tests, task automation, documentation, generated configuration, and packaging metadata."},
-        "difficulty": {"score": 3, "signals": ["AST and source-range reasoning", "autocorrection conflict handling", "parallel deterministic reporting"], "reason": "Static analysis and rewriting require specialized concepts, but RuboCop delegates parsing and organizes behavior into regular Ruby objects."},
-        "complexity": {"score": 4, "signals": ["hundreds of rules and shared forces", "configuration-plugin-runner-formatter ecosystem", "cache and parallel execution"], "reason": "Many extensible subsystems and rule families interact across configuration, inspection, correction, output, and compatibility boundaries."},
-        "placement": "S4/D3/C4 averages to 3.67, which rounds to SDC 4."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "runtime class_eval generation of AST callback methods",
+            "reflection and callback discovery",
+            "cop DSL and plugin framework conventions",
+            "dynamic dispatch over node and restriction maps"
+          ],
+          "reason": "Generated callbacks, reflection, metaprogramming, and framework DSL behavior recur materially, meeting the advanced anchor without multiple pervasive expert mechanisms for 5."
+        },
+        "behavioral_reasoning": {
+          "score": 4,
+          "signals": [
+            "AST event propagation through many cops",
+            "repeated autocorrection to a fixed point",
+            "overlap, conflict, and cycle handling",
+            "cop error isolation and cache paths"
+          ],
+          "reason": "Event dispatch, correction state, convergence, caching, and failure isolation require advanced nonlocal reasoning."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "Runner orchestration and reporting",
+            "Team cop coordination",
+            "Commissioner visitor dispatch",
+            "Base extension lifecycle and Corrector edits",
+            "configuration, cache, and formatter policies"
+          ],
+          "reason": "Many modules, extension points, and cross-cutting policies contribute to inspection and correction."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "exact source ranges, encodings, and syntax preservation",
+            "overlapping-edit and semantic-correction safety",
+            "termination and infinite-cycle detection",
+            "configuration, plugin, target-Ruby, cache, and formatter compatibility"
+          ],
+          "reason": "Several system-wide source-safety, convergence, compatibility, and cache guarantees interact so a local correction change can fail elsewhere."
+        },
+        "placement": "The four scores 4/4/4/5 sum to 17; their arithmetic mean is 4.25 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Inspection phases, correction loops, ordered parallel reporting, configuration decisions, and extension hooks use explicit state and named helpers.",
-        "architecture": "Runner orchestrates targets and output; Team mobilizes cops and forces; Commissioner dispatches AST events; correctors merge edits; registries and plugins supply extensions.",
-        "naming_and_idiom": "Cop, offense, correction, Commissioner, Team, Force, Registry, department, and target finder form a consistent analysis vocabulary.",
-        "tests": "A large RSpec suite covers individual cops, corrections, configuration, plugins, caching, parallelism, formatters, CLI behavior, regressions, and platform cases.",
-        "documentation": "Versioned documentation covers every cop, configuration and suppression, autocorrection safety, extensions, plugins, formatters, and development.",
-        "traceability": "A source offense can be followed from file discovery through processed AST, Team dispatch, cop callback, correction merge, formatter output, and focused specs.",
-        "maintainability": "Rule isolation, shared analysis forces, generated documentation, explicit compatibility policy, and extensive examples keep a broad analyzer evolvable.",
-        "educational_value": "It is a substantial but navigable study of a plugin-oriented static-analysis platform written in the language it analyzes."
+        "source_quality": "Runner, Team, Commissioner, Base, and Corrector expose recognizable orchestration, dispatch, extension, and edit responsibilities; direct specs cover offenses, cop errors, callback lifecycles, overlapping corrections, conflicting cops, infinite correction cycles, caching, formatter behavior, syntax failures, and autocorrect output, while project documentation explains purpose and configuration.",
+        "architecture": "The audited architecture of the path beginning at `lib/rubocop/runner.rb` has these boundaries: Runner orchestration and reporting, Team cop coordination, Commissioner visitor dispatch, Base extension lifecycle and Corrector edits, and configuration, cache, and formatter policies.",
+        "naming_and_idiom": "`lib/rubocop/runner.rb` and its supporting files use these characteristic Ruby mechanisms: runtime class_eval generation of AST callback methods, reflection and callback discovery, cop DSL and plugin framework conventions, and dynamic dispatch over node and restriction maps.",
+        "tests": "Direct tests in `spec/rubocop/runner_spec.rb` and `spec/rubocop/cop/team_spec.rb` cover these states and branches in the selected path: AST event propagation through many cops, repeated autocorrection to a fixed point, overlap, conflict, and cycle handling, and cop error isolation and cache paths.",
+        "documentation": "`lib/rubocop/runner.rb` and its selected supporting material document the contracts needed to understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected.",
+        "traceability": "Start at Runner#process_file and file_offenses, follow the correction loop into Team#investigate, Commissioner-generated node callbacks, Base offense registration, and Corrector edits, then return through Team's corrector collation and conflict handling to Runner's convergence or infinite-loop result; close with Runner and Team specs.",
+        "maintainability": "Changes to the path beginning at `lib/rubocop/runner.rb` are constrained by these audited guarantees: exact source ranges, encodings, and syntax preservation, overlapping-edit and semantic-correction safety, termination and infinite-cycle detection, and configuration, plugin, target-Ruby, cache, and formatter compatibility.",
+        "educational_value": "Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected. AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing."
       },
-      "inspection": {"commit": "8b85bafb041debc1f3a955663a99fa384a9d24f6", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "rubocop.gemspec", "lib/rubocop/runner.rb", "lib/rubocop/cop/team.rb", "spec/rubocop/runner_spec.rb", "LICENSE.txt"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/LICENSE.txt"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "8b85bafb041debc1f3a955663a99fa384a9d24f6",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/rubocop/runner.rb",
+          "lib/rubocop/cop/team.rb",
+          "lib/rubocop/cop/commissioner.rb",
+          "lib/rubocop/cop/base.rb",
+          "lib/rubocop/cop/corrector.rb",
+          "spec/rubocop/runner_spec.rb",
+          "spec/rubocop/cop/team_spec.rb",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/rubocop/rubocop/blob/8b85bafb041debc1f3a955663a99fa384a9d24f6/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "rails",
-      "repository": "rails/rails",
-      "url": "https://github.com/rails/rails",
+      "slug": "sidekiq",
+      "path_slug": "sidekiq-owns-one-fetched-job-through-middleware-and-execution-records",
+      "repository": "sidekiq/sidekiq",
+      "url": "https://github.com/sidekiq/sidekiq",
       "primary_language": "Ruby",
-      "language_evidence": "The MVC framework, ORM, routing, jobs, mail, WebSockets, storage, rendering, support libraries, generators, and application lifecycle are Ruby across the framework components.",
-      "description": "A full-stack web application framework spanning HTTP, MVC, persistence, jobs, mail, WebSockets, storage, and application tooling.",
-      "real_world_evidence": "The repository releases the Rails framework gems used to build and operate production web applications.",
-      "why_study": "It is a mature framework monorepo where conventions emerge from explicit component contracts, lifecycle hooks, query construction, routing, rendering, background work, and generators.",
-      "learn": ["Framework boot and configuration, MVC request flow, routing, ORM and query composition, callbacks, jobs, mail, WebSockets, storage, code generation, and compatibility design."],
-      "prerequisites": ["Advanced Ruby and metaprogramming, HTTP and MVC, relational databases and SQL, asynchronous work, caching, concurrency, security, and large-repository navigation."],
-      "start_here": {"path": "railties/lib/rails/application.rb", "reason": "Application explains how configuration, engines, routes, initializers, reloading, tasks, generators, and request handling become one Rails process."},
-      "sdc": {
+      "language_evidence": "Job fetching, execution, middleware, retries, scheduling, capsules, Redis coordination, process lifecycle, and the monitoring UI are Ruby under lib/ and web/.",
+      "description": "A multithreaded background-job processor for Ruby applications backed by Redis.",
+      "real_world_evidence": "The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.",
+      "why_study": "Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown. Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/sidekiq/processor.rb`: middleware block composition, dynamic worker class resolution and framework conventions, and exception wrapper and configuration abstractions.",
+        "Trace these states and branches from `lib/sidekiq/processor.rb` through its selected supporting files: concurrent processor and fetched-work ownership, global and local retry recovery, middleware and worker failure timing, acknowledgement versus preservation, and quiet and forced-shutdown coordination.",
+        "Identify these architectural responsibilities in the path beginning at `lib/sidekiq/processor.rb`: processor and fetch boundary, retry and dead-job lifecycle, middleware extension chain, manager shutdown coordination, and Redis-backed job state and observability.",
+        "Study these change constraints for the path beginning at `lib/sidekiq/processor.rb`: at-least-once delivery and no-loss shutdown; duplicate-tolerant acknowledgement semantics; retry payload, original-argument, and scheduling compatibility; and thread safety, deadlines, middleware, and error reporting."
+      ],
+      "prerequisites": [
+        "Working familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests, plus experience tracing behavior across several production files.",
+        "A background worker fetches a job, may execute it at least once, records failure for retry, acknowledges completed work, and must preserve in-progress work during shutdown."
+      ],
+      "concepts_developed": [
+        "Middleware block composition.",
+        "Concurrent processor and fetched-work ownership.",
+        "At-least-once delivery and no-loss shutdown."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A background worker fetches a job, may execute it at least once, records failure for retry, acknowledges completed work, and must preserve in-progress work during shutdown."
+        ],
+        "reason": "Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing."
+      },
+      "learning_path": {
+        "goal": "Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.",
+        "start_here": {
+          "path": "lib/sidekiq/processor.rb",
+          "reason": "Begin with `lib/sidekiq/processor.rb` because it exposes how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown."
+        },
+        "supporting_files": [
+          "lib/sidekiq/job_retry.rb",
+          "lib/sidekiq/middleware/chain.rb",
+          "lib/sidekiq/manager.rb",
+          "test/processor_test.rb",
+          "test/manager_test.rb",
+          "docs/internals.md"
+        ],
+        "trace": "Start at Processor#process_one and the fetched unit of work, follow dispatch through global and local JobRetry wrappers, the server middleware chain, worker resolution and execution, then follow the completed flag into acknowledgement or preservation; use Manager shutdown to see deadlines and in-flight ownership, and close with processor and manager tests plus the internals contract."
+      },
+      "learning_level": {
         "level": 4,
-        "size": {"score": 4, "loc": 118826, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["**/test/", "guides/", "tasks/", "templates/"], "notes": "Count covers first-party production framework components, excluding tests, guides, task automation, templates, examples, generated files, and vendored code."},
-        "difficulty": {"score": 4, "signals": ["metaprogrammed framework contracts", "ORM and query semantics", "concurrency, reloading, and security boundaries"], "reason": "Advanced Ruby mechanisms and framework invariants recur across persistence, requests, lifecycle, and extension code."},
-        "complexity": {"score": 4, "signals": ["multi-gem framework monorepo", "request-persistence-job-mail-storage integration", "large extension and compatibility surface"], "reason": "Many framework subsystems cooperate through public contracts, but they form one application platform rather than a distributed product deployment."},
-        "placement": "S4/D4/C4 makes Rails a balanced SDC 4 system."
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "middleware block composition",
+            "dynamic worker class resolution and framework conventions",
+            "exception wrapper and configuration abstractions"
+          ],
+          "reason": "Substantial Ruby framework idioms shape the path, but advanced reflection or multiple expert language mechanisms do not recur enough for 4."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "concurrent processor and fetched-work ownership",
+            "global and local retry recovery",
+            "middleware and worker failure timing",
+            "acknowledgement versus preservation",
+            "quiet and forced-shutdown coordination"
+          ],
+          "reason": "Threaded execution, retry scheduling, failure recovery, job ownership, and shutdown interact pervasively, making expert nonlocal reasoning unavoidable."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "processor and fetch boundary",
+            "retry and dead-job lifecycle",
+            "middleware extension chain",
+            "manager shutdown coordination",
+            "Redis-backed job state and observability"
+          ],
+          "reason": "Many modules, extension points, and cross-cutting execution policies contribute to one job lifecycle."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "at-least-once delivery and no-loss shutdown",
+            "duplicate-tolerant acknowledgement semantics",
+            "retry payload, original arguments, and scheduling compatibility",
+            "thread safety, deadlines, middleware, and error reporting"
+          ],
+          "reason": "Several system-wide reliability, compatibility, concurrency, and recovery guarantees interact so a local change can lose or duplicate work."
+        },
+        "placement": "The four scores 3/5/4/5 sum to 17; their arithmetic mean is 4.25 and rounds half-up to Level 4. The published result is Level 4."
       },
       "quality": {
-        "source_quality": "Public contracts are documented close to implementation, lifecycle phases use named hooks, and framework invariants have focused error types and tests.",
-        "architecture": "Railties composes independent framework gems for support, models, records, controllers, views, jobs, mail, channels, text, storage, and application boot.",
-        "naming_and_idiom": "Application, Engine, Railtie, Relation, Controller, Job, Mailer, Channel, callback, scope, and concern define the framework vocabulary.",
-        "tests": "Each component has extensive unit and integration suites covering adapters, requests, rendering, persistence, generators, security, reloading, concurrency, and regressions.",
-        "documentation": "API documentation and maintained guides cover framework concepts, components, security, deployment, extension, testing, and contribution.",
-        "traceability": "A database-backed request can be traced from route recognition into a controller, model Relation and adapter, rendering, response middleware, and component integration tests.",
-        "maintainability": "Gem boundaries, shared support primitives, deprecation machinery, changelogs, and exhaustive compatibility tests let a large framework evolve deliberately.",
-        "educational_value": "It is a premier advanced study of how a language's idioms can scale into a coherent application platform."
+        "source_quality": "Processor, retry, middleware, and manager responsibilities are explicit and documented in the internals guide; direct tests cover fetch and execution exceptions, middleware before and after failures, skip behavior, acknowledgement, original argument preservation, retry delegation, shutdown deadlines, quieting, and work recovery, making the production lifecycle traceable despite its nonlocal guarantees.",
+        "architecture": "The audited architecture of the path beginning at `lib/sidekiq/processor.rb` has these boundaries: processor and fetch boundary, retry and dead-job lifecycle, middleware extension chain, manager shutdown coordination, and Redis-backed job state and observability.",
+        "naming_and_idiom": "`lib/sidekiq/processor.rb` and its supporting files use these characteristic Ruby mechanisms: middleware block composition, dynamic worker class resolution and framework conventions, and exception wrapper and configuration abstractions.",
+        "tests": "Direct tests in `test/processor_test.rb` and `test/manager_test.rb` cover these states and branches in the selected path: concurrent processor and fetched-work ownership, global and local retry recovery, middleware and worker failure timing, acknowledgement versus preservation, and quiet and forced-shutdown coordination.",
+        "documentation": "`lib/sidekiq/processor.rb` and its selected supporting material document the contracts needed to understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown.",
+        "traceability": "Start at Processor#process_one and the fetched unit of work, follow dispatch through global and local JobRetry wrappers, the server middleware chain, worker resolution and execution, then follow the completed flag into acknowledgement or preservation; use Manager shutdown to see deadlines and in-flight ownership, and close with processor and manager tests plus the internals contract.",
+        "maintainability": "Changes to the path beginning at `lib/sidekiq/processor.rb` are constrained by these audited guarantees: at-least-once delivery and no-loss shutdown, duplicate-tolerant acknowledgement semantics, retry payload, original arguments, and scheduling compatibility, and thread safety, deadlines, middleware, and error reporting.",
+        "educational_value": "Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown. Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing."
       },
-      "inspection": {"commit": "0ca2c2c4cfbe7f0a709bca0589d2d74c1853ef27", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Gemfile", "railties/lib/rails/application.rb", "activerecord/lib/active_record/relation.rb", "railties/test/application/configuration_test.rb", "MIT-LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/rails/rails/blob/0ca2c2c4cfbe7f0a709bca0589d2d74c1853ef27/MIT-LICENSE"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/sidekiq/processor.rb",
+          "lib/sidekiq/job_retry.rb",
+          "lib/sidekiq/middleware/chain.rb",
+          "lib/sidekiq/manager.rb",
+          "test/processor_test.rb",
+          "test/manager_test.rb",
+          "docs/internals.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "LGPL-3.0-only",
+        "urls": [
+          "https://github.com/sidekiq/sidekiq/blob/1bb4aa06e5aa178a114a5e855f9f3d5c24f6c61b/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "discourse",
-      "repository": "discourse/discourse",
-      "url": "https://github.com/discourse/discourse",
+      "slug": "concurrent-ruby",
+      "path_slug": "one-concurrent-ruby-future-is-scheduled-fulfilled-or-rejected-exactly",
+      "repository": "ruby-concurrency/concurrent-ruby",
+      "url": "https://github.com/ruby-concurrency/concurrent-ruby",
       "primary_language": "Ruby",
-      "language_evidence": "Forum domain models, HTTP APIs, moderation, trust, notifications, search, jobs, plugins, administration, and server-side rendering are principally Ruby across app/, lib/, config/, and bundled plugins.",
-      "description": "A complete community discussion platform with forums, trust and moderation, search, notifications, real-time updates, administration, and plugins.",
-      "real_world_evidence": "The repository is the deployable Discourse product used to operate public and private online communities.",
-      "why_study": "It shows how a mature Rails product encodes a rich social domain while coordinating policy, moderation, trust, plugins, background work, search, notifications, and a large client.",
-      "learn": ["Large Rails domain modeling, authorization and moderation, trust systems, background jobs, search, notifications, real-time events, caching, plugins, migrations, operations, and product evolution."],
-      "prerequisites": ["Advanced Ruby and Rails, SQL and data modeling, JavaScript application architecture, queues, caching, search, security and abuse prevention, operations, and monorepo navigation."],
-      "start_here": {"path": "app/models/post.rb", "reason": "Post sits at the product's center and exposes relationships to topics, users, revisions, moderation, notifications, search, uploads, and lifecycle callbacks."},
-      "sdc": {
+      "language_evidence": "The selected promise graph, executor handoff, atomic state, fallback synchronization, documentation, and direct behavioral specs are first-party Ruby; optional native atomic backends are not required by this path.",
+      "description": "A production concurrency toolkit whose promise framework composes asynchronous tasks, dependency graphs, executors, and single-assignment results.",
+      "real_world_evidence": "The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.",
+      "why_study": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/concurrent-ruby/concurrent/promises.rb`: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
+        "Trace these states and branches from `lib/concurrent-ruby/concurrent/promises.rb` through its selected supporting files: pending, reserved, fulfilled, and rejected resolution, then versus rescue propagation, callback registration racing with resolution, and delayed graph touch and blocking wait paths.",
+        "Identify these architectural responsibilities in the path beginning at `lib/concurrent-ruby/concurrent/promises.rb`: public factories and Future API, immutable result-state objects, blocked promise graph, executor boundary, and atomic and blocking synchronization boundary.",
+        "Study these change constraints for the path beginning at `lib/concurrent-ruby/concurrent/promises.rb`: exactly-once resolution, callback visibility under races, rejection and non-StandardError propagation, executor inheritance, timeout and spurious-wakeup correctness, and multiple Ruby runtime backends."
+      ],
+      "prerequisites": [
+        "Strong working familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests, plus experience tracing state, resources, or asynchronous control flow across many production files.",
+        "A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning."
+      ],
+      "concepts_developed": [
+        "Blocks and mixins as asynchronous APIs.",
+        "Pending, reserved, fulfilled, and rejected resolution.",
+        "Exactly-once resolution."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.",
+        "domain_context": [
+          "A future represents one eventual fulfillment or rejection; an executor runs dependent work, and atomic single assignment prevents two competing resolutions from both winning."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers.",
+        "start_here": {
+          "path": "lib/concurrent-ruby/concurrent/promises.rb",
+          "reason": "Begin with `lib/concurrent-ruby/concurrent/promises.rb` because it exposes the complete public factory, dependency, resolution, callback, and observation path."
+        },
+        "supporting_files": [
+          "lib/concurrent-ruby/concurrent/configuration.rb",
+          "lib/concurrent-ruby/concurrent/synchronization/object.rb",
+          "lib/concurrent-ruby/concurrent/collection/lock_free_stack.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_reference.rb",
+          "lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb",
+          "spec/concurrent/promises_spec.rb",
+          "docs-source/promises-main.md",
+          "docs-source/promises.in.md"
+        ],
+        "trace": "Start at Promises.future and Future#then or #rescue, follow BlockedPromise dependency registration into ThenPromise or RescuePromise executor posting, then follow evaluate_to into the CAS-backed fulfilled or rejected state, callback draining, and wait or value! observation; close with direct promise specs for arguments, executors, callbacks, timeouts, branching, delay, rejection, reservation, duplicate assignment, and spurious wakeups. Mutex-backed atomic fallbacks and blocking waits mean the selected path must not be described as universally lock-free."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 563529, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["**/test/", "**/spec/", "fixtures/", "locales/", "vendor/", "node_modules/", "generated/", "*.json"], "notes": "Count covers meaningful first-party server, client, configuration, and bundled-plugin implementation, excluding tests, fixtures, translations, generated or vendored content, large data files, documentation, and dependency trees."},
-        "difficulty": {"score": 4, "signals": ["rich social-policy domain", "authorization, trust, moderation, and abuse controls", "concurrent jobs, cache, search, and real-time behavior"], "reason": "Correctness depends on interacting product, security, data, and asynchronous invariants throughout the central domain."},
-        "complexity": {"score": 5, "signals": ["full server-client product", "large plugin and integration ecosystem", "web, jobs, database, cache, search, mail, and real-time boundaries"], "reason": "The deployed product spans many processes, stores, protocols, extension points, and operational modes with substantial cross-feature coupling."},
-        "placement": "S5/D4/C5 has two dimensions at 5 and therefore requires SDC 5."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "blocks and mixins as asynchronous APIs",
+            "private state and promise subclasses",
+            "atomic accessors, callbacks, aliases, and executor dispatch"
+          ],
+          "reason": "Advanced Ruby object, block, mixin, callback, and generated atomic-accessor techniques recur, without enough pervasive expert metaprogramming for 5."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "pending, reserved, fulfilled, and rejected resolution",
+            "then versus rescue propagation",
+            "callback registration racing with resolution",
+            "delayed graph touch and blocking wait paths"
+          ],
+          "reason": "Concurrent resolution, dependency graphs, executor timing, callbacks, failure, delay, and blocking observation interact nonlocally."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public factories and Future API",
+            "immutable result-state objects",
+            "blocked promise graph",
+            "executor boundary",
+            "atomic and blocking synchronization boundary"
+          ],
+          "reason": "Several strong concurrency boundaries collaborate across one bounded promise framework."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "exactly-once resolution",
+            "callback visibility under races",
+            "rejection and non-StandardError propagation",
+            "executor inheritance",
+            "timeout and spurious-wakeup correctness",
+            "multiple Ruby runtime backends"
+          ],
+          "reason": "Atomicity, visibility, scheduling, failure, timeout, and cross-runtime guarantees interact so a local change can break distant consumers."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. Behavioral reasoning and constraint burden both score 5, satisfying the Level 5 guardrail. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Core domain flows use explicit services, guardians, policies, transactions, jobs, and events, with comments concentrated around product invariants and compatibility.",
-        "architecture": "Rails models and controllers compose service objects, Guardian authorization, Sidekiq jobs, serializers, search, caching, MessageBus events, an Ember client, and a first-class plugin API.",
-        "naming_and_idiom": "Topic, Post, Guardian, trust_level, flag, reviewable, badge, notification, cooked content, and plugin outlet express the community domain consistently.",
-        "tests": "Extensive server and client suites cover models, services, requests, policies, plugins, migrations, jobs, UI behavior, security, performance, and regressions.",
-        "documentation": "Developer guides, plugin APIs, setup documentation, architecture notes, and the live community provide deep operational and extension context.",
-        "traceability": "Creating a post can be followed from the topic endpoint through authorization and PostCreator, transactions and callbacks, jobs, search and notifications, serialization, client rendering, and specs.",
-        "maintainability": "Domain services, policy objects, plugin boundaries, migrations, feature flags, and broad tests provide structure for continuous product change at large scale.",
-        "educational_value": "It is an expert-level source for studying the full lifecycle of a long-lived community product rather than an isolated framework."
+        "source_quality": "The large promises implementation is dense but deliberately partitioned into public futures, immutable states, blocked promise types, and resolution helpers; direct specs close its core races and lifecycle. CamelCase final ivars are an explicit synchronization convention rather than ordinary Ruby style.",
+        "architecture": "The audited architecture of the path beginning at `lib/concurrent-ruby/concurrent/promises.rb` has these boundaries: public factories and Future API, immutable result-state objects, blocked promise graph, executor boundary, and atomic and blocking synchronization boundary.",
+        "naming_and_idiom": "`lib/concurrent-ruby/concurrent/promises.rb` and its supporting files use these characteristic Ruby mechanisms: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
+        "tests": "Direct specs in `spec/concurrent/promises_spec.rb` cover these states and branches in the selected path: pending, reserved, fulfilled, and rejected resolution, then versus rescue propagation, callback registration racing with resolution, and delayed graph touch and blocking wait paths.",
+        "documentation": "The promise guide documents states, graphs, error paths, executor selection, callbacks, and blocking observation; its broad lock-free wording must be read with the source's mutex-backed atomic fallbacks and explicit Mutex/ConditionVariable waits.",
+        "traceability": "Start at Promises.future and Future#then or #rescue, follow BlockedPromise dependency registration into ThenPromise or RescuePromise executor posting, then follow evaluate_to into the CAS-backed fulfilled or rejected state, callback draining, and wait or value! observation; close with direct promise specs for arguments, executors, callbacks, timeouts, branching, delay, rejection, reservation, duplicate assignment, and spurious wakeups. Mutex-backed atomic fallbacks and blocking waits mean the selected path must not be described as universally lock-free.",
+        "maintainability": "Changes to the path beginning at `lib/concurrent-ruby/concurrent/promises.rb` are constrained by these audited guarantees: exactly-once resolution, callback visibility under races, rejection and non-StandardError propagation, executor inheritance, timeout and spurious-wakeup correctness, and multiple Ruby runtime backends. The 2,184-line core file and runtime backend selection increase review scope.",
+        "educational_value": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries."
       },
-      "inspection": {"commit": "58f18d48d66d5ab9bfbfb35cde4c0ef932aea5b9", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Gemfile", "app/controllers/topics_controller.rb", "app/models/post.rb", "spec/models/post_spec.rb", "LICENSE.txt"]},
-      "license": {"spdx": "GPL-2.0-only", "url": "https://github.com/discourse/discourse/blob/58f18d48d66d5ab9bfbfb35cde4c0ef932aea5b9/LICENSE.txt"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "0b88d5ff75f69b3740c8f0868e76f833cb2fd45d",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/concurrent-ruby/concurrent/promises.rb",
+          "lib/concurrent-ruby/concurrent/configuration.rb",
+          "lib/concurrent-ruby/concurrent/synchronization/object.rb",
+          "lib/concurrent-ruby/concurrent/collection/lock_free_stack.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_reference.rb",
+          "lib/concurrent-ruby/concurrent/atomic_reference/mutex_atomic.rb",
+          "lib/concurrent-ruby/concurrent/atomic/atomic_fixnum.rb",
+          "lib/concurrent-ruby/concurrent/atomic/mutex_atomic_fixnum.rb",
+          "spec/concurrent/promises_spec.rb",
+          "docs-source/promises-main.md",
+          "docs-source/promises.in.md",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/ruby-concurrency/concurrent-ruby/blob/0b88d5ff75f69b3740c8f0868e76f833cb2fd45d/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     },
     {
-      "slug": "chatwoot",
-      "repository": "chatwoot/chatwoot",
-      "url": "https://github.com/chatwoot/chatwoot",
+      "slug": "async",
+      "path_slug": "async-creates-a-fiber-backed-child-task-schedules-and-suspends",
+      "repository": "socketry/async",
+      "url": "https://github.com/socketry/async",
       "primary_language": "Ruby",
-      "language_evidence": "The customer-conversation domain, channel APIs, automation, assignments, inboxes, reporting, jobs, integrations, and core application services are primarily Ruby under app/ and lib/.",
-      "description": "A multichannel customer-support platform combining shared inboxes, live chat, messaging integrations, automation, reporting, and agent collaboration.",
-      "real_world_evidence": "The repository is the deployable open-source Chatwoot product used to run customer-support operations across web and messaging channels.",
-      "why_study": "It provides a second large-product lens: a conversation-centered Rails domain integrated with external channels, event delivery, automation, queues, permissions, reporting, and a Vue client.",
-      "learn": ["SaaS domain modeling, multitenancy, channel adapters, webhook and event processing, assignments, automation, background jobs, notifications, reporting, real-time UI, and integration boundaries."],
-      "prerequisites": ["Advanced Ruby and Rails, SQL and multitenancy, JavaScript and Vue, queues, webhooks, OAuth and external APIs, caching, security, operations, and large-system navigation."],
-      "start_here": {"path": "app/models/conversation.rb", "reason": "Conversation is the domain hub for inboxes, contacts, assignees, teams, messages, state, unread counts, bots, notifications, and lifecycle events."},
-      "sdc": {
+      "language_evidence": "Task lifecycle, Fiber scheduling, promise state, cancellation, timeout behavior, tree ownership, and their direct tests are substantive first-party Ruby; io-event supplies selector internals outside the selected path.",
+      "description": "A composable fiber-based asynchronous I/O framework with structured task trees, cancellation, timeouts, and Ruby's Fiber scheduler integration.",
+      "real_world_evidence": "The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.",
+      "why_study": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
+      "learn": [
+        "Study these transferable Ruby mechanisms in `lib/async/task.rb`: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",
+        "Trace these states and branches from `lib/async/task.rb` through its selected supporting files: initialized, running, completed, failed, and cancelled tasks, hierarchical and deferred cancellation, suspension, resumption, timeout injection, and transient-child lifetime.",
+        "Identify these architectural responsibilities in the path beginning at `lib/async/task.rb`: public Async entry and Reactor, hierarchical Task and Node ownership, Scheduler and selector boundary, Promise result boundary, and cancellation and timeout operations.",
+        "Study these change constraints for the path beginning at `lib/async/task.rb`: task-tree integrity and reparenting, one-shot result propagation, cancellation-cause preservation, interruption-point semantics, timer cleanup and stale-wakeup avoidance, and selector, worker, and user-resource shutdown."
+      ],
+      "prerequisites": [
+        "Strong working familiarity with Ruby classes and modules, blocks, collections, exceptions, enumerators, and unit tests, plus experience tracing state, resources, or asynchronous control flow across many production files.",
+        "Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work."
+      ],
+      "concepts_developed": [
+        "Fiber scheduler integration.",
+        "Initialized, running, completed, failed, and cancelled tasks.",
+        "Task-tree integrity and reparenting."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "reason": "Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
+        "domain_context": [
+          "Ruby's Fiber scheduler cooperatively suspends tasks around blocking operations; child tasks form an ownership tree, and cancellation is delivered at interruption points rather than preemptively killing arbitrary work."
+        ]
+      },
+      "learning_path": {
+        "goal": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout.",
+        "start_here": {
+          "path": "lib/async/task.rb",
+          "reason": "Begin with `lib/async/task.rb` because it exposes the task state machine, Fiber execution, child creation, result propagation, cancellation, and finish lifecycle."
+        },
+        "supporting_files": [
+          "lib/kernel/async.rb",
+          "lib/async/reactor.rb",
+          "lib/async/scheduler.rb",
+          "lib/async/node.rb",
+          "lib/async/promise.rb",
+          "lib/async/cancel.rb",
+          "lib/async/timeout.rb",
+          "test/async/task.rb",
+          "test/async/scheduler.rb",
+          "test/async/reactor.rb",
+          "test/async/timeout.rb",
+          "guides/tasks/readme.md",
+          "guides/scheduler/readme.md"
+        ],
+        "trace": "Start at the public Async entry, follow Reactor and Scheduler binding into Task#run, greedy Fiber scheduling and suspension, then follow completion or failure into Promise resolution and task-tree consumption; branch through hierarchical or deferred cancellation and timeout injection, and close with task, scheduler, reactor, and timeout tests for causes, transient children, stale wakeups, interrupts, cleanup, and shutdown. Cancellation remains cooperative, timeout is delivered at an interruption point, io-event owns selector internals, and user-owned sockets or files still require ensure cleanup."
+      },
+      "learning_level": {
         "level": 5,
-        "size": {"score": 5, "loc": 240881, "tool": "tokei 14.0.0", "measured_at": "2026-08-28", "exclusions": ["enterprise/", "**/test/", "**/spec/", "fixtures/", "locales/", "vendor/", "node_modules/", "generated/", "*.json"], "notes": "Count covers the MIT-licensed first-party core under app and lib, excluding the separately licensed enterprise directory, tests, fixtures, translations, generated or vendored content, large data files, documentation, and dependency trees."},
-        "difficulty": {"score": 4, "signals": ["multichannel state and delivery semantics", "multitenant authorization and data invariants", "asynchronous integrations and automation"], "reason": "Central flows must remain correct across accounts, channel capabilities, callbacks, external providers, jobs, bots, and human-agent state."},
-        "complexity": {"score": 5, "signals": ["full Rails and Vue product", "many channel and provider integrations", "database, queues, cache, WebSockets, storage, mail, and webhook boundaries"], "reason": "The product spans many runtime components and third-party systems while coordinating shared conversation state across agents and customers."},
-        "placement": "S5/D4/C5 has two dimensions at 5 and therefore requires SDC 5."
+        "language_technique": {
+          "score": 4,
+          "signals": [
+            "Fiber scheduler integration",
+            "exception-based cooperative cancellation",
+            "block-scoped task construction",
+            "Promise and task-tree abstractions"
+          ],
+          "reason": "Advanced Fiber, scheduler, exception, block, and ensure mechanics recur, without enough distinct expert metaprogramming or reflection for 5."
+        },
+        "behavioral_reasoning": {
+          "score": 5,
+          "signals": [
+            "initialized, running, completed, failed, and cancelled tasks",
+            "hierarchical and deferred cancellation",
+            "suspension, resumption, and timeout injection",
+            "transient-child lifetime"
+          ],
+          "reason": "Scheduling, task and promise state, suspension, cancellation, timeout, reparenting, interruption, and teardown interact nonlocally."
+        },
+        "design_span": {
+          "score": 4,
+          "signals": [
+            "public Async entry and Reactor",
+            "hierarchical Task and Node ownership",
+            "Scheduler and selector boundary",
+            "Promise result boundary",
+            "cancellation and timeout operations"
+          ],
+          "reason": "Multiple strong subsystem boundaries collaborate within one bounded cooperative-concurrency framework."
+        },
+        "constraint_burden": {
+          "score": 5,
+          "signals": [
+            "task-tree integrity and reparenting",
+            "one-shot result propagation",
+            "cancellation-cause preservation",
+            "interruption-point semantics",
+            "timer cleanup and stale-wakeup avoidance",
+            "selector, worker, and user-resource shutdown"
+          ],
+          "reason": "Lifecycle, scheduling, interruption, ownership, cleanup, and resource guarantees interact so local changes can fail across the task tree."
+        },
+        "placement": "The four scores 4/5/4/5 sum to 18; their arithmetic mean is 4.50 and rounds half-up to Level 5. Behavioral reasoning and constraint burden both score 5, satisfying the Level 5 guardrail. The published result is Level 5."
       },
       "quality": {
-        "source_quality": "Domain state, callbacks, services, authorization, events, and provider boundaries are named explicitly, with high-traffic optimizations documented near their invariants.",
-        "architecture": "Account-scoped Rails models and APIs compose service objects, jobs, events, channel adapters, integrations, Action Cable, storage, and a modular Vue application.",
-        "naming_and_idiom": "Conversation, Inbox, ContactInbox, Message, Assignee, AgentBot, Campaign, SLA, channel, and webhook form a consistent support-domain model.",
-        "tests": "Server and client suites cover models, requests, services, jobs, policies, channels, integrations, automation, reporting, UI state, and regressions.",
-        "documentation": "Deployment, developer, API, integration, self-hosting, and contributor documentation accompany inline descriptions of domain and operational behavior.",
-        "traceability": "An incoming channel message can be followed through its adapter, contact and conversation resolution, message persistence, events and jobs, notifications, API serialization, client state, and specs.",
-        "maintainability": "Account scoping, service boundaries, channel abstractions, event dispatch, feature flags, background jobs, and broad tests contain a fast-growing integration surface.",
-        "educational_value": "It is an expert study in keeping a large integration-heavy product centered on a legible domain model."
+        "source_quality": "Task, Node, Promise, Scheduler, cancellation, and timeout responsibilities make lifecycle invariants explicit, and direct tests cover hard interruption and teardown cases. Two stale Task annotations describe a finished-to-cancelled transition and `:complete` status that implementation and tests correctly treat as a no-op and `:completed`; those annotations are excluded from the learning trace.",
+        "architecture": "The audited architecture of the path beginning at `lib/async/task.rb` has these boundaries: public Async entry and Reactor, hierarchical Task and Node ownership, Scheduler and selector boundary, Promise result boundary, and cancellation and timeout operations.",
+        "naming_and_idiom": "`lib/async/task.rb` and its supporting files use these characteristic Ruby mechanisms: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",
+        "tests": "Direct tests in `test/async/task.rb`, `test/async/scheduler.rb`, `test/async/reactor.rb`, and `test/async/timeout.rb` cover these states and branches in the selected path: initialized, running, completed, failed, and cancelled tasks, hierarchical and deferred cancellation, suspension, resumption, timeout injection, and transient-child lifetime.",
+        "documentation": "Task and scheduler guides explain the public lifecycle and cooperative model; the selected trace follows source and tests rather than the two stale Task status annotations, and cross-thread interruption retains a documented missed-wakeup window before scheduler sleep.",
+        "traceability": "Start at the public Async entry, follow Reactor and Scheduler binding into Task#run, greedy Fiber scheduling and suspension, then follow completion or failure into Promise resolution and task-tree consumption; branch through hierarchical or deferred cancellation and timeout injection, and close with task, scheduler, reactor, and timeout tests for causes, transient children, stale wakeups, interrupts, cleanup, and shutdown. Cancellation remains cooperative, timeout is delivered at an interruption point, io-event owns selector internals, and user-owned sockets or files still require ensure cleanup.",
+        "maintainability": "Changes to the path beginning at `lib/async/task.rb` are constrained by these audited guarantees: task-tree integrity and reparenting, one-shot result propagation, cancellation-cause preservation, interruption-point semantics, timer cleanup and stale-wakeup avoidance, and selector, worker, and user-resource shutdown.",
+        "educational_value": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing."
       },
-      "inspection": {"commit": "7f029b65eb787a1b68167338a63151beedd33a25", "inspected_at": "2026-08-28", "reviewers": ["Codex"], "files": ["README.md", "Gemfile", "app/controllers/api/v1/accounts/conversations_controller.rb", "app/models/conversation.rb", "spec/models/conversation_spec.rb", "LICENSE"]},
-      "license": {"spdx": "MIT", "url": "https://github.com/chatwoot/chatwoot/blob/7f029b65eb787a1b68167338a63151beedd33a25/LICENSE"},
-      "github": {"primary_language": "Ruby", "archived": false, "metadata_checked_at": "2026-08-28"}
+      "inspection": {
+        "commit": "e8ecf5804802143f58983dc3f8c519c287d9dd9b",
+        "inspected_at": "2026-08-29",
+        "reviewers": [
+          "Codex primary pass",
+          "independent Codex verification pass"
+        ],
+        "files": [
+          "lib/kernel/async.rb",
+          "lib/async/task.rb",
+          "lib/async/node.rb",
+          "lib/async/promise.rb",
+          "lib/async/cancel.rb",
+          "lib/async/timeout.rb",
+          "lib/async/scheduler.rb",
+          "lib/async/reactor.rb",
+          "test/async/task.rb",
+          "test/async/scheduler.rb",
+          "test/async/reactor.rb",
+          "test/async/timeout.rb",
+          "guides/tasks/readme.md",
+          "guides/scheduler/readme.md",
+          "license.md"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/socketry/async/blob/e8ecf5804802143f58983dc3f8c519c287d9dd9b/license.md"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-29"
+      }
     }
   ]
 }

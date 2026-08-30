@@ -1,85 +1,77 @@
 # Scala
 
-10 qualified repositories. Scores assume the learner described in [the SDC rubric](../../docs/sdc.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
-## SDC 1
+## Level 1
 
-### [softwaremill/retry](https://github.com/softwaremill/retry)
+No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-**S1 / D2 / C1 → SDC 1**
-
-A compact library of composable retry policies for Scala Futures, including immediate, paused, exponential-backoff, jittered, conditional, and fail-fast strategies.
-
-**Real-world evidence:** SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.
-
-**Language evidence:** Retry policies, success predicates, jitter algorithms, asynchronous scheduling, and the complete test suite are implemented in Scala under retry/src.
-
-**Why study it:** Four production files show how a tiny public abstraction can capture several useful retry strategies while keeping asynchronous repetition non-blocking and testable.
-
-**What you can learn:**
-
-- Scala Futures, implicit type classes, partial functions, recursive asynchronous control flow, capped exponential backoff, jitter algorithms, policy decorators, and focused timing and failure tests.
-
-**Prerequisites:**
-
-- Scala traits and objects, generics, implicits, Futures, execution contexts, partial functions, finite durations, and basic asynchronous tests.
-
-**Start here:** [`retry/src/main/scala/Policy.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Policy.scala) — Policy.scala contains the common contract and every retry strategy, so a learner can trace one failed Future through success classification, delay scheduling, recursion, and the matching PolicySpec case.
-
-**Why this level:**
-
-- **S1:** 325 meaningful implementation LOC measured with tokei 14.0.0. Count covers all four production Scala files under retry/src/main and excludes tests, documentation, and build metadata.
-- **D2:** Asynchrony and backoff arithmetic introduce modest technical concerns, but each policy is short, explicit, and built from familiar Future operations.
-- **C1:** The project has no persistence, service topology, or plugin system; an important behavior is local to Policy.scala and one timer boundary.
-- **Placement:** S1/D2/C1 averages to 1.33, making retry an SDC 1 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Policies share small internal helpers, failure paths are explicit, and jitter arithmetic is isolated from Future orchestration.
-- **Architecture:** A Policy accepts deferred Future work, Success classifies results, Timer schedules pauses, and Jitter supplies a replaceable delay calculation.
-- **Naming and idiom:** Directly, Pause, Backoff, JitterBackoff, When, FailFast, countdown, and retry state the behavior rather than the implementation trick.
-- **Tests:** Focused ScalaTest suites cover retry counts, by-name execution, failed Futures, success predicates, pauses, backoff, jitter bounds, overflow, conditional policies, and fail-fast behavior on JVM and Scala.js.
-- **Documentation:** The README explains installation, the Success type class, timers, every policy, examples, and the intended client-configuration pattern.
-- **Traceability:** A Backoff call can be followed through countdown and Delay into a repeated Future and then into exact attempt-count and elapsed-time assertions.
-- **Maintainability:** The small interface, shared helpers, bounded responsibility, cross-platform tests, and current published artifact keep changes reviewable.
-- **Educational value:** It is a concise introduction to designing asynchronous policy objects without hiding their control flow behind a framework.
-
-**Inspection record:** commit `f5d887b23adb8c34b2dc891a4d25a6263e300c48`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `retry/src/main/scala/Policy.scala`, `retry/src/main/scala/Jitter.scala`, `retry/src/main/scala/Success.scala`, `retry/src/test/scala/PolicySpec.scala`, `retry/src/test/scala/JitterSpec.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: retry/src/test/, README.md, build files.
-
-**License:** [MIT](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/LICENSE)
+## Level 2
 
 ### [typelevel/case-insensitive](https://github.com/typelevel/case-insensitive)
 
-**S1 / D2 / C1 → SDC 1**
+**Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
 
 Typelevel's small locale-independent case-insensitive string value with lawful equality, hashing, ordering, Cats instances, interpolation, and extraction.
 
-**Real-world evidence:** Typelevel publishes the cross-version case-insensitive artifact used as a dedicated value type in Scala libraries and documents its Maven coordinates and microsite.
-
-**Language evidence:** The CIString value type, interpolator compatibility layers, Cats instances, test generators, and property suites are Scala across the core, testing, and cross-platform test modules.
-
 **Why study it:** The repository turns one deceptively subtle value-semantic requirement into a tiny implementation whose equality, hash, ordering, interpolation, and Unicode edge cases are all visible.
+
+**Prerequisites:**
+
+- Scala classes and companion objects, ordinary `equals` and `hashCode` overrides, string operations, implicits or givens, and reading property tests.
+- Basic awareness that Unicode case conversion has edge cases; the path develops the exact locale-independent contract.
+
+**Concepts this path develops:**
+
+- One lawful case-insensitive contract shared by equality, hashing, ordering, and containment.
+- Cats type-class instances and interpolation that preserve the core value semantics.
+- Locale-independent case folding verified against Unicode edge cases and cross-version behavior.
 
 **What you can learn:**
 
 - Value-object invariants, equals and hashCode contracts, locale-independent case folding, cached hashes, ordering, Cats type-class instances, string interpolators, cross-version compatibility, property testing, and Unicode edge cases.
 
-**Prerequisites:**
+**Learning path:**
 
-- Scala classes and companion objects, equality and hashing, string operations, implicits or givens, algebraic type classes, property tests, and basic Unicode awareness.
-
-**Start here:** [`core/src/main/scala/org/typelevel/ci/CIString.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala/org/typelevel/ci/CIString.scala) — CIString.scala states the equality contract, implements hashing and ordering, and supplies the algebraic instances exercised directly by CIStringSuite and TurkeySuite.
+- **Goal:** Understand how a small Scala value type preserves lawful case-insensitive equality, hashing, ordering, interpolation, and Unicode behavior.
+- **Start here:** [`core/src/main/scala/org/typelevel/ci/CIString.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala/org/typelevel/ci/CIString.scala) — CIString.scala states the equality contract, implements hashing and ordering, and supplies the algebraic instances exercised directly by CIStringSuite and TurkeySuite.
+- **Then read:**
+  - [`core/src/main/scala/org/typelevel/ci/package.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala/org/typelevel/ci/package.scala)
+  - [`core/src/main/scala-3/org/typelevel/ci/compat.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/core/src/main/scala-3/org/typelevel/ci/compat.scala)
+  - [`tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala)
+  - [`tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala)
+  - [`README.md`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/README.md)
+  - [`LICENSE`](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/LICENSE)
+- **Trace:** Start with CIString equality, cached normalized hashing, ordering, containment, and Cats instances; follow the package and Scala 3 compatibility layers into interpolation and extraction; then close equality/hash laws, serialization, containment, Turkish-I, and sharp-s behavior in the direct suites.
 
 **Why this level:**
 
-- **S1:** 209 meaningful implementation LOC measured with tokei 14.0.0. Count covers the core production value and Scala-version compatibility files and excludes the test-support artifact, test suites, benchmark, documentation, and build metadata.
-- **D2:** Correct value semantics require care, but the implementation relies on standard String and Character operations and remains concentrated in one principal file.
-- **C1:** The core has no I/O or runtime topology and its behavior can be understood from one class, its companion, and the compatibility shim.
-- **Placement:** S1/D2/C1 averages to 1.33, making case-insensitive an SDC 1 project.
+- **Language technique 3:** Type-class instances and compatibility abstractions materially shape the public value semantics without advanced metaprogramming.
+- **Behavioral reasoning 2:** The behavior is subtle but remains a synchronous localized value transformation with no nonlocal lifecycle.
+- **Design span 1:** One abstraction contains the meaningful production behavior.
+- **Constraint burden 3:** Several semantic, algebraic, Unicode, serialization, and compatibility guarantees constrain the small implementation.
+- **Placement:** The four scores 3/2/1/3 sum to 9; their arithmetic mean is 2.25 and rounds half-up to Level 2. The published result is Level 2.
 
-**Quality-gate evidence:**
+**License:** Apache-2.0 ([evidence 1](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Real-world evidence:** Typelevel publishes the cross-version case-insensitive artifact used as a dedicated value type in Scala libraries and documents its Maven coordinates and microsite.
+
+**Language evidence:** The CIString value type, interpolator compatibility layers, Cats instances, test generators, and property suites are Scala across the core, testing, and cross-platform test modules.
+
+**Coding relevance:**
+
+The short text vocabulary is subordinate to reusable programming lessons in value-object invariants, equality and hash contracts, cached computation, ordering, type-class instances, compatibility shims, property testing, and Unicode edge cases.
+
+Required domain context:
+
+- A CIString compares, hashes, orders, interpolates, and extracts strings using locale-independent case-insensitive semantics.
+
+**Eight-part quality gate:**
 
 - **Source quality:** The implementation documents its surprising substitutability caveat, keeps equality and hashing aligned, and uses direct loops where allocation-free behavior matters.
 - **Architecture:** CIString owns value semantics, its companion supplies Cats instances, and version-specific compatibility files implement interpolation without contaminating the core.
@@ -90,86 +82,74 @@ Typelevel's small locale-independent case-insensitive string value with lawful e
 - **Maintainability:** The public surface is narrow, platform differences are isolated, algebraic laws guard refactors, and the project remains actively maintained.
 - **Educational value:** It demonstrates why a seemingly tiny value type deserves explicit contracts and law-based tests.
 
-**Inspection record:** commit `2b28be5341a0f1c6bc5c00a8486622f26018ae9c`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `core/src/main/scala/org/typelevel/ci/CIString.scala`, `core/src/main/scala/org/typelevel/ci/package.scala`, `core/src/main/scala-3/org/typelevel/ci/compat.scala`, `tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala`, `tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: tests/, testing/, bench/, README.md, build files.
+**Inspection record:** commit `2b28be5341a0f1c6bc5c00a8486622f26018ae9c`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `core/src/main/scala/org/typelevel/ci/CIString.scala`, `core/src/main/scala/org/typelevel/ci/package.scala`, `core/src/main/scala-3/org/typelevel/ci/compat.scala`, `tests/shared/src/test/scala/org/typelevel/ci/CIStringSuite.scala`, `tests/shared/src/test/scala/org/typelevel/ci/TurkeySuite.scala`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
 
-**License:** [Apache-2.0](https://github.com/typelevel/case-insensitive/blob/2b28be5341a0f1c6bc5c00a8486622f26018ae9c/LICENSE)
+</details>
 
-## SDC 2
-
-### [com-lihaoyi/requests-scala](https://github.com/com-lihaoyi/requests-scala)
-
-**S1 / D3 / C2 → SDC 2**
-
-A compact synchronous Scala HTTP client with sessions, streaming, redirects, cookies, authentication, compression, TLS, proxies, and multipart uploads.
-
-**Real-world evidence:** Li Haoyi publishes requests-scala as a versioned library and documents it as the straightforward HTTP client used from Scala applications.
-
-**Language evidence:** The request API, HTTP transport orchestration, sessions, cookies, request and response models, encoders, decompression, errors, and integration tests are Scala.
-
-**Why study it:** Fewer than a thousand production lines expose the concrete work beneath a friendly HTTP call: URI construction, headers, bodies, Java HttpClient configuration, redirects, cookies, streams, decompression, and resource cleanup.
-
-**What you can learn:**
-
-- Facade API design, Java HttpClient integration, request models, URL encoding, redirects, cookie persistence, TLS and proxies, streaming bodies, compression, multipart data, resource ownership, and local integration tests.
-
-**Prerequisites:**
-
-- Scala classes and collections, Java interoperability, HTTP request and response semantics, streams, cookies, TLS basics, compression, and resource cleanup.
-
-**Start here:** [`requests/src/requests/Requester.scala`](https://github.com/com-lihaoyi/requests-scala/blob/e3619c19ef551067d2979ced99b434d45bb60986/requests/src/requests/Requester.scala) — Requester.apply delegates to stream, where URL, headers, cookies, transport configuration, redirects, body handling, response construction, and cleanup form one visible end-to-end request path.
-
-**Why this level:**
-
-- **S1:** 902 meaningful implementation LOC measured with tokei 14.0.0. Count covers all seven production Scala files under requests/src and excludes integration tests, documentation, fixtures, and build metadata.
-- **D3:** The code is short, but correct request behavior crosses several protocol and resource-management concerns, including a platform-specific cleanup fallback.
-- **C2:** Several small pieces cooperate around one HTTP client, with no server, persistence layer, plugin system, or multi-process topology.
-- **Placement:** S1/D3/C2 averages to 2.00, making requests-scala an SDC 2 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** The public convenience call delegates to one streaming implementation, protocol helpers stay separated, and resource cleanup is explicit even where the JDK API varies.
-- **Architecture:** Package-level verbs create Requesters, Session supplies reusable defaults and transport state, request blobs encode uploads, and Response owns aggregated output.
-- **Naming and idiom:** Requester.stream, BaseSession, RequestBlob, StreamHeaders, persistCookies, autoDecompress, and maxRedirects make behavior discoverable.
-- **Tests:** A local httpbin-based suite exercises methods, parameters, multipart data, cookies, redirects, streaming, timeouts, certificate handling, compression, headers, failures, and resource leaks.
-- **Documentation:** The generated project documentation and readme orient users to installation and a Python-Requests-like API, while source comments document every request option and streaming contract.
-- **Traceability:** A GET call can be followed through the package facade, Requester, shared HttpClient selection, request construction, response stream and redirects into a local integration assertion.
-- **Maintainability:** One transport path serves buffered and streaming calls, session defaults are overrideable in one place, and regression tests cover platform and lifecycle failures.
-- **Educational value:** It offers a rare small but realistic tour of application-level HTTP client mechanics.
-
-**Inspection record:** commit `e3619c19ef551067d2979ced99b434d45bb60986`, reviewed 2026-08-28 by Codex. Files sampled: `readme.md`, `requests/src/requests/package.scala`, `requests/src/requests/Requester.scala`, `requests/src/requests/Session.scala`, `requests/src/requests/Model.scala`, `requests/test/src/requests/RequestTests.scala`, `requests/test/src/requests/ResourceLeakTests.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: requests/test/, readme.md, documentation and build files.
-
-**License:** [MIT](https://github.com/com-lihaoyi/requests-scala/blob/e3619c19ef551067d2979ced99b434d45bb60986/LICENSE)
+## Level 3
 
 ### [scopt/scopt](https://github.com/scopt/scopt)
 
-**S1 / D2 / C2 → SDC 2**
+**Language 3 / Behavior 2 / Design 3 / Constraints 3 → Level 3**
 
 A small cross-platform command-line option parser for Scala with functional and object-oriented declaration styles and interceptable effects.
 
-**Real-world evidence:** The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.
-
-**Language evidence:** The option definitions, functional and object-oriented DSLs, parser runner, validation, rendering, effects, type readers, and platform adapters are Scala.
-
 **Why study it:** Its source connects a typed declaration DSL to token matching, occurrence constraints, configuration updates, validation, usage rendering, and effect handling without a large framework.
-
-**What you can learn:**
-
-- Typed option readers, builder DSLs, immutable parser descriptions, token classification, commands and positionals, occurrence constraints, validation, effect separation, usage rendering, and cross-platform parsing.
 
 **Prerequisites:**
 
 - Scala generics, type classes, case classes, immutable collections, higher-order functions, command-line conventions, and basic cross-platform source layouts.
 
-**Start here:** [`shared/src/main/scala/scopt/OParser.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OParser.scala) — OParser builds the declarative option list and hands it to ORunner, providing the shortest path from user-facing DSL calls to token execution and parser effects.
+**Concepts this path develops:**
+
+- Generic typed Read instances.
+- Synchronous token-consumption loop.
+- Short, long, grouped, attached, command, and positional token forms.
+
+**What you can learn:**
+
+- Typed option readers, builder DSLs, immutable parser descriptions, token classification, commands and positionals, occurrence constraints, validation, effect separation, usage rendering, and cross-platform parsing.
+
+**Learning path:**
+
+- **Goal:** Understand how scopt turns a typed declarative option DSL into token matching, configuration updates, validation, and separately interpreted effects.
+- **Start here:** [`shared/src/main/scala/scopt/OParser.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OParser.scala) — OParser builds the declarative option list and hands it to ORunner, providing the shortest path from user-facing DSL calls to token execution and parser effects.
+- **Then read:**
+  - [`shared/src/main/scala/scopt/OptionDef.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/OptionDef.scala)
+  - [`shared/src/main/scala/scopt/ORunner.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/ORunner.scala)
+  - [`shared/src/main/scala/scopt/Read.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/main/scala/scopt/Read.scala)
+  - [`shared/src/test/scala/scopttest/ImmutableParserSpec.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/test/scala/scopttest/ImmutableParserSpec.scala)
+  - [`shared/src/test/scala/scopttest/MonadicParserSpec.scala`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/shared/src/test/scala/scopttest/MonadicParserSpec.scala)
+  - [`README.md`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/README.md)
+  - [`LICENSE.md`](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/LICENSE.md)
+- **Trace:** Start with OParser's typed builder operations, follow the resulting OptionDefs into ORunner's token loop, pending options and arguments, commands, occurrence checks, configuration actions, validation, and emitted effects, then close both supported parser APIs in the direct suites.
 
 **Why this level:**
 
-- **S1:** 1,183 meaningful implementation LOC measured with tokei 14.0.0. Count covers shared production parsing plus the JVM, JS, and Native read adapters and excludes every test source set, build logic, documentation, and build metadata.
-- **D2:** Generic readers and parser state require attention, but the grammar and transitions are conventional and represented with explicit data and branches.
-- **C2:** Several clear layers cooperate in one small library, while platform-specific code remains limited to value readers.
-- **Placement:** S1/D2/C2 averages to 1.67 and rounds upward, making scopt an SDC 2 project.
+- **Language technique 3:** Generics, typed readers, higher-order updates, and algebraic descriptions recur without expert language machinery.
+- **Behavioral reasoning 2:** The parser has meaningful state and branching, but the selected lifecycle remains synchronous and locally inspectable.
+- **Design span 3:** Several meaningful declaration, representation, execution, conversion, and verification boundaries cooperate.
+- **Constraint burden 3:** Several syntax, validation, API, rendering, and portability guarantees constrain parser changes.
+- **Placement:** The four scores 3/2/3/3 sum to 11; their arithmetic mean is 2.75 and rounds half-up to Level 3. The published result is Level 3.
 
-**Quality-gate evidence:**
+**License:** MIT ([evidence 1](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Real-world evidence:** The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.
+
+**Language evidence:** The option definitions, functional and object-oriented DSLs, parser runner, validation, rendering, effects, type readers, and platform adapters are Scala.
+
+**Coding relevance:**
+
+The concise command-line vocabulary is subordinate to transferable lessons in generic readers, declarative builders, immutable descriptions, token-state execution, recursive commands, validation, and effect separation.
+
+Required domain context:
+
+- A command-line parser maps option, positional, and command tokens into a typed application configuration and explicit effects.
+
+**Eight-part quality gate:**
 
 - **Source quality:** Parser descriptions are immutable, effects are represented explicitly, and token, validation, and rendering responsibilities remain separated.
 - **Architecture:** OParser builds OptionDefs, ORunner consumes arguments into configurations and OEffects, and a separate interpreter performs display or termination effects.
@@ -180,278 +160,402 @@ A small cross-platform command-line option parser for Scala with functional and 
 - **Maintainability:** The dual APIs converge on one representation, platform dependencies stay at the edge, and behavior-focused suites cover the supported matrix.
 - **Educational value:** It is a compact example of separating a declarative interface, a pure-ish execution result, and side-effect interpretation.
 
-**Inspection record:** commit `f1906911a989320a87c0670fb2e654d48731747d`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `shared/src/main/scala/scopt/OParser.scala`, `shared/src/main/scala/scopt/ORunner.scala`, `shared/src/main/scala/scopt/OptionDef.scala`, `shared/src/main/scala/scopt/Read.scala`, `shared/src/test/scala/scopttest/ImmutableParserSpec.scala`, `shared/src/test/scala/scopttest/MonadicParserSpec.scala`, `LICENSE.md`. GitHub Linguist label: Scala. LOC exclusions: shared/src/test/, jvm/src/test/, js/src/test/, native/src/test/, project/, README.md, build files.
+**Inspection record:** commit `f1906911a989320a87c0670fb2e654d48731747d`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `shared/src/main/scala/scopt/OParser.scala`, `shared/src/main/scala/scopt/OptionDef.scala`, `shared/src/main/scala/scopt/ORunner.scala`, `shared/src/main/scala/scopt/Read.scala`, `shared/src/test/scala/scopttest/ImmutableParserSpec.scala`, `shared/src/test/scala/scopttest/MonadicParserSpec.scala`, `README.md`, `LICENSE.md`. GitHub Linguist label: Scala.
 
-**License:** [MIT](https://github.com/scopt/scopt/blob/f1906911a989320a87c0670fb2e654d48731747d/LICENSE.md)
+</details>
 
-## SDC 3
+### [softwaremill/retry](https://github.com/softwaremill/retry)
+
+**Language 3 / Behavior 3 / Design 2 / Constraints 3 → Level 3**
+
+A compact library of composable retry policies for Scala Futures, including immediate, paused, exponential-backoff, jittered, conditional, and fail-fast strategies.
+
+**Why study it:** softwaremill/retry is a small, inspectable example of composing nonblocking retry policies around deferred Future work without obscuring delays or failures.
+
+**Prerequisites:**
+
+- Readers should know Scala Futures, by-name parameters, pattern matching, higher-order functions, type-class-style predicates, and basic retry and backoff terminology.
+
+**Concepts this path develops:**
+
+- Generic Future policies and deferred by-name work.
+- Asynchronous recursive retries.
+- Work must remain deferred and nonblocking.
+
+**What you can learn:**
+
+- Trace direct, paused, backoff, conditional, fail-fast, and jittered policies through deferred Future evaluation, result classification, countdown recursion, and external scheduling.
+
+**Learning path:**
+
+- **Goal:** Understand how a compact Scala library composes nonblocking retry policies around deferred Future work while preserving result, delay, and failure contracts.
+- **Start here:** [`retry/src/main/scala/Policy.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Policy.scala) — The reviewed trace begins in Policy.scala because it defines policy composition and the recursive decision point for every retry attempt.
+- **Then read:**
+  - [`retry/src/main/scala/Defaults.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Defaults.scala)
+  - [`retry/src/main/scala/Jitter.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Jitter.scala)
+  - [`retry/src/main/scala/Success.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/main/scala/Success.scala)
+  - [`retry/src/test/scala/PolicySpec.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/test/scala/PolicySpec.scala)
+  - [`retry/src/test/scala/JitterSpec.scala`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/retry/src/test/scala/JitterSpec.scala)
+  - [`README.md`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/README.md)
+  - [`LICENSE`](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/LICENSE)
+- **Trace:** Start with Policy's directly, pause, backoff, conditional, and fail-fast implementations; follow deferred Future evaluation through Success classification, countdown recursion, Defaults and odelay scheduling, then close capped delay, jitter, attempt-count, timing, and failure behavior in the two focused suites. Timer is supplied by the external odelay dependency, so no nonexistent repository-local Timer.scala is listed.
+
+**Why this level:**
+
+- **Language technique 3:** Generics, Futures, type-class dispatch, and higher-order composition materially shape the path without recurring expert metaprogramming or type machinery.
+- **Behavioral reasoning 3:** The learner must follow asynchronous repetition and policy state across Future completion while the lifecycle remains bounded to one retry operation.
+- **Design span 2:** A few cohesive modules and one external timer boundary contain the complete behavior.
+- **Constraint burden 3:** Several asynchronous, arithmetic, timing, and API guarantees constrain ordinary policy changes.
+- **Placement:** The four scores 3/3/2/3 sum to 11; their arithmetic mean is 2.75 and rounds half-up to Level 3. The published result is Level 3.
+
+**License:** MIT ([evidence 1](https://github.com/softwaremill/retry/blob/f5d887b23adb8c34b2dc891a4d25a6263e300c48/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Real-world evidence:** SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.
+
+**Language evidence:** Retry policies, success predicates, jitter algorithms, asynchronous scheduling, and the complete test suite are implemented in Scala under retry/src.
+
+**Coding relevance:**
+
+The small retry vocabulary is subordinate to transferable lessons in deferred computation, asynchronous recursion, policy composition, type-class predicates, delay scheduling, bounded arithmetic, and failure propagation.
+
+Required domain context:
+
+- A retry policy classifies a Future result, chooses whether and when to try deferred work again, and optionally modifies the delay with backoff or jitter.
+
+**Eight-part quality gate:**
+
+- **Source quality:** Policy.scala, Defaults.scala, Success.scala, and Jitter.scala have narrow responsibilities and keep retry decisions and delay arithmetic visible.
+- **Architecture:** Policies classify a completed Future result, choose a delay, and defer another attempt through the external odelay timer boundary.
+- **Naming and idiom:** Policy, Success, Defaults, Jitter, pause, backoff, and failFast state the behavior directly and use Scala Futures and composable functions idiomatically.
+- **Tests:** PolicySpec.scala and JitterSpec.scala cover attempt counts, by-name reevaluation, failures, timing, conditions, caps, bounds, and overflow.
+- **Documentation:** README.md documents each policy and makes the external odelay scheduling boundary explicit.
+- **Traceability:** A deferred Future passed to a Policy can be followed through Success classification and delay selection into the next attempt and its focused specifications.
+- **Maintainability:** The implementation is compact, policy concerns are separated, and direct timing and failure tests constrain behavioral changes.
+- **Educational value:** The path demonstrates asynchronous recursion and policy composition without requiring a large effect system or framework.
+
+**Inspection record:** commit `f5d887b23adb8c34b2dc891a4d25a6263e300c48`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `retry/src/main/scala/Policy.scala`, `retry/src/main/scala/Defaults.scala`, `retry/src/main/scala/Jitter.scala`, `retry/src/main/scala/Success.scala`, `retry/src/test/scala/PolicySpec.scala`, `retry/src/test/scala/JitterSpec.scala`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
+
+</details>
+
+## Level 4
 
 ### [circe/circe](https://github.com/circe/circe)
 
-**S2 / D4 / C3 → SDC 3**
+**Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
 
 A modular functional JSON library for Scala with immutable values, typed codecs, cursor navigation, generic derivation, parsing integrations, literals, and JSON Pointer.
+
+**Why study it:** Circe's core decoder path shows how typed composition, immutable cursors, navigation history, and two error strategies fit together in a production functional API.
+
+**Prerequisites:**
+
+- Readers should know Scala type classes, higher-kinded types, algebraic data types, applicative validation, recursion, and basic JSON values and fields.
+
+**Concepts this path develops:**
+
+- Higher-kinded Decoder type class and Cats instances.
+- Recursive JSON and collection traversal.
+- Fail-fast and accumulating results must remain semantically aligned.
+
+**What you can learn:**
+
+- Follow typed Decoder instances through HCursor success, ACursor failure and history, recursive JSON traversal, fail-fast decoding, and applicative error accumulation.
+
+**Learning path:**
+
+- **Goal:** Understand how Circe composes typed decoders over immutable JSON cursors while preserving navigation history and both fail-fast and accumulating error semantics.
+- **Start here:** [`modules/core/shared/src/main/scala/io/circe/Decoder.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/Decoder.scala) — The reviewed trace begins in Decoder.scala because it defines the typed entry points, instances, and fail-fast and accumulating application modes.
+- **Then read:**
+  - [`modules/core/shared/src/main/scala/io/circe/ACursor.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/ACursor.scala)
+  - [`modules/core/shared/src/main/scala/io/circe/HCursor.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/HCursor.scala)
+  - [`modules/core/shared/src/main/scala/io/circe/Json.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/Json.scala)
+  - [`modules/tests/shared/src/test/scala/io/circe/DecoderSuite.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/tests/shared/src/test/scala/io/circe/DecoderSuite.scala)
+  - [`README.md`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/README.md)
+  - [`LICENSE`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/LICENSE)
+- **Trace:** Start with Decoder's typed entry points and instances, follow fail-fast or accumulating application through HCursor success, ACursor failure and history, recursive JSON and collection traversal, and precise DecodingFailure construction, then close those contracts in DecoderSuite. Jawn parsing and generic macro derivation are separate optional modules and are excluded from this bounded core-decoder path.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced functional and higher-kinded abstractions recur across the entire selected decoder path without expert macro machinery.
+- **Behavioral reasoning 3:** Nontrivial traversal and error state cross decoder composition, but the path remains synchronous and has no advanced resource or concurrency lifecycle.
+- **Design span 3:** Several meaningful model, navigation, decoding, failure, and verification boundaries cooperate in one core module.
+- **Constraint burden 4:** Error-mode parity, diagnostics, recursion, laws, and compatibility guarantees recur and interact throughout decoder implementation and tests.
+- **Placement:** The four scores 4/3/3/4 sum to 14; their arithmetic mean is 3.50 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The circe organization publishes cross-platform modules and maintains versioned documentation for production JSON encoding and decoding across the Scala ecosystem.
 
 **Language evidence:** The immutable JSON model, cursors, codecs, numeric representation, parser integrations, printing, generic derivation, literal macros, pointers, and platform modules are Scala.
 
-**Why study it:** Circe separates JSON representation, navigation, error accumulation, parsing, printing, codecs, and derivation, making the tradeoffs of a strongly typed functional API inspectable across clear modules.
+**Coding relevance:**
 
-**What you can learn:**
+The small JSON vocabulary is subordinate to transferable lessons in higher-kinded type classes, recursive traversal, cursor state and history, applicative error accumulation, validation, and stack-safe composition.
 
-- Algebraic JSON models, cursors and edit histories, type-class codecs, fail-fast and accumulating decoding, numeric preservation, parser and printer boundaries, generic product and coproduct derivation, literal macros, law testing, and cross-platform design.
+Required domain context:
 
-**Prerequisites:**
+- A JSON decoder traverses a cursor, produces typed values or precise failures, and can fail fast or accumulate independent errors.
 
-- Advanced Scala types, Cats abstractions, Either and Validated, type classes, recursive algebraic data, JSON grammar, macros or derivation, and cross-platform modules.
+**Eight-part quality gate:**
 
-**Start here:** [`modules/core/shared/src/main/scala/io/circe/Decoder.scala`](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/modules/core/shared/src/main/scala/io/circe/Decoder.scala) — Decoder connects the public typed API to HCursor navigation, error histories, composition, accumulation, collection decoding, and the comprehensive DecoderSuite before generic derivation is introduced.
+- **Source quality:** Decoder.scala, ACursor.scala, HCursor.scala, and Json.scala separate typed decoding, navigation failure, successful focus, and the data model.
+- **Architecture:** Decoders consume immutable cursors, carry navigation history into DecodingFailure values, and compose either sequentially or applicatively.
+- **Naming and idiom:** Decoder, ACursor, HCursor, Json, and DecodingFailure reveal the model while demonstrating typed functional composition and immutable traversal.
+- **Tests:** DecoderSuite.scala exercises primitives, collections, products, recursion, missing fields, cursor history, fail-fast behavior, and accumulating errors.
+- **Documentation:** README.md introduces Circe and its decoding model without pulling unrelated parser or derivation modules into the trace.
+- **Traceability:** A JSON focus can be followed from Decoder.scala through HCursor or ACursor transitions into a typed value or history-bearing failure asserted in DecoderSuite.scala.
+- **Maintainability:** The bounded core path has stable typed boundaries and direct tests, while Jawn parsing and macro derivation remain explicitly outside scope.
+- **Educational value:** The path gives a concrete reason for higher-kinded and applicative abstractions by tying them to precise, testable decoding outcomes.
 
-**Why this level:**
+**Inspection record:** commit `2fb611bb49619e4287b6ac048d2283c2781f4943`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `modules/core/shared/src/main/scala/io/circe/Decoder.scala`, `modules/core/shared/src/main/scala/io/circe/ACursor.scala`, `modules/core/shared/src/main/scala/io/circe/HCursor.scala`, `modules/core/shared/src/main/scala/io/circe/Json.scala`, `modules/tests/shared/src/test/scala/io/circe/DecoderSuite.scala`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
 
-- **S2:** 8,270 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Scala and Java in the core, numbers, generic, parser, literal, pointer, extras, shapes, scodec, and platform modules; test support, laws, benchmarks, rewrite rules, examples, tests, documentation, and build metadata are excluded.
-- **D4:** Advanced types, functional error models, recursive structures, and compile-time derivation recur across the central codec path.
-- **C3:** Several substantial library layers and extension modules interact, but all converge on stable in-process JSON and codec contracts.
-- **Placement:** S2/D4/C3 averages to 3.00, making circe an SDC 3 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Core algebraic types and codec combinators are explicit, low-level number handling is isolated, and complex derivation machinery is kept out of the runtime model.
-- **Architecture:** Json and JsonObject represent values; cursors navigate with histories; Encoder and Decoder map types; parsers and Printer handle syntax; derivation modules synthesize codecs.
-- **Naming and idiom:** HCursor, ACursor, CursorOp, DecodingFailure, decodeAccumulating, JsonNumber, AsObjectEncoder, and DerivedDecoder state contracts precisely.
-- **Tests:** Property laws and suites cover values, numbers, cursors, codecs, error accumulation, parsers, printers, derivation, literals, pointers, platform differences, compatibility, and regression cases.
-- **Documentation:** The README gives purpose, installation, module links, examples, version support, and documentation routes; dedicated docs explain codecs and advanced usage.
-- **Traceability:** A field decode can be traced from Decoder.forProduct through HCursor movement and history, into fail-fast or accumulating results, then through DecoderSuite properties and derived-codec suites.
-- **Maintainability:** The immutable core is decoupled from syntax and derivation, modules make optional features explicit, and law suites guard compositional contracts across platforms.
-- **Educational value:** It is a strong study of how functional API design can preserve precise errors and composition without merging representation, parsing, and object mapping.
-
-**Inspection record:** commit `2fb611bb49619e4287b6ac048d2283c2781f4943`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `modules/core/shared/src/main/scala/io/circe/Json.scala`, `modules/core/shared/src/main/scala/io/circe/Decoder.scala`, `modules/core/shared/src/main/scala/io/circe/HCursor.scala`, `modules/generic/shared/src/main/scala-2/io/circe/generic/util/macros/DerivationMacros.scala`, `modules/jawn/shared/src/main/scala/io/circe/jawn/JawnParser.scala`, `modules/tests/shared/src/test/scala/io/circe/DecoderSuite.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: modules/tests/, modules/testing/, modules/laws/, modules/benchmark/, modules/numbers-testing/, modules/scalafix/, all src/test/ trees, examples/ and documentation.
-
-**License:** [Apache-2.0](https://github.com/circe/circe/blob/2fb611bb49619e4287b6ac048d2283c2781f4943/LICENSE)
-
-### [com-lihaoyi/upickle](https://github.com/com-lihaoyi/upickle)
-
-**S2 / D4 / C3 → SDC 3**
-
-A cross-platform Scala serialization family for typed objects, JSON, MessagePack, streaming visitors, and derived codecs.
-
-**Real-world evidence:** The project publishes uPickle, uJson, and uPack artifacts and maintains user documentation for JSON and binary serialization in Scala applications.
-
-**Language evidence:** The visitor protocol, JSON and MessagePack parsers and writers, object serializers, Scala 2 macros, Scala 3 derivation, format adapters, and schema support are implemented in Scala.
-
-**Why study it:** It unifies text JSON, binary MessagePack, mutable JSON values, and typed object codecs behind one allocation-conscious visitor protocol, then shows both Scala 2 macro and Scala 3 Mirror-based derivation.
-
-**What you can learn:**
-
-- Visitor-based tree processing, JSON and MessagePack state machines, buffered input, typed readers and writers, recursive codecs, tagged sum types, Scala 2 macros, Scala 3 Mirrors and inline derivation, cross-platform adapters, and serialization failure paths.
-
-**Prerequisites:**
-
-- Advanced Scala generics and variance, type classes, binary and text serialization, byte buffers, state machines, macros or Mirrors, inline methods, and cross-platform source conventions.
-
-**Start here:** [`upickle/core/src/upickle/core/Visitor.scala`](https://github.com/com-lihaoyi/upickle/blob/87e0b24b8c811e174ebd680839e4edf1e62abe71/upickle/core/src/upickle/core/Visitor.scala) — Visitor defines the shared event protocol; tracing it into ujson's parser, upack's MsgPackReader, and a derived ReadWriter reveals how all formats avoid an obligatory intermediate tree.
-
-**Why this level:**
-
-- **S2:** 7,550 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Scala across uPickle, uJson, uPack, format adapters, JSON Schema, platform sources, and both Scala derivation implementations; tests, benchmarks, documentation generators, source templates, and build metadata are excluded.
-- **D4:** Advanced parsing, binary encoding, type derivation, recursion, and performance concerns recur through the principal serialization path.
-- **C3:** Several formats and execution modes meet at explicit visitor and reader/writer contracts, creating meaningful but bounded cross-module tracing.
-- **Placement:** S2/D4/C3 averages to 3.00, making uPickle an SDC 3 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** The visitor contract centralizes traversal, byte parsers make indices and buffer growth explicit, and derivation code is isolated by Scala version.
-- **Architecture:** Parsers emit Visitor events; uJson or uPack materialize values, typed Readers consume events, Writers emit them, and derived codecs bridge Scala products and sums.
-- **Naming and idiom:** Visitor, ObjVisitor, BufferingByteParser, MsgPackReader, CaseClassReader, ReadWriter, macroRW, and TraceVisitor expose each role.
-- **Tests:** Format, primitive, macro, derivation, failure, large-input, streaming, schema, compatibility, and cross-platform suites exercise both happy paths and boundary behavior.
-- **Documentation:** The readme links the maintained documentation and hands-on guide, while public protocol and parser types carry implementation-level explanations.
-- **Traceability:** A case class can be followed from macroRW or Mirror derivation into a CaseClassReader, through Visitor callbacks driven by JSON or MessagePack bytes, and into round-trip and failure tests.
-- **Maintainability:** Format-independent events reduce duplicated traversal, version-specific metaprogramming stays separate, and extensive format tests constrain low-level changes.
-- **Educational value:** It shows how one carefully designed protocol can support multiple wire formats, ASTs, and derived object mappings efficiently.
-
-**Inspection record:** commit `87e0b24b8c811e174ebd680839e4edf1e62abe71`, reviewed 2026-08-28 by Codex. Files sampled: `readme.md`, `upickle/core/src/upickle/core/Visitor.scala`, `ujson/src/ujson/ByteArrayParser.scala`, `upack/src/upack/MsgPackReader.scala`, `upickle/implicits/src/upickle/implicits/CaseClassReadWriters.scala`, `upickle/implicits/src-3/upickle/implicits/MacroImplicits.scala`, `upickle/test/src/upickletest/MacroTests.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: all test and testSlow modules, benchmarks, upickleReadme/, upickle/core/templates/, documentation and build files.
-
-**License:** [MIT](https://github.com/com-lihaoyi/upickle/blob/87e0b24b8c811e174ebd680839e4edf1e62abe71/LICENSE)
-
-## SDC 4
+</details>
 
 ### [http4s/http4s](https://github.com/http4s/http4s)
 
-**S3 / D4 / C4 → SDC 4**
+**Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
 
 A purely functional, streaming HTTP toolkit for Scala with protocol types, clients, servers, routing, middleware, codecs, and the Ember network implementation.
+
+**Why study it:** http4s makes resource ownership visible by modeling a client response as an effectful Resource whose streaming body and connection lifetime stay in one scope.
+
+**Prerequisites:**
+
+- Readers should know Scala higher-kinded types, effects, Resource-style scoped ownership, streams, and basic HTTP request, response, status, and body concepts.
+
+**Concepts this path develops:**
+
+- Higher-kinded Client[F] and HttpApp[F] abstractions.
+- Response acquisition and release lifecycle.
+- Responses must be released on success, failure, and cancellation.
+
+**What you can learn:**
+
+- Follow Client.run, fetch, expect, status validation, body streaming, transformations, failures, and connection release through the Resource contract.
+
+**Learning path:**
+
+- **Goal:** Understand how http4s models a client response as an effectful Resource so streaming body consumption, errors, transformation, and connection release remain safely scoped.
+- **Start here:** [`docs/docs/client.md`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/docs/docs/client.md) — The reviewed trace begins in the client guide because it establishes the response-ownership rule a learner must understand before reading Client.scala.
+- **Then read:**
+  - [`client/shared/src/main/scala/org/http4s/client/Client.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/client/shared/src/main/scala/org/http4s/client/Client.scala)
+  - [`core/shared/src/main/scala/org/http4s/HttpApp.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/core/shared/src/main/scala/org/http4s/HttpApp.scala)
+  - [`core/shared/src/main/scala/org/http4s/Message.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/core/shared/src/main/scala/org/http4s/Message.scala)
+  - [`client/shared/src/test/scala/org/http4s/client/ClientSuite.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/client/shared/src/test/scala/org/http4s/client/ClientSuite.scala)
+  - [`README.md`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/README.md)
+  - [`LICENSE`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/LICENSE)
+- **Trace:** Begin with the client guide's warning that a response is a managed Resource, follow Client.run, fetch, expect, status validation, and transformations through HttpApp and Message's streamed body, then close success, failure, disposal, mapping, and scoped-use behavior in ClientSuite. Ember parser, server, and protocol breadth are deliberately excluded.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced effect-polymorphic, Resource, and stream abstractions recur throughout the bounded client path.
+- **Behavioral reasoning 4:** Resource ownership, streaming evaluation, errors, transformation, and cleanup require advanced nonlocal lifecycle reasoning.
+- **Design span 3:** Several meaningful documentation, client, application, message, resource, and verification boundaries cooperate.
+- **Constraint burden 4:** Lifecycle, streaming, error, cancellation, API, and portability guarantees interact throughout ordinary client use.
+- **Placement:** The four scores 4/4/3/4 sum to 15; their arithmetic mean is 3.75 and rounds half-up to Level 4. The published result is Level 4.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** The http4s project publishes a versioned family of core, DSL, client, server, Ember, codec, and integration artifacts for production services on multiple Scala platforms.
 
 **Language evidence:** The HTTP model, codecs, header parsers, routing DSL, client and server algebras, middleware, Ember HTTP/1 and HTTP/2 engine, WebSockets, TLS, and platform integrations are Scala.
 
-**Why study it:** It connects precise HTTP data types and functional service composition to streaming bodies, parsers, sockets, TLS, connection pools, servers, clients, HTTP/2, WebSockets, middleware, and resource-safe shutdown.
+**Coding relevance:**
 
-**What you can learn:**
+The short HTTP request and response vocabulary is documented locally and remains subordinate to transferable lessons in higher-kinded interfaces, Resource ownership, streaming values, scoped use, transformation, error handling, cleanup, and contract tests.
 
-- HTTP message modeling, Kleisli and OptionT services, streaming entities, codecs and content negotiation, incremental protocol parsing, server and client resources, connection pooling, TLS, HTTP/2 framing, WebSockets, middleware, cancellation, and cross-platform networking.
+Required domain context:
 
-**Prerequisites:**
+- An effect-polymorphic HTTP client acquires a response as a Resource so the caller can consume a streaming body and reliably release the underlying connection.
 
-- Advanced Scala, Cats Effect, fs2 streams, higher-kinded types, Resource, HTTP/1.1 and HTTP/2, sockets and TLS, parser state machines, concurrency, and functional service composition.
+**Eight-part quality gate:**
 
-**Start here:** [`core/shared/src/main/scala/org/http4s/HttpApp.scala`](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/core/shared/src/main/scala/org/http4s/HttpApp.scala) — HttpApp and HttpRoutes establish the service model; following a route into EmberServerBuilder and Ember's Parser connects the small functional abstraction to actual sockets, bytes, requests, responses, and lifecycle tests.
+- **Source quality:** client.md states the ownership contract, while Client.scala, HttpApp.scala, and Message.scala separate acquisition, application, and streaming-message behavior.
+- **Architecture:** Client.run acquires a response as a Resource, higher-level client methods transform or validate it, and Message carries the streamed body within that scope.
+- **Naming and idiom:** Client, run, fetch, expect, HttpApp, Message, and Resource make acquisition and scoped use explicit while demonstrating effect-polymorphic Scala design.
+- **Tests:** ClientSuite.scala directly exercises successful use, status failures, disposal, response mapping, transformations, and resource behavior.
+- **Documentation:** docs/docs/client.md is the selected starting document because it explains why response use and release must share a Resource scope.
+- **Traceability:** The documented ownership rule can be followed into Client.run and Message body handling and then closed by ClientSuite.scala's disposal and failure cases.
+- **Maintainability:** Acquisition and use are encoded in types, direct client tests protect cleanup, and Ember parser and server breadth are deliberately excluded.
+- **Educational value:** The path shows how a type-level resource abstraction prevents a concrete network-lifecycle error without requiring a tour of the whole server stack.
 
-**Why this level:**
+**Inspection record:** commit `a95ed19a5d377276d1eb98d93897cea45cbad921`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `docs/docs/client.md`, `client/shared/src/main/scala/org/http4s/client/Client.scala`, `core/shared/src/main/scala/org/http4s/HttpApp.scala`, `core/shared/src/main/scala/org/http4s/Message.scala`, `client/shared/src/test/scala/org/http4s/client/ClientSuite.scala`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
 
-- **S3:** 28,756 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Scala and Java across core, DSL, client, server, Ember, codecs, and integrations; it excludes tests and support, laws, benchmarks, examples, documentation, rewrite rules, build metadata, and the explicitly marked 7,876-line generated MimeDB.scala.
-- **D4:** Advanced functional abstractions, streaming, concurrency, and protocol correctness recur across every server or client path.
-- **C4:** Tracing a real request crosses many explicit components and resource boundaries, with shared concerns such as cancellation, logging, metrics, and headers.
-- **Placement:** S3/D4/C4 averages to 3.67 and rounds upward, making http4s an SDC 4 project.
+</details>
 
-**Quality-gate evidence:**
-
-- **Source quality:** Protocol models, service abstractions, parser internals, resource builders, and middleware are separated, with detailed comments at subtle streaming and RFC boundaries.
-- **Architecture:** Core defines messages and services; DSL and codecs construct them; clients and servers define resources; Ember implements network protocols; middleware and integrations wrap stable interfaces.
-- **Naming and idiom:** HttpApp, HttpRoutes, EntityDecoder, Request, Response, Client.run, EmberServerBuilder, Parser.Request, Shutdown, and WebSocketBuilder2 expose the end-to-end path.
-- **Tests:** Protocol laws, header suites, parser chunk-boundary tests, client middleware, server lifecycle, TLS, HTTP/2, WebSocket, connection, resource, platform, and integration suites cover behavior deeply.
-- **Documentation:** The README provides modules, supported platforms, setup, examples, version status, and links to extensive concepts, recipes, API, and migration documentation.
-- **Traceability:** A request can be followed from HttpRoutes through an HttpApp, Ember server acquisition, incremental parsing, body streaming, response encoding, socket write, and the parser and server suites.
-- **Maintainability:** Protocol and effect contracts are reusable, generated MIME data is labeled, optional integrations remain modular, and exhaustive tests isolate regressions at boundaries.
-- **Educational value:** It demonstrates how small functional abstractions scale into a full protocol implementation without obscuring network and resource mechanics.
-
-**Inspection record:** commit `a95ed19a5d377276d1eb98d93897cea45cbad921`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `core/shared/src/main/scala/org/http4s/HttpApp.scala`, `core/shared/src/main/scala/org/http4s/Message.scala`, `client/shared/src/main/scala/org/http4s/client/Client.scala`, `ember-core/shared/src/main/scala/org/http4s/ember/core/Parser.scala`, `ember-server/shared/src/main/scala/org/http4s/ember/server/EmberServerBuilder.scala`, `ember-core/shared/src/test/scala/org/http4s/ember/core/ParserSuite.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: all test, tests, testing, laws, and testkit modules and source trees, benchmarks, examples/, scalafix/, site and documentation, core/shared/src/main/scala/org/http4s/MimeDB.scala, build files.
-
-**License:** [Apache-2.0](https://github.com/http4s/http4s/blob/a95ed19a5d377276d1eb98d93897cea45cbad921/LICENSE)
+## Level 5
 
 ### [typelevel/cats-effect](https://github.com/typelevel/cats-effect)
 
-**S3 / D5 / C4 → SDC 4**
+**Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
 
 Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cancelable, concurrent Scala applications.
+
+**Why study it:** Cats Effect provides a complete expert trace from an IO algebra through a cancelable fiber interpreter into a fair work-stealing runtime.
+
+**Prerequisites:**
+
+- Readers should know advanced Scala, effect algebras, fibers, continuation stacks, cancellation and finalization, atomics, work stealing, and race-sensitive concurrency tests.
+
+**Concepts this path develops:**
+
+- Higher-kinded effect algebra and type-class instances.
+- Asynchronous suspend and resume state machine.
+- Stack safety and exactly-once asynchronous resumption.
+
+**What you can learn:**
+
+- Trace IO tags through IOFiber's run loop, continuation stacks, asynchronous suspension, cancellation masks, finalizers, outcomes, joins, and work-stealing scheduling.
+
+**Learning path:**
+
+- **Goal:** Understand how Cats Effect interprets IO as a cancelable fiber and schedules it fairly on a work-stealing runtime while preserving asynchronous and finalization guarantees.
+- **Start here:** [`core/shared/src/main/scala/cats/effect/IOFiber.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IOFiber.scala) — The reviewed trace begins in IOFiber.scala because its interpreter run loop turns the public IO algebra into observable asynchronous, cancelable execution.
+- **Then read:**
+  - [`core/shared/src/main/scala/cats/effect/IO.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IO.scala)
+  - [`core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala)
+  - [`core/jvm/src/main/scala/cats/effect/unsafe/IORuntimeCompanionPlatform.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/jvm/src/main/scala/cats/effect/unsafe/IORuntimeCompanionPlatform.scala)
+  - [`core/jvm-native/src/main/scala/cats/effect/unsafe/WorkStealingThreadPool.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/jvm-native/src/main/scala/cats/effect/unsafe/WorkStealingThreadPool.scala)
+  - [`core/jvm-native/src/main/scala/cats/effect/unsafe/WorkerThread.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/jvm-native/src/main/scala/cats/effect/unsafe/WorkerThread.scala)
+  - [`tests/shared/src/test/scala/cats/effect/IOFiberSuite.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/tests/shared/src/test/scala/cats/effect/IOFiberSuite.scala)
+  - [`tests/jvm-native/src/test/scala/cats/effect/IOConcurrencySuite.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/tests/jvm-native/src/test/scala/cats/effect/IOConcurrencySuite.scala)
+  - [`docs/core/starvation-and-tuning.md`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/docs/core/starvation-and-tuning.md)
+  - [`README.md`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/README.md)
+  - [`LICENSE.txt`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/LICENSE.txt)
+- **Trace:** Start with IOFiber's run loop and continuation stacks, map each interpreted tag back to IO's algebra, follow asynchronous suspension and resumption, cancellation masks, finalizer unwinding, outcomes and joins into IORuntime and the JVM/Native work-stealing scheduler, then close stack, race, fairness, cancellation, and error contracts in the direct suites and starvation guide.
+
+**Why this level:**
+
+- **Language technique 5:** Expert functional, generic, continuation, atomic, and low-level runtime techniques are pervasive across the selected fiber-to-scheduler trace.
+- **Behavioral reasoning 5:** Correctness requires expert nonlocal reasoning across concurrency, scheduling, cancellation, finalization, recovery, and publication state.
+- **Design span 4:** Several substantial algebra, interpreter, runtime, platform, scheduler, verification, and documentation boundaries cooperate in one coherent execution path.
+- **Constraint burden 5:** Expert concurrency, lifecycle, memory-model, fairness, performance, diagnostic, and compatibility guarantees interact pervasively.
+- **Placement:** The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
 
 **Real-world evidence:** Typelevel publishes the stable Cats Effect kernel, runtime, standard primitives, laws, and testkit that underpin production libraries and applications across JVM, Scala.js, and Native.
 
 **Language evidence:** The effect type classes, IO algebra and interpreter, fibers, runtime, schedulers, queues, synchronization primitives, test control, metrics, and platform implementations are Scala.
 
-**Why study it:** The repository exposes the machinery beneath IO: an immutable effect algebra, a stack-safe interpreter, cancellation masks, fibers, work-stealing execution, resource safety, structured concurrency, and deterministic testing.
+**Coding relevance:**
 
-**What you can learn:**
+Concurrency and runtime scheduling are core programming subject matter; the path directly teaches effect interpreters, manual continuation state, lock-free publication, work stealing, cancellation masks, finalizers, fairness, and race-sensitive contract testing.
 
-- Effect algebras, referential transparency, trampolining, fibers, structured concurrency, cancellation and finalization, asynchronous callbacks, runtime scheduling, work stealing, atomics, queues and semaphores, Resource, virtual time, laws, and platform runtimes.
+Required domain context:
 
-**Prerequisites:**
+- An IO fiber interprets an effect algebra while coordinating asynchronous suspension, cancellation, finalization, joining, tracing, and runtime scheduling.
 
-- Expert Scala and functional programming, higher-kinded types, Cats type classes, concurrency, atomics and memory visibility, continuation interpreters, cancellation semantics, thread pools, and law-based testing.
+**Eight-part quality gate:**
 
-**Start here:** [`core/shared/src/main/scala/cats/effect/IO.scala`](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/core/shared/src/main/scala/cats/effect/IO.scala) — IO defines the user-visible algebra and contracts; IOFiber.scala then interprets its tags, while IORuntime shows how schedulers and shutdown resources execute the resulting fibers.
+- **Source quality:** IO.scala defines effect nodes, IOFiber.scala contains the interpreter, and IORuntime plus the work-stealing classes make scheduling responsibilities explicit.
+- **Architecture:** An IO value is interpreted by a fiber whose suspension, resumption, cancellation, and completion are scheduled through IORuntime and a work-stealing thread pool.
+- **Naming and idiom:** IOFiber, IORuntime, WorkStealingThreadPool, WorkerThread, outcomes, and finalizers expose the runtime model while using advanced functional and concurrent Scala consistently.
+- **Tests:** IOFiberSuite.scala and IOConcurrencySuite.scala cover stack safety, asynchronous execution, cancellation, finalizers, fairness, races, and error propagation.
+- **Documentation:** starvation-and-tuning.md explains scheduler behavior and tuning, while README.md supplies project orientation.
+- **Traceability:** An IO node can be followed through IOFiber's interpreter state to runtime scheduling and then to direct fiber and concurrency assertions.
+- **Maintainability:** Interpreter and scheduler boundaries are explicit, critical lifecycle rules are directly tested, and the selected files exclude unrelated ecosystem modules.
+- **Educational value:** The path connects high-level effect semantics to the concrete stacks, queues, cancellation masks, and workers that enforce them.
 
-**Why this level:**
+**Inspection record:** commit `3d4486d47a22a40ba33f822cf4adb1eccfdb4feb`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `core/shared/src/main/scala/cats/effect/IOFiber.scala`, `core/shared/src/main/scala/cats/effect/IO.scala`, `core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala`, `core/jvm/src/main/scala/cats/effect/unsafe/IORuntimeCompanionPlatform.scala`, `core/jvm-native/src/main/scala/cats/effect/unsafe/WorkStealingThreadPool.scala`, `core/jvm-native/src/main/scala/cats/effect/unsafe/WorkerThread.scala`, `tests/shared/src/test/scala/cats/effect/IOFiberSuite.scala`, `tests/jvm-native/src/test/scala/cats/effect/IOConcurrencySuite.scala`, `docs/core/starvation-and-tuning.md`, `README.md`, `LICENSE.txt`. GitHub Linguist label: Scala.
 
-- **S3:** 20,172 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Scala and Java across kernel, core, standard primitives, testkit, platform runtimes, and runtime metrics; test applications, laws and generators, benchmarks, rewrite rules, tests, documentation, and build metadata are excluded.
-- **D5:** Expert-level runtime, concurrent-algorithm, memory-model, and type-system concerns are central rather than peripheral.
-- **C4:** Many interacting runtime pieces and platform adaptations share lifecycle contracts, though the repository remains one library family rather than a distributed platform.
-- **Placement:** S3/D5/C4 averages to 4.00, making Cats Effect an SDC 4 project.
+</details>
 
-**Quality-gate evidence:**
+### [typelevel/fs2](https://github.com/typelevel/fs2)
 
-- **Source quality:** Dense runtime paths document invariants and fast paths, algebra and interpreter concerns stay distinct, and unsafe operations are visibly contained.
-- **Architecture:** Kernel type classes define capabilities, IO describes effects, IOFiber interprets them, IORuntime owns schedulers and shutdown, std builds coordination primitives, and testkit supplies controlled execution.
-- **Naming and idiom:** IO, IOFiber, Outcome, CancelScope, uncancelable, evalOn, WorkStealingThreadPool, IORuntime, TestControl, Queue, and Supervisor expose operational meaning.
-- **Tests:** Law suites, deterministic runtime suites, race and stress tests, platform tests, scheduler tests, primitive contracts, tracing checks, and virtual-time tests cover both semantics and concurrency failures.
-- **Documentation:** The README explains the artifact family, IO execution model, resource and concurrency rules, compatibility, performance claims, architecture, and routes to guides and migration material.
-- **Traceability:** An IO.flatMap chain can be followed from algebra nodes into IOFiber's run loop, scheduling and cancellation state, completion Outcome, and focused IOFiber and concurrency suites.
-- **Maintainability:** Capability interfaces constrain implementations, platform code is partitioned, unsafe runtime ownership is explicit, and a deep law and stress-test matrix protects refactoring.
-- **Educational value:** It is a rigorous view of how a high-level pure effect API becomes a practical concurrent runtime.
+**Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
 
-**Inspection record:** commit `3d4486d47a22a40ba33f822cf4adb1eccfdb4feb`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `core/shared/src/main/scala/cats/effect/IO.scala`, `core/shared/src/main/scala/cats/effect/IOFiber.scala`, `core/shared/src/main/scala/cats/effect/unsafe/IORuntime.scala`, `core/jvm/src/main/scala/cats/effect/unsafe/IORuntimeCompanionPlatform.scala`, `std/shared/src/main/scala/cats/effect/std/Queue.scala`, `tests/shared/src/test/scala/cats/effect/IOFiberSuite.scala`, `LICENSE.txt`. GitHub Linguist label: Scala. LOC exclusions: tests/, laws/, kernel-testkit/, benchmarks/, scalafix/, ioapp-tests/, all src/test/ trees, documentation and build files.
+A compositional, effect-polymorphic streaming I/O library for Scala with resource-safe and concurrent stream processing.
 
-**License:** [Apache-2.0](https://github.com/typelevel/cats-effect/blob/3d4486d47a22a40ba33f822cf4adb1eccfdb4feb/LICENSE.txt)
-
-## SDC 5
-
-### [apache/spark](https://github.com/apache/spark)
-
-**S5 / D5 / C5 → SDC 5**
-
-Apache's unified distributed analytics engine for batch computation, SQL, structured streaming, machine learning, and graph processing.
-
-**Real-world evidence:** The Apache Software Foundation ships Spark releases and documents Scala, Java, Python, and R APIs for production-scale data processing across standalone and cluster resource managers.
-
-**Language evidence:** Spark's execution engine, RDD lineage, scheduling, SQL Catalyst analyzer and optimizer, query execution, streaming, MLlib, GraphX, resource-manager integrations, and connectors are predominantly Scala, with substantial first-party Java APIs and infrastructure.
-
-**Why study it:** Spark exposes an entire distributed data platform: lazy lineage, DAG and task scheduling, shuffle, memory and storage management, fault recovery, query analysis and optimization, code generation, streaming state, cluster backends, and multiple domain libraries.
-
-**What you can learn:**
-
-- Lazy distributed collections, lineage and fault recovery, DAG scheduling, stages and tasks, shuffle and storage, executors, cluster resource managers, Catalyst trees and rules, cost and adaptive query optimization, code generation, streaming state, distributed ML, graph processing, RPC, and compatibility engineering.
+**Why study it:** Understand how FS2 compiles a typed Pull program into an effect while opening and closing nested scopes, preserving resource finalizers, interruption, stack safety, and error semantics. A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.
 
 **Prerequisites:**
 
-- Expert Scala and Java, distributed systems, concurrency, networking and RPC, storage and serialization, query planning and optimization, JVM internals, fault tolerance, cluster schedulers, streaming semantics, and large multi-module builds.
+- Be fluent with advanced Scala, higher-kinded types, variance, type classes, algebraic data types, natural transformations, functional effects, Resource, cancellation, references, and property-based concurrency tests.
+- A Stream is represented by a Pull program; compilation interprets that program in an effect while scopes own resources and guarantee cleanup across success, failure, cancellation, interruption, and early termination.
 
-**Start here:** [`core/src/main/scala/org/apache/spark/rdd/RDD.scala`](https://github.com/apache/spark/blob/024120dc960517021a887b51865220f544340362/core/src/main/scala/org/apache/spark/rdd/RDD.scala) — RDD defines lazy partitions, dependencies, transformations, and actions; following an action through SparkContext and DAGScheduler shows how lineage becomes stages, tasks, shuffle boundaries, execution, and recovery before Catalyst is studied separately.
+**Concepts this path develops:**
 
-**Why this level:**
-
-- **S5:** 630,468 meaningful implementation LOC measured with tokei 14.0.0. Conservative count covers checked-in production Scala and Java under 45 non-example src/main roots across common infrastructure, core, SQL, streaming, MLlib, GraphX, connectors, cluster managers, launchers, REPL, and tools. It excludes other first-party language front ends, so the project remains well above S5 without relying on them.
-- **D5:** Multiple expert domains are implemented in the main path, and correctness depends on distributed execution, recovery, optimization, storage, concurrency, and JVM behavior.
-- **C5:** Spark is a platform-scale distributed system whose important behaviors cross process, network, storage, planning, scheduling, and cluster-manager boundaries.
-- **Placement:** S5/D5/C5 triggers the two-dimensions-at-5 rule and makes Apache Spark an SDC 5 project.
-
-**Quality-gate evidence:**
-
-- **Source quality:** Core state machines and planners use explicit domain types and extensive comments; dense distributed paths document invariants, event ownership, and failure handling.
-- **Architecture:** SparkContext coordinates driver services; RDD lineage feeds DAGScheduler and task scheduling; executors and storage run work; Catalyst analyzes and optimizes SQL; higher libraries build on the shared engine.
-- **Naming and idiom:** RDD, Dependency, DAGScheduler, Stage, TaskSet, BlockManager, LogicalPlan, RuleExecutor, SparkPlan, StateStore, and ExecutorBackend map directly to the runtime model.
-- **Tests:** Large unit, integration, distributed, SQL golden, streaming recovery, scheduler, shuffle, storage, connector, compatibility, and cluster-manager suites exercise normal, fault, race, and upgrade behavior.
-- **Documentation:** The README routes readers to maintained programming, SQL, streaming, MLlib, deployment, configuration, operations, tuning, and contribution documentation.
-- **Traceability:** An RDD action can be followed through SparkContext job submission, DAGScheduler's stage graph and event loop, task scheduling, executor computation and shuffle, completion events, and DAGSchedulerSuite failure scenarios.
-- **Maintainability:** Subsystem boundaries, internal APIs, event-driven scheduling, compatibility policies, extensive diagnostics, and broad test matrices support coordinated changes at platform scale.
-- **Educational value:** It is a canonical advanced study of how a distributed data abstraction is realized through scheduling, recovery, optimization, and cluster infrastructure.
-
-**Inspection record:** commit `024120dc960517021a887b51865220f544340362`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `core/src/main/scala/org/apache/spark/rdd/RDD.scala`, `core/src/main/scala/org/apache/spark/SparkContext.scala`, `core/src/main/scala/org/apache/spark/scheduler/DAGScheduler.scala`, `sql/catalyst/src/main/scala/org/apache/spark/sql/catalyst/optimizer/Optimizer.scala`, `sql/core/src/main/scala/org/apache/spark/sql/classic/Dataset.scala`, `core/src/test/scala/org/apache/spark/scheduler/DAGSchedulerSuite.scala`, `sql/catalyst/src/test/scala/org/apache/spark/sql/catalyst/optimizer/OptimizerSuite.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: all src/test/ trees and test modules, examples/src/main/, Python and R front ends, documentation, benchmarks, fixtures, generated test sources, and build files.
-
-**License:** [Apache-2.0](https://github.com/apache/spark/blob/024120dc960517021a887b51865220f544340362/LICENSE)
-
-### [scala/scala3](https://github.com/scala/scala3)
-
-**S5 / D5 / C5 → SDC 5**
-
-The official Scala 3 compiler and language toolchain, including the type checker, transformation pipeline, backends, TASTy, libraries, REPL, documentation, and editor services.
-
-**Real-world evidence:** The Scala organization ships Scala 3 language releases and the compiler, standard library, TASTy tools, REPL, Scaladoc, and presentation components used by the ecosystem.
-
-**Language evidence:** The Scala 3 compiler, standard library additions, TASTy representation, REPL, presentation compiler, language server, Scaladoc, staging, and build bridges are implemented primarily in Scala 3, with small Java interfaces.
-
-**Why study it:** The repository implements a modern language end to end: parsing, name resolution, rich types, inference, implicit search, staging, macros, typed trees, optimization and lowering phases, TASTy serialization, JVM and JavaScript backends, diagnostics, and tooling.
+- Interpreting a typed `Pull` program into a target effect through normalized continuations.
+- Nested scope ownership, leases, interruption, and exactly-once resource finalization.
+- Stack-safe compilation with defined composition of use errors and finalizer errors.
 
 **What you can learn:**
 
-- Compiler phase orchestration, parsing and syntax trees, contexts and symbols, advanced type representation and comparison, inference and implicit search, typed trees, macro staging, desugaring and lowering, phase fusion, TASTy serialization, JVM and JavaScript backends, REPL and editor services, and language conformance testing.
+- Study these expert Scala mechanisms in `core/shared/src/main/scala/fs2/Compiler.scala`: higher-kinded effect parameters and type classes, a typed Pull algebra with variance and natural transformations, interpreter normalization and continuations, and capability-selected compilation targets.
+- Trace these states and branches through the selected implementation: output, evaluation, bind, failure, interruption, scope open and close, acquire and release, lease, cancellation, early termination, and composite finalizer failure.
+- Identify these architectural responsibilities: public Stream and Pull program representation, compiler and target effect boundary, scope tree, scoped resources and leases, interruption context, and direct algebraic, lifecycle, and race tests.
+- Study these change constraints: compilation must remain stack safe, acquired resources must finalize exactly once, children cannot outlive parents, release is uncancelable, interruption must propagate without leaking work, concurrent scope mutation must be race safe, and errors from use and finalizers must retain defined composition semantics.
 
-**Prerequisites:**
+**Learning path:**
 
-- Expert Scala 3, programming-language semantics, type theory and inference, compiler architecture, JVM bytecode, JavaScript backends, macros and staging, incremental tooling, serialization formats, and very large codebases.
-
-**Start here:** [`compiler/src/dotty/tools/dotc/Compiler.scala`](https://github.com/scala/scala3/blob/2106c166d34e5451661d1ab812016cf7c9870c80/compiler/src/dotty/tools/dotc/Compiler.scala) — Compiler.scala names and orders the front-end, typing, transformation, serialization, and backend phases; Run.scala shows compilation-unit execution before deeper study of Typer, Types, MegaPhase, or TASTy.
+- **Goal:** Understand how FS2 compiles a typed Pull program into an effect while opening and closing nested scopes, preserving resource finalizers, interruption, stack safety, and error semantics.
+- **Start here:** [`core/shared/src/main/scala/fs2/Compiler.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Compiler.scala) — Begin with Compiler and Target because they create the root scope, choose the effect capabilities available to interpretation, and connect public compilation to Pull's internal run loop.
+- **Then read:**
+  - [`core/shared/src/main/scala/fs2/Pull.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Pull.scala)
+  - [`core/shared/src/main/scala/fs2/Stream.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/Stream.scala)
+  - [`core/shared/src/main/scala/fs2/internal/Scope.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/internal/Scope.scala)
+  - [`core/shared/src/main/scala/fs2/internal/ScopedResource.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/internal/ScopedResource.scala)
+  - [`core/shared/src/main/scala/fs2/internal/InterruptContext.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/main/scala/fs2/internal/InterruptContext.scala)
+  - [`core/shared/src/test/scala/fs2/BracketSuite.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/test/scala/fs2/BracketSuite.scala)
+  - [`core/shared/src/test/scala/fs2/PullLawsSuite.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/test/scala/fs2/PullLawsSuite.scala)
+  - [`core/shared/src/test/scala/fs2/StreamInterruptSuite.scala`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/core/shared/src/test/scala/fs2/StreamInterruptSuite.scala)
+  - [`docs/implementation-notes.markdown`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/docs/implementation-notes.markdown)
+  - [`site/guide.md`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/site/guide.md)
+  - [`README.md`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/README.md)
+  - [`LICENSE`](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/LICENSE)
+- **Trace:** Start with Compiler.Target creating a root Scope and invoking Pull.compile; follow Pull's typed nodes, binds, outputs, evaluations, failures, and scope operations through normalization and the interpreter loop; then trace Scope open, resource registration, leases, interruption contexts, uncancelable child-first close, composite failure collection, and parent unlinking; close with bracket ordering and exactly-once cleanup, pull laws and stack safety, and nested interruption and cancellation races.
 
 **Why this level:**
 
-- **S5:** 242,131 meaningful implementation LOC measured with tokei 14.0.0. Count covers production Scala and Java in compiler, libraries, TASTy, staging, interfaces, directives parser, REPL, Scaladoc, presentation compiler, language server, TASTy inspector, and sbt bridge; tests, testcases, benchmarks, community builds, scripted fixtures, documentation, and build metadata are excluded.
-- **D5:** The main path is an expert compiler implementation whose correctness depends on language semantics, type theory, staging, transformations, serialization, and platform backends.
-- **C5:** Scala 3 is a language platform and toolchain; even one compilation crosses many tightly coordinated subsystems and representation changes.
-- **Placement:** S5/D5/C5 triggers the two-dimensions-at-5 rule and makes Scala 3 an SDC 5 project.
+- **Language technique 5:** Expert generic, functional, interpreter, effect, and concurrency mechanisms are pervasive throughout the selected compiler and scope path.
+- **Behavioral reasoning 5:** Several coupled interpreter and resource state machines interact nonlocally across every normal and exceptional completion path.
+- **Design span 4:** Multiple substantial API, algebra, interpreter, lifecycle, concurrency, verification, and documentation boundaries cooperate, while the trace stays inside fs2-core.
+- **Constraint burden 5:** Expert type, lifecycle, concurrency, cancellation, failure, stack, performance, and compatibility guarantees constrain the entire path.
+- **Placement:** The four scores 5/5/4/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5, with three dimensions scored 5. The published result is Level 5.
 
-**Quality-gate evidence:**
+**License:** MIT ([evidence 1](https://github.com/typelevel/fs2/blob/3320f42213d00a9ec68a15273efadade5efc0ce1/LICENSE))
 
-- **Source quality:** Compiler phases, contexts, types, and trees have strong internal vocabulary; difficult algorithms carry design comments, invariants, and links to specifications or prior work.
-- **Architecture:** Compiler and Run assemble phases; front-end parsing and Typer produce typed trees; mini-phases transform them; TASTy persists typed structure; backends emit code; tools reuse compiler services.
-- **Naming and idiom:** Context, Symbol, Type, Denotation, Typer, ProtoType, Phase, MiniPhase, MegaPhase, TastyPickler, GenBCode, and InteractiveCompiler expose compiler concepts directly.
-- **Tests:** Positive, negative, run, staging, TASTy, explicit-nulls, initialization, backend, presentation, REPL, documentation, compiler-unit, and regression suites exercise both accepted programs and diagnostics.
-- **Documentation:** The README provides build, test, contribution, issue, release, and architecture routes, alongside the language reference, API, internals documentation, and contributor guidance.
-- **Traceability:** A source unit can be followed through Compiler phase assembly, Run compilation, parsing and Typer, grouped MegaPhase transformations, TASTy pickling, backend emission, and CompilationTests plus focused conformance cases.
-- **Maintainability:** Phase boundaries, explicit context threading, stable typed representations, compatibility tests, diagnostic tests, tooling modules, and a vast conformance corpus support language evolution.
-- **Educational value:** It is an advanced reference for how a production language's semantics, compiler pipeline, binary interchange format, runtimes, and developer tools evolve together.
+<details>
+<summary>Quality and review evidence</summary>
 
-**Inspection record:** commit `2106c166d34e5451661d1ab812016cf7c9870c80`, reviewed 2026-08-28 by Codex. Files sampled: `README.md`, `compiler/src/dotty/tools/dotc/Compiler.scala`, `compiler/src/dotty/tools/dotc/Run.scala`, `compiler/src/dotty/tools/dotc/typer/Typer.scala`, `compiler/src/dotty/tools/dotc/core/Types.scala`, `compiler/src/dotty/tools/dotc/transform/MegaPhase.scala`, `compiler/src/dotty/tools/dotc/core/tasty/TastyPickler.scala`, `compiler/test/dotty/tools/dotc/CompilationTests.scala`, `LICENSE`. GitHub Linguist label: Scala. LOC exclusions: all test and tests trees, scaladoc-testcases/, presentation-compiler-testcases/, benchmarks, community-build/, sbt scripted fixtures, documentation and build files.
+**Real-world evidence:** Typelevel publishes fs2-core for JVM, Scala.js, and Scala Native; production libraries and applications use its Stream abstraction for effectful, resource-safe incremental processing.
 
-**License:** [Apache-2.0](https://github.com/scala/scala3/blob/2106c166d34e5451661d1ab812016cf7c9870c80/LICENSE)
+**Language evidence:** The selected Stream and Pull algebras, compiler, scope tree, resource lifecycle, interruption coordination, and direct law and concurrency suites are handwritten first-party Scala under core/shared.
+
+**Coding relevance:**
+
+A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.
+
+Required domain context:
+
+- A Stream is represented by a Pull program; compilation interprets that program in an effect while scopes own resources and guarantee cleanup across success, failure, cancellation, interruption, and early termination.
+
+**Eight-part quality gate:**
+
+- **Source quality:** Compiler, Pull, Scope, ScopedResource, and InterruptContext document their roles and encode transitions in focused types and methods; the direct suites target laws, cleanup order, interruption, cancellation, and regressions.
+- **Architecture:** Stream delegates to a Pull program, Compiler selects target effect capabilities and owns the root scope, the interpreter evaluates Pull nodes, and a tree of scopes owns resources, leases, interruption, and close ordering.
+- **Naming and idiom:** Compiler.Target, Pull, Terminal, Scope, ScopedResource, Lease, InterruptContext, Outcome, Poll, and CompositeFailure expose the execution model while demonstrating advanced idiomatic functional Scala.
+- **Tests:** BracketSuite exercises success, failure, early termination, deep nesting, LIFO release, cancellation, interruption, finalizer failure, leases, and uncancelable release; PullLawsSuite protects algebraic behavior; StreamInterruptSuite targets hung evaluations, nesting, recovery, cancellation, and race-sensitive interruption.
+- **Documentation:** README.md, the public ScalaDoc, site guide, and implementation notes explain stream representation, Pull interpretation, resource safety, composition, and the implementation's continuation technique.
+- **Traceability:** A compiled stream can be followed from Compiler into Pull normalization and evaluation, scope and resource transitions, interruption and close behavior, then directly into law, bracket, and interruption assertions.
+- **Maintainability:** State ownership and lifecycle rules are documented beside implementation, transitions are centralized, public and internal boundaries are explicit, and regression suites exercise the most dangerous stack, cancellation, and resource races.
+- **Educational value:** The bounded core path connects high-level functional streaming to the concrete typed interpreter, scope tree, references, masks, and finalizer ordering that make its guarantees real.
+
+**Inspection record:** commit `3320f42213d00a9ec68a15273efadade5efc0ce1`, inspected 2026-08-29. Review passes: Codex primary pass; Codex cold verification pass. Files inspected: `core/shared/src/main/scala/fs2/Compiler.scala`, `core/shared/src/main/scala/fs2/Pull.scala`, `core/shared/src/main/scala/fs2/Stream.scala`, `core/shared/src/main/scala/fs2/internal/Scope.scala`, `core/shared/src/main/scala/fs2/internal/ScopedResource.scala`, `core/shared/src/main/scala/fs2/internal/InterruptContext.scala`, `core/shared/src/test/scala/fs2/BracketSuite.scala`, `core/shared/src/test/scala/fs2/PullLawsSuite.scala`, `core/shared/src/test/scala/fs2/StreamInterruptSuite.scala`, `docs/implementation-notes.markdown`, `site/guide.md`, `README.md`, `LICENSE`. GitHub Linguist label: Scala.
+
+</details>
 
 _Generated from `catalog/scala.json`; do not edit by hand._

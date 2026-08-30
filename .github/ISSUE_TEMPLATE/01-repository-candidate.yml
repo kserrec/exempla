@@ -5,9 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for helping improve Exempla. A candidate is accepted only after
-        its pinned source passes the full qualification and SDC workflow in
-        CONTRIBUTING.md. Empty catalog slots and popularity never lower that bar.
+        A candidate is accepted only after one representative pinned path passes
+        the coding-relevance and quality gates and earns its Level from all four
+        published dimensions. Empty slots and popularity never lower that bar.
   - type: input
     id: repository-url
     attributes:
@@ -20,7 +20,7 @@ body:
     id: pinned-revision
     attributes:
       label: Inspected revision
-      description: Enter the full 40-character commit SHA you actually reviewed.
+      description: Enter the full 40-character commit SHA you reviewed.
       placeholder: 0123456789abcdef0123456789abcdef01234567
     validations:
       required: true
@@ -28,7 +28,7 @@ body:
     id: language
     attributes:
       label: Catalog language
-      description: Name the language whose meaningful first-party implementation you inspected.
+      description: Name the meaningful first-party implementation language you inspected.
       placeholder: Python
     validations:
       required: true
@@ -36,52 +36,57 @@ body:
     id: real-world-purpose
     attributes:
       label: Real-world purpose
-      description: Explain what the software does and the evidence that it serves or served a genuine purpose.
+      description: Explain what the software does and how its own documentation proves a genuine purpose.
     validations:
       required: true
   - type: textarea
-    id: source-inspection
+    id: coding-relevance
     attributes:
-      label: Source inspection
-      description: List the entry point, core implementation, boundaries, tests, and architecture or build files you inspected.
-      placeholder: |
-        - Entry point: path/to/file
-        - Core behavior: path/to/file
-        - Tests: path/to/test
-        - Trace followed: ...
-    validations:
-      required: true
-  - type: textarea
-    id: learning-value
-    attributes:
-      label: Learning value and quality evidence
-      description: Explain what makes the source unusually good to study and summarize its qualification evidence.
+      label: Coding relevance and domain context
+      description: Explain the transferable lesson, any short required domain context, and why programming rather than specialist subject matter drives the path.
     validations:
       required: true
   - type: textarea
     id: learner-path
     attributes:
-      label: Proposed learner path
-      description: Name prerequisites, a concrete starting file, and one behavior a learner can trace into tests or output.
+      label: Inspected learning path
+      description: Assign a stable path slug and name the goal, first source file and reason, supporting implementation and tests, prerequisites, concepts developed, and complete trace.
+      placeholder: |
+        Path slug:
+        Goal:
+        Start path and reason:
+        Supporting files:
+        Prerequisites:
+        Concepts developed:
+        Domain context:
+        Entry-to-result trace:
     validations:
       required: true
   - type: textarea
-    id: sdc-evidence
+    id: quality-evidence
     attributes:
-      label: SDC evidence
-      description: Record meaningful implementation LOC and exclusions, then justify S, D, C, and the resulting level independently.
+      label: Eight quality findings
+      description: Record source quality, architecture, naming and idiom, tests, documentation, traceability, maintainability, and educational value for this exact path.
+    validations:
+      required: true
+  - type: textarea
+    id: level-evidence
+    attributes:
+      label: Learning-level evidence
+      description: Score before consulting a gap. Give recurring signals and reasons for all four dimensions, then calculate the Level and guardrails.
       placeholder: |
-        S: score, LOC count, tool version, scope, and exclusions
-        D: score and observed code-level signals
-        C: score and observed system-level signals
-        SDC: formula result and any guardrail
+        Language technique: score, signals, reason
+        Behavioral reasoning: score, signals, reason
+        Design span: score, signals, reason
+        Constraint burden: score, signals, reason
+        Formula result and guardrail:
     validations:
       required: true
   - type: textarea
     id: license
     attributes:
       label: License evidence
-      description: Identify the license file at the inspected revision and explain any ambiguity.
+      description: State the exact SPDX expression and every pinned file URL needed to prove it for the selected path.
     validations:
       required: true
   - type: checkboxes
@@ -89,9 +94,13 @@ body:
     attributes:
       label: Confirmation
       options:
-        - label: I inspected the pinned source; this proposal is not based only on repository metadata, popularity, or reputation.
+        - label: I inspected the pinned source; this proposal is not based only on metadata, popularity, or reputation.
           required: true
         - label: This is genuine software, not a tutorial, exercise, starter, toy, or teaching-first project.
           required: true
-        - label: I understand that opening this issue proposes review and does not mean the candidate has passed the quality gate.
+        - label: I scored observed path evidence before consulting the desired catalog slot.
+          required: true
+        - label: This repository would contribute no more than two catalog paths and would not appear twice in the same language and Level bucket.
+          required: true
+        - label: I understand that this issue proposes review and does not pre-approve the candidate.
           required: true
