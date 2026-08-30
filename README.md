@@ -7,8 +7,8 @@ Learn transferable programming skills from exemplary real-world source code.
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
 path through production implementation and tests. The catalog currently has
-**150 qualified learning paths from 149 public repositories across 20
-languages**. Its **50 open slots are honest research gaps** after the completed
+**151 qualified learning paths from 150 public repositories across 20
+languages**. Its **49 open slots are honest research gaps** after the completed
 learner-centered re-review, path-centered remediation, and documented gap
 research. No gate or score is lowered to preserve an arbitrary count.
 
@@ -67,8 +67,8 @@ separate [pass/fail gate](docs/qualification.md).
 - [The v1 re-review](research/learner-centered-rebuild.json) preserves all 200
   retain/remove decisions and their recorded review passes.
 - [The remediation record](research/learner-centered-remediation.json) preserves
-  the verified 150-path baseline, 55 targeted claim-to-source checks, and the
-  Level 1 follow-up for every affected language.
+  the verified 150-path baseline, the concurrent APISIX result, 56 targeted
+  claim-to-source checks, and the Level 1 follow-up for every affected language.
 - [The current corpus audit](research/learner-centered-audit.json) reconciles
   counts, identities, guardrails, metadata, licenses, generated pages, source
   claims, and neighboring-level comparisons.
@@ -93,8 +93,10 @@ separated prior knowledge from concepts developed, corrected and rescored the
 known `r-lib/pkgconfig` source mismatch, completed a targeted source-claim
 audit, and revisited every Level 1 gap without weakening qualification. That
 review added Webmozart Assert's distinct `notNull()` path at Level 1; the total
-remains 150 because the score floor moved Swift Tagged into a full Level 3
-bucket and preserved Swift Log as a qualified capacity alternate.
+initially remained 150 because the score floor moved Swift Tagged into a full
+Level 3 bucket and preserved Swift Log as a qualified capacity alternate. Final
+integration also preserved the independently completed APISIX Level 5 path, so
+the published corpus now contains 151 paths without weakening a gate or score.
 
 ## Contributing
 

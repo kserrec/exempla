@@ -11,8 +11,9 @@ without turning judgment into an automated popularity ranking.
 - `scripts/catalog.py` enforces semantic rules and generates Markdown.
 - `languages/**/README.md` is generated and must not be hand-edited.
 - `research/learner-centered-rebuild.json` preserves all v1 re-review decisions.
-- `research/learner-centered-remediation.json` preserves the 150-path baseline,
-  path migration, targeted source checks, capacity decisions, and Level 1 gap
+- `research/learner-centered-remediation.json` preserves the 150-path starting
+  baseline, the concurrent APISIX result preserved during integration, path
+  migration, targeted source checks, capacity decisions, and Level 1 gap
   research from the post-rerun refinement.
 - `research/learner-centered-audit.json` is the active learner-centered corpus
   consistency audit.

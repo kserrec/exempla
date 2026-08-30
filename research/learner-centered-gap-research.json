@@ -2577,13 +2577,217 @@
       "rejected": ["BurntSushi/byteorder"],
       "gaps_after": {"1": 2, "2": 1, "3": 0, "4": 0, "5": 0},
       "conclusion": "Four discovery channels and two exact-pin inspections with executable Rust verification found a qualified Level 3 binary conversion alternate and a distinct Level 2 style-value path. anstyle fills one score-supported Level 2 place; both Level 1 places and the second Level 2 place remain honest because byteorder was not moved downward."
+    },
+    {
+      "order": 20,
+      "language_slug": "lua",
+      "language": "Lua",
+      "researched_at": "2026-08-29",
+      "starting_entries": [
+        {
+          "repository": "lunarmodules/say",
+          "level": 2
+        },
+        {
+          "repository": "kikito/middleclass",
+          "level": 3
+        },
+        {
+          "repository": "openresty/lua-resty-lrucache",
+          "level": 3
+        },
+        {
+          "repository": "lunarmodules/busted",
+          "level": 4
+        },
+        {
+          "repository": "lunarmodules/luacheck",
+          "level": 4
+        },
+        {
+          "repository": "Kong/kong",
+          "level": 5
+        }
+      ],
+      "gaps_before": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1
+      },
+      "discovery_channels": [
+        {
+          "id": "lua-luarocks-registry",
+          "channel": "official LuaRocks package registry",
+          "sources": [
+            "https://luarocks.org/modules/paulclinger/serpent",
+            "https://luarocks.org/modules/apisix/apisix",
+            "https://luarocks.org/modules/stephencathcart/log.lua"
+          ],
+          "evidence": "LuaRocks supplied canonical distribution, dependency, license, homepage, version, and production-use evidence for Serpent and APISIX, while the packaged log.lua fork linked the smaller rxi implementation as its upstream lead."
+        },
+        {
+          "id": "github-lua-source",
+          "channel": "GitHub Lua source, maintenance, language, and organization review",
+          "sources": [
+            "https://github.com/rxi/log.lua",
+            "https://github.com/pkulchenko/serpent",
+            "https://github.com/apache/apisix"
+          ],
+          "evidence": "Public source and current GitHub metadata established exact default-branch revisions, meaningful first-party Lua, archive and maintenance status, repository shape, direct test presence, documentation, and pinned license evidence for two compact libraries and a production gateway."
+        },
+        {
+          "id": "lua-maintainer-guides",
+          "channel": "maintainer-authored README, package, test, and contribution guides",
+          "sources": [
+            "https://github.com/rxi/log.lua/blob/master/README.md",
+            "https://github.com/pkulchenko/serpent/blob/master/README.md",
+            "https://github.com/apache/apisix/blob/master/README.md",
+            "https://github.com/apache/apisix/blob/master/CONTRIBUTING.md"
+          ],
+          "evidence": "Maintainer guides exposed log.lua's tiny logging and file-output contract, Serpent's graph, function, formatting, limit, compatibility, and safe-load behavior, and APISIX's real gateway role, source conventions, test expectations, and contribution surface."
+        },
+        {
+          "id": "apache-apisix-docs",
+          "channel": "official Apache APISIX architecture and deployment documentation",
+          "sources": [
+            "https://apisix.apache.org/docs/apisix/deployment-modes/",
+            "https://apisix.apache.org/docs/",
+            "https://apisix.apache.org/docs/ingress-controller/concepts/deployment-architecture/"
+          ],
+          "evidence": "Apache's primary documentation established file-driven and API-driven standalone operation, complete in-memory updates, resource versions, digest idempotence, hot reload, HTTP and stream responsibilities, security requirements, and the production setting for the selected path."
+        }
+      ],
+      "candidates": [
+        {
+          "repository": "rxi/log.lua",
+          "pinned_commit": "7396ae2ee6d68829aecbc96d0b2ee1e5620c1ed7",
+          "discovered_via": [
+            "lua-luarocks-registry",
+            "github-lua-source",
+            "lua-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "log.lua",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Logging levels, console formatting, caller location, file append, filtering, and variadic value conversion are general programming concerns; the implementation is substantive Lua rather than an example or generated wrapper.",
+          "quality_status": "fail",
+          "quality_evidence": "The exact pin contains a readable 110-line module, usage documentation, and an MIT license, but its entire repository consists of README.md, log.lua, and LICENSE: there is no automated test file or harness for level filtering, formatting, caller metadata, colors, number conversion, file creation, append, or I/O failure behavior. That absence materially fails the stable tests, coherent implementation-to-test path, and test-quality requirements.",
+          "decision_evidence": "Reject at the repository-quality gate: the exact pinned repository contains only README.md, log.lua, and LICENSE and provides no automated tests. The module's runtime branches include severity filtering, caller-source discovery, color formatting, variadic conversion and rounding, file creation and append, and unchecked file-open behavior, but examples do not assert any of those contracts. A direct Lua 5.4 smoke probe loaded the module and observed filtering plus fatal output, which confirms implementation exists but cannot replace a regression suite. The hard failure precedes numerical scoring and the open Lua buckets were not consulted.",
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass verified the exact pin, genuine compact Lua implementation, documented API, MIT license, non-archived repository, three-file repository shape, and complete absence of automated tests, and agreed that stable review evidence, implementation-to-test traceability, and test quality fail before scoring or capacity."
+          }
+        },
+        {
+          "repository": "pkulchenko/serpent",
+          "pinned_commit": "139fc18263bc5ffecc1729147891f1eb383046bf",
+          "discovered_via": [
+            "lua-luarocks-registry",
+            "github-lua-source",
+            "lua-maintainer-guides"
+          ],
+          "inspection_files": [
+            "README.md",
+            "src/serpent.lua",
+            "t/test.lua",
+            "t/bench.lua",
+            "misc/serpent-0.30-2.rockspec",
+            "LICENSE"
+          ],
+          "decision": "reject",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "Serialization needs only a short graph and round-trip primer; the path teaches recursive traversal, shared and cyclic identity, deferred references, metatable hooks, function bytecode, dynamic loading, isolated environments, stable formatting, limits, compatibility, and randomized tests.",
+          "quality_status": "pass",
+          "quality_evidence": "One intentional serializer module and direct test file; explicit dump, line, block, and load contracts; advanced but bounded idiomatic Lua; broad round-trip, cyclic, shared-reference, metatable, function, safety, locale, limit, ordering, and randomized tests; detailed feature and option documentation; complete value-to-code-to-value traceability; centralized compatibility and formatting policy; and exceptional compact systems-library teaching value satisfy all eight findings despite dense source formatting.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 3,
+            "design_span": 1,
+            "constraint_burden": 4
+          },
+          "calculated_level": 3,
+          "decision_evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/1/4 sums to 12, whose mean is 3.00 and produces Level 3. Both gates pass, but middleclass and lua-resty-lrucache already fill the two Lua Level 3 places with more complementary metatable object-model and FFI-backed cache-invariant paths. `LUA_PATH='./src/?.lua;;' lua t/test.lua` passed the exact pin's direct suite, including 100 randomized round trips. The path excludes user-defined userdata beyond documented conversions, threads, function upvalues and environments, and metatable preservation; shared and self references, functions and globals, deterministic formatting, numeric precision and locale, Lua 5.1 through 5.4 behavior, output limits, best-effort safe loading, and unsafe opt-out remain interacting constraints.",
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and recursive-value-to-seen-map-to-deferred-reference-section-to-generated-code-to-isolated-load path, both gates and all eight findings, 4/3/1/4 Level 3 formula, full capacity, passing direct and randomized Lua tests, Lua and MIT evidence, and every userdata, thread, function, metatable, identity, formatting, numeric, locale, version, limit, loading, and scope boundary."
+          }
+        },
+        {
+          "repository": "apache/apisix",
+          "pinned_commit": "a64f2baa06b1c7d55e53051f3430f39bf9f4024c",
+          "discovered_via": [
+            "lua-luarocks-registry",
+            "github-lua-source",
+            "lua-maintainer-guides",
+            "apache-apisix-docs"
+          ],
+          "inspection_files": [
+            "apisix/admin/standalone.lua",
+            "apisix/admin/config_validate.lua",
+            "apisix/core/config_yaml.lua",
+            "apisix/events.lua",
+            "apisix/router.lua",
+            "apisix/stream/router/ip_port.lua",
+            "apisix/init.lua",
+            "t/admin/standalone.t",
+            "t/admin/standalone-stream.t",
+            "t/admin/standalone.spec.ts",
+            "docs/en/latest/deployment-modes.md",
+            "README.md",
+            "CODE_STYLE.md",
+            "CONTRIBUTING.md",
+            "LICENSE"
+          ],
+          "decision": "accept",
+          "coding_relevance_status": "pass",
+          "coding_relevance_evidence": "A short gateway and OpenResty worker-model primer is sufficient; the path teaches transferable validation, versioned state replacement, idempotence, shared-memory publication, event and polling coordination, hot reload, safe initialization, failure isolation, and layered integration testing.",
+          "quality_status": "pass",
+          "quality_evidence": "Intentional Admin, validator, event, configuration, router, and phase modules; explicit control, storage, worker, runtime, and routing boundaries; idiomatic advanced OpenResty Lua; forty Jest API cases, seventeen Test::Nginx lifecycle cases, and a focused pre-configuration stream regression; official architecture, deployment, style, and contribution docs; complete update-to-worker-to-route traceability; centralized validation, versioning, publication, and synchronization policy; and exceptional event-driven systems teaching value satisfy all eight findings.",
+          "scores": {
+            "language_technique": 4,
+            "behavioral_reasoning": 5,
+            "design_span": 5,
+            "constraint_burden": 5
+          },
+          "calculated_level": 5,
+          "decision_evidence": "The scores were written before capacity was checked. The 4/5/5/5 profile sums to 19, whose mean of 4.75 rounds half up to Level 5 and satisfies the guardrail; both gates pass and the open second Lua Level 5 place accepts APISIX's API-driven standalone configuration path. The selected Lua files passed `luac -p` at the exact pin; OpenResty and LuaJIT are unavailable locally, so the Test::Nginx and Jest integration suites were inspected but not executed. The path excludes etcd and xDS providers, file-driven parsing after initial provider selection, HTTP router algorithms, upstream balancing internals, plugin execution, TLS matching internals, and cluster-wide control-plane distribution; full replacement, digest idempotence, per-resource versions and modified indexes, validation and duplicates, shared-memory publication, separate HTTP and stream event domains, timer polling, worker recovery, hot route rebuild, empty startup, Admin API security, availability, and performance remain explicit constraints.",
+          "second_review": {
+            "reviewer": "Codex cold self-review",
+            "status": "agree",
+            "notes": "A separate cold pass rechecked the exact pin and Admin-body-to-validation-to-version-and-digest-to-shared-dictionary-to-event-or-stream-poll-to-resource-sync-to-router-rebuild-to-live-request path, both gates and all eight findings, 4/5/5/5 Level 5 result and guardrail, open capacity, successful Lua syntax checks, unavailable OpenResty integration runtime, Lua and Apache-2.0 evidence, and every provider, router, upstream, plugin, TLS, distribution, replacement, version, validation, worker, startup, security, availability, performance, and scope boundary."
+          }
+        }
+      ],
+      "accepted": [
+        "apache/apisix"
+      ],
+      "rejected": [
+        "rxi/log.lua",
+        "pkulchenko/serpent"
+      ],
+      "gaps_after": {
+        "1": 2,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "conclusion": "Four discovery channels and three exact-pin inspections deliberately spanning tiny and platform-scale software produced one hard direct-test rejection, one qualified Level 3 serialization alternate, and one distinct Level 5 configuration-propagation path. APISIX fills the second score-supported Level 5 place; both Level 1 places and the second Level 2 place remain honest because neither smaller candidate was moved downward."
     }
   ],
   "summary": {
-    "languages_completed": 19,
-    "accepted_new_total": 17,
-    "rejected_new_total": 30,
-    "current_entry_total": 150,
-    "remaining_gap_total": 50
+    "languages_completed": 20,
+    "accepted_new_total": 18,
+    "rejected_new_total": 32,
+    "current_entry_total": 151,
+    "remaining_gap_total": 49
   }
 }

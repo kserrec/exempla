@@ -278,13 +278,13 @@
   },
   "path_identity_migration": {
     "status": "completed",
-    "accepted_path_total": 150,
-    "unique_repository_total": 149,
+    "accepted_path_total": 151,
+    "unique_repository_total": 150,
     "identity": "(repository, path_slug)",
     "repository_path_maximum": 2,
     "same_language_level_repository_repetition": 0,
     "notes": [
-      "Every accepted entry now has a canonical path_slug and all 150 identity pairs are globally unique.",
+      "Every accepted entry now has a canonical path_slug and all 151 identity pairs are globally unique, including the concurrent APISIX path preserved after the verified 150-path starting snapshot.",
       "webmozarts/assert contributes the distinct not-null-guard and mixin-generator paths at PHP Levels 1 and 3; every other accepted repository contributes one path.",
       "The validator rejects a third path from one repository and rejects two paths from the same repository in one language and Level bucket."
     ]
@@ -533,7 +533,8 @@
     {"repository":"tokio-rs/tokio","path_slug":"tokio-s-bounded-mpsc-channel-coordinates-permits-lock-free-message","pinned_commit":"ea91b33ca57ff0581b38e735cc108f831bccbdaa","mandatory_reasons":["high-risk unsafe and lock-free concurrency claims"],"status":"pass","evidence":"The pinned channel connects semaphore permits to a lock-free list, uses AtomicWaker and Notify for receiver and close transitions, confines UnsafeCell receiver fields to the sole receiver, and handles sender counts, closure, and destruction."},
     {"repository":"typelevel/cats-effect","path_slug":"cats-effect-interprets-io-as-a-cancelable-fiber-and-schedules","pinned_commit":"3d4486d47a22a40ba33f822cf4adb1eccfdb4feb","mandatory_reasons":["high-risk fiber runtime and cancellation claims"],"status":"pass","evidence":"The pinned IOFiber contains the interpreter run loop, suspension and resume state, cancellation masks, finalizer and callback stacks, cede states, and runtime handoff needed for cancelable fair fiber execution."},
     {"repository":"angular/angular","path_slug":"angular-s-public-signal-and-computed-apis-maintain-a-dynamic","pinned_commit":"34817da7354f2a4e55f277a991d4345a4ca8a91d","mandatory_reasons":["high-risk dynamic dependency-graph claim"],"status":"pass","evidence":"The pinned signal graph tracks active consumers, producer and consumer edges, versions, a global epoch, dirty and live state, recomputation, notification, and cycle-sensitive dependency updates."},
-    {"repository":"colinhacks/zod","path_slug":"a-zod-object-schema-keeps-inferred-input-and-output-types","pinned_commit":"571c8e8a3d73b4305f4abfdd6977773cc12f2bf5","mandatory_reasons":["high-risk generated, asynchronous, and recursive parsing claims"],"status":"pass","evidence":"The pinned schema core exposes synchronous and asynchronous parse paths, a jitless switch, deferred and generated execution paths, cycle-aware memoization, lazy schemas, recursive object handling, and matching typed schema definitions."}
+    {"repository":"colinhacks/zod","path_slug":"a-zod-object-schema-keeps-inferred-input-and-output-types","pinned_commit":"571c8e8a3d73b4305f4abfdd6977773cc12f2bf5","mandatory_reasons":["high-risk generated, asynchronous, and recursive parsing claims"],"status":"pass","evidence":"The pinned schema core exposes synchronous and asynchronous parse paths, a jitless switch, deferred and generated execution paths, cycle-aware memoization, lazy schemas, recursive object handling, and matching typed schema definitions."},
+    {"repository":"apache/apisix","path_slug":"api-driven-standalone-config-hot-reload","pinned_commit":"a64f2baa06b1c7d55e53051f3430f39bf9f4024c","mandatory_reasons":["concurrent accepted Level 5 path preserved during remediation integration","high-risk cross-worker configuration and hot-reload claims"],"status":"pass","evidence":"The pinned Admin handler, validator, configuration provider, event adapter, stream router, initialization path, direct integration tests, and deployment guide support the published validation, digest and version, shared-memory publication, event and polling, hot-rebuild, and empty-startup claims. All 13 recorded source, test, documentation, and license paths resolved at the exact pin."}
   ],
   "level_one_research": [
     {
@@ -609,8 +610,8 @@
     {
       "language_slug": "lua",
       "level_one_gaps_before": 2,
-      "existing_repositories_considered": ["Kong/kong", "kikito/middleclass", "lunarmodules/busted", "lunarmodules/luacheck", "lunarmodules/say", "openresty/lua-resty-lrucache"],
-      "existing_path_result": "say's namespace setters remain part of the same message-registry behavior, middleclass allocation remains part of its class system, and the other repositories have no distinct production-complete behavior below their current paths.",
+      "existing_repositories_considered": ["apache/apisix", "Kong/kong", "kikito/middleclass", "lunarmodules/busted", "lunarmodules/luacheck", "lunarmodules/say", "openresty/lua-resty-lrucache"],
+      "existing_path_result": "say's namespace setters remain part of the same message-registry behavior, middleclass allocation remains part of its class system, APISIX's configuration-propagation behavior remains an expert Level 5 path, and the other repositories have no distinct production-complete behavior below their current paths.",
       "external_research": {
         "basis": "new four-channel pass: LuaRocks registry and dependency statistics, the LewisJEllis awesome-lua curated list, GitHub small public Lua repository search, and focused source review of small-library maintainers and OpenResty",
         "sources": ["https://luarocks.org/modules/kikito/ansicolors", "https://luarocks.org/stats/dependencies", "https://github.com/LewisJEllis/awesome-lua", "https://api.github.com/search/repositories?q=language%3ALua+archived%3Afalse+stars%3A%3E100+size%3A%3C200&sort=updated&order=desc&per_page=20"],
@@ -756,7 +757,7 @@
   ],
   "final_status": "pass-with-documented-gaps",
   "known_limitations": [
-    "Fifty of 200 possible language and Level paths remain unfilled. Each affected Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
+    "Forty-nine of 200 possible language and Level paths remain unfilled. Each affected Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
     "Repository status and GitHub Linguist labels are a point-in-time check dated 2026-08-29 and can change after the audit.",
     "The audit and verification passes are AI-assisted. No independent human inspection is claimed.",
     "Hosted CI is external release evidence rather than a corpus-quality judgment and is not embedded in this point-in-time remediation record."

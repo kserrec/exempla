@@ -2,18 +2,18 @@
   "schema_version": 1,
   "audit_name": "learner-centered corpus audit",
   "audited_at": "2026-08-29",
-  "scope": "The 150 accepted learning paths after the path-identity, score-floor, prerequisite, concepts-developed, source-evidence, and Level 1 remediation pass.",
+  "scope": "The 151 accepted learning paths after the path-identity, score-floor, prerequisite, concepts-developed, source-evidence, Level 1 remediation, and concurrent APISIX preservation pass.",
   "catalog_summary": {
-    "accepted_path_total": 150,
-    "unique_repository_total": 149,
+    "accepted_path_total": 151,
+    "unique_repository_total": 150,
     "capacity": 200,
-    "documented_gap_total": 50,
+    "documented_gap_total": 49,
     "by_level": {
       "1": 3,
       "2": 35,
       "3": 39,
       "4": 40,
-      "5": 33
+      "5": 34
     },
     "by_language": [
       {"language_slug": "c", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
@@ -24,7 +24,7 @@
       {"language_slug": "java", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
       {"language_slug": "javascript", "levels": {"1": 2, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 10},
       {"language_slug": "kotlin", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
-      {"language_slug": "lua", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 1}, "total": 6},
+      {"language_slug": "lua", "levels": {"1": 0, "2": 1, "3": 2, "4": 2, "5": 2}, "total": 7},
       {"language_slug": "objective-c", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 2}, "total": 8},
       {"language_slug": "php", "levels": {"1": 1, "2": 2, "3": 2, "4": 2, "5": 0}, "total": 7},
       {"language_slug": "powershell", "levels": {"1": 0, "2": 2, "3": 2, "4": 2, "5": 1}, "total": 7},
@@ -42,17 +42,17 @@
     {
       "check": "accepted-entry total and distribution",
       "status": "pass",
-      "evidence": "150 accepted paths reconcile to the 20 language files and to the 3/35/39/40/33 level totals recorded above. Fifty unfilled capacity slots remain explicit gaps."
+      "evidence": "151 accepted paths reconcile to the 20 language files and to the 3/35/39/40/34 level totals recorded above. Forty-nine unfilled capacity slots remain explicit gaps."
     },
     {
       "check": "path identity",
       "status": "pass",
-      "evidence": "All 150 (repository, path_slug) pairs are unique. Every accepted record has a canonical path_slug."
+      "evidence": "All 151 (repository, path_slug) pairs are unique. Every accepted record has a canonical path_slug."
     },
     {
       "check": "repository diversity cap",
       "status": "pass",
-      "evidence": "No repository supplies more than two paths. webmozarts/assert supplies exactly two materially distinct paths; each of the other 148 repositories supplies one."
+      "evidence": "No repository supplies more than two paths. webmozarts/assert supplies exactly two materially distinct paths; each of the other 149 repositories supplies one."
     },
     {
       "check": "same-bucket repository duplication",
@@ -67,12 +67,12 @@
     {
       "check": "score guardrails",
       "status": "pass",
-      "evidence": "All 92 paths containing a score of 4 publish at Level 3 or above; all 43 paths containing a score of 5 publish at Level 4 or above; every Level 5 path has at least two scores of 5. There are zero violations."
+      "evidence": "All 93 paths containing a score of 4 publish at Level 3 or above; all 44 paths containing a score of 5 publish at Level 4 or above; every Level 5 path has at least two scores of 5. There are zero violations."
     },
     {
       "check": "concepts developed",
       "status": "pass",
-      "evidence": "All 150 paths have non-empty, distinct concepts_developed lists."
+      "evidence": "All 151 paths have non-empty, distinct concepts_developed lists."
     },
     {
       "check": "prerequisite and lesson separation",
@@ -82,12 +82,12 @@
     {
       "check": "pinned source evidence",
       "status": "pass",
-      "evidence": "All 150 paths have a full 40-character pinned commit and inspected source, test, documentation, and license paths."
+      "evidence": "All 151 paths have a full 40-character pinned commit and inspected source, test, documentation, and license paths."
     },
     {
       "check": "public repository, archive, and GitHub language metadata",
       "status": "pass",
-      "evidence": "A live GitHub GraphQL and REST check on 2026-08-29 resolved all 149 unique repositories as public, enabled, and unarchived and matched every stored GitHub Linguist label."
+      "evidence": "A live GitHub GraphQL and REST check on 2026-08-29 resolved all 150 unique repositories as public, enabled, and unarchived and matched every stored GitHub Linguist label; APISIX and all 13 recorded evidence paths were rechecked when the concurrent Lua result was integrated."
     },
     {
       "check": "selected-path language classification",
@@ -97,7 +97,7 @@
     {
       "check": "license evidence",
       "status": "pass",
-      "evidence": "All 150 paths carry an SPDX expression and at least one pinned license URL; 167 pinned license evidence URLs are recorded in total."
+      "evidence": "All 151 paths carry an SPDX expression and at least one pinned license URL; 168 pinned license evidence URLs are recorded in total."
     },
     {
       "check": "generated-page reconciliation",
@@ -107,7 +107,7 @@
     {
       "check": "source-mechanism claim consistency",
       "status": "pass",
-      "evidence": "The remediation record contains 55 per-path pinned-source results: 53 pass and 2 corrected. r-lib/pkgconfig was corrected and rescored; pointfreeco/swift-tagged was corrected to Level 3. No unresolved high-risk mechanism claim remains."
+      "evidence": "The remediation record contains 56 per-path pinned-source results: 54 pass and 2 corrected. r-lib/pkgconfig was corrected and rescored; pointfreeco/swift-tagged was corrected to Level 3; the concurrent APISIX path passed its exact-pin source and evidence-path check. No unresolved high-risk mechanism claim remains."
     }
   ],
   "cross_level_sanity": {
@@ -182,7 +182,7 @@
     "unusual_distributions": [
       {
         "languages": ["lua", "shell"],
-        "judgment": "Both retain only six accepted paths because source inspection did not justify beginner paths; Shell also has no qualifying Level 5 path, while Lua has one. The gaps are documented research outcomes, not formula anomalies."
+        "judgment": "Neither language has an accepted beginner path after documented research. Shell retains six paths and has no qualifying Level 5 path; Lua has seven paths and fills both Level 5 places after the concurrent APISIX configuration-propagation path qualified. The remaining gaps are research outcomes, not formula anomalies."
       },
       {
         "languages": ["php"],
@@ -216,10 +216,10 @@
     {"command": "python3 -m unittest discover -s tests -v", "status": "pass", "result": "30 tests passed"},
     {"command": "python3 scripts/catalog.py validate", "status": "pass", "result": "Catalog data is valid."},
     {"command": "python3 scripts/catalog.py check-generated", "status": "pass", "result": "Generated Markdown is current."},
-    {"check": "GitHub live metadata query", "status": "pass", "result": "149 of 149 unique repositories resolved as public, enabled, and unarchived; zero stored metadata mismatches."}
+    {"check": "GitHub live metadata query", "status": "pass", "result": "150 of 150 unique repositories resolved as public, enabled, and unarchived; zero stored metadata mismatches. All 13 APISIX evidence paths also resolved at its exact pin."}
   ],
   "known_limitations": [
-    "Fifty of 200 possible language and Level slots remain unfilled, including 37 of 40 possible Level 1 slots. Each Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
+    "Forty-nine of 200 possible language and Level slots remain unfilled, including 37 of 40 possible Level 1 slots. Each Level 1 gap is unresolved after the current documented research pass; the standards were not relaxed to fill it.",
     "Repository status and GitHub Linguist labels are a point-in-time check dated 2026-08-29 and can change after the audit.",
     "The audit and verification passes are AI-assisted. No independent human inspection is claimed.",
     "Hosted CI is external release evidence rather than a corpus-quality judgment and is not embedded in this point-in-time audit record."

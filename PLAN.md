@@ -7,9 +7,9 @@ Complexity release plan is historical.
 ## Current state
 
 - The canonical schema is version 3.
-- The catalog contains 150 qualified learning paths from 149 public
+- The catalog contains 151 qualified learning paths from 150 public
   repositories across 20 languages.
-- The 200-path grid has 50 documented research gaps. Ordinary validation
+- The 200-path grid has 49 documented research gaps. Ordinary validation
   accepts honest gaps; `--complete` is reserved for a genuinely full grid.
 - A path is identified by `(repository, path_slug)`. One repository may supply
   at most two materially distinct paths and never two paths in the same
@@ -38,6 +38,9 @@ Complexity release plan is historical.
   scoring standards.
 - [x] Run live metadata, license, generated-output, distribution, and cross-
   level consistency checks and publish the active audit.
+- [x] Preserve the concurrently completed APISIX Level 5 path and its Lua
+  candidate evidence, migrate it to schema version 3, and recompute the final
+  corpus as 151 paths with 49 documented gaps.
 - [x] Make AI-assisted review provenance explicit and collapse detailed audit
   evidence on generated learner pages.
 - [x] Replace current-facing Size / Difficulty / Complexity terminology and

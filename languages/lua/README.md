@@ -1,6 +1,6 @@
 # Lua
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
 [← All languages](../README.md)
 
@@ -393,6 +393,90 @@ Required domain context:
 </details>
 
 ## Level 5
+
+### [apache/apisix](https://github.com/apache/apisix)
+
+**Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+A cloud-native API and AI gateway with dynamic routing, load balancing, policy plugins, observability, standalone and distributed configuration modes, and HTTP, stream, and extensible runtime paths.
+
+**Why study it:** APISIX's API-driven standalone configuration path is an expert trace through validation, monotonic resource versions, shared memory, subsystem-specific events, per-worker polling, hot route rebuilds, and safe traffic handling before the first configuration arrives.
+
+**Prerequisites:**
+
+- Comfort with Lua modules, tables, metatables, closures, protected calls, and callback-based code.
+- Familiarity with HTTP requests, JSON documents, validation, and the idea that multiple server processes may handle requests concurrently.
+- Basic knowledge that APISIX and OpenResty run Lua handlers inside Nginx worker phases; the required project-specific worker model is summarized below.
+
+**Concepts this path develops:**
+
+- Atomic full-configuration validation and publication with digest idempotence and monotonic resource versions.
+- Cross-worker convergence through shared dictionaries, direct events, and polling across separate Lua virtual machines.
+- Hot router reconstruction and safe empty-startup behavior while live traffic continues.
+
+**What you can learn:**
+
+- Trace a full configuration update from the Admin API through validation, version and digest decisions, shared-memory publication, HTTP and stream worker synchronization, per-resource cache mutation, route rebuild, and request behavior before and after configuration arrives.
+
+**Learning path:**
+
+- **Goal:** Understand how APISIX validates and distributes an API-driven standalone configuration across HTTP and stream workers while preserving version order, idempotence, hot routing, and safe behavior before the first update.
+- **Start here:** [`apisix/admin/standalone.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/admin/standalone.lua) — The reviewed trace begins in standalone.lua because its update handler owns request parsing, digest idempotence, full-resource version decisions, shared-memory publication, worker notification, and the cross-subsystem polling fallback.
+- **Then read:**
+  - [`apisix/admin/config_validate.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/admin/config_validate.lua)
+  - [`apisix/core/config_yaml.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/core/config_yaml.lua)
+  - [`apisix/events.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/events.lua)
+  - [`apisix/router.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/router.lua)
+  - [`apisix/stream/router/ip_port.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/stream/router/ip_port.lua)
+  - [`apisix/init.lua`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/apisix/init.lua)
+  - [`t/admin/standalone.t`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/t/admin/standalone.t)
+  - [`t/admin/standalone-stream.t`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/t/admin/standalone-stream.t)
+  - [`t/admin/standalone.spec.ts`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/t/admin/standalone.spec.ts)
+  - [`docs/en/latest/deployment-modes.md`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/docs/en/latest/deployment-modes.md)
+  - [`README.md`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/README.md)
+  - [`LICENSE`](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/LICENSE)
+- **Trace:** Start in the Standalone Admin API update handler and follow body parsing into batch schema and duplicate validation, digest idempotence, per-resource monotonic version checks, final-config construction, JSON publication in the standalone shared dictionary, and worker-event posting; continue through subsystem-specific event setup and the stream polling fallback into config_yaml's per-worker update and resource sync, then follow stream router version detection and empty-startup handling into stream_preread_phase matching; close the path with the Jest API contract, Test::Nginx hot-update and version cases, and the exact regression for a connection arriving before the first configuration.
+
+**Why this level:**
+
+- **Language technique 4:** Advanced Lua and OpenResty runtime machinery recurs across the main trace, but one bounded path does not require multiple pervasive expert-level language mechanisms beyond that framework fluency.
+- **Behavioral reasoning 5:** Expert nonlocal reasoning across asynchronous publication, per-worker state, scheduling, failures, initialization, and live traffic is unavoidable throughout the selected behavior.
+- **Design span 5:** Understanding the behavior requires coordinating several major control, storage, process, runtime, routing, and test subsystems rather than one local component.
+- **Constraint burden 5:** Several system-wide correctness, ordering, availability, security, recovery, compatibility, and performance guarantees interact so a locally plausible change can reject valid state, publish stale state, strand workers, or abort live traffic.
+- **Placement:** The four scores 4/5/5/5 sum to 19; their arithmetic mean is 4.75 and rounds half-up to Level 5. The published result is Level 5.
+
+**License:** Apache-2.0 ([evidence 1](https://github.com/apache/apisix/blob/a64f2baa06b1c7d55e53051f3430f39bf9f4024c/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Real-world evidence:** The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.
+
+**Language evidence:** Lua implements the Standalone Admin API, configuration validation and propagation, OpenResty worker events and timers, per-resource hot-reload state, stream routing, request phases, and the production gateway runtime; the selected integration suites exercise that Lua behavior.
+
+**Coding relevance:**
+
+That short gateway and worker-model primer is documented in the selected files. Transferable validation, versioned state replacement, idempotence, shared-memory publication, event and polling coordination, hot reload, availability during initialization, fault isolation, and integration testing explain the path's difficulty.
+
+Required domain context:
+
+- API-driven standalone mode accepts a complete gateway configuration through an Admin API, stores it in shared memory, and hot-updates each worker without restarting the gateway.
+- OpenResty's HTTP and stream subsystems use separate Lua virtual machines and event sockets, so stream workers poll shared state even when HTTP workers can receive an event directly.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The selected modules make validation, version decisions, publication, event and polling coordination, cache mutation, router rebuild, empty startup, and request failure paths explicit.
+- **Architecture:** The Admin handler, validator, shared dictionary, event adapter, configuration provider, per-worker resource objects, router, and request phase have recognizable responsibilities and boundaries.
+- **Naming and idiom:** update_and_broadcast_config, validate_configuration, conf_version, sync_data, _automatic_fetch, stream_init_worker, create_router, and matched_route communicate the live configuration lifecycle in idiomatic OpenResty Lua.
+- **Tests:** Forty Jest cases and seventeen Test::Nginx cases cover JSON and YAML updates, digests, versions, modified indexes, validation, duplicates, additions, deletion, routes and stream routes; a focused regression protects a stream connection before the first configuration.
+- **Documentation:** The deployment-mode guide explains file-driven and API-driven standalone operation, full updates, version rules, digests, security requirements, hot reload, and empty startup; README.md provides gateway orientation.
+- **Traceability:** A configuration can be followed from one HTTP update through validation and publication into worker-local resource state, route reconstruction, live request behavior, and direct integration assertions.
+- **Maintainability:** Version, validation, publication, resource synchronization, and routing responsibilities are separated, and layered direct suites protect both API contracts and cross-worker runtime behavior.
+- **Educational value:** The path joins a familiar configuration API to the exact concurrency, lifecycle, and consistency mechanisms needed to hot-update a production event-driven gateway safely.
+
+**Inspection record:** commit `a64f2baa06b1c7d55e53051f3430f39bf9f4024c`, inspected 2026-08-29. Review passes: Codex primary pass; independent Codex verification pass. Files inspected: `apisix/admin/standalone.lua`, `apisix/admin/config_validate.lua`, `apisix/core/config_yaml.lua`, `apisix/events.lua`, `apisix/router.lua`, `apisix/stream/router/ip_port.lua`, `apisix/init.lua`, `t/admin/standalone.t`, `t/admin/standalone-stream.t`, `t/admin/standalone.spec.ts`, `docs/en/latest/deployment-modes.md`, `README.md`, `LICENSE`. GitHub Linguist label: Lua.
+
+</details>
 
 ### [Kong/kong](https://github.com/Kong/kong)
 

@@ -11,8 +11,9 @@ This directory preserves decision evidence outside learner-facing pages.
   inspections, scores, verification passes, admissions, rejections, and honest
   unresolved gaps from the post-cutover search.
 - `learner-centered-remediation.json` records the verified 150-path baseline,
-  path-identity migration, targeted claim-to-source checks, capacity decisions,
-  and the follow-up research for every affected Level 1 gap.
+  the concurrent APISIX result preserved during integration, path-identity
+  migration, targeted claim-to-source checks, capacity decisions, and the
+  follow-up research for every affected Level 1 gap.
 - `learner-centered-audit.json` is the active learner-centered corpus audit. It
   reconciles the accepted set, distributions, identities, score guardrails,
   prerequisites and concepts, pins, live metadata, licenses, generated pages,

@@ -58,7 +58,7 @@ validation and did not replace a completed-corpus consistency pass.
 
 ## Corpus-wide consistency pass — 2026-08-29
 
-The post-rerun pass reviewed the completed 150-path corpus as paths rather than
+The post-rerun pass reviewed the completed 151-path corpus as paths rather than
 whole repositories. It enforced globally unique `(repository, path_slug)`
 identities, a two-path maximum per repository, no repeated repository within a
 language/Level bucket, the arithmetic formula, all score floors, and explicit
@@ -76,12 +76,14 @@ claimed advanced R metaprogramming mechanisms; correcting its language score
 from 4 to 3 left it at Level 2. The distinct Webmozart `notNull()` path was
 accepted at Level 1 after the Level 1 follow-up, while Swift Log was retained as
 a qualified Level 3 capacity alternate rather than moving any path to fit a
-slot.
+slot. Final integration also preserved APISIX's independently completed Level 5
+configuration-propagation path and reran the corpus checks under schema version
+3.
 
 The [current learner-centered audit](../research/learner-centered-audit.json)
 records all distributions, 14 invariant checks, comparisons, corrections, and
-known gaps. It ends `pass-with-documented-gaps`: 150 of 200 possible paths are
-accepted, and all 50 open slots remain explicit rather than lowering a gate or
+known gaps. It ends `pass-with-documented-gaps`: 151 of 200 possible paths are
+accepted, and all 49 open slots remain explicit rather than lowering a gate or
 score. No obvious cross-level inconsistency remains, so calibration stops here;
 future placement changes require new path-specific evidence rather than tuning
 the corpus toward a desired distribution.
