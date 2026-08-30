@@ -1,6 +1,8 @@
 # C#
 
-8 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+9 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -8,11 +10,97 @@
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
+
+### [dotnet/samples](https://github.com/dotnet/samples)
+
+**Language 3 / Behavior 2 / Design 2 / Constraints 2 → Level 2**
+
+**Source:** Educational exemplar
+
+Microsoft's completed unit-testing sample checks a small prime-number service with boundary, positive, and negative xUnit data sets.
+
+**Why study it:** Follow one small class into organized boundary and representative data sets, seeing how test names and failure messages explain the intended contract.
+
+Levels 1–2 may use intentionally instructive software when it provides a gentler path into reading good source code.
+
+**Short context:**
+
+- A prime integer is at least two and has no whole-number divisor other than one and itself; that elementary definition is sufficient for the path.
+
+**Prerequisites:**
+
+- The global novice C# baseline: classes, methods, integers, conditionals, loops, namespaces, and focused tests.
+- A theory is one test method repeated for each InlineData row; the supplied value becomes the method argument.
+
+**Concepts this path develops:**
+
+- Partitioning test data around a public contract's meaningful cases.
+- Keeping production and test dependencies in separate projects.
+- Writing diagnostic assertions that include the failing input.
+
+**What you can learn:**
+
+- Separate a library project from a project that tests its public behavior.
+- Use data rows to cover boundary values, representative successes, and representative failures.
+- Trace an early return and divisor loop into exact boolean assertions.
+
+**Learning path:**
+
+- **Goal:** Understand how a complete .NET sample organizes and runs data-driven tests for a small C# prime-checking service.
+- **Start here:** [`core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs) — The file contains the complete early-boundary and divisor-loop behavior checked by the sample.
+- **Then read:**
+  - [`core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs)
+  - [`core/getting-started/unit-testing-using-dotnet-test/README.md`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/README.md)
+  - [`core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj`](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj)
+- **Trace:** Start at IsPrime's less-than-two return, follow candidates through the divisor loop and success return, then group the InlineData rows into boundary, prime, and composite cases and connect their xUnit assertions to the configured test project.
+
+**Why this level:**
+
+- **Language technique 3:** Attributes materially control test discovery and input injection, while the implementation language remains basic C#.
+- **Behavioral reasoning 2:** A few local branches determine the result, and representative cases remain easy to simulate by hand.
+- **Design span 2:** Two small, explicit project roles contain the complete implementation-to-test path.
+- **Constraint burden 2:** Routine correctness and test-runner safeguards matter without broader production constraints.
+- **Novice accessibility floor 2:** A short primer on theories, InlineData, and project references is sufficient; the elementary loop and every expected result remain directly predictable.
+  - **Central concepts:** data-driven xUnit tests; test-case partitioning; library and test project separation
+  - **Incidental concepts:** the square-root loop bound; MSBuild package references
+- **Placement:** The four scores 3/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** CC-BY-4.0 ([evidence 1](https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The subproject README identifies this complete artifact as the sample for Microsoft's unit-testing tutorial, documents restore and test commands, and includes both implementation and configured test projects.
+
+**Language evidence:** The selected service, xUnit tests, and project definitions are first-party C# and MSBuild files in Microsoft's .NET samples repository; GitHub labels the repository C#.
+
+**Coding relevance:**
+
+The mathematics is elementary and subordinate to reusable lessons in test partitioning, project boundaries, loops, early returns, and diagnostics.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation is complete, readable, and uses a bounded loop rather than placeholder or exercise code.
+- **Architecture:** The sample cleanly separates the service library, tests, and their project dependency.
+- **Naming and idiom:** IsPrime, candidate, divisor, expected test classes, and xUnit attributes state intent conventionally.
+- **Tests:** Eleven InlineData cases cover below-boundary values, small primes, and small composites with input-specific messages.
+- **Documentation:** The README states the tutorial purpose, project behavior, restore process, and exact test command.
+- **Traceability:** Each data row reaches one method call and one boolean assertion through a short visible implementation.
+- **Maintainability:** A narrow API and explicit test project keep changes bounded; current package references remain in the checked-in project.
+- **Educational value:** The artifact teaches meaningful professional test organization while keeping the application logic transparent.
+
+**Inspection record:** commit `86ff8487361a6f32549d9c9ab8b14dde55c643cf`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs`, `core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs`, `core/getting-started/unit-testing-using-dotnet-test/README.md`, `core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.csproj`, `core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj`, `LICENSE`. GitHub Linguist label: C#.
+
+</details>
 
 ### [ardalis/GuardClauses](https://github.com/ardalis/GuardClauses)
 
 **Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
 
 A small C# library that checks arguments and returns an accepted value so calling code can continue safely.
 
@@ -60,7 +148,7 @@ A small C# library that checks arguments and returns an accepted value so callin
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.
+**Purpose evidence:** The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.
 
 **Language evidence:** The guard entry point and validation extension methods under src/GuardClauses are implemented in C#.
 
@@ -88,6 +176,8 @@ No specialist domain context is required.
 ### [Humanizr/Humanizer](https://github.com/Humanizr/Humanizer)
 
 **Language 2 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
+
+**Source:** Production software
 
 A C# string helper that shortens long text to a requested length and can keep either the beginning or the end.
 
@@ -144,7 +234,7 @@ A C# string helper that shortens long text to a requested length and can keep ei
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.
+**Purpose evidence:** Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.
 
 **Language evidence:** The selected extension methods, truncation strategy interface, fixed-length implementation, direction enum, and direct tests are implemented in C# under src/Humanizer and tests/Humanizer.Tests.
 
@@ -169,11 +259,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [FluentValidation/FluentValidation](https://github.com/FluentValidation/FluentValidation)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A strongly typed validation framework that turns fluent expression-based rules into synchronous or asynchronous validation pipelines.
 
@@ -224,7 +316,7 @@ A strongly typed validation framework that turns fluent expression-based rules i
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** FluentValidation is released as production validation infrastructure used in .NET services and applications.
+**Purpose evidence:** FluentValidation is released as production validation infrastructure used in .NET services and applications.
 
 **Language evidence:** Validator composition, rule components, expression parsing, selectors, conditions, async execution, messages, and results are C#.
 
@@ -252,6 +344,8 @@ The learner-facing short context appears above.
 ### [serilog/serilog](https://github.com/serilog/serilog)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.
 
@@ -301,7 +395,7 @@ A structured logging core that turns message templates and properties into immut
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.
+**Purpose evidence:** Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.
 
 **Language evidence:** Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.
 
@@ -331,6 +425,8 @@ The learner-facing short context appears above.
 ### [DapperLib/Dapper](https://github.com/DapperLib/Dapper)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A lightweight object mapper that extends database connections with fast SQL execution and row-to-object materialization.
 
@@ -378,7 +474,7 @@ A lightweight object mapper that extends database connections with fast SQL exec
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.
+**Purpose evidence:** Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.
 
 **Language evidence:** SQL execution, parameter handling, mapping, caching, async operations, type handlers, and AOT support are implemented in C#.
 
@@ -406,6 +502,8 @@ The learner-facing short context appears above.
 ### [dotnet/aspnetcore](https://github.com/dotnet/aspnetcore)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 The ASP.NET Core web platform, including HTTP servers, middleware, routing, hosting, MVC, Razor, Blazor, SignalR, security, and deployment integrations.
 
@@ -456,7 +554,7 @@ The ASP.NET Core web platform, including HTTP servers, middleware, routing, host
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Microsoft ships ASP.NET Core as the production web framework and server stack for modern .NET applications.
+**Purpose evidence:** Microsoft ships ASP.NET Core as the production web framework and server stack for modern .NET applications.
 
 **Language evidence:** HTTP abstractions, Kestrel, hosting, routing, middleware, MVC, Razor, Blazor, SignalR, authentication, and data protection are predominantly C# with first-party web client code.
 
@@ -486,6 +584,8 @@ The learner-facing short context appears above.
 ### [dotnet/roslyn](https://github.com/dotnet/roslyn)
 
 **Language 5 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The open-source C# and Visual Basic compiler platform that exposes syntax, semantic, diagnostic, compilation, and emit APIs used by the .NET toolchain.
 
@@ -543,7 +643,7 @@ The open-source C# and Visual Basic compiler platform that exposes syntax, seman
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Roslyn supplies the production C# and Visual Basic compilers and code-analysis APIs shipped through the .NET SDK, Visual Studio, and Microsoft.CodeAnalysis packages.
+**Purpose evidence:** Roslyn supplies the production C# and Visual Basic compilers and code-analysis APIs shipped through the .NET SDK, Visual Studio, and Microsoft.CodeAnalysis packages.
 
 **Language evidence:** The selected public compilation API, C# compiler pipeline, lowering, IL generation, emitter model, and focused compiler tests are implemented in first-party C#; GitHub also reports C# as the repository's primary language.
 
@@ -571,6 +671,8 @@ The learner-facing short context appears above.
 ### [dotnet/runtime](https://github.com/dotnet/runtime)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type system, core libraries, interop, diagnostics, and native hosting.
 
@@ -616,7 +718,7 @@ The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.
+**Purpose evidence:** Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.
 
 **Language evidence:** Core libraries are C#, while the CLR, garbage collector, JIT, native hosting, interop, and platform layers use C++, C, and assembly as first-party runtime implementation.
 

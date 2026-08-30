@@ -2,17 +2,21 @@
 
 7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 ### [lunarmodules/say](https://github.com/lunarmodules/say)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
 
 A small Lua module that stores named messages, falls back to another namespace, and inserts values into the selected text.
 
@@ -65,7 +69,7 @@ A small Lua module that stores named messages, falls back to another namespace, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.
+**Purpose evidence:** Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.
 
 **Language evidence:** The message registry, namespace fallback, positional substitution, callable interface, and behavior tests are implemented in Lua.
 
@@ -90,11 +94,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [kikito/middleclass](https://github.com/kikito/middleclass)
 
 **Language 4 / Behavior 3 / Design 1 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A compact object-oriented library providing classes, inheritance, instances, mixins, static members, and metamethod support.
 
@@ -144,7 +150,7 @@ A compact object-oriented library providing classes, inheritance, instances, mix
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The maintained LuaRocks library is used by applications and games that want a small conventional class abstraction without a framework.
+**Purpose evidence:** The maintained LuaRocks library is used by applications and games that want a small conventional class abstraction without a framework.
 
 **Language evidence:** Class creation, inheritance, allocation, mixins, metamethod propagation, and the complete test suite are handwritten Lua.
 
@@ -172,6 +178,8 @@ The learner-facing short context appears above.
 ### [openresty/lua-resty-lrucache](https://github.com/openresty/lua-resty-lrucache)
 
 **Language 4 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 An in-process least-recently-used cache for OpenResty with expiry, stale reads, user flags, bounded capacity, and table-backed or pure-FFI storage.
 
@@ -220,7 +228,7 @@ An in-process least-recently-used cache for OpenResty with expiry, stale reads, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** OpenResty maintains the library for production Nginx and LuaJIT applications that need per-worker caching without shared-memory serialization overhead.
+**Purpose evidence:** OpenResty maintains the library for production Nginx and LuaJIT applications that need per-worker caching without shared-memory serialization overhead.
 
 **Language evidence:** Both the table-backed and pure-FFI cache implementations, queue management, expiry logic, flags, and OpenResty tests are Lua.
 
@@ -250,6 +258,8 @@ The learner-facing short context appears above.
 ### [lunarmodules/busted](https://github.com/lunarmodules/busted)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A full testing framework with nested contexts, hooks, asynchronous completion, filtering, randomized execution, multiple source loaders, and pluggable reporters.
 
@@ -302,7 +312,7 @@ A full testing framework with nested contexts, hooks, asynchronous completion, f
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The maintained LuaRocks tool runs real project suites from the command line and provides the standard framework around Luassert assertions.
+**Purpose evidence:** The maintained LuaRocks tool runs real project suites from the command line and provides the standard framework around Luassert assertions.
 
 **Language evidence:** Test-tree construction, hooks, execution, filtering, loaders, configuration, status reporting, output handlers, and self-tests are Lua.
 
@@ -330,6 +340,8 @@ The learner-facing short context appears above.
 ### [lunarmodules/luacheck](https://github.com/lunarmodules/luacheck)
 
 **Language 3 / Behavior 5 / Design 4 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 A static analyzer and command-line linter that reports globals, unused values, control-flow mistakes, whitespace problems, complexity, and configuration-sensitive warnings.
 
@@ -383,7 +395,7 @@ A static analyzer and command-line linter that reports globals, unused values, c
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The maintained LuaRocks and command-line tool checks applications and libraries locally and in continuous integration across configurable language standards.
+**Purpose evidence:** The maintained LuaRocks and command-line tool checks applications and libraries locally and in continuous integration across configurable language standards.
 
 **Language evidence:** Lexing, parsing, AST passes, control-flow linearization, local resolution, warning detectors, configuration, filtering, caching, CLI behavior, and tests are Lua.
 
@@ -413,6 +425,8 @@ The learner-facing short context appears above.
 ### [apache/apisix](https://github.com/apache/apisix)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A cloud-native API and AI gateway with dynamic routing, load balancing, policy plugins, observability, standalone and distributed configuration modes, and HTTP, stream, and extensible runtime paths.
 
@@ -471,7 +485,7 @@ A cloud-native API and AI gateway with dynamic routing, load balancing, policy p
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.
+**Purpose evidence:** The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.
 
 **Language evidence:** Lua implements the Standalone Admin API, configuration validation and propagation, OpenResty worker events and timers, per-resource hot-reload state, stream routing, request phases, and the production gateway runtime; the selected integration suites exercise that Lua behavior.
 
@@ -499,6 +513,8 @@ The learner-facing short context appears above.
 ### [Kong/kong](https://github.com/Kong/kong)
 
 **Language 3 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A production API, AI, and MCP gateway supporting traffic routing, load balancing, authentication, policy plugins, observability, databases or declarative operation, and hybrid control and data planes.
 
@@ -550,7 +566,7 @@ A production API, AI, and MCP gateway supporting traffic routing, load balancing
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Kong maintains and ships the gateway for real network traffic, with documented deployment, upgrade, plugin-development, database, DB-less, and hybrid-cluster modes.
+**Purpose evidence:** Kong maintains and ships the gateway for real network traffic, with documented deployment, upgrade, plugin-development, database, DB-less, and hybrid-cluster modes.
 
 **Language evidence:** Lua implements the gateway lifecycle, routing, load balancing, plugins, policy enforcement, data models, declarative configuration, clustering, control and data planes, PDK, observability, vaults, migrations, and tests on OpenResty.
 

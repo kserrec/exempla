@@ -1,94 +1,121 @@
 # Exempla current plan
 
-Exempla is a learner-centered catalog of pinned real-world source paths. This
-is the only current implementation plan; the original Size / Difficulty /
-Complexity release plan is historical.
+Exempla is a learner-centered catalog of pinned exemplary source paths. This
+is the only current implementation plan; earlier release and remediation plans
+are historical.
 
 ## Current state
 
-- The canonical schema is version 4.
-- The catalog contains 125 qualified learning paths from 124 public
-  repositories across 20 languages.
-- The 200-path grid has 75 documented research gaps. Ordinary validation
-  accepts honest gaps; `--complete` is reserved for a genuinely full grid.
+- The canonical schema is version 5.
+- The preserved pre-expansion baseline contains 125 qualified learning paths
+  from 124 public repositories across 20 languages.
+- The completed expansion catalog contains 138 paths from 137 repositories:
+  133 production paths and 5 educational exemplars. The 240-path 3/3/2/2/2
+  grid has 102 honest open slots, including 56 Level 1 and 40 Level 2 gaps.
+  Ordinary validation accepts those gaps; `--complete` is reserved for a
+  genuinely full grid.
+- Every accepted path declares `source_kind` and `purpose_evidence`. Production
+  software may publish at Levels 1–5; qualified educational exemplars may
+  publish only at Levels 1–2.
 - A path is identified by `(repository, path_slug)`. One repository may supply
   at most two materially distinct paths and never two paths in the same
   language/Level bucket.
-- The rubric Level still comes from four path-centered scores and their existing
-  guardrails. Rubric Levels 1 and 2 also require a novice-accessibility floor;
-  the published Level is the greater of the rubric Level and that floor.
-- Prerequisites name prior knowledge; `concepts_developed` names what the path
-  teaches.
-- The active lower-rung audit is
-  [`research/novice-accessibility-audit.json`](research/novice-accessibility-audit.json).
-  It preserves all 38 starting low-level decisions, 28 qualified capacity
-  alternates, 20 conditional gap passes, two replacements, and six progression
-  sanity checks.
+- The four-score rubric, guardrails, novice learner baseline, accessibility
+  floor, and five accessibility tests are unchanged.
+- [`research/lower-level-expansion.json`](research/lower-level-expansion.json)
+  preserves the exact before-state. The completed pass is reconciled in
+  [`research/lower-level-expansion-audit.json`](research/lower-level-expansion-audit.json);
+  older audits remain historical.
 
-## Active novice-accessibility remediation
+## Active lower-level educational-exemplar expansion
 
-The novice-to-advanced progression review preserves the four path-centered
-scores and adds a separate accessibility floor for structurally low-level
-paths. The supplied specification describes eight phases and, despite calling
-them 20 required steps, enumerates 25 named steps; all 25 remain in scope.
+### Phase 1 — Record the new baseline
 
-### Phase 1 — Define the novice learner precisely
+- [x] Snapshot commit, validation, totals, lower-level counts, gaps, capacity,
+  and novice-accessibility policy.
 
-- [x] Step 1.1: Rewrite the learner baseline.
-- [x] Step 1.2: Give Levels 1 and 2 explicit pedagogical meanings.
+### Phase 2 — Introduce explicit source classes
 
-### Phase 2 — Add a novice-accessibility floor to the algorithm
+- [x] Require `source_kind` on every accepted entry.
+- [x] Replace `real_world_evidence` with generalized `purpose_evidence`.
 
-- [x] Step 2.1: Define central versus incidental concepts.
-- [x] Step 2.2: Define `novice_accessibility` for low structural levels.
-- [x] Step 2.3: Add five accessibility tests to candidate review.
+### Phase 3 — Define source qualification
 
-### Phase 3 — Calibrate the revised low-level algorithm
+- [x] Preserve the production gate.
+- [x] Add the ten-part educational-exemplar gate.
 
-- [x] Step 3.1: Recalibrate the required representative paths from pinned
-  implementation and test evidence.
-- [x] Step 3.2: Freeze the revised lower-level rules before the corpus audit.
+### Phase 4 — Update coding relevance
 
-### Phase 4 — Implement schema, tooling, rendering, and tests
+- [x] Admit genuine production behavior or complete intentional lower-level
+  educational behavior without weakening the domain gate.
 
-- [x] Step 4.1: Implement machine-checkable accessibility-floor behavior.
-- [x] Step 4.2: Test the required formula cases and known failure modes.
+### Phase 5 — Expand capacity
 
-### Phase 5 — Audit all current Level 1 entries
+- [x] Implement 3/3/2/2/2 target capacity, repository diversity, and 240-path
+  completeness semantics.
 
-- [x] Step 5.1: Audit every current Level 1 path from pinned implementation
-  and tests, including all three required special reviews.
+### Phase 6 — Update schema, tooling, rendering, and tests
 
-### Phase 6 — Audit all current Level 2 entries
+- [x] Migrate every existing accepted path to schema version 5 and
+  `source_kind = production` without reclassifying historical entries.
+- [x] Enforce source-kind Level restrictions and visibly render provenance.
+- [x] Add focused source-kind, migration, and capacity tests.
 
-- [x] Step 6.1: Audit JavaScript and Python.
-- [x] Step 6.2: Audit Java and PHP.
-- [x] Step 6.3: Audit C# and TypeScript.
-- [x] Step 6.4: Audit C++ and Ruby.
-- [x] Step 6.5: Audit C and Swift.
-- [x] Step 6.6: Audit Go and R.
-- [x] Step 6.7: Audit Shell and Kotlin.
-- [x] Step 6.8: Audit Scala and PowerShell.
-- [x] Step 6.9: Audit Dart and Objective-C.
-- [x] Step 6.10: Audit Rust and Lua.
+### Phase 7 — Update methodology and product explanation
 
-### Phase 7 — Reconcile movement and repair lower-level gaps
+- [x] Update current-facing source policy, rubric, research, contribution,
+  maintenance, issue, pull-request, and catalog documentation.
 
-- [x] Step 7.1: Reconcile Levels and capacity without scoring to fit slots.
-- [x] Run conditional replacement research only for newly open or clearly
-  sparse lower-level language buckets.
+### Phase 8 — Define educational discovery and triage
 
-### Phase 8 — Make the learner-facing experience explicitly gentle
+- [x] Add official-example, respected-teaching, small-reference, curated-list,
+  and GitHub discovery channels plus explicit early rejections.
 
-- [x] Step 8.1: Rewrite low-level presentation rules and affected entries.
-- [x] Step 8.2: Improve Level labels and onboarding text.
-- [x] Step 8.3: Publish the complete lower-level pedagogy audit.
-- [x] Step 8.4: Sanity-check at least five Level 1 → Level 2 → Level 3
-  progressions, including JavaScript and PHP.
-- [x] Run generation, tests, ordinary validation, generated-output checks, and
-  a final approved-boundary diff audit: 38 tests pass, catalog validation
-  passes, generated Markdown is current, and the diff remains within the
-  novice-progression specification.
+### Phase 9 — Run 20 language research passes in catalog order
+
+- [x] JavaScript
+- [x] Python
+- [x] Java
+- [x] PHP
+- [x] C#
+- [x] TypeScript
+- [x] C++
+- [x] Ruby
+- [x] C
+- [x] Swift
+- [x] Go
+- [x] R
+- [x] Shell
+- [x] Kotlin
+- [x] Scala
+- [x] PowerShell
+- [x] Dart
+- [x] Objective-C
+- [x] Rust
+- [x] Lua
+
+### Phase 10 — Curate the lower-level ladders
+
+- [x] Order Level 1 and Level 2 paths from gentlest to most demanding.
+- [x] Check each available Level 2 → Level 3 handoff without globally
+  re-grading Level 3.
+
+### Phase 11 — Audit the expansion
+
+- [x] Publish before/after totals, source-class results, every serious
+  rejection, unresolved-gap stopping evidence, leakage checks, and sampled
+  source-quality checks.
+
+### Phase 12 — Finish learner-facing polish
+
+- [x] Reconcile literal counts and expose the concise source legend and policy
+  explanation on generated navigation and current documentation.
+
+### Phase 13 — Validate and release-ready check
+
+- [x] Regenerate all learner pages; run unit tests, ordinary validation,
+  generated-output checks, source-class leakage checks, and the final diff
+  audit. Run `--complete` only if all 240 slots genuinely qualify.
 
 ## Completed learner-centered remediation
 
@@ -124,7 +151,7 @@ them 20 required steps, enumerates 25 named steps; all 25 remain in scope.
 3. Recheck repository status, language labels, pins, paths, and license evidence
    when refreshing an entry or preparing a release.
 4. Regenerate language pages with canonical JSON changes and run the ordinary
-   verification gates. Use `--complete` only when all 200 paths exist.
+   verification gates. Use `--complete` only when all 240 paths exist.
 5. Treat source quality and pedagogy as review judgments. Name model and human
    review passes literally; automation checks structure and formulas only.
 6. Commit, push, tag, or publish only when those release actions are explicitly

@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [pointfreeco/swift-tagged](https://github.com/pointfreeco/swift-tagged)
 
 **Language 4 / Behavior 1 / Design 1 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A tiny generic wrapper that gives otherwise identical raw values distinct compile-time identities.
 
@@ -65,7 +69,7 @@ A tiny generic wrapper that gives otherwise identical raw values distinct compil
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.
+**Purpose evidence:** The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.
 
 **Language evidence:** The generic tag wrapper, conditional conformances, literal support, serialization, identifiers, money, and time helpers are implemented in Swift under Sources/.
 
@@ -93,6 +97,8 @@ The learner-facing short context appears above.
 ### [vapor/vapor](https://github.com/vapor/vapor)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A server-side Swift web framework built on SwiftNIO with routing, middleware, content, authentication, sessions, clients, and operational integrations.
 
@@ -144,7 +150,7 @@ A server-side Swift web framework built on SwiftNIO with routing, middleware, co
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the Vapor package used to build and run production HTTP and WebSocket services in Swift.
+**Purpose evidence:** The repository publishes the Vapor package used to build and run production HTTP and WebSocket services in Swift.
 
 **Language evidence:** Application lifecycle, routing, requests and responses, middleware, content coding, authentication, sessions, clients, servers, WebSockets, validation, views, caching, tracing, metrics, and testing are Swift under Sources/.
 
@@ -174,6 +180,8 @@ The learner-facing short context appears above.
 ### [Alamofire/Alamofire](https://github.com/Alamofire/Alamofire)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 An HTTP networking library for Apple platforms built over URLSession with fluent, async, Combine, streaming, and WebSocket APIs.
 
@@ -226,7 +234,7 @@ An HTTP networking library for Apple platforms built over URLSession with fluent
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.
+**Purpose evidence:** The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.
 
 **Language evidence:** Session management, requests, uploads, downloads, streams, WebSockets, serialization, validation, authentication, retries, trust evaluation, reachability, and event monitoring are Swift under Source/.
 
@@ -254,6 +262,8 @@ The learner-facing short context appears above.
 ### [realm/SwiftLint](https://github.com/realm/SwiftLint)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A configurable Swift style and static-analysis tool with hundreds of rules, autocorrection, baselines, reporters, and build integrations.
 
@@ -308,7 +318,7 @@ A configurable Swift style and static-analysis tool with hundreds of rules, auto
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository releases the SwiftLint command, frameworks, package plugins, and build-tool integrations used by Swift projects and CI systems.
+**Purpose evidence:** The repository releases the SwiftLint command, frameworks, package plugins, and build-tool integrations used by Swift projects and CI systems.
 
 **Language evidence:** Rule protocols and implementations, SwiftSyntax and SourceKit analysis, configuration, corrections, baselines, caching, reporters, file discovery, command execution, plugins, and macros are Swift under Source/ and Plugins/.
 
@@ -338,6 +348,8 @@ The learner-facing short context appears above.
 ### [apple/swift-nio](https://github.com/apple/swift-nio)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A cross-platform high-performance event-driven networking framework for building protocol servers and clients in Swift.
 
@@ -388,7 +400,7 @@ A cross-platform high-performance event-driven networking framework for building
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.
+**Purpose evidence:** The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.
 
 **Language evidence:** Event loops, channels and pipelines, futures, byte buffers, sockets, selectors, bootstraps, HTTP/1, WebSockets, TLS abstractions, async sequences, and filesystem APIs are primarily Swift under Sources/.
 
@@ -416,6 +428,8 @@ The learner-facing short context appears above.
 ### [swiftlang/swift-syntax](https://github.com/swiftlang/swift-syntax)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Swift's source-accurate syntax-tree libraries, parser tooling, refactoring support, and macro-expansion infrastructure.
 
@@ -471,7 +485,7 @@ Swift's source-accurate syntax-tree libraries, parser tooling, refactoring suppo
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.
+**Purpose evidence:** The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.
 
 **Language evidence:** The selected macro-expansion system, syntax rewriter, role dispatch, expansion context, diagnostics, formatting, and direct behavioral tests are handwritten first-party Swift under Sources/SwiftSyntaxMacroExpansion and Tests/SwiftSyntaxMacroExpansionTest.
 

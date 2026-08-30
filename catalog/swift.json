@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "swift",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Swift",
       "language_evidence": "The generic tag wrapper, conditional conformances, literal support, serialization, identifiers, money, and time helpers are implemented in Swift under Sources/.",
       "description": "A tiny generic wrapper that gives otherwise identical raw values distinct compile-time identities.",
-      "real_world_evidence": "The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes Swift packages used by applications to prevent identifier and domain-value mixups without runtime overhead.",
       "why_study": "Understand how Swift can give identical raw values distinct compile-time identities without adding a second runtime state machine. The tag idea needs one brief explanation; the selected path is programming-led and teaches generic wrappers, conditional conformances, dynamic-member forwarding, literal and Codable forwarding, mapping, and explicit coercion.",
       "learn": [
         "Study these transferable Swift mechanisms in `Sources/Tagged/Tagged.swift`: phantom generic tag parameter, conditional protocol conformances, and dynamic-member, literal, and Codable forwarding.",
@@ -127,7 +128,8 @@
       "primary_language": "Swift",
       "language_evidence": "Application lifecycle, routing, requests and responses, middleware, content coding, authentication, sessions, clients, servers, WebSockets, validation, views, caching, tracing, metrics, and testing are Swift under Sources/.",
       "description": "A server-side Swift web framework built on SwiftNIO with routing, middleware, content, authentication, sessions, clients, and operational integrations.",
-      "real_world_evidence": "The repository publishes the Vapor package used to build and run production HTTP and WebSocket services in Swift.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the Vapor package used to build and run production HTTP and WebSocket services in Swift.",
       "why_study": "Understand how Vapor builds an ordered middleware chain around a terminal responder and preserves request, response, and error flow. HTTP request and response vocabulary is brief; the path is programming-led and teaches protocol composition, responder wrapping, ordered configuration, type erasure, error propagation, and direct integration testing.",
       "learn": [
         "Study these transferable Swift mechanisms in `Sources/Vapor/Middleware/Middleware.swift`: protocol-based middleware and responder contracts, closure and type-erased composition, and asynchronous response values.",
@@ -251,7 +253,8 @@
       "primary_language": "Swift",
       "language_evidence": "Session management, requests, uploads, downloads, streams, WebSockets, serialization, validation, authentication, retries, trust evaluation, reachability, and event monitoring are Swift under Source/.",
       "description": "An HTTP networking library for Apple platforms built over URLSession with fluent, async, Combine, streaming, and WebSocket APIs.",
-      "real_world_evidence": "The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository releases Alamofire through Swift Package Manager and CocoaPods for production iOS, macOS, tvOS, watchOS, and visionOS applications.",
       "why_study": "Understand how Alamofire coordinates one request's task completion, interceptor decision, retry, cancellation, and final cleanup. HTTP and URLSession context is brief; the bounded path teaches synchronized mutable state, callback-to-task coordination, adapter and retrier boundaries, cancellation, completion ordering, and cleanup.",
       "learn": [
         "Study these transferable Swift mechanisms in `Source/Core/Request.swift`: closure and protocol-based interceptor callbacks, synchronized mutable request state, and typed request and task coordination.",
@@ -378,7 +381,8 @@
       "primary_language": "Swift",
       "language_evidence": "Rule protocols and implementations, SwiftSyntax and SourceKit analysis, configuration, corrections, baselines, caching, reporters, file discovery, command execution, plugins, and macros are Swift under Source/ and Plugins/.",
       "description": "A configurable Swift style and static-analysis tool with hundreds of rules, autocorrection, baselines, reporters, and build integrations.",
-      "real_world_evidence": "The repository releases the SwiftLint command, frameworks, package plugins, and build-tool integrations used by Swift projects and CI systems.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository releases the SwiftLint command, frameworks, package plugins, and build-tool integrations used by Swift projects and CI systems.",
       "why_study": "Understand how one SwiftLint rule detects and safely corrects unsorted import blocks while preserving source structure and configuration. Lint-rule vocabulary is brief and the code remains programming-led; the path teaches SwiftSyntax visitors and rewriters, macros, configurable comparison, source trivia preservation, disabled-region handling, correction accounting, generated tests, and reusable test helpers.",
       "learn": [
         "Study these transferable Swift mechanisms in `Source/SwiftLintBuiltInRules/Rules/Style/SortedImportsRule.swift`: SwiftSyntax visitor and rewriter subclasses, macro-generated rule conformance, and typed syntax and trivia transformations.",
@@ -508,7 +512,8 @@
       "primary_language": "Swift",
       "language_evidence": "Event loops, channels and pipelines, futures, byte buffers, sockets, selectors, bootstraps, HTTP/1, WebSockets, TLS abstractions, async sequences, and filesystem APIs are primarily Swift under Sources/.",
       "description": "A cross-platform high-performance event-driven networking framework for building protocol servers and clients in Swift.",
-      "real_world_evidence": "The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes the core SwiftNIO packages that underpin production server frameworks, protocol libraries, and network clients across the Swift ecosystem.",
       "why_study": "Understand how SwiftNIO completes, transforms, combines, and bridges futures while preserving event-loop affinity and callback ordering. Event-loop vocabulary is explained once; the path teaches advanced generic future and promise APIs, callback scheduling, event-loop affinity, cascading, aggregation, cancellation and failure propagation, async interoperation, and concurrency invariants.",
       "learn": [
         "Study these transferable Swift mechanisms in `Sources/NIOCore/EventLoopFuture.swift`: deep generic future and promise composition, Sendable and concurrency-aware callback APIs, and async-await bridging with performance-sensitive specialization.",
@@ -631,7 +636,8 @@
       "primary_language": "Swift",
       "language_evidence": "The selected macro-expansion system, syntax rewriter, role dispatch, expansion context, diagnostics, formatting, and direct behavioral tests are handwritten first-party Swift under Sources/SwiftSyntaxMacroExpansion and Tests/SwiftSyntaxMacroExpansionTest.",
       "description": "Swift's source-accurate syntax-tree libraries, parser tooling, refactoring support, and macro-expansion infrastructure.",
-      "real_world_evidence": "The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.",
+      "source_kind": "production",
+      "purpose_evidence": "The package publishes the SwiftSyntax libraries used by Swift macros, source tooling, formatting, refactoring, and compiler-adjacent developer tools across supported platforms.",
       "why_study": "Understand how SwiftSyntax discovers attached and freestanding macro uses, dispatches them by role, rewrites the syntax tree, preserves context and trivia, and turns expansion failures into diagnostics. A short macro and syntax-tree primer is sufficient; the path teaches expert protocol and generic dispatch, existential types, syntax rewriting, recursive expansion, context propagation, diagnostics, source fidelity, compatibility policy, and adversarial transformation tests.",
       "learn": [
         "Study these transferable Swift mechanisms in `Sources/SwiftSyntaxMacroExpansion/MacroSystem.swift`: generic `some` and existential `any` protocol APIs, runtime metatype dispatch across macro roles, and SyntaxProtocol rewriting and typed-node conversion.",

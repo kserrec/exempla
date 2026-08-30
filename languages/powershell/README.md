@@ -2,21 +2,25 @@
 
 5 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [Badgerati/Pode](https://github.com/Badgerati/Pode)
 
 **Language 3 / Behavior 2 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A cross-platform PowerShell application-server framework with its own asynchronous HTTP, WebSocket, server-sent events, TCP, SMTP, file-watcher, and TLS runtime plus routing, middleware, authentication, sessions, OpenAPI, schedules, and serverless adapters.
 
@@ -64,7 +68,7 @@ A cross-platform PowerShell application-server framework with its own asynchrono
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Pode is released through the PowerShell Gallery, Chocolatey, and Docker and documents production hosting for APIs, sites, protocol servers, serverless functions, and container deployments.
+**Purpose evidence:** Pode is released through the PowerShell Gallery, Chocolatey, and Docker and documents production hosting for APIs, sites, protocol servers, serverless functions, and container deployments.
 
 **Language evidence:** Server lifecycle, routing, middleware, authentication, sessions, OpenAPI, scheduling, MCP, and runspace orchestration are PowerShell, while first-party C# implements asynchronous listeners, sockets, HTTP, TCP, SMTP, WebSocket, TLS, concurrent structures, and transport logging.
 
@@ -92,6 +96,8 @@ The learner-facing short context appears above.
 ### [dfinke/ImportExcel](https://github.com/dfinke/ImportExcel)
 
 **Language 3 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A PowerShell module for reading, writing, formatting, charting, and pivoting Excel workbooks without requiring Microsoft Excel.
 
@@ -142,7 +148,7 @@ A PowerShell module for reading, writing, formatting, charting, and pivoting Exc
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** ImportExcel is published on the PowerShell Gallery and documents automation workflows for reports, inventory, charts, pivot tables, SQL data, and workbook transformation.
+**Purpose evidence:** ImportExcel is published on the PowerShell Gallery and documents automation workflows for reports, inventory, charts, pivot tables, SQL data, and workbook transformation.
 
 **Language evidence:** Workbook import and export, cell typing and formatting, tables, charts, pivot tables, conditional formatting, worksheet operations, and Pester tests are implemented in PowerShell around the bundled EPPlus API.
 
@@ -172,6 +178,8 @@ The learner-facing short context appears above.
 ### [nightroman/Invoke-Build](https://github.com/nightroman/Invoke-Build)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A compact build-automation engine for PowerShell with task graphs, incremental inputs and outputs, nested builds, checkpoints, hooks, structured results, and parallel build execution.
 
@@ -222,7 +230,7 @@ A compact build-automation engine for PowerShell with task graphs, incremental i
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Invoke-Build is distributed through the PowerShell Gallery, NuGet, and a dotnet tool, and its documentation links to production projects that use its build-script model.
+**Purpose evidence:** Invoke-Build is distributed through the PowerShell Gallery, NuGet, and a dotnet tool, and its documentation links to production projects that use its build-script model.
 
 **Language evidence:** Task declaration, dependency validation, incremental scheduling, execution, error propagation, checkpoints, parallel builds, graph output, and the behavior suites are PowerShell.
 
@@ -250,6 +258,8 @@ The learner-facing short context appears above.
 ### [PoshCode/ModuleBuilder](https://github.com/PoshCode/ModuleBuilder)
 
 **Language 5 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A PowerShell build module that compiles source folders into versioned modules, rewrites manifests, preserves source mappings, applies syntax-tree generators, and prepares packages for publication.
 
@@ -300,7 +310,7 @@ A PowerShell build module that compiles source folders into versioned modules, r
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** ModuleBuilder is published as a PowerShell Gallery module and documents a source-to-package workflow used by PowerShell module authors.
+**Purpose evidence:** ModuleBuilder is published as a PowerShell Gallery module and documents a source-to-package workflow used by PowerShell module authors.
 
 **Language evidence:** Module assembly, manifest rewriting, syntax-tree parsing, using-statement relocation, source mapping, generator transforms, signing and packaging support, and tests are PowerShell.
 
@@ -330,6 +340,8 @@ The learner-facing short context appears above.
 ### [pester/Pester](https://github.com/pester/Pester)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 PowerShell's test and mock framework, with a discovery and execution runtime, assertions, scope-aware mocks, filtering, plugins, code coverage, parallel containers, and CI result formats.
 
@@ -380,7 +392,7 @@ PowerShell's test and mock framework, with a discovery and execution runtime, as
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Pester is the standard PowerShell testing framework, is distributed through the PowerShell Gallery, ships with older Windows installations, and integrates with editors and continuous-integration systems.
+**Purpose evidence:** Pester is the standard PowerShell testing framework, is distributed through the PowerShell Gallery, ships with older Windows installations, and integrates with editors and continuous-integration systems.
 
 **Language evidence:** Test discovery and execution, nested scopes, hooks, assertions, mocking, filtering, output and result formats, code coverage integration, parallel orchestration, and supporting runtime types are implemented in PowerShell and first-party C#.
 

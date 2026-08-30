@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "rust",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Rust",
       "language_evidence": "Version and requirement models, parsing, comparator evaluation, formatting, error reporting, fuzz targets, and tests are Rust.",
       "description": "A parser and evaluator for Cargo-flavored Semantic Versioning versions and requirements, including caret, tilde, wildcard, range, and prerelease rules.",
-      "real_world_evidence": "The maintained crate is published for Rust tools that interpret Cargo-compatible versions and dependency requirements.",
+      "source_kind": "production",
+      "purpose_evidence": "The maintained crate is published for Rust tools that interpret Cargo-compatible versions and dependency requirements.",
       "why_study": "A compact domain library turns a familiar specification into explicit data types, a byte-level parser, precise position-aware errors, comparator normalization, matching semantics, and stable formatting.",
       "learn": [
         "Domain modeling, byte parsers, semantic-version grammar, comparator operators, caret and tilde ranges, wildcards, prerelease matching, error locations, formatting, property tests, and fuzzing."
@@ -137,7 +138,8 @@
       "primary_language": "Rust",
       "language_evidence": "The shared word-boundary transform, eight case-style modules, display adapters, Unicode handling, and inline test matrices are Rust.",
       "description": "A no_std string case-conversion library supporting snake, kebab, title, train, shouty, lower camel, and upper camel forms.",
-      "real_world_evidence": "The maintained crate is published for use by Rust libraries, procedural macros, and applications that need predictable identifier and display-name conversion.",
+      "source_kind": "production",
+      "purpose_evidence": "The maintained crate is published for use by Rust libraries, procedural macros, and applications that need predictable identifier and display-name conversion.",
       "why_study": "A small common transform turns subtle acronym, digit, lowercase, uppercase, Unicode, and separator rules into reusable conversion traits and zero-allocation display wrappers.",
       "learn": [
         "Unicode-aware character iteration, word-boundary state, acronym splitting, case conversion traits, Display wrappers, no_std design, module reuse, and table-driven tests."
@@ -263,7 +265,8 @@
       "primary_language": "Rust",
       "language_evidence": "The type-erased error representation, vtable operations, context chains, downcasting, formatting, backtraces, macros, and tests are Rust.",
       "description": "A flexible application-error type that carries context, error chains, downcasting, backtraces, and ergonomic propagation across arbitrary error sources.",
-      "real_world_evidence": "The crate is maintained and published for Rust applications that need one reportable error type across diverse libraries and failure paths.",
+      "source_kind": "production",
+      "purpose_evidence": "The crate is maintained and published for Rust applications that need one reportable error type across diverse libraries and failure paths.",
       "why_study": "anyhow's context path connects an idiomatic Result extension to the type-erased owned representation that preserves sources, backtraces, formatting, and downcasting.",
       "learn": [
         "Trace eager or lazy context through generic error construction, pointer ownership, custom vtables, source chains, backtraces, downcasts, mutation, and destruction."
@@ -392,7 +395,8 @@
       "primary_language": "Rust",
       "language_evidence": "Routing, handlers, extractors, responses, middleware integration, macros, first-party extensions, and test suites are Rust.",
       "description": "A modular asynchronous web framework built around Tokio, Hyper, Tower services, typed request extractors, composable routers, middleware, and response conversion.",
-      "real_world_evidence": "The Tokio project maintains and publishes Axum for production HTTP services, with documented middleware, WebSocket, streaming, state, tracing, and deployment patterns.",
+      "source_kind": "production",
+      "purpose_evidence": "The Tokio project maintains and publishes Axum for production HTTP services, with documented middleware, WebSocket, streaming, state, tracing, and deployment patterns.",
       "why_study": "Axum's Json type is a bounded async framework path from request metadata and one-time body ownership to typed input, precise rejection, and response serialization.",
       "learn": [
         "Trace content-type validation and body buffering into path-aware deserialization, syntax and data rejections, optional extraction, outbound serialization, headers, statuses, and failures."
@@ -516,7 +520,8 @@
       "primary_language": "Rust",
       "language_evidence": "Manifest and workspace modeling, dependency resolution, package sources, registries, compilation orchestration, caching, credentials, publishing, installation, tests, and the command-line application are Rust.",
       "description": "Rust's package manager and build orchestrator, covering manifests, workspaces, lockfiles, dependency resolution, registries and other sources, compilation units, caching, credentials, packaging, publishing, installation, and extensible commands.",
-      "real_world_evidence": "The Rust project maintains Cargo as the package manager distributed with the Rust toolchain and as the client for crates.io and compatible registries.",
+      "source_kind": "production",
+      "purpose_evidence": "The Rust project maintains Cargo as the package manager distributed with the Rust toolchain and as the client for crates.io and compatible registries.",
       "why_study": "Cargo's JobQueue is an expert but bounded build-system path through dependency readiness, shared jobserver capacity, process orchestration, freshness, diagnostics, artifacts, failures, and shutdown.",
       "learn": [
         "Trace compile units through dependency readiness, jobserver tokens, fresh or dirty jobs, process and message state, diagnostics, artifacts, cancellation, failure propagation, and queue draining."
@@ -646,7 +651,8 @@
       "primary_language": "Rust",
       "language_evidence": "The asynchronous runtime, task scheduler and harness, OS I/O driver, timers, synchronization channels, networking, processes, signals, filesystem adapters, macros, utilities, model tests, and integration suites are Rust.",
       "description": "An asynchronous runtime platform for Rust with multi-thread and current-thread schedulers, task lifecycles, OS-backed I/O, timers, networking, synchronization, processes, signals, files, macros, streams, and utilities.",
-      "real_world_evidence": "The Tokio project maintains and publishes the runtime and companion crates as infrastructure for asynchronous Rust applications and libraries.",
+      "source_kind": "production",
+      "purpose_evidence": "The Tokio project maintains and publishes the runtime and companion crates as infrastructure for asynchronous Rust applications and libraries.",
       "why_study": "Tokio's bounded MPSC channel is a complete expert trace through permits, backpressure, lock-free storage, wakeups, cancellation, closure, destruction, and model-checked interleavings.",
       "learn": [
         "Trace send and reserve through semaphore permits into linked message blocks, readiness publication, receiver wakeup, dequeue, closure, outstanding permits, drops, reclamation, and panic safety."

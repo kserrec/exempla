@@ -2,17 +2,21 @@
 
 7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 ### [benhoyt/inih](https://github.com/benhoyt/inih)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+**Source:** Production software
 
 A small C parser that reads an INI settings file line by line and reports each section, name, and value to a callback.
 
@@ -69,7 +73,7 @@ A small C parser that reads an INI settings file line by line and reports each s
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.
+**Purpose evidence:** inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.
 
 **Language evidence:** The selected line parser, public callbacks, string and file readers, allocation policies, and baseline tests are implemented in C in ini.c, ini.h, and tests/unittest.c.
 
@@ -94,11 +98,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [cktan/tomlc17](https://github.com/cktan/tomlc17)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A lightweight C17 TOML parser that builds an owned typed tree and supports lookup, merge, structural comparison, source locations, and custom allocators.
 
@@ -153,7 +159,7 @@ A lightweight C17 TOML parser that builds an owned typed tree and supports looku
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships an embeddable C library for reading TOML configuration, documents C and C++ integration, and validates its parser against the standard toml-test corpus.
+**Purpose evidence:** The repository ships an embeddable C library for reading TOML configuration, documents C and C++ integration, and validates its parser against the standard toml-test corpus.
 
 **Language evidence:** The public API, hand-written scanner and recursive-descent parser, tagged value tree, arena and growable-cell allocators, merge behavior, teardown, and direct tests are first-party C in src/ and test/.
 
@@ -181,6 +187,8 @@ The learner-facing short context appears above.
 ### [DaveGamble/cJSON](https://github.com/DaveGamble/cJSON)
 
 **Language 4 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 An ultralightweight JSON parser, tree model, printer, and manipulation library written in portable ANSI C.
 
@@ -231,7 +239,7 @@ An ultralightweight JSON parser, tree model, printer, and manipulation library w
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships installable and embeddable C libraries used to parse and generate JSON in native applications.
+**Purpose evidence:** The repository ships installable and embeddable C libraries used to parse and generate JSON in native applications.
 
 **Language evidence:** JSON parsing, tree ownership, printing, mutation, comparison, JSON Pointer, Patch, Merge Patch, and sorting are C in cJSON.c and cJSON_Utils.c.
 
@@ -261,6 +269,8 @@ The learner-facing short context appears above.
 ### [git/git](https://github.com/git/git)
 
 **Language 4 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 The distributed version control system implementing content-addressed history, branches, merging, network protocols, and repository maintenance.
 
@@ -311,7 +321,7 @@ The distributed version control system implementing content-addressed history, b
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds the Git command suite used to create, exchange, review, and maintain source histories across the software industry.
+**Purpose evidence:** The repository builds the Git command suite used to create, exchange, review, and maintain source histories across the software industry.
 
 **Language evidence:** Object storage, index and working-tree operations, revision traversal, diff and merge algorithms, refs, transports, protocols, commands, and repository maintenance are principally C across the root and builtin/.
 
@@ -339,6 +349,8 @@ The learner-facing short context appears above.
 ### [libcheck/check](https://github.com/libcheck/check)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A unit testing framework for C with fork-based isolation, fixtures, timeouts, diagnostics, and multiple output formats.
 
@@ -392,7 +404,7 @@ A unit testing framework for C with fork-based isolation, fixtures, timeouts, di
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes the Check library and checkmk tool used to build and run isolated native test suites.
+**Purpose evidence:** The project publishes the Check library and checkmk tool used to build and run isolated native test suites.
 
 **Language evidence:** Test registration, fixtures, isolated execution, timeout and signal handling, result transport, logging, and the checkmk generator are implemented principally in C.
 
@@ -422,6 +434,8 @@ The learner-facing short context appears above.
 ### [curl/curl](https://github.com/curl/curl)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A command-line data transfer tool and reusable library supporting URL-based communication across many protocols and platforms.
 
@@ -477,7 +491,7 @@ A command-line data transfer tool and reusable library supporting URL-based comm
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.
+**Purpose evidence:** The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.
 
 **Language evidence:** Protocol engines, connection reuse, DNS, proxies, TLS adapters, HTTP versions, the multi state machine, URL API, and command-line tool are C under lib/ and src/.
 
@@ -505,6 +519,8 @@ The learner-facing short context appears above.
 ### [libevent/libevent](https://github.com/libevent/libevent)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A portable asynchronous event-notification library with event loops, buffered streams, networking protocols, and threading support.
 
@@ -559,7 +575,7 @@ A portable asynchronous event-notification library with event loops, buffered st
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.
+**Purpose evidence:** The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.
 
 **Language evidence:** Event loops, platform polling backends, buffered I/O, listeners, DNS, HTTP, RPC, TLS adapters, threading, timers, and utilities are C across the repository root and include/.
 

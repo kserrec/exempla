@@ -2,29 +2,33 @@
 
 Choose a language, then browse from Level 1 — First real code through Level 5 — Expert.
 
-If you can write small programs in the language, Level 1 is designed as your first comfortable step into production source. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.
+**Production software** is built primarily for real users or systems. **Educational exemplars** are complete software artifacts intentionally chosen for teaching clarity and are allowed only at Levels 1 and 2.
 
-The catalog currently contains **125 qualified learning paths across 20 languages**. Empty cells are honest research gaps.
+Exempla deliberately allows high-quality educational software at Levels 1 and 2 because production code often assumes professional concepts before a novice has learned them. Difficulty and novice-accessibility standards do not change, every entry discloses its source type, and Level 3 begins the production-only part of the ladder.
+
+If you can write small programs in the language, Level 1 is designed as your first comfortable source-reading step. An empty Level 1 means Exempla has not yet found a path gentle enough to publish there; it is not advice to skip straight to Level 2.
+
+The catalog currently contains **138 qualified learning paths across 20 languages**. Empty cells are honest research gaps.
 
 | Language | Entries | Level 1 | Level 2 | Level 3 | Level 4 | Level 5 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| [JavaScript](javascript/README.md) | 7 | 1 | 0 | 2 | 2 | 2 |
-| [Python](python/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [Java](java/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [PHP](php/README.md) | 6 | 1 | 1 | 2 | 2 | 0 |
-| [C#](c-sharp/README.md) | 8 | 0 | 2 | 2 | 2 | 2 |
+| [JavaScript](javascript/README.md) | 10 | 2 | 2 | 2 | 2 | 2 |
+| [Python](python/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
+| [Java](java/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
+| [PHP](php/README.md) | 7 | 1 | 2 | 2 | 2 | 0 |
+| [C#](c-sharp/README.md) | 9 | 0 | 3 | 2 | 2 | 2 |
 | [TypeScript](typescript/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [C++](cpp/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
-| [Ruby](ruby/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
+| [Ruby](ruby/README.md) | 10 | 1 | 3 | 2 | 2 | 2 |
 | [C](c/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
 | [Swift](swift/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
-| [Go](go/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |
+| [Go](go/README.md) | 9 | 0 | 3 | 2 | 2 | 2 |
 | [R](r/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [Shell](shell/README.md) | 4 | 0 | 0 | 2 | 2 | 0 |
 | [Kotlin](kotlin/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [Scala](scala/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [PowerShell](powershell/README.md) | 5 | 0 | 0 | 2 | 2 | 1 |
-| [Dart](dart/README.md) | 6 | 0 | 1 | 2 | 2 | 1 |
+| [Dart](dart/README.md) | 7 | 0 | 2 | 2 | 2 | 1 |
 | [Objective-C](objective-c/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [Rust](rust/README.md) | 6 | 0 | 0 | 2 | 2 | 2 |
 | [Lua](lua/README.md) | 7 | 0 | 1 | 2 | 2 | 2 |

@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [r-lib/withr](https://github.com/r-lib/withr)
 
 **Language 4 / Behavior 3 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A library for running code with temporary changes to global process state and reliably restoring that state afterward.
 
@@ -66,7 +70,7 @@ A library for running code with temporary changes to global process state and re
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the withr CRAN package used by packages, tests, scripts, and tools that must scope side effects safely.
+**Purpose evidence:** The repository publishes the withr CRAN package used by packages, tests, scripts, and tools that must scope side effects safely.
 
 **Language evidence:** Temporary state setters, dynamic function construction, deferred cleanup, resource helpers, and integrations are implemented in R.
 
@@ -94,6 +98,8 @@ The learner-facing short context appears above.
 ### [tidyverse/ggplot2](https://github.com/tidyverse/ggplot2)
 
 **Language 4 / Behavior 2 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A declarative graphics system that implements a layered grammar of data, aesthetics, scales, statistics, geometry, coordinates, faceting, guides, and themes.
 
@@ -144,7 +150,7 @@ A declarative graphics system that implements a layered grammar of data, aesthet
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the ggplot2 CRAN package used to create static visualizations and as a platform for a large extension ecosystem.
+**Purpose evidence:** The repository publishes the ggplot2 CRAN package used to create static visualizations and as a platform for a large extension ecosystem.
 
 **Language evidence:** The grammar, plot object, build pipeline, layers, scales, coordinates, facets, guides, themes, geoms, stats, positions, and extension system are implemented in R.
 
@@ -174,6 +180,8 @@ The learner-facing short context appears above.
 ### [r-lib/testthat](https://github.com/r-lib/testthat)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 R's xUnit-style testing framework, with expressive expectations, reporters, snapshots, package integration, and parallel execution.
 
@@ -225,7 +233,7 @@ R's xUnit-style testing framework, with expressive expectations, reporters, snap
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the testthat CRAN package used to run and report automated tests for R packages and applications.
+**Purpose evidence:** The repository publishes the testthat CRAN package used to run and report automated tests for R packages and applications.
 
 **Language evidence:** Test discovery and execution, expectations, conditions and restarts, reporters, snapshots, mocking, parallel workers, and package integration are implemented primarily in R.
 
@@ -253,6 +261,8 @@ The learner-facing short context appears above.
 ### [tidyverse/glue](https://github.com/tidyverse/glue)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A dependency-light string interpolation library that evaluates expressions inside customizable delimiters.
 
@@ -304,7 +314,7 @@ A dependency-light string interpolation library that evaluates expressions insid
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the glue CRAN package for applications and packages that construct text, messages, SQL, and data-aware strings.
+**Purpose evidence:** The repository publishes the glue CRAN package for applications and packages that construct text, messages, SQL, and data-aware strings.
 
 **Language evidence:** Expression capture and evaluation, transformers, quoting, SQL support, vector recycling, and the interpolation parser are implemented in R and C.
 
@@ -334,6 +344,8 @@ The learner-facing short context appears above.
 ### [nimble-dev/nimble](https://github.com/nimble-dev/nimble)
 
 **Language 5 / Behavior 4 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A programmable hierarchical-modeling system that compiles BUGS-style models and model-generic algorithms from R into customized C++.
 
@@ -386,7 +398,7 @@ A programmable hierarchical-modeling system that compiles BUGS-style models and 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the NIMBLE CRAN package used to build and fit hierarchical models with MCMC, particle filtering, Laplace approximation, and custom statistical algorithms.
+**Purpose evidence:** The repository publishes the NIMBLE CRAN package used to build and fit hierarchical models with MCMC, particle filtering, Laplace approximation, and custom statistical algorithms.
 
 **Language evidence:** The BUGS-compatible modeling language, graph construction, algorithm DSL, MCMC configuration, compiler and C++ generation pipeline, and R interfaces are implemented in substantial first-party R alongside the generated-code runtime in C++.
 
@@ -414,6 +426,8 @@ The learner-facing short context appears above.
 ### [wch/r-source](https://github.com/wch/r-source)
 
 **Language 5 / Behavior 4 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The R language implementation, runtime, garbage collector, standard and recommended packages, graphics, statistics, compiler, build system, and platform ports.
 
@@ -467,7 +481,7 @@ The R language implementation, runtime, garbage collector, standard and recommen
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** This read-only mirror tracks the upstream R source tree used to build the R language and standard software distribution.
+**Purpose evidence:** This read-only mirror tracks the upstream R source tree used to build the R language and standard software distribution.
 
 **Language evidence:** The repository is the R language implementation itself: its evaluator and runtime are written in C, its base and standard packages substantially in R, and numerical kernels in C and Fortran.
 

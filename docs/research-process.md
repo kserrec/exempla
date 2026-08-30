@@ -15,21 +15,37 @@ research effort, but they never determine a candidate's score.
 Use at least three independent sources such as:
 
 - official language, foundation, or ecosystem organizations;
+- official language, framework, and tool sample repositories with complete
+  checked-in behavior;
 - package registries and reverse-dependency evidence;
 - GitHub language and topic search across varied project sizes;
 - software named in production documentation or real workflows;
 - respected maintainers' smaller libraries and tools; and
-- curated ecosystem lists used only as leads.
+- completed companion code from respected books, courses, workshops, or public
+  university materials;
+- small complete reference implementations, games, command-line applications,
+  data transformers, and deliberately minimal libraries; and
+- curated ecosystem or beginner-project lists used only as leads.
 
-Deliberately include smaller and less-famous real software. Do not search for a
-desired Level or sort only by stars.
+For Level 1 and Level 2 research, actually search both production and
+educational-exemplar channels. Deliberately include smaller and less-famous
+software. Do not search for a desired score, treat a "beginner" label as
+qualification evidence, or sort only by stars. Discover first, inspect second,
+score third.
 
 ## 3. Triage before deep review
 
-Record canonical URL, public status, genuine purpose, license, archive state,
-GitHub language label, meaningful first-party language paths, and a full pinned
-commit. Reject tutorials, examples, generated artifacts, mirrors, templates,
-incidental-language candidates, and obvious domain-gate failures early.
+Record canonical URL, public status, source kind, purpose, license, archive
+state, GitHub language label, meaningful first-party language paths, and a full
+pinned commit. Reject incomplete work, exercise-only material, unlicensed
+source, snippet and solution collections, materially obsolete instruction,
+generated-code-dominated projects, intentionally bad examples, templates,
+mirrors, incidental-language candidates, and artifacts with no coherent
+behavior.
+
+Do not reject teaching purpose by itself at Levels 1 and 2. A plausible
+educational exemplar proceeds to the separate complete-artifact qualification
+gate. Educational source is ineligible at Levels 3 through 5.
 
 GitHub Linguist is evidence, not authority. Generated or vendored files can
 dominate its label; explicit first-party path evidence may support a different
@@ -40,7 +56,8 @@ catalog classification.
 At the pin, review:
 
 1. repository purpose and orientation documentation;
-2. one concrete production behavior;
+2. one concrete production behavior or, for a lower-level educational
+   exemplar, one complete intentional teaching behavior;
 3. the public entry point or first source file;
 4. the implementation modules and meaningful boundaries in its trace;
 5. tests covering the behavior and an important failure or edge case;
@@ -58,15 +75,18 @@ exclude all four patterns from every recursive operation.
 
 ## 5. Apply both gates
 
-Apply the [coding-relevance gate and eight quality findings](qualification.md)
-before scoring. A failed gate rejects even when the corresponding catalog slot
-is empty. Record the exact failed condition, evidence, and reconsideration
+Classify the candidate as production or educational before admission. Apply
+the applicable source-qualification gate, the
+[coding-relevance gate and eight quality findings](qualification.md) before
+scoring. A failed gate rejects even when the corresponding catalog slot is
+empty. Record the exact failed condition, evidence, and reconsideration
 condition immediately.
 
 ## 6. Write path and score evidence
 
 For a passing candidate, record:
 
+- `source_kind` and `purpose_evidence` appropriate to that class;
 - a stable `path_slug` that names this learning path inside the repository;
 - concrete goal;
 - start path and why reading begins there;
@@ -90,14 +110,24 @@ tests in [the learning-level rubric](learning-levels.md). The published Level
 is the higher of the rubric Level and accessibility floor. The floor is a
 lower-rung guardrail, not a fifth weighted score.
 
+Only after the final Level is known, apply the source restriction. An
+educational exemplar at final Level 3 or higher is rejected under the
+educational exception unless the same repository independently passes the
+production gate and is truthfully reclassified as `production`.
+
 ## 7. Resolve capacity honestly
 
 A repository may contribute at most two materially distinct learning paths
 across the catalog and may not appear twice in the same `(language, Level)`
-bucket. Each bucket holds at most two paths. When more paths qualify, compare
-educational clarity and path quality, retain the strongest two, and record the
-others as qualified capacity alternates. Never move a candidate to a
-neighboring Level.
+bucket. Level 1 and Level 2 each hold at most three paths per language; Levels
+3–5 each hold at most two. Three lower-level slots are target capacity, not an
+admission quota.
+
+When more candidates qualify than fit, prefer novice accessibility and clarity,
+educational value, source quality and correctness, diversity of lessons, then
+repository and author diversity. At Levels 1–2, production provenance is only
+a tie-breaker. Record other qualified candidates as capacity alternates. Never
+move a candidate to a neighboring Level.
 
 ## 8. Verification pass and recording
 
@@ -109,8 +139,10 @@ cross-check into a claim of independent human inspection. Resolve
 disagreements against source and the public anchors before acceptance.
 
 Accepted records go in `catalog/<language>.json`; serious failures and
-alternates are appended to `research/rejections.json`. Regenerate and validate
-canonical and learner-facing files together.
+alternates are appended to `research/rejections.json` and the active expansion
+audit. Order multiple Level 1 and Level 2 entries from gentlest to most
+demanding so each bucket forms a small learning progression. Regenerate and
+validate canonical and learner-facing files together.
 
 The current corpus was curated through AI-assisted source inspection and Codex
 verification passes under the project owner's direction and acceptance.
@@ -120,9 +152,13 @@ judgments. Pinned community corrections are welcome.
 
 ## 9. Declaring an unresolved gap
 
-A gap may remain only after recording the three or more discovery channels and
-the plausible candidates inspected. A superficial single search is not
-diligent research. Truth outranks a full grid.
+A lower-level gap may remain only after recording at least three distinct
+discovery channels, serious inspection of multiple plausible candidates,
+reconsideration of prior lower-level alternates and rejections, and an actual
+educational-exemplar search. Record the result as "unresolved after production
+and educational-exemplar research"; do not claim that no suitable project
+exists anywhere. A superficial single search is not diligent research. Truth
+outranks a full grid.
 
 ## 10. Refresh
 

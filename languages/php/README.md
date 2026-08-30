@@ -1,6 +1,8 @@
 # PHP
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -9,6 +11,8 @@
 ### [webmozarts/assert](https://github.com/webmozarts/assert)
 
 **Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
 
 A small PHP guard that rejects only null and returns every accepted value unchanged.
 
@@ -56,7 +60,7 @@ A small PHP guard that rejects only null and returns every accepted value unchan
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.
+**Purpose evidence:** Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.
 
 **Language evidence:** The public assertion API, message resolution, exception boundary, generated mixins, and direct test suite are first-party PHP.
 
@@ -81,11 +85,92 @@ No specialist domain context is required.
 
 </details>
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
+
+### [nikic/iter](https://github.com/nikic/iter)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Educational exemplar
+
+A deliberately readable PHP iterator library whose map function transforms values lazily while preserving their keys.
+
+**Why study it:** See how one small generator turns a familiar eager map into a lazy, key-preserving pipeline with a direct test from range to array.
+
+Levels 1–2 may use intentionally instructive software when it provides a gentler path into reading good source code.
+
+**Prerequisites:**
+
+- The global novice PHP baseline: functions, arrays, foreach, callbacks, namespaces, and focused tests.
+- A generator pauses at yield and resumes when its iterator is asked for another value.
+
+**Concepts this path develops:**
+
+- Expressing a lazy transformation with yield.
+- Preserving collection keys across value mapping.
+- Testing deferred behavior by consuming the result at an explicit boundary.
+
+**What you can learn:**
+
+- Apply a callback to each value only when the returned iterator is consumed.
+- Preserve input keys while yielding transformed values.
+- Turn the lazy result into an array in a focused behavior test.
+
+**Learning path:**
+
+- **Goal:** Understand how iter map lazily transforms each iterable value, preserves keys, and produces the expected result when consumed.
+- **Start here:** [`src/iter.php`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/src/iter.php) — The map generator and nearby toArray consumer contain the complete deferred transformation and materialization behavior.
+- **Then read:**
+  - [`test/iterTest.php`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/test/iterTest.php)
+  - [`README.md`](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/README.md)
+- **Trace:** Pass a range and multiplication callback into map, let foreach request each key and value, yield the original key with the transformed value, consume the iterator through toArray, and compare the six exact results in testMap.
+
+**Why this level:**
+
+- **Language technique 2:** Generators, callbacks, and iterator types are common professional PHP idioms central to the selected path.
+- **Behavioral reasoning 2:** Consumption controls when work occurs, but the state follows one local foreach sequence with no nonlocal lifecycle.
+- **Design span 1:** The selected behavior stays within one source file and a focused implementation-to-test trace.
+- **Constraint burden 2:** A small stable iterator contract must be preserved, but its guarantees remain local.
+- **Novice accessibility floor 2:** One short generator primer is enough to follow each yield and predict the consumed array; the static-analysis annotations do not affect runtime behavior.
+  - **Central concepts:** generator-based lazy iteration; callback mapping; key preservation
+  - **Incidental concepts:** PHPDoc template annotations
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The README says the complete Composer library serves substantially as small generator examples while remaining practically useful; it documents the public API and ships direct PHPUnit coverage.
+
+**Language evidence:** The complete iterator library, map generator, conversion helper, and PHPUnit behavior suite are first-party PHP; GitHub labels the repository PHP.
+
+**Coding relevance:**
+
+Lazy iteration, callbacks, key preservation, and explicit materialization are transferable collection-processing practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The selected function states its complete behavior in one foreach and yield without clever indirection.
+- **Architecture:** A focused generator composes with a separate consumer while the wider library keeps related primitives in one documented module.
+- **Naming and idiom:** map, iterable, function, key, value, Iterator, and yield use conventional PHP iterator vocabulary.
+- **Tests:** The direct PHPUnit test maps a generated range, consumes it, and checks every exact value; the same suite covers the library's boundary contracts.
+- **Documentation:** The README states the teaching purpose, practical package use, installation, laziness, supported iterables, and public signatures.
+- **Traceability:** The test's range, callback, generator, consumer, and expected array form one short visible chain.
+- **Maintainability:** A narrow typed signature and direct generator body make future behavior changes easy to locate and test.
+- **Educational value:** The complete package offers a genuine, concise generator lesson without reducing the path to a disconnected snippet.
+
+**Inspection record:** commit `4e89b04c36af387d6cda164310737563eaa9e455`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `src/iter.php`, `test/iterTest.php`, `README.md`, `composer.json`, `LICENSE`. GitHub Linguist label: PHP.
+
+</details>
 
 ### [schmittjoh/php-option](https://github.com/schmittjoh/php-option)
 
 **Language 2 / Behavior 2 / Design 2 / Constraints 3 → Level 2**
+
+**Source:** Production software
 
 A small PHP API that represents either a present value or no value, with optional lazy creation.
 
@@ -140,7 +225,7 @@ A small PHP API that represents either a present value or no value, with optiona
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.
+**Purpose evidence:** The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.
 
 **Language evidence:** The Option abstraction, eager Some and None implementations, lazy wrapper, and focused tests under src and tests are implemented in PHP.
 
@@ -165,11 +250,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [nikic/FastRoute](https://github.com/nikic/FastRoute)
 
 **Language 2 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A fast HTTP request router that compiles static and variable routes into compact dispatch data and matched parameters.
 
@@ -221,7 +308,7 @@ A fast HTTP request router that compiles static and variable routes into compact
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** FastRoute is a published production routing library used by PHP web frameworks and applications.
+**Purpose evidence:** FastRoute is a published production routing library used by PHP web frameworks and applications.
 
 **Language evidence:** Route parsing, regex data generation, dispatch strategies, caching, and URI generation under src are PHP.
 
@@ -249,6 +336,8 @@ The learner-facing short context appears above.
 ### [webmozarts/assert](https://github.com/webmozarts/assert)
 
 **Language 4 / Behavior 2 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A defensive-programming library providing typed assertions for method inputs, outputs, values, collections, files, classes, and objects.
 
@@ -296,7 +385,7 @@ A defensive-programming library providing typed assertions for method inputs, ou
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.
+**Purpose evidence:** The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.
 
 **Language evidence:** The assertion API, generated mixin variants, static-analysis plugin, and exception type under src are PHP.
 
@@ -326,6 +415,8 @@ The learner-facing short context appears above.
 ### [Seldaek/monolog](https://github.com/Seldaek/monolog)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A logging library that routes structured records through processors, formatters, filters, buffers, groups, files, sockets, databases, and web services.
 
@@ -374,7 +465,7 @@ A logging library that routes structured records through processors, formatters,
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Monolog is a production PSR-3 logging implementation used by major PHP applications and frameworks.
+**Purpose evidence:** Monolog is a production PSR-3 logging implementation used by major PHP applications and frameworks.
 
 **Language evidence:** Logger channels, immutable records, handlers, formatters, processors, error integration, and reset contracts under src/Monolog are PHP.
 
@@ -402,6 +493,8 @@ The learner-facing short context appears above.
 ### [symfony/symfony](https://github.com/symfony/symfony)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A component framework spanning dependency injection, HTTP kernels, console tools, events, routing, security, messaging, forms, validation, and integrations.
 
@@ -456,7 +549,7 @@ A component framework spanning dependency injection, HTTP kernels, console tools
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Symfony is actively released production infrastructure used directly and as a foundation for major PHP applications and frameworks.
+**Purpose evidence:** Symfony is actively released production infrastructure used directly and as a foundation for major PHP applications and frameworks.
 
 **Language evidence:** The framework's dependency injection, HTTP, console, event, routing, security, messaging, persistence bridges, and component implementations are PHP.
 

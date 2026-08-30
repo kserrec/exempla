@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "lua",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Lua",
       "language_evidence": "The message registry, namespace fallback, positional substitution, callable interface, and behavior tests are implemented in Lua.",
       "description": "A small Lua module that stores named messages, falls back to another namespace, and inserts values into the selected text.",
-      "real_world_evidence": "Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.",
+      "source_kind": "production",
+      "purpose_evidence": "Lua developers use the maintained LuaRocks module as the message and localization layer underneath tools including Luassert and Busted.",
       "why_study": "Trace one in-memory registry from message storage through active-namespace lookup, fallback lookup, argument checking, and formatted output.",
       "learn": [
         "Trace message storage and lookup through one module-local registry.",
@@ -144,7 +145,8 @@
       "primary_language": "Lua",
       "language_evidence": "Class creation, inheritance, allocation, mixins, metamethod propagation, and the complete test suite are handwritten Lua.",
       "description": "A compact object-oriented library providing classes, inheritance, instances, mixins, static members, and metamethod support.",
-      "real_world_evidence": "The maintained LuaRocks library is used by applications and games that want a small conventional class abstraction without a framework.",
+      "source_kind": "production",
+      "purpose_evidence": "The maintained LuaRocks library is used by applications and games that want a small conventional class abstraction without a framework.",
       "why_study": "It turns tables and metatables into a recognizable object model while keeping class construction, inheritance, allocation, mixins, and special metamethod handling visible in one file.",
       "learn": [
         "Prototype relationships, metatables, class and instance lookup, inheritance, allocation versus initialization, mixins, static members, metamethod forwarding, and version-sensitive tests."
@@ -267,7 +269,8 @@
       "primary_language": "Lua",
       "language_evidence": "Both the table-backed and pure-FFI cache implementations, queue management, expiry logic, flags, and OpenResty tests are Lua.",
       "description": "An in-process least-recently-used cache for OpenResty with expiry, stale reads, user flags, bounded capacity, and table-backed or pure-FFI storage.",
-      "real_world_evidence": "OpenResty maintains the library for production Nginx and LuaJIT applications that need per-worker caching without shared-memory serialization overhead.",
+      "source_kind": "production",
+      "purpose_evidence": "OpenResty maintains the library for production Nginx and LuaJIT applications that need per-worker caching without shared-memory serialization overhead.",
       "why_study": "Two implementations preserve one contract while exposing hash lookup, a doubly linked recency queue, expiration semantics, stale recovery, FFI memory layouts, and capacity tradeoffs.",
       "learn": [
         "LRU invariants, hash-table and linked-list coordination, TTL expiration, stale reads, user flags, LuaJIT FFI structures, capacity accounting, cache flushing, and Nginx integration tests."
@@ -388,7 +391,8 @@
       "primary_language": "Lua",
       "language_evidence": "Test-tree construction, hooks, execution, filtering, loaders, configuration, status reporting, output handlers, and self-tests are Lua.",
       "description": "A full testing framework with nested contexts, hooks, asynchronous completion, filtering, randomized execution, multiple source loaders, and pluggable reporters.",
-      "real_world_evidence": "The maintained LuaRocks tool runs real project suites from the command line and provides the standard framework around Luassert assertions.",
+      "source_kind": "production",
+      "purpose_evidence": "The maintained LuaRocks tool runs real project suites from the command line and provides the standard framework around Luassert assertions.",
       "why_study": "Busted's synchronous core shows how a dynamic Lua DSL becomes a nested block tree and executes with exact hooks, events, failures, pending state, and cleanup order.",
       "learn": [
         "Trace describe, it, hook, and pending registration into block nodes, then through discovery, environment scoping, recursive execution, protected callbacks, teardown, cleanup, and results."
@@ -517,7 +521,8 @@
       "primary_language": "Lua",
       "language_evidence": "Lexing, parsing, AST passes, control-flow linearization, local resolution, warning detectors, configuration, filtering, caching, CLI behavior, and tests are Lua.",
       "description": "A static analyzer and command-line linter that reports globals, unused values, control-flow mistakes, whitespace problems, complexity, and configuration-sensitive warnings.",
-      "real_world_evidence": "The maintained LuaRocks and command-line tool checks applications and libraries locally and in continuous integration across configurable language standards.",
+      "source_kind": "production",
+      "purpose_evidence": "The maintained LuaRocks and command-line tool checks applications and libraries locally and in continuous integration across configurable language standards.",
       "why_study": "The selected Luacheck path exposes a complete static-analysis trace from source tokens and syntax nodes through control-flow linearization, lexical-scope resolution, unused-local detection, and final warning filtering.",
       "learn": [
         "Use `src/luacheck/check.lua` to study lexing, parsing, syntax-tree normalization, control-flow linearization, nested lexical scopes, definition and access tracking, unused-local analysis, warning locations, option filtering, and focused end-to-end specifications."
@@ -648,7 +653,8 @@
       "primary_language": "Lua",
       "language_evidence": "Lua implements the Standalone Admin API, configuration validation and propagation, OpenResty worker events and timers, per-resource hot-reload state, stream routing, request phases, and the production gateway runtime; the selected integration suites exercise that Lua behavior.",
       "description": "A cloud-native API and AI gateway with dynamic routing, load balancing, policy plugins, observability, standalone and distributed configuration modes, and HTTP, stream, and extensible runtime paths.",
-      "real_world_evidence": "The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.",
+      "source_kind": "production",
+      "purpose_evidence": "The Apache Software Foundation actively maintains and releases APISIX for production traffic management, and the project documents installation, deployment modes, gateway operation, extension points, upgrades, and contribution workflows.",
       "why_study": "APISIX's API-driven standalone configuration path is an expert trace through validation, monotonic resource versions, shared memory, subsystem-specific events, per-worker polling, hot route rebuilds, and safe traffic handling before the first configuration arrives.",
       "learn": [
         "Trace a full configuration update from the Admin API through validation, version and digest decisions, shared-memory publication, HTTP and stream worker synchronization, per-resource cache mutation, route rebuild, and request behavior before and after configuration arrives."
@@ -786,7 +792,8 @@
       "primary_language": "Lua",
       "language_evidence": "Lua implements the gateway lifecycle, routing, load balancing, plugins, policy enforcement, data models, declarative configuration, clustering, control and data planes, PDK, observability, vaults, migrations, and tests on OpenResty.",
       "description": "A production API, AI, and MCP gateway supporting traffic routing, load balancing, authentication, policy plugins, observability, databases or declarative operation, and hybrid control and data planes.",
-      "real_world_evidence": "Kong maintains and ships the gateway for real network traffic, with documented deployment, upgrade, plugin-development, database, DB-less, and hybrid-cluster modes.",
+      "source_kind": "production",
+      "purpose_evidence": "Kong maintains and ships the gateway for real network traffic, with documented deployment, upgrade, plugin-development, database, DB-less, and hybrid-cluster modes.",
       "why_study": "Kong's cluster-events subsystem is an expert Lua path through durable publication, polling, shared-memory cursors, deduplication, delayed delivery, callback isolation, and recovery across nodes and workers.",
       "learn": [
         "Trace broadcast into durable storage, then follow locked paged polling, lookback cursors, same-node suppression, shared-memory deduplication, not-before delays, protected callbacks, cleanup, and timer rescheduling."

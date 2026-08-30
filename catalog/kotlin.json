@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "kotlin",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "Command modeling, tokenization and parsing, property-delegated parameters, transformations, validation, value sources, help formatting, completion generation, and platform types are Kotlin.",
       "description": "A multiplatform Kotlin framework for type-safe command-line applications with nested commands, composable parameters, generated help, and shell completion.",
-      "real_world_evidence": "Clikt publishes current core, full, and Markdown artifacts on Maven Central and maintains documentation and sample applications for JVM, Node.js, and native targets.",
+      "source_kind": "production",
+      "purpose_evidence": "Clikt publishes current core, full, and Markdown artifacts on Maven Central and maintains documentation and sample applications for JVM, Node.js, and native targets.",
       "why_study": "Starting at CommandLineParser shows how a declarative Kotlin command model becomes normalized tokens, recursive invocations, finalized option values, validation results, and executable subcommands.",
       "learn": [
         "Use `CommandLineParser.kt` to study property delegates, staged parsing, token normalization, alias and argument-file expansion, recursive command trees, typed option finalization, validation, and direct option and subcommand contracts."
@@ -136,7 +137,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "The lazy logging facade, event builder, logger factories, SLF4J and JUL adapters, source-location preservation, and native, Android, JS, Wasm, and Darwin backends are Kotlin.",
       "description": "A lightweight Kotlin multiplatform logging facade with lazy messages and adapters for platform logging systems.",
-      "real_world_evidence": "The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.",
       "why_study": "kotlin-logging shows how a multiplatform facade can keep logging lazy while preserving markers, payloads, causes, and the original call site through an SLF4J adapter.",
       "learn": [
         "Trace enabled checks and lazy event construction through the common logger contract into a location-aware JVM backend with exact caller metadata."
@@ -261,7 +263,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "Flow collection, channel wrapping, event modeling, timeouts, cancellation, assertion reporting, and the public test DSL are implemented in common Kotlin.",
       "description": "A small multiplatform testing library that turns Kotlin Flow emissions, completion, and failures into explicit ordered assertions.",
-      "real_world_evidence": "Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.",
+      "source_kind": "production",
+      "purpose_evidence": "Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.",
       "why_study": "Turbine makes concurrent Flow testing concrete by turning collection into an ordered event protocol with timeouts, cancellation, cleanup, and preserved failures.",
       "learn": [
         "Follow Flow collection into channel-backed item, completion, and error events, then reason about timeout selection, cancellation, joining, and unconsumed-event reporting."
@@ -393,7 +396,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "The adapter registry, streaming UTF-8 reader and writer, Kotlin reflection integration, standard adapters, and KSP code generator are primarily Kotlin, with intentional Java interoperability and tests.",
       "description": "A modern JSON library for Kotlin and Java with streaming I/O, composable adapters, reflection support, and generated adapters through Kotlin Symbol Processing.",
-      "real_world_evidence": "Square publishes Moshi runtime, Kotlin, adapter, and code-generation artifacts and documents stable use in Kotlin and Java applications.",
+      "source_kind": "production",
+      "purpose_evidence": "Square publishes Moshi runtime, Kotlin, adapter, and code-generation artifacts and documents stable use in Kotlin and Java applications.",
       "why_study": "Moshi's adapter lookup is a focused study of recursive factory resolution, cycle breaking, deferred publication, and safe cache updates.",
       "learn": [
         "Follow a generic adapter request through factory precedence, a thread-local lookup chain, deferred recursive adapters, and synchronized cache publication."
@@ -520,7 +524,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "The compiler frontends, FIR semantic model, FIR-to-IR conversion, intermediate representations, lowering pipelines, JVM backend, command-line compiler, daemon, incremental compilation, and much supporting infrastructure are implemented primarily in Kotlin.",
       "description": "The Kotlin programming language implementation, including its compiler frontends, intermediate representations, backends, tooling, libraries, and multiplatform infrastructure.",
-      "real_world_evidence": "This official JetBrains repository builds the Kotlin compiler and language toolchain distributed for JVM, JavaScript, Wasm, Native, IDE, Gradle, Maven, and command-line workflows.",
+      "source_kind": "production",
+      "purpose_evidence": "This official JetBrains repository builds the Kotlin compiler and language toolchain distributed for JVM, JavaScript, Wasm, Native, IDE, Gradle, Maven, and command-line workflows.",
       "why_study": "Kotlin's JVM command-line compiler exposes an expert but unusually explicit staged path from configuration and frontend analysis through FIR, IR, backend code generation, and artifact output.",
       "learn": [
         "Follow source compilation through ordered pipeline phases, typed intermediate representations, backend generation, diagnostics, and safe JAR output."
@@ -662,7 +667,8 @@
       "primary_language": "Kotlin",
       "language_evidence": "Coroutine jobs, continuations, dispatchers, work-stealing scheduler, channels, flows, synchronization primitives, test scheduler, debug probes, reactive adapters, and platform integrations are Kotlin.",
       "description": "Kotlin's official multiplatform library for structured concurrency, asynchronous streams, channels, scheduling, testing, debugging, and ecosystem integration.",
-      "real_world_evidence": "JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.",
+      "source_kind": "production",
+      "purpose_evidence": "JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.",
       "why_study": "The kotlinx.coroutines Job implementation is a concentrated example of a thread-safe lifecycle state machine with cancellation, child ownership, callbacks, and exception aggregation.",
       "learn": [
         "Trace Job activation, cancellation, make-completing transitions, child waiting, finalization, handler notification, and exception aggregation through atomic state changes."

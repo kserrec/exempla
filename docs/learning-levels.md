@@ -38,27 +38,46 @@ matching can be introductory in a functional language, and classes can be
 introductory Java while irrelevant to C. Record any such language-specific
 exception when it materially changes a Level 1 or Level 2 decision.
 
+## Source types across the ladder
+
+Levels 1 and 2 may use production software or a qualified educational
+exemplar. Production software is built primarily for real users or systems. An
+educational exemplar is a complete, coherent, licensed, verifiable software
+artifact intentionally chosen for teaching clarity; exercises, starters,
+answer dumps, and disconnected snippets do not qualify.
+
+This is deliberate curriculum design. Real production code commonly assumes
+professional concepts before a novice has learned them, and a production-only
+rule left the entry ramp too sparse. The four-score formula, guardrails,
+learner baseline, novice-accessibility floor, and five tests are unchanged.
+Every entry discloses its source type. Level 3 is the explicit transition to
+production-only source. Teaching intent never lowers a score: an educational
+exemplar whose evidence produces Level 3 or higher is rejected unless it also
+independently qualifies and is truthfully classified as production software.
+
 ## Level meanings
 
 - **Level 1 — First real code:** The central programming ideas are already in
   the learner baseline. Unfamiliar context is incidental and explainable in
   one or two plain sentences; control flow is local and predictable; and the
   learner does not need to study another topic before understanding why the
-  path works. This rung should be a comfortable first production-code reading.
-- **Level 2 — Guided real-world code:** One or a few common professional
+  path works. This rung should be a comfortable first serious source-code
+  reading.
+- **Level 2 — Guided real-world patterns:** One or a few common professional
   concepts may be central, but a short inline primer is enough to begin. The
   path remains locally traceable, prerequisites beyond the baseline are short
   and specific, and unrelated unfamiliar concepts do not pile up.
-- **Level 3 — Intermediate:** A substantial grammar, theory, lifecycle,
-  protocol, or mental model is central; several post-baseline concepts
-  interact; significant ecosystem knowledge is required; or the learner needs
-  a separate tutorial before the path becomes intelligible.
+- **Level 3 — Intermediate production software:** Source is production-only.
+  A substantial grammar, theory, lifecycle, protocol, or mental model is
+  central; several post-baseline concepts interact; significant ecosystem
+  knowledge is required; or the learner needs a separate tutorial before the
+  path becomes intelligible.
 - **Level 4 — Advanced:** Advanced machinery, architecture, state,
   constraints, or systems reasoning dominates the path.
 - **Level 5 — Expert:** Several expert-level burdens interact pervasively.
 
 If you can write small programs in the language, Level 1 is designed to be
-your first comfortable step into production source. An empty Level 1 does not
+your first comfortable step into serious source. An empty Level 1 does not
 mean learners should simply jump to Level 2; it means Exempla has not yet found
 a path gentle enough to publish there.
 
@@ -200,7 +219,7 @@ plain-language reason, and one integer floor:
 
 - **Floor 1:** All central concepts are within the learner baseline;
   unfamiliar concepts are incidental and locally explainable; the path is
-  suitable as a first production-code reading.
+  suitable as a first serious source-code reading.
 - **Floor 2:** One or a few common professional concepts are central, but a
   short in-entry primer is sufficient for a novice who has already read some
   real code.

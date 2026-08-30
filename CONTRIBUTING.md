@@ -3,7 +3,8 @@
 Exempla accepts evidence-backed improvements to a learning catalog. A
 repository does not qualify because it is famous, convenient, or needed to
 fill a slot. Its selected path must teach transferable programming, pass the
-repository-quality gate, and earn its Level from observed source evidence.
+applicable production or educational-exemplar gate, pass the source-quality
+gate, and earn its Level from observed evidence.
 
 ## Start here
 
@@ -73,9 +74,10 @@ and generated navigation together.
 
 ## Candidate workflow
 
-1. **Triage eligibility.** Confirm public source, a genuine software purpose,
-   meaningful first-party code in the cataloged language, and inspectable
-   license terms.
+1. **Classify and triage eligibility.** Record `source_kind` and
+   `purpose_evidence`. Confirm public source, meaningful first-party code in
+   the cataloged language, inspectable license terms, and either genuine
+   non-teaching production purpose or every educational-exemplar requirement.
 2. **Pin the revision.** Record a full 40-character commit before judging
    source. Do not use a floating branch as evidence.
 3. **Choose a representative path.** Assign a stable `path_slug`; name one real
@@ -98,11 +100,14 @@ and generated navigation together.
    tests, and record a floor from 1 through 3. The final Level is the higher of
    the rubric Level and accessibility floor. Do not average the floor with the
    four scores or lower it to fit a slot.
+   An educational exemplar whose published result is Level 3 or higher is
+   rejected unless it independently qualifies as production software and is
+   reclassified truthfully.
 8. **Resolve path and slot capacity.** A repository may contribute at most two
    materially distinct paths across the entire catalog and may not appear
-   twice in one language/Level bucket. Each bucket holds at most two paths.
-   Keep the clearest learning paths and record other qualified candidates as
-   capacity alternates.
+   twice in one language/Level bucket. Levels 1 and 2 each hold at most three
+   paths; Levels 3–5 each hold at most two. Keep the clearest learning sequence
+   and record other qualified candidates as capacity alternates.
 9. **Record the decision.** Accepted entries go in
    `catalog/<language>.json`; serious rejections go in
    `research/rejections.json` with evidence and a literal reconsideration
@@ -113,8 +118,10 @@ and generated navigation together.
    inspection when a model performed the verification.
 
 Discovery must use at least three independent channels and deliberately include
-smaller real projects. Stars, downloads, reputation, and beginner labels are
-leads at most, never admission evidence.
+smaller production projects. Lower-level research must also search official
+examples, respected completed teaching artifacts, and small coherent reference
+implementations. Stars, downloads, reputation, and beginner labels are leads
+at most, never admission evidence.
 
 The current catalog was curated with AI-assisted source inspection and
 cross-checking under the project owner's direction and acceptance. Automated
@@ -124,7 +131,7 @@ corrections with pinned evidence are welcome.
 
 ## Canonical entry format
 
-[`catalog/schema.json`](catalog/schema.json) defines schema version 4 and
+[`catalog/schema.json`](catalog/schema.json) defines schema version 5 and
 [`scripts/catalog.py`](scripts/catalog.py) enforces semantic relationships:
 safe paths, inspection membership, pinned license URL arrays, formula and score
 floors, the novice-accessibility floor for structural Levels 1 and 2,
@@ -150,9 +157,9 @@ python3 scripts/catalog.py validate
 python3 scripts/catalog.py check-generated
 ```
 
-Use `--complete` on both catalog commands only when every language has two
-qualified entries at every Level. Canonical JSON and generated Markdown belong
-in the same commit.
+Use `--complete` on both catalog commands only when every language has three
+qualified entries at Levels 1 and 2 and two at Levels 3–5. Canonical JSON and
+generated Markdown belong in the same commit.
 
 ## Scoring disagreements
 
@@ -165,6 +172,9 @@ lower anchor when a higher-level signal is isolated or outside the main trace.
 
 - The exact starting state and pinned revision are identified.
 - The selected path passes the coding-relevance and quality gates.
+- `source_kind` and `purpose_evidence` truthfully establish production or
+  educational-exemplar eligibility; educational source is confined to Levels
+  1 and 2.
 - Stable path slug, goal, start reason, supporting files, trace, prerequisites,
   concepts developed, and domain context describe the path actually scored.
 - All four scores cite observed recurring signals and the formula is exact.

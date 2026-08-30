@@ -1,6 +1,8 @@
 # JavaScript
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+10 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -9,6 +11,8 @@
 ### [sindresorhus/slash](https://github.com/sindresorhus/slash)
 
 **Language 1 / Behavior 1 / Design 1 / Constraints 2 → Level 1**
+
+**Source:** Production software
 
 A tiny JavaScript function that changes Windows backslashes to forward slashes except for one protected path form.
 
@@ -59,7 +63,7 @@ A tiny JavaScript function that changes Windows backslashes to forward slashes e
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.
+**Purpose evidence:** npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.
 
 **Language evidence:** The first-party runtime is exported from index.js as an ES module and its direct runtime suite is JavaScript; GitHub also labels the repository JavaScript at the metadata check.
 
@@ -84,15 +88,254 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 2 — Guided real-world code
+### [sindresorhus/array-union](https://github.com/sindresorhus/array-union)
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+**Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1**
 
-## Level 3 — Intermediate
+**Source:** Production software
+
+A one-function JavaScript package that combines arrays, removes repeated values, and preserves first-seen order.
+
+**Why study it:** See how standard collection operations express a complete useful transformation, then use direct examples to verify both uniqueness and order.
+
+**Prerequisites:**
+
+- The global novice JavaScript baseline: functions, arrays, modules, and focused tests.
+- A Set is a collection that retains one instance of each value; spreading it produces an array in insertion order.
+
+**Concepts this path develops:**
+
+- Composing flattening and deduplication into one deterministic transformation.
+- Preserving first-seen order while removing repeated values.
+- Testing mixed and repeated inputs against exact output arrays.
+
+**What you can learn:**
+
+- Trace several input arrays through flattening, Set-based deduplication, and the returned array.
+- Explain why the first occurrence of each value determines output order.
+- Use focused tests to check duplicates within and across input arrays.
+
+**Learning path:**
+
+- **Goal:** Understand how array-union combines any number of arrays into one ordered array containing each value once.
+- **Start here:** [`index.js`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/index.js) — The exported one-line function contains the entire runtime transformation in execution order.
+- **Then read:**
+  - [`test.js`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/test.js)
+  - [`readme.md`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/readme.md)
+  - [`package.json`](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/package.json)
+- **Trace:** Start with the rest-parameter arrays in index.js, flatten them, let Set retain the first occurrence of each value, spread the Set into the result, and compare that sequence with the three exact arrays in test.js.
+
+**Why this level:**
+
+- **Language technique 1:** The runtime uses one function and familiar collection operations without custom abstraction or hidden control flow.
+- **Behavioral reasoning 1:** Every input follows the same direct flatten, deduplicate, and return sequence.
+- **Design span 1:** One focused source unit and its direct tests contain the complete selected behavior.
+- **Constraint burden 1:** The contract has two local, plainly observable guarantees and no wider compatibility or lifecycle burden.
+- **Novice accessibility floor 1:** The learner can predict every example after two local sentences about Set uniqueness and insertion order; no separate topic is required.
+  - **Central concepts:** array flattening; duplicate removal; first-seen ordering
+  - **Incidental concepts:** rest and spread syntax; Set insertion order
+- **Placement:** The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** MIT ([evidence 1](https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/license))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The package manifest publishes array-union 3.0.1 to npm with index.js as its exported runtime, while the README documents installation and application-facing use.
+
+**Language evidence:** The published runtime is the first-party JavaScript module index.js and its behavioral suite is test.js; GitHub labels the repository TypeScript because it also ships declaration tests.
+
+**Coding relevance:**
+
+The selected behavior is a general collection transformation with direct application use and no specialist domain prerequisite.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation is a direct composition of standard operations with no duplicated or obscured logic.
+- **Architecture:** A single exported function is proportionate to the package's one responsibility.
+- **Naming and idiom:** The package name, rest parameter, Set, flat, and spread syntax state the transformation idiomatically.
+- **Tests:** AVA assertions cover repeated values within and across arrays, mixed value types, and exact output order.
+- **Documentation:** The README states the purpose, installation, and four concrete input-to-output examples.
+- **Traceability:** Every documented example maps directly to the sole runtime expression and direct behavioral assertions.
+- **Maintainability:** The narrow stable API and absence of mutable state make the effect of a change easy to bound.
+- **Educational value:** It is a comfortable first production path for learning how standard collection tools can form a complete utility.
+
+**Inspection record:** commit `c9e401d946d70eb46149ad67973c911c6ad2a335`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `index.js`, `test.js`, `readme.md`, `package.json`, `license`. GitHub Linguist label: TypeScript.
+
+</details>
+
+## Level 2 — Guided real-world patterns
+
+### [expressjs/express](https://github.com/expressjs/express)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
+
+**Source:** Educational exemplar
+
+Express's completed hello-world example maps one HTTP GET route to a response and verifies both success and missing-route behavior.
+
+**Why study it:** Read a complete tiny web application from route declaration through response, startup boundary, and externally observed request tests.
+
+Levels 1–2 may use intentionally instructive software when it provides a gentler path into reading good source code.
+
+**Short context:**
+
+- Only the basic GET request, URL path, status, and response-body model described in the prerequisites is needed.
+
+**Prerequisites:**
+
+- The global novice JavaScript baseline: functions, modules, conditionals, and focused tests.
+- An HTTP GET request names a path; a response has a status and body, and a route callback produces that response.
+
+**Concepts this path develops:**
+
+- Declaring a route with a request-handler callback.
+- Exporting an application separately from its direct-run server startup.
+- Testing observable HTTP status and body behavior.
+
+**What you can learn:**
+
+- Connect an HTTP method and path to one JavaScript callback.
+- Separate reusable application construction from starting a listening server.
+- Verify the success route and framework-provided missing-route response from outside the app.
+
+**Learning path:**
+
+- **Goal:** Understand how a complete minimal Express application serves Hello World at one route and remains directly acceptance-testable.
+- **Start here:** [`examples/hello-world/index.js`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/hello-world/index.js) — This file contains the whole application, route callback, export boundary, and direct-run startup guard.
+- **Then read:**
+  - [`test/acceptance/hello-world.js`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/test/acceptance/hello-world.js)
+  - [`examples/README.md`](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/examples/README.md)
+- **Trace:** Construct and export the Express application, register GET / to send Hello World, start listening only when run directly, then follow the acceptance suite's GET / and GET /missing requests to their expected 200 body and 404 status.
+
+**Why this level:**
+
+- **Language technique 2:** Callbacks and the framework's route and request APIs are common professional JavaScript idioms that remain locally visible.
+- **Behavioral reasoning 2:** A small request lifecycle and one startup branch matter, but both remain explicit and easy to trace.
+- **Design span 1:** The selected behavior stays within one tiny application and its direct external tests.
+- **Constraint burden 1:** The example preserves a small observable contract without interacting production constraints.
+- **Novice accessibility floor 2:** A short primer defines a route, request, response, and direct-run guard; the learner can then predict both acceptance tests without studying HTTP internals.
+  - **Central concepts:** HTTP route callback; application export and direct-run startup; external request testing
+  - **Incidental concepts:** the framework's default 404 handling
+- **Placement:** The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** Express maintains examples/hello-world as its documented simple request-handler example, exports the complete application for testing, and ships a direct acceptance suite for it.
+
+**Language evidence:** The complete hello-world example, its request handler, and its acceptance test are first-party JavaScript in the Express repository.
+
+**Coding relevance:**
+
+The complete example teaches a transferable application boundary, callback route, and behavior-first acceptance test without requiring protocol internals.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The complete app is short, direct, and contains no placeholder or unexplained branch.
+- **Architecture:** Application construction is exported for tests while the direct-run guard owns listening, a sound boundary even at this size.
+- **Naming and idiom:** app, get, req, res, send, and listen follow the framework's conventional vocabulary.
+- **Tests:** The checked-in acceptance suite asserts the exact success body and status plus the unmatched-path status.
+- **Documentation:** The examples index identifies this artifact as the simple request handler and the source is complete as checked in.
+- **Traceability:** Each registered or absent route corresponds directly to one external request assertion.
+- **Maintainability:** The export/listen separation prevents tests from opening a server and keeps the example's responsibility bounded.
+- **Educational value:** It introduces one common framework pattern through a complete runnable artifact rather than an isolated snippet.
+
+**Inspection record:** commit `023767fe9872e029271df1418f73401bff20ff40`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `examples/hello-world/index.js`, `test/acceptance/hello-world.js`, `examples/README.md`, `package.json`, `LICENSE`. GitHub Linguist label: JavaScript.
+
+</details>
+
+### [sindresorhus/onetime](https://github.com/sindresorhus/onetime)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A JavaScript package that calls a wrapped function once, reuses its first successful result, and records every attempt.
+
+**Why study it:** Trace a small stateful closure through first call, repeated call, throwing first attempt, optional error behavior, and call-count inspection.
+
+**Prerequisites:**
+
+- The global novice JavaScript baseline: functions, objects, exceptions, modules, and focused tests.
+- A closure keeps local variables alive for a returned function; a WeakMap associates data with function objects without adding public properties.
+
+**Concepts this path develops:**
+
+- Using closure state to enforce one successful execution.
+- Preserving a caller's this value and arguments through a wrapper.
+- Keeping wrapper metadata in a private WeakMap.
+
+**What you can learn:**
+
+- See how a closure retains a result and disables later execution after the first successful call.
+- Explain why a first call that throws remains retryable.
+- Track wrapper call counts without exposing mutable fields on the wrapped function.
+
+**Learning path:**
+
+- **Goal:** Understand how onetime executes a wrapped function once successfully, returns the cached value thereafter, and reports every call attempt.
+- **Start here:** [`index.js`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/index.js) — The file contains input validation, closure state, invocation, retry semantics, metadata storage, and the public callCount helper.
+- **Then read:**
+  - [`test.js`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/test.js)
+  - [`readme.md`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/readme.md)
+  - [`package.json`](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/package.json)
+- **Trace:** Create a wrapper with returnValue, callCount, and the original function in closure state; on each call update WeakMap metadata, invoke and clear the original only after success, otherwise return the cached value or throw by option, then match those branches to the direct tests.
+
+**Why this level:**
+
+- **Language technique 2:** Callbacks, closures, function context, and WeakMap are common professional idioms that materially shape the wrapper.
+- **Behavioral reasoning 2:** A few explicit state branches matter, including the placement of the clear operation after a successful return.
+- **Design span 1:** The complete behavior stays within one small module and its direct tests.
+- **Constraint burden 2:** Several routine wrapper guarantees are tested, but they remain local and do not create a wider lifecycle.
+- **Novice accessibility floor 2:** One short primer on closures and wrappers makes the state transitions predictable; WeakMap and metadata copying can be treated as local supporting operations.
+  - **Central concepts:** closure-held state; function wrapping; first-success and retry behavior
+  - **Incidental concepts:** WeakMap storage; copying function metadata through mimic-function
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/license))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The package manifest publishes onetime 8.0.0 to npm as an application-facing function wrapper and the README documents its stable runtime API.
+
+**Language evidence:** The published runtime wrapper and its direct AVA behavior suite are first-party JavaScript in index.js and test.js.
+
+**Coding relevance:**
+
+Function wrapping, cached results, retry-on-error behavior, and private call metadata are transferable library-design practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** State changes occur close to their conditions, and the successful-call boundary is visible rather than hidden in helpers.
+- **Architecture:** One wrapper factory, one private metadata store, and one inspection method form a proportionate public API.
+- **Naming and idiom:** returnValue, callCount, calledFunctions, and the throw option communicate their roles directly.
+- **Tests:** AVA tests cover one-time execution, cached returns, optional errors, call counts, this preservation, invalid inspection, and retry after throw.
+- **Documentation:** The README explains the contract, both repeated-call modes, installation, and call-count API with executable-style examples.
+- **Traceability:** Every state branch in index.js has a direct assertion in test.js.
+- **Maintainability:** Private metadata and a narrow exported surface contain future changes while tests pin the subtle exception timing.
+- **Educational value:** The path introduces professional function wrapping through a compact state machine whose edge cases are directly visible.
+
+**Inspection record:** commit `481ec583f8303e98c4d1d16bb316ef8e6b04d72c`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `index.js`, `test.js`, `readme.md`, `package.json`, `license`. GitHub Linguist label: JavaScript.
+
+</details>
+
+## Level 3 — Intermediate production software
 
 ### [ai/nanoid](https://github.com/ai/nanoid)
 
 **Language 2 / Behavior 2 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A compact secure unique-ID generator for JavaScript runtimes with customizable alphabets and output lengths.
 
@@ -138,7 +381,7 @@ A compact secure unique-ID generator for JavaScript runtimes with customizable a
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships Nano ID for Node.js, browsers, and package ecosystems as a production identifier library.
+**Purpose evidence:** The repository ships Nano ID for Node.js, browsers, and package ecosystems as a production identifier library.
 
 **Language evidence:** Node and browser generators, alphabets, and public entry points are first-party JavaScript with declaration files alongside them.
 
@@ -166,6 +409,8 @@ The learner-facing short context appears above.
 ### [jquery/jquery](https://github.com/jquery/jquery)
 
 **Language 3 / Behavior 2 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A browser library that normalizes DOM traversal, manipulation, events, Ajax, data, and effects behind a chainable API.
 
@@ -211,7 +456,7 @@ A browser library that normalizes DOM traversal, manipulation, events, Ajax, dat
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds and releases the jQuery browser library as real compatibility software, not an instructional implementation.
+**Purpose evidence:** The repository builds and releases the jQuery browser library as real compatibility software, not an instructional implementation.
 
 **Language evidence:** The modular DOM, events, data, Ajax, traversal, and effects implementation is JavaScript under src.
 
@@ -241,6 +486,8 @@ The learner-facing short context appears above.
 ### [eslint/eslint](https://github.com/eslint/eslint)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A configurable static-analysis engine and CLI for identifying and automatically fixing JavaScript problems.
 
@@ -288,7 +535,7 @@ A configurable static-analysis engine and CLI for identifying and automatically 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes ESLint as an extensible linter used in development and continuous-integration workflows.
+**Purpose evidence:** The repository publishes ESLint as an extensible linter used in development and continuous-integration workflows.
 
 **Language evidence:** The linter engine, configuration loaders, rule traversal, fixes, CLI engine, and services are JavaScript under lib.
 
@@ -316,6 +563,8 @@ The learner-facing short context appears above.
 ### [prettier/prettier](https://github.com/prettier/prettier)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 An opinionated source-code formatter that parses many languages, builds a document representation, and prints stable layouts.
 
@@ -366,7 +615,7 @@ An opinionated source-code formatter that parses many languages, builds a docume
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.
+**Purpose evidence:** The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.
 
 **Language evidence:** The formatter core, document intermediate representation, printers, parser adapters, and plugins are JavaScript under src.
 
@@ -396,6 +645,8 @@ The learner-facing short context appears above.
 ### [nodejs/node](https://github.com/nodejs/node)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The Node.js runtime, standard library, module loaders, native bindings, event loop integration, diagnostics, and tooling.
 
@@ -442,7 +693,7 @@ The Node.js runtime, standard library, module loaders, native bindings, event lo
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** This repository builds the released Node.js executable and standard library used to run server, command-line, and tooling workloads.
+**Purpose evidence:** This repository builds the released Node.js executable and standard library used to run server, command-line, and tooling workloads.
 
 **Language evidence:** JavaScript implements the standard-library and internal runtime layers, with substantial first-party C++ and C bindings beneath them.
 
@@ -470,6 +721,8 @@ The learner-facing short context appears above.
 ### [react/react](https://github.com/react/react)
 
 **Language 3 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A component runtime and rendering platform spanning reconciliation, scheduling, server rendering, native/web renderers, and a compiler.
 
@@ -518,7 +771,7 @@ A component runtime and rendering platform spanning reconciliation, scheduling, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.
+**Purpose evidence:** The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.
 
 **Language evidence:** JavaScript implements the public packages, reconciler, scheduler integration, renderers, server components, and runtime; Rust supports the compiler.
 

@@ -2,21 +2,25 @@
 
 4 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [dokku/dokku](https://github.com/dokku/dokku)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A self-hosted platform as a service that builds, deploys, configures, networks, schedules, and serves applications on a user's server.
 
@@ -70,7 +74,7 @@ A self-hosted platform as a service that builds, deploys, configures, networks, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes installable Dokku releases and packages for operating a multi-application deployment platform on supported Ubuntu and Debian hosts.
+**Purpose evidence:** The repository publishes installable Dokku releases and packages for operating a multi-application deployment platform on supported Ubuntu and Debian hosts.
 
 **Language evidence:** The command router and core deployment plugins are implemented in Bash, with substantial first-party Go modules extending application, builder, proxy, storage, Docker, and Kubernetes behavior.
 
@@ -98,6 +102,8 @@ The learner-facing short context appears above.
 ### [rbenv/rbenv](https://github.com/rbenv/rbenv)
 
 **Language 2 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A per-user Ruby version manager that selects installations through PATH shims, directory-local version files, environment overrides, and plugins.
 
@@ -149,7 +155,7 @@ A per-user Ruby version manager that selects installations through PATH shims, d
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships the rbenv command installed by major operating-system package managers and used to select Ruby runtimes for projects and shells.
+**Purpose evidence:** The repository ships the rbenv command installed by major operating-system package managers and used to select Ruby runtimes for projects and shells.
 
 **Language evidence:** Command dispatch, version selection, shim generation, hook discovery, executable lookup, and shell initialization are implemented as Bash executables under libexec/.
 
@@ -179,6 +185,8 @@ The learner-facing short context appears above.
 ### [ko1nksm/getoptions](https://github.com/ko1nksm/getoptions)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A portable POSIX-shell option parser and parser generator supporting short, long, optional, abbreviated, and subcommand forms.
 
@@ -233,7 +241,7 @@ A portable POSIX-shell option parser and parser generator supporting short, long
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes standalone release scripts and a Homebrew package for shell programs that need a richer option grammar than getopts provides.
+**Purpose evidence:** The repository publishes standalone release scripts and a Homebrew package for shell programs that need a richer option grammar than getopts provides.
 
 **Language evidence:** The portable option grammar, parser-code generator, abbreviation and help modules, and executable interfaces are implemented in POSIX shell.
 
@@ -261,6 +269,8 @@ The learner-facing short context appears above.
 ### [pyenv/pyenv](https://github.com/pyenv/pyenv)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A Python version manager that selects installed runtimes through shims and can download and build many Python implementations.
 
@@ -311,7 +321,7 @@ A Python version manager that selects installed runtimes through shims and can d
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships the pyenv command and bundled python-build plugin installed through common package managers and used for per-user and per-project Python selection.
+**Purpose evidence:** The repository ships the pyenv command and bundled python-build plugin installed through common package managers and used for per-user and per-project Python selection.
 
 **Language evidence:** Runtime selection, command dispatch, shims, hooks, shell setup, Python download and compilation, and binary packaging are implemented primarily in Bash.
 

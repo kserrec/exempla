@@ -1,6 +1,8 @@
 # Java
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -8,15 +10,95 @@
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [junit-team/junit-examples](https://github.com/junit-team/junit-examples)
 
-## Level 3 — Intermediate
+**Language 3 / Behavior 1 / Design 2 / Constraints 2 → Level 2**
+
+**Source:** Educational exemplar
+
+JUnit's complete Gradle starter pairs a tiny Java class with one example test and one table-driven parameterized test.
+
+**Why study it:** See how a finished small Java project turns examples and a table of inputs into repeatable tests with descriptive failure messages.
+
+Levels 1–2 may use intentionally instructive software when it provides a gentler path into reading good source code.
+
+**Prerequisites:**
+
+- The global novice Java baseline: classes, methods, integers, imports, and focused tests.
+- A test annotation marks a method for the test runner; a parameterized test repeats one method with each declared data row.
+
+**Concepts this path develops:**
+
+- Organizing production and test source into explicit project roles.
+- Expressing one behavior with both example-based and table-driven tests.
+- Configuring a build tool to discover tests through the JUnit Platform.
+
+**What you can learn:**
+
+- Separate the class being checked from its test class and test-only dependencies.
+- Compare one ordinary test with a parameterized test driven by CSV rows.
+- Connect Gradle's JUnit Platform configuration to the annotations that discover and run tests.
+
+**Learning path:**
+
+- **Goal:** Understand how JUnit's complete Gradle starter discovers and runs ordinary and parameterized tests against a small Java class.
+- **Start here:** [`junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java) — The single public add behavior provides the exact contract that every selected test exercises.
+- **Then read:**
+  - [`junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java)
+  - [`junit-jupiter-starter-gradle/build.gradle`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/build.gradle)
+  - [`junit-jupiter-starter-gradle/README.md`](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/junit-jupiter-starter-gradle/README.md)
+- **Trace:** Read Calculator.add, follow the ordinary @Test assertion, then follow each @CsvSource row into the parameterized add method and expected result; finish at build.gradle where JUnit dependencies and useJUnitPlatform make those annotated methods executable.
+
+**Why this level:**
+
+- **Language technique 3:** Annotations materially drive discovery and data injection, while the surrounding Java remains deliberately basic.
+- **Behavioral reasoning 1:** Each test has direct inputs, one method call, and an exact expected value with no mutable lifecycle.
+- **Design span 2:** A few explicit project boundaries connect the class, its tests, and the runner configuration.
+- **Constraint burden 2:** Routine build and test safeguards matter, but the artifact has no wider application constraints.
+- **Novice accessibility floor 2:** A short primer on annotations, parameter rows, and source sets makes every execution predictable; no framework lifecycle beyond test discovery is required.
+  - **Central concepts:** test discovery annotations; parameterized test data; main and test source separation
+  - **Incidental concepts:** Gradle's Groovy configuration syntax; a lazy assertion-message lambda
+- **Placement:** The four scores 3/1/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** EPL-2.0 ([evidence 1](https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The JUnit team documents junit-jupiter-starter-gradle as its bare-minimum complete setup for Java tests on JUnit Jupiter with Gradle, and CI builds the example projects.
+
+**Language evidence:** The selected starter's calculator, JUnit Jupiter tests, and Gradle setup are first-party Java and Groovy maintained by the JUnit team; GitHub labels the repository Java.
+
+**Coding relevance:**
+
+Test organization, data-driven verification, failure diagnostics, and build integration are transferable software-engineering practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The selected project is intentionally minimal, complete, and free of placeholder methods or exercises.
+- **Architecture:** Main code, test code, dependencies, and runner configuration have clear conventional boundaries.
+- **Naming and idiom:** CalculatorTests, addsTwoNumbers, expectedResult, @Test, and @ParameterizedTest communicate their roles directly.
+- **Tests:** One direct case and four parameter rows verify the complete behavior with exact values and useful messages.
+- **Documentation:** The subproject README states its purpose, language, build system, and JUnit Platform relationship; the root README records CI coverage.
+- **Traceability:** Every test input reaches the one add method and one exact assertion, while the build file explains discovery.
+- **Maintainability:** Pinned dependencies, a standard source layout, and one explicit runner setting keep the starter current and easy to change.
+- **Educational value:** The artifact teaches professional automated-test structure without hiding it behind application complexity.
+
+**Inspection record:** commit `02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java`, `junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java`, `junit-jupiter-starter-gradle/build.gradle`, `junit-jupiter-starter-gradle/README.md`, `README.md`, `LICENSE.md`. GitHub Linguist label: Java.
+
+</details>
+
+## Level 3 — Intermediate production software
 
 ### [java-diff-utils/java-diff-utils](https://github.com/java-diff-utils/java-diff-utils)
 
 **Language 3 / Behavior 2 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A library for computing sequence differences, applying and restoring patches, parsing unified diffs, and producing comparison output.
 
@@ -67,7 +149,7 @@ A library for computing sequence differences, applying and restoring patches, pa
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes reusable Maven artifacts used by applications that compare text and other ordered data.
+**Purpose evidence:** The project publishes reusable Maven artifacts used by applications that compare text and other ordered data.
 
 **Language evidence:** Diff algorithms, deltas, patches, unified-diff parsing, and output helpers in the two production modules are Java.
 
@@ -95,6 +177,8 @@ The learner-facing short context appears above.
 ### [jhy/jsoup](https://github.com/jhy/jsoup)
 
 **Language 2 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 An HTML parser and manipulation library with DOM traversal, CSS selectors, fetching, sanitization, and standards-aware error recovery.
 
@@ -142,7 +226,7 @@ An HTML parser and manipulation library with DOM traversal, CSS selectors, fetch
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** jsoup is released as a production HTML library used for scraping, editing, validation, and safe content cleaning.
+**Purpose evidence:** jsoup is released as a production HTML library used for scraping, editing, validation, and safe content cleaning.
 
 **Language evidence:** HTML tokenization, tree building, DOM nodes, selectors, networking, cleaning, and output under src/main are Java.
 
@@ -172,6 +256,8 @@ The learner-facing short context appears above.
 ### [google/gson](https://github.com/google/gson)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A JSON serialization library that maps Java object graphs and generic types through configurable streaming and tree adapters.
 
@@ -221,7 +307,7 @@ A JSON serialization library that maps Java object graphs and generic types thro
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Google releases Gson as production serialization infrastructure consumed broadly through Maven and Android ecosystems.
+**Purpose evidence:** Google releases Gson as production serialization infrastructure consumed broadly through Maven and Android ecosystems.
 
 **Language evidence:** The JSON model, streaming reader/writer, reflection adapters, type tokens, and serialization engine in the Gson modules are Java.
 
@@ -249,6 +335,8 @@ The learner-facing short context appears above.
 ### [junit-team/junit4](https://github.com/junit-team/junit4)
 
 **Language 4 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 The fourth-generation JUnit testing framework, including reflective discovery, runners, rules, assertions, lifecycle statements, and reports.
 
@@ -300,7 +388,7 @@ The fourth-generation JUnit testing framework, including reflective discovery, r
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** JUnit 4 remains maintained production test infrastructure and a compatibility foundation across the Java ecosystem.
+**Purpose evidence:** JUnit 4 remains maintained production test infrastructure and a compatibility foundation across the Java ecosystem.
 
 **Language evidence:** The test runner, descriptions, statements, rules, assertions, matchers, and extension model under src/main/java are Java.
 
@@ -330,6 +418,8 @@ The learner-facing short context appears above.
 ### [jenkinsci/jenkins](https://github.com/jenkinsci/jenkins)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The Jenkins automation server core, including its persistent task queue, extension-driven eligibility policy, executor placement, work handoff, and completion lifecycle.
 
@@ -382,7 +472,7 @@ The Jenkins automation server core, including its persistent task queue, extensi
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Jenkins publishes weekly and long-term-support automation-server releases used to build, test, analyze, and deploy production software.
+**Purpose evidence:** Jenkins publishes weekly and long-term-support automation-server releases used to build, test, analyze, and deploy production software.
 
 **Language evidence:** The queue, placement, work-unit, executor, extension, persistence, and integration-test implementation in the selected path is first-party Java.
 
@@ -410,6 +500,8 @@ The learner-facing short context appears above.
 ### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A comprehensive application framework spanning dependency injection, AOP, transactions, data access, messaging, web stacks, and testing.
 
@@ -460,7 +552,7 @@ A comprehensive application framework spanning dependency injection, AOP, transa
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Spring Framework is actively released production infrastructure underlying a large portion of the enterprise Java ecosystem.
+**Purpose evidence:** Spring Framework is actively released production infrastructure underlying a large portion of the enterprise Java ecosystem.
 
 **Language evidence:** Core containers, reflection and type systems, AOP, transactions, data access, messaging, MVC, reactive web, and testing support are primarily Java.
 

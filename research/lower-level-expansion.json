@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-30",
+  "baseline_commit": "ef0ecbd27f7f47138fa3d48931f6726e4f90063c",
+  "purpose": "Reproducible before-state for the lower-level educational-exemplar expansion.",
+  "verification": {
+    "unit_tests": {
+      "command": "python3 -m unittest discover -s tests -v",
+      "result": "pass",
+      "tests_run": 38
+    },
+    "catalog_validation": {
+      "command": "python3 scripts/catalog.py validate",
+      "result": "pass"
+    },
+    "generated_output_check": {
+      "command": "python3 scripts/catalog.py check-generated",
+      "result": "pass"
+    }
+  },
+  "catalog": {
+    "accepted_paths": 125,
+    "paths_by_level": {
+      "1": 2,
+      "2": 9,
+      "3": 40,
+      "4": 40,
+      "5": 34
+    },
+    "capacity_before": {
+      "per_language": {
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2
+      },
+      "complete_grid": 200,
+      "ordinary_validation_allows_gaps": true,
+      "complete_validation_requires_every_slot": true
+    },
+    "expansion_target": {
+      "per_language": {
+        "1": 3,
+        "2": 3,
+        "3": 2,
+        "4": 2,
+        "5": 2
+      },
+      "complete_grid": 240,
+      "lower_level_slots_open_at_baseline": {
+        "1": 58,
+        "2": 51,
+        "total": 109
+      }
+    },
+    "lower_levels_by_language": [
+      {"language_slug": "javascript", "level_1": 1, "level_2": 0, "gaps_to_old_capacity": {"1": 1, "2": 2}, "gaps_to_expansion_target": {"1": 2, "2": 3}},
+      {"language_slug": "python", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "java", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "php", "level_1": 1, "level_2": 1, "gaps_to_old_capacity": {"1": 1, "2": 1}, "gaps_to_expansion_target": {"1": 2, "2": 2}},
+      {"language_slug": "c-sharp", "level_1": 0, "level_2": 2, "gaps_to_old_capacity": {"1": 2, "2": 0}, "gaps_to_expansion_target": {"1": 3, "2": 1}},
+      {"language_slug": "typescript", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "cpp", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}},
+      {"language_slug": "ruby", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}},
+      {"language_slug": "c", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}},
+      {"language_slug": "swift", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "go", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}},
+      {"language_slug": "r", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "shell", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "kotlin", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "scala", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "powershell", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "dart", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}},
+      {"language_slug": "objective-c", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "rust", "level_1": 0, "level_2": 0, "gaps_to_old_capacity": {"1": 2, "2": 2}, "gaps_to_expansion_target": {"1": 3, "2": 3}},
+      {"language_slug": "lua", "level_1": 0, "level_2": 1, "gaps_to_old_capacity": {"1": 2, "2": 1}, "gaps_to_expansion_target": {"1": 3, "2": 2}}
+    ]
+  },
+  "novice_accessibility_policy": {
+    "learner_baseline": "A learner who knows the language's introductory syntax and can write small programs, but is not assumed to know professional ecosystems, specialist grammars, protocols, advanced type machinery, concurrency, or platform internals.",
+    "rubric_level": "The unchanged four structural dimensions and guardrails.",
+    "published_level": "max(rubric_level, novice_accessibility.floor), with the floor capped at 3.",
+    "tests": [
+      "five-minute orientation",
+      "no hidden course",
+      "prediction",
+      "jargon",
+      "prerequisite stack"
+    ],
+    "capacity_rule": "Scores and accessibility floors are fixed before bucket capacity is considered; qualified overflow is preserved as capacity alternates."
+  }
+}

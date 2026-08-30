@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "cpp",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "C++",
       "language_evidence": "The final_action class, finally factory, move-only ownership transfer, and direct contract tests are implemented in C++ in include/gsl/util and tests/utils_tests.cpp.",
       "description": "A small C++ scope guard that runs a cleanup function when control leaves a block.",
-      "real_world_evidence": "The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.",
+      "source_kind": "production",
+      "purpose_evidence": "The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.",
       "why_study": "Learn how one object owns a cleanup action, runs it during ordinary destruction, and transfers that responsibility safely when moved.",
       "learn": [
         "Follow construction, move construction, and destruction through one small utility.",
@@ -144,7 +145,8 @@
       "primary_language": "C++",
       "language_evidence": "Argument models, parsers, validators, config formats, help formatters, encoding, and public APIs are C++ under include/CLI.",
       "description": "A command-line parser supporting typed options, flags, subcommands, validation, configuration files, aliases, and rich help output.",
-      "real_world_evidence": "The repository ships a header-only, precompiled, and module-capable library through major C++ package systems.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships a header-only, precompiled, and module-capable library through major C++ package systems.",
       "why_study": "The CLI11 App path shows how command-line tokens become typed option and subcommand values while preserving validation, callbacks, fallthrough, remaining arguments, repetition, and structured errors.",
       "learn": [
         "Use `include/CLI/App.hpp` to study the following transferable techniques and behaviors: Generic option conversion, traits for scalar and container inputs, overloads, callback and validator composition, token classification, option matching, arity, nested subcommands, fallthrough, requirements and exclusions, callback order, remaining tokens, repeated parsing, and errors."
@@ -266,7 +268,8 @@
       "primary_language": "C++",
       "language_evidence": "The complete template parser, data model, renderer, escaping, sections, lambdas, and partials are implemented in mustache.hpp.",
       "description": "A dependency-free, header-only Mustache template engine for STL-compatible narrow and wide string types.",
-      "real_world_evidence": "The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.",
       "why_study": "The single-header Mustache path shows how C++ parses templates and renders variables, sections, lambdas, and partials against a context stack while preserving escaping and specification compatibility.",
       "learn": [
         "Use `mustache.hpp` to study the following transferable techniques and behaviors: Generic string and stream support, recursive template data, tokenization, delimiter changes, nested sections, stacked context lookup, scalar, list, object and lambda values, partials, HTML escaping, raw output, whitespace, and parse errors."
@@ -379,7 +382,8 @@
       "primary_language": "C++",
       "language_evidence": "Test registration, assertions, matchers, generators, reporters, command handling, execution, and discovery support are C++ under src/catch2.",
       "description": "A C++ testing framework with expressive assertions, matchers, generators, test discovery, filtering, reporters, and benchmarking.",
-      "real_world_evidence": "The repository releases libraries, a test runner, CMake discovery integration, and packages used to test C++ software.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository releases libraries, a test runner, CMake discovery integration, and packages used to test C++ software.",
       "why_study": "The assertion-macro path shows how Catch2 captures one C++ expression, decomposes operands without double evaluation, and reports faithful values through a managed assertion lifecycle.",
       "learn": [
         "Use `src/catch2/catch_test_macros.hpp` to study the following transferable techniques and behaviors: Layered variadic macros, expression templates, operator-overload capture, forwarding and traits, unary and binary expression objects, exactly-once evaluation, operand stringification, negation, exception and fatal branches, assertion handlers, and compiler portability."
@@ -500,7 +504,8 @@
       "primary_language": "C++",
       "language_evidence": "Logger orchestration, asynchronous queues, formatters, registries, and platform-specific sinks are C++ under include/spdlog and src.",
       "description": "A high-performance logging library with synchronous and asynchronous loggers, formatters, registries, and many output sinks.",
-      "real_world_evidence": "The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.",
       "why_study": "The asynchronous logger path shows how spdlog hands messages to a bounded queue and worker threads while preserving overflow, ordering, flush, ownership, exceptions, and shutdown contracts.",
       "learn": [
         "Use `include/spdlog/async_logger-inl.h` to study the following transferable techniques and behaviors: Generic bounded queues, shared and weak ownership, multi-producer and multi-consumer synchronization, blocking and overrun overflow policies, worker scheduling, backend sink dispatch, flush messages, termination, exceptions, queue capacity, and concurrent tests."
@@ -622,7 +627,8 @@
       "primary_language": "C++",
       "language_evidence": "The async_compose and composed APIs, intermediate handler, work tracking, completion-token adaptation, associated executor and allocator propagation, cancellation state, and direct tests are C++ under include/boost/asio, test/compose.cpp, and test/composed.cpp.",
       "description": "Boost.Asio's portable asynchronous I/O library for networking, timers, executors, completion tokens, coroutines, and composed operations.",
-      "real_world_evidence": "Boost distributes Asio as its portable low-level I/O library with versioned reference documentation, examples, tests, and release integration.",
+      "source_kind": "production",
+      "purpose_evidence": "Boost distributes Asio as its portable low-level I/O library with versioned reference documentation, examples, tests, and release integration.",
       "why_study": "The async_compose path shows how a user state machine becomes a conforming asynchronous operation while preserving completion-token return types, handler characteristics, outstanding work, cancellation, Asio work-guard release, and the model's at-most-once completion contract.",
       "learn": [
         "Use `include/boost/asio/compose.hpp` to study the following transferable techniques and behaviors: Variadic completion signatures, forwarding and decay, completion-token adaptation, stateful intermediate handlers, associated executor and allocator propagation, outstanding-work guards, per-operation cancellation filters, asynchronous state machines, resource lifetime, result delivery, and at-most-once completion contracts."
@@ -758,7 +764,8 @@
       "primary_language": "C++",
       "language_evidence": "The component library, futures, coroutines, executors, containers, synchronization, networking, I/O, and portability layers are C++ under folly.",
       "description": "Meta's performance-oriented collection of C++20 components for concurrency, containers, memory, networking, I/O, executors, futures, and utilities.",
-      "real_world_evidence": "The README states that Folly components are used extensively at Meta and underpin other production open-source C++ projects.",
+      "source_kind": "production",
+      "purpose_evidence": "The README states that Folly components are used extensively at Meta and underpin other production open-source C++ projects.",
       "why_study": "The Folly Future path shows how Promise and Future coordinate through synchronized shared state and schedule exactly-once continuations on an Executor across values, exceptions, interruption, cancellation, and races.",
       "learn": [
         "Use `folly/futures/Future.h` to study the following transferable techniques and behaviors: Variadic and conditional continuation types, perfect forwarding, callable adaptation, type erasure, Future and SemiFuture value-category transitions, synchronized shared Core state, executor handoff, continuation chaining, exception transfer, interruption, broken promises, ownership release, destruction, and races."

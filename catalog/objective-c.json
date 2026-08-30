@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "objective-c",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "Priority scheduling, serial and bounded-concurrent execution, cancellation, coalescing, grouped operations, synchronization, and tests are Objective-C over Grand Central Dispatch and pthread mutexes.",
       "description": "A thread-safe operation queue with priorities, dynamic concurrency limits, cancellation, data coalescing, completions, and operation groups.",
-      "real_world_evidence": "Pinterest maintains and releases PINOperation as an Apple-platform library through Swift Package Manager and CocoaPods.",
+      "source_kind": "production",
+      "purpose_evidence": "Pinterest maintains and releases PINOperation as an Apple-platform library through Swift Package Manager and CocoaPods.",
       "why_study": "Its small surface reveals recursive locks, serial and concurrent lanes, semaphores, dispatch groups, priority queues, weak reference maps, duplicate-work coalescing, and nested work.",
       "learn": [
         "Grand Central Dispatch queues, groups, and semaphores, pthread mutexes, bounded concurrency, priorities, cancellation, coalescing, completion fan-out, and asynchronous XCTest."
@@ -133,7 +134,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "Updater scheduling and drivers, appcast parsing, signature and code-signing validation, downloading, extraction and installation, XPC services, UI, version comparison, CLI integration, and core tests are predominantly Objective-C.",
       "description": "A secure macOS software-update framework with signed appcasts, background downloads, delta updates, sandbox support, privilege-separated installation, phased rollouts, resumable updates, and customizable UI.",
-      "real_world_evidence": "Sparkle is released as a framework, Swift package, command-line tool, and supporting services used by independently distributed macOS applications.",
+      "source_kind": "production",
+      "purpose_evidence": "Sparkle is released as a framework, Swift package, command-line tool, and supporting services used by independently distributed macOS applications.",
       "why_study": "Sparkle's appcast-selection path is a bounded policy engine for filtering and ordering update candidates without requiring the security and installation pipeline.",
       "learn": [
         "Trace feed items through operating-system, channel, version, skipped-update, autoupdate, phased-rollout, delegate, primary, secondary, and no-update decisions."
@@ -260,7 +262,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "Incremental UTF-8 tokenization, parser and writer state machines, Objective-C value construction, streaming callbacks, formatting, errors, and tests are Objective-C.",
       "description": "A streaming Objective-C JSON parser and writer that accepts chunks, emits complete values or array elements, and supports bounded depth and deterministic formatting.",
-      "real_world_evidence": "SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.",
+      "source_kind": "production",
+      "purpose_evidence": "SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.",
       "why_study": "SBJson's streaming path is a production parser lesson in preserving lexical and structural state when tokens and nested values cross arbitrary input chunks.",
       "learn": [
         "Trace retained bytes through incremental token states, UTF-8 and escape validation, nested object and array states, depth limits, callbacks, completion, and errors."
@@ -387,7 +390,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "Image orchestration, downloader operations, memory and disk caches, coder and loader protocols, animated playback, transformations, UIKit and AppKit categories, prefetching, and tests are Objective-C.",
       "description": "An asynchronous image loading and caching framework for Apple platforms with codecs, progressive and animated images, transformations, prefetching, and extensible cache and loader pipelines.",
-      "real_world_evidence": "SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.",
+      "source_kind": "production",
+      "purpose_evidence": "SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.",
       "why_study": "SDWebImage's manager path shows how a mature Objective-C library coordinates cache, network, decoding, transformation, cancellation, storage, and callback ownership for one request.",
       "learn": [
         "Follow an image URL through cache-key lookup, layered cache queries, loader dispatch, progressive and final decoding, cancellation, transformation, storage, and callback delivery."
@@ -512,7 +516,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "The still-dominant terminal core—byte streams, VT100 parsers and state machines, grids, screens, line buffers, sessions, process integration, selection, search, drawing, and much of the UI—is Objective-C and Objective-C++, with a substantial modern Swift layer.",
       "description": "A full macOS terminal emulator with VT protocols, high-performance grids and rendering, sessions and process control, tmux and shell integration, automation APIs, restoration, search, transfers, profiles, and modern application features.",
-      "real_world_evidence": "The repository builds and releases the iTerm2 desktop application used as a terminal replacement on macOS, plus scripting, helper, companion, and integration surfaces.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository builds and releases the iTerm2 desktop application used as a terminal replacement on macOS, plus scripting, helper, companion, and integration surfaces.",
       "why_study": "iTerm2's state-restoration database is an expert path through cyclic graph encoding, delta persistence, transactions, identity, integrity checks, and recovery after failure.",
       "learn": [
         "Trace restorable state into graph records, stable identifiers and generations, prior-revision deltas, transactional SQLite rows, root publication, garbage collection, rollback, and bounded recovery."
@@ -645,7 +650,8 @@
       "primary_language": "Objective-C",
       "language_evidence": "The Foundation-compatible object model, strings and collections, coding, dates and locales, files, processes and threads, run loops, notifications, predicates, XML, networking, URL loading, distributed objects, and public headers are predominantly Objective-C with supporting C.",
       "description": "GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa Foundation APIs, from root objects and collections through run loops, networking, serialization, localization, processes, and distributed objects.",
-      "real_world_evidence": "GNUstep Base is a released runtime library used by GNUstep applications and command-line software to provide Foundation-style APIs across Unix-like systems and Windows.",
+      "source_kind": "production",
+      "purpose_evidence": "GNUstep Base is a released runtime library used by GNUstep applications and command-line software to provide Foundation-style APIs across Unix-like systems and Windows.",
       "why_study": "GNUstep's notification center is an expert Foundation-compatible implementation of wildcard registration, weak observer identity, reentrant callbacks, and thread-safe removal.",
       "learn": [
         "Trace selector and block observers into wildcard indexes and locks, then follow snapshot-based synchronous posting, reentrant mutation, queued delivery, exceptions, removal, and lifetime races."

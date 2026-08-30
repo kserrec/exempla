@@ -2,17 +2,21 @@
 
 7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 ### [microsoft/GSL](https://github.com/microsoft/GSL)
 
 **Language 3 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+**Source:** Production software
 
 A small C++ scope guard that runs a cleanup function when control leaves a block.
 
@@ -64,7 +68,7 @@ A small C++ scope guard that runs a cleanup function when control leaves a block
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.
+**Purpose evidence:** The project ships a versioned, installable CMake package whose public headers implement the C++ Core Guidelines Support Library interfaces.
 
 **Language evidence:** The final_action class, finally factory, move-only ownership transfer, and direct contract tests are implemented in C++ in include/gsl/util and tests/utils_tests.cpp.
 
@@ -89,11 +93,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [CLIUtils/CLI11](https://github.com/CLIUtils/CLI11)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A command-line parser supporting typed options, flags, subcommands, validation, configuration files, aliases, and rich help output.
 
@@ -142,7 +148,7 @@ A command-line parser supporting typed options, flags, subcommands, validation, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository ships a header-only, precompiled, and module-capable library through major C++ package systems.
+**Purpose evidence:** The repository ships a header-only, precompiled, and module-capable library through major C++ package systems.
 
 **Language evidence:** Argument models, parsers, validators, config formats, help formatters, encoding, and public APIs are C++ under include/CLI.
 
@@ -170,6 +176,8 @@ The learner-facing short context appears above.
 ### [kainjow/Mustache](https://github.com/kainjow/Mustache)
 
 **Language 3 / Behavior 2 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A dependency-free, header-only Mustache template engine for STL-compatible narrow and wide string types.
 
@@ -214,7 +222,7 @@ A dependency-free, header-only Mustache template engine for STL-compatible narro
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.
+**Purpose evidence:** The repository publishes an embeddable C++ library that implements the Mustache template specification for application use.
 
 **Language evidence:** The complete template parser, data model, renderer, escaping, sections, lambdas, and partials are implemented in mustache.hpp.
 
@@ -244,6 +252,8 @@ The learner-facing short context appears above.
 ### [catchorg/Catch2](https://github.com/catchorg/Catch2)
 
 **Language 5 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A C++ testing framework with expressive assertions, matchers, generators, test discovery, filtering, reporters, and benchmarking.
 
@@ -291,7 +301,7 @@ A C++ testing framework with expressive assertions, matchers, generators, test d
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository releases libraries, a test runner, CMake discovery integration, and packages used to test C++ software.
+**Purpose evidence:** The repository releases libraries, a test runner, CMake discovery integration, and packages used to test C++ software.
 
 **Language evidence:** Test registration, assertions, matchers, generators, reporters, command handling, execution, and discovery support are C++ under src/catch2.
 
@@ -319,6 +329,8 @@ The learner-facing short context appears above.
 ### [gabime/spdlog](https://github.com/gabime/spdlog)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A high-performance logging library with synchronous and asynchronous loggers, formatters, registries, and many output sinks.
 
@@ -367,7 +379,7 @@ A high-performance logging library with synchronous and asynchronous loggers, fo
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.
+**Purpose evidence:** The repository publishes header-only and compiled packages used for application logging across desktop, server, mobile, and embedded platforms.
 
 **Language evidence:** Logger orchestration, asynchronous queues, formatters, registries, and platform-specific sinks are C++ under include/spdlog and src.
 
@@ -397,6 +409,8 @@ The learner-facing short context appears above.
 ### [boostorg/asio](https://github.com/boostorg/asio)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Boost.Asio's portable asynchronous I/O library for networking, timers, executors, completion tokens, coroutines, and composed operations.
 
@@ -451,7 +465,7 @@ Boost.Asio's portable asynchronous I/O library for networking, timers, executors
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Boost distributes Asio as its portable low-level I/O library with versioned reference documentation, examples, tests, and release integration.
+**Purpose evidence:** Boost distributes Asio as its portable low-level I/O library with versioned reference documentation, examples, tests, and release integration.
 
 **Language evidence:** The async_compose and composed APIs, intermediate handler, work tracking, completion-token adaptation, associated executor and allocator propagation, cancellation state, and direct tests are C++ under include/boost/asio, test/compose.cpp, and test/composed.cpp.
 
@@ -479,6 +493,8 @@ The learner-facing short context appears above.
 ### [facebook/folly](https://github.com/facebook/folly)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Meta's performance-oriented collection of C++20 components for concurrency, containers, memory, networking, I/O, executors, futures, and utilities.
 
@@ -527,7 +543,7 @@ Meta's performance-oriented collection of C++20 components for concurrency, cont
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The README states that Folly components are used extensively at Meta and underpin other production open-source C++ projects.
+**Purpose evidence:** The README states that Folly components are used extensively at Meta and underpin other production open-source C++ projects.
 
 **Language evidence:** The component library, futures, coroutines, executors, containers, synchronization, networking, I/O, and portability layers are C++ under folly.
 

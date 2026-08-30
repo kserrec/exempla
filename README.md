@@ -2,25 +2,35 @@
 
 [![Validate catalog](https://github.com/kserrec/exempla/actions/workflows/validate.yml/badge.svg)](https://github.com/kserrec/exempla/actions/workflows/validate.yml)
 
-Learn transferable programming skills from exemplary real-world source code.
+Learn transferable programming skills from exemplary source code.
 
 Exempla is a curated, GitHub-native catalog of public open-source software.
 Choose a language and a learner Level from 1 through 5, then follow one concrete
-path through production implementation and tests. The catalog currently has
-**125 qualified learning paths from 124 public repositories across 20
-languages**. Its **75 open slots are honest research gaps** after the completed
-learner-centered re-review, novice-accessibility audit, and documented gap
-research. No gate or score is lowered to preserve an arbitrary count.
+path through implementation and verification. The catalog currently has
+**138 qualified learning paths from 137 public repositories across 20
+languages**. Its **102 open slots are honest research gaps** under the expanded
+3/3/2/2/2 capacity map, including 56 Level 1 gaps and 40 Level 2 gaps after the
+completed production and educational-exemplar research pass. No gate or score
+is lowered to preserve an arbitrary count.
 
 If you can write small programs in the language, **Level 1 — First real code**
-is designed to be your first comfortable step into production source. An empty
+is designed to be your first comfortable step into serious source. An empty
 Level 1 does not mean you should simply jump to Level 2; it means Exempla has
 not yet found a path gentle enough to publish there.
+
+Levels 1 and 2 may include carefully selected educational exemplars. Real
+production code often assumes professional concepts before a novice has had a
+chance to learn them, so requiring production use at every Level left the
+beginning of the ladder nearly empty. Exempla keeps the same strict difficulty
+and novice-accessibility standards while allowing complete, high-quality
+teaching artifacts to bridge that gap. Every entry visibly identifies its
+source type. From Level 3 onward, every path is production software.
 
 ## Browse the catalog
 
 [Choose a language](languages/README.md). Each entry records:
 
+- whether the source is production software or an educational exemplar;
 - the real behavior the learner will understand;
 - the first source file to open, supporting implementation and test files, and
   an entry-to-result trace;
@@ -59,8 +69,8 @@ accessibility tests, and coding-relevance gate are in the
 separate [pass/fail gate](docs/qualification.md).
 
 The learner-facing rungs are **Level 1 — First real code**, **Level 2 — Guided
-real-world code**, **Level 3 — Intermediate**, **Level 4 — Advanced**, and
-**Level 5 — Expert**.
+real-world patterns**, **Level 3 — Intermediate production software**, **Level
+4 — Advanced**, and **Level 5 — Expert**.
 
 ## How to study an entry
 
@@ -91,10 +101,14 @@ real-world code**, **Level 3 — Intermediate**, **Level 4 — Advanced**, and
   records every starting Level 1 and Level 2 judgment, all five accessibility
   tests, capacity alternates, conditional replacement passes, and progression
   sanity checks.
+- [The lower-level expansion audit](research/lower-level-expansion-audit.json)
+  reconciles the 125-path baseline, 13 accepted additions, all 20 language
+  passes, educational qualification, serious rejections, progression, source-
+  class leakage, and 96 remaining lower-level gaps.
 - [Rejected candidates](research/rejections.json) are append-only.
 - [`research/audit.json`](research/audit.json) is the historical v1 corpus
   audit; it is no longer the active consistency record.
-- Canonical schema-version-4 JSON under [`catalog/`](catalog/README.md)
+- Canonical schema-version-5 JSON under [`catalog/`](catalog/README.md)
   deterministically generates every language page.
 
 Automation validates local structure, formulas, reconciliation, and generated
@@ -103,16 +117,13 @@ AI-assisted in the current corpus; the project owner directed the process and
 accepted the resulting catalog. Inspection records name the actual review
 passes, and no independent human review is implied.
 
-## Current learner-centered refinement
+## Current learner-centered expansion
 
-The lower-rung review inspected all 3 starting Level 1 paths and all 35
-starting Level 2 paths at their exact pins. It retained the four structural
-scores, added a separate novice-accessibility floor, promoted 29 concept-heavy
-paths to Level 3, and resolved Level 3 capacity only after those judgments were
-fixed. Twenty-eight qualified overflow paths remain preserved as restorable
-capacity alternates. Current exact-pin gap evidence yielded two honest Level 2
-replacements—Humanizer string truncation for C# and inih's line-oriented parser
-for C—while every other lower-level gap remains visible.
+The prior lower-rung review inspected all 3 starting Level 1 paths and all 35
+starting Level 2 paths at their exact pins. The educational-exemplar expansion
+preserves that strict learner baseline and accessibility floor while opening a
+third target slot at Levels 1 and 2. Educational source must pass its own
+complete-artifact gate and may never publish above Level 2.
 
 ## Contributing
 
@@ -123,7 +134,7 @@ Read [CONTRIBUTING.md](CONTRIBUTING.md) or use the
 Validation and generation use only Python's standard library. Continuous
 integration runs tests, gap-tolerant catalog validation, and generated-output
 checks. `--complete` remains available and is used only when every one of the
-200 possible slots is genuinely filled.
+240 possible slots is genuinely filled.
 
 ## License
 

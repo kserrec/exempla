@@ -1,0 +1,1119 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-08-30",
+  "baseline": {
+    "path": "research/lower-level-expansion.json",
+    "commit": "ef0ecbd27f7f47138fa3d48931f6726e4f90063c"
+  },
+  "policy": {
+    "target_capacity": {"1": 3, "2": 3, "3": 2, "4": 2, "5": 2},
+    "complete_grid": 240,
+    "unresolved_gap_phrase": "unresolved after production and educational-exemplar research",
+    "educational_gate": [
+      "complete_artifact",
+      "clear_educational_purpose",
+      "exemplary_source_quality",
+      "verifiable_behavior",
+      "useful_documentation",
+      "stable_inspectable_revision",
+      "public_source_and_license",
+      "genuine_learning_value",
+      "novice_accessibility_compliance",
+      "no_level_gaming"
+    ]
+  },
+  "before": {
+    "accepted_paths": 125,
+    "paths_by_level": {"1": 2, "2": 9, "3": 40, "4": 40, "5": 34}
+  },
+  "after": {
+    "accepted_paths": 138,
+    "paths_by_level": {"1": 4, "2": 20, "3": 40, "4": 40, "5": 34}
+  },
+  "additions": {
+    "production": 8,
+    "educational_exemplar": 5,
+    "paths": [
+      {
+        "language_slug": "javascript",
+        "repository": "sindresorhus/array-union",
+        "path_slug": "array-union-flattens-arrays-and-keeps-each-value-once-in-first-seen-order",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "c9e401d946d70eb46149ad67973c911c6ad2a335"
+      },
+      {
+        "language_slug": "javascript",
+        "repository": "expressjs/express",
+        "path_slug": "the-complete-express-hello-world-example-maps-one-get-route-to-a-tested-response",
+        "source_kind": "educational-exemplar",
+        "level": 2,
+        "pinned_commit": "023767fe9872e029271df1418f73401bff20ff40"
+      },
+      {
+        "language_slug": "javascript",
+        "repository": "sindresorhus/onetime",
+        "path_slug": "onetime-wraps-a-function-caches-its-first-success-and-counts-every-call",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "481ec583f8303e98c4d1d16bb316ef8e6b04d72c"
+      },
+      {
+        "language_slug": "python",
+        "repository": "more-itertools/more-itertools",
+        "path_slug": "chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10"
+      },
+      {
+        "language_slug": "java",
+        "repository": "junit-team/junit-examples",
+        "path_slug": "the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test",
+        "source_kind": "educational-exemplar",
+        "level": 2,
+        "pinned_commit": "02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7"
+      },
+      {
+        "language_slug": "php",
+        "repository": "nikic/iter",
+        "path_slug": "iter-map-lazily-applies-one-callback-while-preserving-each-input-key",
+        "source_kind": "educational-exemplar",
+        "level": 2,
+        "pinned_commit": "4e89b04c36af387d6cda164310737563eaa9e455"
+      },
+      {
+        "language_slug": "c-sharp",
+        "repository": "dotnet/samples",
+        "path_slug": "the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases",
+        "source_kind": "educational-exemplar",
+        "level": 2,
+        "pinned_commit": "86ff8487361a6f32549d9c9ab8b14dde55c643cf"
+      },
+      {
+        "language_slug": "ruby",
+        "repository": "ruby/abbrev",
+        "path_slug": "abbrev-builds-every-unambiguous-prefix-while-removing-collisions",
+        "source_kind": "production",
+        "level": 1,
+        "pinned_commit": "138820c087d1fccc776eb7665634ac6bca602faf"
+      },
+      {
+        "language_slug": "ruby",
+        "repository": "sinatra/sinatra",
+        "path_slug": "sinatras-complete-hello-world-example-declares-one-route-and-verifies-its-body",
+        "source_kind": "educational-exemplar",
+        "level": 2,
+        "pinned_commit": "cb22afd7902b566b6eaba6c4ea89739494a65d12"
+      },
+      {
+        "language_slug": "ruby",
+        "repository": "ruby/observer",
+        "path_slug": "observer-notifies-subscribed-objects-only-after-an-explicit-change",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "ebf1653465ee6854bdf35c8f2b794713068daa26"
+      },
+      {
+        "language_slug": "go",
+        "repository": "dustin/go-humanize",
+        "path_slug": "comma-formats-every-int64-with-three-digit-groups-and-exact-sign-handling",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "4d1d9082551ec085912e7d2253a33ae547fca000"
+      },
+      {
+        "language_slug": "go",
+        "repository": "mitchellh/go-wordwrap",
+        "path_slug": "wrap-string-breaks-text-at-whitespace-while-preserving-explicit-lines-and-long-words",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "ecf0936a077a4bd73a1cc2ac5c370f2b55618d62"
+      },
+      {
+        "language_slug": "dart",
+        "repository": "dart-lang/core",
+        "path_slug": "group-by-builds-ordered-lists-under-callback-derived-map-keys",
+        "source_kind": "production",
+        "level": 2,
+        "pinned_commit": "b80e488556bd7d72386f7e358d0b4e4a44ce0423"
+      }
+    ]
+  },
+  "remaining_lower_level_gaps": {"1": 56, "2": 40, "total": 96},
+  "language_passes": [
+    {
+      "language_slug": "javascript",
+      "before": {"1": 1, "2": 0},
+      "after": {"1": 2, "2": 2},
+      "gaps_after": {"1": 1, "2": 1},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official ecosystem examples",
+        "npm package discovery",
+        "GitHub search for complete tested JavaScript projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked prior small-package candidates including p-limit and escape-string-regexp at their honest accessibility floors.",
+        "Revisited the historical Express removal at its original path and pin before inspecting the distinct checked-in hello-world application."
+      ],
+      "educational_search": "Searched official framework examples and complete documented sample applications, then inspected the Express hello-world artifact and its acceptance test.",
+      "candidates": [
+        {"repository": "sindresorhus/array-union", "decision": "accepted", "evidence": "The entire production transformation is one tested standard-library composition with novice floor 1."},
+        {"repository": "expressjs/express", "decision": "accepted", "evidence": "A distinct complete hello-world application is exported, documented, and acceptance-tested at novice floor 2."},
+        {"repository": "sindresorhus/onetime", "decision": "accepted", "evidence": "The focused production wrapper has a complete directly tested first-success state machine at Level 2."},
+        {"repository": "sindresorhus/p-limit", "decision": "rejected", "evidence": "Promise scheduling, queue state, active-count invariants, and concurrency lifecycle remain beyond the lower-level accessibility ceiling."}
+      ],
+      "accepted_path_slugs": [
+        "array-union-flattens-arrays-and-keeps-each-value-once-in-first-seen-order",
+        "the-complete-express-hello-world-example-maps-one-get-route-to-a-tested-response",
+        "onetime-wraps-a-function-caches-its-first-success-and-counts-every-call"
+      ],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "python",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 1},
+      "gaps_after": {"1": 3, "2": 2},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Python packaging and framework examples",
+        "PyPI package discovery",
+        "GitHub search for complete tested Python projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked prior schedule and itsdangerous candidates; their meaningful behavior remains Level 3.",
+        "Revisited teaching-first Python candidates under the new source policy rather than assuming production use."
+      ],
+      "educational_search": "Inspected PyPA's sample project and Flask's completed tutorial application in addition to official and community teaching searches.",
+      "candidates": [
+        {"repository": "more-itertools/more-itertools", "decision": "accepted", "evidence": "chunked is a complete production iterator contract with seven direct tests and a credible Level 2 primer."},
+        {"repository": "pypa/sampleproject", "decision": "rejected", "evidence": "Its meaningful lesson is packaging; selecting the trivial add_one placeholder would be Level gaming."},
+        {"repository": "pallets/flask", "decision": "rejected", "evidence": "The completed Flaskr tutorial requires interacting application, database, authentication, session, template, and fixture concepts, so its floor is 3."}
+      ],
+      "accepted_path_slugs": ["chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract"],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "java",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 1},
+      "gaps_after": {"1": 3, "2": 2},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Java testing and framework examples",
+        "Maven ecosystem discovery",
+        "GitHub search for complete tested Java projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked minimal-json and Jackson paths; their parsing and binding concepts remain honest Level 3 work.",
+        "Revisited official teaching projects under the educational-exemplar gate."
+      ],
+      "educational_search": "Inspected the JUnit starter, Spring REST guide, and Open Liberty getting-started sample as complete official educational artifacts.",
+      "candidates": [
+        {"repository": "junit-team/junit-examples", "decision": "accepted", "evidence": "The Gradle starter is a complete configured project whose ordinary and parameterized tests directly verify one small class."},
+        {"repository": "spring-guides/gs-rest-service", "decision": "rejected", "evidence": "Annotations, binding, Boot context, HTTP dispatch, JSON conversion, and shared state create accessibility floor 3."},
+        {"repository": "OpenLiberty/sample-getting-started", "decision": "rejected", "evidence": "REST resources, server features, packaging, configuration, and functional-test lifecycle interact beyond Level 2."}
+      ],
+      "accepted_path_slugs": ["the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test"],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "php",
+      "before": {"1": 1, "2": 1},
+      "after": {"1": 1, "2": 2},
+      "gaps_after": {"1": 2, "2": 1},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official PHP framework examples",
+        "Packagist package discovery",
+        "GitHub search for complete tested PHP projects"
+      ],
+      "prior_research_revisited": [
+        "Retained the existing Assert and php-option lower paths after checking their place in the expanded ladder.",
+        "Revisited Doctrine Lexer and prior compact libraries at their existing Level 3 floors."
+      ],
+      "educational_search": "Inspected a teaching-first generator library, a compact historical teaching library, and Symfony's completed demo application.",
+      "candidates": [
+        {"repository": "nikic/iter", "decision": "accepted", "evidence": "The complete documented library intentionally teaches generators and directly tests its meaningful lazy map behavior at Level 2."},
+        {"repository": "igorw/get-in", "decision": "rejected", "evidence": "The package teaches obsolete PHP 5.4 and removed PHPUnit conventions, so it is not exemplary current source."},
+        {"repository": "symfony/demo", "decision": "rejected", "evidence": "Attributes, dependency injection, ORM, forms, templates, authorization, and framework lifecycle require at least Level 3."}
+      ],
+      "accepted_path_slugs": ["iter-map-lazily-applies-one-callback-while-preserving-each-input-key"],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "c-sharp",
+      "before": {"1": 0, "2": 2},
+      "after": {"1": 0, "2": 3},
+      "gaps_after": {"1": 3, "2": 0},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official dotnet samples and tutorials",
+        "NuGet package discovery",
+        "GitHub search for complete tested C-sharp projects"
+      ],
+      "prior_research_revisited": [
+        "Retained GuardClauses and Humanizer as the established Level 2 production paths.",
+        "Revisited prior result and Serilog candidates at their honest abstraction floors."
+      ],
+      "educational_search": "Inspected Microsoft's complete unit-testing tutorial sample and other official dotnet sample trees for coherent lower paths.",
+      "candidates": [
+        {"repository": "dotnet/samples", "decision": "accepted", "evidence": "The complete PrimeService tutorial sample cleanly joins elementary implementation logic to eleven configured xUnit cases."},
+        {"repository": "ardalis/Result", "decision": "rejected", "evidence": "Generic variants, status and validation models, conversions, mapping, and binding interact at accessibility floor 3."},
+        {"repository": "serilog/serilog", "decision": "retained-higher", "evidence": "The accepted structured logging path remains a sound production Level 3 transition, not a lower-level candidate."}
+      ],
+      "accepted_path_slugs": ["the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases"],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "typescript",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official TypeScript sample and starter searches",
+        "npm package discovery",
+        "GitHub search for complete tested TypeScript projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked mitt and tiny-invariant; meaningful type and event contracts remain at least Level 3.",
+        "Revisited unjs/ofetch and the prior small-package queue for quality, first-party implementation, and accessibility."
+      ],
+      "educational_search": "Searched official starters, completed tutorials, and teaching repositories; plausible results were scaffolds, snippet collections, or framework-heavy applications.",
+      "candidates": [
+        {"repository": "developit/mitt", "decision": "retained-higher", "evidence": "Wildcard subscriptions, generic event maps, mutation during dispatch, and type contracts preserve its Level 3 placement."},
+        {"repository": "alexreardon/tiny-invariant", "decision": "rejected", "evidence": "The meaningful package contract includes build-time environment stripping and assertion typing rather than a complete lower-rung behavior."},
+        {"repository": "unjs/ofetch", "decision": "rejected", "evidence": "Earlier direct review found source-correctness, test, traceability, maintainability, and educational-value failures."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "cpp",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 0, "2": 1},
+      "gaps_after": {"1": 3, "2": 2},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official and respected C-plus-plus example searches",
+        "package and curated library discovery",
+        "GitHub search for complete tested C-plus-plus projects"
+      ],
+      "prior_research_revisited": [
+        "Retained GSL final_action at Level 2 after comparing its local lifetime lesson with new candidates.",
+        "Rechecked rang, cxxopts, argparse, and prior compact header libraries without lowering their language and parser burden."
+      ],
+      "educational_search": "Searched completed tutorial applications, reference implementations, and small tested libraries; the coherent candidates depended on templates, ownership, or parsing beyond Level 2.",
+      "candidates": [
+        {"repository": "microsoft/GSL", "decision": "retained-lower", "evidence": "The existing final_action path remains the gentlest complete tested Level 2 lifetime behavior."},
+        {"repository": "agauniyal/rang", "decision": "rejected", "evidence": "Terminal capability branches, stream state, templates, platform handling, and formatting constraints exceed the lower-level ceiling."},
+        {"repository": "jarro2783/cxxopts", "decision": "rejected", "evidence": "Template-heavy option types and command-line grammar preserve the prior higher calculated level."},
+        {"repository": "p-ranav/argparse", "decision": "rejected", "evidence": "Parser grammar, typed conversion, subcommands, and error contracts remain materially beyond Level 2."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "ruby",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 1, "2": 3},
+      "gaps_after": {"1": 2, "2": 0},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Ruby default-gem and framework examples",
+        "RubyGems package discovery",
+        "GitHub search for complete tested Ruby projects"
+      ],
+      "prior_research_revisited": [
+        "Retained pathname and revisited base64 at its honest Level 3 constraint burden.",
+        "Rechecked default gems and framework documentation examples as possible complete lower paths."
+      ],
+      "educational_search": "Inspected the tested canonical Sinatra hello-world application and respected Ruby teaching examples alongside default-gem production code.",
+      "candidates": [
+        {"repository": "ruby/abbrev", "decision": "accepted", "evidence": "The complete default-gem transformation and collision removal are directly tested and accessible at Level 1."},
+        {"repository": "sinatra/sinatra", "decision": "accepted", "evidence": "The primary README's finished application has executable verification and one meaningful route contract at Level 2."},
+        {"repository": "ruby/observer", "decision": "accepted", "evidence": "The production default gem exposes a compact subscriber lifecycle with direct history assertions at Level 2."},
+        {"repository": "ruby/base64", "decision": "rejected", "evidence": "Encoding rules, alphabets, padding, strictness, and binary contracts keep the meaningful production candidate at Level 3 rather than a lower slot."}
+      ],
+      "accepted_path_slugs": [
+        "abbrev-builds-every-unambiguous-prefix-while-removing-collisions",
+        "sinatras-complete-hello-world-example-declares-one-route-and-verifies-its-body",
+        "observer-notifies-subscribed-objects-only-after-an-explicit-change"
+      ],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "c",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 0, "2": 1},
+      "gaps_after": {"1": 3, "2": 2},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "small reference implementation searches",
+        "curated C library discovery",
+        "GitHub search for complete tested C projects"
+      ],
+      "prior_research_revisited": [
+        "Retained inih as the current Level 2 production path.",
+        "Rechecked cwalk and jsmn alongside earlier parser and collection candidates at their honest memory and grammar floors."
+      ],
+      "educational_search": "Searched small complete utilities, teaching libraries, and reference implementations with direct tests; memory ownership or parser grammar remained central in plausible results.",
+      "candidates": [
+        {"repository": "benhoyt/inih", "decision": "retained-lower", "evidence": "The existing line-oriented callback parser remains the gentlest qualified complete Level 2 C path."},
+        {"repository": "likle/cwalk", "decision": "rejected", "evidence": "Cross-platform path grammar, pointer slicing, normalization, and buffer contracts require at least Level 3."},
+        {"repository": "zserge/jsmn", "decision": "rejected", "evidence": "Token state, recursive structure, JSON grammar, position tracking, and error rules exceed a Level 2 primer."},
+        {"repository": "skeeto/optparse", "decision": "rejected", "evidence": "Option grammar, mutable parser state, raw pointers, argv permutation, and error signaling produce accessibility floor 3."},
+        {"repository": "rxi/vec", "decision": "rejected", "evidence": "Macro generics, allocation, capacity invariants, raw pointers, memmove, and lifetime rules produce accessibility floor 3."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "swift",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Apple sample repositories",
+        "Swift Package Index and small-library discovery",
+        "GitHub search for complete tested Swift projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked Files and existing small Swift packages at their ownership, generic, and platform floors.",
+        "Revisited official sample-app candidates under the complete educational-exemplar gate."
+      ],
+      "educational_search": "Inspected Apple's completed Backyard Birds sample and searched smaller complete official tutorial artifacts with tests or deterministic verification.",
+      "candidates": [
+        {"repository": "JohnSundell/Files", "decision": "rejected", "evidence": "Filesystem semantics, throwing APIs, URL/path behavior, and platform constraints keep the meaningful path at Level 3."},
+        {"repository": "apple/sample-backyard-birds", "decision": "rejected", "evidence": "SwiftUI state wrappers, SwiftData, observation, navigation, relationships, and application lifecycle interact beyond Level 2."},
+        {"repository": "apple/swift-collections", "decision": "rejected", "evidence": "Generic collection invariants, storage design, performance contracts, and test breadth exceed the novice accessibility ceiling."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "go",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 0, "2": 3},
+      "gaps_after": {"1": 3, "2": 0},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Go example and tutorial searches",
+        "Go package discovery",
+        "GitHub search for complete tested Go projects"
+      ],
+      "prior_research_revisited": [
+        "Retained tidwall/match as the established most demanding Level 2 path.",
+        "Revisited small formatters, command tools, and pflag candidates without hiding concurrency, parsing, or compatibility burden."
+      ],
+      "educational_search": "Inspected complete example applications and small teaching projects as well as production formatting libraries with unusually direct tests.",
+      "candidates": [
+        {"repository": "dustin/go-humanize", "decision": "accepted", "evidence": "Comma is a complete formatter with boundary tables and a fuzz invariant, accessible with one numeric-buffer primer."},
+        {"repository": "mitchellh/go-wordwrap", "decision": "accepted", "evidence": "WrapString is a focused Unicode-aware stateful transformation with exhaustive direct examples at Level 2."},
+        {"repository": "tidwall/match", "decision": "retained-lower", "evidence": "The existing matcher remains the ladder's most demanding qualified Level 2 production path."},
+        {"repository": "dustinkirkland/golang-petname", "decision": "rejected", "evidence": "Word-count behavior, weak tests, and secure-randomness documentation do not agree, so the source is not exemplary."}
+      ],
+      "accepted_path_slugs": [
+        "comma-formats-every-int64-with-three-digit-groups-and-exact-sign-handling",
+        "wrap-string-breaks-text-at-whitespace-while-preserving-explicit-lines-and-long-words"
+      ],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "r",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official R teaching and package examples",
+        "CRAN and r-lib package discovery",
+        "GitHub search for complete tested R projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked prettyunits, pkgconfig, and rematch2 from prior research with the new teaching-first allowance.",
+        "Kept exercise materials excluded unless they formed a complete licensed artifact with meaningful verified behavior."
+      ],
+      "educational_search": "Searched public course companions, package vignettes, reference implementations, and complete teaching applications; plausible results were exercises or required advanced R evaluation and package machinery.",
+      "candidates": [
+        {"repository": "r-lib/prettyunits", "decision": "rejected", "evidence": "Unit tables, significant figures, vectorization, missing values, formatting rules, and option behavior keep the production path at Level 3."},
+        {"repository": "r-lib/pkgconfig", "decision": "rejected", "evidence": "Caller-frame lookup, namespaces, environments, and global fallback materially determine correctness and require Level 3."},
+        {"repository": "r-lib/rematch2", "decision": "rejected", "evidence": "Regular-expression grammar, capture matrices, attributes, missing matches, and vector semantics exceed a short Level 2 primer."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "shell",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official and respected Shell teaching repositories",
+        "curated command-line project discovery",
+        "GitHub search for complete tested Shell projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked bats-core and semver-tool at their framework, subprocess, portability, and grammar floors.",
+        "Revisited earlier shell utility candidates without selecting trivial example scripts from more complex artifacts."
+      ],
+      "educational_search": "Inspected shUnit2 examples and complete teaching utilities, while excluding exercise-only scripts and framework examples whose meaningful behavior was trivial.",
+      "candidates": [
+        {"repository": "kward/shunit2", "decision": "rejected", "evidence": "The framework exceeds Level 2 while isolated equality examples are too trivial and would constitute Level gaming."},
+        {"repository": "bash-my-aws/bash-my-aws", "decision": "rejected", "evidence": "AWS services, CLI conventions, profiles, resources, JSON filters, and completion logic dominate the path."},
+        {"repository": "bats-core/bats-core", "decision": "rejected", "evidence": "Process orchestration, temporary state, hook lifecycle, assertion status, and portability are central and remain Level 3."},
+        {"repository": "fsaintjacques/semver-tool", "decision": "rejected", "evidence": "Semantic-version grammar, shell portability, parsing branches, comparison rules, and command behavior exceed Level 2."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "kotlin",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Kotlin and Ktor examples",
+        "Maven and small-library discovery",
+        "GitHub search for complete tested Kotlin projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked Picnic and Timber candidates at their DSL, rendering, concurrency, and Android platform floors.",
+        "Revisited official starter projects under the full educational quality gate."
+      ],
+      "educational_search": "Inspected the JUnit Kotlin starter and several complete Ktor samples, including their tests, project configuration, and documentation.",
+      "candidates": [
+        {"repository": "junit-team/junit-examples", "decision": "rejected", "evidence": "The Kotlin starter uses JVM assert for a public division-by-zero precondition, which may be disabled and is not exemplary practice."},
+        {"repository": "ktorio/ktor-samples", "decision": "rejected", "evidence": "Even the smaller verified samples combine routing DSLs, test lifecycles, plugins, configuration, or serialization at Level 3."},
+        {"repository": "JakeWharton/picnic", "decision": "rejected", "evidence": "Table DSL construction, layout measurement, rendering state, width constraints, and style composition exceed Level 2."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "scala",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Scala example and starter repositories",
+        "Scala package and small-library discovery",
+        "GitHub search for complete tested Scala projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked os-lib and case-insensitive candidates at their filesystem, typeclass, and normalization floors.",
+        "Revisited official starters for complete coherent behavior, licensing, and accurate documentation."
+      ],
+      "educational_search": "Inspected Scala's official example project and JUnit's sbt starter plus public teaching repositories with tests.",
+      "candidates": [
+        {"repository": "scala/scala3-example-project", "decision": "rejected", "evidence": "It lacks a source license and combines disconnected advanced demonstrations with a tautological test."},
+        {"repository": "junit-team/junit-examples", "decision": "rejected", "evidence": "The sbt README points its sbt link to a Gradle Java guide and offers weaker idiomatic Scala value than alternatives."},
+        {"repository": "com-lihaoyi/os-lib", "decision": "rejected", "evidence": "Filesystem operations, path modeling, process behavior, exceptions, and platform constraints keep meaningful paths above Level 2."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "powershell",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official PowerShell sample and module searches",
+        "PowerShell Gallery discovery",
+        "GitHub search for complete tested PowerShell projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked Terminal-Icons and PSDepend at their host, dependency, manifest, and platform floors.",
+        "Revisited PSWriteColor after its direct test-quality failure and searched complete module templates without treating scaffolds as artifacts."
+      ],
+      "educational_search": "Searched official samples, workshop projects, tutorial modules, and finished reference utilities; results were scaffolds, untested snippets, or ecosystem-heavy modules.",
+      "candidates": [
+        {"repository": "devblackops/Terminal-Icons", "decision": "rejected", "evidence": "Host capabilities, filesystem metadata, theme data, module lifecycle, and cross-platform behavior keep the path above Level 2."},
+        {"repository": "PowerShellOrg/PSDepend", "decision": "rejected", "evidence": "Dependency types, manifests, provider dispatch, remote acquisition, and environment state make the meaningful path too broad."},
+        {"repository": "EvotecIT/PSWriteColor", "decision": "rejected", "evidence": "The prior direct review found its tests did not provide reliable protection for the claimed behavior."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "dart",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 0, "2": 2},
+      "gaps_after": {"1": 3, "2": 1},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Dart examples and repositories",
+        "pub.dev package discovery",
+        "GitHub search for complete tested Dart projects"
+      ],
+      "prior_research_revisited": [
+        "Retained formz as the existing more demanding Level 2 path.",
+        "Rechecked archived clock and equatable candidates without overlooking maintenance, type, equality, and state burden."
+      ],
+      "educational_search": "Inspected dart-lang/samples and official tutorial material, while distinguishing aggregate sample collections from coherent finished artifacts.",
+      "candidates": [
+        {"repository": "dart-lang/core", "decision": "accepted", "evidence": "package:collection groupBy is a complete production collection behavior with direct empty and ordered grouping tests at Level 2."},
+        {"repository": "dart-lang/samples", "decision": "rejected", "evidence": "The repository is an aggregate of unrelated samples, and plausible CLI paths add parsing, networking, and asynchronous I/O."},
+        {"repository": "felangel/equatable", "decision": "rejected", "evidence": "Equality contracts, inheritance, generic props, hashing, stringification, and runtime configuration remain at least Level 3."}
+      ],
+      "accepted_path_slugs": ["group-by-builds-ordered-lists-under-callback-derived-map-keys"],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "objective-c",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Apple and ecosystem sample searches",
+        "CocoaPods and small-library discovery",
+        "GitHub search for complete tested Objective-C projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked DeepLinkKit, Promises, and OMGHTTPURLRQ under the expanded source policy.",
+        "Retained prior evidence about routing, asynchronous lifecycle, networking, and direct test failures rather than lowering scores."
+      ],
+      "educational_search": "Searched completed Apple-era sample applications, teaching repositories, and compact reference libraries with tests and licenses; none passed both current quality and accessibility.",
+      "candidates": [
+        {"repository": "button/DeepLinkKit", "decision": "rejected", "evidence": "URL parsing, route matching, parameter extraction, callback dispatch, and application integration preserve a higher calculated level."},
+        {"repository": "google/promises", "decision": "rejected", "evidence": "Asynchronous state, chaining, error propagation, queues, and lifecycle semantics remain beyond Level 2."},
+        {"repository": "mxcl/OMGHTTPURLRQ", "decision": "rejected", "evidence": "The direct test suite failed in prior inspection, so the compact network wrapper does not clear the quality gate."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "rust",
+      "before": {"1": 0, "2": 0},
+      "after": {"1": 0, "2": 0},
+      "gaps_after": {"1": 3, "2": 3},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official Rust books and project examples",
+        "crates.io package discovery",
+        "GitHub search for complete tested Rust projects"
+      ],
+      "prior_research_revisited": [
+        "Rechecked anstyle and prior compact crates at their trait, generic, formatting, and platform floors.",
+        "Revisited official learning repositories while enforcing the complete-artifact and no-exercise-collection rules."
+      ],
+      "educational_search": "Inspected the Rust book's minigrep material, the Rust CLI book's grrs artifact, and rustlings in addition to official examples.",
+      "candidates": [
+        {"repository": "rust-lang/book", "decision": "rejected", "evidence": "Minigrep exists as evolving prose listings rather than one checked-in coherent runnable source tree."},
+        {"repository": "rust-cli/book", "decision": "rejected", "evidence": "Macros, generic I/O, contextual errors, filesystem work, process execution, and predicates produce accessibility floor 3."},
+        {"repository": "rust-lang/rustlings", "decision": "rejected", "evidence": "It is explicitly an exercise-and-solution collection, not a complete coherent software artifact."},
+        {"repository": "rust-cli/anstyle", "decision": "rejected", "evidence": "Generic formatting traits, terminal capability, platform handling, and nested style state keep the meaningful path above Level 2."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    },
+    {
+      "language_slug": "lua",
+      "before": {"1": 0, "2": 1},
+      "after": {"1": 0, "2": 1},
+      "gaps_after": {"1": 3, "2": 2},
+      "discovery_channels": [
+        "existing catalog and historical research records",
+        "official and respected Lua teaching searches",
+        "LuaRocks and small-library discovery",
+        "GitHub search for complete tested Lua projects"
+      ],
+      "prior_research_revisited": [
+        "Retained say as the existing Level 2 production path.",
+        "Rechecked small class, logging, game-tutorial, and parser candidates for direct verification and honest concept burden."
+      ],
+      "educational_search": "Inspected a completed game tutorial progression and small teaching-first libraries, while requiring a stable final artifact and direct deterministic verification.",
+      "candidates": [
+        {"repository": "lunarmodules/say", "decision": "retained-lower", "evidence": "The existing namespaced message behavior remains the sole qualified Level 2 lower path."},
+        {"repository": "rxi/classic", "decision": "rejected", "evidence": "The class module has no automated or golden verification for inheritance, mixins, identity, or invalid use."},
+        {"repository": "kikito/love-tile-tutorial", "decision": "rejected", "evidence": "It lacks a clearly verified final artifact and requires framework lifecycle, graphics, input, collision, and map state."},
+        {"repository": "rxi/json.lua", "decision": "rejected", "evidence": "Recursive grammar dispatch, escapes, numbers, nested state, and precise parser errors require Level 3."}
+      ],
+      "accepted_path_slugs": [],
+      "gap_status": "unresolved after production and educational-exemplar research"
+    }
+  ],
+  "educational_exemplars": [
+    {
+      "language_slug": "javascript",
+      "repository": "expressjs/express",
+      "path_slug": "the-complete-express-hello-world-example-maps-one-get-route-to-a-tested-response",
+      "pinned_commit": "023767fe9872e029271df1418f73401bff20ff40",
+      "level": 2,
+      "ordinary_scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 1},
+      "novice_accessibility_floor": 2,
+      "inspected_files": [
+        "examples/hello-world/index.js",
+        "test/acceptance/hello-world.js",
+        "examples/README.md",
+        "package.json",
+        "LICENSE"
+      ],
+      "qualification": {
+        "complete_artifact": {"pass": true, "evidence": "The checked-in file is the whole runnable application, including its route, export boundary, and direct-run listener guard."},
+        "clear_educational_purpose": {"pass": true, "evidence": "Express labels hello-world as its simple request-handler example and maintains it beside the examples index."},
+        "exemplary_source_quality": {"pass": true, "evidence": "The application is direct, idiomatic, placeholder-free, and separates exported construction from direct-run startup."},
+        "verifiable_behavior": {"pass": true, "evidence": "The acceptance suite checks the exact 200 response body and the unmatched-route 404 result."},
+        "useful_documentation": {"pass": true, "evidence": "The examples documentation identifies the artifact and the source itself shows the complete runnable boundary."},
+        "stable_inspectable_revision": {"pass": true, "evidence": "The exact Express revision is pinned and the example uses the repository's current maintained API and test suite."},
+        "public_source_and_license": {"pass": true, "evidence": "The public source is covered by the pinned repository's MIT license."},
+        "genuine_learning_value": {"pass": true, "evidence": "The path teaches a complete request-to-route-to-response boundary and external behavior verification."},
+        "novice_accessibility_compliance": {"pass": true, "evidence": "A short route, request, response, and direct-run primer makes both tested outcomes predictable; the floor is 2."},
+        "no_level_gaming": {"pass": true, "evidence": "The selected path is the complete named hello-world application and its acceptance test, not an arbitrary helper from Express internals."}
+      }
+    },
+    {
+      "language_slug": "java",
+      "repository": "junit-team/junit-examples",
+      "path_slug": "the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test",
+      "pinned_commit": "02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7",
+      "level": 2,
+      "ordinary_scores": {"language_technique": 3, "behavioral_reasoning": 1, "design_span": 2, "constraint_burden": 2},
+      "novice_accessibility_floor": 2,
+      "inspected_files": [
+        "junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java",
+        "junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java",
+        "junit-jupiter-starter-gradle/build.gradle",
+        "junit-jupiter-starter-gradle/README.md",
+        "README.md",
+        "LICENSE.md"
+      ],
+      "qualification": {
+        "complete_artifact": {"pass": true, "evidence": "The starter contains a finished class, ordinary and parameterized tests, dependency configuration, and runner setup with no missing work."},
+        "clear_educational_purpose": {"pass": true, "evidence": "The JUnit team documents it as the bare-minimum complete Gradle setup for JUnit Jupiter."},
+        "exemplary_source_quality": {"pass": true, "evidence": "Conventional source sets, direct names, exact assertions, and explicit runner configuration teach current Java testing structure."},
+        "verifiable_behavior": {"pass": true, "evidence": "One direct test and four CSV parameter rows verify the complete add behavior; repository CI builds the examples."},
+        "useful_documentation": {"pass": true, "evidence": "The subproject README explains its purpose, build system, language, and JUnit Platform relationship."},
+        "stable_inspectable_revision": {"pass": true, "evidence": "The exact maintained JUnit examples revision and its declared dependencies are pinned for inspection."},
+        "public_source_and_license": {"pass": true, "evidence": "The public source is covered by the pinned EPL-2.0 license."},
+        "genuine_learning_value": {"pass": true, "evidence": "The artifact teaches professional test discovery, data-driven cases, and main-versus-test project structure."},
+        "novice_accessibility_compliance": {"pass": true, "evidence": "A short annotations, parameter rows, and source-set primer explains the full execution path; the floor is 2."},
+        "no_level_gaming": {"pass": true, "evidence": "The selection includes the complete starter project boundary and test runner, not just the trivial Calculator method."}
+      }
+    },
+    {
+      "language_slug": "php",
+      "repository": "nikic/iter",
+      "path_slug": "iter-map-lazily-applies-one-callback-while-preserving-each-input-key",
+      "pinned_commit": "4e89b04c36af387d6cda164310737563eaa9e455",
+      "level": 2,
+      "ordinary_scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 2},
+      "novice_accessibility_floor": 2,
+      "inspected_files": [
+        "src/iter.php",
+        "test/iterTest.php",
+        "README.md",
+        "composer.json",
+        "LICENSE"
+      ],
+      "qualification": {
+        "complete_artifact": {"pass": true, "evidence": "The checked-in Composer library provides a finished generator API, consumer functions, tests, metadata, and documentation."},
+        "clear_educational_purpose": {"pass": true, "evidence": "The README explicitly says the library substantially serves as small generator examples while remaining practically useful."},
+        "exemplary_source_quality": {"pass": true, "evidence": "map states its entire behavior in one typed foreach and yield, with no placeholder, trick, or unnecessary indirection."},
+        "verifiable_behavior": {"pass": true, "evidence": "The direct PHPUnit method maps a generated range, materializes it, and checks all six exact values."},
+        "useful_documentation": {"pass": true, "evidence": "The README explains purpose, installation, laziness, supported iterables, and public function signatures."},
+        "stable_inspectable_revision": {"pass": true, "evidence": "The exact revision is pinned, remains meaningfully inspectable, and uses current generator and iterable idioms."},
+        "public_source_and_license": {"pass": true, "evidence": "The public source is covered by the pinned BSD-3-Clause license."},
+        "genuine_learning_value": {"pass": true, "evidence": "The path teaches lazy callback mapping, key preservation, and materialization as one transferable collection lesson."},
+        "novice_accessibility_compliance": {"pass": true, "evidence": "One short generator primer makes every yield and expected output predictable; the floor is 2."},
+        "no_level_gaming": {"pass": true, "evidence": "map is a meaningful documented public behavior of the complete exemplar, followed through its real consumer and direct test."}
+      }
+    },
+    {
+      "language_slug": "c-sharp",
+      "repository": "dotnet/samples",
+      "path_slug": "the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases",
+      "pinned_commit": "86ff8487361a6f32549d9c9ab8b14dde55c643cf",
+      "level": 2,
+      "ordinary_scores": {"language_technique": 3, "behavioral_reasoning": 2, "design_span": 2, "constraint_burden": 2},
+      "novice_accessibility_floor": 2,
+      "inspected_files": [
+        "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs",
+        "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs",
+        "core/getting-started/unit-testing-using-dotnet-test/README.md",
+        "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.csproj",
+        "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj",
+        "LICENSE"
+      ],
+      "qualification": {
+        "complete_artifact": {"pass": true, "evidence": "The sample contains finished implementation and test projects, current package references, eleven cases, and no learner TODOs."},
+        "clear_educational_purpose": {"pass": true, "evidence": "The subproject README identifies it as Microsoft's complete dotnet test tutorial sample and gives restore and test instructions."},
+        "exemplary_source_quality": {"pass": true, "evidence": "The service uses clear boundaries, an understandable bounded loop, conventional names, and informative test-case diagnostics."},
+        "verifiable_behavior": {"pass": true, "evidence": "Eleven InlineData rows directly cover boundary values, primes, and composites through xUnit."},
+        "useful_documentation": {"pass": true, "evidence": "The README states the artifact's behavior, project roles, restore process, and exact test invocation."},
+        "stable_inspectable_revision": {"pass": true, "evidence": "The precise dotnet samples revision, project files, source, and tests are pinned and inspectable together."},
+        "public_source_and_license": {"pass": true, "evidence": "The public sample is covered by the pinned CC-BY-4.0 repository license."},
+        "genuine_learning_value": {"pass": true, "evidence": "The artifact teaches data-driven test partitioning, project boundaries, early returns, and diagnostic assertions."},
+        "novice_accessibility_compliance": {"pass": true, "evidence": "Elementary prime definition plus a short xUnit and project-reference primer makes every outcome predictable; the floor is 2."},
+        "no_level_gaming": {"pass": true, "evidence": "The selected path includes the complete service-to-test-project behavior, not merely the prime loop in isolation."}
+      }
+    },
+    {
+      "language_slug": "ruby",
+      "repository": "sinatra/sinatra",
+      "path_slug": "sinatras-complete-hello-world-example-declares-one-route-and-verifies-its-body",
+      "pinned_commit": "cb22afd7902b566b6eaba6c4ea89739494a65d12",
+      "level": 2,
+      "ordinary_scores": {"language_technique": 2, "behavioral_reasoning": 2, "design_span": 1, "constraint_burden": 1},
+      "novice_accessibility_floor": 2,
+      "inspected_files": [
+        "README.md",
+        "test/readme_test.rb",
+        "sinatra.gemspec",
+        "LICENSE"
+      ],
+      "qualification": {
+        "complete_artifact": {"pass": true, "evidence": "The four-line program is a complete runnable Sinatra application with its dependency metadata and executable documentation test."},
+        "clear_educational_purpose": {"pass": true, "evidence": "Sinatra presents it as the first runnable example in the primary README and explains how to install, run, and view it."},
+        "exemplary_source_quality": {"pass": true, "evidence": "The source uses the framework's conventional minimal route style with no omitted application step or placeholder."},
+        "verifiable_behavior": {"pass": true, "evidence": "ReadmeTest constructs the documented route, requests it, and asserts the exact response body."},
+        "useful_documentation": {"pass": true, "evidence": "The primary README gives complete source, installation, execution, viewing address, and route explanation together."},
+        "stable_inspectable_revision": {"pass": true, "evidence": "The exact maintained Sinatra revision pins the example, its executable test, gem metadata, and license."},
+        "public_source_and_license": {"pass": true, "evidence": "The public source is covered by the pinned MIT license."},
+        "genuine_learning_value": {"pass": true, "evidence": "The complete program teaches route declaration, request dispatch, returned response bodies, and documentation verification."},
+        "novice_accessibility_compliance": {"pass": true, "evidence": "A short route-and-response primer makes the complete application and test predictable; the floor is 2."},
+        "no_level_gaming": {"pass": true, "evidence": "The selected behavior is Sinatra's canonical complete first application and its matching executable test, not an internal helper."}
+      }
+    }
+  ],
+  "serious_rejections_added_this_pass": [
+    {
+      "language_slug": "python",
+      "repository": "pypa/sampleproject",
+      "failed_requirement": "educational-exemplar source quality and genuine learning value",
+      "decision_evidence": "The meaningful artifact teaches packaging, while selecting its trivial add_one placeholder would hide that burden and constitute Level gaming.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "python",
+      "repository": "pallets/flask",
+      "failed_requirement": "novice-accessibility ceiling for the completed tutorial application",
+      "decision_evidence": "The complete Flaskr path centrally combines application factories, context, SQLite, authentication, sessions, routing, templates, and fixtures at floor 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "java",
+      "repository": "spring-guides/gs-rest-service",
+      "failed_requirement": "novice-accessibility ceiling for the completed tutorial application",
+      "decision_evidence": "Annotations, query binding, Spring Boot context, HTTP dispatch, JSON conversion, tests, and shared state form a Level 3 prerequisite stack.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "java",
+      "repository": "OpenLiberty/sample-getting-started",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "REST resources, server features, packaging, configuration, health, metrics, and functional-test lifecycle calculate at least Level 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "php",
+      "repository": "igorw/get-in",
+      "failed_requirement": "current exemplary maintenance and test idiom",
+      "decision_evidence": "The compact implementation is tied to PHP 5.4 and removed PHPUnit base-class and annotation conventions, so it is not exemplary current teaching source.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "php",
+      "repository": "symfony/demo",
+      "failed_requirement": "novice-accessibility ceiling",
+      "decision_evidence": "Attributes, dependency injection, ORM entities, forms, events, templates, authorization, and framework lifecycle make every meaningful path at least Level 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "c-sharp",
+      "repository": "ardalis/Result",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "Generic result variants, status and validation models, implicit conversions, mapping, binding, and error contracts interact at floor 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "c",
+      "repository": "skeeto/optparse",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "Option grammar, mutable parser state, pointer manipulation, argv permutation, subcommands, and error signaling require a parser and memory-model primer.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "c",
+      "repository": "rxi/vec",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "Macro pseudo-generics, allocation and reallocation, capacity invariants, raw pointers, memmove, and element lifetime centrally require floor 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "swift",
+      "repository": "apple/sample-backyard-birds",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "SwiftUI property wrappers, SwiftData persistence, observation, navigation, model relationships, and app lifecycle interact beyond Level 2.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "go",
+      "repository": "dustinkirkland/golang-petname",
+      "failed_requirement": "direct test quality and truthful public contract",
+      "decision_evidence": "Zero and negative word requests violate the stated count, tests assert only nonempty output, and secure wording conflicts with math/rand use.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "shell",
+      "repository": "kward/shunit2",
+      "failed_requirement": "genuine learning value without Level gaming",
+      "decision_evidence": "The meaningful framework exceeds Level 2, while isolated beginner equality examples are too trivial to represent independent software.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "shell",
+      "repository": "bash-my-aws/bash-my-aws",
+      "failed_requirement": "coding-relevance and novice-accessibility ceiling",
+      "decision_evidence": "AWS resources, profiles, CLI conventions, JSON filtering, shell completion, and cloud-service knowledge dominate every meaningful tested path.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "kotlin",
+      "repository": "junit-team/junit-examples",
+      "failed_requirement": "exemplary source quality in the Kotlin starter",
+      "decision_evidence": "Calculator.div uses JVM assert for a public division-by-zero precondition even though assertions may be disabled in ordinary execution.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "kotlin",
+      "repository": "ktorio/ktor-samples",
+      "failed_requirement": "novice-accessibility ceiling for verified complete samples",
+      "decision_evidence": "The smaller tested samples still combine routing DSLs, test lifecycle, plugins or injection, configuration, serialization, or native setup at Level 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "scala",
+      "repository": "scala/scala3-example-project",
+      "failed_requirement": "public license and coherent educational artifact",
+      "decision_evidence": "The repository lacks a source license, dispatches disconnected advanced demonstrations, and tests only the tautology that 42 equals 42.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "scala",
+      "repository": "junit-team/junit-examples",
+      "failed_requirement": "documentation accuracy and comparative ecosystem idiom",
+      "decision_evidence": "The Scala sbt starter points its sbt documentation link to a Gradle Java guide and is a weaker novice Scala bridge than an idiomatic exemplar should be.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "dart",
+      "repository": "dart-lang/samples",
+      "failed_requirement": "candidate type and coherent artifact boundary",
+      "decision_evidence": "The repository is an aggregate of unrelated samples, and plausible CLI examples add parsing, networking, and asynchronous I/O rather than a coherent gentler artifact.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "rust",
+      "repository": "rust-lang/book",
+      "failed_requirement": "complete checked-in software artifact",
+      "decision_evidence": "Minigrep is represented as evolving code listings across book chapters rather than one checked-in coherent runnable source tree.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "rust",
+      "repository": "rust-cli/book",
+      "failed_requirement": "novice-accessibility ceiling",
+      "decision_evidence": "The complete grrs path combines derive macros, generic I/O, contextual errors, files, process execution, temporary state, and predicate assertions at floor 3.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "rust",
+      "repository": "rust-lang/rustlings",
+      "failed_requirement": "excluded exercise-and-solution collection",
+      "decision_evidence": "The repository is explicitly a sequence of exercises with expected solutions and progress tooling, not a complete coherent application.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "lua",
+      "repository": "rxi/classic",
+      "failed_requirement": "verifiable behavior and direct test quality",
+      "decision_evidence": "The documented class module has no automated or deterministic golden verification for inheritance, mixins, identity, construction, or invalid use.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "lua",
+      "repository": "kikito/love-tile-tutorial",
+      "failed_requirement": "complete-artifact verification and novice-accessibility ceiling",
+      "decision_evidence": "The staged tutorial lacks a clearly versioned verified final artifact and centrally requires game lifecycle, graphics, input, collision, and map state.",
+      "full_record": "research/rejections.json"
+    },
+    {
+      "language_slug": "lua",
+      "repository": "rxi/json.lua",
+      "failed_requirement": "calculated lower-level accessibility",
+      "decision_evidence": "Recursive grammar dispatch, escapes, numeric rules, position state, nested structures, and precise errors make the meaningful parser at least Level 3.",
+      "full_record": "research/rejections.json"
+    }
+  ],
+  "progression_checks": [
+    {
+      "language_slug": "javascript",
+      "level_1_order": ["slash", "array-union"],
+      "level_2_order": ["express-hello-world", "onetime"],
+      "level_3_order": ["nanoid", "jquery"],
+      "ordering_rationale": "The ladder moves from one lexical string replacement to a collection composition, then from one explicit framework route to closure-backed wrapper state.",
+      "level_2_to_3": "onetime introduces state, callbacks, edge cases, and a narrow public contract before nanoid adds randomness, encoding, distribution guarantees, and environment concerns.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "python",
+      "level_1_order": [],
+      "level_2_order": ["more-itertools-chunked"],
+      "level_3_order": ["click", "requests"],
+      "ordering_rationale": "The available lower path introduces one iterator composition and its local strict branch without framework lifecycle.",
+      "level_2_to_3": "chunked prepares learners for callbacks, lazy behavior, and contracts before Click adds decorators, command parsing, context, and error presentation; the missing Level 1 ramp remains explicit.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "java",
+      "level_1_order": [],
+      "level_2_order": ["junit-jupiter-starter-gradle"],
+      "level_3_order": ["java-diff-utils", "jsoup"],
+      "ordering_rationale": "The starter introduces annotations, data-driven verification, and project boundaries around elementary behavior before multi-step production libraries.",
+      "level_2_to_3": "The JUnit path provides testing and generic project orientation before java-diff-utils introduces generic patch operations, mutation, validation, and several interacting cases.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "php",
+      "level_1_order": ["webmozart-assert-not-null"],
+      "level_2_order": ["iter-map", "php-option"],
+      "level_3_order": ["fastroute", "webmozart-assert"],
+      "ordering_rationale": "A direct guard leads to one lazy callback transformation, then to an object-based optional-value abstraction with more branches and composition.",
+      "level_2_to_3": "php-option establishes callbacks, variants, and explicit value absence before FastRoute adds route grammar, compilation, regular expressions, and dispatch state.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "c-sharp",
+      "level_1_order": [],
+      "level_2_order": ["dotnet-prime-service-tests", "guardclauses", "humanizer"],
+      "level_3_order": ["fluentvalidation", "serilog"],
+      "ordering_rationale": "A complete elementary test project leads to a focused generic guard and then a richer text transformation with options and edge contracts.",
+      "level_2_to_3": "Humanizer's extension methods, options, and boundary cases prepare the learner for FluentValidation's typed rule expressions, rule components, and asynchronous validation flow.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "cpp",
+      "level_1_order": [],
+      "level_2_order": ["gsl"],
+      "level_3_order": ["cli11", "mustache"],
+      "ordering_rationale": "The sole lower path focuses on one lifetime-bound cleanup abstraction before production parsing and rendering systems.",
+      "level_2_to_3": "final_action introduces templates, move/lifetime behavior, and guarantees before CLI11 adds command grammar, typed conversion, subcommands, and parser errors; the absent Level 1 ramp remains explicit.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "ruby",
+      "level_1_order": ["abbrev"],
+      "level_2_order": ["sinatra-hello-world", "observer", "pathname"],
+      "level_3_order": ["jekyll", "tempfile"],
+      "ordering_rationale": "A local collection algorithm leads to one route callback, then subscriber state, then path parsing and normalization with broader edge cases.",
+      "level_2_to_3": "Pathname introduces object APIs, lexical normalization, roots, and platform-shaped cases before Jekyll adds pipeline stages, hooks, rendering, and site-wide state.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "c",
+      "level_1_order": [],
+      "level_2_order": ["inih"],
+      "level_3_order": ["tomlc17", "cjson"],
+      "ordering_rationale": "The line-oriented callback parser is the smallest qualified complete C path and precedes owned recursive syntax trees.",
+      "level_2_to_3": "inih introduces buffers, callbacks, parsing branches, and errors before tomlc17 adds bounded scanning, ownership, tagged values, recursive structures, and format constraints.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "go",
+      "level_1_order": [],
+      "level_2_order": ["go-humanize-comma", "go-wordwrap", "match"],
+      "level_3_order": ["gin", "cron"],
+      "ordering_rationale": "A numeric buffer algorithm leads to richer text-scanning state and then a compact wildcard matcher with more branching and recursive cases.",
+      "level_2_to_3": "match provides byte scanning, wildcard state, and backtracking-like reasoning before Gin introduces request context, routing trees, middleware, and framework lifecycle.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "dart",
+      "level_1_order": [],
+      "level_2_order": ["collection-group-by", "formz"],
+      "level_3_order": ["dart-sdk", "shelf"],
+      "ordering_rationale": "One generic callback accumulation precedes typed validation state and interaction status across a small model abstraction.",
+      "level_2_to_3": "formz introduces generics, state, validation, equality, and composition before Future.wait adds asynchronous coordination, ordering, cleanup, and first-error guarantees.",
+      "result": "pass-with-explicit-gap"
+    },
+    {
+      "language_slug": "lua",
+      "level_1_order": [],
+      "level_2_order": ["say"],
+      "level_3_order": ["middleclass", "lua-resty-lrucache"],
+      "ordering_rationale": "The lower path focuses on namespaced message storage and fallback before metatable-based object systems and bounded caches.",
+      "level_2_to_3": "say introduces tables, namespaces, fallback, formatting, and local state before middleclass adds metatables, inheritance, mixins, propagation, and dynamic method rules.",
+      "result": "pass-with-explicit-gap"
+    }
+  ],
+  "source_class_leakage": {
+    "level_3_to_5_paths_checked": 114,
+    "all_level_3_to_5_paths_are_production": true,
+    "educational_exemplars_checked": 5,
+    "educational_exemplars_above_level_2": 0,
+    "baseline_paths_preserved": 125,
+    "baseline_paths_reclassified_as_educational": 0,
+    "visible_source_disclosure": "pass",
+    "evidence": "Canonical validation checked every entry; generated entry summaries display Source outside collapsed audit details, and the shared legend defines both source classes."
+  },
+  "educational_quality_samples": [
+    {
+      "repository": "expressjs/express",
+      "result": "pass",
+      "evidence": "The pinned application is complete, the source/test claims match, both success and missing-route behavior are asserted, and the prose confines required HTTP context to a short primer."
+    },
+    {
+      "repository": "junit-team/junit-examples",
+      "result": "pass",
+      "evidence": "The pinned Java starter includes current project configuration, complete source, exact ordinary and parameterized assertions, and accurate subproject documentation."
+    },
+    {
+      "repository": "nikic/iter",
+      "result": "pass",
+      "evidence": "The pinned PHP package is a coherent library rather than a snippet, its map generator is directly tested, and documentation accurately describes both teaching and practical purpose."
+    },
+    {
+      "repository": "dotnet/samples",
+      "result": "pass",
+      "evidence": "The pinned C-sharp sample has complete implementation and configured tests, eleven meaningful data rows, current conventional source, and a trace that requires only an elementary domain definition."
+    },
+    {
+      "repository": "sinatra/sinatra",
+      "result": "pass",
+      "evidence": "The pinned Ruby program is complete despite its size, the repository executes the documented route in ReadmeTest, and learner prose does not claim framework internals are beginner material."
+    }
+  ],
+  "candidate_verification": [
+    {"repository": "sindresorhus/array-union", "method": "runtime probe", "result": "pass", "evidence": "The pinned implementation returned [1,2,3] for overlapping arrays, confirming uniqueness and first-seen order."},
+    {"repository": "sindresorhus/onetime", "method": "source and direct-test inspection", "result": "pass", "evidence": "The wrapper implementation and AVA cases were inspected across first success, cached return, retry after throw, repeated-call error, call count, and preserved receiver behavior."},
+    {"repository": "more-itertools/more-itertools", "method": "focused upstream test class", "result": "pass", "evidence": "All seven ChunkedTests passed at the pinned revision."},
+    {"repository": "ruby/abbrev", "method": "focused upstream tests", "result": "pass", "evidence": "Two tests and six assertions passed at the pinned revision."},
+    {"repository": "ruby/observer", "method": "focused upstream tests", "result": "pass", "evidence": "One lifecycle test and eleven assertions passed at the pinned revision."},
+    {"repository": "expressjs/express", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact application and acceptance assertions were inspected; the isolated checkout did not have the project's JavaScript dependency tree installed."},
+    {"repository": "junit-team/junit-examples", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact Java source, Gradle configuration, and direct assertions were inspected; no Java runtime was installed in the execution environment."},
+    {"repository": "nikic/iter", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact generator, consumer, and PHPUnit assertions were inspected; no PHP runtime was installed in the execution environment."},
+    {"repository": "dotnet/samples", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The exact service, projects, and eleven xUnit cases were inspected; no dotnet runtime was installed in the execution environment."},
+    {"repository": "sinatra/sinatra", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The canonical example and matching ReadmeTest were inspected; the isolated checkout lacked the Rack dependency required to execute Sinatra."},
+    {"repository": "dustin/go-humanize", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The formatter, boundary table, and fuzz property were inspected; no Go runtime was installed in the execution environment."},
+    {"repository": "mitchellh/go-wordwrap", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The complete scanner and direct boundary table were inspected; no Go runtime was installed in the execution environment."},
+    {"repository": "dart-lang/core", "method": "source and direct-test inspection", "result": "pass-with-runtime-unavailable", "evidence": "The groupBy function, empty case, and exact ordered grouping assertion were inspected; no Dart runtime was installed in the execution environment."}
+  ],
+  "verification": {
+    "generated_pages": {"command": "python3 scripts/catalog.py generate", "result": "pass"},
+    "unit_tests": {"command": "python3 -m unittest discover -s tests -v", "result": "pass", "tests_run": 45},
+    "catalog_validation": {"command": "python3 scripts/catalog.py validate", "result": "pass"},
+    "generated_output_check": {"command": "python3 scripts/catalog.py check-generated", "result": "pass"},
+    "complete_validation": {"run": false, "reason": "The catalog has 102 honest open slots, including 96 lower-level gaps, so the specification forbids claiming a complete 240-path grid."}
+  }
+}

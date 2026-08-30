@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [pinterest/PINOperation](https://github.com/pinterest/PINOperation)
 
 **Language 3 / Behavior 4 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A thread-safe operation queue with priorities, dynamic concurrency limits, cancellation, data coalescing, completions, and operation groups.
 
@@ -66,7 +70,7 @@ A thread-safe operation queue with priorities, dynamic concurrency limits, cance
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Pinterest maintains and releases PINOperation as an Apple-platform library through Swift Package Manager and CocoaPods.
+**Purpose evidence:** Pinterest maintains and releases PINOperation as an Apple-platform library through Swift Package Manager and CocoaPods.
 
 **Language evidence:** Priority scheduling, serial and bounded-concurrent execution, cancellation, coalescing, grouped operations, synchronization, and tests are Objective-C over Grand Central Dispatch and pthread mutexes.
 
@@ -94,6 +98,8 @@ The learner-facing short context appears above.
 ### [sparkle-project/Sparkle](https://github.com/sparkle-project/Sparkle)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A secure macOS software-update framework with signed appcasts, background downloads, delta updates, sandbox support, privilege-separated installation, phased rollouts, resumable updates, and customizable UI.
 
@@ -145,7 +151,7 @@ A secure macOS software-update framework with signed appcasts, background downlo
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Sparkle is released as a framework, Swift package, command-line tool, and supporting services used by independently distributed macOS applications.
+**Purpose evidence:** Sparkle is released as a framework, Swift package, command-line tool, and supporting services used by independently distributed macOS applications.
 
 **Language evidence:** Updater scheduling and drivers, appcast parsing, signature and code-signing validation, downloading, extraction and installation, XPC services, UI, version comparison, CLI integration, and core tests are predominantly Objective-C.
 
@@ -175,6 +181,8 @@ The learner-facing short context appears above.
 ### [SBJson/SBJson](https://github.com/SBJson/SBJson)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A streaming Objective-C JSON parser and writer that accepts chunks, emits complete values or array elements, and supports bounded depth and deterministic formatting.
 
@@ -226,7 +234,7 @@ A streaming Objective-C JSON parser and writer that accepts chunks, emits comple
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.
+**Purpose evidence:** SBJson ships a versioned CocoaPod and framework API for applications needing incremental JSON processing or compatibility with its long-lived interface.
 
 **Language evidence:** Incremental UTF-8 tokenization, parser and writer state machines, Objective-C value construction, streaming callbacks, formatting, errors, and tests are Objective-C.
 
@@ -254,6 +262,8 @@ The learner-facing short context appears above.
 ### [SDWebImage/SDWebImage](https://github.com/SDWebImage/SDWebImage)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 An asynchronous image loading and caching framework for Apple platforms with codecs, progressive and animated images, transformations, prefetching, and extensible cache and loader pipelines.
 
@@ -304,7 +314,7 @@ An asynchronous image loading and caching framework for Apple platforms with cod
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.
+**Purpose evidence:** SDWebImage is released through Swift Package Manager, CocoaPods, and Carthage for production UI integrations across Apple platforms.
 
 **Language evidence:** Image orchestration, downloader operations, memory and disk caches, coder and loader protocols, animated playback, transformations, UIKit and AppKit categories, prefetching, and tests are Objective-C.
 
@@ -334,6 +344,8 @@ The learner-facing short context appears above.
 ### [gnachman/iTerm2](https://github.com/gnachman/iTerm2)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A full macOS terminal emulator with VT protocols, high-performance grids and rendering, sessions and process control, tmux and shell integration, automation APIs, restoration, search, transfers, profiles, and modern application features.
 
@@ -387,7 +399,7 @@ A full macOS terminal emulator with VT protocols, high-performance grids and ren
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds and releases the iTerm2 desktop application used as a terminal replacement on macOS, plus scripting, helper, companion, and integration surfaces.
+**Purpose evidence:** The repository builds and releases the iTerm2 desktop application used as a terminal replacement on macOS, plus scripting, helper, companion, and integration surfaces.
 
 **Language evidence:** The still-dominant terminal core—byte streams, VT100 parsers and state machines, grids, screens, line buffers, sessions, process integration, selection, search, drawing, and much of the UI—is Objective-C and Objective-C++, with a substantial modern Swift layer.
 
@@ -415,6 +427,8 @@ The learner-facing short context appears above.
 ### [gnustep/libs-base](https://github.com/gnustep/libs-base)
 
 **Language 5 / Behavior 5 / Design 3 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa Foundation APIs, from root objects and collections through run loops, networking, serialization, localization, processes, and distributed objects.
 
@@ -466,7 +480,7 @@ GNUstep's cross-platform implementation of the non-graphical OpenStep and Cocoa 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** GNUstep Base is a released runtime library used by GNUstep applications and command-line software to provide Foundation-style APIs across Unix-like systems and Windows.
+**Purpose evidence:** GNUstep Base is a released runtime library used by GNUstep applications and command-line software to provide Foundation-style APIs across Unix-like systems and Windows.
 
 **Language evidence:** The Foundation-compatible object model, strings and collections, coding, dates and locales, files, processes and threads, run loops, notifications, predicates, XML, networking, URL loading, distributed objects, and public headers are predominantly Objective-C with supporting C.
 

@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "typescript",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "The complete event-emitter runtime and its public generic types are implemented together in src/index.ts.",
       "description": "A tiny typed event emitter that supports named events, wildcard listeners, and injectable event maps.",
-      "real_world_evidence": "The repository publishes mitt as a framework-neutral npm library for browser and server applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes mitt as a framework-neutral npm library for browser and server applications.",
       "why_study": "The mitt path shows how one small TypeScript emitter keeps named and wildcard subscriptions type-safe while preserving dispatch order when handlers mutate the registry.",
       "learn": [
         "Use `src/index.ts` to study the following transferable techniques and behaviors: Generic event maps, keyed payload lookup, mapped handler storage, overloaded emission, Map-backed subscriptions, listener snapshots, duplicate handlers, symbols, removal, and named-before-wildcard ordering."
@@ -139,7 +140,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "Store creation, reducer composition, middleware application, observable interoperation, and public types are first-party TypeScript under src.",
       "description": "A predictable state container built around pure reducers, immutable state transitions, action dispatch, subscriptions, and middleware.",
-      "real_world_evidence": "The repository publishes the Redux state-management library used by browser, server, and framework-integrated applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the Redux state-management library used by browser, server, and framework-integrated applications.",
       "why_study": "The createStore path shows how Redux validates and reduces one action while preserving state identity, listener snapshots, nested dispatch behavior, reentrancy rules, and generic store contracts.",
       "learn": [
         "Use `src/createStore.ts` to study the following transferable techniques and behaviors: Generic Store and Reducer relationships, overloads and enhancers, action validation, reducer reentrancy guards, state replacement, current-versus-next listener snapshots, nested dispatch, unsubscription, observable interoperation, and error recovery."
@@ -258,7 +260,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "Rendering, dependency injection, reactivity, compilation, forms, routing, HTTP, tooling, and public framework packages are TypeScript.",
       "description": "A web application framework with a compiler, rendering and reactivity engine, dependency injection, routing, forms, HTTP, hydration, testing, and developer tooling.",
-      "real_world_evidence": "The repository builds and releases the Angular framework and its first-party packages for production web applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository builds and releases the Angular framework and its first-party packages for production web applications.",
       "why_study": "The signal path shows how Angular maintains a dynamic producer-consumer graph with lazy recomputation, precise invalidation, equality filtering, cycle detection, cached errors, and recovery.",
       "learn": [
         "Use `packages/core/src/render3/reactivity/signal.ts` to study the following transferable techniques and behaviors: Generic callable signal objects, hidden reactive nodes, branded versions, producer-consumer links, dynamic dependency rebuilding, push invalidation, pull polling, epochs and versions, lazy computed values, equality, active-consumer restoration, cycle sentinels, error caching, and write guardrails."
@@ -382,7 +385,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "Selector construction, memoizers, developer checks, utilities, and public inference types are implemented in TypeScript under src.",
       "description": "A memoized selector library that derives values from application state while preserving stable results across unchanged inputs.",
-      "real_world_evidence": "The repository publishes Reselect for application and Redux state derivation, including extensible memoization strategies and development checks.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes Reselect for application and Redux state derivation, including extensible memoization strategies and development checks.",
       "why_study": "The weak-map memoizer path shows how Reselect caches arbitrary argument tuples across weak object and strong primitive branches, then composes that cache into a precisely typed selector.",
       "learn": [
         "Use `src/weakMapMemoize.ts` to study the following transferable techniques and behaviors: Variadic and tuple generics, conditional result inference, object-versus-primitive cache trees, WeakMap and Map ownership, generation replacement, WeakRef result retention, equality reuse, exception behavior, selector composition, and recomputation diagnostics."
@@ -501,7 +505,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "Schema definitions, parsing internals, error representation, adapters, codecs, and public fluent APIs are TypeScript across the packages workspace.",
       "description": "A schema validation library that parses untrusted values and infers static TypeScript input and output types from runtime definitions.",
-      "real_world_evidence": "The repository publishes multiple maintained Zod packages used to validate application, API, form, and configuration data.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes multiple maintained Zod packages used to validate application, API, form, and configuration data.",
       "why_study": "The Zod object-schema path shows how one fluent public model keeps inferred input and output types aligned with interpreted, generated, asynchronous, and recursive runtime parsing.",
       "learn": [
         "Use `packages/zod/src/v4/classic/schemas.ts` to study the following transferable techniques and behaviors: Conditional mapped types, key remapping, variance-aware schema generics, public schema builders, normalized object shapes, interpreted and generated parsers, async children, recursive identity memoization, catchalls, defaults, symbol keys, issue aggregation, and prototype-pollution safety."
@@ -623,7 +628,8 @@
       "primary_language": "TypeScript",
       "language_evidence": "The server runtime, clients, transports, adapters, framework bindings, and inference machinery are TypeScript across the packages workspace.",
       "description": "An end-to-end typesafe RPC framework that infers client calls from server routers without a generated schema or code-generation step.",
-      "real_world_evidence": "The repository publishes server, client, React, Next.js, TanStack, and adapter packages for deployed TypeScript applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes server, client, React, Next.js, TanStack, and adapter packages for deployed TypeScript applications.",
       "why_study": "The procedure-builder path shows how tRPC turns fluent generic declarations into a recursively typed router caller whose proxy, lazy loading, middleware, context, and runtime lookup agree without code generation.",
       "learn": [
         "Use `packages/server/src/unstable-core-do-not-import/procedureBuilder.ts` to study the following transferable techniques and behaviors: Recursive mapped and conditional types, generic context and input transformations, typed callable proxies, procedure middleware, router decoration and flattening, async context creation, once-only parallel lazy loading, query, mutation and subscription dispatch, reserved names, path collisions, and error callbacks."

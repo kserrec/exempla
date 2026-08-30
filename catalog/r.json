@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "r",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "R",
       "language_evidence": "Temporary state setters, dynamic function construction, deferred cleanup, resource helpers, and integrations are implemented in R.",
       "description": "A library for running code with temporary changes to global process state and reliably restoring that state afterward.",
-      "real_world_evidence": "The repository publishes the withr CRAN package used by packages, tests, scripts, and tools that must scope side effects safely.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the withr CRAN package used by packages, tests, scripts, and tools that must scope side effects safely.",
       "why_study": "Understand how withr generates scoped wrappers that evaluate code under temporary state and reliably restore the previous state. Temporary-state vocabulary is familiar; the bounded generated-wrapper path teaches substitute and eval, delayed cleanup, dynamic wrapper generation, option capture, error-safe restoration, and nested scope behavior.",
       "learn": [
         "Study these transferable R mechanisms in `R/with_.R`: substitute and caller-environment evaluation, programmatic wrapper generation, and deferred cleanup callbacks.",
@@ -130,7 +131,8 @@
       "primary_language": "R",
       "language_evidence": "The grammar, plot object, build pipeline, layers, scales, coordinates, facets, guides, themes, geoms, stats, positions, and extension system are implemented in R.",
       "description": "A declarative graphics system that implements a layered grammar of data, aesthetics, scales, statistics, geometry, coordinates, faceting, guides, and themes.",
-      "real_world_evidence": "The repository publishes the ggplot2 CRAN package used to create static visualizations and as a platform for a large extension ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the ggplot2 CRAN package used to create static visualizations and as a platform for a large extension ecosystem.",
       "why_study": "Understand how ggplot2 implements prototype inheritance and bound methods in R and uses that system for extensible plot components. Plot-component vocabulary is brief; the replacement path teaches prototype inheritance, parent-method dispatch, environment-backed objects, cloning, method binding, extension contracts, and direct tests without the full plot-build pipeline.",
       "learn": [
         "Study these transferable R mechanisms in `R/ggproto.R`: environment-backed prototype objects, dynamic method binding and parent dispatch, and custom printing, lookup, and cloning behavior.",
@@ -252,7 +254,8 @@
       "primary_language": "R",
       "language_evidence": "Test discovery and execution, expectations, conditions and restarts, reporters, snapshots, mocking, parallel workers, and package integration are implemented primarily in R.",
       "description": "R's xUnit-style testing framework, with expressive expectations, reporters, snapshots, package integration, and parallel execution.",
-      "real_world_evidence": "The repository publishes the testthat CRAN package used to run and report automated tests for R packages and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the testthat CRAN package used to run and report automated tests for R packages and applications.",
       "why_study": "Understand how testthat evaluates one test block, turns expectations into structured conditions, and reports passing, failure, error, and skip outcomes. Testing vocabulary is familiar; the path teaches captured evaluation, condition signaling, expectation objects, reporter callbacks, nested contexts, failure and skip policy, and self-tests.",
       "learn": [
         "Study these transferable R mechanisms in `R/test-that.R`: captured expressions and caller environments, custom condition signaling and handling, and R6-style reporter callback protocols.",
@@ -376,7 +379,8 @@
       "primary_language": "R",
       "language_evidence": "Expression capture and evaluation, transformers, quoting, SQL support, vector recycling, and the interpolation parser are implemented in R and C.",
       "description": "A dependency-light string interpolation library that evaluates expressions inside customizable delimiters.",
-      "real_world_evidence": "The repository publishes the glue CRAN package for applications and packages that construct text, messages, SQL, and data-aware strings.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the glue CRAN package for applications and packages that construct text, messages, SQL, and data-aware strings.",
       "why_study": "Understand how glue_data scans an interpolation template, evaluates embedded R expressions, transforms values, and produces vectorized output. Interpolation vocabulary is immediate; the path teaches captured evaluation environments, parser callbacks, delimiter and escape state, transformer extension, vector recycling, missing values, and a C scanning boundary.",
       "learn": [
         "Study these transferable R mechanisms in `R/glue.R`: captured environments and expression evaluation, transformer callback extension, and R-to-C scanner interface.",
@@ -500,7 +504,8 @@
       "primary_language": "R",
       "language_evidence": "The BUGS-compatible modeling language, graph construction, algorithm DSL, MCMC configuration, compiler and C++ generation pipeline, and R interfaces are implemented in substantial first-party R alongside the generated-code runtime in C++.",
       "description": "A programmable hierarchical-modeling system that compiles BUGS-style models and model-generic algorithms from R into customized C++.",
-      "real_world_evidence": "The repository publishes the NIMBLE CRAN package used to build and fit hierarchical models with MCMC, particle filtering, Laplace approximation, and custom statistical algorithms.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the NIMBLE CRAN package used to build and fit hierarchical models with MCMC, particle filtering, Laplace approximation, and custom statistical algorithms.",
       "why_study": "Understand how NIMBLE turns a typed arithmetic nimbleFunction into generated C++, compiles it within a project, and exposes the native result through an R interface. The selected compiler path needs typed arithmetic and native-interface vocabulary, not Bayesian or statistical expertise; it teaches custom AST and type processing, project compilation state, code generation, native registration, reflection, specialization, and R/C++ interoperability.",
       "learn": [
         "Study these transferable R mechanisms in `packages/nimble/R/nimbleFunction_core.R`: captured R code and custom type specialization, AST transformation and generated C++, and reflection and native R/C++ interface construction.",
@@ -632,7 +637,8 @@
       "primary_language": "R",
       "language_evidence": "The repository is the R language implementation itself: its evaluator and runtime are written in C, its base and standard packages substantially in R, and numerical kernels in C and Fortran.",
       "description": "The R language implementation, runtime, garbage collector, standard and recommended packages, graphics, statistics, compiler, build system, and platform ports.",
-      "real_world_evidence": "This read-only mirror tracks the upstream R source tree used to build the R language and standard software distribution.",
+      "source_kind": "production",
+      "purpose_evidence": "This read-only mirror tracks the upstream R source tree used to build the R language and standard software distribution.",
       "why_study": "Understand how R's R-authored compiler turns functions and expressions into byte code while preserving lexical scope, control flow, constants, and evaluation semantics. Compiler vocabulary is introduced directly; the R-authored path teaches language-object traversal, lexical environment analysis, constant handling, control-flow compilation, instruction emission, optimization, byte-code objects, and compiler self-tests.",
       "learn": [
         "Study these transferable R mechanisms in `src/library/compiler/noweb/compiler.nw`: recursive manipulation of R language objects, lexical environment and closure analysis, and instruction construction, dispatch tables, and compiler metaprogramming.",

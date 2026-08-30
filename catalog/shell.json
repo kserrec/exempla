@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "shell",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Shell",
       "language_evidence": "The command router and core deployment plugins are implemented in Bash, with substantial first-party Go modules extending application, builder, proxy, storage, Docker, and Kubernetes behavior.",
       "description": "A self-hosted platform as a service that builds, deploys, configures, networks, schedules, and serves applications on a user's server.",
-      "real_world_evidence": "The repository publishes installable Dokku releases and packages for operating a multi-application deployment platform on supported Ubuntu and Debian hosts.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes installable Dokku releases and packages for operating a multi-application deployment platform on supported Ubuntu and Debian hosts.",
       "why_study": "Understand how Dokku resolves aliases and dispatches a command through enabled plugin subcommands and the legacy command protocol. The bounded execute_dokku_cmd trace needs only concise plugin-dispatch vocabulary and primarily teaches associative alias maps, argument adaptation, extension precedence, dynamic executable routing, compatibility fallback, and explicit exit semantics; Docker, Git deployment, proxies, certificates, and Kubernetes are excluded.",
       "learn": [
         "Study these transferable Shell mechanisms in `dokku`: Bash associative alias map and arrays, parameter-based plugin and subcommand decomposition, and dynamic executable dispatch through a framework convention.",
@@ -139,7 +140,8 @@
       "primary_language": "Shell",
       "language_evidence": "Command dispatch, version selection, shim generation, hook discovery, executable lookup, and shell initialization are implemented as Bash executables under libexec/.",
       "description": "A per-user Ruby version manager that selects installations through PATH shims, directory-local version files, environment overrides, and plugins.",
-      "real_world_evidence": "The repository ships the rbenv command installed by major operating-system package managers and used to select Ruby runtimes for projects and shells.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships the rbenv command installed by major operating-system package managers and used to select Ruby runtimes for projects and shells.",
       "why_study": "Understand how rbenv safely reconciles a directory of executable shims with installed runtimes and plugin-provided commands. The short runtime-selection context is subordinate to transferable lessons in filesystem reconciliation, lock ownership, cleanup traps, generated wrappers, plugin hooks, exact-name matching, and behavior-driven tests.",
       "learn": [
         "Study these transferable Shell mechanisms in `libexec/rbenv-rehash`: arrays, process substitution, and parameter expansion, heredoc-generated shim and sourced plugin hooks, and EXIT trap and noclobber lock idioms.",
@@ -263,7 +265,8 @@
       "primary_language": "Shell",
       "language_evidence": "The portable option grammar, parser-code generator, abbreviation and help modules, and executable interfaces are implemented in POSIX shell.",
       "description": "A portable POSIX-shell option parser and parser generator supporting short, long, optional, abbreviated, and subcommand forms.",
-      "real_world_evidence": "The repository publishes standalone release scripts and a Homebrew package for shell programs that need a richer option grammar than getopts provides.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes standalone release scripts and a Homebrew package for shell programs that need a richer option grammar than getopts provides.",
       "why_study": "Understand how a portable Shell definition DSL emits and evaluates a parser for flags, values, validation, scanning modes, abbreviations, subcommands, and rest arguments. Command-line option vocabulary is concise; the path primarily teaches portable Shell metaprogramming, quoting, generated parsers, stateful scanning, callbacks, modular extensions, and cross-shell contracts.",
       "learn": [
         "Study these transferable Shell mechanisms in `lib/getoptions_base.sh`: nested definition functions and dynamic dispatch, portable quoting and indirect variables, and eval-based Shell code generation.",
@@ -394,7 +397,8 @@
       "primary_language": "Shell",
       "language_evidence": "Runtime selection, command dispatch, shims, hooks, shell setup, Python download and compilation, and binary packaging are implemented primarily in Bash.",
       "description": "A Python version manager that selects installed runtimes through shims and can download and build many Python implementations.",
-      "real_world_evidence": "The repository ships the pyenv command and bundled python-build plugin installed through common package managers and used for per-user and per-project Python selection.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships the pyenv command and bundled python-build plugin installed through common package managers and used for per-user and per-project Python selection.",
       "why_study": "Understand how pyenv detects a caller shell, emits compatible initialization code, and safely installs startup configuration across several shell languages. Startup-file vocabulary is short and the selected path teaches cross-language code generation, parent-shell detection, persistent configuration safeguards, idempotent PATH handling, and directly tested compatibility without Python build-toolchain breadth.",
       "learn": [
         "Study these transferable Shell mechanisms in `libexec/pyenv-init`: Bash that generates Bash, Zsh, Ksh, Fish, and PowerShell code, arrays and shell-specific parameter and quoting machinery, and dynamic wrapper-function and PATH-program generation.",

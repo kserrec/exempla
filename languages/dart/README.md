@@ -1,6 +1,8 @@
 # Dart
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -8,11 +10,91 @@
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
+
+### [dart-lang/core](https://github.com/dart-lang/core)
+
+**Language 2 / Behavior 1 / Design 1 / Constraints 1 → Level 2**
+
+**Source:** Production software
+
+Dart's production collection package groups iterable values into ordered lists under keys computed by a callback.
+
+**Why study it:** Read one compact callback-driven collection transformation and verify how empty input, repeated keys, and input order determine the result.
+
+**Prerequisites:**
+
+- The global novice Dart baseline: functions, loops, maps, lists, generics at ordinary collection use, and focused tests.
+- A callback is a function supplied by the caller; groupBy calls it once per element to choose that element's map key.
+
+**Concepts this path develops:**
+
+- Building grouped collections with create-on-first-use map entries.
+- Separating a reusable grouping algorithm from caller-defined key selection.
+- Preserving stable order while accumulating values.
+
+**What you can learn:**
+
+- Compute one grouping key for each input element.
+- Create a list only when a key first appears, then append later matching elements.
+- Preserve the relative input order inside every group.
+
+**Learning path:**
+
+- **Goal:** Understand how package:collection groupBy maps each iterable element to a key and accumulates ordered lists under those keys.
+- **Start here:** [`pkgs/collection/lib/src/functions.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/lib/src/functions.dart) — The groupBy function contains the entire loop, callback invocation, first-list creation, append, and return.
+- **Then read:**
+  - [`pkgs/collection/test/functions_test.dart`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/test/functions_test.dart)
+  - [`pkgs/collection/README.md`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/README.md)
+  - [`pkgs/collection/pubspec.yaml`](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/pubspec.yaml)
+- **Trace:** Start with an empty typed map, call key for each string, create the missing list with ??=, append the element, return the map, and compare the empty and second-character grouping cases in the direct groupBy tests.
+
+**Why this level:**
+
+- **Language technique 2:** Generic callbacks and create-on-first-use collection syntax are common professional Dart idioms central to the function.
+- **Behavioral reasoning 1:** The function is synchronous and each element follows the same direct key, list, and append sequence.
+- **Design span 1:** One implementation unit and its focused assertions contain the complete selected path.
+- **Constraint burden 1:** The local contract has plainly observable empty and ordering behavior without interacting constraints.
+- **Novice accessibility floor 2:** A short callback and generics primer makes each result predictable; the null-aware expression is one local create-or-reuse operation.
+  - **Central concepts:** callback-derived keys; generic map and list types; create-on-first-use accumulation
+  - **Incidental concepts:** null-aware assignment syntax
+- **Placement:** The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 2 raises the published result to Level 2.
+
+**License:** BSD-3-Clause ([evidence 1](https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** dart-lang/core actively maintains and publishes package:collection for application use; its package README documents collection utilities and links the public package and API.
+
+**Language evidence:** The collection package's groupBy implementation, exports, documentation, and direct test group are first-party Dart; GitHub labels the monorepository Dart.
+
+**Coding relevance:**
+
+Callback-driven grouping, map accumulation, stable ordering, and empty-input tests are broadly transferable collection-processing skills.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation is one direct loop with descriptive types and documentation immediately above the function.
+- **Architecture:** A focused top-level utility lives with related collection functions and is exported by a maintained package.
+- **Naming and idiom:** groupBy, values, key, element, and map state the transformation using idiomatic Dart collection syntax.
+- **Tests:** The direct test group proves the callback is unused for empty input and checks exact keys, grouped values, and preserved order.
+- **Documentation:** The function docs define key selection and order, while the package README explains purpose, publication, and the wider collection context.
+- **Traceability:** Every expected list entry follows one visible callback result and one append operation.
+- **Maintainability:** The narrow signature, active monorepository, package metadata, and focused tests make behavior changes easy to bound.
+- **Educational value:** It is a concise production example of reusable higher-order collection code without advanced type machinery.
+
+**Inspection record:** commit `b80e488556bd7d72386f7e358d0b4e4a44ce0423`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `pkgs/collection/lib/src/functions.dart`, `pkgs/collection/test/functions_test.dart`, `pkgs/collection/README.md`, `pkgs/collection/pubspec.yaml`, `pkgs/collection/LICENSE`. GitHub Linguist label: Dart.
+
+</details>
 
 ### [VeryGoodOpenSource/formz](https://github.com/VeryGoodOpenSource/formz)
 
 **Language 3 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
 
 A small Dart model for form values, validation errors, untouched inputs, modified inputs, and submission state.
 
@@ -66,7 +148,7 @@ A small Dart model for form values, validation errors, untouched inputs, modifie
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.
+**Purpose evidence:** Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.
 
 **Language evidence:** Typed form-input state, validation, error caching, aggregate form status, value semantics, and tests are implemented in one Dart library and its Dart test fixtures.
 
@@ -91,11 +173,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [dart-lang/sdk](https://github.com/dart-lang/sdk)
 
 **Language 3 / Behavior 4 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 The Dart language platform: common front end, analyzers and language server, intermediate representation, native and web compilers, virtual machine, JIT and AOT runtimes, garbage collector, core libraries, debugger services, command-line tools, and platform ports.
 
@@ -144,7 +228,7 @@ The Dart language platform: common front end, analyzers and language server, int
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** This repository is the upstream source for official Dart SDK releases and the compiler, runtime, libraries, analyzer, and tools used by Dart and Flutter developers.
+**Purpose evidence:** This repository is the upstream source for official Dart SDK releases and the compiler, runtime, libraries, analyzer, and tools used by Dart and Flutter developers.
 
 **Language evidence:** The analyzer, common front end, kernel IR, dart2js, development compiler, WebAssembly compiler, analysis server, package tools, debugger services, and core libraries are Dart, while the first-party VM, garbage collector, JIT, AOT backend, runtime and native platform layers are C++ and related native code.
 
@@ -172,6 +256,8 @@ The learner-facing short context appears above.
 ### [dart-lang/shelf](https://github.com/dart-lang/shelf)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 Dart's composable web-server middleware ecosystem, with immutable requests and responses, streaming bodies, pipelines, routing, static files, proxies, WebSockets, and HTTP compliance checks.
 
@@ -222,7 +308,7 @@ Dart's composable web-server middleware ecosystem, with immutable requests and r
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the shelf family of packages used to build Dart HTTP servers and middleware, and maintains protocol-compliance reports against its server adapter.
+**Purpose evidence:** The repository publishes the shelf family of packages used to build Dart HTTP servers and middleware, and maintains protocol-compliance reports against its server adapter.
 
 **Language evidence:** HTTP request and response models, body and header handling, middleware composition, I/O adapters, routing tries, static and proxy handlers, WebSocket support, generators, and tests are Dart.
 
@@ -252,6 +338,8 @@ The learner-facing short context appears above.
 ### [felangel/mocktail](https://github.com/felangel/mocktail)
 
 **Language 4 / Behavior 4 / Design 2 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A null-safe Dart mocking library that intercepts invocations at runtime and supports stubbing, argument matching, capture, verification, and asynchronous call observation without code generation.
 
@@ -300,7 +388,7 @@ A null-safe Dart mocking library that intercepts invocations at runtime and supp
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Mocktail is released on pub.dev and its README documents use as a test dependency in Dart and Flutter projects.
+**Purpose evidence:** Mocktail is released on pub.dev and its README documents use as a test dependency in Dart and Flutter projects.
 
 **Language evidence:** Runtime method interception, stubbing, invocation and argument matching, capture, verification, fallback values, call history, timing, and the test suite are Dart.
 
@@ -328,6 +416,8 @@ The learner-facing short context appears above.
 ### [google/json_serializable.dart](https://github.com/google/json_serializable.dart)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A source generator and annotation suite that derives typed Dart JSON codecs, validation helpers, field metadata, enums, converters, generics, and JSON Schema from class declarations.
 
@@ -379,7 +469,7 @@ A source generator and annotation suite that derives typed Dart JSON codecs, val
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes json_serializable, json_annotation, and checked_yaml packages used in Dart build_runner workflows and generated model layers.
+**Purpose evidence:** The repository publishes json_serializable, json_annotation, and checked_yaml packages used in Dart build_runner workflows and generated model layers.
 
 **Language evidence:** Annotations, analyzer-driven model inspection, serialization and deserialization generation, type-helper dispatch, schema output, checked runtime helpers, YAML support, and tests are Dart.
 
@@ -409,6 +499,8 @@ The learner-facing short context appears above.
 ### [dart-lang/build](https://github.com/dart-lang/build)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Dart's modular code-generation toolkit and build runner, including incremental planning, dependency tracking, builder execution, and persistent build state.
 
@@ -470,7 +562,7 @@ Dart's modular code-generation toolkit and build runner, including incremental p
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The Dart team publishes build_runner on pub.dev as the standard command-line entry point used by Dart and Flutter code generators such as json_serializable, built_value, Mockito, and Freezed.
+**Purpose evidence:** The Dart team publishes build_runner on pub.dev as the standard command-line entry point used by Dart and Flutter code generators such as json_serializable, built_value, Mockito, and Freezed.
 
 **Language evidence:** The selected build planning, incremental state, dependency invalidation, execution, resource lifecycle, and direct unit, integration, and stress suites are handwritten first-party Dart under build_runner.
 

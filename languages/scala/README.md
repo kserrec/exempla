@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [scopt/scopt](https://github.com/scopt/scopt)
 
 **Language 3 / Behavior 2 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A small cross-platform command-line option parser for Scala with functional and object-oriented declaration styles and interceptable effects.
 
@@ -67,7 +71,7 @@ A small cross-platform command-line option parser for Scala with functional and 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.
+**Purpose evidence:** The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.
 
 **Language evidence:** The option definitions, functional and object-oriented DSLs, parser runner, validation, rendering, effects, type readers, and platform adapters are Scala.
 
@@ -95,6 +99,8 @@ The learner-facing short context appears above.
 ### [softwaremill/retry](https://github.com/softwaremill/retry)
 
 **Language 3 / Behavior 3 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A compact library of composable retry policies for Scala Futures, including immediate, paused, exponential-backoff, jittered, conditional, and fail-fast strategies.
 
@@ -145,7 +151,7 @@ A compact library of composable retry policies for Scala Futures, including imme
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.
+**Purpose evidence:** SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.
 
 **Language evidence:** Retry policies, success predicates, jitter algorithms, asynchronous scheduling, and the complete test suite are implemented in Scala under retry/src.
 
@@ -175,6 +181,8 @@ The learner-facing short context appears above.
 ### [circe/circe](https://github.com/circe/circe)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A modular functional JSON library for Scala with immutable values, typed codecs, cursor navigation, generic derivation, parsing integrations, literals, and JSON Pointer.
 
@@ -224,7 +232,7 @@ A modular functional JSON library for Scala with immutable values, typed codecs,
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The circe organization publishes cross-platform modules and maintains versioned documentation for production JSON encoding and decoding across the Scala ecosystem.
+**Purpose evidence:** The circe organization publishes cross-platform modules and maintains versioned documentation for production JSON encoding and decoding across the Scala ecosystem.
 
 **Language evidence:** The immutable JSON model, cursors, codecs, numeric representation, parser integrations, printing, generic derivation, literal macros, pointers, and platform modules are Scala.
 
@@ -252,6 +260,8 @@ The learner-facing short context appears above.
 ### [http4s/http4s](https://github.com/http4s/http4s)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A purely functional, streaming HTTP toolkit for Scala with protocol types, clients, servers, routing, middleware, codecs, and the Ember network implementation.
 
@@ -301,7 +311,7 @@ A purely functional, streaming HTTP toolkit for Scala with protocol types, clien
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The http4s project publishes a versioned family of core, DSL, client, server, Ember, codec, and integration artifacts for production services on multiple Scala platforms.
+**Purpose evidence:** The http4s project publishes a versioned family of core, DSL, client, server, Ember, codec, and integration artifacts for production services on multiple Scala platforms.
 
 **Language evidence:** The HTTP model, codecs, header parsers, routing DSL, client and server algebras, middleware, Ember HTTP/1 and HTTP/2 engine, WebSockets, TLS, and platform integrations are Scala.
 
@@ -331,6 +341,8 @@ The learner-facing short context appears above.
 ### [typelevel/cats-effect](https://github.com/typelevel/cats-effect)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cancelable, concurrent Scala applications.
 
@@ -384,7 +396,7 @@ Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cance
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Typelevel publishes the stable Cats Effect kernel, runtime, standard primitives, laws, and testkit that underpin production libraries and applications across JVM, Scala.js, and Native.
+**Purpose evidence:** Typelevel publishes the stable Cats Effect kernel, runtime, standard primitives, laws, and testkit that underpin production libraries and applications across JVM, Scala.js, and Native.
 
 **Language evidence:** The effect type classes, IO algebra and interpreter, fibers, runtime, schedulers, queues, synchronization primitives, test control, metrics, and platform implementations are Scala.
 
@@ -412,6 +424,8 @@ The learner-facing short context appears above.
 ### [typelevel/fs2](https://github.com/typelevel/fs2)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A compositional, effect-polymorphic streaming I/O library for Scala with resource-safe and concurrent stream processing.
 
@@ -471,7 +485,7 @@ A compositional, effect-polymorphic streaming I/O library for Scala with resourc
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Typelevel publishes fs2-core for JVM, Scala.js, and Scala Native; production libraries and applications use its Stream abstraction for effectful, resource-safe incremental processing.
+**Purpose evidence:** Typelevel publishes fs2-core for JVM, Scala.js, and Scala Native; production libraries and applications use its Stream abstraction for effectful, resource-safe incremental processing.
 
 **Language evidence:** The selected Stream and Pull algebras, compiler, scope tree, resource lifecycle, interruption coordination, and direct law and concurrency suites are handwritten first-party Scala under core/shared.
 

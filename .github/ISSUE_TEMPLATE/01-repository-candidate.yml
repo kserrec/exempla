@@ -1,5 +1,5 @@
 name: Propose a repository
-description: Suggest real-world software for evidence-backed catalog review.
+description: Suggest production software or a lower-level educational exemplar for evidence-backed review.
 title: "[Candidate]: "
 body:
   - type: markdown
@@ -14,6 +14,16 @@ body:
       label: Repository URL
       description: Link to the public upstream GitHub repository.
       placeholder: https://github.com/owner/repository
+    validations:
+      required: true
+  - type: dropdown
+    id: source-kind
+    attributes:
+      label: Source kind
+      description: Educational exemplars are eligible only at Levels 1 and 2 and must be complete, verifiable software rather than exercises or scaffolds.
+      options:
+        - Production software
+        - Educational exemplar
     validations:
       required: true
   - type: input
@@ -33,10 +43,10 @@ body:
     validations:
       required: true
   - type: textarea
-    id: real-world-purpose
+    id: purpose-evidence
     attributes:
-      label: Real-world purpose
-      description: Explain what the software does and how its own documentation proves a genuine purpose.
+      label: Purpose evidence
+      description: For production, prove the genuine non-teaching function. For an educational exemplar, identify the creator, teaching intent, completed artifact, verification, and why it is credible source to learn from.
     validations:
       required: true
   - type: textarea
@@ -96,11 +106,13 @@ body:
       options:
         - label: I inspected the pinned source; this proposal is not based only on metadata, popularity, or reputation.
           required: true
-        - label: This is genuine software, not a tutorial, exercise, starter, toy, or teaching-first project.
+        - label: This is either genuine production software or a complete, coherent, licensed, verifiable educational exemplar—not an exercise, starter, answer dump, or snippet collection.
+          required: true
+        - label: If this is an educational exemplar, its calculated and published Level is 1 or 2.
           required: true
         - label: I scored observed path evidence before consulting the desired catalog slot.
           required: true
-        - label: This repository would contribute no more than two catalog paths and would not appear twice in the same language and Level bucket.
+        - label: This repository would contribute no more than two catalog paths, would not repeat within one language/Level bucket, and fits the 3/3/2/2/2 capacity map.
           required: true
         - label: I understand that this issue proposes review and does not pre-approve the candidate.
           required: true

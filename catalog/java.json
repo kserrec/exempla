@@ -1,7 +1,138 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "java",
   "repositories": [
+    {
+      "slug": "junit-jupiter-starter-gradle",
+      "path_slug": "the-complete-junit-jupiter-gradle-starter-runs-one-example-and-one-data-driven-test",
+      "repository": "junit-team/junit-examples",
+      "url": "https://github.com/junit-team/junit-examples",
+      "primary_language": "Java",
+      "language_evidence": "The selected starter's calculator, JUnit Jupiter tests, and Gradle setup are first-party Java and Groovy maintained by the JUnit team; GitHub labels the repository Java.",
+      "description": "JUnit's complete Gradle starter pairs a tiny Java class with one example test and one table-driven parameterized test.",
+      "source_kind": "educational-exemplar",
+      "purpose_evidence": "The JUnit team documents junit-jupiter-starter-gradle as its bare-minimum complete setup for Java tests on JUnit Jupiter with Gradle, and CI builds the example projects.",
+      "why_study": "See how a finished small Java project turns examples and a table of inputs into repeatable tests with descriptive failure messages.",
+      "learn": [
+        "Separate the class being checked from its test class and test-only dependencies.",
+        "Compare one ordinary test with a parameterized test driven by CSV rows.",
+        "Connect Gradle's JUnit Platform configuration to the annotations that discover and run tests."
+      ],
+      "prerequisites": [
+        "The global novice Java baseline: classes, methods, integers, imports, and focused tests.",
+        "A test annotation marks a method for the test runner; a parameterized test repeats one method with each declared data row."
+      ],
+      "concepts_developed": [
+        "Organizing production and test source into explicit project roles.",
+        "Expressing one behavior with both example-based and table-driven tests.",
+        "Configuring a build tool to discover tests through the JUnit Platform."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Test organization, data-driven verification, failure diagnostics, and build integration are transferable software-engineering practices."
+      },
+      "learning_path": {
+        "goal": "Understand how JUnit's complete Gradle starter discovers and runs ordinary and parameterized tests against a small Java class.",
+        "start_here": {
+          "path": "junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java",
+          "reason": "The single public add behavior provides the exact contract that every selected test exercises."
+        },
+        "supporting_files": [
+          "junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java",
+          "junit-jupiter-starter-gradle/build.gradle",
+          "junit-jupiter-starter-gradle/README.md"
+        ],
+        "trace": "Read Calculator.add, follow the ordinary @Test assertion, then follow each @CsvSource row into the parameterized add method and expected result; finish at build.gradle where JUnit dependencies and useJUnitPlatform make those annotated methods executable."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "test annotations",
+            "parameterized-test metadata",
+            "lambda failure-message supplier"
+          ],
+          "reason": "Annotations materially drive discovery and data injection, while the surrounding Java remains deliberately basic."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "deterministic integer addition",
+            "independent test invocations"
+          ],
+          "reason": "Each test has direct inputs, one method call, and an exact expected value with no mutable lifecycle."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "main and test source sets",
+            "Gradle test-runner boundary"
+          ],
+          "reason": "A few explicit project boundaries connect the class, its tests, and the runner configuration."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "repeatable test discovery",
+            "declared test dependencies",
+            "diagnostic assertion messages"
+          ],
+          "reason": "Routine build and test safeguards matter, but the artifact has no wider application constraints."
+        },
+        "placement": "The four scores 3/1/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The selected project is intentionally minimal, complete, and free of placeholder methods or exercises.",
+        "architecture": "Main code, test code, dependencies, and runner configuration have clear conventional boundaries.",
+        "naming_and_idiom": "CalculatorTests, addsTwoNumbers, expectedResult, @Test, and @ParameterizedTest communicate their roles directly.",
+        "tests": "One direct case and four parameter rows verify the complete behavior with exact values and useful messages.",
+        "documentation": "The subproject README states its purpose, language, build system, and JUnit Platform relationship; the root README records CI coverage.",
+        "traceability": "Every test input reaches the one add method and one exact assertion, while the build file explains discovery.",
+        "maintainability": "Pinned dependencies, a standard source layout, and one explicit runner setting keep the starter current and easy to change.",
+        "educational_value": "The artifact teaches professional automated-test structure without hiding it behind application complexity."
+      },
+      "inspection": {
+        "commit": "02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "junit-jupiter-starter-gradle/src/main/java/com/example/project/Calculator.java",
+          "junit-jupiter-starter-gradle/src/test/java/com/example/project/CalculatorTests.java",
+          "junit-jupiter-starter-gradle/build.gradle",
+          "junit-jupiter-starter-gradle/README.md",
+          "README.md",
+          "LICENSE.md"
+        ]
+      },
+      "license": {
+        "spdx": "EPL-2.0",
+        "urls": [
+          "https://github.com/junit-team/junit-examples/blob/02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7/LICENSE.md"
+        ]
+      },
+      "github": {
+        "primary_language": "Java",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "test discovery annotations",
+          "parameterized test data",
+          "main and test source separation"
+        ],
+        "incidental_concepts": [
+          "Gradle's Groovy configuration syntax",
+          "a lazy assertion-message lambda"
+        ],
+        "reason": "A short primer on annotations, parameter rows, and source sets makes every execution predictable; no framework lifecycle beyond test discovery is required."
+      }
+    },
     {
       "slug": "java-diff-utils",
       "path_slug": "java-diff-utils-validates-and-applies-an-existing-generic-patch",
@@ -10,7 +141,8 @@
       "primary_language": "Java",
       "language_evidence": "Diff algorithms, deltas, patches, unified-diff parsing, and output helpers in the two production modules are Java.",
       "description": "A library for computing sequence differences, applying and restoring patches, parsing unified diffs, and producing comparison output.",
-      "real_world_evidence": "The project publishes reusable Maven artifacts used by applications that compare text and other ordered data.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes reusable Maven artifacts used by applications that compare text and other ordered data.",
       "why_study": "The Patch path separates reversible transformation and conflict validation from diff-generation theory, making a familiar algorithmic product readable as a typed production API.",
       "learn": [
         "Use `java-diff-utils/src/main/java/com/github/difflib/patch/Patch.java` to study the following transferable techniques and behaviors: Generic patches and chunks, polymorphic insert, delete, and change deltas, reverse-ordered mutation, input verification, conflict callbacks, inverse restoration, and serialization contracts."
@@ -135,7 +267,8 @@
       "primary_language": "Java",
       "language_evidence": "HTML tokenization, tree building, DOM nodes, selectors, networking, cleaning, and output under src/main are Java.",
       "description": "An HTML parser and manipulation library with DOM traversal, CSS selectors, fetching, sanitization, and standards-aware error recovery.",
-      "real_world_evidence": "jsoup is released as a production HTML library used for scraping, editing, validation, and safe content cleaning.",
+      "source_kind": "production",
+      "purpose_evidence": "jsoup is released as a production HTML library used for scraping, editing, validation, and safe content cleaning.",
       "why_study": "The Jsoup.clean path exposes a practical security boundary: parse untrusted HTML, rebuild a separate document, and admit only tags, attributes, and URL protocols allowed by an explicit policy.",
       "learn": [
         "Use `src/main/java/org/jsoup/Jsoup.java` to study the following transferable techniques and behaviors: Facade design, DOM visitor traversal, destination-stack state, safe document reconstruction, fluent policy configuration, tag and attribute checks, URL normalization, enforced attributes, immutability, and concurrency-safe policy reuse."
@@ -255,7 +388,8 @@
       "primary_language": "Java",
       "language_evidence": "The JSON model, streaming reader/writer, reflection adapters, type tokens, and serialization engine in the Gson modules are Java.",
       "description": "A JSON serialization library that maps Java object graphs and generic types through configurable streaming and tree adapters.",
-      "real_world_evidence": "Google releases Gson as production serialization infrastructure consumed broadly through Maven and Android ecosystems.",
+      "source_kind": "production",
+      "purpose_evidence": "Google releases Gson as production serialization infrastructure consumed broadly through Maven and Android ecosystems.",
       "why_study": "The Gson adapter path shows how a serialization library resolves and caches behavior for a generic type, breaks recursive construction cycles, and falls back to reflective fields or records.",
       "learn": [
         "Use `gson/src/main/java/com/google/gson/Gson.java` to study the following transferable techniques and behaviors: Erased generic TypeToken recovery, ordered adapter factories, concurrent caching, thread-local recursion placeholders, reflective field binding, record construction, access filtering, streaming conversion, and stable errors."
@@ -379,7 +513,8 @@
       "primary_language": "Java",
       "language_evidence": "The test runner, descriptions, statements, rules, assertions, matchers, and extension model under src/main/java are Java.",
       "description": "The fourth-generation JUnit testing framework, including reflective discovery, runners, rules, assertions, lifecycle statements, and reports.",
-      "real_world_evidence": "JUnit 4 remains maintained production test infrastructure and a compatibility foundation across the Java ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "JUnit 4 remains maintained production test infrastructure and a compatibility foundation across the Java ecosystem.",
       "why_study": "The BlockJUnit4ClassRunner path shows how JUnit 4 discovers one annotated method, composes its execution lifecycle from Statements and rules, schedules it, and reports failures safely.",
       "learn": [
         "Use `src/main/java/org/junit/runners/BlockJUnit4ClassRunner.java` to study the following transferable techniques and behaviors: Reflection and annotations, runner hierarchies, Statement decoration, expected exceptions, timeouts, before and after hooks, ordered rules, child scheduling, listener events, and failure isolation."
@@ -507,7 +642,8 @@
       "primary_language": "Java",
       "language_evidence": "The queue, placement, work-unit, executor, extension, persistence, and integration-test implementation in the selected path is first-party Java.",
       "description": "The Jenkins automation server core, including its persistent task queue, extension-driven eligibility policy, executor placement, work handoff, and completion lifecycle.",
-      "real_world_evidence": "Jenkins publishes weekly and long-term-support automation-server releases used to build, test, analyze, and deploy production software.",
+      "source_kind": "production",
+      "purpose_evidence": "Jenkins publishes weekly and long-term-support automation-server releases used to build, test, analyze, and deploy production software.",
       "why_study": "The queue-to-executor path exposes how a mature extensible platform coordinates persistent scheduling state, resource assignment, concurrent execution, failure recovery, and compatibility without hiding the difficult invariants.",
       "learn": [
         "Use `core/src/main/java/hudson/model/Queue.java` to study transferable task-state machines, concurrency control, extension policy, constrained resource assignment, multi-unit work handoff, persistence recovery, listener isolation, and completion guarantees."
@@ -640,7 +776,8 @@
       "primary_language": "Java",
       "language_evidence": "Core containers, reflection and type systems, AOP, transactions, data access, messaging, MVC, reactive web, and testing support are primarily Java.",
       "description": "A comprehensive application framework spanning dependency injection, AOP, transactions, data access, messaging, web stacks, and testing.",
-      "real_world_evidence": "Spring Framework is actively released production infrastructure underlying a large portion of the enterprise Java ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "Spring Framework is actively released production infrastructure underlying a large portion of the enterprise Java ecosystem.",
       "why_study": "The bean-factory path exposes how Spring resolves typed and qualified dependencies, constructs and post-processes one singleton, and preserves identity through concurrency and circular references.",
       "learn": [
         "Use `spring-beans/src/main/java/org/springframework/beans/factory/support/DefaultListableBeanFactory.java` to study the following transferable techniques and behaviors: Bean-definition registration, generic ResolvableType matching, DependencyDescriptor policy, qualifiers and priorities, constructor selection, reflective instantiation, post-processors, singleton caches, circular references, locking, initialization, and destruction."

@@ -1,7 +1,136 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "python",
   "repositories": [
+    {
+      "slug": "more-itertools-chunked",
+      "path_slug": "chunked-turns-any-iterable-into-lazy-fixed-size-lists-with-an-optional-strict-contract",
+      "repository": "more-itertools/more-itertools",
+      "url": "https://github.com/more-itertools/more-itertools",
+      "primary_language": "Python",
+      "language_evidence": "The chunked implementation, package exports, doctest examples, and direct unittest class are first-party Python.",
+      "description": "A production iterator utility that yields fixed-size lists lazily and can reject a short final group in strict mode.",
+      "source_kind": "production",
+      "purpose_evidence": "more-itertools is a maintained installable Python package whose README documents chunked as one of its application-facing iterator recipes.",
+      "why_study": "Follow a compact professional iterator from input validation through lazy grouping, then compare ordinary and strict edge cases in focused tests.",
+      "learn": [
+        "Build successive lists from any iterable without consuming the complete input first.",
+        "Use a sentinel-driven iterator to stop when no next group remains.",
+        "Add an optional strict contract that rejects a short final group."
+      ],
+      "prerequisites": [
+        "The global novice Python baseline: functions, loops, lists, exceptions, imports, and focused tests.",
+        "An iterator produces values on demand; partial prepares a function call with some arguments already supplied."
+      ],
+      "concepts_developed": [
+        "Turning repeated bounded reads into a lazy iterator of lists.",
+        "Using an empty-list sentinel to end iteration.",
+        "Layering optional validation around an existing iterator."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Lazy grouping, boundary validation, and focused edge-case tests are broadly transferable collection-processing techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how more-itertools chunked lazily groups an iterable and enforces optional exact divisibility.",
+        "start_here": {
+          "path": "more_itertools/more.py",
+          "reason": "The chunked function contains size validation, the sentinel iterator, and the strict wrapper generator together."
+        },
+        "supporting_files": [
+          "tests/test_more.py",
+          "README.rst"
+        ],
+        "trace": "Validate n, repeatedly call take through partial until an empty list stops the iterator, return it directly in ordinary mode or pass each group through the nested strict validator, then match even, short, negative, None, and strict cases in ChunkedTests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "iterator protocol",
+            "partial application",
+            "nested generator"
+          ],
+          "reason": "Iterators, partial, and a small generator are common professional Python idioms central to the implementation."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "lazy repeated reads",
+            "ordinary and strict modes",
+            "invalid-size branches"
+          ],
+          "reason": "Several local branches and deferred results matter, but the complete lifecycle remains within one function."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public function",
+            "one focused test class"
+          ],
+          "reason": "The selected contract is contained in one implementation unit and its direct tests."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "arbitrary iterables",
+            "short final groups",
+            "strict divisibility errors"
+          ],
+          "reason": "Routine input and boundary guarantees shape the function without creating cross-module constraints."
+        },
+        "placement": "The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The implementation is compact, comments and docstrings expose its contracts, and strict behavior is separated without duplication.",
+        "architecture": "One iterator builds groups and a narrow optional wrapper adds strictness, matching the public API.",
+        "naming_and_idiom": "chunked, strict, iterator, and chunk follow established Python and itertools vocabulary.",
+        "tests": "Seven direct tests cover even and short inputs, None and negative sizes, both strict outcomes, and the strict-None error.",
+        "documentation": "The function docstring and README show exact lazy grouping results and explain the short-final-group policy.",
+        "traceability": "Each validation and mode branch maps directly to a named ChunkedTests assertion.",
+        "maintainability": "A narrow public signature, direct exceptions, and isolated strict wrapper make the behavior safe to extend.",
+        "educational_value": "The path makes iterator composition concrete without requiring a separate framework or specialist domain."
+      },
+      "inspection": {
+        "commit": "2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "more_itertools/more.py",
+          "tests/test_more.py",
+          "README.rst",
+          "pyproject.toml",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Python",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "lazy iteration",
+          "partial application",
+          "optional strict validation"
+        ],
+        "incidental_concepts": [
+          "an empty list used as the iterator sentinel"
+        ],
+        "reason": "A short primer on iterators, partial, and sentinels is enough to predict every tested group and error without a separate course."
+      }
+    },
     {
       "slug": "click",
       "path_slug": "a-decorated-python-callback-becomes-a-command-parses-arguments-into",
@@ -10,7 +139,8 @@
       "primary_language": "Python",
       "language_evidence": "Command parsing, parameter types, decorators, terminal helpers, and shell completion under src/click are Python.",
       "description": "A composable command-line toolkit that maps decorators and command objects onto parsing, validation, help, invocation, and shell completion.",
-      "real_world_evidence": "Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.",
+      "source_kind": "production",
+      "purpose_evidence": "Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.",
       "why_study": "Starting with Click's decorators connects a polished declarative API to the command objects, parser state, managed contexts, callbacks, errors, and cleanup that implement it.",
       "learn": [
         "Use `src/click/decorators.py` to study the following transferable techniques and behaviors: Higher-order decorators, dynamic declaration metadata, command construction, parameter parsing, context propagation, nested invocation, usage errors, return values, and deterministic teardown."
@@ -128,7 +258,8 @@
       "primary_language": "Python",
       "language_evidence": "The public API, sessions, models, authentication, cookies, adapters, and utilities under src/requests are Python.",
       "description": "A synchronous HTTP client that turns URLs, headers, authentication, cookies, redirects, and connection pools into a small Python API.",
-      "real_world_evidence": "Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.",
+      "source_kind": "production",
+      "purpose_evidence": "Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.",
       "why_study": "Beginning with requests.get and api.request shows how a deliberately small convenience API creates and cleans up a Session while preserving preparation, redirect, transport, streaming, and security policy.",
       "learn": [
         "Use `src/requests/api.py` to study the following transferable techniques and behaviors: API layering, temporary and persistent sessions, request preparation, adapter dispatch, redirect state, cookie and credential policy, streamed-response ownership, hooks, and exception cleanup."
@@ -247,7 +378,8 @@
       "primary_language": "Python",
       "language_evidence": "Application, blueprint, context, helper, session, CLI, and templating integration modules under src/flask are Python.",
       "description": "A web application framework that composes routing, request contexts, templating, sessions, error handling, and extensions over Werkzeug.",
-      "real_world_evidence": "Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.",
       "why_study": "The Flask request path shows one complete WSGI lifecycle through scoped context binding, routing, hooks, view dispatch, error handling, response finalization, and guaranteed teardown.",
       "learn": [
         "Use `src/flask/app.py` to study the following transferable techniques and behaviors: WSGI application entry, RequestContext ownership, ContextVar-backed globals, route matching, before and after hooks, sync-to-async adaptation, error handlers, response conversion, and teardown ordering."
@@ -365,7 +497,8 @@
       "primary_language": "Python",
       "language_evidence": "Collection, fixtures, assertion rewriting, hooks, configuration, execution, reports, and terminal output under src/_pytest are Python.",
       "description": "An extensible testing framework that discovers tests, resolves fixtures, rewrites assertions, runs lifecycle hooks, and reports results.",
-      "real_world_evidence": "pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.",
+      "source_kind": "production",
+      "purpose_evidence": "pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.",
       "why_study": "The collection path shows how pytest converts command-line paths into a deterministic extensible tree while coordinating imports, plugin hooks, reflection, parametrization, duplicate policy, and failures.",
       "learn": [
         "Use `src/_pytest/main.py` to study the following transferable techniques and behaviors: Recursive collector trees, filesystem hook proxies, dynamic imports, reflective Python discovery, plugin dispatch, cached collectors, parametrized item generation, node identifiers, duplicate handling, and collection reports."
@@ -481,7 +614,8 @@
       "primary_language": "Python",
       "language_evidence": "The scheduler, DAG and task models, executors, APIs, providers, serialization, jobs, and operational services are predominantly Python.",
       "description": "A workflow-orchestration platform that defines directed task graphs and schedules, executes, retries, observes, and persists their runs.",
-      "real_world_evidence": "Apache Airflow is an actively released Apache project used to operate production data and automation workflows.",
+      "source_kind": "production",
+      "purpose_evidence": "Apache Airflow is an actively released Apache project used to operate production data and automation workflows.",
       "why_study": "The scheduler-job path exposes how Airflow converts persisted due workflows into queued executor work while enforcing transactional claims, capacity, priority, fairness, and crash recovery.",
       "learn": [
         "Use `airflow-core/src/airflow/jobs/scheduler_job_runner.py` to study the following transferable techniques and behaviors: SQLAlchemy query construction, row locking, DAG-run creation, task-instance state transitions, pool and concurrency limits, priority selection, atomic queueing, executor dispatch, event reconciliation, and orphan recovery."
@@ -605,7 +739,8 @@
       "primary_language": "Python",
       "language_evidence": "The automation runtime, state machine, services, event bus, configuration entries, integrations, and coordinators are implemented in Python.",
       "description": "A home-automation runtime that coordinates devices, integrations, events, services, entity state, configuration, storage, and user automations.",
-      "real_world_evidence": "Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.",
+      "source_kind": "production",
+      "purpose_evidence": "Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.",
       "why_study": "The configuration-entry lifecycle is a bounded view of Home Assistant's hardest transferable engineering: asynchronous state transitions, migration, retries, locking, persistence, unload cleanup, and shutdown cancellation.",
       "learn": [
         "Use `homeassistant/config_entries.py` to study the following transferable techniques and behaviors: Typed asynchronous state machines, per-entry locking, integration loading, schema migration, exponential retry, concurrent reload, runtime-data ownership, persistence notifications, unload callbacks, and shutdown cancellation."

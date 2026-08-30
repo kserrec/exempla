@@ -1,6 +1,8 @@
 # Go
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+9 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -8,11 +10,168 @@
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
+
+### [dustin/go-humanize](https://github.com/dustin/go-humanize)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+**Source:** Production software
+
+A production Go formatter that writes any signed 64-bit integer with comma-separated three-digit groups.
+
+**Why study it:** Trace a visible number-to-string algorithm while learning how production code handles signs, exact buffer sizing, and the one integer that cannot be negated.
+
+**Prerequisites:**
+
+- The global novice Go baseline: functions, integers, loops, conditionals, slices, packages, and focused tests.
+- Signed int64 ranges from -9,223,372,036,854,775,808 through 9,223,372,036,854,775,807, so its minimum value has no positive int64 counterpart.
+
+**Concepts this path develops:**
+
+- Building formatted output backward into a pre-sized buffer.
+- Handling a numeric boundary before the ordinary algorithm.
+- Combining example tables with a property-based fuzz check.
+
+**What you can learn:**
+
+- Count decimal digits and allocate exactly enough output space for digits, separators, and a sign.
+- Fill a byte slice from right to left while inserting every third separator.
+- Protect the minimum signed integer boundary and verify general formatting properties with fuzz tests.
+
+**Learning path:**
+
+- **Goal:** Understand how go-humanize Comma formats every int64 exactly and how examples plus a fuzz property defend the contract.
+- **Start here:** [`comma.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma.go) — The Comma function contains the fast path, minimum-integer guard, digit count, allocation, sign handling, and backward fill.
+- **Then read:**
+  - [`comma_test.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma_test.go)
+  - [`comma_fuzz_test.go`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/comma_fuzz_test.go)
+  - [`README.markdown`](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/README.markdown)
+- **Trace:** Take an int64 through the small-number shortcut or minimum-value guard, count digits and separators, make the exact byte slice, write digits and commas from right to left, restore a negative sign, then compare table boundaries and the fuzz invariant that removing commas reproduces strconv.FormatInt.
+
+**Why this level:**
+
+- **Language technique 2:** Manual byte formatting and a local bitwise optimization are common professional techniques beyond the simplest string conversion.
+- **Behavioral reasoning 2:** Several local states and boundary branches matter, but every step is synchronous and directly traceable.
+- **Design span 1:** One implementation unit and its focused tests contain the complete selected contract.
+- **Constraint burden 3:** Several material numeric and formatting guarantees recur even though the implementation is compact.
+- **Novice accessibility floor 2:** A short primer on the int64 minimum and backward filling makes representative outputs predictable; the fast path can be explained as one local optimization.
+  - **Central concepts:** backward buffer construction; three-digit grouping; signed integer boundary handling
+  - **Incidental concepts:** the bitwise fast-path expression
+- **Placement:** The four scores 2/2/1/3 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** go-humanize is a maintained importable Go module whose README documents application-facing number, size, time, and text formatting functions.
+
+**Language evidence:** The integer formatter, example documentation, table tests, and fuzz property are first-party Go; GitHub labels the repository Go.
+
+**Coding relevance:**
+
+Buffer construction, boundary handling, deterministic formatting, and property-focused testing are broadly transferable implementation practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The ordinary path is linear, the exceptional minimum value is explicit, and each counter has one visible role.
+- **Architecture:** A focused formatter is accompanied by separate example and property tests without unnecessary abstraction.
+- **Naming and idiom:** count, output, counter, and Comma communicate the buffer construction directly using standard Go slices and loops.
+- **Tests:** Table cases cover sizes, signs, maximum and minimum int64, while the fuzz test checks digit preservation, sign, and separator positions over arbitrary inputs.
+- **Documentation:** The README gives exact number mappings, import instructions, and an application-style formatting example.
+- **Traceability:** Every branch and invariant in Comma has a corresponding boundary example or fuzz assertion.
+- **Maintainability:** The full-range contract is explicit and protected by both examples and a general property, reducing untested numeric corners.
+- **Educational value:** It introduces careful production formatting through a concrete algorithm whose safeguards remain understandable.
+
+**Inspection record:** commit `4d1d9082551ec085912e7d2253a33ae547fca000`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `comma.go`, `comma_test.go`, `comma_fuzz_test.go`, `README.markdown`, `go.mod`, `LICENSE`. GitHub Linguist label: Go.
+
+</details>
+
+### [mitchellh/go-wordwrap](https://github.com/mitchellh/go-wordwrap)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A small production Go package that wraps text at whitespace while preserving explicit newlines, long words, and nonbreaking spaces.
+
+**Why study it:** Follow a practical stateful string transformation through pending spaces, words, explicit line breaks, and Unicode characters with a thorough table of examples.
+
+**Prerequisites:**
+
+- The global novice Go baseline: functions, strings, loops, conditionals, packages, and focused tests.
+- A rune is one Unicode code point; bytes.Buffer accumulates output without repeated string concatenation.
+
+**Concepts this path develops:**
+
+- Delaying whitespace output until the next word determines whether a line fits.
+- Maintaining local counters alongside word and space buffers.
+- Separating explicit line breaks from automatic wrapping decisions.
+
+**What you can learn:**
+
+- Accumulate a pending word and whitespace separately until a wrapping decision is possible.
+- Distinguish breakable whitespace from explicit newlines and nonbreaking spaces.
+- Use boundary examples to define trailing-space, long-word, and multi-byte behavior.
+
+**Learning path:**
+
+- **Goal:** Understand how WrapString inserts line breaks only at breakable whitespace while preserving the package's explicit text contracts.
+- **Start here:** [`wordwrap.go`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap.go) — The sole function contains the pending word, whitespace, width counters, newline cases, and final buffer flush.
+- **Then read:**
+  - [`wordwrap_test.go`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/wordwrap_test.go)
+  - [`README.md`](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/README.md)
+- **Trace:** Scan each rune into a word or space buffer, flush completed pieces when whitespace or an explicit newline resolves them, insert an automatic newline when the next word would exceed the limit, finish the remaining buffers, and compare each boundary with the table test.
+
+**Why this level:**
+
+- **Language technique 2:** Rune-aware scanning and incremental buffers are common professional Go techniques central to the function.
+- **Behavioral reasoning 2:** Several local states interact, but they move forward through the input in one synchronous pass.
+- **Design span 1:** The entire path is one implementation unit plus its exhaustive examples.
+- **Constraint burden 2:** Several routine text-boundary guarantees matter but remain local to the formatter.
+- **Novice accessibility floor 2:** A short primer on buffers, runes, and pending spaces is enough to simulate each test; no text-layout theory or parser grammar is required.
+  - **Central concepts:** incremental text buffering; pending whitespace; line-width state
+  - **Incidental concepts:** Unicode rune representation; the nonbreaking-space code point
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/mitchellh/go-wordwrap/blob/ecf0936a077a4bd73a1cc2ac5c370f2b55618d62/LICENSE.md))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The repository documents go-wordwrap as an importable package for formatting command-line output and exposes a stable WrapString API under an MIT license.
+
+**Language evidence:** The complete wrapping implementation and its direct table test are first-party Go; GitHub labels the repository Go.
+
+**Coding relevance:**
+
+Incremental text transformation, local state, Unicode-aware scanning, and edge-case tests are transferable implementation skills.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The buffers and counters are explicit, comments explain the algorithm's intended limits, and control flow advances in one pass.
+- **Architecture:** One exported function and one direct test table are proportionate to the package's focused responsibility.
+- **Naming and idiom:** wordBuf, spaceBuf, current, and lim expose the pending state using conventional Go buffer and rune APIs.
+- **Tests:** The direct table covers normal and long words, whitespace runs, explicit newlines, trailing spaces, nonbreaking spaces, and multi-byte characters.
+- **Documentation:** The README states the CLI-formatting purpose, installation, usage, output, and the algorithm's deliberate simplicity.
+- **Traceability:** Each named input category in the test follows a specific visible branch in WrapString.
+- **Maintainability:** The documented non-goals and exhaustive boundary table constrain changes to one small public function.
+- **Educational value:** The path demonstrates meaningful local state and Unicode-aware processing without requiring a parser or framework.
+
+**Inspection record:** commit `ecf0936a077a4bd73a1cc2ac5c370f2b55618d62`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `wordwrap.go`, `wordwrap_test.go`, `README.md`, `go.mod`, `LICENSE.md`. GitHub Linguist label: Go.
+
+</details>
 
 ### [tidwall/match](https://github.com/tidwall/match)
 
 **Language 1 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+**Source:** Production software
 
 A small Go matcher that checks text against ordinary characters, question marks, and stars.
 
@@ -63,7 +222,7 @@ A small Go matcher that checks text against ordinary characters, question marks,
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.
+**Purpose evidence:** The repository publishes an importable Go module for matching strings against wildcard patterns in applications and libraries.
 
 **Language evidence:** The wildcard matcher, limit-aware traversal, Unicode handling, and public API are implemented in the root Go package.
 
@@ -88,11 +247,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [gin-gonic/gin](https://github.com/gin-gonic/gin)
 
 **Language 2 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A high-performance HTTP web framework with routing, middleware, request binding, rendering, recovery, and server utilities.
 
@@ -145,7 +306,7 @@ A high-performance HTTP web framework with routing, middleware, request binding,
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the Gin Go module for building HTTP services and documents supported production deployment patterns.
+**Purpose evidence:** The repository publishes the Gin Go module for building HTTP services and documents supported production deployment patterns.
 
 **Language evidence:** The HTTP engine, radix route trees, request context, middleware chain, binding, rendering, recovery, and server adapters are implemented in Go.
 
@@ -173,6 +334,8 @@ The learner-facing short context appears above.
 ### [robfig/cron](https://github.com/robfig/cron)
 
 **Language 2 / Behavior 4 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A cron expression parser and in-process job scheduler for Go applications.
 
@@ -222,7 +385,7 @@ A cron expression parser and in-process job scheduler for Go applications.
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes a versioned Go module for applications that schedule recurring work inside a process.
+**Purpose evidence:** The repository publishes a versioned Go module for applications that schedule recurring work inside a process.
 
 **Language evidence:** The schedule parser, scheduler loop, job wrappers, and public interfaces are implemented in the root Go package.
 
@@ -252,6 +415,8 @@ The learner-facing short context appears above.
 ### [caddyserver/caddy](https://github.com/caddyserver/caddy)
 
 **Language 3 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 An extensible server platform and web server with automatic HTTPS, dynamic configuration, multiple HTTP protocols, and a module system.
 
@@ -302,7 +467,7 @@ An extensible server platform and web server with automatic HTTPS, dynamic confi
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds the released Caddy server used to host sites and services, and documents production installation, operation, and extension.
+**Purpose evidence:** The repository builds the released Caddy server used to host sites and services, and documents production installation, operation, and extension.
 
 **Language evidence:** Configuration loading, module lifecycle, administration, HTTP servers, routing, automatic HTTPS, storage integration, and bundled modules are implemented in Go.
 
@@ -330,6 +495,8 @@ The learner-facing short context appears above.
 ### [kubernetes/kubernetes](https://github.com/kubernetes/kubernetes)
 
 **Language 3 / Behavior 5 / Design 3 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 A distributed container orchestration platform with declarative APIs, scheduling, controllers, node agents, networking, storage, and extensibility.
 
@@ -385,7 +552,7 @@ A distributed container orchestration platform with declarative APIs, scheduling
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository builds the upstream Kubernetes control plane and node components released for operating containerized workloads across clusters.
+**Purpose evidence:** The repository builds the upstream Kubernetes control plane and node components released for operating containerized workloads across clusters.
 
 **Language evidence:** The API server, controllers, scheduler, kubelet, proxy, storage and API machinery, command binaries, and core control-plane behavior are implemented primarily in Go.
 
@@ -415,6 +582,8 @@ The learner-facing short context appears above.
 ### [golang/go](https://github.com/golang/go)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The Go programming language implementation, including its compiler, runtime, standard library, build tools, assembler, linker, and platform ports.
 
@@ -466,7 +635,7 @@ The Go programming language implementation, including its compiler, runtime, sta
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository is the upstream source used to build official Go toolchains and standard-library releases across supported operating systems and architectures.
+**Purpose evidence:** The repository is the upstream source used to build official Go toolchains and standard-library releases across supported operating systems and architectures.
 
 **Language evidence:** The compiler, runtime, garbage collector, scheduler, standard library, assembler, linker, debugger support, and developer tools are implemented predominantly in Go with first-party assembly and small C boundaries.
 
@@ -494,6 +663,8 @@ The learner-facing short context appears above.
 ### [grpc/grpc-go](https://github.com/grpc/grpc-go)
 
 **Language 4 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The Go implementation of gRPC, providing clients, servers, streaming RPCs, transports, resolution, load balancing, retries, observability, and generated-code support.
 
@@ -549,7 +720,7 @@ The Go implementation of gRPC, providing clients, servers, streaming RPCs, trans
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The module publishes google.golang.org/grpc, the production Go runtime used to build interoperable RPC clients and servers across the gRPC ecosystem.
+**Purpose evidence:** The module publishes google.golang.org/grpc, the production Go runtime used to build interoperable RPC clients and servers across the gRPC ecosystem.
 
 **Language evidence:** The selected ClientConn, resolver and balancer wrappers, address-connection state machine, picker coordination, shutdown behavior, and direct tests are handwritten first-party Go in the root, resolver/, connectivity/, and test/.
 

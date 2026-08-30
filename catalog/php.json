@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "php",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "PHP",
       "language_evidence": "The public assertion API, message resolution, exception boundary, generated mixins, and direct test suite are first-party PHP.",
       "description": "A small PHP guard that rejects only null and returns every accepted value unchanged.",
-      "real_world_evidence": "Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.",
+      "source_kind": "production",
+      "purpose_evidence": "Webmozart Assert is a maintained Composer package used by PHP applications and libraries for runtime precondition checks with stable default and custom error behavior.",
       "why_study": "Trace one exact success-or-failure branch, see why false and zero remain valid, and use focused tests to confirm the returned value and error message.",
       "learn": [
         "Trace the direct null check and the unchanged success return.",
@@ -132,6 +133,135 @@
       }
     },
     {
+      "slug": "iter-map",
+      "path_slug": "iter-map-lazily-applies-one-callback-while-preserving-each-input-key",
+      "repository": "nikic/iter",
+      "url": "https://github.com/nikic/iter",
+      "primary_language": "PHP",
+      "language_evidence": "The complete iterator library, map generator, conversion helper, and PHPUnit behavior suite are first-party PHP; GitHub labels the repository PHP.",
+      "description": "A deliberately readable PHP iterator library whose map function transforms values lazily while preserving their keys.",
+      "source_kind": "educational-exemplar",
+      "purpose_evidence": "The README says the complete Composer library serves substantially as small generator examples while remaining practically useful; it documents the public API and ships direct PHPUnit coverage.",
+      "why_study": "See how one small generator turns a familiar eager map into a lazy, key-preserving pipeline with a direct test from range to array.",
+      "learn": [
+        "Apply a callback to each value only when the returned iterator is consumed.",
+        "Preserve input keys while yielding transformed values.",
+        "Turn the lazy result into an array in a focused behavior test."
+      ],
+      "prerequisites": [
+        "The global novice PHP baseline: functions, arrays, foreach, callbacks, namespaces, and focused tests.",
+        "A generator pauses at yield and resumes when its iterator is asked for another value."
+      ],
+      "concepts_developed": [
+        "Expressing a lazy transformation with yield.",
+        "Preserving collection keys across value mapping.",
+        "Testing deferred behavior by consuming the result at an explicit boundary."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Lazy iteration, callbacks, key preservation, and explicit materialization are transferable collection-processing practices."
+      },
+      "learning_path": {
+        "goal": "Understand how iter map lazily transforms each iterable value, preserves keys, and produces the expected result when consumed.",
+        "start_here": {
+          "path": "src/iter.php",
+          "reason": "The map generator and nearby toArray consumer contain the complete deferred transformation and materialization behavior."
+        },
+        "supporting_files": [
+          "test/iterTest.php",
+          "README.md"
+        ],
+        "trace": "Pass a range and multiplication callback into map, let foreach request each key and value, yield the original key with the transformed value, consume the iterator through toArray, and compare the six exact results in testMap."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "generator yield",
+            "callable parameter",
+            "iterable and Iterator types"
+          ],
+          "reason": "Generators, callbacks, and iterator types are common professional PHP idioms central to the selected path."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "deferred execution",
+            "one value at a time",
+            "explicit materialization"
+          ],
+          "reason": "Consumption controls when work occurs, but the state follows one local foreach sequence with no nonlocal lifecycle."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public generator",
+            "one direct test method"
+          ],
+          "reason": "The selected behavior stays within one source file and a focused implementation-to-test trace."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "arbitrary iterable input",
+            "key preservation",
+            "lazy single-pass result"
+          ],
+          "reason": "A small stable iterator contract must be preserved, but its guarantees remain local."
+        },
+        "placement": "The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The selected function states its complete behavior in one foreach and yield without clever indirection.",
+        "architecture": "A focused generator composes with a separate consumer while the wider library keeps related primitives in one documented module.",
+        "naming_and_idiom": "map, iterable, function, key, value, Iterator, and yield use conventional PHP iterator vocabulary.",
+        "tests": "The direct PHPUnit test maps a generated range, consumes it, and checks every exact value; the same suite covers the library's boundary contracts.",
+        "documentation": "The README states the teaching purpose, practical package use, installation, laziness, supported iterables, and public signatures.",
+        "traceability": "The test's range, callback, generator, consumer, and expected array form one short visible chain.",
+        "maintainability": "A narrow typed signature and direct generator body make future behavior changes easy to locate and test.",
+        "educational_value": "The complete package offers a genuine, concise generator lesson without reducing the path to a disconnected snippet."
+      },
+      "inspection": {
+        "commit": "4e89b04c36af387d6cda164310737563eaa9e455",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "src/iter.php",
+          "test/iterTest.php",
+          "README.md",
+          "composer.json",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/nikic/iter/blob/4e89b04c36af387d6cda164310737563eaa9e455/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "PHP",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "generator-based lazy iteration",
+          "callback mapping",
+          "key preservation"
+        ],
+        "incidental_concepts": [
+          "PHPDoc template annotations"
+        ],
+        "reason": "One short generator primer is enough to follow each yield and predict the consumed array; the static-analysis annotations do not affect runtime behavior."
+      }
+    },
+    {
       "slug": "php-option",
       "path_slug": "php-option-turns-eager-values-callables-and-existing-option-objects",
       "repository": "schmittjoh/php-option",
@@ -139,7 +269,8 @@
       "primary_language": "PHP",
       "language_evidence": "The Option abstraction, eager Some and None implementations, lazy wrapper, and focused tests under src and tests are implemented in PHP.",
       "description": "A small PHP API that represents either a present value or no value, with optional lazy creation.",
-      "real_world_evidence": "The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes phpoption/phpoption through Composer as a reusable production library consumed by other PHP packages and applications.",
       "why_study": "See how factories create present, absent, and delayed results, then follow one delayed callback until its successful result is stored for reuse.",
       "learn": [
         "Trace factory inputs into Some, None, or LazyOption.",
@@ -280,7 +411,8 @@
       "primary_language": "PHP",
       "language_evidence": "Route parsing, regex data generation, dispatch strategies, caching, and URI generation under src are PHP.",
       "description": "A fast HTTP request router that compiles static and variable routes into compact dispatch data and matched parameters.",
-      "real_world_evidence": "FastRoute is a published production routing library used by PHP web frameworks and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "FastRoute is a published production routing library used by PHP web frameworks and applications.",
       "why_study": "The FastRoute path shows how route declarations become validated static or combined-regular-expression data and then one of three explicit HTTP dispatch results.",
       "learn": [
         "Use `src/RouteParser/Std.php` to study the following transferable techniques and behaviors: Optional route-segment expansion, placeholder parsing, capture-group rejection, static and variable route validation, combined regular expressions, group-count dispatch, method fallback, and typed dispatch results."
@@ -408,7 +540,8 @@
       "primary_language": "PHP",
       "language_evidence": "The assertion API, generated mixin variants, static-analysis plugin, and exception type under src are PHP.",
       "description": "A defensive-programming library providing typed assertions for method inputs, outputs, values, collections, files, classes, and objects.",
-      "real_world_evidence": "The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The package is released through Composer as reusable validation infrastructure across production PHP libraries and applications.",
       "why_study": "The MixinGenerator path shows how reflection and source generation can extend a repetitive validation API while preserving native signatures, static-analysis contracts, defaults, messages, and runtime behavior.",
       "learn": [
         "Use `bin/src/MixinGenerator.php` to study the following transferable techniques and behaviors: ReflectionClass and ReflectionMethod, deterministic PHP generation, union and intersection type rewriting, PHPDoc assertion transformation, default-value rendering, generated method families, and compatibility testing."
@@ -527,7 +660,8 @@
       "primary_language": "PHP",
       "language_evidence": "Logger channels, immutable records, handlers, formatters, processors, error integration, and reset contracts under src/Monolog are PHP.",
       "description": "A logging library that routes structured records through processors, formatters, filters, buffers, groups, files, sockets, databases, and web services.",
-      "real_world_evidence": "Monolog is a production PSR-3 logging implementation used by major PHP applications and frameworks.",
+      "source_kind": "production",
+      "purpose_evidence": "Monolog is a production PSR-3 logging implementation used by major PHP applications and frameworks.",
       "why_study": "The Logger path shows how Monolog builds one immutable record, delays processing until needed, propagates it through bubbling handlers, contains failures, and prevents recursive logging per Fiber.",
       "learn": [
         "Use `src/Monolog/Logger.php` to study the following transferable techniques and behaviors: Immutable log records, level normalization, callable processors, handler bubbling, once-only processing, exception routing, Fiber-local WeakMap state, recursive-call detection, reset and close lifecycles, and finally-based cleanup."
@@ -649,7 +783,8 @@
       "primary_language": "PHP",
       "language_evidence": "The framework's dependency injection, HTTP, console, event, routing, security, messaging, persistence bridges, and component implementations are PHP.",
       "description": "A component framework spanning dependency injection, HTTP kernels, console tools, events, routing, security, messaging, forms, validation, and integrations.",
-      "real_world_evidence": "Symfony is actively released production infrastructure used directly and as a foundation for major PHP applications and frameworks.",
+      "source_kind": "production",
+      "purpose_evidence": "Symfony is actively released production infrastructure used directly and as a foundation for major PHP applications and frameworks.",
       "why_study": "The HttpKernel path shows how Symfony transforms one Request into a Response through ordered resolver and event extensions while preserving nested and streamed request context and recovering from exceptions.",
       "learn": [
         "Use `src/Symfony/Component/HttpKernel/HttpKernel.php` to study the following transferable techniques and behaviors: RequestStack ownership, ordered event dispatch, controller and argument resolution, short circuits, callable invocation, view conversion, response filtering, exception recovery, streamed callbacks, finish events, termination, and cleanup."

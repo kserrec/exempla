@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "c",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "C",
       "language_evidence": "The selected line parser, public callbacks, string and file readers, allocation policies, and baseline tests are implemented in C in ini.c, ini.h, and tests/unittest.c.",
       "description": "A small C parser that reads an INI settings file line by line and reports each section, name, and value to a callback.",
-      "real_world_evidence": "inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.",
+      "source_kind": "production",
+      "purpose_evidence": "inih ships a maintained embeddable parser used and packaged across C and C++ ecosystems, with configurable allocation and syntax policies plus a direct compiler test matrix.",
       "why_study": "Follow one input line from whitespace cleanup through comment, section, key-value, continuation, or error handling, then see the parsed result cross one callback boundary.",
       "learn": [
         "Trace a line-oriented parser with direct branches for comments, sections, values, continuations, and malformed input.",
@@ -153,7 +154,8 @@
       "primary_language": "C",
       "language_evidence": "The public API, hand-written scanner and recursive-descent parser, tagged value tree, arena and growable-cell allocators, merge behavior, teardown, and direct tests are first-party C in src/ and test/.",
       "description": "A lightweight C17 TOML parser that builds an owned typed tree and supports lookup, merge, structural comparison, source locations, and custom allocators.",
-      "real_world_evidence": "The repository ships an embeddable C library for reading TOML configuration, documents C and C++ integration, and validates its parser against the standard toml-test corpus.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships an embeddable C library for reading TOML configuration, documents C and C++ integration, and validates its parser against the standard toml-test corpus.",
       "why_study": "Understand how tomlc17 scans a bounded byte buffer, builds an owned tagged tree, and releases every allocation on success or failure. TOML needs only a short syntax primer; the path teaches transferable scanner and parser state, tagged unions, arena ownership, recursive construction, error propagation, configurable allocation, and sanitizer-backed edge testing.",
       "learn": [
         "Study these transferable C mechanisms in `src/tomlc17.c`: pointer-and-length spans over caller input, tagged unions for heterogeneous values, and separate arena and growable-cell allocation strategies.",
@@ -285,7 +287,8 @@
       "primary_language": "C",
       "language_evidence": "JSON parsing, tree ownership, printing, mutation, comparison, JSON Pointer, Patch, Merge Patch, and sorting are C in cJSON.c and cJSON_Utils.c.",
       "description": "An ultralightweight JSON parser, tree model, printer, and manipulation library written in portable ANSI C.",
-      "real_world_evidence": "The repository ships installable and embeddable C libraries used to parse and generate JSON in native applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships installable and embeddable C libraries used to parse and generate JSON in native applications.",
       "why_study": "Understand how cJSON parses bounded text into an owned recursive object tree and cleans up correctly across success and failure. The short data-format vocabulary is sufficient context; the path teaches transferable recursive parsing, linked ownership, allocator discipline, error positions, depth limits, and public/private API boundaries.",
       "learn": [
         "Study these transferable C mechanisms in `cJSON.c`: manual recursive tree ownership, intrusive child and sibling links, and pluggable allocation hooks and pointer arithmetic.",
@@ -407,7 +410,8 @@
       "primary_language": "C",
       "language_evidence": "Object storage, index and working-tree operations, revision traversal, diff and merge algorithms, refs, transports, protocols, commands, and repository maintenance are principally C across the root and builtin/.",
       "description": "The distributed version control system implementing content-addressed history, branches, merging, network protocols, and repository maintenance.",
-      "real_world_evidence": "The repository builds the Git command suite used to create, exchange, review, and maintain source histories across the software industry.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository builds the Git command suite used to create, exchange, review, and maintain source histories across the software industry.",
       "why_study": "Understand how Git starts, communicates with, cleans up, and optionally schedules child processes in portable C infrastructure. The path is domain-neutral process infrastructure; it teaches transferable subprocess API design, pipe and descriptor ownership, fork or spawn lifecycles, signal cleanup, callbacks, bounded parallelism, output coordination, and shell-level integration testing.",
       "learn": [
         "Study these transferable C mechanisms in `run-command.h`: function-pointer lifecycle and task callbacks, explicit child_process and parallel-process structures, and manual file-descriptor and pipe ownership.",
@@ -529,7 +533,8 @@
       "primary_language": "C",
       "language_evidence": "Test registration, fixtures, isolated execution, timeout and signal handling, result transport, logging, and the checkmk generator are implemented principally in C.",
       "description": "A unit testing framework for C with fork-based isolation, fixtures, timeouts, diagnostics, and multiple output formats.",
-      "real_world_evidence": "The project publishes the Check library and checkmk tool used to build and run isolated native test suites.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes the Check library and checkmk tool used to build and run isolated native test suites.",
       "why_study": "Understand how Check turns public assertion macros and registered test cases into isolated executions and reliable parent-process results. Testing concepts need little special background; the path teaches transferable macro/API design, process isolation, signal and timeout control, interprocess result transport, lifecycle orchestration, and self-testing.",
       "learn": [
         "Study these transferable C mechanisms in `src/check.h.in`: public variadic assertion macro machinery, function-pointer test and fixture callbacks, and manual packed message representation.",
@@ -658,7 +663,8 @@
       "primary_language": "C",
       "language_evidence": "Protocol engines, connection reuse, DNS, proxies, TLS adapters, HTTP versions, the multi state machine, URL API, and command-line tool are C under lib/ and src/.",
       "description": "A command-line data transfer tool and reusable library supporting URL-based communication across many protocols and platforms.",
-      "real_world_evidence": "The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository builds curl and libcurl, widely deployed for command-line transfers and embedded network clients across operating systems and devices.",
       "why_study": "Understand how curl's multi engine schedules and advances many transfer state machines through caller-driven perform, poll, timeout, wakeup, and completion APIs. Protocol-specific handlers remain adapter boundaries; the selected engine teaches transferable cooperative state-machine scheduling, opaque-handle APIs, socket and timer integration, wakeups, lifecycle ownership, error propagation, and event-loop testing.",
       "learn": [
         "Study these transferable C mechanisms in `lib/multi.c`: opaque public and internal handle representations, callback and socket-operation function pointers, and intrusive transfer and message collections.",
@@ -791,7 +797,8 @@
       "primary_language": "C",
       "language_evidence": "Event loops, platform polling backends, buffered I/O, listeners, DNS, HTTP, RPC, TLS adapters, threading, timers, and utilities are C across the repository root and include/.",
       "description": "A portable asynchronous event-notification library with event loops, buffered streams, networking protocols, and threading support.",
-      "real_world_evidence": "The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.",
+      "source_kind": "production",
+      "purpose_evidence": "The project releases a native library used by network servers and clients to multiplex I/O across operating-system backends.",
       "why_study": "Understand how Libevent coordinates I/O readiness and timeouts through a portable event-base loop and dispatches callbacks safely. The operating-system vocabulary is concise; the selected core loop teaches transferable scheduling, callback lifecycles, readiness maps, timeout heaps, backend abstraction, reentrancy, synchronization, and resource cleanup without unrelated protocol breadth.",
       "learn": [
         "Study these transferable C mechanisms in `event.c`: opaque public handles and internal structures, callback function pointers and backend operation tables, and intrusive queues, maps, and timeout heap.",

@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [ajalt/clikt](https://github.com/ajalt/clikt)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A multiplatform Kotlin framework for type-safe command-line applications with nested commands, composable parameters, generated help, and shell completion.
 
@@ -66,7 +70,7 @@ A multiplatform Kotlin framework for type-safe command-line applications with ne
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Clikt publishes current core, full, and Markdown artifacts on Maven Central and maintains documentation and sample applications for JVM, Node.js, and native targets.
+**Purpose evidence:** Clikt publishes current core, full, and Markdown artifacts on Maven Central and maintains documentation and sample applications for JVM, Node.js, and native targets.
 
 **Language evidence:** Command modeling, tokenization and parsing, property-delegated parameters, transformations, validation, value sources, help formatting, completion generation, and platform types are Kotlin.
 
@@ -94,6 +98,8 @@ The learner-facing short context appears above.
 ### [oshai/kotlin-logging](https://github.com/oshai/kotlin-logging)
 
 **Language 3 / Behavior 2 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A lightweight Kotlin multiplatform logging facade with lazy messages and adapters for platform logging systems.
 
@@ -143,7 +149,7 @@ A lightweight Kotlin multiplatform logging facade with lazy messages and adapter
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.
+**Purpose evidence:** The project publishes current Maven artifacts, documents platform setup and runtime backend requirements, and lists production software that uses the facade.
 
 **Language evidence:** The lazy logging facade, event builder, logger factories, SLF4J and JUL adapters, source-location preservation, and native, Android, JS, Wasm, and Darwin backends are Kotlin.
 
@@ -173,6 +179,8 @@ The learner-facing short context appears above.
 ### [cashapp/turbine](https://github.com/cashapp/turbine)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A small multiplatform testing library that turns Kotlin Flow emissions, completion, and failures into explicit ordered assertions.
 
@@ -225,7 +233,7 @@ A small multiplatform testing library that turns Kotlin Flow emissions, completi
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.
+**Purpose evidence:** Cash App publishes the versioned Turbine testing artifact and documents stable Flow-testing APIs used from ordinary coroutine test suites.
 
 **Language evidence:** Flow collection, channel wrapping, event modeling, timeouts, cancellation, assertion reporting, and the public test DSL are implemented in common Kotlin.
 
@@ -253,6 +261,8 @@ The learner-facing short context appears above.
 ### [square/moshi](https://github.com/square/moshi)
 
 **Language 4 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A modern JSON library for Kotlin and Java with streaming I/O, composable adapters, reflection support, and generated adapters through Kotlin Symbol Processing.
 
@@ -302,7 +312,7 @@ A modern JSON library for Kotlin and Java with streaming I/O, composable adapter
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Square publishes Moshi runtime, Kotlin, adapter, and code-generation artifacts and documents stable use in Kotlin and Java applications.
+**Purpose evidence:** Square publishes Moshi runtime, Kotlin, adapter, and code-generation artifacts and documents stable use in Kotlin and Java applications.
 
 **Language evidence:** The adapter registry, streaming UTF-8 reader and writer, Kotlin reflection integration, standard adapters, and KSP code generator are primarily Kotlin, with intentional Java interoperability and tests.
 
@@ -332,6 +342,8 @@ The learner-facing short context appears above.
 ### [JetBrains/kotlin](https://github.com/JetBrains/kotlin)
 
 **Language 5 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 The Kotlin programming language implementation, including its compiler frontends, intermediate representations, backends, tooling, libraries, and multiplatform infrastructure.
 
@@ -387,7 +399,7 @@ The Kotlin programming language implementation, including its compiler frontends
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** This official JetBrains repository builds the Kotlin compiler and language toolchain distributed for JVM, JavaScript, Wasm, Native, IDE, Gradle, Maven, and command-line workflows.
+**Purpose evidence:** This official JetBrains repository builds the Kotlin compiler and language toolchain distributed for JVM, JavaScript, Wasm, Native, IDE, Gradle, Maven, and command-line workflows.
 
 **Language evidence:** The compiler frontends, FIR semantic model, FIR-to-IR conversion, intermediate representations, lowering pipelines, JVM backend, command-line compiler, daemon, incremental compilation, and much supporting infrastructure are implemented primarily in Kotlin.
 
@@ -415,6 +427,8 @@ The learner-facing short context appears above.
 ### [Kotlin/kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
 
 **Language 5 / Behavior 5 / Design 3 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Kotlin's official multiplatform library for structured concurrency, asynchronous streams, channels, scheduling, testing, debugging, and ecosystem integration.
 
@@ -465,7 +479,7 @@ Kotlin's official multiplatform library for structured concurrency, asynchronous
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.
+**Purpose evidence:** JetBrains publishes stable core, test, debug, reactive, UI, and integration artifacts as the standard library companion for Kotlin coroutine applications.
 
 **Language evidence:** Coroutine jobs, continuations, dispatchers, work-stealing scheduler, channels, flows, synchronization primitives, test scheduler, debug probes, reactive adapters, and platform integrations are Kotlin.
 

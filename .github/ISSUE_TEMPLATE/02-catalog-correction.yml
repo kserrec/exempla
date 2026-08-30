@@ -22,7 +22,7 @@ body:
       label: Correction type
       options:
         - Repository or pinned-source link
-        - Description or real-world evidence
+        - Source kind, description, or purpose evidence
         - License
         - Language classification
         - Inspected learning-path files

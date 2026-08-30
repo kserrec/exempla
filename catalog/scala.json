@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "scala",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "Scala",
       "language_evidence": "The option definitions, functional and object-oriented DSLs, parser runner, validation, rendering, effects, type readers, and platform adapters are Scala.",
       "description": "A small cross-platform command-line option parser for Scala with functional and object-oriented declaration styles and interceptable effects.",
-      "real_world_evidence": "The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes scopt artifacts for Scala 2, Scala 3, JVM, Scala.js, and Scala Native and documents a mature application configuration API.",
       "why_study": "Its source connects a typed declaration DSL to token matching, occurrence constraints, configuration updates, validation, usage rendering, and effect handling without a large framework.",
       "learn": [
         "Typed option readers, builder DSLs, immutable parser descriptions, token classification, commands and positionals, occurrence constraints, validation, effect separation, usage rendering, and cross-platform parsing."
@@ -135,7 +136,8 @@
       "primary_language": "Scala",
       "language_evidence": "Retry policies, success predicates, jitter algorithms, asynchronous scheduling, and the complete test suite are implemented in Scala under retry/src.",
       "description": "A compact library of composable retry policies for Scala Futures, including immediate, paused, exponential-backoff, jittered, conditional, and fail-fast strategies.",
-      "real_world_evidence": "SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.",
+      "source_kind": "production",
+      "purpose_evidence": "SoftwareMill maintains and publishes the versioned com.softwaremill.retry artifact, and the README documents application-facing policy configuration and timer integration.",
       "why_study": "softwaremill/retry is a small, inspectable example of composing nonblocking retry policies around deferred Future work without obscuring delays or failures.",
       "learn": [
         "Trace direct, paused, backoff, conditional, fail-fast, and jittered policies through deferred Future evaluation, result classification, countdown recursion, and external scheduling."
@@ -260,7 +262,8 @@
       "primary_language": "Scala",
       "language_evidence": "The immutable JSON model, cursors, codecs, numeric representation, parser integrations, printing, generic derivation, literal macros, pointers, and platform modules are Scala.",
       "description": "A modular functional JSON library for Scala with immutable values, typed codecs, cursor navigation, generic derivation, parsing integrations, literals, and JSON Pointer.",
-      "real_world_evidence": "The circe organization publishes cross-platform modules and maintains versioned documentation for production JSON encoding and decoding across the Scala ecosystem.",
+      "source_kind": "production",
+      "purpose_evidence": "The circe organization publishes cross-platform modules and maintains versioned documentation for production JSON encoding and decoding across the Scala ecosystem.",
       "why_study": "Circe's core decoder path shows how typed composition, immutable cursors, navigation history, and two error strategies fit together in a production functional API.",
       "learn": [
         "Follow typed Decoder instances through HCursor success, ACursor failure and history, recursive JSON traversal, fail-fast decoding, and applicative error accumulation."
@@ -384,7 +387,8 @@
       "primary_language": "Scala",
       "language_evidence": "The HTTP model, codecs, header parsers, routing DSL, client and server algebras, middleware, Ember HTTP/1 and HTTP/2 engine, WebSockets, TLS, and platform integrations are Scala.",
       "description": "A purely functional, streaming HTTP toolkit for Scala with protocol types, clients, servers, routing, middleware, codecs, and the Ember network implementation.",
-      "real_world_evidence": "The http4s project publishes a versioned family of core, DSL, client, server, Ember, codec, and integration artifacts for production services on multiple Scala platforms.",
+      "source_kind": "production",
+      "purpose_evidence": "The http4s project publishes a versioned family of core, DSL, client, server, Ember, codec, and integration artifacts for production services on multiple Scala platforms.",
       "why_study": "http4s makes resource ownership visible by modeling a client response as an effectful Resource whose streaming body and connection lifetime stay in one scope.",
       "learn": [
         "Follow Client.run, fetch, expect, status validation, body streaming, transformations, failures, and connection release through the Resource contract."
@@ -509,7 +513,8 @@
       "primary_language": "Scala",
       "language_evidence": "The effect type classes, IO algebra and interpreter, fibers, runtime, schedulers, queues, synchronization primitives, test control, metrics, and platform implementations are Scala.",
       "description": "Typelevel's pure asynchronous runtime and effect-kernel for resource-safe, cancelable, concurrent Scala applications.",
-      "real_world_evidence": "Typelevel publishes the stable Cats Effect kernel, runtime, standard primitives, laws, and testkit that underpin production libraries and applications across JVM, Scala.js, and Native.",
+      "source_kind": "production",
+      "purpose_evidence": "Typelevel publishes the stable Cats Effect kernel, runtime, standard primitives, laws, and testkit that underpin production libraries and applications across JVM, Scala.js, and Native.",
       "why_study": "Cats Effect provides a complete expert trace from an IO algebra through a cancelable fiber interpreter into a fair work-stealing runtime.",
       "learn": [
         "Trace IO tags through IOFiber's run loop, continuation stacks, asynchronous suspension, cancellation masks, finalizers, outcomes, joins, and work-stealing scheduling."
@@ -645,7 +650,8 @@
       "primary_language": "Scala",
       "language_evidence": "The selected Stream and Pull algebras, compiler, scope tree, resource lifecycle, interruption coordination, and direct law and concurrency suites are handwritten first-party Scala under core/shared.",
       "description": "A compositional, effect-polymorphic streaming I/O library for Scala with resource-safe and concurrent stream processing.",
-      "real_world_evidence": "Typelevel publishes fs2-core for JVM, Scala.js, and Scala Native; production libraries and applications use its Stream abstraction for effectful, resource-safe incremental processing.",
+      "source_kind": "production",
+      "purpose_evidence": "Typelevel publishes fs2-core for JVM, Scala.js, and Scala Native; production libraries and applications use its Stream abstraction for effectful, resource-safe incremental processing.",
       "why_study": "Understand how FS2 compiles a typed Pull program into an effect while opening and closing nested scopes, preserving resource finalizers, interruption, stack safety, and error semantics. A short stream, effect, and resource-scope primer is sufficient; the path teaches higher-kinded algebras, interpreter normalization, continuation state, effect capabilities, tree-structured resource ownership, cancellation masks, composite failures, concurrency races, and law-based tests.",
       "learn": [
         "Study these expert Scala mechanisms in `core/shared/src/main/scala/fs2/Compiler.scala`: higher-kinded effect parameters and type classes, a typed Pull algebra with variance and natural transformations, interpreter normalization and continuations, and capability-selected compilation targets.",

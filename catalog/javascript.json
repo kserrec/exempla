@@ -1,5 +1,5 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "javascript",
   "repositories": [
     {
@@ -10,7 +10,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "The first-party runtime is exported from index.js as an ES module and its direct runtime suite is JavaScript; GitHub also labels the repository JavaScript at the metadata check.",
       "description": "A tiny JavaScript function that changes Windows backslashes to forward slashes except for one protected path form.",
-      "real_world_evidence": "npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.",
+      "source_kind": "production",
+      "purpose_evidence": "npm published version 5.1.0 without a deprecation notice, and the public registry reported 140,366,022 downloads for 2026-08-22 through 2026-08-28.",
       "why_study": "See how one clear guard protects an exceptional input while the ordinary case performs a direct string transformation, with focused tests for both outcomes.",
       "learn": [
         "Read one production function from its guard through its returned string.",
@@ -134,6 +135,396 @@
       }
     },
     {
+      "slug": "array-union",
+      "path_slug": "array-union-flattens-arrays-and-keeps-each-value-once-in-first-seen-order",
+      "repository": "sindresorhus/array-union",
+      "url": "https://github.com/sindresorhus/array-union",
+      "primary_language": "JavaScript",
+      "language_evidence": "The published runtime is the first-party JavaScript module index.js and its behavioral suite is test.js; GitHub labels the repository TypeScript because it also ships declaration tests.",
+      "description": "A one-function JavaScript package that combines arrays, removes repeated values, and preserves first-seen order.",
+      "source_kind": "production",
+      "purpose_evidence": "The package manifest publishes array-union 3.0.1 to npm with index.js as its exported runtime, while the README documents installation and application-facing use.",
+      "why_study": "See how standard collection operations express a complete useful transformation, then use direct examples to verify both uniqueness and order.",
+      "learn": [
+        "Trace several input arrays through flattening, Set-based deduplication, and the returned array.",
+        "Explain why the first occurrence of each value determines output order.",
+        "Use focused tests to check duplicates within and across input arrays."
+      ],
+      "prerequisites": [
+        "The global novice JavaScript baseline: functions, arrays, modules, and focused tests.",
+        "A Set is a collection that retains one instance of each value; spreading it produces an array in insertion order."
+      ],
+      "concepts_developed": [
+        "Composing flattening and deduplication into one deterministic transformation.",
+        "Preserving first-seen order while removing repeated values.",
+        "Testing mixed and repeated inputs against exact output arrays."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "The selected behavior is a general collection transformation with direct application use and no specialist domain prerequisite."
+      },
+      "learning_path": {
+        "goal": "Understand how array-union combines any number of arrays into one ordered array containing each value once.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The exported one-line function contains the entire runtime transformation in execution order."
+        },
+        "supporting_files": [
+          "test.js",
+          "readme.md",
+          "package.json"
+        ],
+        "trace": "Start with the rest-parameter arrays in index.js, flatten them, let Set retain the first occurrence of each value, spread the Set into the result, and compare that sequence with the three exact arrays in test.js."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "one direct function",
+            "ordinary arrays and Set",
+            "standard spread and flat operations"
+          ],
+          "reason": "The runtime uses one function and familiar collection operations without custom abstraction or hidden control flow."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "synchronous stateless transformation",
+            "first-seen ordering"
+          ],
+          "reason": "Every input follows the same direct flatten, deduplicate, and return sequence."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one runtime file",
+            "one direct behavioral suite"
+          ],
+          "reason": "One focused source unit and its direct tests contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "unique output values",
+            "stable insertion order"
+          ],
+          "reason": "The contract has two local, plainly observable guarantees and no wider compatibility or lifecycle burden."
+        },
+        "placement": "The four scores 1/1/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The implementation is a direct composition of standard operations with no duplicated or obscured logic.",
+        "architecture": "A single exported function is proportionate to the package's one responsibility.",
+        "naming_and_idiom": "The package name, rest parameter, Set, flat, and spread syntax state the transformation idiomatically.",
+        "tests": "AVA assertions cover repeated values within and across arrays, mixed value types, and exact output order.",
+        "documentation": "The README states the purpose, installation, and four concrete input-to-output examples.",
+        "traceability": "Every documented example maps directly to the sole runtime expression and direct behavioral assertions.",
+        "maintainability": "The narrow stable API and absence of mutable state make the effect of a change easy to bound.",
+        "educational_value": "It is a comfortable first production path for learning how standard collection tools can form a complete utility."
+      },
+      "inspection": {
+        "commit": "c9e401d946d70eb46149ad67973c911c6ad2a335",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "index.js",
+          "test.js",
+          "readme.md",
+          "package.json",
+          "license"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sindresorhus/array-union/blob/c9e401d946d70eb46149ad67973c911c6ad2a335/license"
+        ]
+      },
+      "github": {
+        "primary_language": "TypeScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "array flattening",
+          "duplicate removal",
+          "first-seen ordering"
+        ],
+        "incidental_concepts": [
+          "rest and spread syntax",
+          "Set insertion order"
+        ],
+        "reason": "The learner can predict every example after two local sentences about Set uniqueness and insertion order; no separate topic is required."
+      }
+    },
+    {
+      "slug": "express-hello-world",
+      "path_slug": "the-complete-express-hello-world-example-maps-one-get-route-to-a-tested-response",
+      "repository": "expressjs/express",
+      "url": "https://github.com/expressjs/express",
+      "primary_language": "JavaScript",
+      "language_evidence": "The complete hello-world example, its request handler, and its acceptance test are first-party JavaScript in the Express repository.",
+      "description": "Express's completed hello-world example maps one HTTP GET route to a response and verifies both success and missing-route behavior.",
+      "source_kind": "educational-exemplar",
+      "purpose_evidence": "Express maintains examples/hello-world as its documented simple request-handler example, exports the complete application for testing, and ships a direct acceptance suite for it.",
+      "why_study": "Read a complete tiny web application from route declaration through response, startup boundary, and externally observed request tests.",
+      "learn": [
+        "Connect an HTTP method and path to one JavaScript callback.",
+        "Separate reusable application construction from starting a listening server.",
+        "Verify the success route and framework-provided missing-route response from outside the app."
+      ],
+      "prerequisites": [
+        "The global novice JavaScript baseline: functions, modules, conditionals, and focused tests.",
+        "An HTTP GET request names a path; a response has a status and body, and a route callback produces that response."
+      ],
+      "concepts_developed": [
+        "Declaring a route with a request-handler callback.",
+        "Exporting an application separately from its direct-run server startup.",
+        "Testing observable HTTP status and body behavior."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Only the basic GET request, URL path, status, and response-body model described in the prerequisites is needed."
+        ],
+        "reason": "The complete example teaches a transferable application boundary, callback route, and behavior-first acceptance test without requiring protocol internals."
+      },
+      "learning_path": {
+        "goal": "Understand how a complete minimal Express application serves Hello World at one route and remains directly acceptance-testable.",
+        "start_here": {
+          "path": "examples/hello-world/index.js",
+          "reason": "This file contains the whole application, route callback, export boundary, and direct-run startup guard."
+        },
+        "supporting_files": [
+          "test/acceptance/hello-world.js",
+          "examples/README.md"
+        ],
+        "trace": "Construct and export the Express application, register GET / to send Hello World, start listening only when run directly, then follow the acceptance suite's GET / and GET /missing requests to their expected 200 body and 404 status."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "route callback",
+            "CommonJS application export",
+            "framework method chaining in tests"
+          ],
+          "reason": "Callbacks and the framework's route and request APIs are common professional JavaScript idioms that remain locally visible."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "request-to-handler dispatch",
+            "direct-run startup guard",
+            "success and missing-route outcomes"
+          ],
+          "reason": "A small request lifecycle and one startup branch matter, but both remain explicit and easy to trace."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one complete application file",
+            "one acceptance test file"
+          ],
+          "reason": "The selected behavior stays within one tiny application and its direct external tests."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "exact response body",
+            "expected success and not-found statuses"
+          ],
+          "reason": "The example preserves a small observable contract without interacting production constraints."
+        },
+        "placement": "The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The complete app is short, direct, and contains no placeholder or unexplained branch.",
+        "architecture": "Application construction is exported for tests while the direct-run guard owns listening, a sound boundary even at this size.",
+        "naming_and_idiom": "app, get, req, res, send, and listen follow the framework's conventional vocabulary.",
+        "tests": "The checked-in acceptance suite asserts the exact success body and status plus the unmatched-path status.",
+        "documentation": "The examples index identifies this artifact as the simple request handler and the source is complete as checked in.",
+        "traceability": "Each registered or absent route corresponds directly to one external request assertion.",
+        "maintainability": "The export/listen separation prevents tests from opening a server and keeps the example's responsibility bounded.",
+        "educational_value": "It introduces one common framework pattern through a complete runnable artifact rather than an isolated snippet."
+      },
+      "inspection": {
+        "commit": "023767fe9872e029271df1418f73401bff20ff40",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "examples/hello-world/index.js",
+          "test/acceptance/hello-world.js",
+          "examples/README.md",
+          "package.json",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/expressjs/express/blob/023767fe9872e029271df1418f73401bff20ff40/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "HTTP route callback",
+          "application export and direct-run startup",
+          "external request testing"
+        ],
+        "incidental_concepts": [
+          "the framework's default 404 handling"
+        ],
+        "reason": "A short primer defines a route, request, response, and direct-run guard; the learner can then predict both acceptance tests without studying HTTP internals."
+      }
+    },
+    {
+      "slug": "onetime",
+      "path_slug": "onetime-wraps-a-function-caches-its-first-success-and-counts-every-call",
+      "repository": "sindresorhus/onetime",
+      "url": "https://github.com/sindresorhus/onetime",
+      "primary_language": "JavaScript",
+      "language_evidence": "The published runtime wrapper and its direct AVA behavior suite are first-party JavaScript in index.js and test.js.",
+      "description": "A JavaScript package that calls a wrapped function once, reuses its first successful result, and records every attempt.",
+      "source_kind": "production",
+      "purpose_evidence": "The package manifest publishes onetime 8.0.0 to npm as an application-facing function wrapper and the README documents its stable runtime API.",
+      "why_study": "Trace a small stateful closure through first call, repeated call, throwing first attempt, optional error behavior, and call-count inspection.",
+      "learn": [
+        "See how a closure retains a result and disables later execution after the first successful call.",
+        "Explain why a first call that throws remains retryable.",
+        "Track wrapper call counts without exposing mutable fields on the wrapped function."
+      ],
+      "prerequisites": [
+        "The global novice JavaScript baseline: functions, objects, exceptions, modules, and focused tests.",
+        "A closure keeps local variables alive for a returned function; a WeakMap associates data with function objects without adding public properties."
+      ],
+      "concepts_developed": [
+        "Using closure state to enforce one successful execution.",
+        "Preserving a caller's this value and arguments through a wrapper.",
+        "Keeping wrapper metadata in a private WeakMap."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Function wrapping, cached results, retry-on-error behavior, and private call metadata are transferable library-design practices."
+      },
+      "learning_path": {
+        "goal": "Understand how onetime executes a wrapped function once successfully, returns the cached value thereafter, and reports every call attempt.",
+        "start_here": {
+          "path": "index.js",
+          "reason": "The file contains input validation, closure state, invocation, retry semantics, metadata storage, and the public callCount helper."
+        },
+        "supporting_files": [
+          "test.js",
+          "readme.md",
+          "package.json"
+        ],
+        "trace": "Create a wrapper with returnValue, callCount, and the original function in closure state; on each call update WeakMap metadata, invoke and clear the original only after success, otherwise return the cached value or throw by option, then match those branches to the direct tests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "closure-backed wrapper",
+            "function apply and this preservation",
+            "WeakMap metadata"
+          ],
+          "reason": "Callbacks, closures, function context, and WeakMap are common professional idioms that materially shape the wrapper."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "first-success state transition",
+            "cached return value",
+            "retry after an exception"
+          ],
+          "reason": "A few explicit state branches matter, including the placement of the clear operation after a successful return."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one runtime module",
+            "one direct behavior suite"
+          ],
+          "reason": "The complete behavior stays within one small module and its direct tests."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "preserved this and arguments",
+            "retry-on-throw contract",
+            "optional repeated-call error"
+          ],
+          "reason": "Several routine wrapper guarantees are tested, but they remain local and do not create a wider lifecycle."
+        },
+        "placement": "The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "State changes occur close to their conditions, and the successful-call boundary is visible rather than hidden in helpers.",
+        "architecture": "One wrapper factory, one private metadata store, and one inspection method form a proportionate public API.",
+        "naming_and_idiom": "returnValue, callCount, calledFunctions, and the throw option communicate their roles directly.",
+        "tests": "AVA tests cover one-time execution, cached returns, optional errors, call counts, this preservation, invalid inspection, and retry after throw.",
+        "documentation": "The README explains the contract, both repeated-call modes, installation, and call-count API with executable-style examples.",
+        "traceability": "Every state branch in index.js has a direct assertion in test.js.",
+        "maintainability": "Private metadata and a narrow exported surface contain future changes while tests pin the subtle exception timing.",
+        "educational_value": "The path introduces professional function wrapping through a compact state machine whose edge cases are directly visible."
+      },
+      "inspection": {
+        "commit": "481ec583f8303e98c4d1d16bb316ef8e6b04d72c",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "index.js",
+          "test.js",
+          "readme.md",
+          "package.json",
+          "license"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sindresorhus/onetime/blob/481ec583f8303e98c4d1d16bb316ef8e6b04d72c/license"
+        ]
+      },
+      "github": {
+        "primary_language": "JavaScript",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "closure-held state",
+          "function wrapping",
+          "first-success and retry behavior"
+        ],
+        "incidental_concepts": [
+          "WeakMap storage",
+          "copying function metadata through mimic-function"
+        ],
+        "reason": "One short primer on closures and wrappers makes the state transitions predictable; WeakMap and metadata copying can be treated as local supporting operations."
+      }
+    },
+    {
       "slug": "nanoid",
       "path_slug": "nano-id-converts-cryptographically-random-bytes-into-uniformly-distributed-custom",
       "repository": "ai/nanoid",
@@ -141,7 +532,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "Node and browser generators, alphabets, and public entry points are first-party JavaScript with declaration files alongside them.",
       "description": "A compact secure unique-ID generator for JavaScript runtimes with customizable alphabets and output lengths.",
-      "real_world_evidence": "The repository ships Nano ID for Node.js, browsers, and package ecosystems as a production identifier library.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository ships Nano ID for Node.js, browsers, and package ecosystems as a production identifier library.",
       "why_study": "A small surface demonstrates cryptographic randomness, unbiased alphabet mapping, performance-conscious pooling, and cross-runtime packaging.",
       "learn": [
         "Rejection sampling, entropy preservation, typed-array operations, runtime-specific entry points, and property-focused tests."
@@ -254,7 +646,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "The modular DOM, events, data, Ajax, traversal, and effects implementation is JavaScript under src.",
       "description": "A browser library that normalizes DOM traversal, manipulation, events, Ajax, data, and effects behind a chainable API.",
-      "real_world_evidence": "The repository builds and releases the jQuery browser library as real compatibility software, not an instructional implementation.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository builds and releases the jQuery browser library as real compatibility software, not an instructional implementation.",
       "why_study": "The core factory path shows how jQuery turns varied selector inputs into one array-like, chainable collection while preserving deep-extension compatibility and prototype-pollution defenses.",
       "learn": [
         "Use `src/core.js` to study the following transferable techniques and behaviors: Prototype-based fluent objects, constructor indirection, selector-input classification, array-like collections, shallow and deep extension, document-ready callbacks, and prototype-pollution prevention."
@@ -369,7 +762,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "The linter engine, configuration loaders, rule traversal, fixes, CLI engine, and services are JavaScript under lib.",
       "description": "A configurable static-analysis engine and CLI for identifying and automatically fixing JavaScript problems.",
-      "real_world_evidence": "The repository publishes ESLint as an extensible linter used in development and continuous-integration workflows.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes ESLint as an extensible linter used in development and continuous-integration workflows.",
       "why_study": "Starting at the public lintText entry point reveals the full analysis lifecycle: configuration lookup, parser and rule isolation, event-driven traversal, diagnostic suppression, and conflict-safe iterative fixes.",
       "learn": [
         "Use `lib/eslint/eslint.js` to study the following transferable techniques and behaviors: Public API orchestration, abstract-syntax-tree traversal, visitor dispatch, plugin isolation, configuration resolution, stable diagnostics, suppression accounting, and multipass autofix handling."
@@ -489,7 +883,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "The formatter core, document intermediate representation, printers, parser adapters, and plugins are JavaScript under src.",
       "description": "An opinionated source-code formatter that parses many languages, builds a document representation, and prints stable layouts.",
-      "real_world_evidence": "The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository releases a formatter CLI, library, standalone browser builds, and editor-facing plugins used on real codebases.",
       "why_study": "The core formatting path makes a production pretty-printer concrete by connecting parsing, abstract-syntax-tree conversion, document layout, comment handling, and cursor preservation.",
       "learn": [
         "Use `src/main/core.js` to study the following transferable techniques and behaviors: Parser-plugin resolution, abstract-syntax-tree modeling, document intermediate representations, constrained layout, comment attachment, line-ending normalization, cursor relocation, and snapshot testing."
@@ -615,7 +1010,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "JavaScript implements the standard-library and internal runtime layers, with substantial first-party C++ and C bindings beneath them.",
       "description": "The Node.js runtime, standard library, module loaders, native bindings, event loop integration, diagnostics, and tooling.",
-      "real_world_evidence": "This repository builds the released Node.js executable and standard library used to run server, command-line, and tooling workloads.",
+      "source_kind": "production",
+      "purpose_evidence": "This repository builds the released Node.js executable and standard library used to run server, command-line, and tooling workloads.",
       "why_study": "The CommonJS loader path connects require to resolution, caching, circular dependencies, wrapper compilation, extension handling, and failure cleanup inside a production runtime.",
       "learn": [
         "Use `lib/internal/modules/cjs/loader.js` to study the following transferable techniques and behaviors: Module resolution, cache identity, circular exports, built-in modules, extension dispatch, source wrapping, dynamic compilation, parent-child relationships, and failed-load cleanup."
@@ -733,7 +1129,8 @@
       "primary_language": "JavaScript",
       "language_evidence": "JavaScript implements the public packages, reconciler, scheduler integration, renderers, server components, and runtime; Rust supports the compiler.",
       "description": "A component runtime and rendering platform spanning reconciliation, scheduling, server rendering, native/web renderers, and a compiler.",
-      "real_world_evidence": "The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository produces React runtime packages and renderer integrations used to build and operate real user interfaces.",
       "why_study": "The reconciler work-loop path shows how React assigns a state update to priority lanes, performs interruptible fiber work, rebases deferred updates, and commits effects in order.",
       "learn": [
         "Use `packages/react-reconciler/src/ReactFiberWorkLoop.js` to study the following transferable techniques and behaviors: Fiber update queues, priority lanes, root scheduling, synchronous and concurrent rendering, interruption, rebasing, effect collection, and commit ordering."

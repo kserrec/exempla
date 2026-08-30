@@ -1152,6 +1152,198 @@
       "failed_requirement": "maximum two learning paths per language and calculated level",
       "evidence": "Reject only as a qualified capacity alternate: the scores were written before capacity was checked, and 4/3/1/4 sums to 12, whose mean is 3.00 and produces Level 3. Both gates pass, but middleclass and lua-resty-lrucache already fill the two Lua Level 3 places with more complementary metatable object-model and FFI-backed cache-invariant paths. `LUA_PATH='./src/?.lua;;' lua t/test.lua` passed the exact pin's direct suite, including 100 randomized round trips. The path excludes user-defined userdata beyond documented conversions, threads, function upvalues and environments, and metatable preservation; shared and self references, functions and globals, deterministic formatting, numeric precision and locale, Lua 5.1 through 5.4 behavior, output limits, best-effort safe loading, and unsafe opt-out remain interacting constraints.",
       "reconsider": "Reconsider if a Lua Level 3 place opens, the two-path bucket cap changes, or comparative review finds the recursive graph-identity, deferred-reference, dynamic-code, safe-load, compatibility, limit, and randomized-test path stronger and sufficiently distinct; retain calculated Level 3 and every data-type, identity, formatting, numeric, locale, version, loading, safety, and scope boundary."
+    },
+    {
+      "repository": "pypa/sampleproject",
+      "language": "Python",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "educational-exemplar source quality and genuine learning value",
+      "evidence": "At commit 621e4974ca25ce531773def586ba3ed8e736b3fc, src/sample/simple.py contains only add_one and its direct test, while the README explicitly says the project demonstrates packaging and does not aim to cover testing or other best practices. The packaging configuration is the real lesson and requires a separate build-and-distribution model, so selecting add_one would be Level gaming rather than a meaningful Level 1 path.",
+      "reconsider": "Reconsider a future complete PyPA teaching artifact only when its meaningful runtime behavior, tests, and documentation themselves form an exemplary novice-accessible path rather than a placeholder inside a packaging template."
+    },
+    {
+      "repository": "pallets/flask",
+      "language": "Python",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "novice-accessibility ceiling for the completed tutorial application",
+      "evidence": "The completed Flaskr tutorial at commit d318b683471101618febed18996405ad26462110 is coherent, documented, licensed, and tested, but its meaningful path combines application factories, request context, SQLite persistence, authentication, sessions, routing, templates, and fixtures. Several post-baseline concepts interact centrally, requiring accessibility floor 3 rather than Level 1 or 2.",
+      "reconsider": "Reconsider only a genuinely smaller complete Flask exemplar whose central behavior and tests do not require the database, authentication, session, template, and application-context stack; do not carve an arbitrary helper from Flaskr."
+    },
+    {
+      "repository": "spring-guides/gs-rest-service",
+      "language": "Java",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "novice-accessibility ceiling for the completed tutorial application",
+      "evidence": "At commit 2ef8e28f7139ebd1b9b7a9226f748d43e9f9145f, the complete greeting service and tests are exemplary, but the main trace materially depends on controller and mapping annotations, query binding, Spring Boot startup and test context, HTTP request dispatch, JSON conversion, and shared AtomicLong state. Those concepts form a prerequisite stack and require accessibility floor 3 despite the detailed guide.",
+      "reconsider": "Reconsider if a smaller complete Java exemplar teaches one cohesive professional concept with direct tests and no framework startup, binding, serialization, and lifecycle stack; retain this Spring guide as a valid Level 3 educational candidate only if Level 3 policy changes."
+    },
+    {
+      "repository": "OpenLiberty/sample-getting-started",
+      "language": "Java",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "The complete sample at commit 60416b0937b8ad53418e78d2bd933eb638645d59 is tested and documented, but its meaningful behavior crosses REST resources, server configuration, health and metrics features, application packaging, and functional-test lifecycle. The path requires several ecosystem concepts and calculates at least Level 3, so educational source status cannot admit it at Levels 1 or 2.",
+      "reconsider": "Reconsider a narrower complete Open Liberty example only after its entire meaningful behavior and verification remain explainable with one short primer and calculate no higher than Level 2."
+    },
+    {
+      "repository": "igorw/get-in",
+      "language": "PHP",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "current exemplary maintenance and test idiom",
+      "evidence": "At commit e2bfd524906ba62fe03a80cd3efd3ec635850a1b, get_in itself is readable and tested, but the package still targets PHP 5.4 and the checked-in suite uses the removed PHPUnit_Framework_TestCase class plus obsolete expected-exception annotations. Publishing it as a new novice exemplar would present materially retired testing practice as current good practice.",
+      "reconsider": "Reconsider after a maintained revision updates the supported runtime and direct suite to current PHPUnit conventions while preserving the compact nested-lookup behavior and edge-case coverage."
+    },
+    {
+      "repository": "symfony/demo",
+      "language": "PHP",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "novice-accessibility ceiling",
+      "evidence": "The reference application at commit 920d86dc809f837543cb519d3df5b364a2c36577 is complete and high quality, but representative controller paths combine attributes, dependency injection, ORM entities, forms, events, templates, authorization, and framework lifecycle. No meaningful complete lower path avoids that prerequisite stack, so the candidate calculates at least Level 3.",
+      "reconsider": "Reconsider a distinct complete Symfony educational artifact only when one tested behavior is self-contained and its framework concepts fit a short Level 2 primer; do not extract a trivial helper from the demo."
+    },
+    {
+      "repository": "ardalis/Result",
+      "language": "C#",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "At commit 14cf45a126daa56f6798d033f4d5091aeb0900fc, the production library and samples are well tested, but meaningful result paths combine generic result variants, status and validation modeling, implicit conversions, mapping, binding, and error contracts. Several post-baseline abstractions interact, producing at least accessibility floor 3.",
+      "reconsider": "Reconsider a smaller complete C# result exemplar only if one cohesive result contract and its tests remain meaningful without the generic conversion, validation, status, and composition stack."
+    },
+    {
+      "repository": "skeeto/optparse",
+      "language": "C",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "The public-domain implementation and broad test.c at commit a86877ed301d89a4eb64feb08f23af395aede2ed are substantial, but the main path combines option grammar, mutable parser state, pointer manipulation, argv permutation, subcommands, and error signaling. Understanding why representative cases are correct requires a separate parser and C memory-model primer, so the path is at least Level 3.",
+      "reconsider": "Reconsider only a complete C utility whose meaningful tested behavior uses introductory pointer operations without a command-line grammar and mutable parser lifecycle."
+    },
+    {
+      "repository": "rxi/vec",
+      "language": "C",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "At commit 20e84224ceb29a8f76d2b9d0ccfc547258a14ec5, the library is compact, documented, licensed, and tested, but its meaningful vector contract depends on macros for pseudo-generics, allocation and reallocation, capacity invariants, raw pointers, memmove, and element lifetime. Those central memory concerns require accessibility floor 3.",
+      "reconsider": "Reconsider a smaller complete C collection only when ownership, resizing, and generic macro machinery are not a central prerequisite stack; do not hide vec's real memory contract behind one wrapper call."
+    },
+    {
+      "repository": "apple/sample-backyard-birds",
+      "language": "Swift",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "The completed Apple sample at commit 1843d5655bf884b501e2889ad9862ec58978fdbe is a coherent application, but representative behavior crosses SwiftUI property wrappers, SwiftData persistence, observation, navigation, model relationships, and application lifecycle. Several framework models interact, so no meaningful complete path fits Levels 1 or 2.",
+      "reconsider": "Reconsider a smaller official Swift sample only after a complete tested behavior remains locally traceable without SwiftUI state, persistence, navigation, and app-lifecycle concepts interacting."
+    },
+    {
+      "repository": "dustinkirkland/golang-petname",
+      "language": "Go",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "direct test quality and truthful public contract",
+      "evidence": "At commit f0c533e9ce9b17d561689476f39699391102bfc0, Generator.Generate is readable and deterministic examples are present, but its tests for word counts assert only nonempty output. Requests for zero or negative words return an adjective-name pair despite documentation promising the specified number, and the README describes names as secure while the Go library uses math/rand. These mismatches make it unsuitable as exemplary novice source.",
+      "reconsider": "Reconsider after documented input bounds, secure-versus-memorable claims, and exact word-count behavior agree, with direct tests covering zero, negative, one, two, and larger counts plus separator and deterministic-source contracts."
+    },
+    {
+      "repository": "kward/shunit2",
+      "language": "Shell",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "genuine learning value without Level gaming",
+      "evidence": "At commit f39734a3dd56495c2fee1d4b0925bb31082e36d2, shUnit2 itself is a real tested framework whose discovery, setup, assertion, portability, and reporting internals exceed Level 2. Its beginner equality and math examples are complete but too trivial to represent meaningful software independently; selecting them alone would hide the artifact's real burden.",
+      "reconsider": "Reconsider a complete Shell educational utility with meaningful behavior and direct shUnit2 tests, or reconsider the framework itself at its honestly calculated higher Level."
+    },
+    {
+      "repository": "bash-my-aws/bash-my-aws",
+      "language": "Shell",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "coding-relevance and novice-accessibility ceiling",
+      "evidence": "The tested utility suite at commit 172430a98b27595a44b3be0ba813e77a306a302d is genuine software, but meaningful paths require AWS CLI conventions, profiles, resources, shell completion, JSON filtering, command composition, and cloud-service domain knowledge across many function libraries. That burden is at least Level 3 and is often better explained by the external domain.",
+      "reconsider": "Reconsider only a self-contained Shell path whose purpose, behavior, and tests remain meaningful without an AWS service and CLI prerequisite stack."
+    },
+    {
+      "repository": "junit-team/junit-examples",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "exemplary source quality in the Kotlin starter",
+      "evidence": "At commit 02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7, the Kotlin Gradle starter is complete and tested, but Calculator.div uses Kotlin/JVM assert for division-by-zero input validation. Assertions may be disabled outside assertion-enabled runs, so the sample teaches a hazardous public precondition pattern and fails the educational quality gate.",
+      "reconsider": "Reconsider the Kotlin starter after division by zero uses an always-enforced require/check/exception contract with tests that run under ordinary application settings."
+    },
+    {
+      "repository": "ktorio/ktor-samples",
+      "language": "Kotlin",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "novice-accessibility ceiling for verified complete samples",
+      "evidence": "At commit 69dcff3fa81daa85f936cfb7f17007761363c303, the repository contains many complete Ktor applications, but the plausibly small samples with direct tests still combine routing DSLs, application test lifecycles, plugins or dependency injection, configuration, serialization, or native-image setup. The verified meaningful paths require several framework concepts and calculate at least Level 3.",
+      "reconsider": "Reconsider a distinct complete Ktor sample when its own directory includes focused tests and documentation and one short primer suffices for every central framework concept."
+    },
+    {
+      "repository": "scala/scala3-example-project",
+      "language": "Scala",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "public license and coherent educational artifact",
+      "evidence": "At commit f0b8bb13d7e49bd5ed1d73250c5cc307ae361028, the repository supplies no license file and Main.scala dispatches a collection of disconnected advanced feature demonstrations while MySuite only asserts 42 equals 42. It therefore fails both public-license evidence and meaningful implementation-to-test coherence.",
+      "reconsider": "Reconsider after an explicit source license is added and a complete coherent application behavior receives direct nontrivial tests instead of disconnected feature demos and a tautological assertion."
+    },
+    {
+      "repository": "junit-team/junit-examples",
+      "language": "Scala",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "documentation accuracy and comparative ecosystem idiom",
+      "evidence": "At commit 02dedb783f4f98c4d6b5bd53ae96bf8986eeebf7, the Scala sbt starter is complete and tested, but its README labels the sbt link while pointing to Gradle's Java-testing guide. The path also teaches a Java-centric runner integration rather than a clearer idiomatic Scala lower-rung sequence, so it does not clear the exemplary documentation and comparative-value gate.",
+      "reconsider": "Reconsider after the sbt documentation is accurate and a fresh comparison shows this JUnit integration is a better novice Scala bridge than a complete idiomatic Scala test exemplar."
+    },
+    {
+      "repository": "dart-lang/samples",
+      "language": "Dart",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "candidate type and coherent artifact boundary",
+      "evidence": "At commit f8e28eaa3f08fa990f975f26a4b2519b0b6bfdb2, the repository is explicitly a collection of unrelated sample programs rather than one coherent software artifact. The plausible command-line examples also add argument parsing, network requests, and asynchronous I/O, so they do not provide a simpler complete Level 1 or 2 path than the accepted collection package function.",
+      "reconsider": "Reconsider a separately maintained complete Dart sample application with its own purpose, focused tests, stable revision, license evidence, and Level 1 or 2 accessibility; do not catalog the aggregate sample collection."
+    },
+    {
+      "repository": "rust-lang/book",
+      "language": "Rust",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "complete checked-in software artifact",
+      "evidence": "At commit 917544888a55e4da7109bdba8c88c893c0da70f4, the minigrep chapter thoroughly documents and tests a completed program in prose, but the repository does not check in that program as a coherent runnable source tree; the implementation exists as evolving code listings across chapter files. The book therefore fails the complete-artifact gate for this path.",
+      "reconsider": "Reconsider an official repository that checks in the completed minigrep source, manifest, direct tests, documentation, and license together at one stable revision."
+    },
+    {
+      "repository": "rust-cli/book",
+      "language": "Rust",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "novice-accessibility ceiling",
+      "evidence": "The grrs testing artifact at commit 2679b0d384266e2d5859e25c295d41ccd4b60338 is complete, licensed, documented, and directly tested, but its meaningful path combines derive macros, clap parsing, generic Write traits, file I/O, contextual Result errors, stdout injection, temporary files, process execution, and predicate assertions. That prerequisite stack requires accessibility floor 3.",
+      "reconsider": "Reconsider a smaller complete Rust CLI exemplar only when its meaningful tested behavior avoids the macro, generic I/O, error-context, filesystem, and process-testing stack."
+    },
+    {
+      "repository": "rust-lang/rustlings",
+      "language": "Rust",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "excluded exercise-and-solution collection",
+      "evidence": "At commit a650509c789da1656f813392b16aa1fa043b7f3e, the repository's purpose is a sequenced collection of exercises with expected solutions and progress tooling. It is valuable teaching material but explicitly outside the educational-exemplar candidate type because no selected exercise is a complete coherent software artifact.",
+      "reconsider": "Do not reconsider under the current policy; consider only a separately maintained finished reference application with meaningful behavior and direct tests."
+    },
+    {
+      "repository": "rxi/classic",
+      "language": "Lua",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "verifiable behavior and direct test quality",
+      "evidence": "At commit e5610756c98ac2f8facd7ab90c94e1a097ecd2c6, the small class module is documented and licensed but the repository contains only source, README, and license with no automated tests or deterministic golden verification. Examples in prose do not protect inheritance, constructor, mixin, identity, or instance behavior.",
+      "reconsider": "Reconsider after direct automated tests cover construction, inheritance, override and super calls, mixins, instance checks, and invalid use at a stable pin."
+    },
+    {
+      "repository": "kikito/love-tile-tutorial",
+      "language": "Lua",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "complete-artifact verification and novice-accessibility ceiling",
+      "evidence": "At commit 077334aec1f5d77bd2b5fa05809630268e01478b, the repository is a progression of tutorial stages rather than one clearly versioned final artifact, and it provides no direct automated or golden-output verification. The meaningful game path also requires the LÖVE lifecycle, graphics coordinates, input, collision, and map state, which exceeds a short Level 2 primer.",
+      "reconsider": "Reconsider a separately identified final game artifact only after deterministic verification covers its meaningful behavior and the framework, graphics, input, and collision concepts honestly calculate no higher than Level 2."
+    },
+    {
+      "repository": "rxi/json.lua",
+      "language": "Lua",
+      "inspected_at": "2026-08-30",
+      "failed_requirement": "calculated lower-level accessibility",
+      "evidence": "At commit dbf4b2dd2eb7c23be2773c89eb059dadd6436f94, the production module is readable, licensed, and tested, but its meaningful behavior is a recursive JSON encoder and parser with grammar dispatch, escape handling, numeric rules, position state, nested structures, and precise errors. Parser theory and format constraints are central, requiring at least Level 3.",
+      "reconsider": "Reconsider only for a production Level 3 place or after policy changes; do not isolate a trivial helper from the parser to manufacture a lower Level."
     }
   ]
 }

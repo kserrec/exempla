@@ -1,18 +1,257 @@
 # Ruby
 
-7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+10 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
-No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
+### [ruby/abbrev](https://github.com/ruby/abbrev)
 
-## Level 2 — Guided real-world code
+**Language 1 / Behavior 2 / Design 1 / Constraints 1 → Level 1**
+
+**Source:** Production software
+
+A Ruby default gem that builds all unambiguous word prefixes and removes a prefix as soon as a collision appears.
+
+**Why study it:** Trace a small production algorithm whose hashes make both successful prefixes and collisions visible, then predict the exact abbreviation table.
+
+**Prerequisites:**
+
+- The global novice Ruby baseline: methods, arrays, strings, hashes, loops, modules, and focused tests.
+- The selected path uses the default unfiltered call; the nearby optional pattern branch can be skipped on a first reading.
+
+**Concepts this path develops:**
+
+- Tracking candidate uniqueness with occurrence counts.
+- Deleting a previously valid result when a collision appears.
+- Building a deterministic lookup table from ordinary strings.
+
+**What you can learn:**
+
+- Generate progressively shorter prefixes for each input word.
+- Use one hash to count sightings and another to retain only unambiguous results.
+- Explain why full words remain valid even when their shorter prefixes collide.
+
+**Learning path:**
+
+- **Goal:** Understand how Abbrev turns words into a hash of every unambiguous prefix without losing full-word lookups.
+- **Start here:** [`lib/abbrev.rb`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/lib/abbrev.rb) — The abbrev method contains the complete prefix loop, collision count, deletion rule, and final full-word pass.
+- **Then read:**
+  - [`test/test_abbrev.rb`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/test/test_abbrev.rb)
+  - [`README.md`](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/README.md)
+- **Trace:** For each nonempty word, walk prefix lengths downward, increment seen, add the first occurrence, delete the second, and stop after later collisions; then restore each full word and compare the resulting hash with the direct summer, winter, win, ruby, and rules assertion.
+
+**Why this level:**
+
+- **Language technique 1:** The selected unfiltered path uses basic Ruby collections, iteration, slicing, and branching.
+- **Behavioral reasoning 2:** A small amount of local mutable state distinguishes unique and colliding prefixes, but remains easy to simulate.
+- **Design span 1:** One source method and its direct assertions contain the complete selected behavior.
+- **Constraint burden 1:** The contract consists of two local deterministic rules without wider compatibility constraints.
+- **Novice accessibility floor 1:** The central algorithm uses familiar loops, strings, hashes, and branches; the optional filter and delegation can be skipped without hiding the selected behavior.
+  - **Central concepts:** string prefixes; hash-based occurrence counts; collision removal
+  - **Incidental concepts:** the optional regular-expression filter; the Array convenience extension
+- **Placement:** The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1.
+
+**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/LICENSE.txt))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The repository packages and releases abbrev as an installable Ruby default gem with a documented public API and direct regression tests.
+
+**Language evidence:** The default gem's abbreviation algorithm, Array convenience method, documentation, and direct Test::Unit suite are first-party Ruby; GitHub labels the repository Ruby.
+
+**Coding relevance:**
+
+Prefix generation, collision tracking, and deterministic map construction are broadly transferable programming techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The algorithm exposes its two state hashes and collision cases directly, with examples adjacent to the public method.
+- **Architecture:** One module function owns the algorithm and one thin Array method delegates to it without duplication.
+- **Naming and idiom:** table, seen, word, len, and abbrev communicate the evolving prefix state with conventional Ruby iteration.
+- **Tests:** The direct suite checks collisions, retained full words, prefix filtering, delegation, and strings containing a line break.
+- **Documentation:** The README and method documentation explain the mapping contract with several exact output hashes.
+- **Traceability:** Every expected prefix can be followed through one count and the corresponding add, delete, or restore action.
+- **Maintainability:** The small public surface, deterministic algorithm, and exact result maps make regressions easy to locate.
+- **Educational value:** It is a substantial but approachable first production algorithm built entirely from novice-baseline Ruby tools.
+
+**Inspection record:** commit `138820c087d1fccc776eb7665634ac6bca602faf`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `lib/abbrev.rb`, `test/test_abbrev.rb`, `README.md`, `abbrev.gemspec`, `LICENSE.txt`. GitHub Linguist label: Ruby.
+
+</details>
+
+## Level 2 — Guided real-world patterns
+
+### [sinatra/sinatra](https://github.com/sinatra/sinatra)
+
+**Language 2 / Behavior 2 / Design 1 / Constraints 1 → Level 2**
+
+**Source:** Educational exemplar
+
+Sinatra's complete hello-world example declares one route with a Ruby block and verifies its response body in the README test suite.
+
+**Why study it:** Read a whole web application small enough to hold in memory while learning how a route block becomes an externally checked response.
+
+Levels 1–2 may use intentionally instructive software when it provides a gentler path into reading good source code.
+
+**Short context:**
+
+- Only the basic GET request, path, and response-body model stated in the prerequisites is needed.
+
+**Prerequisites:**
+
+- The global novice Ruby baseline: methods, strings, blocks, require, and focused tests.
+- An HTTP GET request names a path, and a route block returns the body for matching requests.
+
+**Concepts this path develops:**
+
+- Using a small domain-specific language to register application behavior.
+- Connecting a request route to a returned body.
+- Testing documented examples as observable application behavior.
+
+**What you can learn:**
+
+- Declare an HTTP method and path with Sinatra's route syntax.
+- Return a response body from the route's Ruby block.
+- Execute the route in a test and assert the exact body a caller receives.
+
+**Learning path:**
+
+- **Goal:** Understand how Sinatra's complete minimal application maps GET / to Hello world and verifies that documentation example in code.
+- **Start here:** [`README.md`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/README.md) — The opening example contains the complete application and immediately explains how to install, run, and view it.
+- **Then read:**
+  - [`test/readme_test.rb`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/test/readme_test.rb)
+  - [`sinatra.gemspec`](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/sinatra.gemspec)
+- **Trace:** Require Sinatra, register GET / with a block returning Hello world, then follow ReadmeTest as it constructs the same route, performs GET /, and checks the exact body.
+
+**Why this level:**
+
+- **Language technique 2:** Blocks and the route DSL are common professional Ruby idioms that remain direct in this example.
+- **Behavioral reasoning 2:** One framework dispatch step is central, but the matching route and result remain locally predictable.
+- **Design span 1:** The application behavior and its verification each fit in one small visible block.
+- **Constraint burden 1:** The exemplar has one ordinary observable contract and no interacting production constraints.
+- **Novice accessibility floor 2:** A short route-and-response primer makes the example and its test predictable; framework internals are not required for the selected behavior.
+  - **Central concepts:** route declaration; request dispatch; response-body verification
+  - **Incidental concepts:** Sinatra's internal routing implementation
+- **Placement:** The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** Sinatra presents this finished four-line application as the first runnable example in its primary README and maintains an executable ReadmeTest that asserts the example's exact result.
+
+**Language evidence:** The documented hello-world application and the test that executes its route are first-party Ruby in README.md and test/readme_test.rb; GitHub labels the repository Ruby.
+
+**Coding relevance:**
+
+The complete example teaches transferable callback routing and behavior verification without requiring HTTP protocol internals.
+
+The learner-facing short context appears above.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The checked-in example is complete, direct, and contains no placeholder or omitted application step.
+- **Architecture:** A single route is proportionate to the artifact, while the README test keeps verification separate.
+- **Naming and idiom:** require, get, the root path, and a returned string use Sinatra's standard minimal style.
+- **Tests:** ReadmeTest constructs the documented route, performs a request, and asserts the exact response body.
+- **Documentation:** The primary README begins with the complete source, installation, run command, viewing address, and route explanation.
+- **Traceability:** The example's only route corresponds directly to the first executable README test.
+- **Maintainability:** Testing the documentation prevents the canonical first example from silently drifting away from framework behavior.
+- **Educational value:** The artifact introduces a real framework pattern through a complete program rather than a disconnected statement.
+
+**Inspection record:** commit `cb22afd7902b566b6eaba6c4ea89739494a65d12`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `README.md`, `test/readme_test.rb`, `sinatra.gemspec`, `LICENSE`. GitHub Linguist label: Ruby.
+
+</details>
+
+### [ruby/observer](https://github.com/ruby/observer)
+
+**Language 2 / Behavior 3 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+Ruby's Observer default gem stores subscribers and notifies their chosen methods only after the observable marks itself changed.
+
+**Why study it:** Follow a compact publish-and-subscribe lifecycle from registration through change gating, callback dispatch, reset, and removal.
+
+**Prerequisites:**
+
+- The global novice Ruby baseline: classes, modules, hashes, instance variables, methods, symbols, and focused tests.
+- A callback is a method saved now so another object can invoke it when an event occurs.
+
+**Concepts this path develops:**
+
+- Maintaining a collection of subscribers and callback names.
+- Using explicit state to prevent accidental notifications.
+- Dispatching event arguments and updating subscriptions safely.
+
+**What you can learn:**
+
+- Register objects and the callback method each should receive.
+- Gate notifications behind an explicit changed state and reset that state afterward.
+- Use a behavior test to track which subscribers receive each event after additions and removals.
+
+**Learning path:**
+
+- **Goal:** Understand how Ruby Observable registers subscribers, gates events on changed state, dispatches arguments, and removes subscriptions.
+- **Start here:** [`lib/observer.rb`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/lib/observer.rb) — The Observable module contains registration, removal, state, count, and notification behavior in one readable unit.
+- **Then read:**
+  - [`test/test_observer.rb`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/test/test_observer.rb)
+  - [`README.md`](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/README.md)
+- **Trace:** Add each watcher and callback to @observer_peers, call changed before notify_observers, dispatch the event arguments with __send__, reset @observer_state, then follow the direct test as watchers join, receive different event histories, and are removed.
+
+**Why this level:**
+
+- **Language technique 2:** Mixins and callbacks are common professional Ruby patterns that materially shape the implementation.
+- **Behavioral reasoning 3:** Event delivery and subscription state are central, although the complete lifecycle remains compact and synchronous.
+- **Design span 1:** One component and its test contain registration, notification, and removal.
+- **Constraint burden 2:** Several routine lifecycle guarantees matter, but they are explicit and local.
+- **Novice accessibility floor 2:** The README supplies a cohesive publish-and-subscribe primer, after which the direct test makes each state transition and event history predictable.
+  - **Central concepts:** subscriber registration; callback dispatch; change-gated event state
+  - **Incidental concepts:** __send__ as the dynamic callback operation
+- **Placement:** The four scores 2/3/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** Ruby OR BSD-2-Clause ([evidence 1](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/COPYING), [evidence 2](https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/BSDL))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** The repository packages and releases observer as an installable Ruby default gem implementing the application-facing Observable API.
+
+**Language evidence:** The default gem's Observable module, documentation, and direct Test::Unit suite are first-party Ruby; GitHub labels the repository Ruby.
+
+**Coding relevance:**
+
+Subscriber management, change gating, callback dispatch, and direct lifecycle tests are transferable object-design practices.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** Each lifecycle operation is short, named, and keeps state changes adjacent to the behavior they control.
+- **Architecture:** A reusable mixin owns subscriber state while observable and watcher classes retain their own domain responsibilities.
+- **Naming and idiom:** add_observer, changed, notify_observers, update, and count_observers expose the pattern's vocabulary directly.
+- **Tests:** The direct suite asserts counts and exact notification histories across registration, later registration, single removal, and clearing all observers.
+- **Documentation:** The README explains the mechanism, the required changed/notify sequence, callback contract, and a complete worked example.
+- **Traceability:** Every lifecycle mutation in the test maps to one Observable method and an exact resulting history.
+- **Maintainability:** A small API, explicit state, and end-to-end lifecycle assertions make regressions in delivery or removal visible.
+- **Educational value:** It presents a recognizable design pattern in compact production Ruby with enough state to be meaningful but still locally traceable.
+
+**Inspection record:** commit `ebf1653465ee6854bdf35c8f2b794713068daa26`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `lib/observer.rb`, `test/test_observer.rb`, `README.md`, `observer.gemspec`, `COPYING`, `BSDL`. GitHub Linguist label: Ruby.
+
+</details>
 
 ### [ruby/pathname](https://github.com/ruby/pathname)
 
 **Language 2 / Behavior 2 / Design 1 / Constraints 3 → Level 2**
+
+**Source:** Production software
 
 A Ruby path method that removes redundant path pieces without reading the filesystem.
 
@@ -64,7 +303,7 @@ A Ruby path method that removes redundant path pieces without reading the filesy
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.
+**Purpose evidence:** The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.
 
 **Language evidence:** The path value object and nearly all path and filesystem behavior are Ruby under lib/, with a small C extension for selected primitives.
 
@@ -89,11 +328,13 @@ The learner-facing short context appears above.
 
 </details>
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [jekyll/jekyll](https://github.com/jekyll/jekyll)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A static-site generator that transforms Markdown, Liquid templates, data, assets, and configuration into a deployable website.
 
@@ -146,7 +387,7 @@ A static-site generator that transforms Markdown, Liquid templates, data, assets
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the Jekyll gem and command-line tool used for blogs, documentation, and GitHub Pages workflows.
+**Purpose evidence:** The repository publishes the Jekyll gem and command-line tool used for blogs, documentation, and GitHub Pages workflows.
 
 **Language evidence:** Site discovery, collections, front matter, rendering, plugins, incremental regeneration, destination writing, and CLI behavior are Ruby under lib/.
 
@@ -174,6 +415,8 @@ The learner-facing short context appears above.
 ### [ruby/tempfile](https://github.com/ruby/tempfile)
 
 **Language 2 / Behavior 3 / Design 2 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 Ruby's standard temporary-file library, providing secure creation plus explicit and automatic cleanup lifecycles.
 
@@ -222,7 +465,7 @@ Ruby's standard temporary-file library, providing secure creation plus explicit 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.
+**Purpose evidence:** The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.
 
 **Language evidence:** Temporary-file creation, permissions, cleanup, delegation, and lifecycle behavior are implemented in Ruby under lib/.
 
@@ -252,6 +495,8 @@ The learner-facing short context appears above.
 ### [rubocop/rubocop](https://github.com/rubocop/rubocop)
 
 **Language 4 / Behavior 4 / Design 4 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 A configurable Ruby static analyzer and formatter built around independently selectable cops.
 
@@ -305,7 +550,7 @@ A configurable Ruby static analyzer and formatter built around independently sel
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the RuboCop gem and executable used to lint, format, and enforce Ruby project conventions.
+**Purpose evidence:** The repository publishes the RuboCop gem and executable used to lint, format, and enforce Ruby project conventions.
 
 **Language evidence:** Configuration, target discovery, AST inspection, cop dispatch, offense reporting, autocorrection, caching, formatters, and CLI orchestration are Ruby under lib/ and exe/.
 
@@ -333,6 +578,8 @@ The learner-facing short context appears above.
 ### [sidekiq/sidekiq](https://github.com/sidekiq/sidekiq)
 
 **Language 3 / Behavior 5 / Design 4 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 A multithreaded background-job processor for Ruby applications backed by Redis.
 
@@ -386,7 +633,7 @@ A multithreaded background-job processor for Ruby applications backed by Redis.
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.
+**Purpose evidence:** The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.
 
 **Language evidence:** Job fetching, execution, middleware, retries, scheduling, capsules, Redis coordination, process lifecycle, and the monitoring UI are Ruby under lib/ and web/.
 
@@ -416,6 +663,8 @@ The learner-facing short context appears above.
 ### [ruby-concurrency/concurrent-ruby](https://github.com/ruby-concurrency/concurrent-ruby)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A production concurrency toolkit whose promise framework composes asynchronous tasks, dependency graphs, executors, and single-assignment results.
 
@@ -471,7 +720,7 @@ A production concurrency toolkit whose promise framework composes asynchronous t
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.
+**Purpose evidence:** The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.
 
 **Language evidence:** The selected promise graph, executor handoff, atomic state, fallback synchronization, documentation, and direct behavioral specs are first-party Ruby; optional native atomic backends are not required by this path.
 
@@ -499,6 +748,8 @@ The learner-facing short context appears above.
 ### [socketry/async](https://github.com/socketry/async)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A composable fiber-based asynchronous I/O framework with structured task trees, cancellation, timeouts, and Ruby's Fiber scheduler integration.
 
@@ -559,7 +810,7 @@ A composable fiber-based asynchronous I/O framework with structured task trees, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.
+**Purpose evidence:** The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.
 
 **Language evidence:** Task lifecycle, Fiber scheduling, promise state, cancellation, timeout behavior, tree ownership, and their direct tests are substantive first-party Ruby; io-event supplies selector internals outside the selected path.
 

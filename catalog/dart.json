@@ -1,7 +1,135 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "dart",
   "repositories": [
+    {
+      "slug": "collection-group-by",
+      "path_slug": "group-by-builds-ordered-lists-under-callback-derived-map-keys",
+      "repository": "dart-lang/core",
+      "url": "https://github.com/dart-lang/core",
+      "primary_language": "Dart",
+      "language_evidence": "The collection package's groupBy implementation, exports, documentation, and direct test group are first-party Dart; GitHub labels the monorepository Dart.",
+      "description": "Dart's production collection package groups iterable values into ordered lists under keys computed by a callback.",
+      "source_kind": "production",
+      "purpose_evidence": "dart-lang/core actively maintains and publishes package:collection for application use; its package README documents collection utilities and links the public package and API.",
+      "why_study": "Read one compact callback-driven collection transformation and verify how empty input, repeated keys, and input order determine the result.",
+      "learn": [
+        "Compute one grouping key for each input element.",
+        "Create a list only when a key first appears, then append later matching elements.",
+        "Preserve the relative input order inside every group."
+      ],
+      "prerequisites": [
+        "The global novice Dart baseline: functions, loops, maps, lists, generics at ordinary collection use, and focused tests.",
+        "A callback is a function supplied by the caller; groupBy calls it once per element to choose that element's map key."
+      ],
+      "concepts_developed": [
+        "Building grouped collections with create-on-first-use map entries.",
+        "Separating a reusable grouping algorithm from caller-defined key selection.",
+        "Preserving stable order while accumulating values."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Callback-driven grouping, map accumulation, stable ordering, and empty-input tests are broadly transferable collection-processing skills."
+      },
+      "learning_path": {
+        "goal": "Understand how package:collection groupBy maps each iterable element to a key and accumulates ordered lists under those keys.",
+        "start_here": {
+          "path": "pkgs/collection/lib/src/functions.dart",
+          "reason": "The groupBy function contains the entire loop, callback invocation, first-list creation, append, and return."
+        },
+        "supporting_files": [
+          "pkgs/collection/test/functions_test.dart",
+          "pkgs/collection/README.md",
+          "pkgs/collection/pubspec.yaml"
+        ],
+        "trace": "Start with an empty typed map, call key for each string, create the missing list with ??=, append the element, return the map, and compare the empty and second-character grouping cases in the direct groupBy tests."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "generic collection types",
+            "callback parameter",
+            "null-aware assignment"
+          ],
+          "reason": "Generic callbacks and create-on-first-use collection syntax are common professional Dart idioms central to the function."
+        },
+        "behavioral_reasoning": {
+          "score": 1,
+          "signals": [
+            "single forward loop",
+            "local map accumulation"
+          ],
+          "reason": "The function is synchronous and each element follows the same direct key, list, and append sequence."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one public function",
+            "one direct test group"
+          ],
+          "reason": "One implementation unit and its focused assertions contain the complete selected path."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "empty input",
+            "stable group order"
+          ],
+          "reason": "The local contract has plainly observable empty and ordering behavior without interacting constraints."
+        },
+        "placement": "The four scores 2/1/1/1 produce rubric Level 1. Novice accessibility floor 2 raises the published result to Level 2."
+      },
+      "quality": {
+        "source_quality": "The implementation is one direct loop with descriptive types and documentation immediately above the function.",
+        "architecture": "A focused top-level utility lives with related collection functions and is exported by a maintained package.",
+        "naming_and_idiom": "groupBy, values, key, element, and map state the transformation using idiomatic Dart collection syntax.",
+        "tests": "The direct test group proves the callback is unused for empty input and checks exact keys, grouped values, and preserved order.",
+        "documentation": "The function docs define key selection and order, while the package README explains purpose, publication, and the wider collection context.",
+        "traceability": "Every expected list entry follows one visible callback result and one append operation.",
+        "maintainability": "The narrow signature, active monorepository, package metadata, and focused tests make behavior changes easy to bound.",
+        "educational_value": "It is a concise production example of reusable higher-order collection code without advanced type machinery."
+      },
+      "inspection": {
+        "commit": "b80e488556bd7d72386f7e358d0b4e4a44ce0423",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "pkgs/collection/lib/src/functions.dart",
+          "pkgs/collection/test/functions_test.dart",
+          "pkgs/collection/README.md",
+          "pkgs/collection/pubspec.yaml",
+          "pkgs/collection/LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "BSD-3-Clause",
+        "urls": [
+          "https://github.com/dart-lang/core/blob/b80e488556bd7d72386f7e358d0b4e4a44ce0423/pkgs/collection/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Dart",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "callback-derived keys",
+          "generic map and list types",
+          "create-on-first-use accumulation"
+        ],
+        "incidental_concepts": [
+          "null-aware assignment syntax"
+        ],
+        "reason": "A short callback and generics primer makes each result predictable; the null-aware expression is one local create-or-reuse operation."
+      }
+    },
     {
       "slug": "formz",
       "path_slug": "a-small-dart-model-makes-input-interaction-state-typed-validation",
@@ -10,7 +138,8 @@
       "primary_language": "Dart",
       "language_evidence": "Typed form-input state, validation, error caching, aggregate form status, value semantics, and tests are implemented in one Dart library and its Dart test fixtures.",
       "description": "A small Dart model for form values, validation errors, untouched inputs, modified inputs, and submission state.",
-      "real_world_evidence": "Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.",
+      "source_kind": "production",
+      "purpose_evidence": "Formz is published on pub.dev and its README documents integration with Dart and Flutter form-state architectures.",
       "why_study": "See how one file gives form inputs explicit value, interaction, error, and validation state, then combines several inputs into a whole-form answer.",
       "learn": [
         "Trace how pure and dirty inputs expose validation and display errors.",
@@ -146,7 +275,8 @@
       "primary_language": "Dart",
       "language_evidence": "The analyzer, common front end, kernel IR, dart2js, development compiler, WebAssembly compiler, analysis server, package tools, debugger services, and core libraries are Dart, while the first-party VM, garbage collector, JIT, AOT backend, runtime and native platform layers are C++ and related native code.",
       "description": "The Dart language platform: common front end, analyzers and language server, intermediate representation, native and web compilers, virtual machine, JIT and AOT runtimes, garbage collector, core libraries, debugger services, command-line tools, and platform ports.",
-      "real_world_evidence": "This repository is the upstream source for official Dart SDK releases and the compiler, runtime, libraries, analyzer, and tools used by Dart and Flutter developers.",
+      "source_kind": "production",
+      "purpose_evidence": "This repository is the upstream source for official Dart SDK releases and the compiler, runtime, libraries, analyzer, and tools used by Dart and Flutter developers.",
       "why_study": "Future.wait is a bounded standard-library implementation that combines concurrency, input ordering, error policy, cleanup ownership, malformed protocol handling, and type soundness.",
       "learn": [
         "Trace concurrent Future completions through position capture, shared remaining state, first-error handling, eager or deferred failure, cleanup, and ordered result construction."
@@ -267,7 +397,8 @@
       "primary_language": "Dart",
       "language_evidence": "HTTP request and response models, body and header handling, middleware composition, I/O adapters, routing tries, static and proxy handlers, WebSocket support, generators, and tests are Dart.",
       "description": "Dart's composable web-server middleware ecosystem, with immutable requests and responses, streaming bodies, pipelines, routing, static files, proxies, WebSockets, and HTTP compliance checks.",
-      "real_world_evidence": "The repository publishes the shelf family of packages used to build Dart HTTP servers and middleware, and maintains protocol-compliance reports against its server adapter.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the shelf family of packages used to build Dart HTTP servers and middleware, and maintains protocol-compliance reports against its server adapter.",
       "why_study": "Shelf Router is a coherent Dart path from declarative route patterns through trie indexing, ordered matching, request updates, middleware, and handler dispatch.",
       "learn": [
         "Trace route registration into a trie, then follow candidate ordering, method and HEAD policy, parameter extraction, mounted paths, middleware, and FutureOr dispatch."
@@ -394,7 +525,8 @@
       "primary_language": "Dart",
       "language_evidence": "Runtime method interception, stubbing, invocation and argument matching, capture, verification, fallback values, call history, timing, and the test suite are Dart.",
       "description": "A null-safe Dart mocking library that intercepts invocations at runtime and supports stubbing, argument matching, capture, verification, and asynchronous call observation without code generation.",
-      "real_world_evidence": "Mocktail is released on pub.dev and its README documents use as a test dependency in Dart and Flutter projects.",
+      "source_kind": "production",
+      "purpose_evidence": "Mocktail is released on pub.dev and its README documents use as a test dependency in Dart and Flutter projects.",
       "why_study": "Mocktail makes Dart's runtime mocking mechanics inspectable by connecting noSuchMethod interception to matcher reconstruction, fallback values, stubbing, call history, and verification.",
       "learn": [
         "Trace an intercepted invocation through recording mode, argument matcher registration, invocation matching, canned responses, call capture, verification, and reset."
@@ -515,7 +647,8 @@
       "primary_language": "Dart",
       "language_evidence": "Annotations, analyzer-driven model inspection, serialization and deserialization generation, type-helper dispatch, schema output, checked runtime helpers, YAML support, and tests are Dart.",
       "description": "A source generator and annotation suite that derives typed Dart JSON codecs, validation helpers, field metadata, enums, converters, generics, and JSON Schema from class declarations.",
-      "real_world_evidence": "The repository publishes json_serializable, json_annotation, and checked_yaml packages used in Dart build_runner workflows and generated model layers.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes json_serializable, json_annotation, and checked_yaml packages used in Dart build_runner workflows and generated model layers.",
       "why_study": "json_serializable's generic-factory path shows how analyzer metadata becomes generated callback parameters and nested conversion code with checked-in, executable evidence.",
       "learn": [
         "Follow an annotated generic class through configuration and field analysis into generated fromJson and toJson callbacks, nested type arguments, emitted source, and runtime tests."
@@ -642,7 +775,8 @@
       "primary_language": "Dart",
       "language_evidence": "The selected build planning, incremental state, dependency invalidation, execution, resource lifecycle, and direct unit, integration, and stress suites are handwritten first-party Dart under build_runner.",
       "description": "Dart's modular code-generation toolkit and build runner, including incremental planning, dependency tracking, builder execution, and persistent build state.",
-      "real_world_evidence": "The Dart team publishes build_runner on pub.dev as the standard command-line entry point used by Dart and Flutter code generators such as json_serializable, built_value, Mockito, and Freezed.",
+      "source_kind": "production",
+      "purpose_evidence": "The Dart team publishes build_runner on pub.dev as the standard command-line entry point used by Dart and Flutter code generators such as json_serializable, built_value, Mockito, and Freezed.",
       "why_study": "Understand how build_runner turns sources and configured builder phases into an incremental execution plan, reuses compatible cached state, invalidates changed dependency paths, runs concurrent build actions, and persists the next build's state. The code-generation vocabulary needs only a short primer; the path teaches transferable graph planning, content-addressed change detection, lifecycle state, concurrency, failure recovery, caching, and adversarial testing.",
       "learn": [
         "Study these advanced Dart mechanisms in `build_runner/lib/src/build_plan/build_plan.dart`: asynchronous filesystem inspection, immutable built_value plans, typed AssetId maps and sets, content digests, phase-indexed build steps, and clean-versus-incremental construction.",

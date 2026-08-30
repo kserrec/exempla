@@ -1,6 +1,8 @@
 # Python
 
-6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+7 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
+
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
 
 [← All languages](../README.md)
 
@@ -8,15 +10,92 @@
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
-No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
+### [more-itertools/more-itertools](https://github.com/more-itertools/more-itertools)
 
-## Level 3 — Intermediate
+**Language 2 / Behavior 2 / Design 1 / Constraints 2 → Level 2**
+
+**Source:** Production software
+
+A production iterator utility that yields fixed-size lists lazily and can reject a short final group in strict mode.
+
+**Why study it:** Follow a compact professional iterator from input validation through lazy grouping, then compare ordinary and strict edge cases in focused tests.
+
+**Prerequisites:**
+
+- The global novice Python baseline: functions, loops, lists, exceptions, imports, and focused tests.
+- An iterator produces values on demand; partial prepares a function call with some arguments already supplied.
+
+**Concepts this path develops:**
+
+- Turning repeated bounded reads into a lazy iterator of lists.
+- Using an empty-list sentinel to end iteration.
+- Layering optional validation around an existing iterator.
+
+**What you can learn:**
+
+- Build successive lists from any iterable without consuming the complete input first.
+- Use a sentinel-driven iterator to stop when no next group remains.
+- Add an optional strict contract that rejects a short final group.
+
+**Learning path:**
+
+- **Goal:** Understand how more-itertools chunked lazily groups an iterable and enforces optional exact divisibility.
+- **Start here:** [`more_itertools/more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/more_itertools/more.py) — The chunked function contains size validation, the sentinel iterator, and the strict wrapper generator together.
+- **Then read:**
+  - [`tests/test_more.py`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/tests/test_more.py)
+  - [`README.rst`](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/README.rst)
+- **Trace:** Validate n, repeatedly call take through partial until an empty list stops the iterator, return it directly in ordinary mode or pass each group through the nested strict validator, then match even, short, negative, None, and strict cases in ChunkedTests.
+
+**Why this level:**
+
+- **Language technique 2:** Iterators, partial, and a small generator are common professional Python idioms central to the implementation.
+- **Behavioral reasoning 2:** Several local branches and deferred results matter, but the complete lifecycle remains within one function.
+- **Design span 1:** The selected contract is contained in one implementation unit and its direct tests.
+- **Constraint burden 2:** Routine input and boundary guarantees shape the function without creating cross-module constraints.
+- **Novice accessibility floor 2:** A short primer on iterators, partial, and sentinels is enough to predict every tested group and error without a separate course.
+  - **Central concepts:** lazy iteration; partial application; optional strict validation
+  - **Incidental concepts:** an empty list used as the iterator sentinel
+- **Placement:** The four scores 2/2/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2.
+
+**License:** MIT ([evidence 1](https://github.com/more-itertools/more-itertools/blob/2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10/LICENSE))
+
+<details>
+<summary>Quality and review evidence</summary>
+
+**Purpose evidence:** more-itertools is a maintained installable Python package whose README documents chunked as one of its application-facing iterator recipes.
+
+**Language evidence:** The chunked implementation, package exports, doctest examples, and direct unittest class are first-party Python.
+
+**Coding relevance:**
+
+Lazy grouping, boundary validation, and focused edge-case tests are broadly transferable collection-processing techniques.
+
+No specialist domain context is required.
+
+**Eight-part quality gate:**
+
+- **Source quality:** The implementation is compact, comments and docstrings expose its contracts, and strict behavior is separated without duplication.
+- **Architecture:** One iterator builds groups and a narrow optional wrapper adds strictness, matching the public API.
+- **Naming and idiom:** chunked, strict, iterator, and chunk follow established Python and itertools vocabulary.
+- **Tests:** Seven direct tests cover even and short inputs, None and negative sizes, both strict outcomes, and the strict-None error.
+- **Documentation:** The function docstring and README show exact lazy grouping results and explain the short-final-group policy.
+- **Traceability:** Each validation and mode branch maps directly to a named ChunkedTests assertion.
+- **Maintainability:** A narrow public signature, direct exceptions, and isolated strict wrapper make the behavior safe to extend.
+- **Educational value:** The path makes iterator composition concrete without requiring a separate framework or specialist domain.
+
+**Inspection record:** commit `2fe1b2eeb9d75f994113fe3ac76d14b6bcd6fb10`, inspected 2026-08-30. Review passes: Codex lower-level expansion pass. Files inspected: `more_itertools/more.py`, `tests/test_more.py`, `README.rst`, `pyproject.toml`, `LICENSE`. GitHub Linguist label: Python.
+
+</details>
+
+## Level 3 — Intermediate production software
 
 ### [pallets/click](https://github.com/pallets/click)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A composable command-line toolkit that maps decorators and command objects onto parsing, validation, help, invocation, and shell completion.
 
@@ -63,7 +142,7 @@ A composable command-line toolkit that maps decorators and command objects onto 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.
+**Purpose evidence:** Pallets publishes Click as production CLI infrastructure used directly and by frameworks such as Flask.
 
 **Language evidence:** Command parsing, parameter types, decorators, terminal helpers, and shell completion under src/click are Python.
 
@@ -91,6 +170,8 @@ The learner-facing short context appears above.
 ### [psf/requests](https://github.com/psf/requests)
 
 **Language 2 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A synchronous HTTP client that turns URLs, headers, authentication, cookies, redirects, and connection pools into a small Python API.
 
@@ -138,7 +219,7 @@ A synchronous HTTP client that turns URLs, headers, authentication, cookies, red
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.
+**Purpose evidence:** Requests is released by the Python Software Foundation for production HTTP clients and maintains broad compatibility behavior.
 
 **Language evidence:** The public API, sessions, models, authentication, cookies, adapters, and utilities under src/requests are Python.
 
@@ -168,6 +249,8 @@ The learner-facing short context appears above.
 ### [pallets/flask](https://github.com/pallets/flask)
 
 **Language 3 / Behavior 4 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A web application framework that composes routing, request contexts, templating, sessions, error handling, and extensions over Werkzeug.
 
@@ -214,7 +297,7 @@ A web application framework that composes routing, request contexts, templating,
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.
+**Purpose evidence:** Pallets maintains and publishes Flask as a production web framework with a mature extension ecosystem.
 
 **Language evidence:** Application, blueprint, context, helper, session, CLI, and templating integration modules under src/flask are Python.
 
@@ -242,6 +325,8 @@ The learner-facing short context appears above.
 ### [pytest-dev/pytest](https://github.com/pytest-dev/pytest)
 
 **Language 4 / Behavior 4 / Design 4 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 An extensible testing framework that discovers tests, resolves fixtures, rewrites assertions, runs lifecycle hooks, and reports results.
 
@@ -287,7 +372,7 @@ An extensible testing framework that discovers tests, resolves fixtures, rewrite
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.
+**Purpose evidence:** pytest is released as production test infrastructure and supports a large plugin ecosystem across Python projects.
 
 **Language evidence:** Collection, fixtures, assertion rewriting, hooks, configuration, execution, reports, and terminal output under src/_pytest are Python.
 
@@ -317,6 +402,8 @@ The learner-facing short context appears above.
 ### [apache/airflow](https://github.com/apache/airflow)
 
 **Language 3 / Behavior 5 / Design 5 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A workflow-orchestration platform that defines directed task graphs and schedules, executes, retries, observes, and persists their runs.
 
@@ -366,7 +453,7 @@ A workflow-orchestration platform that defines directed task graphs and schedule
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Apache Airflow is an actively released Apache project used to operate production data and automation workflows.
+**Purpose evidence:** Apache Airflow is an actively released Apache project used to operate production data and automation workflows.
 
 **Language evidence:** The scheduler, DAG and task models, executors, APIs, providers, serialization, jobs, and operational services are predominantly Python.
 
@@ -394,6 +481,8 @@ The learner-facing short context appears above.
 ### [home-assistant/core](https://github.com/home-assistant/core)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 A home-automation runtime that coordinates devices, integrations, events, services, entity state, configuration, storage, and user automations.
 
@@ -442,7 +531,7 @@ A home-automation runtime that coordinates devices, integrations, events, servic
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.
+**Purpose evidence:** Home Assistant Core is continuously released as the production engine behind deployed home-automation installations.
 
 **Language evidence:** The automation runtime, state machine, services, event bus, configuration entries, integrations, and coordinators are implemented in Python.
 

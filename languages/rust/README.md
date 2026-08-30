@@ -2,21 +2,25 @@
 
 6 qualified learning paths. Scores assume the learner described in [the learning-level rubric](../../docs/learning-levels.md).
 
+**Source legend:** Production software is built primarily for real users or systems. Educational exemplars are complete teaching-oriented software and may appear only at Levels 1 and 2.
+
 [← All languages](../README.md)
 
 ## Level 1 — First real code
 
 No qualified learning path has been published at this level. An empty Level 1 means Exempla has not yet found a path gentle enough to publish here; learners are not being told to jump to Level 2.
 
-## Level 2 — Guided real-world code
+## Level 2 — Guided real-world patterns
 
 No qualified learning path has been published at this level. Standards are not lowered to fill a slot.
 
-## Level 3 — Intermediate
+## Level 3 — Intermediate production software
 
 ### [dtolnay/semver](https://github.com/dtolnay/semver)
 
 **Language 3 / Behavior 3 / Design 3 / Constraints 4 → Level 3**
+
+**Source:** Production software
 
 A parser and evaluator for Cargo-flavored Semantic Versioning versions and requirements, including caret, tilde, wildcard, range, and prerelease rules.
 
@@ -67,7 +71,7 @@ A parser and evaluator for Cargo-flavored Semantic Versioning versions and requi
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The maintained crate is published for Rust tools that interpret Cargo-compatible versions and dependency requirements.
+**Purpose evidence:** The maintained crate is published for Rust tools that interpret Cargo-compatible versions and dependency requirements.
 
 **Language evidence:** Version and requirement models, parsing, comparator evaluation, formatting, error reporting, fuzz targets, and tests are Rust.
 
@@ -95,6 +99,8 @@ The learner-facing short context appears above.
 ### [withoutboats/heck](https://github.com/withoutboats/heck)
 
 **Language 3 / Behavior 2 / Design 2 / Constraints 3 → Level 3**
+
+**Source:** Production software
 
 A no_std string case-conversion library supporting snake, kebab, title, train, shouty, lower camel, and upper camel forms.
 
@@ -145,7 +151,7 @@ A no_std string case-conversion library supporting snake, kebab, title, train, s
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The maintained crate is published for use by Rust libraries, procedural macros, and applications that need predictable identifier and display-name conversion.
+**Purpose evidence:** The maintained crate is published for use by Rust libraries, procedural macros, and applications that need predictable identifier and display-name conversion.
 
 **Language evidence:** The shared word-boundary transform, eight case-style modules, display adapters, Unicode handling, and inline test matrices are Rust.
 
@@ -175,6 +181,8 @@ The learner-facing short context appears above.
 ### [dtolnay/anyhow](https://github.com/dtolnay/anyhow)
 
 **Language 5 / Behavior 4 / Design 3 / Constraints 5 → Level 4**
+
+**Source:** Production software
 
 A flexible application-error type that carries context, error chains, downcasting, backtraces, and ergonomic propagation across arbitrary error sources.
 
@@ -226,7 +234,7 @@ A flexible application-error type that carries context, error chains, downcastin
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The crate is maintained and published for Rust applications that need one reportable error type across diverse libraries and failure paths.
+**Purpose evidence:** The crate is maintained and published for Rust applications that need one reportable error type across diverse libraries and failure paths.
 
 **Language evidence:** The type-erased error representation, vtable operations, context chains, downcasting, formatting, backtraces, macros, and tests are Rust.
 
@@ -254,6 +262,8 @@ The learner-facing short context appears above.
 ### [tokio-rs/axum](https://github.com/tokio-rs/axum)
 
 **Language 4 / Behavior 3 / Design 3 / Constraints 4 → Level 4**
+
+**Source:** Production software
 
 A modular asynchronous web framework built around Tokio, Hyper, Tower services, typed request extractors, composable routers, middleware, and response conversion.
 
@@ -304,7 +314,7 @@ A modular asynchronous web framework built around Tokio, Hyper, Tower services, 
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The Tokio project maintains and publishes Axum for production HTTP services, with documented middleware, WebSocket, streaming, state, tracing, and deployment patterns.
+**Purpose evidence:** The Tokio project maintains and publishes Axum for production HTTP services, with documented middleware, WebSocket, streaming, state, tracing, and deployment patterns.
 
 **Language evidence:** Routing, handlers, extractors, responses, middleware integration, macros, first-party extensions, and test suites are Rust.
 
@@ -334,6 +344,8 @@ The learner-facing short context appears above.
 ### [rust-lang/cargo](https://github.com/rust-lang/cargo)
 
 **Language 4 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 Rust's package manager and build orchestrator, covering manifests, workspaces, lockfiles, dependency resolution, registries and other sources, compilation units, caching, credentials, packaging, publishing, installation, and extensible commands.
 
@@ -386,7 +398,7 @@ Rust's package manager and build orchestrator, covering manifests, workspaces, l
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The Rust project maintains Cargo as the package manager distributed with the Rust toolchain and as the client for crates.io and compatible registries.
+**Purpose evidence:** The Rust project maintains Cargo as the package manager distributed with the Rust toolchain and as the client for crates.io and compatible registries.
 
 **Language evidence:** Manifest and workspace modeling, dependency resolution, package sources, registries, compilation orchestration, caching, credentials, publishing, installation, tests, and the command-line application are Rust.
 
@@ -414,6 +426,8 @@ The learner-facing short context appears above.
 ### [tokio-rs/tokio](https://github.com/tokio-rs/tokio)
 
 **Language 5 / Behavior 5 / Design 4 / Constraints 5 → Level 5**
+
+**Source:** Production software
 
 An asynchronous runtime platform for Rust with multi-thread and current-thread schedulers, task lifecycles, OS-backed I/O, timers, networking, synchronization, processes, signals, files, macros, streams, and utilities.
 
@@ -468,7 +482,7 @@ An asynchronous runtime platform for Rust with multi-thread and current-thread s
 <details>
 <summary>Quality and review evidence</summary>
 
-**Real-world evidence:** The Tokio project maintains and publishes the runtime and companion crates as infrastructure for asynchronous Rust applications and libraries.
+**Purpose evidence:** The Tokio project maintains and publishes the runtime and companion crates as infrastructure for asynchronous Rust applications and libraries.
 
 **Language evidence:** The asynchronous runtime, task scheduler and harness, OS I/O driver, timers, synchronization channels, networking, processes, signals, filesystem adapters, macros, utilities, model tests, and integration suites are Rust.
 

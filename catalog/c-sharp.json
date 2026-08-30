@@ -1,7 +1,142 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "c-sharp",
   "repositories": [
+    {
+      "slug": "dotnet-prime-service-tests",
+      "path_slug": "the-complete-dotnet-unit-testing-sample-checks-prime-results-with-data-driven-xunit-cases",
+      "repository": "dotnet/samples",
+      "url": "https://github.com/dotnet/samples",
+      "primary_language": "C#",
+      "language_evidence": "The selected service, xUnit tests, and project definitions are first-party C# and MSBuild files in Microsoft's .NET samples repository; GitHub labels the repository C#.",
+      "description": "Microsoft's completed unit-testing sample checks a small prime-number service with boundary, positive, and negative xUnit data sets.",
+      "source_kind": "educational-exemplar",
+      "purpose_evidence": "The subproject README identifies this complete artifact as the sample for Microsoft's unit-testing tutorial, documents restore and test commands, and includes both implementation and configured test projects.",
+      "why_study": "Follow one small class into organized boundary and representative data sets, seeing how test names and failure messages explain the intended contract.",
+      "learn": [
+        "Separate a library project from a project that tests its public behavior.",
+        "Use data rows to cover boundary values, representative successes, and representative failures.",
+        "Trace an early return and divisor loop into exact boolean assertions."
+      ],
+      "prerequisites": [
+        "The global novice C# baseline: classes, methods, integers, conditionals, loops, namespaces, and focused tests.",
+        "A theory is one test method repeated for each InlineData row; the supplied value becomes the method argument."
+      ],
+      "concepts_developed": [
+        "Partitioning test data around a public contract's meaningful cases.",
+        "Keeping production and test dependencies in separate projects.",
+        "Writing diagnostic assertions that include the failing input."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "A prime integer is at least two and has no whole-number divisor other than one and itself; that elementary definition is sufficient for the path."
+        ],
+        "reason": "The mathematics is elementary and subordinate to reusable lessons in test partitioning, project boundaries, loops, early returns, and diagnostics."
+      },
+      "learning_path": {
+        "goal": "Understand how a complete .NET sample organizes and runs data-driven tests for a small C# prime-checking service.",
+        "start_here": {
+          "path": "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs",
+          "reason": "The file contains the complete early-boundary and divisor-loop behavior checked by the sample."
+        },
+        "supporting_files": [
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs",
+          "core/getting-started/unit-testing-using-dotnet-test/README.md",
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj"
+        ],
+        "trace": "Start at IsPrime's less-than-two return, follow candidates through the divisor loop and success return, then group the InlineData rows into boundary, prime, and composite cases and connect their xUnit assertions to the configured test project."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 3,
+          "signals": [
+            "xUnit attributes",
+            "data-driven theory method",
+            "project reference for tests"
+          ],
+          "reason": "Attributes materially control test discovery and input injection, while the implementation language remains basic C#."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "boundary early return",
+            "bounded divisor loop",
+            "success and failure exits"
+          ],
+          "reason": "A few local branches determine the result, and representative cases remain easy to simulate by hand."
+        },
+        "design_span": {
+          "score": 2,
+          "signals": [
+            "library project",
+            "test project",
+            "explicit project reference"
+          ],
+          "reason": "Two small, explicit project roles contain the complete implementation-to-test path."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "boundary and representative partitions",
+            "repeatable runner configuration",
+            "diagnostic messages"
+          ],
+          "reason": "Routine correctness and test-runner safeguards matter without broader production constraints."
+        },
+        "placement": "The four scores 3/2/2/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The implementation is complete, readable, and uses a bounded loop rather than placeholder or exercise code.",
+        "architecture": "The sample cleanly separates the service library, tests, and their project dependency.",
+        "naming_and_idiom": "IsPrime, candidate, divisor, expected test classes, and xUnit attributes state intent conventionally.",
+        "tests": "Eleven InlineData cases cover below-boundary values, small primes, and small composites with input-specific messages.",
+        "documentation": "The README states the tutorial purpose, project behavior, restore process, and exact test command.",
+        "traceability": "Each data row reaches one method call and one boolean assertion through a short visible implementation.",
+        "maintainability": "A narrow API and explicit test project keep changes bounded; current package references remain in the checked-in project.",
+        "educational_value": "The artifact teaches meaningful professional test organization while keeping the application logic transparent."
+      },
+      "inspection": {
+        "commit": "86ff8487361a6f32549d9c9ab8b14dde55c643cf",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.cs",
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService_IsPrimeShould.cs",
+          "core/getting-started/unit-testing-using-dotnet-test/README.md",
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService/PrimeService.csproj",
+          "core/getting-started/unit-testing-using-dotnet-test/PrimeService.Tests/PrimeService.Tests.csproj",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "urls": [
+          "https://github.com/dotnet/samples/blob/86ff8487361a6f32549d9c9ab8b14dde55c643cf/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "C#",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "data-driven xUnit tests",
+          "test-case partitioning",
+          "library and test project separation"
+        ],
+        "incidental_concepts": [
+          "the square-root loop bound",
+          "MSBuild package references"
+        ],
+        "reason": "A short primer on theories, InlineData, and project references is sufficient; the elementary loop and every expected result remain directly predictable."
+      }
+    },
     {
       "slug": "guardclauses",
       "path_slug": "guardclauses-rejects-null-arguments-while-returning-a-compiler-narrowed-value",
@@ -10,7 +145,8 @@
       "primary_language": "C#",
       "language_evidence": "The guard entry point and validation extension methods under src/GuardClauses are implemented in C#.",
       "description": "A small C# library that checks arguments and returns an accepted value so calling code can continue safely.",
-      "real_world_evidence": "The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes a NuGet package used to enforce method preconditions in production .NET applications.",
       "why_study": "See how one null check becomes a reusable guard while compiler annotations make the successful non-null result available to later code.",
       "learn": [
         "Trace reference-type and nullable-value inputs through the same two outcomes.",
@@ -137,7 +273,8 @@
       "primary_language": "C#",
       "language_evidence": "The selected extension methods, truncation strategy interface, fixed-length implementation, direction enum, and direct tests are implemented in C# under src/Humanizer and tests/Humanizer.Tests.",
       "description": "A C# string helper that shortens long text to a requested length and can keep either the beginning or the end.",
-      "real_world_evidence": "Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.",
+      "source_kind": "production",
+      "purpose_evidence": "Humanizer publishes a maintained .NET package whose production string APIs include documented and directly tested truncation strategies used by applications.",
       "why_study": "Follow a familiar string operation through overloads, one strategy boundary, left-or-right slicing, an optional marker, and a table of concrete boundary cases.",
       "learn": [
         "Trace simple extension-method overloads into one fixed-length truncation strategy.",
@@ -280,7 +417,8 @@
       "primary_language": "C#",
       "language_evidence": "Validator composition, rule components, expression parsing, selectors, conditions, async execution, messages, and results are C#.",
       "description": "A strongly typed validation framework that turns fluent expression-based rules into synchronous or asynchronous validation pipelines.",
-      "real_world_evidence": "FluentValidation is released as production validation infrastructure used in .NET services and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "FluentValidation is released as production validation infrastructure used in .NET services and applications.",
       "why_study": "The validator path shows how a typed RuleFor expression becomes an authored asynchronous property-rule pipeline with conditions, cascades, dependent rules, cancellation, and structured failures.",
       "learn": [
         "Use `src/FluentValidation/AbstractValidator.cs` to study the following transferable techniques and behaviors: Generic fluent builders, expression-tree property capture, cached accessors, validation contexts and selectors, ordered asynchronous components, conditions, class and rule cascades, dependent rules, cancellation, and sync-async parity."
@@ -406,7 +544,8 @@
       "primary_language": "C#",
       "language_evidence": "Logger pipelines, structured events, message-template parsing, enrichment, filtering, sinks, configuration, and level switching are C#.",
       "description": "A structured logging core that turns message templates and properties into immutable events routed through enrichers, filters, and sinks.",
-      "real_world_evidence": "Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.",
+      "source_kind": "production",
+      "purpose_evidence": "Serilog is maintained and released as the core event pipeline for a production logging ecosystem of sinks and framework integrations.",
       "why_study": "The Logger path shows how Serilog parses and caches a message template, binds structured properties, enriches and filters one event, emits it to sinks, and contains extension failures.",
       "learn": [
         "Use `src/Serilog/Core/Logger.cs` to study the following transferable techniques and behaviors: Message-template tokenization, template caching, property binding, immutable log events, contextual enrichment, filtering, sink dispatch, dynamic levels, trace context, failure isolation, and synchronous and asynchronous disposal."
@@ -530,7 +669,8 @@
       "primary_language": "C#",
       "language_evidence": "SQL execution, parameter handling, mapping, caching, async operations, type handlers, and AOT support are implemented in C#.",
       "description": "A lightweight object mapper that extends database connections with fast SQL execution and row-to-object materialization.",
-      "real_world_evidence": "Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.",
+      "source_kind": "production",
+      "purpose_evidence": "Dapper is released as production data-access infrastructure and is used by large .NET applications, including its original Stack Overflow use case.",
       "why_study": "The type-deserializer path shows how Dapper converts a data-reader row into a typed object by caching generated IL while preserving constructor, member, null, conversion, tuple, and type-handler contracts.",
       "learn": [
         "Use `Dapper/SqlMapper.TypeDeserializerCache.cs` to study the following transferable techniques and behaviors: Reflection-driven mapping, typed deserializer caches, DynamicMethod and ILGenerator, constructor selection, member binding, column conversion, null handling, tuple materialization, custom type handlers, and hot-path performance."
@@ -651,7 +791,8 @@
       "primary_language": "C#",
       "language_evidence": "HTTP abstractions, Kestrel, hosting, routing, middleware, MVC, Razor, Blazor, SignalR, authentication, and data protection are predominantly C# with first-party web client code.",
       "description": "The ASP.NET Core web platform, including HTTP servers, middleware, routing, hosting, MVC, Razor, Blazor, SignalR, security, and deployment integrations.",
-      "real_world_evidence": "Microsoft ships ASP.NET Core as the production web framework and server stack for modern .NET applications.",
+      "source_kind": "production",
+      "purpose_evidence": "Microsoft ships ASP.NET Core as the production web framework and server stack for modern .NET applications.",
       "why_study": "The ApplicationBuilder path shows how ASP.NET Core folds middleware into an ordered request-delegate pipeline and adapts both conventional and factory-created components with dependency injection and reliable release.",
       "learn": [
         "Use `src/Http/Http/src/Builder/ApplicationBuilder.cs` to study the following transferable techniques and behaviors: Higher-order RequestDelegate composition, reverse pipeline folding, asynchronous ordering and short circuits, reflection-based Invoke discovery, expression compilation, AOT-compatible fallback, injected and keyed services, per-request activation, and finally-based release."
@@ -777,7 +918,8 @@
       "primary_language": "C#",
       "language_evidence": "The selected public compilation API, C# compiler pipeline, lowering, IL generation, emitter model, and focused compiler tests are implemented in first-party C#; GitHub also reports C# as the repository's primary language.",
       "description": "The open-source C# and Visual Basic compiler platform that exposes syntax, semantic, diagnostic, compilation, and emit APIs used by the .NET toolchain.",
-      "real_world_evidence": "Roslyn supplies the production C# and Visual Basic compilers and code-analysis APIs shipped through the .NET SDK, Visual Studio, and Microsoft.CodeAnalysis packages.",
+      "source_kind": "production",
+      "purpose_evidence": "Roslyn supplies the production C# and Visual Basic compilers and code-analysis APIs shipped through the .NET SDK, Visual Studio, and Microsoft.CodeAnalysis packages.",
       "why_study": "The compilation-to-emit path shows how a platform-scale C# system turns immutable syntax, references, and options into diagnostics or deterministic PE and PDB output while coordinating binding, flow analysis, concurrent method compilation, lowering, IL generation, metadata, compatibility, and cleanup.",
       "learn": [
         "Use `src/Compilers/Core/Portable/Compilation/Compilation.cs` to study the following transferable techniques and behaviors: Public stream and option validation, immutable compilation snapshots, staged diagnostics, module-builder specialization, concurrent symbol traversal, binding and flow analysis, lowering and instrumentation, IL generation, entry-point selection, deterministic PE and PDB serialization, cancellation, pooled resources, and compatibility-preserving APIs."
@@ -918,7 +1060,8 @@
       "primary_language": "C#",
       "language_evidence": "Core libraries are C#, while the CLR, garbage collector, JIT, native hosting, interop, and platform layers use C++, C, and assembly as first-party runtime implementation.",
       "description": "The cross-platform .NET runtime, including the CLR, JIT, garbage collector, type system, core libraries, interop, diagnostics, and native hosting.",
-      "real_world_evidence": "Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.",
+      "source_kind": "production",
+      "purpose_evidence": "Microsoft ships this repository as the production runtime and standard libraries underlying .NET applications across operating systems and architectures.",
       "why_study": "The TaskAwaiter path exposes how .NET registers and runs an await continuation while preserving contexts, scheduler policy, race safety, inlining rules, fault behavior, and forced asynchronous execution.",
       "learn": [
         "Use `src/libraries/System.Private.CoreLib/src/System/Runtime/CompilerServices/TaskAwaiter.cs` to study the following transferable techniques and behaviors: Awaiter and async-state-machine interfaces, Task continuation registration, SynchronizationContext and TaskScheduler capture, ExecutionContext flow, lock-free completion races, inline versus queued execution, ThreadPool scheduling, cancellation, faults, and exactly-once guarantees."

@@ -23,6 +23,10 @@
 <!-- Complete this section for catalog changes; otherwise write "Not applicable." -->
 
 - Pinned 40-character revision:
+- Source kind (`production` or `educational-exemplar`) and purpose evidence:
+- For an educational exemplar: completeness, teaching purpose, verification,
+  documentation, stable revision, license, source quality, and no-Level-gaming
+  evidence:
 - Coding-relevance evidence and required domain context:
 - Stable path slug, learning goal, start path and reason, supporting files, and trace:
 - Prerequisites and distinct concepts developed:
@@ -44,6 +48,8 @@
 - [ ] `--complete` was also run only if every catalog slot is genuinely filled.
 - [ ] Canonical JSON and generated Markdown changed together, or neither needed regeneration.
 - [ ] No catalog standard was lowered to fill a slot.
+- [ ] Educational exemplars publish only at Levels 1 or 2; Level 3–5 entries are production software.
 - [ ] `(repository, path_slug)` is unique; the repository stays within its two-path maximum and does not repeat inside one language/Level bucket.
+- [ ] The language bucket stays within the 3/3/2/2/2 capacity map, and lower-level entries are ordered from gentlest to most demanding.
 - [ ] Review-pass labels accurately identify people or models and do not imply unperformed human inspection.
 - [ ] Submitted text and output contain no credentials, private data, or dotenv contents.

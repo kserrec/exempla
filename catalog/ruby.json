@@ -1,7 +1,395 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "language_slug": "ruby",
   "repositories": [
+    {
+      "slug": "abbrev",
+      "path_slug": "abbrev-builds-every-unambiguous-prefix-while-removing-collisions",
+      "repository": "ruby/abbrev",
+      "url": "https://github.com/ruby/abbrev",
+      "primary_language": "Ruby",
+      "language_evidence": "The default gem's abbreviation algorithm, Array convenience method, documentation, and direct Test::Unit suite are first-party Ruby; GitHub labels the repository Ruby.",
+      "description": "A Ruby default gem that builds all unambiguous word prefixes and removes a prefix as soon as a collision appears.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository packages and releases abbrev as an installable Ruby default gem with a documented public API and direct regression tests.",
+      "why_study": "Trace a small production algorithm whose hashes make both successful prefixes and collisions visible, then predict the exact abbreviation table.",
+      "learn": [
+        "Generate progressively shorter prefixes for each input word.",
+        "Use one hash to count sightings and another to retain only unambiguous results.",
+        "Explain why full words remain valid even when their shorter prefixes collide."
+      ],
+      "prerequisites": [
+        "The global novice Ruby baseline: methods, arrays, strings, hashes, loops, modules, and focused tests.",
+        "The selected path uses the default unfiltered call; the nearby optional pattern branch can be skipped on a first reading."
+      ],
+      "concepts_developed": [
+        "Tracking candidate uniqueness with occurrence counts.",
+        "Deleting a previously valid result when a collision appears.",
+        "Building a deterministic lookup table from ordinary strings."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Prefix generation, collision tracking, and deterministic map construction are broadly transferable programming techniques."
+      },
+      "learning_path": {
+        "goal": "Understand how Abbrev turns words into a hash of every unambiguous prefix without losing full-word lookups.",
+        "start_here": {
+          "path": "lib/abbrev.rb",
+          "reason": "The abbrev method contains the complete prefix loop, collision count, deletion rule, and final full-word pass."
+        },
+        "supporting_files": [
+          "test/test_abbrev.rb",
+          "README.md"
+        ],
+        "trace": "For each nonempty word, walk prefix lengths downward, increment seen, add the first occurrence, delete the second, and stop after later collisions; then restore each full word and compare the resulting hash with the direct summer, winter, win, ruby, and rules assertion."
+      },
+      "learning_level": {
+        "level": 1,
+        "language_technique": {
+          "score": 1,
+          "signals": [
+            "ordinary arrays and hashes",
+            "nested loops",
+            "local case branch"
+          ],
+          "reason": "The selected unfiltered path uses basic Ruby collections, iteration, slicing, and branching."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "prefix sighting counts",
+            "add then delete collision state",
+            "full-word restoration"
+          ],
+          "reason": "A small amount of local mutable state distinguishes unique and colliding prefixes, but remains easy to simulate."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one algorithm method",
+            "one direct test class"
+          ],
+          "reason": "One source method and its direct assertions contain the complete selected behavior."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "unambiguous prefixes",
+            "full words always retained"
+          ],
+          "reason": "The contract consists of two local deterministic rules without wider compatibility constraints."
+        },
+        "placement": "The four scores 1/2/1/1 produce rubric Level 1. Novice accessibility floor 1 preserves published Level 1."
+      },
+      "quality": {
+        "source_quality": "The algorithm exposes its two state hashes and collision cases directly, with examples adjacent to the public method.",
+        "architecture": "One module function owns the algorithm and one thin Array method delegates to it without duplication.",
+        "naming_and_idiom": "table, seen, word, len, and abbrev communicate the evolving prefix state with conventional Ruby iteration.",
+        "tests": "The direct suite checks collisions, retained full words, prefix filtering, delegation, and strings containing a line break.",
+        "documentation": "The README and method documentation explain the mapping contract with several exact output hashes.",
+        "traceability": "Every expected prefix can be followed through one count and the corresponding add, delete, or restore action.",
+        "maintainability": "The small public surface, deterministic algorithm, and exact result maps make regressions easy to locate.",
+        "educational_value": "It is a substantial but approachable first production algorithm built entirely from novice-baseline Ruby tools."
+      },
+      "inspection": {
+        "commit": "138820c087d1fccc776eb7665634ac6bca602faf",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "lib/abbrev.rb",
+          "test/test_abbrev.rb",
+          "README.md",
+          "abbrev.gemspec",
+          "LICENSE.txt"
+        ]
+      },
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/abbrev/blob/138820c087d1fccc776eb7665634ac6bca602faf/LICENSE.txt"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 1,
+        "central_concepts": [
+          "string prefixes",
+          "hash-based occurrence counts",
+          "collision removal"
+        ],
+        "incidental_concepts": [
+          "the optional regular-expression filter",
+          "the Array convenience extension"
+        ],
+        "reason": "The central algorithm uses familiar loops, strings, hashes, and branches; the optional filter and delegation can be skipped without hiding the selected behavior."
+      }
+    },
+    {
+      "slug": "sinatra-hello-world",
+      "path_slug": "sinatras-complete-hello-world-example-declares-one-route-and-verifies-its-body",
+      "repository": "sinatra/sinatra",
+      "url": "https://github.com/sinatra/sinatra",
+      "primary_language": "Ruby",
+      "language_evidence": "The documented hello-world application and the test that executes its route are first-party Ruby in README.md and test/readme_test.rb; GitHub labels the repository Ruby.",
+      "description": "Sinatra's complete hello-world example declares one route with a Ruby block and verifies its response body in the README test suite.",
+      "source_kind": "educational-exemplar",
+      "purpose_evidence": "Sinatra presents this finished four-line application as the first runnable example in its primary README and maintains an executable ReadmeTest that asserts the example's exact result.",
+      "why_study": "Read a whole web application small enough to hold in memory while learning how a route block becomes an externally checked response.",
+      "learn": [
+        "Declare an HTTP method and path with Sinatra's route syntax.",
+        "Return a response body from the route's Ruby block.",
+        "Execute the route in a test and assert the exact body a caller receives."
+      ],
+      "prerequisites": [
+        "The global novice Ruby baseline: methods, strings, blocks, require, and focused tests.",
+        "An HTTP GET request names a path, and a route block returns the body for matching requests."
+      ],
+      "concepts_developed": [
+        "Using a small domain-specific language to register application behavior.",
+        "Connecting a request route to a returned body.",
+        "Testing documented examples as observable application behavior."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [
+          "Only the basic GET request, path, and response-body model stated in the prerequisites is needed."
+        ],
+        "reason": "The complete example teaches transferable callback routing and behavior verification without requiring HTTP protocol internals."
+      },
+      "learning_path": {
+        "goal": "Understand how Sinatra's complete minimal application maps GET / to Hello world and verifies that documentation example in code.",
+        "start_here": {
+          "path": "README.md",
+          "reason": "The opening example contains the complete application and immediately explains how to install, run, and view it."
+        },
+        "supporting_files": [
+          "test/readme_test.rb",
+          "sinatra.gemspec"
+        ],
+        "trace": "Require Sinatra, register GET / with a block returning Hello world, then follow ReadmeTest as it constructs the same route, performs GET /, and checks the exact body."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "route block",
+            "framework domain-specific language",
+            "test helper callback"
+          ],
+          "reason": "Blocks and the route DSL are common professional Ruby idioms that remain direct in this example."
+        },
+        "behavioral_reasoning": {
+          "score": 2,
+          "signals": [
+            "request-to-route dispatch",
+            "returned response body"
+          ],
+          "reason": "One framework dispatch step is central, but the matching route and result remain locally predictable."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one complete example",
+            "one direct README assertion"
+          ],
+          "reason": "The application behavior and its verification each fit in one small visible block."
+        },
+        "constraint_burden": {
+          "score": 1,
+          "signals": [
+            "one route contract",
+            "one exact response body"
+          ],
+          "reason": "The exemplar has one ordinary observable contract and no interacting production constraints."
+        },
+        "placement": "The four scores 2/2/1/1 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "The checked-in example is complete, direct, and contains no placeholder or omitted application step.",
+        "architecture": "A single route is proportionate to the artifact, while the README test keeps verification separate.",
+        "naming_and_idiom": "require, get, the root path, and a returned string use Sinatra's standard minimal style.",
+        "tests": "ReadmeTest constructs the documented route, performs a request, and asserts the exact response body.",
+        "documentation": "The primary README begins with the complete source, installation, run command, viewing address, and route explanation.",
+        "traceability": "The example's only route corresponds directly to the first executable README test.",
+        "maintainability": "Testing the documentation prevents the canonical first example from silently drifting away from framework behavior.",
+        "educational_value": "The artifact introduces a real framework pattern through a complete program rather than a disconnected statement."
+      },
+      "inspection": {
+        "commit": "cb22afd7902b566b6eaba6c4ea89739494a65d12",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "README.md",
+          "test/readme_test.rb",
+          "sinatra.gemspec",
+          "LICENSE"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "urls": [
+          "https://github.com/sinatra/sinatra/blob/cb22afd7902b566b6eaba6c4ea89739494a65d12/LICENSE"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "route declaration",
+          "request dispatch",
+          "response-body verification"
+        ],
+        "incidental_concepts": [
+          "Sinatra's internal routing implementation"
+        ],
+        "reason": "A short route-and-response primer makes the example and its test predictable; framework internals are not required for the selected behavior."
+      }
+    },
+    {
+      "slug": "observer",
+      "path_slug": "observer-notifies-subscribed-objects-only-after-an-explicit-change",
+      "repository": "ruby/observer",
+      "url": "https://github.com/ruby/observer",
+      "primary_language": "Ruby",
+      "language_evidence": "The default gem's Observable module, documentation, and direct Test::Unit suite are first-party Ruby; GitHub labels the repository Ruby.",
+      "description": "Ruby's Observer default gem stores subscribers and notifies their chosen methods only after the observable marks itself changed.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository packages and releases observer as an installable Ruby default gem implementing the application-facing Observable API.",
+      "why_study": "Follow a compact publish-and-subscribe lifecycle from registration through change gating, callback dispatch, reset, and removal.",
+      "learn": [
+        "Register objects and the callback method each should receive.",
+        "Gate notifications behind an explicit changed state and reset that state afterward.",
+        "Use a behavior test to track which subscribers receive each event after additions and removals."
+      ],
+      "prerequisites": [
+        "The global novice Ruby baseline: classes, modules, hashes, instance variables, methods, symbols, and focused tests.",
+        "A callback is a method saved now so another object can invoke it when an event occurs."
+      ],
+      "concepts_developed": [
+        "Maintaining a collection of subscribers and callback names.",
+        "Using explicit state to prevent accidental notifications.",
+        "Dispatching event arguments and updating subscriptions safely."
+      ],
+      "coding_relevance": {
+        "gate": "pass",
+        "domain_context": [],
+        "reason": "Subscriber management, change gating, callback dispatch, and direct lifecycle tests are transferable object-design practices."
+      },
+      "learning_path": {
+        "goal": "Understand how Ruby Observable registers subscribers, gates events on changed state, dispatches arguments, and removes subscriptions.",
+        "start_here": {
+          "path": "lib/observer.rb",
+          "reason": "The Observable module contains registration, removal, state, count, and notification behavior in one readable unit."
+        },
+        "supporting_files": [
+          "test/test_observer.rb",
+          "README.md"
+        ],
+        "trace": "Add each watcher and callback to @observer_peers, call changed before notify_observers, dispatch the event arguments with __send__, reset @observer_state, then follow the direct test as watchers join, receive different event histories, and are removed."
+      },
+      "learning_level": {
+        "level": 2,
+        "language_technique": {
+          "score": 2,
+          "signals": [
+            "module mixin",
+            "stored callback symbols",
+            "dynamic method dispatch"
+          ],
+          "reason": "Mixins and callbacks are common professional Ruby patterns that materially shape the implementation."
+        },
+        "behavioral_reasoning": {
+          "score": 3,
+          "signals": [
+            "subscriber lifecycle",
+            "change-gated events",
+            "post-notification state reset"
+          ],
+          "reason": "Event delivery and subscription state are central, although the complete lifecycle remains compact and synchronous."
+        },
+        "design_span": {
+          "score": 1,
+          "signals": [
+            "one Observable module",
+            "one direct lifecycle test"
+          ],
+          "reason": "One component and its test contain registration, notification, and removal."
+        },
+        "constraint_burden": {
+          "score": 2,
+          "signals": [
+            "callback capability check",
+            "no notification before changed",
+            "correct removal behavior"
+          ],
+          "reason": "Several routine lifecycle guarantees matter, but they are explicit and local."
+        },
+        "placement": "The four scores 2/3/1/2 produce rubric Level 2. Novice accessibility floor 2 preserves published Level 2."
+      },
+      "quality": {
+        "source_quality": "Each lifecycle operation is short, named, and keeps state changes adjacent to the behavior they control.",
+        "architecture": "A reusable mixin owns subscriber state while observable and watcher classes retain their own domain responsibilities.",
+        "naming_and_idiom": "add_observer, changed, notify_observers, update, and count_observers expose the pattern's vocabulary directly.",
+        "tests": "The direct suite asserts counts and exact notification histories across registration, later registration, single removal, and clearing all observers.",
+        "documentation": "The README explains the mechanism, the required changed/notify sequence, callback contract, and a complete worked example.",
+        "traceability": "Every lifecycle mutation in the test maps to one Observable method and an exact resulting history.",
+        "maintainability": "A small API, explicit state, and end-to-end lifecycle assertions make regressions in delivery or removal visible.",
+        "educational_value": "It presents a recognizable design pattern in compact production Ruby with enough state to be meaningful but still locally traceable."
+      },
+      "inspection": {
+        "commit": "ebf1653465ee6854bdf35c8f2b794713068daa26",
+        "inspected_at": "2026-08-30",
+        "reviewers": [
+          "Codex lower-level expansion pass"
+        ],
+        "files": [
+          "lib/observer.rb",
+          "test/test_observer.rb",
+          "README.md",
+          "observer.gemspec",
+          "COPYING",
+          "BSDL"
+        ]
+      },
+      "license": {
+        "spdx": "Ruby OR BSD-2-Clause",
+        "urls": [
+          "https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/COPYING",
+          "https://github.com/ruby/observer/blob/ebf1653465ee6854bdf35c8f2b794713068daa26/BSDL"
+        ]
+      },
+      "github": {
+        "primary_language": "Ruby",
+        "archived": false,
+        "metadata_checked_at": "2026-08-30"
+      },
+      "novice_accessibility": {
+        "floor": 2,
+        "central_concepts": [
+          "subscriber registration",
+          "callback dispatch",
+          "change-gated event state"
+        ],
+        "incidental_concepts": [
+          "__send__ as the dynamic callback operation"
+        ],
+        "reason": "The README supplies a cohesive publish-and-subscribe primer, after which the direct test makes each state transition and event history predictable."
+      }
+    },
     {
       "slug": "pathname",
       "path_slug": "pathname-cleanpath-normalizes-a-path-lexically-while-preserving-roots-and",
@@ -10,7 +398,8 @@
       "primary_language": "Ruby",
       "language_evidence": "The path value object and nearly all path and filesystem behavior are Ruby under lib/, with a small C extension for selected primitives.",
       "description": "A Ruby path method that removes redundant path pieces without reading the filesystem.",
-      "real_world_evidence": "The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes Ruby's pathname default gem and implements the Pathname API used throughout Ruby tooling and applications.",
       "why_study": "Follow path components through a small stack that removes dots, handles parent steps, preserves roots, and offers a conservative mode for symbolic links.",
       "learn": [
         "Trace ordinary, dot, parent, rooted, and trailing-separator examples.",
@@ -145,7 +534,8 @@
       "primary_language": "Ruby",
       "language_evidence": "Site discovery, collections, front matter, rendering, plugins, incremental regeneration, destination writing, and CLI behavior are Ruby under lib/.",
       "description": "A static-site generator that transforms Markdown, Liquid templates, data, assets, and configuration into a deployable website.",
-      "real_world_evidence": "The repository publishes the Jekyll gem and command-line tool used for blogs, documentation, and GitHub Pages workflows.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the Jekyll gem and command-line tool used for blogs, documentation, and GitHub Pages workflows.",
       "why_study": "Understand how Jekyll transforms one source document through Liquid, converters, hooks, nested layouts, and incremental dependency recording into generated output. Markdown, Liquid, front matter, and layouts need only a short orientation; the selected renderer path teaches transferable staged pipelines, strategy selection, hooks, mutable transformation state, cycle protection, dependency tracking, error propagation, and integration testing.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/jekyll/renderer.rb`: converter strategy and reduction pipeline, hook and plugin framework idioms, and Liquid payload and document abstractions.",
@@ -274,7 +664,8 @@
       "primary_language": "Ruby",
       "language_evidence": "Temporary-file creation, permissions, cleanup, delegation, and lifecycle behavior are implemented in Ruby under lib/.",
       "description": "Ruby's standard temporary-file library, providing secure creation plus explicit and automatic cleanup lifecycles.",
-      "real_world_evidence": "The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the tempfile default gem used by Ruby applications and the Ruby standard library.",
       "why_study": "Understand how Tempfile.create securely opens a temporary file and guarantees deterministic close and unlink behavior around a caller block. Temporary-file permissions and unlink behavior need only a short explanation; the selected block-based path teaches transferable resource ownership, secure creation, exception-safe cleanup, cross-platform fallback, API design, and focused behavioral testing.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/tempfile.rb`: block-scoped resource ownership, keyword forwarding and conventional exception cleanup, and ordinary class and file composition.",
@@ -395,7 +786,8 @@
       "primary_language": "Ruby",
       "language_evidence": "Configuration, target discovery, AST inspection, cop dispatch, offense reporting, autocorrection, caching, formatters, and CLI orchestration are Ruby under lib/ and exe/.",
       "description": "A configurable Ruby static analyzer and formatter built around independently selectable cops.",
-      "real_world_evidence": "The repository publishes the RuboCop gem and executable used to lint, format, and enforce Ruby project conventions.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the RuboCop gem and executable used to lint, format, and enforce Ruby project conventions.",
       "why_study": "Understand how RuboCop inspects one Ruby file, dispatches AST callbacks to configured cops, combines corrections, and repeats autocorrection safely until the source stabilizes or a cycle is detected. AST nodes, source ranges, and lint rules need only a short programming-oriented explanation; the path teaches transferable visitor dispatch, runtime callback generation, plugin lifecycles, edit collation, conflict detection, fixed-point iteration, caching, error isolation, and contract testing.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/rubocop/runner.rb`: runtime class_eval generation of AST callback methods, reflection and callback discovery, cop DSL and plugin framework conventions, and dynamic dispatch over node and restriction maps.",
@@ -528,7 +920,8 @@
       "primary_language": "Ruby",
       "language_evidence": "Job fetching, execution, middleware, retries, scheduling, capsules, Redis coordination, process lifecycle, and the monitoring UI are Ruby under lib/ and web/.",
       "description": "A multithreaded background-job processor for Ruby applications backed by Redis.",
-      "real_world_evidence": "The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.",
+      "source_kind": "production",
+      "purpose_evidence": "The project publishes the Sidekiq gem and executable used to run durable asynchronous work for Ruby applications.",
       "why_study": "Understand how Sidekiq owns one fetched job through middleware and execution, records retryable failure, acknowledges completed work, and preserves unfinished work during shutdown. Queue and at-least-once semantics need only a short explanation; the path teaches transferable threaded processing, ownership, middleware, retries, acknowledgement, shutdown coordination, failure recovery, observability, and concurrency testing.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/sidekiq/processor.rb`: middleware block composition, dynamic worker class resolution and framework conventions, and exception wrapper and configuration abstractions.",
@@ -661,7 +1054,8 @@
       "primary_language": "Ruby",
       "language_evidence": "The selected promise graph, executor handoff, atomic state, fallback synchronization, documentation, and direct behavioral specs are first-party Ruby; optional native atomic backends are not required by this path.",
       "description": "A production concurrency toolkit whose promise framework composes asynchronous tasks, dependency graphs, executors, and single-assignment results.",
-      "real_world_evidence": "The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the concurrent-ruby gem used by Ruby applications for futures, promises, executors, atomic primitives, and other concurrency abstractions.",
       "why_study": "Understand how one concurrent-ruby future is scheduled, fulfilled or rejected exactly once, and propagated through dependent then or rescue work to callbacks and waiting callers. Futures and executors need only a short concurrency primer; the path teaches transferable asynchronous state machines, atomic single assignment, callback races, executor handoff, dependency graphs, error recovery, timeouts, and blocking boundaries.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/concurrent-ruby/concurrent/promises.rb`: blocks and mixins as asynchronous APIs, private state and promise subclasses, and atomic accessors, callbacks, aliases, and executor dispatch.",
@@ -801,7 +1195,8 @@
       "primary_language": "Ruby",
       "language_evidence": "Task lifecycle, Fiber scheduling, promise state, cancellation, timeout behavior, tree ownership, and their direct tests are substantive first-party Ruby; io-event supplies selector internals outside the selected path.",
       "description": "A composable fiber-based asynchronous I/O framework with structured task trees, cancellation, timeouts, and Ruby's Fiber scheduler integration.",
-      "real_world_evidence": "The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.",
+      "source_kind": "production",
+      "purpose_evidence": "The repository publishes the async gem and core runtime used by the Socketry ecosystem for cooperative concurrent services and I/O clients.",
       "why_study": "Understand how Async creates a Fiber-backed child task, schedules and suspends it, propagates result or failure, and tears down its task tree under cancellation or timeout. Fibers, schedulers, and cooperative cancellation need only a short concurrency primer; the path teaches transferable structured concurrency, lifecycle state machines, promise resolution, exception injection, timeout cleanup, ownership, resource lifetime, and shutdown testing.",
       "learn": [
         "Study these transferable Ruby mechanisms in `lib/async/task.rb`: Fiber scheduler integration, exception-based cooperative cancellation, block-scoped task construction, and Promise and task-tree abstractions.",

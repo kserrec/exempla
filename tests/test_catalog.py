@@ -27,7 +27,8 @@ def valid_entry() -> dict:
         "primary_language": "Python",
         "language_evidence": "The src directory contains the first-party Python implementation.",
         "description": "A real command-line tool that performs useful production work.",
-        "real_world_evidence": "Published releases are used as a command-line utility by real users.",
+        "source_kind": "production",
+        "purpose_evidence": "Published releases are used as a command-line utility by real users.",
         "why_study": "The path demonstrates a complete request, validation, and transformation boundary.",
         "learn": ["Understand how a command request becomes a tested observable result."],
         "prerequisites": ["Basic Python functions, modules, collections, and exceptions."],
@@ -181,6 +182,8 @@ class RecordValidationTests(unittest.TestCase):
         self.assertEqual(self.validate(entry), [])
         rendered = "\n".join(catalog_tool.render_repository(entry))
         self.assertIn("Language 1 / Behavior 1 / Design 1 / Constraints 1 → Level 1", rendered)
+        self.assertIn("**Source:** Production software", rendered)
+        self.assertIn("**Purpose evidence:**", rendered)
         self.assertIn("**Coding relevance:**", rendered)
         self.assertIn("**Concepts this path develops:**", rendered)
         self.assertIn("**Learning path:**", rendered)
@@ -216,6 +219,73 @@ class RecordValidationTests(unittest.TestCase):
         obsolete = valid_entry()
         obsolete["sdc"] = {"level": 1}
         self.assertTrue(any("unexpected fields sdc" in error for error in self.validate(obsolete)))
+
+    def test_source_kind_and_purpose_evidence_are_required(self) -> None:
+        missing_kind = valid_entry()
+        del missing_kind["source_kind"]
+        self.assertTrue(
+            any("missing fields source_kind" in error for error in self.validate(missing_kind))
+        )
+        invalid_kind = valid_entry()
+        invalid_kind["source_kind"] = "tutorial"
+        self.assertTrue(
+            any(
+                "expected production or educational-exemplar" in error
+                for error in self.validate(invalid_kind)
+            )
+        )
+        missing_purpose = valid_entry()
+        del missing_purpose["purpose_evidence"]
+        self.assertTrue(
+            any(
+                "missing fields purpose_evidence" in error
+                for error in self.validate(missing_purpose)
+            )
+        )
+        obsolete = valid_entry()
+        obsolete["real_world_evidence"] = obsolete.pop("purpose_evidence")
+        errors = self.validate(obsolete)
+        self.assertTrue(any("missing fields purpose_evidence" in error for error in errors))
+        self.assertTrue(any("unexpected fields real_world_evidence" in error for error in errors))
+
+    def test_educational_exemplar_is_allowed_only_at_levels_one_and_two(self) -> None:
+        for level in range(1, 6):
+            with self.subTest(level=level):
+                entry = valid_entry()
+                entry["source_kind"] = "educational-exemplar"
+                for dimension in catalog_tool.DIMENSION_FIELDS:
+                    entry["learning_level"][dimension]["score"] = level
+                entry["learning_level"]["level"] = level
+                if level <= 2:
+                    entry["novice_accessibility"]["floor"] = level
+                else:
+                    del entry["novice_accessibility"]
+                errors = self.validate(entry)
+                if level <= 2:
+                    self.assertEqual(errors, [])
+                    rendered = "\n".join(catalog_tool.render_repository(entry))
+                    self.assertIn("**Source:** Educational exemplar", rendered)
+                    self.assertIn("gentler path", rendered)
+                else:
+                    self.assertTrue(
+                        any(
+                            f"may publish only at Level 1 or 2, not Level {level}" in error
+                            for error in errors
+                        )
+                    )
+
+    def test_production_source_is_allowed_at_every_level(self) -> None:
+        for level in range(1, 6):
+            with self.subTest(level=level):
+                entry = valid_entry()
+                for dimension in catalog_tool.DIMENSION_FIELDS:
+                    entry["learning_level"][dimension]["score"] = level
+                entry["learning_level"]["level"] = level
+                if level <= 2:
+                    entry["novice_accessibility"]["floor"] = level
+                else:
+                    del entry["novice_accessibility"]
+                self.assertEqual(self.validate(entry), [])
 
     def test_path_slug_is_required_and_must_be_canonical(self) -> None:
         missing = valid_entry()
@@ -458,7 +528,7 @@ class RecordValidationTests(unittest.TestCase):
 
 
 class CatalogIntegrationTests(unittest.TestCase):
-    def make_root(self, *, empty: bool = False, schema_version: int = 4) -> Path:
+    def make_root(self, *, empty: bool = False, schema_version: int = 5) -> Path:
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)
         root = Path(temporary.name)
@@ -484,6 +554,8 @@ class CatalogIntegrationTests(unittest.TestCase):
             "learner-centered-rebuild.json",
             "learner-centered-gap-research.json",
             "learner-centered-remediation.json",
+            "lower-level-expansion.json",
+            "lower-level-expansion-audit.json",
             "novice-accessibility-audit.json",
             "rejections.json",
         ):
@@ -494,6 +566,95 @@ class CatalogIntegrationTests(unittest.TestCase):
 
     def test_current_catalog_schema_and_rebuild_audit_reconcile(self) -> None:
         self.assertEqual(catalog_tool.validate_catalog(ROOT), [])
+
+    def test_lower_level_expansion_audit_reconciles_counts_and_educational_gate(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        audit_path = root / "research" / "lower-level-expansion-audit.json"
+        audit = json.loads(audit_path.read_text(encoding="utf-8"))
+        audit["after"]["accepted_paths"] += 1
+        audit_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                ".after: does not match the canonical catalog" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+        audit = json.loads(
+            (ROOT / "research" / "lower-level-expansion-audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        audit["educational_exemplars"][0]["qualification"]["complete_artifact"][
+            "pass"
+        ] = False
+        audit_path.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "every educational gate must pass" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+    def test_historical_lower_gap_counts_are_not_coupled_to_later_additions(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        novice_audit = json.loads(
+            (root / "research" / "novice-accessibility-audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(
+            novice_audit["replacement_research"][0]["open_levels_after"],
+            {"1": 1, "2": 2},
+        )
+        current_javascript = json.loads(
+            (root / "catalog" / "javascript.json").read_text(encoding="utf-8")
+        )
+        current_gaps = {
+            str(level): 3
+            - sum(
+                entry["learning_level"]["level"] == level
+                for entry in current_javascript["repositories"]
+            )
+            for level in (1, 2)
+        }
+        self.assertEqual(current_gaps, {"1": 1, "2": 1})
+        self.assertEqual(catalog_tool.validate_catalog(root), [])
+
+        novice_audit["replacement_research"][0]["open_levels_after"] = current_gaps
+        novice_path = root / "research" / "novice-accessibility-audit.json"
+        novice_path.write_text(
+            json.dumps(novice_audit, indent=2) + "\n", encoding="utf-8"
+        )
+        self.assertTrue(
+            any(
+                "differs from historical audited outcomes" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
+
+    def test_distinct_later_path_in_a_removed_repository_is_allowed(self) -> None:
+        root = self.make_root()
+        self.add_research(root)
+        self.assertEqual(catalog_tool.validate_catalog(root), [])
+
+        path = root / "catalog" / "javascript.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        express = next(
+            entry
+            for entry in data["repositories"]
+            if entry["repository"] == "expressjs/express"
+        )
+        express["learning_path"]["start_here"]["path"] = "lib/application.js"
+        path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+        self.assertTrue(
+            any(
+                "removed repository path is still accepted: expressjs/express" in error
+                for error in catalog_tool.validate_catalog(root)
+            )
+        )
 
     def test_gap_research_requires_diligent_channels_and_reconciles_acceptance(self) -> None:
         root = self.make_root()
@@ -598,17 +759,58 @@ class CatalogIntegrationTests(unittest.TestCase):
             )
         )
 
-    def test_schema_version_three_is_rejected(self) -> None:
-        root = self.make_root(empty=True, schema_version=3)
+    def test_schema_version_four_is_rejected(self) -> None:
+        root = self.make_root(empty=True, schema_version=4)
         errors = catalog_tool.validate_catalog(root)
-        self.assertTrue(any("schema_version: expected 4" in error for error in errors))
+        self.assertTrue(any("schema_version: expected 5" in error for error in errors))
 
     def test_incomplete_catalog_is_valid_but_not_complete(self) -> None:
         root = self.make_root(empty=True)
         self.assertEqual(catalog_tool.validate_catalog(root), [])
         errors = catalog_tool.validate_catalog(root, complete=True)
-        self.assertTrue(any("complete catalog requires 200 learning paths; found 0" in error for error in errors))
-        self.assertTrue(any("Level 1 requires 2 entries" in error for error in errors))
+        self.assertTrue(any("complete catalog requires 240 learning paths; found 0" in error for error in errors))
+        self.assertTrue(any("Level 1 requires 3 entries" in error for error in errors))
+        self.assertTrue(any("Level 2 requires 3 entries" in error for error in errors))
+        self.assertTrue(any("Level 3 requires 2 entries" in error for error in errors))
+
+    def test_capacity_map_is_enforced(self) -> None:
+        self.assertEqual(catalog_tool.LEVEL_CAPACITY, {1: 3, 2: 3, 3: 2, 4: 2, 5: 2})
+        for level, capacity in catalog_tool.LEVEL_CAPACITY.items():
+            with self.subTest(level=level):
+                root = self.make_root(empty=True)
+                entries = []
+                for index in range(capacity + 1):
+                    entry = valid_entry()
+                    repository = f"example/level-{level}-tool-{index}"
+                    entry["slug"] = f"level-{level}-tool-{index}"
+                    entry["path_slug"] = f"level-{level}-path-{index}"
+                    entry["repository"] = repository
+                    entry["url"] = f"https://github.com/{repository}"
+                    entry["license"]["urls"] = [
+                        f"https://github.com/{repository}/blob/{entry['inspection']['commit']}/LICENSE"
+                    ]
+                    for dimension in catalog_tool.DIMENSION_FIELDS:
+                        entry["learning_level"][dimension]["score"] = level
+                    entry["learning_level"]["level"] = level
+                    if level <= 2:
+                        entry["novice_accessibility"]["floor"] = level
+                    else:
+                        del entry["novice_accessibility"]
+                    entries.append(entry)
+                path = root / "catalog" / "python.json"
+                data = json.loads(path.read_text(encoding="utf-8"))
+                data["repositories"] = entries[:capacity]
+                path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+                self.assertEqual(catalog_tool.validate_catalog(root), [])
+                data["repositories"] = entries
+                path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+                self.assertTrue(
+                    any(
+                        f"Level {level} has {capacity + 1} entries; maximum is {capacity}"
+                        in error
+                        for error in catalog_tool.validate_catalog(root)
+                    )
+                )
 
     def test_schema_and_manual_validator_stay_aligned(self) -> None:
         self.assertEqual(catalog_tool.validate_schema(ROOT), [])
@@ -659,14 +861,36 @@ class CatalogIntegrationTests(unittest.TestCase):
         index.write_text("stale\n", encoding="utf-8")
         self.assertIn("stale generated file: languages/README.md", catalog_tool.check_generated(root))
 
-    def test_no_active_entry_contains_sdc_or_top_level_start_here(self) -> None:
+    def test_active_entries_use_current_schema_and_baseline_paths_stay_production(self) -> None:
         languages = json.loads((ROOT / "catalog" / "languages.json").read_text(encoding="utf-8"))["languages"]
+        expansion = json.loads(
+            (ROOT / "research" / "lower-level-expansion-audit.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        added_paths = {
+            (record["repository"].lower(), record["path_slug"])
+            for record in expansion["additions"]["paths"]
+        }
+        educational_additions = {
+            (record["repository"].lower(), record["path_slug"])
+            for record in expansion["additions"]["paths"]
+            if record["source_kind"] == "educational-exemplar"
+        }
         for language in languages:
             data = json.loads((ROOT / "catalog" / f"{language['slug']}.json").read_text(encoding="utf-8"))
-            self.assertEqual(data["schema_version"], 4)
+            self.assertEqual(data["schema_version"], 5)
             for entry in data["repositories"]:
                 self.assertNotIn("sdc", entry)
                 self.assertNotIn("start_here", entry)
+                self.assertIn("purpose_evidence", entry)
+                self.assertNotIn("real_world_evidence", entry)
+                key = (entry["repository"].lower(), entry["path_slug"])
+                if key not in added_paths:
+                    self.assertEqual(entry["source_kind"], "production")
+                if entry["source_kind"] == "educational-exemplar":
+                    self.assertIn(key, educational_additions)
+                    self.assertLessEqual(entry["learning_level"]["level"], 2)
 
     def test_multi_license_evidence_is_representable(self) -> None:
         shelf = json.loads((ROOT / "catalog" / "dart.json").read_text(encoding="utf-8"))

@@ -6,7 +6,7 @@ without turning judgment into an automated popularity ranking.
 ## Source-of-truth map
 
 - `catalog/languages.json` is the ordered language-scope registry.
-- `catalog/<language>.json` contains accepted schema-version-4 learning paths.
+- `catalog/<language>.json` contains accepted schema-version-5 learning paths.
 - `catalog/schema.json` publishes the serialized contract.
 - `scripts/catalog.py` enforces semantic rules and generates Markdown.
 - `languages/**/README.md` is generated and must not be hand-edited.
@@ -17,9 +17,12 @@ without turning judgment into an automated popularity ranking.
   research from the post-rerun refinement.
 - `research/learner-centered-audit.json` is the active learner-centered corpus
   consistency audit.
-- `research/novice-accessibility-audit.json` is the active lower-rung pedagogy
-  audit and preserves re-leveling, capacity, replacement, and progression
-  evidence.
+- `research/novice-accessibility-audit.json` is the frozen pre-expansion lower-
+  rung pedagogy audit and preserves re-leveling, prior capacity, replacement,
+  and progression evidence.
+- `research/lower-level-expansion.json` preserves the exact pre-expansion
+  baseline; `research/lower-level-expansion-audit.json` is the active
+  lower-level policy and research reconciliation record.
 - `research/rejections.json` is append-only rejection and alternate evidence.
 - `research/audit.json` is the historical v1 Size / Difficulty / Complexity
   audit and is not the active consistency record.
@@ -51,19 +54,20 @@ python3 scripts/catalog.py generate
 ```
 
 Use `--complete` on validation and generated checks only when every language
-has two qualified learning paths at every Level. Commit canonical input and
-generated output together.
+has three qualified learning paths at Levels 1 and 2 and two at Levels 3–5.
+Commit canonical input and generated output together.
 
 ## Refreshing an accepted entry
 
-1. Establish the exact catalog file, `(repository, path_slug)` identity, pin,
+1. Establish the exact catalog file, `(repository, path_slug)` identity,
+   `source_kind`, `purpose_evidence`, pin,
    learning path, prerequisites, concepts developed, four scores, quality
    findings, inspection files, language evidence, and license URLs.
 2. Verify that the pinned repository, commit, every path, and every license
    target remain public. A default-branch move alone does not invalidate them.
 3. Move to a new commit only for a factual correction, material upstream
    change, or intentional periodic review.
-4. Reinspect the new revision: purpose, selected behavior, implementation,
+4. Reinspect the new revision: source-class eligibility, purpose, selected behavior, implementation,
    tests, boundaries, documentation, language classification, and license.
 5. Reapply coding relevance and all eight quality findings.
 6. Record recurring evidence for all four dimensions before calculating the
@@ -123,8 +127,8 @@ change must:
 1. preserve the prior source and date in Git history;
 2. update `docs/language-selection.md` and `catalog/languages.json`;
 3. add or remove the matching canonical file;
-4. research up to two qualified learning paths per Level without lowered
-   standards;
+4. research up to three qualified learning paths at Levels 1 and 2 and two at
+   Levels 3–5 without lowered standards;
 5. update language-count expectations in the validator and tests;
 6. regenerate navigation and repeat the live-fact and consistency audits; and
 7. update literal counts and gaps in public documentation.
@@ -137,9 +141,10 @@ Before a tagged release and after material scope changes, verify for every
 accepted entry:
 
 - public repository, archive state, language classification, globally unique
-  `(repository, path_slug)` identity, and the two-path repository cap;
+  `(repository, path_slug)` identity, source kind, purpose evidence, and the
+  two-path repository cap;
 - exact pin and every safe learning-path and inspection path;
-- coding-relevance and all eight quality findings;
+- source-class qualification, coding relevance, and all eight quality findings;
 - four scores, formula and all score floors, novice-accessibility evidence for
   low rubric Levels, bucket capacity, prerequisites, concepts developed, their
   separation, and domain context;
